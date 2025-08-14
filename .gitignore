@@ -11,3 +11,5 @@ __pycache__/
 generated.*
 bin/psyq
 venv/
+reference/
+reference/

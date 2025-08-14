@@ -99,4 +99,3 @@ RotMatrix = 0x8007B5A8;
 RotMatrixYXZ = 0x8007B838;
 RotMatrixY = 0x8007BC68;
 rand = 0x8007FE50;
-func_8010D400 = 0x8010D400;
