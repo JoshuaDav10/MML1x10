@@ -1,4 +1,5 @@
 #include "common.h"
+#include "rock_neo.h"
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001B3E4);
 
@@ -24,7 +25,74 @@ INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001C7F0);
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001C824);
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001C95C);
+// CD-ROM system initialization and status checking function
+// Original MIPS function: func_8001C95C
+void func_8001C95C(void) {
+    u32 cdPos;
+    u32 statusIndex;
+    u32 funcIndex;
+    void (*funcPtr)(void);
+    
+    // Check if CD-ROM system needs initialization
+    if (D_8009896C != 0) {
+        // Reset CD-ROM system flags
+        D_80098964 = 0;
+        D_800988EC = 0;
+        D_8009896C = 0;
+        D_800989C8 = 0;
+        D_800989C4 = 0;
+        
+        // Set CD-ROM callback functions to NULL
+        CdSyncCallback(0);
+        CdReadyCallback(0);
+        
+        // Reset CD-ROM until successful
+        while (CdReset(0) == 0) {
+            // Keep trying until reset succeeds
+        }
+    }
+    
+    // Check CD-ROM status
+    if (D_800988D0 == 2) {
+        // Get CD-ROM status information
+        func_8001D2BC(1, 0, &D_80098A98);
+        
+        // Store status byte
+        D_80098AB8 = D_80098A98;
+        
+        // Check if specific bit is set (0x20)
+        if (D_80098A98 & 0x20) {
+            // Get additional status information
+            func_8001D2BC(0x11, 0, &D_80098A98);
+            
+            // Convert CD position to integer
+            cdPos = CdPosToInt(&D_80098A98);
+            D_800989D8 = cdPos;
+            
+            // Check if position is within valid range
+            if (cdPos < D_800989B0) {
+                // Check if specific flag is set (0x40000000)
+                if (D_800989C0 & 0x40000000) {
+                    // Call function with CD-ROM buffer
+                    func_8001D58C(D_800989B8);
+                } else {
+                    // Call alternative function
+                    func_8001CB7C();
+                }
+            }
+        }
+    }
+    
+    // Call function pointer based on status
+    statusIndex = D_80098A84;
+    funcIndex = statusIndex << 2; // Multiply by 4 (word size)
+    
+    // Get function pointer from table and call it
+    funcPtr = (void (*)(void))D_80087680[funcIndex];
+    if (funcPtr != 0) {
+        funcPtr();
+    }
+}
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001CAAC);
 

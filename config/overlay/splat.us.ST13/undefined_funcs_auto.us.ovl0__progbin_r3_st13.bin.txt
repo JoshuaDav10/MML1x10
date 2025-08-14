@@ -105,4 +105,3 @@ RotMatrixYXZ = 0x8007B838;
 RotMatrixY = 0x8007BC68;
 ratan2 = 0x8007BFA8;
 rand = 0x8007FE50;
-func_8010D9F8 = 0x8010D9F8;

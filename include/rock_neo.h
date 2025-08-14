@@ -58,4 +58,20 @@ extern void (*D_80080894[])(s8*);
 extern s8 D_80098B1C;
 extern s8 D_80098B1D;
 
+/* CD-ROM related global variables */
+extern u8 D_8009896C;
+extern u8 D_80098964;
+extern u8 D_800988EC;
+extern u32 D_800989C8;
+extern u32 D_800989C4;
+extern u8 D_800988D0;
+extern u8 D_80098A98;
+extern u8 D_80098AB8;
+extern u32 D_800989D8;
+extern u32 D_800989B0;
+extern u32 D_800989C0;
+extern u32 D_800989B8;
+extern u32 D_80098A84;
+extern u32 D_80087680[];
+
 #endif
