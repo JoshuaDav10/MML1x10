@@ -1,13 +1,70 @@
 #include "common.h"
 #include "rock_neo.h"
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001B3E4);
+// CD-ROM system initialization function
+// Original MIPS function: func_8001B3E4
+void func_8001B3E4(void) {
+    s32 retryCount;
+    s32 memoryIndex;
+    void* cdStructPtr;
+    
+    // Initialize CD-ROM system with retry logic
+    do {
+        retryCount = CdInit();
+    } while (retryCount == 0);
+    
+    // Set return value to 7 (success)
+    retryCount = 7;
+    
+    // Initialize CD-ROM global variables
+    D_800988EC = 0;
+    D_80098A98 = 0;
+    D_800988DC = 0;
+    D_80098998 = 0;
+    D_800988C0 = 0;
+    D_80098B42 = retryCount;  // Set to 7
+    D_800988EC = 0;
+    D_80098AA0 = 0;
+    D_800988DC = 0;
+    
+    // Call CD-ROM function with parameter 0xE
+    func_8001D2BC(0xE);
+    
+    // Initialize memory area at D_800A3A40
+    memoryIndex = 0xF0;
+    do {
+        D_800A3A40[memoryIndex >> 2] = 0;  // Divide by 4 since it's a u32 array
+        memoryIndex -= 0x10;
+    } while (memoryIndex >= 0);
+    
+    // Set up CD-ROM structure pointers
+    cdStructPtr = &D_800A3A40;
+    D_80098A84 = (u32)cdStructPtr;
+    unknown_Cd_strucptr = cdStructPtr;
+    
+    // Initialize additional CD-ROM variables
+    D_80098828 = 0;
+    D_80098968 = 0;
+    D_800989C8 = 0;
+    D_800989C4 = 0;
+    D_800988D0 = 0;
+}
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001B4C4);
+// No-operation function (placeholder/callback stub)
+// Original MIPS function: func_8001B4C4
+void func_8001B4C4(void) {
+    // This function does nothing - it's a placeholder
+    // that gets called by other code expecting a function pointer
+}
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001B4CC);
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001B63C);
+// No-operation function (placeholder/callback stub)
+// Original MIPS function: func_8001B63C
+void func_8001B63C(void) {
+    // This function does nothing - it's a placeholder
+    // that gets called by other code expecting a function pointer
+}
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001B644);
 
@@ -15,7 +72,30 @@ INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001B6FC);
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001B7B4);
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001B858);
+// Function pointer table lookup and call
+// Original MIPS function: func_8001B858
+void func_8001B858(void) {
+    u32* ptr;
+    u32 index;
+    void (*funcPtr)(void);
+    
+    // Get pointer from global variable
+    ptr = (u32*)D_80098A84;
+    
+    // Read index value from offset 0x8
+    index = ptr[2];  // 0x8 / 4 = 2 (since u32 is 4 bytes)
+    
+    // Multiply index by 4 (shift left by 2)
+    index = index << 2;
+    
+    // Use index to get function pointer from table
+    funcPtr = (void (*)(void))D_80087670[index >> 2];  // Divide by 4 since we multiplied by 4 above
+    
+    // Call the function pointer
+    if (funcPtr != 0) {
+        funcPtr();
+    }
+}
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001B89C);
 

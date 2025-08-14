@@ -73,6 +73,16 @@ extern u32 D_800989C0;
 extern u32 D_800989B8;
 extern u32 D_80098A84;
 extern u32 D_80087680[];
+extern u32 D_80087670[];
+extern u8 D_800988DC;
+extern u32 D_80098998;
+extern u8 D_800988C0;
+extern u8 D_80098B42;
+extern u8 D_80098AA0;
+extern u32 D_80098828;
+extern u32 D_80098968;
+extern u32 D_800A3A40[];
+extern void* unknown_Cd_strucptr;
 
 /* Game work and input variables */
 extern u16 D_800C0C2A;  // Joystick input
