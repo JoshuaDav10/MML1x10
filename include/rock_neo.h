@@ -76,12 +76,15 @@ extern u32 D_80087680[];
 extern u32 D_80087670[];
 extern u8 D_800988DC;
 extern u32 D_80098998;
+extern u16 D_80098994;
 extern u8 D_800988C0;
 extern u8 D_80098B42;
 extern u8 D_80098AA0;
 extern u32 D_80098828;
 extern u32 D_80098968;
 extern u32 D_800A3A40[];
+extern u16 D_800AD142;
+extern u16 D_800AD146;
 extern void* unknown_Cd_strucptr;
 
 /* Game work and input variables */
