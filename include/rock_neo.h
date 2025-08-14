@@ -74,4 +74,9 @@ extern u32 D_800989B8;
 extern u32 D_80098A84;
 extern u32 D_80087680[];
 
+/* Game work and input variables */
+extern u16 D_800C0C2A;  // Joystick input
+extern s16 D_80098A70;  // Game work field
+extern s16 D_80098A72;  // Game work field
+
 #endif
