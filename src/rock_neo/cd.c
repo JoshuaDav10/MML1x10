@@ -57,7 +57,76 @@ void func_8001B4C4(void) {
     // that gets called by other code expecting a function pointer
 }
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001B4CC);
+// Complex state machine function for CD-ROM system
+// Original MIPS function: func_8001B4CC
+void func_8001B4CC(void) {
+    u32 state;
+    u8 tempValue;
+    u32 timerValue;
+    
+    // Get current state from global variable
+    state = D_800989C4;
+    
+    if (state == 0) {
+        // State 0: Check system readiness
+        tempValue = D_80098964;
+        
+        if (tempValue == 0) {
+            // System not ready, call initialization function
+            func_8001CB7C();
+        }
+        
+        // Increment state to 1
+        D_800989C4 = state + 1;
+        
+    } else if (state == 1) {
+        // State 1: Check system status
+        tempValue = D_80098964;
+        
+        if (tempValue != 0) {
+            // System is ready, call function with parameter 0xA0
+            func_8001D324(0xA0);
+            
+            // Increment state to 2
+            D_800989C4 = state + 1;
+        }
+        
+    } else if (state == 2) {
+        // State 2: Handle countdown timer
+        timerValue = D_80098828;
+        
+        if (timerValue != 0) {
+            // Decrement timer
+            D_80098828 = timerValue - 1;
+        } else {
+            // Timer expired, process data
+            u32* ptr = (u32*)D_80098A84;
+            func_8001CC7C(ptr[1], ptr[2]);  // Pass values from offsets 4 and 8
+            
+            // Clear flags and increment state
+            D_800988D0 = 0;
+            D_80098828 = 0;
+            D_800989C4 = state + 1;
+        }
+        
+    } else if (state == 3) {
+        // State 3: Handle incrementing timer
+        timerValue = D_80098828;
+        D_80098828 = timerValue + 1;
+        
+        if (timerValue + 1 == 0x96) {  // 150
+            // Timer reached target, set system flag
+            D_8009896C |= 0x2;
+        } else {
+            // Check if we should call function
+            tempValue = D_800988C0;
+            if (tempValue == 0) {
+                func_8001CAAC();
+            }
+        }
+    }
+    // For any other state, do nothing
+}
 
 // No-operation function (placeholder/callback stub)
 // Original MIPS function: func_8001B63C
@@ -66,11 +135,145 @@ void func_8001B63C(void) {
     // that gets called by other code expecting a function pointer
 }
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001B644);
+// State machine function for CD-ROM system
+// Original MIPS function: func_8001B644
+void func_8001B644(void) {
+    u32 state;
+    u32 counter;
+    u8 tempValue;
+    
+    // Get current state from global variable
+    state = D_800989C4;
+    
+    if (state == 0) {
+        // State 0: Initialize system with counter loop
+        counter = 0x7F;  // Start with 127
+        
+        // Loop: call func_8001D394 with counter values from 127 down to 1
+        do {
+            func_8001D394(counter & 0xFF);  // Pass counter as parameter
+            counter--;
+        } while (counter > 0);
+        
+        // Set hardware register D_800AD142 with bit 0x8000 set
+        D_800AD142 |= 0x8000;
+        
+        // Call function to handle hardware setup
+        func_8001CB7C();
+        
+        // Update state variable and set flag
+        D_800988D0 = 1;  // Set flag
+        D_800989C4 = state + 1;  // Increment state to 1
+        
+    } else if (state == 1) {
+        // State 1: Check if system is ready
+        tempValue = D_80098964;
+        
+        if (tempValue != 0) {
+            // System is ready, set flag and call function
+            D_80098B42 = 1;
+            func_8001CAAC();
+        }
+    }
+    // For any other state, do nothing
+}
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001B6FC);
+// State machine function for CD-ROM system (phase 2)
+// Original MIPS function: func_8001B6FC
+// Note: This is very similar to func_8001B644 but handles different state
+void func_8001B6FC(void) {
+    u32 state;
+    u32 counter;
+    u8 tempValue;
+    
+    // Get current state from global variable
+    state = D_800989C4;
+    
+    if (state == 0) {
+        // State 0: Initialize system with counter loop
+        counter = 0x7F;  // Start with 127
+        
+        // Loop: call func_8001D394 with counter values from 127 down to 1
+        do {
+            func_8001D394(counter & 0xFF);  // Pass counter as parameter
+            counter--;
+        } while (counter > 0);
+        
+        // Set hardware register D_800AD142 with bit 0x8000 set
+        D_800AD142 |= 0x8000;
+        
+        // Call function to handle hardware setup
+        func_8001CB7C();
+        
+        // Update state variable and set flag
+        D_800988D0 = 1;  // Set flag
+        D_800989C4 = state + 1;  // Increment state to 1
+        
+    } else if (state == 1) {
+        // State 1: Check if system is ready
+        tempValue = D_80098964;
+        
+        if (tempValue != 0) {
+            // System is ready, set flag to 2 (different from func_8001B644)
+            D_80098B42 = 2;
+            func_8001CAAC();
+        }
+    }
+    // For any other state, do nothing
+}
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001B7B4);
+// Hardware initialization function with toggle mechanism
+// Original MIPS function: func_8001B7B4
+void func_8001B7B4(void) {
+    u32 counter;
+    u16 hardwareValue;
+    u8 toggleFlag;
+    u16 tempValue;
+    
+    // Initialize counter to 127
+    counter = 0x7F;
+    
+    // Loop: call func_8001D394 with counter values from 127 down to 1
+    do {
+        func_8001D394(counter & 0xFF);  // Pass counter as parameter
+        counter--;
+    } while (counter > 0);
+    
+    // Set hardware register D_800AD142 with bit 0x8000
+    D_800AD142 |= 0x8000;
+    
+    // Check toggle flag
+    toggleFlag = D_800988DC;
+    
+    if (toggleFlag != 0) {
+        // Path 1: Toggle flag is set
+        // Load value from D_80098994
+        tempValue = D_80098994;
+        
+        // Clear the toggle flag
+        D_800988DC = 0;
+        
+        // Store value to hardware register D_800AD146
+        D_800AD146 = tempValue;
+        
+    } else {
+        // Path 2: Toggle flag is clear
+        // Load current value from hardware register D_800AD146
+        tempValue = D_800AD146;
+        
+        // Clear hardware register
+        D_800AD146 = 0;
+        
+        // Set toggle flag
+        D_800988DC = 1;
+        
+        // Store previous value to D_80098994
+        D_80098994 = tempValue;
+    }
+    
+    // Call final function
+    func_8001CAAC();
+}
 
 // Function pointer table lookup and call
 // Original MIPS function: func_8001B858
