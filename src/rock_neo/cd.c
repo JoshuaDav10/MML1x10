@@ -634,11 +634,95 @@ void func_8001CC08(u32 syncResult) {
     }
 }
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001CC7C);
+// CD-ROM read initialization and setup function
+// Original MIPS function: func_8001CC7C
+// This function initializes CD-ROM read operations using table lookups
+void func_8001CC7C(u32 index, u32 param1) {
+    u32 tableOffset;
+    u32 tableValue1, tableValue2;
+    
+    // Calculate table offset: index * 3 * 4 (familiar pattern from our knowledge base!)
+    tableOffset = (index * 3) << 2;
+    
+    // Load first value from D_80082CD0 table
+    tableValue1 = D_80082CD0[tableOffset >> 2];
+    
+    // Set system state variables
+    D_800988C0 = 1;      // Set flag
+    D_80098B42 = 7;      // Set counter
+    D_8009896C = 0;      // Clear status
+    D_80098828 = 0;      // Clear timer
+    D_80098964 = 0;      // Clear ready flag
+    D_80098A7C = tableValue1;  // Store table value
+    
+    // Convert sector number to CD position
+    CdIntToPos();
+    
+    // Load second value from D_80082CD0 table (offset + 4)
+    tableValue2 = D_80082CD0[(tableOffset + 4) >> 2];
+    
+    // Store callback function pointer and parameter
+    D_800987A4 = param1;
+    D_8009881C = tableValue2;
+    
+    // Set CD-ROM ready callback to NULL (disable it)
+    CdReadyCallback(0);
+    
+    // Execute CD-ROM command 2 with position buffer
+    func_8001D2BC(2, D_80098814, D_80098A98);
+    
+    // Execute CD-ROM command 6 with parameter 0
+    func_8001D2BC(6, 0, D_80098A98);
+}
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001CD60);
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001CF98);
+// CD-ROM read initialization function (variant with memory clearing)
+// Original MIPS function: func_8001CF98
+// This function is nearly identical to func_8001CC7C but clears memory and uses different callback
+void func_8001CF98(u32 index) {
+    u32 tableOffset;
+    u32 tableValue1, tableValue2;
+    u8* memoryPtr;
+    s32 i;
+    
+    // Clear 10 bytes of memory starting from D_80098B41 down to D_80098B38
+    memoryPtr = &D_80098B41;
+    for (i = 9; i >= 0; i--) {
+        memoryPtr[i] = 0;
+        memoryPtr--;
+    }
+    
+    // Calculate table offset: index * 3 * 4 (same pattern as func_8001CC7C)
+    tableOffset = (index * 3) << 2;
+    
+    // Load first value from D_80082CD0 table
+    tableValue1 = D_80082CD0[tableOffset >> 2];
+    
+    // Set system state variables (identical to func_8001CC7C)
+    D_800988C0 = 1;      // Set flag
+    D_80098B42 = 7;      // Set counter
+    D_8009896C = 0;      // Clear status
+    D_80098828 = 0;      // Clear timer
+    D_80098964 = 0;      // Clear ready flag
+    D_80098998 = 0;      // Clear additional flag
+    D_80098A7C = tableValue1;  // Store table value
+    
+    // Convert sector number to CD position
+    CdIntToPos();
+    
+    // Load second value from D_80082CD0 table (offset + 4)
+    tableValue2 = D_80082CD0[(tableOffset + 4) >> 2];
+    
+    // Store callback function pointer (different from func_8001CC7C)
+    D_8009881C = tableValue2;
+    
+    // Set CD-ROM ready callback to NULL (disable it)
+    CdReadyCallback(0);
+    
+    // Execute CD-ROM command 6 only (vs. commands 2 and 6 in func_8001CC7C)
+    func_8001D2BC(6, D_80098814, D_80098A98);
+}
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001D078);
 
@@ -913,7 +997,81 @@ void func_8001D648(u32 address) {
     func_8001D6D8(value2 + (value2 & 0xFFFFFF));
 }
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001D6D8);
+// CD-ROM command queue processor function
+// Original MIPS function: func_8001D6D8
+// This function processes the CD-ROM command queue and handles command type 7
+void func_8001D6D8(u32 parameter) {
+    void* cdStructPtr;
+    void* searchPtr;
+    void* movePtr;
+    u32* currentPtr;
+    u32 temp1, temp2, temp3;
+    
+    // Get current CD structure pointer
+    cdStructPtr = unknown_Cd_strucptr;
+    
+    // Start search from D_800A3A40 + 0x10
+    searchPtr = (void*)(D_800A3A40 + 0x10);
+    
+    // Check if search pointer is before CD structure pointer
+    if (searchPtr >= cdStructPtr) {
+        goto create_command;
+    }
+    
+    // Search for command type 7 in the queue
+    do {
+        // Check if current command is type 7
+        if (*(u32*)searchPtr == 7) {
+            // Found command type 7, move data blocks
+            movePtr = searchPtr + 0x10;
+            
+            // Check if move pointer is before CD structure pointer
+            if (movePtr >= cdStructPtr) {
+                // Skip to next iteration
+            } else {
+                // Move data blocks (similar to func_8001CAAC)
+                currentPtr = (u32*)movePtr;
+                do {
+                    // Load 4 words from source
+                    temp1 = currentPtr[0];
+                    temp2 = currentPtr[1];
+                    temp3 = currentPtr[2];
+                    
+                    // Write to destination (overwriting the command type 7)
+                    currentPtr[-4] = temp1;  // offset -16
+                    currentPtr[-3] = temp2;  // offset -12
+                    currentPtr[-2] = temp3;  // offset -8
+                    
+                    // Advance pointers
+                    currentPtr += 4;
+                    
+                    // Check if we've reached the end
+                } while (currentPtr < (u32*)cdStructPtr);
+                
+                // Adjust CD structure pointer backward by 16 bytes
+                unknown_Cd_strucptr = (void*)((u8*)unknown_Cd_strucptr - 0x10);
+            }
+        }
+        
+        // Advance search pointer by 16 bytes
+        searchPtr = (void*)((u8*)searchPtr + 0x10);
+        
+        // Check if search pointer is still before CD structure pointer
+    } while (searchPtr < cdStructPtr);
+    
+create_command:
+    // Create new command structure
+    cdStructPtr = unknown_Cd_strucptr;
+    
+    // Set command type to 7
+    ((u32*)cdStructPtr)[0] = 7;
+    
+    // Set parameter in offset 8
+    ((u32*)cdStructPtr)[2] = parameter;
+    
+    // Advance CD structure pointer by 16 bytes
+    unknown_Cd_strucptr = (void*)((u8*)cdStructPtr + 0x10);
+}
 
 // Table lookup and function call function
 // Original MIPS function: func_8001D7AC
