@@ -74,7 +74,7 @@ extern u32 D_800989B0;
 extern u32 D_800989BC;
 extern u32 D_800989C0;
 extern u32 D_800989B8;
-extern u32 D_80098A84;
+extern u32* D_80098A84;
 extern u32 D_80087680[];
 extern u32 D_80087670[];
 extern u32 D_80082CD0[];
@@ -86,7 +86,7 @@ extern u16 D_80098994;
 extern u8 D_800988C0;
 extern u8 D_80098B42;
 extern u8 D_80098B41;
-extern u8 D_80098B38;
+extern u8* D_80098B38;
 extern u8 D_80098AA0;
 extern u32 D_80098828;
 extern u32 D_80098814;
@@ -94,6 +94,7 @@ extern u32 D_8009881C;
 extern u32 D_80098968;
 extern u32 D_80098A7C;
 extern u32 D_800987A4;
+extern u32 D_800987A8;
 extern u32 D_800A3A40[];
 extern u32 D_800B5DB0[];
 extern u16 D_800AD142;
@@ -110,5 +111,39 @@ extern void* unknown_Cd_strucptr;
 extern u16 D_800C0C2A;  // Joystick input
 extern s16 D_80098A70;  // Game work field
 extern s16 D_80098A72;  // Game work field
+
+extern u32 D_800A3A40[];
+extern u32 D_800B5DB0[];
+extern u16 D_800AD142;
+extern u32 D_800AD140;
+extern u8 D_800AD154;
+extern u8 D_800AD155;
+extern u8 D_800AD156;
+extern u8 D_800AD157;
+extern u32 D_80088F9C[];
+extern u32 D_80088EF8[];
+extern u32 D_800989BC;
+extern u32 D_80098814;
+extern u32 D_8009881C;
+extern u32 D_80098A7C;
+extern u32 D_800987A4;
+extern u8 D_80098B41;
+extern u32 D_800B5DB0[];
+extern u8* D_80098B38;
+extern u32 D_800987A8;
+extern u32 D_80098A54;
+extern u32 D_800C5604[];
+extern u32 D_800C560C;
+extern u32 D_80098A54;
+extern u32 D_8009BE48;
+extern u32 D_8009BE4A;
+extern u32 D_800C5634;
+extern u32 D_800C561C;
+extern u32 D_800C5638;
+extern u32 D_800C5620;
+extern u32 D_800C5624;
+extern u32 D_800C5628;
+extern u32 D_800C5608;
+// D_80098B42 already declared above
 
 #endif
