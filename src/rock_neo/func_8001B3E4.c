@@ -1,6 +1,6 @@
 #include "common.h"
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/func_8001B3E4", D_8002ABE4);
+INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/func_8001B3E4", func_8002ABE4);
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/func_8001B3E4", func_8002AEE4);
 
