@@ -439,7 +439,65 @@ void func_8001C7F0(void) {
     CdSyncCallback(0);
 }
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001C824);
+// CD-ROM main state machine controller function
+// Original MIPS function: func_8001C824
+// This function controls the main CD-ROM system state machine
+void func_8001C824(void) {
+    u32 currentState;
+    u32 timerValue;
+    
+    // Get current state
+    currentState = D_800989C4;
+    
+    if (currentState == 1) {
+        // State 1: Check if system is ready
+        if (D_80098964 != 0) {
+            // System ready, set up sync callback and execute commands
+            D_800988D0 = 0;  // Clear flag
+            
+            // Set sync callback to our function
+            CdSyncCallback(func_8001C7F0);
+            
+            // Get sector number from D_80098A84 and convert to position
+            CdIntToPos();
+            
+            // Execute CD-ROM command 0x16 with position buffer
+            func_8001D254(0x16, (u32)((u8*)&D_80098A84 + 0x10), D_80098A98);
+            
+            // Reset timer and increment state
+            D_80098828 = 0;
+            D_800989C4 = currentState + 1;
+        }
+        
+    } else if (currentState == 0) {
+        // State 0: Initialize system if needed
+        if (D_80098964 == 0) {
+            // System not ready, call initialization function
+            func_8001CB7C();
+        }
+        
+        // Increment state
+        D_800989C4 = currentState + 1;
+        
+    } else if (currentState == 2) {
+        // State 2: Timer-based state
+        timerValue = D_80098828;
+        timerValue++;
+        D_80098828 = timerValue;
+        
+        // Check if timer has reached threshold (0x96 = 150)
+        if (timerValue == 0x96) {
+            // Timer expired, set flag in status register
+            D_8009896C |= 0x2;
+        }
+        
+    } else if (currentState == 3) {
+        // State 3: Call memory cleanup function
+        func_8001CAAC();
+    }
+    
+    // For any other state, do nothing
+}
 
 // CD-ROM system initialization and status checking function
 // Original MIPS function: func_8001C95C
@@ -870,7 +928,98 @@ void func_8001D468(u32 param1, u32 param2) {
     unknown_Cd_strucptr = cdStructPtr;
 }
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001D494);
+// CD-ROM conditional command queue processor function
+// Original MIPS function: func_8001D494
+// This function processes the CD-ROM command queue with conditional logic for command type 2
+void func_8001D494(u32 param1, u32 param2, u32 param3) {
+    void* cdStructPtr;
+    void* searchPtr;
+    void* movePtr;
+    u32* currentPtr;
+    u32* destPtr;
+    u32 temp1, temp2, temp3;
+    
+    // Early return if param2 is not 1
+    if (param2 != 1) {
+        goto create_structure;
+    }
+    
+    // Get current CD structure pointer
+    cdStructPtr = unknown_Cd_strucptr;
+    
+    // Start search from D_800A3A40 + 0x10
+    searchPtr = (void*)(D_800A3A40 + 0x10);
+    
+    // Check if search pointer is before CD structure pointer
+    if (searchPtr >= cdStructPtr) {
+        goto create_structure;
+    }
+    
+    // Search for command type 2 in the queue
+    do {
+        // Check if current command is type 2
+        if (*(u32*)searchPtr == 2) {
+            // Found command type 2, check additional condition
+            movePtr = searchPtr + 0x10;
+            
+            // Check if value at offset -8 is 1
+            if (*(u32*)((u8*)movePtr - 8) == 1) {
+                // Check if move pointer is before CD structure pointer
+                if (movePtr < cdStructPtr) {
+                    // Move data blocks (similar to other functions)
+                    currentPtr = (u32*)movePtr;
+                    destPtr = (u32*)searchPtr;
+                    
+                    do {
+                        // Load 4 words from source
+                        temp1 = currentPtr[0];
+                        temp2 = currentPtr[1];
+                        temp3 = currentPtr[2];
+                        
+                        // Write to destination (overwriting the command type 2)
+                        destPtr[0] = temp1;
+                        destPtr[1] = temp2;
+                        destPtr[2] = temp3;
+                        
+                        // Write back to source positions
+                        currentPtr[-4] = temp1;  // offset -16
+                        currentPtr[-3] = temp2;  // offset -12
+                        currentPtr[-2] = temp3;  // offset -8
+                        
+                        // Advance pointers
+                        currentPtr += 4;
+                        destPtr += 4;
+                        
+                        // Check if we've reached the end
+                    } while (currentPtr < (u32*)cdStructPtr);
+                    
+                    // Adjust CD structure pointer backward by 16 bytes
+                    unknown_Cd_strucptr = (void*)((u8*)unknown_Cd_strucptr - 0x10);
+                }
+            }
+        }
+        
+        // Advance search pointer by 16 bytes
+        searchPtr = (void*)((u8*)searchPtr + 0x10);
+        
+        // Check if search pointer is still before CD structure pointer
+    } while (searchPtr < cdStructPtr);
+    
+create_structure:
+    // Create new command structure
+    cdStructPtr = unknown_Cd_strucptr;
+    
+    // Set command type to 2
+    ((u32*)cdStructPtr)[0] = 2;
+    
+    // Set parameters
+    ((u32*)cdStructPtr)[1] = param1;  // offset 4
+    ((u32*)cdStructPtr)[2] = param2;  // offset 8
+    ((u32*)cdStructPtr)[3] = param3;  // offset 12
+    
+    // Advance CD structure pointer by 16 bytes
+    unknown_Cd_strucptr = (void*)((u8*)cdStructPtr + 0x10);
+}
 
 // CD-ROM command structure builder function
 // Original MIPS function: func_8001D58C
