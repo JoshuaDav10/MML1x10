@@ -43,21 +43,9 @@ segments:
       - [0xBBE4, c, cd]
       - [0xE054, c, scene]
       - [0x10638, asm]
-      - name: func_8001B3E4
-        type: code
-        start: 0x1B3E4
-        subsegments:
-          - [0x1B3E4, c, func_8001B3E4]
-      - name: func_8001C95C
-        type: code
-        start: 0x1C95C
-        subsegments:
-          - [0x1C95C, c, func_8001C95C]
-      - name: func_8001D7E4
-        type: code
-        start: 0x1D7E4
-        subsegments:
-          - [0x1D7E4, c, func_8001D7E4]
+      - [0x1B3E4, c, func_8001B3E4]
+      - [0x1C95C, c, func_8001C95C]
+      - [0x1D7E4, c, func_8001D7E4]
       - [0x2C640, c, player]
       - [0x32A38, asm]
       - [0x43F88, c, moji]

@@ -12,7 +12,8 @@ INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/func_8001D7E4", func_8002D27C);
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/func_8001D7E4", func_8002D2DC);
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/func_8001D7E4", func_8002D318);
+void func_8002D318(void) {
+}
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/func_8001D7E4", func_8002D320);
 
@@ -238,7 +239,8 @@ INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/func_8001D7E4", func_800355F0);
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/func_8001D7E4", func_80035724);
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/func_8001D7E4", func_800358E8);
+void func_800358E8(void) {
+}
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/func_8001D7E4", func_800358F0);
 
@@ -328,9 +330,11 @@ INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/func_8001D7E4", func_80038894);
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/func_8001D7E4", func_800392CC);
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/func_8001D7E4", func_8003949C);
+void func_8003949C(void) {
+}
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/func_8001D7E4", func_800394A4);
+void func_800394A4(void) {
+}
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/func_8001D7E4", func_800394AC);
 
@@ -430,4 +434,5 @@ INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/func_8001D7E4", func_8003BD0C);
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/func_8001D7E4", func_8003BDC0);
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/func_8001D7E4", func_8003BE38);
+void func_8003BE38(void) {
+}
