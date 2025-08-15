@@ -733,7 +733,117 @@ void func_8001CC7C(u32 index, u32 param1) {
     func_8001D2BC(6, 0, D_80098A98);
 }
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001CD60);
+// CD-ROM sector reading and data processing callback function
+// Original MIPS function: func_8001CD60
+// This function handles CD-ROM sector reading with complex data processing
+void func_8001CD60(u32 operation) {
+    u32* sectorBuffer;
+    u32 convertedPos;
+    u32 expectedPos;
+    u32 callbackPtr;
+    u32 tableOffset;
+    u32 tableValue;
+    u32 dataValue;
+    u32 copyLength;
+    u8* sourcePtr;
+    u8* destPtr;
+    
+    // Mask operation to 8 bits
+    operation = operation & 0xFF;
+    
+    // Reset timer
+    D_80098828 = 0;
+    
+    if (operation == 1) {
+        // Sector reading operation
+        sectorBuffer = D_800B5DB0;
+        
+        // Read sector from CD-ROM
+        CdGetSector(sectorBuffer, 3);
+        
+        // Convert position back to integer for verification
+        convertedPos = CdPosToInt(sectorBuffer);
+        
+        // Check if converted position matches expected value
+        expectedPos = D_80098A7C;
+        if (convertedPos == expectedPos) {
+            // Position matches, increment expected position
+            D_80098A7C = convertedPos + 1;
+            
+            // Check if callback pointer is less than 0x800
+            callbackPtr = D_8009881C;
+            if (callbackPtr < 0x800) {
+                // Callback pointer is small, perform data processing
+                if (D_800989C8 == 0) {
+                    // Process data from D_80098A84 structure
+                    dataValue = ((u32*)D_80098A84)[1];  // offset 4
+                    
+                    // Calculate table offset: (dataValue * 3) * 4
+                    tableOffset = (dataValue * 3) << 2;
+                    
+                    // Look up value from D_80082CD0 table (offset + 8)
+                    tableValue = D_80082CD0[(tableOffset + 8) >> 2];
+                    
+                    // Check if table value matches callback parameter
+                    if (tableValue == D_800987A4) {
+                        // Values match, set flag
+                        D_800989C8 = operation;
+                    } else {
+                        // Values don't match, set error flag
+                        D_8009896C |= 0x20;
+                    }
+                }
+                
+                // Decrement callback pointer by 0x800
+                D_8009881C = callbackPtr - 0x800;
+                
+                if (D_8009881C == 0) {
+                    // Callback pointer reached 0, reset system
+                    CdReadyCallback(0);
+                    CdSyncCallback(func_8001CC08);
+                    func_8001D254(9, 0, D_80098A98);
+                } else {
+                    // Increment callback parameter by 0x800
+                    D_800987A4 = D_800987A4 + 0x800;
+                }
+            } else {
+                // Callback pointer is large, read sector and copy data
+                CdGetSector(sectorBuffer, 0x200);
+                
+                // Copy data from sector buffer to destination
+                copyLength = D_8009881C;
+                if (copyLength != 0) {
+                    sourcePtr = (u8*)sectorBuffer;
+                    destPtr = (u8*)D_800987A4;
+                    
+                    do {
+                        *destPtr = *sourcePtr;
+                        destPtr++;
+                        sourcePtr++;
+                        copyLength--;
+                    } while (copyLength != 0);
+                    
+                    // Update destination pointer
+                    D_800987A4 = (u32)destPtr;
+                }
+                
+                // Set up callbacks
+                CdSyncCallback(func_8001CC08);
+                func_8001D254(9, 0, D_80098A98);
+            }
+        } else {
+            // Position mismatch, set error flag
+            D_8009896C |= 0x40;
+        }
+    } else {
+        // Non-sector operation, set error flag
+        D_8009896C |= 0x4;
+    }
+    
+    // Set error flag and set up callbacks
+    D_800988C0 = 0x80;
+    CdReadyCallback(0);
+}
 
 // CD-ROM read initialization function (variant with memory clearing)
 // Original MIPS function: func_8001CF98
@@ -782,7 +892,89 @@ void func_8001CF98(u32 index) {
     func_8001D2BC(6, D_80098814, D_80098A98);
 }
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001D078);
+// CD-ROM sector reading and error handling callback function
+// Original MIPS function: func_8001D078
+// This function handles CD-ROM sector reading operations and error conditions
+void func_8001D078(u32 operation) {
+    u32 sectorIndex;
+    u32 sectorOffset;
+    u32* sectorBuffer;
+    u32 sectorValue;
+    u32 convertedPos;
+    
+    // Mask operation to 8 bits
+    operation = operation & 0xFF;
+    
+    // Reset timer
+    D_80098828 = 0;
+    
+    if (operation == 1) {
+        // Sector reading operation
+        sectorIndex = D_80098998;
+        
+        // Check if sector is already marked as read
+        if (*(u8*)(D_80098B38 + sectorIndex) == 0) {
+            // Sector not read yet, perform reading operation
+            sectorOffset = sectorIndex << 11;  // Multiply by 2048 (sector size)
+            sectorBuffer = (u32*)(D_800B5DB0 + sectorOffset);
+            
+            // Read sector from CD-ROM
+            CdGetSector(sectorBuffer, 3);
+            
+            // Convert position back to integer for verification
+            convertedPos = CdPosToInt(sectorBuffer);
+            
+            // Check if converted position matches expected value
+            if (convertedPos == D_80098A7C) {
+                // Position matches, increment sector value
+                D_80098A7C = convertedPos + 1;
+                
+                // Read next sector
+                CdGetSector(sectorBuffer, 3);
+                
+                // Mark sector as read
+                *(u8*)(D_80098B38 + sectorIndex) = 1;
+                
+                // Increment sector index
+                D_80098998 = sectorIndex + 1;
+                
+                // Wrap around if index reaches 10
+                if (D_80098998 == 10) {
+                    D_80098998 = 0;
+                }
+                
+                // Update callback pointer
+                D_8009881C = D_8009881C - 0x800;
+                
+                // Check if callback pointer is still valid
+                if (D_8009881C > 0) {
+                    // Continue with normal operation
+                } else {
+                    // Reset system and set up callbacks
+                    CdReadyCallback(0);
+                    func_8001D254(9, 0, D_80098A98);
+                    CdSyncCallback(func_8001CC08);
+                }
+            } else {
+                // Position mismatch, set error flag
+                D_8009896C |= 0x40;
+            }
+        } else {
+            // Sector already read, set error flag
+            D_800988C0 = 0x80;
+            D_8009896C |= 0x1;
+        }
+    } else {
+        // Non-sector operation, set different error flag
+        D_8009896C |= 0x4;
+        D_800988C0 = 0x80;
+    }
+    
+    // Set up callbacks for error conditions
+    CdReadyCallback(0);
+    CdSyncCallback(func_8001CC08);
+    func_8001D254(9, 0, D_80098A98);
+}
 
 // Robust CD-ROM command execution function
 // Original MIPS function: func_8001D254
