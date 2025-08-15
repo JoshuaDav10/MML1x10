@@ -89,6 +89,11 @@ extern u32 D_800A3A40[];
 extern u16 D_800AD142;
 extern u16 D_800AD146;
 extern u16 D_800AD14E;
+extern u32 D_800AD140;
+extern u8 D_800AD154;
+extern u8 D_800AD155;
+extern u8 D_800AD156;
+extern u8 D_800AD157;
 extern void* unknown_Cd_strucptr;
 
 /* Game work and input variables */
