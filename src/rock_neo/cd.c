@@ -510,7 +510,59 @@ void func_8001C95C(void) {
     }
 }
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001CAAC);
+// CD-ROM memory cleanup and defragmentation function
+// Original MIPS function: func_8001CAAC
+// This function compacts CD-ROM memory by moving data blocks and resetting pointers
+void func_8001CAAC(void) {
+    u32* sourcePtr;
+    u32* destPtr;
+    u32* currentPtr;
+    u32 temp1, temp2, temp3;
+    
+    // Get destination pointer (D_800A3A40)
+    destPtr = D_800A3A40;
+    
+    // Check if there's data to move
+    if (*destPtr != 0) {
+        // Set source pointer 12 bytes ahead
+        sourcePtr = (u32*)((u8*)destPtr + 0xC);
+        
+        // Loop to move data blocks
+        do {
+            // Load 3 words from source
+            temp1 = sourcePtr[1];  // offset 4
+            temp2 = sourcePtr[2];  // offset 8
+            temp3 = sourcePtr[3];  // offset 12
+            
+            // Write to destination
+            *destPtr = temp1;
+            
+            // Advance destination pointer by 16 bytes
+            destPtr = (u32*)((u8*)destPtr + 0x10);
+            
+            // Write remaining data to source-relative positions
+            sourcePtr[-2] = temp1;  // offset -8
+            sourcePtr[-1] = temp2;  // offset -4
+            sourcePtr[0] = temp3;   // offset 0
+            
+            // Check if more data exists
+            if (*destPtr != 0) {
+                // Advance source pointer by 16 bytes
+                sourcePtr = (u32*)((u8*)sourcePtr + 0x10);
+            }
+        } while (*destPtr != 0);
+    }
+    
+    // Reset destination pointer to zero
+    *destPtr = 0;
+    
+    // Reset global state variables
+    D_800989C8 = 0;
+    D_800989C4 = 0;
+    
+    // Move CD structure pointer backward by 16 bytes
+    unknown_Cd_strucptr = (void*)((u8*)unknown_Cd_strucptr - 0x10);
+}
 
 // CD-ROM callback setup and initialization function
 // Original MIPS function: func_8001CB30
@@ -528,9 +580,59 @@ void func_8001CB30(void) {
     func_8001D254(9, 0, &D_80098A98);
 }
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001CB7C);
+// CD-ROM system initialization and audio setup function
+// Original MIPS function: func_8001CB7C
+// This function initializes the CD-ROM system and sets up audio parameters
+void func_8001CB7C(void) {
+    s16 audioIndex;
+    
+    // Loop through audio indices from 0x7F down to 0
+    for (audioIndex = 0x7F; audioIndex > 0; audioIndex--) {
+        // Call audio setup function for each index
+        func_8001D394(audioIndex & 0xFF);
+    }
+    
+    // Set hardware register flag (bit 15)
+    D_800AD142 |= 0x8000;
+    
+    // Clear CD-ROM status flag
+    D_8009896C = 0;
+    
+    // Set CD-ROM ready callback to NULL (disable it)
+    CdReadyCallback(0);
+    
+    // Set CD-ROM sync callback to our handler function
+    CdSyncCallback(func_8001CC08);
+    
+    // Initialize CD-ROM system with command 9, parameter 0, and status buffer
+    func_8001D254(9, 0, &D_80098A98);
+    
+    // Clear system state variables
+    D_800988D0 = 0;
+    D_80098AB8 = 0;
+}
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001CC08);
+// CD-ROM sync callback handler function
+// Original MIPS function: func_8001CC08
+// This function handles CD-ROM synchronization results and updates system state
+void func_8001CC08(u32 syncResult) {
+    // Disable the CD-ROM sync callback
+    CdSyncCallback(0);
+    
+    // Mask the sync result to 8 bits
+    syncResult = syncResult & 0xFF;
+    
+    // Check if sync was successful (result == 2)
+    if (syncResult == 2) {
+        // Success: Set system ready flag and clear error flag
+        D_80098964 = 1;
+        D_800988C0 = 0;
+    } else {
+        // Failure: Set error flag and update status register
+        D_800988C0 = 0x80;
+        D_8009896C |= 0x8;
+    }
+}
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001CC7C);
 
@@ -561,11 +663,88 @@ void func_8001D254(u32 command, u32 param1, void* param2) {
     } while (1);
 }
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001D2BC);
+// Blocking CD-ROM command execution function
+// Original MIPS function: func_8001D2BC
+// This function ensures CD-ROM synchronization and blocking command execution succeed
+// Similar to func_8001D254 but uses CdControlB (blocking) instead of CdControl (non-blocking)
+void func_8001D2BC(u32 command, u32 param1, void* param2) {
+    // First loop: Wait for CD-ROM synchronization to succeed
+    do {
+        // Try to sync with CD-ROM, passing param2 as the status buffer
+        if (CdSync(1, param2) != 0) {
+            break;  // Success, exit loop
+        }
+    } while (1);
+    
+    // Second loop: Wait for blocking CD-ROM command to succeed
+    do {
+        // Execute blocking CD-ROM command with masked command value
+        if (CdControlB(command & 0xFF, param1, param2) != 0) {
+            break;  // Success, exit loop
+        }
+    } while (1);
+}
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001D324);
+// CD-ROM state management and timing control function
+// Original MIPS function: func_8001D324
+// This function manages CD-ROM state transitions and timing
+void func_8001D324(u32 newState) {
+    u8 currentState;
+    u8 newStateMasked;
+    u8 currentStateMasked;
+    
+    // Save parameter and get current state
+    currentState = D_800988EC;
+    newStateMasked = newState & 0xFF;
+    currentStateMasked = currentState & 0xFF;
+    
+    // Reset the timer
+    D_80098828 = 0;
+    
+    // Early return if state hasn't changed (low 8 bits match)
+    if (currentStateMasked == newStateMasked) {
+        return;
+    }
+    
+    // Set timer to 2 if high bit (0x80) has changed
+    if ((currentState & 0x80) != (newState & 0x80)) {
+        D_80098828 = 2;
+    }
+    
+    // Update the global state variable
+    D_800988EC = newState;
+    
+    // Call blocking CD-ROM command function with command 0xE
+    func_8001D2BC(0xE, D_800988EC, &D_80098A98);
+}
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001D394);
+// Audio SPU register control function
+// Original MIPS function: func_8001D394
+// This function controls SPU (Sound Processing Unit) registers based on hardware flags
+void func_8001D394(u32 audioValue) {
+    u16 hardwareFlag;
+    
+    // Check hardware flag (bit 0 of D_800AD142)
+    hardwareFlag = D_800AD142 & 0x1;
+    
+    // Set SPU register 0 (D_800AD154)
+    D_800AD154 = audioValue;
+    
+    if (hardwareFlag != 0) {
+        // Flag set: Set all registers to the audio value
+        D_800AD155 = audioValue;
+        D_800AD156 = audioValue;
+        D_800AD157 = audioValue;
+    } else {
+        // Flag clear: Set registers 1,3 to 0, register 2 to audio value
+        D_800AD155 = 0;
+        D_800AD156 = audioValue;
+        D_800AD157 = 0;
+    }
+    
+    // Call audio mixing function with SPU buffer pointer
+    CdMix((void*)(D_800AD140 + 0x14));
+}
 
 // CD-ROM command queue enqueue function
 // Original MIPS function: func_8001D414
