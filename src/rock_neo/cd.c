@@ -788,9 +788,130 @@ void func_8001D468(u32 param1, u32 param2) {
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001D494);
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001D58C);
+// CD-ROM command structure builder function
+// Original MIPS function: func_8001D58C
+// This function builds CD-ROM command structures and advances the command queue
+void func_8001D58C(u32 address) {
+    u32 highBits, middleBits, lowBits;
+    u32 tableIndex, offset1, offset2;
+    u32* table1Ptr, *table2Ptr;
+    u32 value1, value2, finalValue;
+    void* cdStructPtr;
+    
+    // Extract high 2 bits (bits 28-29) for table index
+    highBits = (address >> 28) & 0x3;
+    
+    // Calculate table offset
+    tableIndex = highBits * 4;  // 4 bytes per entry
+    
+    // Get current CD structure pointer
+    cdStructPtr = unknown_Cd_strucptr;
+    
+    // Set command type to 4
+    ((u32*)cdStructPtr)[0] = 4;
+    
+    // Store address in global variable
+    D_800989B8 = address;
+    
+    // Extract middle 16 bits (bits 4-19) for offset calculation
+    middleBits = (address << 4) >> 20;
+    
+    // Look up value from first table (D_80088F9C)
+    table1Ptr = (u32*)(D_80088F9C + tableIndex);
+    value1 = table1Ptr[middleBits];
+    
+    // Store first value in structure
+    ((u32*)cdStructPtr)[1] = value1;
+    
+    // Check high bit (bit 30) for flag
+    if (address & 0x40000000) {
+        // Look up value from second table (D_80088EF8)
+        table2Ptr = (u32*)(D_80088EF8 + tableIndex);
+        value2 = table2Ptr[middleBits];
+        
+        // Extract low 16 bits for final offset
+        lowBits = address & 0xFFFF;
+        
+        // Calculate final address and load value
+        finalValue = value2 + (lowBits << 3);
+        value1 = *(u32*)finalValue;
+        
+        // Store second value in structure
+        ((u32*)cdStructPtr)[2] = value1;
+        
+        // Load additional value and combine with flag
+        value2 = *(u32*)(finalValue + 4);
+        value2 |= 0x40000000;  // Set high bit flag
+        
+        // Store third value in structure
+        ((u32*)cdStructPtr)[3] = value2;
+    } else {
+        // No flag set, use simpler logic
+        table2Ptr = (u32*)(D_80088EF8 + tableIndex);
+        value2 = table2Ptr[middleBits];
+        
+        lowBits = address & 0xFFFF;
+        finalValue = value2 + (lowBits << 3);
+        value1 = *(u32*)finalValue;
+        
+        ((u32*)cdStructPtr)[2] = value1;
+        ((u32*)cdStructPtr)[3] = *(u32*)(finalValue + 4);
+    }
+    
+    // Store values from D_80098A84 structure
+    D_800989BC = ((u32*)D_80098A84)[2];  // offset 8
+    D_800989C0 = ((u32*)D_80098A84)[3];  // offset 12
+    
+    // Advance CD structure pointer by 16 bytes
+    unknown_Cd_strucptr = (void*)((u8*)cdStructPtr + 0x10);
+}
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001D648);
+// CD-ROM address calculation and lookup function
+// Original MIPS function: func_8001D648
+// This function performs complex address calculations using multiple lookup tables
+void func_8001D648(u32 address) {
+    u32 highBits, middleBits, lowBits;
+    u32 tableIndex, offset1, offset2;
+    u32* table1Ptr, *table2Ptr;
+    u32 value1, value2, finalOffset;
+    
+    // Extract high 4 bits (bits 28-31) for table index
+    highBits = (address >> 28) & 0xF;
+    
+    // Extract middle 20 bits (bits 4-23) for offset calculation
+    middleBits = (address << 4) >> 20;
+    
+    // Extract low 16 bits (bits 0-15) for final offset
+    lowBits = address & 0xFFFF;
+    
+    // Calculate table offsets
+    tableIndex = highBits * 4;  // 4 bytes per entry
+    
+    // Look up values from first table (D_80088F9C)
+    table1Ptr = (u32*)(D_80088F9C + tableIndex);
+    value1 = *table1Ptr;
+    
+    // Look up values from second table (D_80088EF8)
+    table2Ptr = (u32*)(D_80088EF8 + tableIndex);
+    value2 = *table2Ptr;
+    
+    // Calculate offsets
+    offset1 = value1 + middleBits;
+    offset2 = value2 + middleBits;
+    
+    // Load values from calculated addresses
+    value1 = *(u32*)offset1;
+    value2 = *(u32*)offset2;
+    
+    // Calculate final offset: (value1 * 3) * 4 + lowBits
+    finalOffset = ((value1 * 3) << 2) + lowBits;
+    
+    // Look up final value from D_80082CD0 table
+    value2 = D_80082CD0[finalOffset >> 2];  // Divide by 4 since it's a u32 array
+    
+    // Call function with calculated address
+    func_8001D6D8(value2 + (value2 & 0xFFFFFF));
+}
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001D6D8);
 
