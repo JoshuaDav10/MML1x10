@@ -29,7 +29,7 @@ unknown_t func_8005DF4C();
 unknown_t func_80063EF0();
 unknown_t func_8001B314();
 unknown_t func_8001B33C();
-unknown_t func_8001D494(unknown_t, unknown_t, unknown_t);
+void func_8001D494(u32, u32, u32);
 unknown_t Sce_flag_off(unknown_t);
 unknown_t func_80063BA8();
 unknown_t func_800665E8();
