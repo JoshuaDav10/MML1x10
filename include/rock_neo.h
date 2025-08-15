@@ -9,7 +9,9 @@
 
 /* Symbols with unknown compile units */
 unknown_t func_80063FC0(unknown_t, unknown_t);
-unknown_t func_8001D7AC(unknown_t);
+void func_8001D7AC(u32);
+void func_8001CC08(u32);
+void func_8001D254(u32, u32, void*);
 unknown_t func_80012E98(unknown_t);
 unknown_t func_80031AA4();
 unknown_t func_80016D64();
@@ -74,6 +76,7 @@ extern u32 D_800989B8;
 extern u32 D_80098A84;
 extern u32 D_80087680[];
 extern u32 D_80087670[];
+extern u32 D_80082CD0[];
 extern u8 D_800988DC;
 extern u32 D_80098998;
 extern u16 D_80098994;
@@ -85,6 +88,7 @@ extern u32 D_80098968;
 extern u32 D_800A3A40[];
 extern u16 D_800AD142;
 extern u16 D_800AD146;
+extern u16 D_800AD14E;
 extern void* unknown_Cd_strucptr;
 
 /* Game work and input variables */
