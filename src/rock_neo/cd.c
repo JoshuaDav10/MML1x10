@@ -300,11 +300,144 @@ void func_8001B858(void) {
     }
 }
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001B89C);
+// Very complex state machine function for CD-ROM system
+// Original MIPS function: func_8001B89C
+void func_8001B89C(void) {
+    u32 state;
+    u8 tempValue;
+    u32 timerValue;
+    u32* ptr;
+    u32 temp1, temp2;
+    u16 hardwareValue;
+    s16 counter;
+    u8 stackData[2];
+    u32 addr1, value1, value2;
+    
+    // Get current state from global variable
+    state = D_800989C4;
+    
+    if (state == 0) {
+        // State 0: Check system readiness
+        tempValue = D_80098964;
+        
+        if (tempValue == 0) {
+            // System not ready, call initialization function
+            func_8001CB7C();
+        }
+        
+        // Set flag and increment state
+        D_800988D0 = 2;
+        D_800989C4 = state + 1;
+        
+    } else if (state == 1) {
+        // State 1: Check system status and set hardware
+        tempValue = D_80098964;
+        
+        if (tempValue != 0) {
+            // System is ready, set hardware register and call function
+            D_800AD14E = 0x7F;
+            func_8001D324(0xC8);
+            
+            // Increment state to 2
+            D_800989C4 = state + 1;
+        }
+        
+    } else if (state == 2) {
+        // State 2: Handle countdown timer and complex data processing
+        timerValue = D_80098828;
+        
+        if (timerValue != 0) {
+            // Decrement timer
+            D_80098828 = timerValue - 1;
+        } else {
+            // Timer expired, perform complex data processing
+            D_800988C0 = 0;
+            D_8009896C = 0;
+            D_80098964 = D_800988C0;
+            
+            if (D_80098B42 == 2) {
+                // Complex data structure manipulation
+                ptr = (u32*)D_80098A84;
+                
+                // Store values on stack for function calls
+                stackData[0] = 1;
+                stackData[1] = ptr[0xB] & 0x1F;  // Offset 0xB, mask with 0x1F
+                
+                // Complex pointer arithmetic
+                temp1 = ptr[1];  // Offset 4
+                temp2 = ptr[2];  // Offset 8
+                
+                // Calculate address: (temp1 * 3 * 4) + (temp2 & 0xFFFFFF)
+                addr1 = ((temp1 * 3) << 2) + (temp2 & 0xFFFFFF);
+                value1 = *(u32*)(0x80082CD0 + ((temp1 * 3) << 2)) + (temp2 & 0xFFFFFF);
+                
+                // Calculate second address
+                temp1 = ptr[1];  // Offset 4
+                temp2 = ptr[3];  // Offset 0xC
+                value2 = *(u32*)(0x80082CD0 + ((temp1 * 3) << 2)) + (temp2 & 0xFFFFFF);
+                
+                // Store calculated values
+                D_800989B0 = value2;
+                
+                // Call CD-ROM functions
+                CdIntToPos(value1, (u8*)stackData);
+                
+                func_8001D2BC(0xD, (u8*)stackData, &D_80098A98);
+                func_8001D2BC(0x2, (u8*)stackData, &D_80098A98);
+                func_8001D2BC(0x1B, 0, &D_80098A98);
+                
+                // Update variables
+                D_80098828 = 0;
+                D_80098AB8 = D_80098A98;
+            }
+            
+            // Increment state to 3
+            D_800989C4 = state + 1;
+        }
+        
+    } else if (state == 3) {
+        // State 3: Handle bit checking and timer incrementing
+        tempValue = D_80098AB8;
+        
+        if ((tempValue & 0x20) == 0) {
+            // Bit not set, increment timer
+            timerValue = D_80098828;
+            D_80098828 = timerValue + 1;
+            
+            if (timerValue + 1 >= 0x96) {  // 150
+                // Timer reached target, set system flag
+                D_8009896C |= 0x10;
+            }
+        } else {
+            // Bit is set, run counter loop
+            counter = 0;
+            do {
+                func_8001D394(counter & 0xFF);
+                counter++;
+            } while (counter < 0x7F);
+            
+            // Clear hardware register bit and call function
+            D_80098B42 = 0;
+            hardwareValue = D_800AD142;
+            D_800AD142 = hardwareValue & 0x7FFF;  // Clear bit 0x8000
+            func_8001CAAC();
+        }
+    }
+    // For any other state, do nothing
+}
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001BB4C);
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001C7F0);
+// State increment and CD-ROM callback cleanup function
+// Original MIPS function: func_8001C7F0
+void func_8001C7F0(void) {
+    // Increment the CD-ROM system state variable
+    D_800989C4 = D_800989C4 + 1;
+    
+    // Disable CD-ROM sync callback by setting it to NULL
+    // This cleans up any previous callback function
+    CdSyncCallback(0);
+}
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001C824);
 
@@ -379,7 +512,21 @@ void func_8001C95C(void) {
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001CAAC);
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001CB30);
+// CD-ROM callback setup and initialization function
+// Original MIPS function: func_8001CB30
+void func_8001CB30(void) {
+    // Clear the CD-ROM status flag
+    D_8009896C = 0;
+    
+    // Set CD-ROM ready callback to NULL (disable it)
+    CdReadyCallback(0);
+    
+    // Set CD-ROM sync callback to our handler function
+    CdSyncCallback(func_8001CC08);
+    
+    // Call function to initialize CD-ROM with command 9, parameter 0, and status buffer
+    func_8001D254(9, 0, &D_80098A98);
+}
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001CB7C);
 
@@ -393,7 +540,26 @@ INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001CF98);
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001D078);
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001D254);
+// Robust CD-ROM command execution function
+// Original MIPS function: func_8001D254
+// This function ensures CD-ROM synchronization and command execution succeed
+void func_8001D254(u32 command, u32 param1, void* param2) {
+    // First loop: Wait for CD-ROM synchronization to succeed
+    do {
+        // Try to sync with CD-ROM, passing param2 as the status buffer
+        if (CdSync(1, param2) != 0) {
+            break;  // Success, exit loop
+        }
+    } while (1);
+    
+    // Second loop: Wait for CD-ROM command to succeed
+    do {
+        // Execute CD-ROM command with masked command value
+        if (CdControl(command & 0xFF, param1, param2) != 0) {
+            break;  // Success, exit loop
+        }
+    } while (1);
+}
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001D2BC);
 
@@ -401,11 +567,45 @@ INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001D324);
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001D394);
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001D414);
+// CD-ROM command queue enqueue function
+// Original MIPS function: func_8001D414
+// This function adds a command to the CD-ROM command queue
+void func_8001D414(u32 param1, u32 param2) {
+    // Get current CD-ROM structure pointer
+    void* cdStructPtr = unknown_Cd_strucptr;
+    
+    // Write command data to the structure
+    ((u32*)cdStructPtr)[0] = 4;           // Command type/identifier
+    ((u32*)cdStructPtr)[1] = param1;      // First parameter
+    ((u32*)cdStructPtr)[2] = param2;      // Second parameter
+    
+    // Advance pointer by 16 bytes (4 words) to next queue position
+    cdStructPtr = (void*)((u8*)cdStructPtr + 0x10);
+    
+    // Update global pointer to next available position
+    unknown_Cd_strucptr = cdStructPtr;
+}
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", Cd_read_comb);
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001D468);
+// CD-ROM command queue enqueue function (type 1)
+// Original MIPS function: func_8001D468
+// This function adds a different type of command to the CD-ROM command queue
+void func_8001D468(u32 param1, u32 param2) {
+    // Get current CD-ROM structure pointer
+    void* cdStructPtr = unknown_Cd_strucptr;
+    
+    // Write command data to the structure
+    ((u32*)cdStructPtr)[0] = 1;           // Command type/identifier (different from func_8001D414)
+    ((u32*)cdStructPtr)[1] = param1;      // First parameter
+    ((u32*)cdStructPtr)[2] = param2;      // Second parameter
+    
+    // Advance pointer by 16 bytes (4 words) to next queue position
+    cdStructPtr = (void*)((u8*)cdStructPtr + 0x10);
+    
+    // Update global pointer to next available position
+    unknown_Cd_strucptr = cdStructPtr;
+}
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001D494);
 
@@ -415,8 +615,41 @@ INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001D648);
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001D6D8);
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001D7AC);
+// Table lookup and function call function
+// Original MIPS function: func_8001D7AC
+// This function looks up a value in a table and calls another function with it
+void func_8001D7AC(u32 index) {
+    // Calculate array offset: index * 12 (3 * 4 bytes)
+    u32 offset = index * 12;
+    
+    // Load value from table D_80082CD0 at calculated offset
+    u32 tableValue = D_80082CD0[offset >> 2];  // Divide by 4 since it's a u32 array
+    
+    // Call function with the loaded value
+    func_8001D6D8(tableValue);
+}
 
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", func_8001D7E4);
+// CD-ROM structure pointer synchronization function
+// Original MIPS function: func_8001D7E4
+// This function waits for the CD-ROM structure pointer to reach a specific value
+void func_8001D7E4(void) {
+    void* cdStructPtr;
+    void* targetPtr;
+    
+    // Get current CD-ROM structure pointer and target pointer
+    cdStructPtr = unknown_Cd_strucptr;
+    targetPtr = D_800A3A40;
+    
+    // If pointers already match, no need to wait
+    if (cdStructPtr == targetPtr) {
+        return;
+    }
+    
+    // Wait for pointers to match by calling function in a loop
+    do {
+        func_80012E98(1);
+        cdStructPtr = unknown_Cd_strucptr;
+    } while (cdStructPtr != targetPtr);
+}
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/cd", Cd_read_sync2);
