@@ -97,6 +97,8 @@ void func_8001D078(void) {
 
 // Function: func_8001D324
 // Purpose: CD-ROM command execution
+// COMMENTED OUT - Duplicate definition with INCLUDE_ASM file
+/*
 void func_8001D324(u32 command) {
     // Execute CD-ROM command
     u8 param[8] = {0};
@@ -108,9 +110,12 @@ void func_8001D324(u32 command) {
     // Execute command
     CdControl(command, param, result);
 }
+*/
 
 // Function: func_8001D494
 // Purpose: CD-ROM data processing
+// COMMENTED OUT - Duplicate definition with INCLUDE_ASM file
+/*
 void func_8001D494(u32 dataType, u32 offset, u32 size) {
     // Process CD-ROM data based on type
     switch (dataType) {
@@ -131,9 +136,12 @@ void func_8001D494(u32 dataType, u32 offset, u32 size) {
             break;
     }
 }
+*/
 
 // Function: func_8001D58C
 // Purpose: CD-ROM state management
+// COMMENTED OUT - Duplicate definition with INCLUDE_ASM file
+/*
 void func_8001D58C(void) {
     // Manage CD-ROM system state
     u32 state = D_800989C4;
@@ -143,6 +151,7 @@ void func_8001D58C(void) {
         D_800989C4 = (state + 1) % 5;
     }
 }
+*/
 
 // Function: func_8001D6D8
 // Purpose: CD-ROM search operations
