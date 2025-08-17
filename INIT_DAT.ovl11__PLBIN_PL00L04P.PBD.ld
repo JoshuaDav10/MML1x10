@@ -1,0 +1,38 @@
+SECTIONS
+{
+    __romPos = 0;
+    _gp = 0x0;
+    INIT_DAT_PL00L04P_11_header_ROM_START = __romPos;
+    INIT_DAT_PL00L04P_11_header_VRAM = ADDR(.INIT_DAT_PL00L04P_11_header);
+    .INIT_DAT_PL00L04P_11_header : AT(INIT_DAT_PL00L04P_11_header_ROM_START) SUBALIGN(16)
+    {
+        INIT_DAT_PL00L04P_11_header_DATA_START = .;
+        INIT_DAT_PL00L04P_11_header_s = .;
+        build/asm/INIT_DAT/ovl11__PLBIN_PL00L04P.PBD/INIT_DAT_PL00L04P_11_header.s.o(.data);
+        INIT_DAT_PL00L04P_11_header_DATA_END = .;
+        INIT_DAT_PL00L04P_11_header_DATA_SIZE = ABSOLUTE(INIT_DAT_PL00L04P_11_header_DATA_END - INIT_DAT_PL00L04P_11_header_DATA_START);
+    }
+    __romPos += SIZEOF(.INIT_DAT_PL00L04P_11_header);
+    INIT_DAT_PL00L04P_11_header_ROM_END = __romPos;
+    INIT_DAT_PL00L04P_11_header_VRAM_END = .;
+
+    INIT_DAT_PL00L04P_11_ROM_START = __romPos;
+    INIT_DAT_PL00L04P_11_VRAM = ADDR(.INIT_DAT_PL00L04P_11);
+    .INIT_DAT_PL00L04P_11 0x800FDF00 : AT(INIT_DAT_PL00L04P_11_ROM_START) SUBALIGN(4)
+    {
+        INIT_DAT_PL00L04P_11_DATA_START = .;
+        PL00L04P_11_data__s = .;
+        build/asm/INIT_DAT/ovl11__PLBIN_PL00L04P.PBD/data/PL00L04P_11.data.s.o(.data);
+        INIT_DAT_PL00L04P_11_DATA_END = .;
+        INIT_DAT_PL00L04P_11_DATA_SIZE = ABSOLUTE(INIT_DAT_PL00L04P_11_DATA_END - INIT_DAT_PL00L04P_11_DATA_START);
+    }
+    __romPos += SIZEOF(.INIT_DAT_PL00L04P_11);
+    __romPos = ALIGN(__romPos, 16);
+    INIT_DAT_PL00L04P_11_ROM_END = __romPos;
+    INIT_DAT_PL00L04P_11_VRAM_END = .;
+
+    /DISCARD/ :
+    {
+        *(*);
+    }
+}

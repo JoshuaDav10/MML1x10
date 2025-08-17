@@ -1,0 +1,38 @@
+SECTIONS
+{
+    __romPos = 0;
+    _gp = 0x0;
+    ST06_02_PL00S06M_43_header_ROM_START = __romPos;
+    ST06_02_PL00S06M_43_header_VRAM = ADDR(.ST06_02_PL00S06M_43_header);
+    .ST06_02_PL00S06M_43_header : AT(ST06_02_PL00S06M_43_header_ROM_START) SUBALIGN(16)
+    {
+        ST06_02_PL00S06M_43_header_DATA_START = .;
+        ST06_02_PL00S06M_43_header_s = .;
+        build/asm/ST06_02/ovl43__PLBIN_PL00S06M.PBD/ST06_02_PL00S06M_43_header.s.o(.data);
+        ST06_02_PL00S06M_43_header_DATA_END = .;
+        ST06_02_PL00S06M_43_header_DATA_SIZE = ABSOLUTE(ST06_02_PL00S06M_43_header_DATA_END - ST06_02_PL00S06M_43_header_DATA_START);
+    }
+    __romPos += SIZEOF(.ST06_02_PL00S06M_43_header);
+    ST06_02_PL00S06M_43_header_ROM_END = __romPos;
+    ST06_02_PL00S06M_43_header_VRAM_END = .;
+
+    ST06_02_PL00S06M_43_ROM_START = __romPos;
+    ST06_02_PL00S06M_43_VRAM = ADDR(.ST06_02_PL00S06M_43);
+    .ST06_02_PL00S06M_43 0x800E9600 : AT(ST06_02_PL00S06M_43_ROM_START) SUBALIGN(4)
+    {
+        ST06_02_PL00S06M_43_DATA_START = .;
+        PL00S06M_43_data__s = .;
+        build/asm/ST06_02/ovl43__PLBIN_PL00S06M.PBD/data/PL00S06M_43.data.s.o(.data);
+        ST06_02_PL00S06M_43_DATA_END = .;
+        ST06_02_PL00S06M_43_DATA_SIZE = ABSOLUTE(ST06_02_PL00S06M_43_DATA_END - ST06_02_PL00S06M_43_DATA_START);
+    }
+    __romPos += SIZEOF(.ST06_02_PL00S06M_43);
+    __romPos = ALIGN(__romPos, 16);
+    ST06_02_PL00S06M_43_ROM_END = __romPos;
+    ST06_02_PL00S06M_43_VRAM_END = .;
+
+    /DISCARD/ :
+    {
+        *(*);
+    }
+}

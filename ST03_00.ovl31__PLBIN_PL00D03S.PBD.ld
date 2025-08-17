@@ -1,0 +1,38 @@
+SECTIONS
+{
+    __romPos = 0;
+    _gp = 0x0;
+    ST03_00_PL00D03S_31_header_ROM_START = __romPos;
+    ST03_00_PL00D03S_31_header_VRAM = ADDR(.ST03_00_PL00D03S_31_header);
+    .ST03_00_PL00D03S_31_header : AT(ST03_00_PL00D03S_31_header_ROM_START) SUBALIGN(16)
+    {
+        ST03_00_PL00D03S_31_header_DATA_START = .;
+        ST03_00_PL00D03S_31_header_s = .;
+        build/asm/ST03_00/ovl31__PLBIN_PL00D03S.PBD/ST03_00_PL00D03S_31_header.s.o(.data);
+        ST03_00_PL00D03S_31_header_DATA_END = .;
+        ST03_00_PL00D03S_31_header_DATA_SIZE = ABSOLUTE(ST03_00_PL00D03S_31_header_DATA_END - ST03_00_PL00D03S_31_header_DATA_START);
+    }
+    __romPos += SIZEOF(.ST03_00_PL00D03S_31_header);
+    ST03_00_PL00D03S_31_header_ROM_END = __romPos;
+    ST03_00_PL00D03S_31_header_VRAM_END = .;
+
+    ST03_00_PL00D03S_31_ROM_START = __romPos;
+    ST03_00_PL00D03S_31_VRAM = ADDR(.ST03_00_PL00D03S_31);
+    .ST03_00_PL00D03S_31 0x800DBA00 : AT(ST03_00_PL00D03S_31_ROM_START) SUBALIGN(4)
+    {
+        ST03_00_PL00D03S_31_DATA_START = .;
+        PL00D03S_31_data__s = .;
+        build/asm/ST03_00/ovl31__PLBIN_PL00D03S.PBD/data/PL00D03S_31.data.s.o(.data);
+        ST03_00_PL00D03S_31_DATA_END = .;
+        ST03_00_PL00D03S_31_DATA_SIZE = ABSOLUTE(ST03_00_PL00D03S_31_DATA_END - ST03_00_PL00D03S_31_DATA_START);
+    }
+    __romPos += SIZEOF(.ST03_00_PL00D03S_31);
+    __romPos = ALIGN(__romPos, 16);
+    ST03_00_PL00D03S_31_ROM_END = __romPos;
+    ST03_00_PL00D03S_31_VRAM_END = .;
+
+    /DISCARD/ :
+    {
+        *(*);
+    }
+}

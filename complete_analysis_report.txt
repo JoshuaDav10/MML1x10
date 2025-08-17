@@ -1,0 +1,29 @@
+=== COMPLETE ASSEMBLY ANALYSIS REPORT ===
+Total Functions Found: 8507
+Total Jump Tables: 0
+Total Global Variables: 1
+
+=== FUNCTION STATISTICS ===
+Valid Functions with Boundaries: 1539
+Total Code Size: 154,583,956 bytes (150960.9 KB)
+Size Distribution:
+  0-99 bytes: 1295 functions
+  100-199 bytes: 168 functions
+  200-299 bytes: 43 functions
+  300-399 bytes: 18 functions
+  400-499 bytes: 1 functions
+  500-599 bytes: 3 functions
+  600-699 bytes: 1 functions
+  700-799 bytes: 1 functions
+  900-999 bytes: 1 functions
+  1000-1099 bytes: 3 functions
+  1200-1299 bytes: 1 functions
+  8500-8599 bytes: 1 functions
+  2137800-2137899 bytes: 1 functions
+  17561200-17561299 bytes: 1 functions
+  134782700-134782799 bytes: 1 functions
+
+=== JUMP TABLE ANALYSIS ===
+
+=== GLOBAL VARIABLE ANALYSIS ===
+Total D_ symbols: 1

@@ -1,15 +1,57 @@
-*.o
-*.ld
+# Build artifacts
 build/
-disks/
-asm/
-assets/
-logs/
-ctx.c
-.vscode/settings.json
+*.o
+*.elf
+*.map
+*.bin
+
+# Python cache
 __pycache__/
-generated.*
-bin/psyq
+*.pyc
+*.pyo
+*.pyd
+
+# Temporary files
+*.tmp
+*.log
+*.bak
+*.swp
+*.swo
+*~
+
+# Lock files
+*.lock
+*.rep
+
+# IDE files
+.vscode/
+.idea/
+*.sublime-*
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Backup files
+*.orig
+*.rej
+*.old
+
+# Large binary files
+*.iso
+*.img
+*.rom
+
+# Virtual environments
 venv/
-reference/
-reference/
+env/
+.venv/
+
+# Node modules (if any)
+node_modules/
+
+# Python packages
+*.egg-info/
+dist/
+build/

@@ -1,0 +1,38 @@
+SECTIONS
+{
+    __romPos = 0;
+    _gp = 0x0;
+    ST1A_02_PL00D45M_17_header_ROM_START = __romPos;
+    ST1A_02_PL00D45M_17_header_VRAM = ADDR(.ST1A_02_PL00D45M_17_header);
+    .ST1A_02_PL00D45M_17_header : AT(ST1A_02_PL00D45M_17_header_ROM_START) SUBALIGN(16)
+    {
+        ST1A_02_PL00D45M_17_header_DATA_START = .;
+        ST1A_02_PL00D45M_17_header_s = .;
+        build/asm/ST1A_02/ovl17__PLBIN_PL00D45M.PBD/ST1A_02_PL00D45M_17_header.s.o(.data);
+        ST1A_02_PL00D45M_17_header_DATA_END = .;
+        ST1A_02_PL00D45M_17_header_DATA_SIZE = ABSOLUTE(ST1A_02_PL00D45M_17_header_DATA_END - ST1A_02_PL00D45M_17_header_DATA_START);
+    }
+    __romPos += SIZEOF(.ST1A_02_PL00D45M_17_header);
+    ST1A_02_PL00D45M_17_header_ROM_END = __romPos;
+    ST1A_02_PL00D45M_17_header_VRAM_END = .;
+
+    ST1A_02_PL00D45M_17_ROM_START = __romPos;
+    ST1A_02_PL00D45M_17_VRAM = ADDR(.ST1A_02_PL00D45M_17);
+    .ST1A_02_PL00D45M_17 0x800E9600 : AT(ST1A_02_PL00D45M_17_ROM_START) SUBALIGN(4)
+    {
+        ST1A_02_PL00D45M_17_DATA_START = .;
+        PL00D45M_17_data__s = .;
+        build/asm/ST1A_02/ovl17__PLBIN_PL00D45M.PBD/data/PL00D45M_17.data.s.o(.data);
+        ST1A_02_PL00D45M_17_DATA_END = .;
+        ST1A_02_PL00D45M_17_DATA_SIZE = ABSOLUTE(ST1A_02_PL00D45M_17_DATA_END - ST1A_02_PL00D45M_17_DATA_START);
+    }
+    __romPos += SIZEOF(.ST1A_02_PL00D45M_17);
+    __romPos = ALIGN(__romPos, 16);
+    ST1A_02_PL00D45M_17_ROM_END = __romPos;
+    ST1A_02_PL00D45M_17_VRAM_END = .;
+
+    /DISCARD/ :
+    {
+        *(*);
+    }
+}

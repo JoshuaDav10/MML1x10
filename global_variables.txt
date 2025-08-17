@@ -1,0 +1,2 @@
+=== GLOBAL VARIABLES ===
+D_80011f1f

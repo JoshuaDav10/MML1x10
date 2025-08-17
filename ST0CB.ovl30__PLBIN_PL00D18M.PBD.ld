@@ -1,0 +1,38 @@
+SECTIONS
+{
+    __romPos = 0;
+    _gp = 0x0;
+    ST0CB_PL00D18M_30_header_ROM_START = __romPos;
+    ST0CB_PL00D18M_30_header_VRAM = ADDR(.ST0CB_PL00D18M_30_header);
+    .ST0CB_PL00D18M_30_header : AT(ST0CB_PL00D18M_30_header_ROM_START) SUBALIGN(16)
+    {
+        ST0CB_PL00D18M_30_header_DATA_START = .;
+        ST0CB_PL00D18M_30_header_s = .;
+        build/asm/ST0CB/ovl30__PLBIN_PL00D18M.PBD/ST0CB_PL00D18M_30_header.s.o(.data);
+        ST0CB_PL00D18M_30_header_DATA_END = .;
+        ST0CB_PL00D18M_30_header_DATA_SIZE = ABSOLUTE(ST0CB_PL00D18M_30_header_DATA_END - ST0CB_PL00D18M_30_header_DATA_START);
+    }
+    __romPos += SIZEOF(.ST0CB_PL00D18M_30_header);
+    ST0CB_PL00D18M_30_header_ROM_END = __romPos;
+    ST0CB_PL00D18M_30_header_VRAM_END = .;
+
+    ST0CB_PL00D18M_30_ROM_START = __romPos;
+    ST0CB_PL00D18M_30_VRAM = ADDR(.ST0CB_PL00D18M_30);
+    .ST0CB_PL00D18M_30 0x800E9600 : AT(ST0CB_PL00D18M_30_ROM_START) SUBALIGN(4)
+    {
+        ST0CB_PL00D18M_30_DATA_START = .;
+        PL00D18M_30_data__s = .;
+        build/asm/ST0CB/ovl30__PLBIN_PL00D18M.PBD/data/PL00D18M_30.data.s.o(.data);
+        ST0CB_PL00D18M_30_DATA_END = .;
+        ST0CB_PL00D18M_30_DATA_SIZE = ABSOLUTE(ST0CB_PL00D18M_30_DATA_END - ST0CB_PL00D18M_30_DATA_START);
+    }
+    __romPos += SIZEOF(.ST0CB_PL00D18M_30);
+    __romPos = ALIGN(__romPos, 16);
+    ST0CB_PL00D18M_30_ROM_END = __romPos;
+    ST0CB_PL00D18M_30_VRAM_END = .;
+
+    /DISCARD/ :
+    {
+        *(*);
+    }
+}

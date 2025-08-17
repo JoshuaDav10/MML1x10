@@ -1,0 +1,38 @@
+SECTIONS
+{
+    __romPos = 0;
+    _gp = 0x0;
+    INIT_DAT_PL00R00P_7_header_ROM_START = __romPos;
+    INIT_DAT_PL00R00P_7_header_VRAM = ADDR(.INIT_DAT_PL00R00P_7_header);
+    .INIT_DAT_PL00R00P_7_header : AT(INIT_DAT_PL00R00P_7_header_ROM_START) SUBALIGN(16)
+    {
+        INIT_DAT_PL00R00P_7_header_DATA_START = .;
+        INIT_DAT_PL00R00P_7_header_s = .;
+        build/asm/INIT_DAT/ovl7__PLBIN_PL00R00P.PBD/INIT_DAT_PL00R00P_7_header.s.o(.data);
+        INIT_DAT_PL00R00P_7_header_DATA_END = .;
+        INIT_DAT_PL00R00P_7_header_DATA_SIZE = ABSOLUTE(INIT_DAT_PL00R00P_7_header_DATA_END - INIT_DAT_PL00R00P_7_header_DATA_START);
+    }
+    __romPos += SIZEOF(.INIT_DAT_PL00R00P_7_header);
+    INIT_DAT_PL00R00P_7_header_ROM_END = __romPos;
+    INIT_DAT_PL00R00P_7_header_VRAM_END = .;
+
+    INIT_DAT_PL00R00P_7_ROM_START = __romPos;
+    INIT_DAT_PL00R00P_7_VRAM = ADDR(.INIT_DAT_PL00R00P_7);
+    .INIT_DAT_PL00R00P_7 0x800FA000 : AT(INIT_DAT_PL00R00P_7_ROM_START) SUBALIGN(4)
+    {
+        INIT_DAT_PL00R00P_7_DATA_START = .;
+        PL00R00P_7_data__s = .;
+        build/asm/INIT_DAT/ovl7__PLBIN_PL00R00P.PBD/data/PL00R00P_7.data.s.o(.data);
+        INIT_DAT_PL00R00P_7_DATA_END = .;
+        INIT_DAT_PL00R00P_7_DATA_SIZE = ABSOLUTE(INIT_DAT_PL00R00P_7_DATA_END - INIT_DAT_PL00R00P_7_DATA_START);
+    }
+    __romPos += SIZEOF(.INIT_DAT_PL00R00P_7);
+    __romPos = ALIGN(__romPos, 16);
+    INIT_DAT_PL00R00P_7_ROM_END = __romPos;
+    INIT_DAT_PL00R00P_7_VRAM_END = .;
+
+    /DISCARD/ :
+    {
+        *(*);
+    }
+}

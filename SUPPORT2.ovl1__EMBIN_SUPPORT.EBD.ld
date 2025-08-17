@@ -1,0 +1,38 @@
+SECTIONS
+{
+    __romPos = 0;
+    _gp = 0x0;
+    SUPPORT2_SUPPORT_1_header_ROM_START = __romPos;
+    SUPPORT2_SUPPORT_1_header_VRAM = ADDR(.SUPPORT2_SUPPORT_1_header);
+    .SUPPORT2_SUPPORT_1_header : AT(SUPPORT2_SUPPORT_1_header_ROM_START) SUBALIGN(16)
+    {
+        SUPPORT2_SUPPORT_1_header_DATA_START = .;
+        SUPPORT2_SUPPORT_1_header_s = .;
+        build/asm/SUPPORT2/ovl1__EMBIN_SUPPORT.EBD/SUPPORT2_SUPPORT_1_header.s.o(.data);
+        SUPPORT2_SUPPORT_1_header_DATA_END = .;
+        SUPPORT2_SUPPORT_1_header_DATA_SIZE = ABSOLUTE(SUPPORT2_SUPPORT_1_header_DATA_END - SUPPORT2_SUPPORT_1_header_DATA_START);
+    }
+    __romPos += SIZEOF(.SUPPORT2_SUPPORT_1_header);
+    SUPPORT2_SUPPORT_1_header_ROM_END = __romPos;
+    SUPPORT2_SUPPORT_1_header_VRAM_END = .;
+
+    SUPPORT2_SUPPORT_1_ROM_START = __romPos;
+    SUPPORT2_SUPPORT_1_VRAM = ADDR(.SUPPORT2_SUPPORT_1);
+    .SUPPORT2_SUPPORT_1 0x801F2000 : AT(SUPPORT2_SUPPORT_1_ROM_START) SUBALIGN(4)
+    {
+        SUPPORT2_SUPPORT_1_DATA_START = .;
+        SUPPORT_1_data__s = .;
+        build/asm/SUPPORT2/ovl1__EMBIN_SUPPORT.EBD/data/SUPPORT_1.data.s.o(.data);
+        SUPPORT2_SUPPORT_1_DATA_END = .;
+        SUPPORT2_SUPPORT_1_DATA_SIZE = ABSOLUTE(SUPPORT2_SUPPORT_1_DATA_END - SUPPORT2_SUPPORT_1_DATA_START);
+    }
+    __romPos += SIZEOF(.SUPPORT2_SUPPORT_1);
+    __romPos = ALIGN(__romPos, 16);
+    SUPPORT2_SUPPORT_1_ROM_END = __romPos;
+    SUPPORT2_SUPPORT_1_VRAM_END = .;
+
+    /DISCARD/ :
+    {
+        *(*);
+    }
+}

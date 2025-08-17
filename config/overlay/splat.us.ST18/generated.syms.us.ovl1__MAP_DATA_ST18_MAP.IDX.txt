@@ -1,0 +1,429 @@
+System_timer = 0x1F800002;
+Map_prim_ptr = 0x1F800070;
+
+main = 0x80011C90;
+idk_Init_system_maybe = 0x80011F04;
+vsync_cb = 0x800123FC;
+
+
+
+
+
+
+
+
+Sound_call = 0x8001A008;
+Sound_call2 = 0x8001A050;
+
+
+
+
+
+Cd_read_comb = 0x8001D440;
+Cd_read_sync2 = 0x8001D838;
+Sce_flag_test = 0x8001DA58;
+
+
+
+
+
+
+
+
+Model_Shadow_Trans = 0x8002C794;
+Obj_work_flag_change = 0x8002EE90;
+
+
+
+
+
+
+
+
+
+
+func_80040294 = 0x80040294;
+
+func_8004029C = 0x8004029C;
+
+func_800402A4 = 0x800402A4;
+
+
+
+
+
+
+
+
+
+
+
+
+Pl00_shot_enable_off = 0x800423A0;
+Pl00_shot_enable_on = 0x800423C8;
+
+
+
+
+
+
+
+
+
+
+
+
+MojiTaskKill = 0x80053A30;
+
+
+
+
+Sub_screen_cancel_check = 0x80060E64;
+Sub_screen_shift_check = 0x80060EC0;
+Sub_screen_sort_attack = 0x80060F84;
+Sub_screen_sort_energy = 0x80061064;
+Sub_screen_sort_range = 0x80061144;
+Sub_screen_sort_rapid = 0x80061224;
+Sub_screen_sort_sub = 0x80061304;
+Sub_screen_rb_parts_set = 0x80061320;
+Sub_screen_rb_parts_calc = 0x8006147C;
+Sub_screen_rb_parts_calc_sub00 = 0x80061640;
+Sub_screen_rb_parts_calc_sub01 = 0x80061740;
+Sub_screen_status_calc = 0x80061840;
+Sub_screen_gauge_set = 0x80061A2C;
+Sub_screen_gauge_set2 = 0x80061C50;
+Sub_screen_basic_param_set = 0x80061E0C;
+Sub_screen_basic_param_set_sub = 0x80062028;
+Sub_screen_status_param_set = 0x80062118;
+Sub_screen_status_param_set_sub = 0x8006227C;
+Sub_screen_back_ground_set = 0x80062368;
+Sub_screen_sound_reinit = 0x80062490;
+Map_screen_init = 0x8006259C;
+Map_screen_task = 0x800625DC;
+map_screen_set = 0x800627D8;
+map_cursor_set = 0x80062880;
+
+Game_logo_kill = 0x80063F28;
+
+
+
+
+
+Map_screen_work = 0x800987F0;
+idk_framecounter_maybe = 0x80098888;
+Moji_flag = 0x80098A58;
+Moji_flag3 = 0x80098B30;
+Player_work = 0x800B51B0; // type:symbol size:0x5F4
+Player_work2 = 0x800B57A4; // type:symbol size:0x5F4
+
+
+func_80023728 = 0x80023728;
+func_8002626C = 0x8002626C;
+func_80029C18 = 0x80029C18;
+func_8002A160 = 0x8002A160;
+func_8002AB70 = 0x8002AB70;
+func_8002B2C8 = 0x8002B2C8;
+func_8002BD48 = 0x8002BD48;
+func_8002D9A0 = 0x8002D9A0;
+
+Rock_buster_parts_tbl = 0x8008FE64;
+Game_work = 0x800C1B10; // type:symbol size:0x210
+
+Code800133D8_work = 0x80098AA8; // type:symbol size:0x10
+Code800133D8_main_tbl = 0x80080950;
+
+Game_main_tbl = 0x80082114;
+
+Unk_stage_func_tbl = 0x800823A0;
+
+p_Player_work = 0x80098A50;
+
+unknown_Cd_strucptr = 0x800989A4;
+
+Sce_flag = 0x800BE378;
+
+Moji_work = 0x800BB6B8; // type:symbol size:784
+
+Debug_work = 0x800C4C10; // type:symbol size:0x38
+Scene_work = 0x800C4C48; // type:symbol size:0xA8
+
+D_800A3A40 = 0x800A3A40; // type:symbol size:0x40
+
+SUPPORT_STG_LOAD_ADDRESS = 0x801F6000;
+SUPPORT_EBD_LOAD_ADDRESS = 0x801F2000;
+SUPPORT_PROGBIN_LOAD_ADDRESS = 0x801D8000;
+STAGE_STG_LOAD_ADDRESS = 0x80194000;
+STAGE_EBD_LOAD_ADDRESS2 = 0x80190000;
+STAGE_EBD_LOAD_ADDRESS1 = 0x8016C000;
+STAGE_MDT_LOAD_ADDRESS = 0x80164000;
+STAGE_IDX_LOAD_ADDRESS = 0x8015C000;
+MSG_LOAD_ADDRESS = 0x80153000;
+STAGE_HED_LOAD_ADDRESS = 0x8013A000;
+STAGE_PROGBIN_LOAD_ADDRESS = 0x80100000;
+SHL_PROGBIN_LOAD_ADDRESS = 0x800D8800;
+
+D_80082CD0 = 0x80082CD0; // type:symbol size:0xBA0
+
+__main = 0x80067ff8;
+_addque2 = 0x8007f0e8;
+_bu_init = 0x8007fc00;
+_card_clear = 0x8007fc50;
+_card_info = 0x8007fc10;
+_card_load = 0x8007fc20;
+_card_write = 0x8007fc30;
+_ctl = 0x8007efbc;
+_exeque = 0x8007f3c8;
+_new_card = 0x8007fc40;
+_otc = 0x8007e7b8;
+_patch_gte = 0x8007c128;
+_patch_pad = 0x80080540;
+_remove_ChgclrPAD = 0x80080668;
+_reset = 0x8007f6b4;
+_send_pad = 0x800805d0;
+_SN_read = 0x80076a6c;
+_spu_FsetDelayR = 0x8006a66c;
+_spu_FsetDelayW = 0x8006a640;
+_spu_FsetRXX = 0x8006a4b8;
+_spu_FsetRXXa = 0x8006a500;
+_spu_Fw = 0x8006a3c8;
+_spu_Fw1ts = 0x8006a698;
+_spu_FwriteByIO = 0x80069e00;
+_spu_gcSPU = 0x80075bf8;
+_spu_init = 0x80069b6c;
+_spu_note2pitch = 0x8006b084;
+_spu_setReverbAttr = 0x800718dc;
+_spu_t = 0x8006a138;
+_SpuDataCallback = 0x8006a700;
+_SpuInit = 0x800699f8;
+_SpuIsInAllocateArea_ = 0x80071850;
+_SsClose = 0x8006b2e8;
+_SsInit = 0x8006b4ac;
+_SsInitSoundSep = 0x8006d8ac;
+_SsInitSoundSeq = 0x8006dfb4;
+_SsReadDeltaValue = 0x8006d7fc;
+_SsSndNextSep = 0x8006fe34;
+_SsSndPause = 0x8006f67c;
+_SsSndPlay = 0x8006f718;
+_SsSndReplay = 0x8006ff30;
+_SsSndTempo = 0x80070754;
+_SsStart = 0x8006ea04;
+_SsUtBuildADSR = 0x8006c9ac;
+_SsUtResolveADSR = 0x8006c950;
+_SsVmSelectToneAndVag = 0x800753b0;
+_SsVmSetProgVol = 0x80074b54;
+_SsVmVSetUp = 0x800759e0;
+_sync = 0x8007f810;
+_version = 0x8007faf8;
+AddPrim = 0x8007c5a4;
+ApplyMatrix = 0x8007ad38;
+ApplyMatrixLV = 0x8007a9b8;
+ApplyMatrixSV = 0x8007ad88;
+catan = 0x8007a414;
+ccos = 0x8007a230;
+CD_cw = 0x80078ae0;
+CD_flush = 0x80078f84;
+CD_getsector = 0x80079500;
+CD_init = 0x800791a8;
+CD_initintr = 0x80079158;
+CD_initvol = 0x80079064;
+CD_sync = 0x80078594;
+CD_vol = 0x80078efc;
+CdControl = 0x80077a3c;
+CdControlB = 0x80077ca0;
+CdGetSector = 0x80077e04;
+CdInit = 0x80077770;
+CdIntToPos = 0x80077e88;
+CdMix = 0x80077de4;
+CdPosToInt = 0x80077f8c;
+CdReadCallback = 0x8007a030;
+CdReadMode = 0x8007a048;
+CdReadyCallback = 0x80077a24;
+CdReset = 0x800778c0;
+CdSync = 0x800779cc;
+CdSyncCallback = 0x80077a0c;
+ChangeClearPAD = 0x80080000;
+ChangeClearRCnt = 0x80080010;
+ChangeTh = 0x8007ff30;
+CheckCallback = 0x80076dbc;
+checkRECT = 0x8007d098;
+ClearOTagR = 0x8007d534;
+close = 0x8007ffc0;
+CloseTh = 0x8007ff20;
+csincos = 0x8007a2f4;
+DeliverEvent = 0x8007fec0;
+DMACallback = 0x80076cc8;
+DrawOTag = 0x8007d62c;
+DrawSync = 0x8007d02c;
+EnableEvent = 0x8007ff00;
+EnablePAD = 0x80080518;
+firstfile = 0x8007ffe0;
+FlushCache = 0x8007fe80;
+format = 0x8007ffd0;
+get_alarm = 0x8007f98c;
+get_ce = 0x8007e55c;
+get_cs = 0x8007e490;
+get_dx = 0x8007e6f0;
+get_mode = 0x8007e438;
+get_ofs = 0x8007e628;
+get_tw = 0x8007e66c;
+GetClut = 0x8007c4b4;
+getintr = 0x8007800c;
+GetTPage = 0x8007c478;
+GPU_cw = 0x8007fe90;
+HookEntryInt = 0x8007ff60;
+InitCARD2 = 0x8007fd40;
+InitGeom = 0x8007a4f0;
+InitHeap = 0x8007fe70;
+InitPAD = 0x80080254;
+InitPAD2 = 0x800804b8;
+InterruptCallback = 0x80076c98;
+LoadImage = 0x8007d2f0;
+memclr = 0x8007734c;
+//memclr = 0x80077474;
+//memclr = 0x8007771c;
+memcpy = 0x8007fe40;
+memset = 0x8007fbd4;
+MSC02_OBJ_E0 = 0x8007a6e8;
+MSC02_OBJ_FC = 0x8007a704;
+MulMatrix = 0x8007ab18;
+MulMatrix0 = 0x8007a8a8;
+nextfile = 0x8007fff0;
+NormalColorCol = 0x8007b24c;
+note2pitch = 0x80073b84;
+note2pitch2 = 0x80073c48;
+open = 0x8007ff90;
+OpenEvent = 0x8007fed0;
+OpenTh = 0x8007ff10;
+OuterProduct0 = 0x8007b4c4;
+OuterProduct12 = 0x8007b46c;
+PCopen = 0x8007697c;
+PCread = 0x800769ac;
+printf = 0x8007fe60;
+PutDispEnv = 0x8007d8f8;
+PutDrawEnv = 0x8007d6a0;
+rand = 0x8007fe50;
+ratan2 = 0x8007bfa8;
+rcos = 0x8007a12c;
+read = 0x8007ffa0;
+ReadInitPadFlag = 0x800801a8;
+ResetCallback = 0x80076c68;
+ResetEntryInt = 0x8007ff50;
+ResetGraph = 0x8007cb6c;
+ResetRCnt = 0x80080160;
+ReturnFromException = 0x8007ff40;
+RotMatrix = 0x8007b5a8;
+RotMatrixY = 0x8007bc68;
+RotMatrixYXZ = 0x8007b838;
+RotTrans = 0x8007b538;
+rsin = 0x8007a060;
+ScaleMatrix = 0x8007ade8;
+set_alarm = 0x8007f958;
+SetBackColor = 0x8007b0d8;
+SetColorMatrix = 0x8007af78;
+SetDefDispEnv = 0x8007c43c;
+SetDefDrawEnv = 0x8007c384;
+SetDispMask = 0x8007cf90;
+SetDQA = 0x8007b0c0;
+SetDQB = 0x8007b0cc;
+SetDrawArea = 0x8007de44;
+SetDrawEnv2 = 0x8007e1a8;
+SetDrawMode = 0x8007df38;
+SetFarColor = 0x8007b0f8;
+SetFogNear = 0x8007a1cc;
+setIntr = 0x800770c4;
+SetIntrMask = 0x80076de4;
+setjmp = 0x8007fe10;
+SetLightMatrix = 0x8007af48;
+SetPatchPad = 0x80080358;
+SetRCnt = 0x80080020;
+SetRotMatrix = 0x8007af18;
+SetTransMatrix = 0x8007afa8;
+sin_1 = 0x8007a09c;
+SpuClearReverbWorkArea = 0x80071dac;
+SpuFree = 0x80075b7c;
+SpuGetKeyStatus = 0x8006a920;
+SpuGetVoiceEnvelope = 0x80072d2c;
+SpuInitMalloc = 0x80073068;
+SpuIsTransferCompleted = 0x800768d4;
+SpuMalloc = 0x8007636c;
+SpuSetCommonAttr = 0x8006e520;
+SpuSetEnv = 0x80069994;
+SpuSetKey = 0x8006a724;
+SpuSetKeyOnWithAttr = 0x8006a9b4;
+SpuSetNoiseClock = 0x80074220;
+SpuSetNoiseVoice = 0x80072a1c;
+SpuSetReverb = 0x80072094;
+SpuSetReverbDepth = 0x8006e98c;
+SpuSetReverbModeParam = 0x800712d8;
+SpuSetReverbVoice = 0x80072d08;
+SpuSetTransferMode = 0x800767ec;
+SpuSetTransferStartAddr = 0x80076794;
+SpuStart = 0x80069af0;
+SpuWritePartly = 0x80076820;
+SquareRoot0 = 0x8007a578;
+SsIsEos = 0x8006b624;
+SsSepClose = 0x8006b488;
+SsSepOpen = 0x8006b664;
+SsSepPlay = 0x8006e338;
+SsSeqCalledTbyT = 0x8006ed3c;
+SsSeqClose = 0x8006b464;
+SsSeqOpen = 0x8006dc94;
+SsSeqPlay = 0x8006e300;
+SsSetMVol = 0x8006e8b4;
+SsSetReservedVoice = 0x80075ac8;
+SsSetRVol = 0x8006e904;
+SsSetSerialAttr = 0x8006e48c;
+SsSetSerialVol = 0x80070168;
+SsSetTableSize = 0x80070264;
+SsSetTickMode = 0x8007043c;
+SsStart = 0x8006ec6c;
+SsUtGetProgAtr = 0x80070a94;
+SsUtGetVagAddr = 0x80070dd8;
+SsUtGetVagAtr = 0x80070b9c;
+SsUtReverbOff = 0x8006b5c4;
+SsUtSetReverbDelay = 0x80071298;
+SsUtSetReverbDepth = 0x80071f48;
+SsUtSetReverbFeedback = 0x80072164;
+SsUtSetReverbType = 0x80071fe0;
+SsUtSetVagAtr = 0x800721e4;
+SsVabClose = 0x80075af8;
+SsVabOpenHeadSticky = 0x80075f30;
+SsVabOpenHeadWithMode = 0x80075f90;
+SsVabTransBodyPartly = 0x80076634;
+SsVabTransCompleted = 0x800768ac;
+StartCARD2 = 0x8007fd50;
+startIntr = 0x80076e00;
+startIntrDMA = 0x800774a0;
+startIntrVSync = 0x80077378;
+StartPAD = 0x800802f0;
+StartPAD2 = 0x800804c8;
+StopCallback = 0x80076d5c;
+stopIntr = 0x80077218;
+strcat = 0x8007fe20;
+strcpy = 0x8007fe30;
+SysDeqIntRP = 0x80080508;
+SysEnqIntRP = 0x800804f8;
+TestEvent = 0x8007fef0;
+TransposeMatrix = 0x8007b568;
+trapIntr = 0x80076edc;
+v_wait = 0x80076bcc;
+VectorNormal = 0x8007a6a8;
+VectorNormalS = 0x8007a694;
+VSync = 0x80076a84;
+VSyncCallback = 0x80076cf8;
+WaitEvent = 0x8007fee0;
+write = 0x8007ffb0;
+
+Close_EVE_WORK = 0x800319F4;
+
+//eve19_check_flag = 0x800c1c8a;
+
+MojiTaskExec2 = 0x80053A08;
+
+Sce_flag_on = 0x8001DA8C;
+
+Swing_Camera2 = 0x800398F8;
+
+MojiTaskExec = 0x8005382C;
+
+Sce_flag_off = 0x8001DCD0;

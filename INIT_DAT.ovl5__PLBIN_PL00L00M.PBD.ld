@@ -1,0 +1,38 @@
+SECTIONS
+{
+    __romPos = 0;
+    _gp = 0x0;
+    INIT_DAT_PL00L00M_5_header_ROM_START = __romPos;
+    INIT_DAT_PL00L00M_5_header_VRAM = ADDR(.INIT_DAT_PL00L00M_5_header);
+    .INIT_DAT_PL00L00M_5_header : AT(INIT_DAT_PL00L00M_5_header_ROM_START) SUBALIGN(16)
+    {
+        INIT_DAT_PL00L00M_5_header_DATA_START = .;
+        INIT_DAT_PL00L00M_5_header_s = .;
+        build/asm/INIT_DAT/ovl5__PLBIN_PL00L00M.PBD/INIT_DAT_PL00L00M_5_header.s.o(.data);
+        INIT_DAT_PL00L00M_5_header_DATA_END = .;
+        INIT_DAT_PL00L00M_5_header_DATA_SIZE = ABSOLUTE(INIT_DAT_PL00L00M_5_header_DATA_END - INIT_DAT_PL00L00M_5_header_DATA_START);
+    }
+    __romPos += SIZEOF(.INIT_DAT_PL00L00M_5_header);
+    INIT_DAT_PL00L00M_5_header_ROM_END = __romPos;
+    INIT_DAT_PL00L00M_5_header_VRAM_END = .;
+
+    INIT_DAT_PL00L00M_5_ROM_START = __romPos;
+    INIT_DAT_PL00L00M_5_VRAM = ADDR(.INIT_DAT_PL00L00M_5);
+    .INIT_DAT_PL00L00M_5 0x800F1600 : AT(INIT_DAT_PL00L00M_5_ROM_START) SUBALIGN(4)
+    {
+        INIT_DAT_PL00L00M_5_DATA_START = .;
+        PL00L00M_5_data__s = .;
+        build/asm/INIT_DAT/ovl5__PLBIN_PL00L00M.PBD/data/PL00L00M_5.data.s.o(.data);
+        INIT_DAT_PL00L00M_5_DATA_END = .;
+        INIT_DAT_PL00L00M_5_DATA_SIZE = ABSOLUTE(INIT_DAT_PL00L00M_5_DATA_END - INIT_DAT_PL00L00M_5_DATA_START);
+    }
+    __romPos += SIZEOF(.INIT_DAT_PL00L00M_5);
+    __romPos = ALIGN(__romPos, 16);
+    INIT_DAT_PL00L00M_5_ROM_END = __romPos;
+    INIT_DAT_PL00L00M_5_VRAM_END = .;
+
+    /DISCARD/ :
+    {
+        *(*);
+    }
+}
