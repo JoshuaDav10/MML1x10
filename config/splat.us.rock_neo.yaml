@@ -703,7 +703,6 @@ segments:
       - [0x89fe4, c, FUN_80089fe4, 0x8a060]
       - [0x8a060, c, FUN_8008a060, 0x8a070]
       - [0x8a070, asm, 0x8a074]
-      - [0x8a074, c, FUN_8008a074, 0x8a074]
       - [0x89258, .scommon, moji]
       - [0x89260, scommon]
       - [0x8B648, bss]
