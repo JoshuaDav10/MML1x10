@@ -1213,3 +1213,6 @@ segments:
       - [0x8B648, bss]
       - [0xB5E88, bin] # heap?
   - [0xC9800]
+  - [0x6b0b0, c, FUN_8006b0b0, 0x6b0f8]
+  - [0x6b0fc, c, FUN_8006b0fc, 0x6b12c]
+  - [0x76240, c, FUN_80076240, 0x762bc]
