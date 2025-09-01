@@ -1146,6 +1146,8 @@ segments:
       - [0x8ba74, c, FUN_8008ba74, 0x8bbb0]
       - [0x8bbb0, c, FUN_8008bbb0, 0x8bef0]
       - [0x8bef0, c, FUN_8008bef0, 0x8c070]
+      - [0x8c070, c, FUN_8008c070, 0x8c2cc]
+      - [0x8c2cc, c, FUN_8008c2cc, 0x8c384]
       - [0x89258, .scommon, moji]
       - [0x89260, scommon]
       - [0x8B648, bss]
