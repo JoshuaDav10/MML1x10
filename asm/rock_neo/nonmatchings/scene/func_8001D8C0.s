@@ -24,7 +24,7 @@ glabel func_8001D8C0
     /* E104 8001D904 30618424 */  addiu      $a0, $a0, %lo(D_800B6130)
     /* E108 8001D908 0C80053C */  lui        $a1, %hi(Sce_flag)
     /* E10C 8001D90C 78E3A524 */  addiu      $a1, $a1, %lo(Sce_flag)
-    /* E110 8001D910 B75D000C */  jal        func_800176DC
+    /* E110 8001D910 B75D000C */  jal        .L800176DC
     /* E114 8001D914 08000624 */   addiu     $a2, $zero, 0x8
   .L8001D918:
     /* E118 8001D918 1000BF8F */  lw         $ra, 0x10($sp)
