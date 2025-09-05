@@ -1344,6 +1344,10 @@ SECTIONS
         build/src/rock_neo/FUN_8007b058.c.o(.text);
         build/src/rock_neo/FUN_8007b230.c.o(.text);
         build/src/rock_neo/FUN_8007b3ac.c.o(.text);
+        build/src/rock_neo/FUN_8007b3d0.c.o(.text);
+        build/src/rock_neo/FUN_8007b3f4.c.o(.text);
+        build/src/rock_neo/FUN_8007b4dc.c.o(.text);
+        build/src/rock_neo/FUN_8007b50c.c.o(.text);
         build/asm/rock_neo/data/80064.sdata.s.o(.sdata);
         build/src/rock_neo/FUN_800800a0.c.o(.text);
         build/src/rock_neo/FUN_800800d4.c.o(.text);
