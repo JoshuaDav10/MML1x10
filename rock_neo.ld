@@ -1328,6 +1328,11 @@ SECTIONS
         build/src/rock_neo/FUN_8007a5a8.c.o(.text);
         build/src/rock_neo/FUN_8007a5b4.c.o(.text);
         build/src/rock_neo/FUN_8007a5e0.c.o(.text);
+        build/src/rock_neo/FUN_8007a648.c.o(.text);
+        build/src/rock_neo/FUN_8007a66c.c.o(.text);
+        build/src/rock_neo/FUN_8007a6ac.c.o(.text);
+        build/src/rock_neo/FUN_8007a7a8.c.o(.text);
+        build/src/rock_neo/FUN_8007a868.c.o(.text);
         build/asm/rock_neo/data/80064.sdata.s.o(.sdata);
         build/src/rock_neo/FUN_800800a0.c.o(.text);
         build/src/rock_neo/FUN_800800d4.c.o(.text);
