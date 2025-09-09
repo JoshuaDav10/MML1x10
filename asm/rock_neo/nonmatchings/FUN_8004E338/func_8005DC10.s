@@ -12,9 +12,9 @@ glabel func_8005DC10
     /* 4E42C 8005DC2C 03000924 */  addiu      $t1, $zero, 0x3
     /* 4E430 8005DC30 21280000 */  addu       $a1, $zero, $zero
   .L8005DC34:
-    /* 4E434 8005DC34 0980013C */  lui        $at, %hi(D_8008D19C)
+    /* 4E434 8005DC34 0980013C */  lui        $at, %hi(func_8008D19C)
     /* 4E438 8005DC38 21082500 */  addu       $at, $at, $a1
-    /* 4E43C 8005DC3C 9CD12390 */  lbu        $v1, %lo(D_8008D19C)($at)
+    /* 4E43C 8005DC3C 9CD12390 */  lbu        $v1, %lo(func_8008D19C)($at)
     /* 4E440 8005DC40 00000000 */  nop
     /* 4E444 8005DC44 19006810 */  beq        $v1, $t0, .L8005DCAC
     /* 4E448 8005DC48 00000000 */   nop
