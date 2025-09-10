@@ -1393,6 +1393,9 @@ SECTIONS
         build/src/rock_neo/FUN_800803d0.c.o(.text);
         build/src/rock_neo/FUN_80080428.c.o(.text);
         build/src/rock_neo/FUN_80080460.c.o(.text);
+        build/src/rock_neo/FUN_80081554.c.o(.text);
+        build/src/rock_neo/FUN_80081664.c.o(.text);
+        build/src/rock_neo/FUN_800816e4.c.o(.text);
         build/asm/rock_neo/data/88958.scommon.s.o(.scommon);
         build/src/rock_neo/moji.c.o(.scommon);
         build/asm/rock_neo/data/89260.scommon.s.o(.scommon);

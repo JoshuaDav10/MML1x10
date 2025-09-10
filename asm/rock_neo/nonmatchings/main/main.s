@@ -8,7 +8,7 @@ glabel main
     /* 249C 80011C9C 1400B1AF */  sw         $s1, 0x14($sp)
     /* 24A0 80011CA0 FE9F010C */  jal        __main
     /* 24A4 80011CA4 1000B0AF */   sw        $s0, 0x10($sp)
-    /* 24A8 80011CA8 0000828F */  lw         $v0, %gp_rel(D_80097864)($gp)
+    /* 24A8 80011CA8 0000828F */  lw         $v0, %gp_rel(func_80097864)($gp)
     /* 24AC 80011CAC 00000000 */  nop
     /* 24B0 80011CB0 03004014 */  bnez       $v0, .L80011CC0
     /* 24B4 80011CB4 00000000 */   nop
@@ -145,7 +145,7 @@ glabel main
     /* 26AC 80011EAC 00000000 */   nop
     /* 26B0 80011EB0 3F5E000C */  jal        func_800178FC
     /* 26B4 80011EB4 00000000 */   nop
-    /* 26B8 80011EB8 0000828F */  lw         $v0, %gp_rel(D_80097864)($gp)
+    /* 26B8 80011EB8 0000828F */  lw         $v0, %gp_rel(func_80097864)($gp)
     /* 26BC 80011EBC 00000000 */  nop
     /* 26C0 80011EC0 03004010 */  beqz       $v0, .L80011ED0
     /* 26C4 80011EC4 801F033C */   lui       $v1, (0x1F800002 >> 16)
