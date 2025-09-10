@@ -1258,6 +1258,9 @@ SECTIONS
         build/src/rock_neo/FUN_80075bac.c.o(.text);
         build/src/rock_neo/FUN_80076240.c.o(.text);
         build/src/rock_neo/FUN_800762c4.c.o(.text);
+        build/src/rock_neo/FUN_80076404.c.o(.text);
+        build/src/rock_neo/FUN_80076530.c.o(.text);
+        build/src/rock_neo/FUN_80076544.c.o(.text);
         build/src/rock_neo/FUN_80076648.c.o(.text);
         build/src/rock_neo/FUN_80076678.c.o(.text);
         build/src/rock_neo/FUN_800766a8.c.o(.text);
