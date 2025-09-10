@@ -1324,6 +1324,7 @@ segments:
       - [0x79de4, c, FUN_80079de4, 0x79e34]
       - [0x79e50, c, FUN_80079e50, 0x79f28]
       - [0x79f2c, c, FUN_80079f2c, 0x7a1f8]
+      - [0x7a080, c, FUN_8007a080, 0x7a380]
       - [0x7a264, c, FUN_8007a264, 0x7a2f4]
       - [0x7a2f8, c, FUN_8007a2f8, 0x7a30c]
       - [0x7a310, c, FUN_8007a310, 0x7a37c]
