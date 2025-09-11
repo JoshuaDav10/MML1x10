@@ -1,0 +1,40 @@
+MIPS INSTRUCTION SET REFERENCE - RESERVED INSTRUCTION, COPROCESSOR UNUSABLE
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Reserved Instruction, Coprocessor Unusable
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1839 characters
+Lines: 31
+================================================================================
+
+Reserved Instruction, Coprocessor Unusable
+
+
+
+
+184                                                              MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                               Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+MOVF.fmt
+
+
+
+
+   Floating Point Move Conditional on Floating Point False                                                                    MOVF.fmt
+
+           31                   26 25             21 20        18 17 16 15              11 10               6   5                  0
+                   COP1                                           0   tf                                              MOVCF
+                                          fmt             cc                     fs                 fd
+                   010001                                         0   0                                                010001
+                     6                     5              3       1   1          5                  5                     6
+
+                Format:     MOVF.S fd, fs, cc                                                                           MIPS32
+                            MOVF.D fd, fs, cc                                                                           MIPS32
+                            MOVF.PS fd, fs, cc                                                                          MIPS64
+                                                                                                                MIPS32 Release 2
+
+                Purpose:
+                To test an FP condition code then conditionally move an FP value
+
+                Description: if cc = 0 then fd ← fs
+                If the floating point condition code specified by CC is zero, then the value in FPR fs is placed into FPR fd. The source

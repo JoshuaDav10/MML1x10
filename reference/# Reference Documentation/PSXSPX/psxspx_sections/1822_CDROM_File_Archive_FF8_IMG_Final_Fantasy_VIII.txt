@@ -1,0 +1,50 @@
+PSXSPX SPECIFICATIONS - CDROM FILE ARCHIVE FF8 IMG (FINAL FANTASY VIII)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Archive FF8 IMG (Final Fantasy VIII)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1863 characters
+Lines: 41
+================================================================================
+
+CDROM File Archive FF8 IMG (Final Fantasy VIII)
+
+FF8 is quite a mess without clear directory structure. Apart from SYSTEM.CNF
+and boot EXE, there is only one huge IMG file. There are at least two central
+directories: The Root directory (usually at the start of the IMG file), and the
+Fields directory (hidden in a compressed file that can be found in the Root
+directory). Moreover, there are files that exist in neither of the directories
+(most notably the Movies at the end of the IMG file).
+
+IMG File
+
+The IMG file doesn't have a unique file header, it can be best detected by
+checking the filename: FF8DISCn.IMG with n=1-4 for Disc 1-4 (or only
+FF8DISC1.IMG or FF8.EXE+FF8TRY.IMG for demo versions).
+
+The directories contain ISO sector numbers (originated from begin of the ISO
+area at sector 00:02:00). Accordingly, it's best to extract data from the whole
+disc image (in CUE/BIN format or the like). When having only the raw IMG file,
+one most know/guess the starting sector number (eg. assume that the first Root
+File is located on the sector after the Root Directory, and convert sector
+numbers ISO-to-IMG accordingly).
+
+Another oddity is that many files contain RAM addresses (80000000h-801FFFFFh),
+unknown how far that's relevant, and if there are cases where one would need to
+convert RAM addresses to IMG offsets.
+
+Root Directory
+
+The Root Directory is found at:
+
+| Offset 0000h in FF8DISCn.IMG in NTSC retail versions
+Offset 2800h in FF8DISCn.IMG in PAL retail versions
+Offset 0000h in FF8DISC1.IMG in french demo version
+Offset ?????h in FF8.EXE in MagDemo23 (...maybe offset 3357Ch ?)
+Offset 33510h in FF8.EXE in japanese demo version ?
+Offset 33584h in FF8.EXE in other demo versions ?
+
+For detection:
+
+| if FF8DISCn.IMG starts with 000003xxh --> assume Root at IMG offset 0
+if FF8DISCn.IMG starts with xxxxxxxxh --> assume Root at IMG offset 2800h

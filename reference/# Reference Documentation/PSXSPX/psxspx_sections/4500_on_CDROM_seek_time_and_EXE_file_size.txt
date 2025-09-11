@@ -1,0 +1,24 @@
+PSXSPX SPECIFICATIONS - ON CDROM SEEK TIME AND EXE FILE SIZE).
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: on CDROM seek time and EXE file size).
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1003 characters
+Lines: 15
+================================================================================
+
+on CDROM seek time and EXE file size).
+
+| [1f801c00h]=00000e7fh,02000bfch,dfed8c7ah,034c0000h [1f801e00h]=00001cfeh
+[1f801c10h]=00000d0ch,02000aadh,dfed8c7ah,034c0000h [1f801e04h]=00001a18h
+[1f801c20h]=0b740000h,02000c12h,dfed8c7ah,034c0000h [1f801e08h]=16e80000h
+[1f801c30h]=05420000h,02000ac1h,dfed8c7ah,034c0000h [1f801e0ch]=0a840000h
+[1f801c40h]=00001548h,0200017fh,cfaeb8ffh,034c4c41h [1f801e10h]=00002a90h
+[1f801c50h]=16ab0000h,02000182h,cfaeb8ffh,034c4c41h [1f801e14h]=2d560000h
+[1f801c60h]=00003e03h,0c2802abh,dff18088h,14c40faeh [1f801e18h]=00007c06h
+[1f801c70h]=0000089eh,02001000h,dfed8c7ah,034c0000h [1f801e1ch]=0000113ch
+[1f801c80h]=000005f4h,02000400h,dfed8c7ah,034c0000h [1f801e20h]=00000be8h
+[1f801c90h]=02660000h,02000407h,dfed8c7ah,034c0000h [1f801e24h]=04cc0000h
+[1f801ca0h]=00000bf7h,02000200h,cfaeb8ffh,034c0000h [1f801e28h]=000017eeh
+[1f801cb0h]=0cc00000h,02000203h,cfaeb8ffh,034c0000h [1f801e2ch]=19800000h
+[1f801cc0h]=00000735h,02000720h,dfed8c7ah,034c0000h [1f801e30h]=00000e6ah

@@ -1,0 +1,146 @@
+PSXSPX SPECIFICATIONS - 006H 2 HEIGHT (USUALLY F0H=240PIX) (CDH=205PIX IN APOCALYPSE WARNING.RLE)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 006h 2 Height (usually F0h=240pix) (CDh=205pix in Apocalypse warning.rle)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 5321 characters
+Lines: 138
+================================================================================
+
+006h 2 Height (usually F0h=240pix) (CDh=205pix in Apocalypse warning.rle)
+008h .. Bitmap data, 16bpp (width*height*2 bytes)
+
+Most or all newer BMR files (in Apocalypse "loadlogo.rle", and in all files in
+Spider-Man 1, Spider-Man-2, Tony Hawk's Pro Skater) have the 8-byte header
+replaced by unused 8-byte at end of file:
+
+| 000h .. Bitmap data, 16bpp (width*height*2 bytes)
+.. 8 Unused (garbage or extra pixels, not transferred to VRAM)
+
+BUG: The bitmaps in all .BMR files (both with/without header) are distorted:
+The last 4-byte (rightmost 2pix) of each scanline should be actually located at
+the begin of the scanline, and the last scanline is shifted by an odd amount of
+bytes (resulting in nonsense 16bpp pixel colors); Spider-Man is actually
+displaying the bitmap in that distorted form (although it does mask off some
+glitches: one of the two bad rightmost pixels is replaced by a bad black
+leftmost pixel, and glitches in upper/lower lines aren't visible on 224-line
+NTSC screens).
+
+Croc 1 (retail: *.IMG) (retail only, not in MagDemo02 demo version)
+
+Croc 2 (MagDemo22: CROC2\CROCII.DIR\*.IMG)
+
+Disney's The Emperor's New Groove (MagDemo39: ENG\KINGDOM.DIR\*.IMG)
+
+Disney's Aladdin in Nasira's Rev. (MagDemo46: ALADDIN\ALADDIN.DIR\*.IMG)
+
+Contains raw 16bpp bitmaps, with following sizes:
+
+| 25800h bytes = 12C00h pixels (320x240) ;Croc 1 (retail version)
+3C000h bytes = 1E000h pixels (512x240)
+96000h bytes = 4B000h pixels (640x480)
+
+Note: The .IMG format is about same as .BMR files (but without the 8-byte
+header, and without distorted scanlines).
+
+Mat Hoffman's Pro BMX (MagDemo39: BMX\FE.WAD+STR\*.BIN) (Activision)
+
+Mat Hoffman's Pro BMX (MagDemo48: MHPB\FE.WAD+STR\*.BIN) (Shaba/Activision)
+
+| 000h 2 Bits per pixel (4 or 8)
+002h 2 Bitmap Width in pixels
+004h 2 Bitmap Height in pixels
+006h 2 Zero
+008h N*2 Palette (with N=(1 SHL bpp))
+... .. Bitmap (with Width*Height*bpp/8 bytes)
+... (..) Zeropadding to 4-byte boundary (old version only)
+
+The trailing alignment padding exists only in old demo version (eg. size of
+78x49x8bpp "coreypp.bin" is old=10F8h, new=10F6h).
+
+E.T. Interplanetary Mission (MagDemo54: MEGA\MEGA.CSH\*)
+
+| 000h 2 Type (0=4bpp, 1=8bpp, 2=16bpp)
+002h 2 Unknown (usually 0000h, or sometimes CCCCh)
+004h 2 Bitmap Width in pixels
+006h 2 Bitmap Height in pixels
+008h 200h Palette (always 200h-byte, even for 4bpp or 16bpp)
+208h .. Bitmap (Width*Height*bpp/8 bytes)
+
+Palette is 00h-or-CCh-padded when 4bpp, or CCh-filled when 16bpp.
+
+Note: Some files contain two or more such bitmaps (of same or different sizes)
+badged together.
+
+EA Sports: Madden NFL '98 (MagDemo02: TIBURON\*.DAT\*)
+
+EA Sports: Madden NFL 2000 (MagDemo27: MADN00\*.DAT\*)
+
+EA Sports: Madden NFL 2001 (MagDemo39: MADN01\*.DAT\*)
+
+This format is used in various EA Sports Madden .DAT archives, it contains
+standard TIMs with extra Headers/Footers.
+
+| 000h 4 Offset to TIM (1Ch) (Hdr size) (1Ch) ;\
+004h 4 Offset to Footer (Hdr+TIM size)(123Ch,1A3Ch,1830h) ;
+008h 2 Bitmap Width in pixels (40h or 60h or 30h) ;
+00Ah 2 Bitmap Height in pixels (40h) ;
+00Ch 4 Unknown, always 01h (01h) ; Header
+010h 4 Unknown, always 23h (23h) ; 1Ch bytes
+014h 2 Unknown, always 0101h (101h) ;
+016h 1 Bitmap Width in pixels (40h or 60h or 30h) ;
+017h 1 Bitmap Height in pixels (40h) ;
+018h 4 Unknown, always 00h (0) ;/
+01Ch .. TIM (Texture, can be 4bpp, 8bpp, 16bpp) ;-TIM
+... 4 Unknown, always C0000222h (C0000222h) ;\
+... 2 Unknown, always 0001h (0001h) ;
+... 1 Bitmap Width in pixels (40h or 60h or 30h) ; Footer
+... 1 Bitmap Height in pixels (40h) ; 12h bytes
+... 4 Unknown, always 78000000h (78000000h) ;
+... 6 Unknown (0,0,80h,0,0,0) ;/
+
+Purpose is unknown; the 8bit Width/Height entries might be TexCoords.
+
+The PORTRAITS.DAT archives are a special case:
+
+| Madden NFL '98 (MagDemo02: TIBURON\PORTRAIT.DAT) (48x64, 16bpp)
+Madden NFL 2000 (MagDemo27: MADN00\PORTRAIT.DAT) (96x64, 8bpp plus palette)
+Madden NFL 2001 (MagDemo39: MADN01\PORTRAIT.DAT) (64x64, 8bpp plus palette)
+
+Those PORTRAITS.DAT don't have any archive header, instead they do contain
+several images in the above format, each one zeropadded to 2000h-byte size.
+
+989 Sports: NHL Faceoff '99 (MagDemo17: FO99\*.KGB\*.TEX)
+
+989 Sports: NHL Faceoff 2000 (MagDemo28: FO2000\*.TEX)
+
+989 Sports: NCAA Final Four 2000 (MagDemo30: FF00\*.TEX)
+
+| 000h 0Ch ID "TEX PSX ",01h,00h,00h,00h ;used in 989 Sports games
+00Ch 4 Number of Textures
+010h 4 Total Filesize
+014h 4 Common Palette Size (0=200h, 1=None, 2=20h)
+018h (..) Common Palette, if any (0,20h,200h bytes)
+... .. Texture(s)
+Texture format:
+000h 10h Filename (eg. "light1", max 16 chars, zeropadded if shorter)
+010h 4 Width in pixels (eg. 40h)
+014h 4 Height (eg. 20h or 40h)
+018h 4 Unknown (always 0)
+01Ch 4 Number of Colors (eg. 10h, 20h or 100h)
+020h .. Bitmap (4bpp when NumColors10h)
+... (..) Palette (NumColors*2 bytes, only present if Common Palette=None)
+
+The .TEX files may be in ISO folders, KGB archives, DOTLESS archives. And, some
+are stored in headerless .DAT/.CAT archives (which start with ID "TEX PSX ",
+but seem to have further files appended thereafter).
+
+Electronic Arts .PSH (SHPP)
+
+FIFA - Road to World Cup 98 (with chunk C0h/C1h = RefPack compression)
+
+NCAA March Madness 2000 (MagDemo32: MM2K\*.PSH)
+
+Need for Speed 3 Hot Pursuit (*.PSH, ZLOAD*.QPS\RefPack.PSH)
+
+ReBoot (DATA\*.PSH) (with chunk 6Bh)

@@ -1,0 +1,43 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION LZ5 AND LZ5-VARIANTS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression LZ5 and LZ5-variants
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1184 characters
+Lines: 35
+================================================================================
+
+CDROM File Compression LZ5 and LZ5-variants
+
+The Next Tetris (MagDemo22: TETRIS\*) has PSX.BSE (and nested therein)
+
+| 000h 4 Unknown (3)
+004h 4 Total Size
+008h 4 Number of Files (N) (max 40h, for max 40h*4 bytes in file list)
+00Ch N*4 File List (increasing offsets, 800h-byte aligned)
+... .. Unknown (looks like garbage padding for unused File List entries)
+10Ch 6F4h 42h-filled padding to 800h-byte boundary
+800h .. File Data area
+
+Tactics Ogre (UBF*.BIN)
+
+| 000h 8 Fixed (88h,0,0,0,0,0,0,0)
+008h 4 Number of Files (eg. 1Dh or 585h, including last/end file)
+00Ch N*4 File List (increasing offsets, 800h-byte aligned)
+... .. Zeropadding to 800h-byte boundary
+... .. File Data area
+
+Note: The last file is a TXT file containing "LINK-FILE END....",0Dh,0Ah,1Ah,
+plus zeropadding to 800h-byte boundary.
+
+Spyro the Dragon (MagDemo12: SPYRO\PETE.WAD)
+
+| 000h 4 Total Filesize (3E800h in Spyro)
+004h N*8 File List (1B0h bytes in Spyro)
+... .. Zeropadding to 800h-byte boundary
+... .. File Data (4-byte aligned, despite of above 800h-byte hdr padding)
+
+File List entries:
+
+| 000h 4 Fileoffset (increasing, 4-byte aligned)
+004h 4 File ID? (unsorted, not increasing, used range is 000h..1FAh)

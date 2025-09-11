@@ -1,0 +1,94 @@
+PSXSPX SPECIFICATIONS - CDROM INTERNAL HC05 INSTRUCTION SET
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM Internal HC05 Instruction Set
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 3240 characters
+Lines: 85
+================================================================================
+
+CDROM Internal HC05 Instruction Set
+
+ALU, Load/Store, Jump/Call
+
+| Opcode Clk HINZC Name Syntax
+x6 ... 2-5 --NZ- LDA MOV A, ;A=op
+xE ... 2-5 --NZ- LDX MOV X, ;X=op
+x7 ... 4-6 --NZ- STA MOV ,A ;op=A
+xF ... 4-6 --NZ- STX MOV ,X ;op=X
+xC ... 2-4 ----- JMP JMP ;PC=op
+xD ... 5-7 ----- JSR CALL ;[SP]=PC, PC=op
+xB ... 2-5 H-NZC ADD ADD A, ;A=A+op
+x9 ... 2-5 H-NZC ADC ADC A, ;A=A+op+C
+x0 ... 2-5 --NZC SUB SUB A, ;A=A-op
+x2 ... 2-5 --NZC SBC SBC A, ;A=A-op-C
+x4 ... 2-5 --NZ- AND AND A, ;A=A AND op
+xA ... 2-5 --NZ- ORA OR A, ;A=A OR op
+x8 ... 2-5 --NZ- EOR XOR A, ;A=A XOR op
+x1 ... 2-5 --NZC CMP CMP A, ;A-op
+x3 ... 2-5 --NZC CPX CMP X, ;X-op
+x5 ... 2-5 --NZ- BIT TEST A, ;A AND op
+A7,AF,AC = Reserved (no STA/STX/JMP with immediate operand)
+
+Operands can be...
+
+| Opcode Clk ALU/LDA/LDX Clk STA/STX Clk JMP/CALL
+Ax nn 2 cmd r,nn - N/A -/6 call relative (BSR)
+Bx nn 3 cmd r,[nn] 4 mov [nn],r 2/5 cmd nn
+Cx nn mm 4 cmd r,[nnmm] 5 mov [nnmm],r 3/6 cmd nnmm
+Dx nn mm 5 cmd r,[X+nnmm] 6 mov [X+nnmm],r 4/7 cmd X+nnmm
+Ex nn 4 cmd r,[X+nn] 5 mov [X+nn],r 3/6 cmd X+nn
+Fx 3 cmd r,[X] 4 mov [X],r 2/5 cmd X
+
+Read-Modify-Write
+
+| Opcode Clk HINZC Name Syntax
+xC ... 3-6 --NZ- INC INC op ;increment ;op=op+1
+xA ... 3-6 --NZ- DEC DEC op ;decrement ;op=op-1
+xF ... 3-6 --01- CLR ?? op,00h ;clear ;op=op AND 00h
+x3 ... 3-6 --NZ1 COM NOT op ;complement ;op=op XOR FFh
+x0 ... 3-6 --NZC NEG NEG op ;negate ;op=00h-op
+x9 ... 3-6 --NZC ROL RCL op ;rotate left through carry
+x6 ... 3-6 --NZC ROR RCR op ;rotate right through carry
+x8 ... 3-6 --NZC LSL SHL op ;shift left logical
+x4 ... 3-6 --0ZC LSR SHR op ;shift right logical
+x7 ... 3-6 --NZC ASR SAR op ;shift right arithmetic
+xD ... 3-5 --NZ- TST TEST op,FFh ;test for negative or zero (AND FFh?)
+x1,x2,x5,xB,xE = Reserved (except for: 42 = MUL)
+
+Operands can be...
+
+| Opcode Clk RMW Clk CLR Clk TST
+3x nn 5 cmd [nn] 5 MOV [nn],00h 4 TEST [nn],0FFh
+4x 3 cmd A 3 MOV A,00h,slow 3 TEST A,0FFh,slow
+5x 3 cmd X 3 MOV X,00h,slow 3 TEST X,0FFh
+6x nn 6 cmd [X+nn] 6 MOV [X+nn],00h 5 TEST [X+nn],0FFh
+7x 5 cmd [X] 5 MOV [X],00h 4 TEST [X],0FFh
+
+CLR includes a dummy-read-cycle, whilst TST does omit the dummy-write cycle.
+
+The ",slow" RMW opcodes are smaller, but slower than equivalent ALU opcodes.
+
+Bit Manipulation and Bit Test with Relative Jump (to $+3+/-dd)
+
+| Opcode Clk HINZC Name Syntax
+00h+i*2 nn dd 5 ----C BRSET JNZ [nn].i,dest ;C=[nn].i, branch if set
+01h+i*2 nn dd 5 ----C BRCLR JZ [nn].i,dest ;C=[nn].i, branch if clear
+10h+i*2 nn 5 ----- BSET SET [nn].i ;set [nn].i
+11h+i*2 nn 5 ----- BCLR RES [nn].i ;clear [nn].i
+
+Branch (Relative jump to $+2+/-nn)
+
+| Opcode Clk HINZC Name Syntax
+20 nn 3 ----- BRA JR nn ;branch always
+21 nn 3 ----- BRN NUL nn ;branch never
+22 nn 3 ----- BHI JA nn ;if C=0 and Z=0, higher ?
+23 nn 3 ----- BLS JBE nn ;if C=1 or Z=1, lower or same ?
+24 nn 3 ----- BCC/BHS JNC/JAE nn ;if C=0, carry clear, higher.same
+25 nn 3 ----- BCS/BLO JC/JB nn ;if C=1, carry set, lower
+26 nn 3 ----- BNE JNZ/JNE nn ;if Z=0, not equal / not zero
+27 nn 3 ----- BEQ JZ/JE nn ;if Z=1, equal / zero
+28 nn 3 ----- BHCC JNH nn ;if H=0, half-carry clear
+29 nn 3 ----- BHCS JH nn ;if H=1, half-carry set
+2A nn 3 ----- BPL JNS nn ;if S=0, plus / not signed
+2B nn 3 ----- BMI JS nn ;if S=1, minus / signed

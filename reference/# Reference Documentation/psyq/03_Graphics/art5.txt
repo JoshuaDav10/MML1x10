@@ -1,0 +1,255 @@
+PSYQ DOCUMENTATION - FAQ/art5.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/FAQ/art5.pdf
+Converted: Wed Sep 10 02:47:39 PM CDT 2025
+================================================================================
+
+============================================
+     T H E   " U N - O F F I C I A L"
+       PLAYSTATION DEVELOPMENT FAQ
+
+              ARTIST TOOLS
+              CONFERENCE
+============================================
+
+             Release v1.1
+       Last Updated: August 31, 1995
+
+---------------------------------------------
+
+----------
+DISCLAIMER
+----------
+
+This FAQ is to aid in informing the licensed game
+developer about the development environment provided
+by Sony Computer Entertainment.
+
+The Development System Tool to which this manual
+relates is supplied pursuant to and subject to the
+terms of the Sony Playstation Licensed Developer Agreement.
+
+This FAQ is intended for distribution to and use only
+by Sony PlayStation Licensed Developers in accordance with
+the Sony Playstation Licensed Developer Agreement. The
+information in thismanual is subject to change without
+notice.
+
+The content of this manual is Confidential Information
+of Sony for the purposes of the Sony PlayStation Licensed
+Developer Agreement and otherwise.
+
+---------------------
+TRADEMARK INFORMATION
+---------------------
+PlayStation and Sony Computer Entertainment names and logos
+are trade names and/or trademarks and/or copyright artwork
+of Sony Corporation(or its subsidiaries).
+
+All specific names included herein are trademarks and are
+so acknowledged: IBM, Microsoft, MS-DOS. Any trademarks not
+mentioned here are still hypothetically acknowledged.
+
+----------------
+COPYRIGHT NOTICE
+[1.]: ARTIST TOOLS
+
+[1.1. ]: What are the types of graphic file formats?
+
+[1.1.1.]: What is TMD format?
+
+
+TMD format data is modeling data format which is managed in
+Playstation's 3D library libgs.
+
+
+[1.1.2.]: What type of data is in the TMD format?
+
+
+Data recorded in the TMD format is an aggregate of primatives such as
+polygons and straight lines which make up the object. One TMD file can
+have multiple objects.
+
+
+[1.1.3.]: What is RSD file?
+
+
+The RSD file which is a higher abstract text data, is used by the artist
+tools such as the 3D Graphics Tool.
+
+
+[1.1.4.]: What is PMD file format?
+
+
+PMD format data is a type of modeling data handled by an extended
+graphics library, "libgs" and it is a format for high speed processing.
+Compared with the TMD format, several of its functions have been
+simplified and it can be processed at a higher speed.
+
+
+[1.1.5.]: What type of data is in the PMD format?
+
+
+The objects handled by the PMD format are as follows:
+  * Limited to triangular/quadrangular polygons
+  * A packet creation area is included in the data.
+  * It handles polygons with the same attributes
+collectively.
+
+
+
+[1.1.6.]: I would like to know about the tips to create 1-cut
+animation with MIMe.
+
+As a way to create 1-cut animation, refer to the following:
+Initial frame      Key frame       Key frame       Final frame
+  ---------------------------------------------------------------
+Interpolation     Interpolation    Interpolation     processing
+processing       processing
+  TMD data X0 --> TMD data X1 --> TMD data X2 --> TMD data Xn
+ VDF0(=0)        VDF1            VDF2         VDFn
+ (W0=1.0)        W1=1.0          W2=1.0       W1n=1.0
+
+When VDF data is made up by setting the initial frame as the base TMD
+and setting each key frame as the vector TMD (any TMDs are available for
+the base), 1-cut animation can be created by interpolating a weighted
+coefficient "W". In the case of the linear interpolation, the non-zero
+weighted coefficients are 2 to the maximum between each key frame. Since
+the functions in vertex MIMe skip the processing when the weighted
+coefficient is zero, even many key frames will not put the load on the
+calculation. Moreover, more smooth interpolation can be achieved by
+performing the spline interpolation for the weighted coefficient W. In
+this case, the load will increase because the non-zero weighted
+coefficients increase in number.
+
+If the translation or the rotation is performed in MIMe, the high effect
+will not be expected because all the vertices move. However, when the
+base is changed dynamically as follows, VDF will be smaller if there is
+a correlation between the key frames.
+Initial frame        Key frame        Key frame        Final frame
+  ----------------------------------------------------
+
+TMD data X0 --> TMD data X1 --> TMD data X2 --> TMD Data Xn
+Base=TMD0          Base=TMD2
+VDF1        VDFn
+W1=1.0           (W2=1.0)       Wn=1.0
+
+Also, the following tool has been released for creating efficient TMD
+and VDF (NDF).
+   * mimefilt ... Tool for creating VDF (NDF)
+   * tmdsort ... Sorting TMD according to the packet type Speeding up
+the display with GsSortObject4() and
+GsSortObject5()
+   * mimesort ... By sorting the vertex information of the TMD file for
+which MIMe must be performed, speeding up the run-time MIMe. The VDF
+becomes smaller.
+
+
+
+
+ [1.1.7.]: I would like to know about the formats of the
+rotation parameters (Rx, Ry, Rz), the translation parameters
+(Tx, Ty, Tz), and the scaling parameters (Sx, Sy, Sz) in the
+TOD data packet.
+See the following.
+* Rotation
+       32-bit signed integer. (1,31,0) 4096 represents 1 degree.
+* Transfer
+       32-bit signed integer. (1,31,0)
+ * Scale
+       16-bit fixed decimal point number. (1,3,12)
+[1.1.8.]: How can the objects with the parent-child relation,
+connected by joints, be operated?
+With PlayStation, the joints are represented by Origin. For example, in
+order to connect a body and an arm Origin is necessary as the shoulder.
+Select "Create Origin" command in Tool menu of animation tool to create
+Origin.
+
+ [1.1.9.]: Are there any ways to display a wire-frame object
+without perspective?
+
+
+
+No ways can eliminate it perfectly, but approximate desired appearance
+will be achieved with a telephoto lens pulling back the camera.
+
+Refer to the animation tool manual for how to pull back the camera and
+how to change the focus distance.
+
+
+
+
+[1.1.10.]: How does the copy functionality of the material
+editor work, and when should it be used?
+When performing the copy processing with the material editor, a new
+polygon will be generated at the quite same location. At this time,
+since
+the vertices of the copied polygon are shared by those of the original
+polygon, the number of vertices doesn't change. If selecting a polygon,
+the closer polygon will be selected. This functionality is useful as
+follows:
+     1) By reversing the side of the copied polygon, double-sided polygon
+will be generated.
+     2) By mapping the texture on the copied polygon, and rendering a
+part
+       of the polygon semitransparent, such an effect as the texture is
+mapped on only a part of the polygon will be produced. In other words,
+it is like decalcomania on plastic-models.
+
+[1.2. ]: Graphic Artist Board setup questions.
+
+[1.2.1.]: What address should be used when installing the
+board?
+
+
+Always use the default address, 1340, to avoid potential problems with
+the tools having hardcoded addresses. If you MUST use a different
+address, use the ABOARD program to specify your boards address.
+[1.2.2.]: If I am installing both the graphic Artist card and
+the development system into the same pc, what should I look
+out for?
+
+
+Make sure that you change the default address on the dev system board,
+since both board sets are shipped with the same default address. Also,
+use the S-Video output on the Artist Board, because it is the only one
+that will reliably work when both board sets are installed.
+
+
+[1.3. ]: 3D Studio Plug-In Questions.
+
+[1.3.1.]: What restrictions are there on mapping methods
+within 3D Studio?
+
+
+The biggest restriction is that the converter does not support the
+tiling of materials. You have to “custom map” all textures.
+
+
+ [1.4. ]: Caligari Truespace Questions.
+
+[1.4.1.]: Will a version 2.0 of Caligari Truespace for the
+Playstation be released, to match Caligari’s current version?
+
+
+It depends on the demand for the product. At this time, the 1.0 version
+is all that we have, and no version 2.0 has been scheduled.
+
+
+[1.5. ]: Materials Editor Questions.
+
+[1.5.1.]: We are trying to get snapshot working from the
+Meditor Utility on version 1.6 and higher. Every time we get
+a snapshot we get a blue color bleed all over the TIM image.
+Does anybody knows why we are getting this blue color bleed?
+
+
+I believe it to be caused by the Windows configuration, as it only
+happened when Windows was in 256 color mode. As soon as I switched to a
+65k color mode, the bleeding went away. The problem also only showed up
+while "preview"ing the tim file, not when using the "tim view" option.
+This is just a limitation of Windows, so the solution is to switch to a
+higher color mode or to only use the tim view option.
+Has anyone used any sort of tiling techniques on the Sony Playstation? We can't seem yo find the support
+for this really useful function. Any advice would be appreciated.
+

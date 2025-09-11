@@ -1,0 +1,50 @@
+PSXSPX SPECIFICATIONS - THE HARDWARE CAN HOLD MAX 2 TX CHARACTERS PER CHANNEL (1 IN THE THR REGISTER,
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: The hardware can hold max 2 Tx characters per channel (1 in the THR register,
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1646 characters
+Lines: 41
+================================================================================
+
+The hardware can hold max 2 Tx characters per channel (1 in the THR register,
+and one currently processed in the Tx Shift Register), and max 4 Rx characters
+(3 in the RHR FIFO, plus one in the Rx Shift Register) (when receiving a 5th
+character, the "old newest" value in the Rx Shift Register is lost, and the
+overrun flag is set).
+
+1F802020h/FirstAccess - MR1A - DUART Mode Register 1.A (R/W)
+
+1F802028h/FirstAccess - MR1B - DUART Mode Register 1.B (R/W)
+
+| 7 RxRTS Control (0=No, 1=Yes)
+6 RxINT Select (0=RxRDY, 1=FFULL)
+5 Error Mode (0=Char, 1=Block)
+4-3 Parity Mode (0=With Parity, 1=Force Parity, 2=No Parity, 3=Multidrop)
+2 Parity Type (0=Even, 1=Odd)
+1-0 Bits per Character (0=5bit, 1=6bit, 2=7bit, 3=8bit)
+
+Note: In block error mode, block error conditions must be cleared by using the
+error reset command (command 4) or a receiver reset (command 2).
+
+1F802020h/SecondAccess - MR2A - DUART Mode Register 2.A (R/W)
+
+1F802028h/SecondAccess - MR2B - DUART Mode Register 2.B (R/W)
+
+| 7-6 Channel Mode (0=Normal, 1=Auto-Echo, 2=Local loop, 3=Remote loop)
+5 TxRTS Control (0=No, 1=Yes) (when 1 --> OP0=RTSA / OP1=RTSB)
+4 CTS Enable (0=No, 1=Yes) (when 1 --> IP0=CTSA / IP1=CTSB)
+3-0 Tx Stop Bit Length (00h..0Fh = see below)
+
+Stop Bit Lengths:
+
+| 0=0.563 1=0.625 2=0.688 3=0.750 4=0.813 5=0.875 6=0.938 7=1.000
+8=1.563 9=1.625 A=1.688 B=1.750 C=1.813 D=1.875 E=1.938 F=2.000
+
+Add 0.5 to values shown for 0..7 if channel is programmed for 5 bits/char.
+
+1F802021h/Write - CSRA - DUART Clock Select Register A (W)
+
+1F802029h/Write - CSRB - DUART Clock Select Register B (W)
+
+| 7-4 Rx Clock Select (0..0Ch=See Table, 0Dh=Timer, 0Eh=16xIP, 0Fh=1xIP)

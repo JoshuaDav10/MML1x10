@@ -1,0 +1,58 @@
+PSXSPX SPECIFICATIONS - CAUTION: BELOW COMMANDS 19H,71H..76H ARE SUPPORTED ONLY IN BIOS VERSION VC1 AND
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Caution: Below commands 19h,71h..76h are supported only in BIOS version vC1 and
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1650 characters
+Lines: 49
+================================================================================
+
+Caution: Below commands 19h,71h..76h are supported only in BIOS version vC1 and
+up. Not supported in vC0.
+
+19h,71h,index --> INT3(databyte) ;Read single register
+
+index can be 00h..1Fh, bigger values seem to be mirrored to "index AND 1Fh",
+with one exception: index 13h in NOT mirrored, instead, index 33h, 53h, 93h,
+B3h, D3h, F3h return INT5(stat+1,10h), and index 73h returns INT5(stat+1,20h).
+
+Aside from returning a value, the commands seem to DO something (like moving
+the drive head when a disk is inserted). Return values are usually:
+
+| index value
+00h 04h ;04h=empty, 8Eh=licensed, 24h=audio
+01h [0B1h] ;DCh=empty/licensed, DDh=audio
+02h 00h
+03h 00h ;or variable when disk inserted
+04h 00h
+05h 80h ;or 86h or 89h when disk inserted
+06h C0h
+07h 02h
+08h 8Ah
+09h C0h
+0Ah 00h
+0Bh C0h
+0Ch [1F2h]
+0Dh [1F3h]
+0Eh 00h ;or 8Eh or E6h when disk inserted ;D4h/audio
+0Fh 00h ;or sometimes 01h when disk inserted ;50h/audio
+10h C0h
+11h E0h
+12h 71h
+13h stat
+14h FFh
+15h..1Fh C0h-filled ;or 17h --> DEh
+
+19h,72h,index,databyte --> INT3(stat) ;Write single register
+
+| ;other response on param xx16h,xx18h with xx>00h
+
+19h,73h,index,len --> INT3(databytes...) ;Read multiple registers (bugged)
+
+19h,74h,index,len,databytes --> INT3(stat) ;Write multiple registers (bugged)
+
+Same as read/write single register, but trying to transfer multiple registers
+at once. BUG: The transfer should range from 00h to len-1, but the loop counter
+is left uninitialized (set to X=48h aka "command number 19h-minus-1-mul-2"
+instead of X=00h). Causing to the function to read/write garbage at index
+48h..FFh, it does then wrap to 00h and do the correct intended transfer, but

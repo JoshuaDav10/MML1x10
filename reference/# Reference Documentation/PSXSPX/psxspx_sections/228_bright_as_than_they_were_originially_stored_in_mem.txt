@@ -1,0 +1,37 @@
+PSXSPX SPECIFICATIONS - BRIGHT AS THAN THEY WERE ORIGINIALLY STORED IN MEMORY; OF COURSE THE RESULTS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: bright as than they were originially stored in memory; of course the results
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 1020 characters
+Lines: 28
+================================================================================
+
+bright as than they were originially stored in memory; of course the results
+can't exceed the maximum brightness, ie. the 5bit values written to the
+framebuffer are saturated to max 1Fh).
+
+Texpage Attribute (Parameter for Textured-Polygons commands)
+
+| 0-8 Same as GP0(E1h).Bit0-8 (see there)
+9-10 Unused (does NOT change GP0(E1h).Bit9-10)
+11 Same as GP0(E1h).Bit11 (see there)
+12-13 Unused (does NOT change GP0(E1h).Bit12-13)
+14-15 Unused (should be 0)
+
+This attribute is used in all Textured-Polygons commands.
+
+Clut Attribute (Color Lookup Table, aka Palette)
+
+This attribute is used in all Textured Polygon/Rectangle commands. Of course,
+it's relevant only for 4bit/8bit textures (don't care for 15bit textures).
+
+| 0-5 X coordinate X/16 (ie. in 16-halfword steps)
+6-14 Y coordinate 0-511 (ie. in 1-line steps)
+15 Unknown/unused (should be 0)
+
+Specifies the location of the CLUT data within VRAM.
+
+GP0(E1h) - Draw Mode setting (aka "Texpage")
+
+| 0-3 Texture page X Base (N*64) (ie. in 64-halfword steps) ;GPUSTAT.0-3

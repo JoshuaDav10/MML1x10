@@ -1,0 +1,87 @@
+PSXSPX SPECIFICATIONS - THE HEADER/DATA LACKS INFO ABOUT MDEC SIZE AFTER HUFFMAN DECOMPRESSION, THE
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: The header/data lacks info about MDEC size after Huffman decompression, the
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 3510 characters
+Lines: 78
+================================================================================
+
+The header/data lacks info about MDEC size after Huffman decompression, the
+worst case size for 320x208pix would be:
+
+| 14h*0Dh*6*41h*2+Align(80h)+Header(4) = 31880h+4 bytes
+
+Note: The bitstream consists of separate 16x208pix slices (set DC for Cr,Cb,Y
+to zero at begin of each slice, and skip padding to 32bit-boundary at end of
+each slice).
+
+Wacwac Huffman Table Sets
+
+Aconcagua has two table sets, stored in PROGRAM.BIN (in compressed form,
+appearing as so: FF,90,16,2E,06,20,03,D6,etc). While watching the intro movie,
+the uncompressed sets can be found at these RAM locations:
+
+| 80112AF8h (1690h bytes) ;Table Set for Intro Scene
+80114188h (1B68h bytes) ;Table Set for Ending Scene
+
+Each Table Set has a 38h-byte header, followed by five tables:
+
+| 000h 4 Table Set size (1690h or 1B68h)
+004h 4 Table Set exploded size (when allocating 16bit/DC, 32bit/Size/AC)
+008h 2 Size Table max Huffman size in bits (0Ah or 09h) ;\Size
+00Ah 2 Size Table number of entries (40h) ;/
+00Ch 2 DC Table max Huffman size in bits (0Bh) ;\
+00Eh 2 DC Table number of entries (100h) ; DC
+010h 2 DC Huffman code Escape 10bit (non-relative 10bit DC value) ;
+012h 2 DC Huffman size Escape 10bit (3 or 6, escape prefix size) ;/
+014h 2 AC1 Table max Huffman size in bits (0Eh or 0Bh) ;\
+016h 2 AC1 Table number of entries (0DAh or 100h) ;
+018h 2 AC1 Huffman code Escape 7bit (run=0bit, level=signed7bit) ; AC1
+01Ah 2 AC1 Huffman code Escape 16bit (run=6bit, level=10bit) ;
+01Ch 2 AC1 Huffman size Escape 7bit (9 or 7, escape prefix size) ;
+01Eh 2 AC1 Huffman size Escape 16bit (9 or 7, escape prefix size) ;/
+020h 2 AC2 Table max Huffman size in bits (0Eh) ;\
+022h 2 AC2 Table number of entries (AAh or F4h) ;
+024h 2 AC2 Huffman code Escape 8bit (run=3bit, level=signed5bit) ; AC2
+026h 2 AC2 Huffman code Escape 16bit (run=6bit, level=10bit) ;
+028h 2 AC2 Huffman size Escape 8bit (10 or 9, escape prefix size) ;
+02Ah 2 AC2 Huffman size Escape 16bit (10 or 9, escape prefix size) ;/
+02Ch 2 AC3 Table max Huffman size in bits (0Eh) ;\
+02Eh 2 AC3 Table number of entries (87h or B2h) ;
+030h 2 AC3 Huffman code Escape 8bit (run=4bit, level=signed4bit) ; AC3
+032h 2 AC3 Huffman code Escape 16bit (run=6bit, level=10bit) ;
+034h 2 AC3 Huffman size Escape 8bit (10 or 9, escape prefix size) ;
+036h 2 AC3 Huffman size Escape 16bit (10 or 9, escape prefix size) ;/
+038h .. Size Table (64bit per entry) ;\
+... .. DC Table (32bit per entry) ;
+... .. AC1 Table (64bit per entry) ; Tables
+... .. AC2 Table (64bit per entry) ;
+... .. AC3 Table (64bit per entry) ;/
+
+Size Table entries (64bit):
+
+| 0-1 Zero
+2-31 Huffman code (10bit max)
+32-39 Number of AC1 codes in this block ;\implies End of Block (EOB)
+40-47 Number of AC2 codes in this block ; after those AC codes
+48-55 Number of AC3 codes in this block ;/
+56-63 Huffman size (1..10 bits)
+
+DC Table entries (32bit):
+
+| 0-9 Relative DC Value (relative to old DC from memorized Cr,Cb,Y)
+10-15 Huffman size (1..11 bits)
+16-31 Huffman code (11bit max)
+Notes: For the relative DC's, the decoder does memorize DC for Cr,Cb,Y upon
+decoding Cr,Cb,Y1,Y3 (but does NOT memorize DC when decoding Y2,Y4).
+Initial DC for Cr,Cb,Y is zero at begin of each 16x208pix slice.
+Obscurities: The decoder does accidentally use bit10 to sign-expand the
+DC value in bit0-9 (but does mask-off those bugged sign bits thereafter),
+and the decoder does uselessly memorize Y1 and Y3 separately (but uses only
+the most recently memorized value).
+
+AC1/AC2/AC3 Table entries (64bit):
+
+| 0-1 Zero
+2-31 Huffman code (14bit max)

@@ -1,0 +1,42 @@
+MIPS INSTRUCTION SET REFERENCE - EXCEPTIONS:
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Exceptions:
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1543 characters
+Lines: 34
+================================================================================
+
+Exceptions:
+           None
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                                 263
+
+                              Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+SRLV
+
+
+
+
+  Shift Word Right Logical Variable                                                                                      SRLV
+
+       31                   26 25            21 20              16 15             11 10          7   6   5                 0
+             SPECIAL                                                                                 R         SRLV
+                                      rs                 rt                rd             0000
+              000000                                                                                 0         000110
+                   6                  5                  5                 5               4         1           6
+
+            Format:    SRLV rd, rt, rs                                                                               MIPS32
+
+            Purpose:
+            To execute a logical right-shift of a word by a variable number of bits
+
+            Description: rd ← rt >> rs               (logical)
+            The contents of the low-order 32-bit word of GPR rt are shifted right, inserting zeros into the emptied bits; the word
+            result is placed in GPR rd. The bit-shift amount is specified by the low-order 5 bits of GPR rs.
+
+            Restrictions:
+            None

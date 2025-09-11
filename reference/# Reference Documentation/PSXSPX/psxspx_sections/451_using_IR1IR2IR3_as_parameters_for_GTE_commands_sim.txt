@@ -1,0 +1,35 @@
+PSXSPX SPECIFICATIONS - USING IR1,IR2,IR3 AS PARAMETERS FOR GTE COMMANDS, SIMILAR TIMING RESTRICTIONS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: using IR1,IR2,IR3 as parameters for GTE commands, similar timing restrictions
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 1165 characters
+Lines: 27
+================================================================================
+
+using IR1,IR2,IR3 as parameters for GTE commands, similar timing restrictions
+might apply... depending on when the specific commands use the parameters?
+
+cop2r29 - ORGB - Color conversion Output (R)
+
+Collapses 16:16:16 bit RGB (range 0000h..0F80h) to 5:5:5 bit RGB (range
+0..1Fh). Negative values (8000h..FFFFh/80h) are saturated to 00h, large
+positive values (1000h..7FFFh/80h) are saturated to 1Fh, there are no overflow
+or saturation flags set in cop2r63 though.
+
+| 0-4 Red (0..1Fh) (R) ;IR1 divided by 80h, saturated to +00h..+1Fh
+5-9 Green (0..1Fh) (R) ;IR2 divided by 80h, saturated to +00h..+1Fh
+10-14 Blue (0..1Fh) (R) ;IR3 divided by 80h, saturated to +00h..+1Fh
+15-31 Not used (always zero) (Read only)
+
+Any changes to IR1,IR2,IR3 are reflected to this register (and, actually also
+to IRGB) (ie. ORGB is simply a read-only mirror of IRGB).
+
+cop2r30 - LZCS - Count Leading Bits Source data (R/W)
+
+cop2r31 - LZCR - Count Leading Bits Result (R)
+
+Reading LZCR returns the leading 0 count of LZCS if LZCS is positive and the
+leading 1 count of LZCS if LZCS is negative. The results are in range 1..32.
+
+cop2r63 (cnt31) - FLAG - Returns any calculation errors.

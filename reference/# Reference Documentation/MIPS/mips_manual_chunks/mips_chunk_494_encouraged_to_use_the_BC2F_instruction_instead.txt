@@ -1,0 +1,45 @@
+MIPS INSTRUCTION SET REFERENCE - ENCOURAGED TO USE THE BC2F INSTRUCTION INSTEAD.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: encouraged to use the BC2F instruction instead.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1898 characters
+Lines: 37
+================================================================================
+
+encouraged to use the BC2F instruction instead.
+
+
+
+
+56                                                       MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                        Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+BC2T
+
+
+
+
+  Branch on COP2 True                                                                                                        BC2T
+
+       31                   26 25             21 20        18 17 16 15                                                        0
+               COP2                  BC                      nd tf
+                                                      cc                                        offset
+              010010                01000                     0   1
+                 6                    5               3       1   1                              16
+
+            Format:    BC2T offset (cc = 0 implied)                                                                    MIPS32
+                       BC2T cc, offset                                                                                 MIPS32
+
+            Purpose:
+            To test a COP2 condition code and do a PC-relative conditional branch
+
+            Description: if cc = 1 then branch
+            An 18-bit signed offset (the 16-bit offset field shifted left 2 bits) is added to the address of the instruction following
+            the branch (not the branch itself) in the branch delay slot to form a PC-relative effective target address. If the COP2
+            condition specified by CC is true (1), the program branches to the effective target address after the instruction in the
+            delay slot is executed.
+
+            Restrictions:
+            Processor operation is UNPREDICTABLE if a branch, jump, ERET, DERET, or WAIT instruction is placed in the
+            delay slot of a branch or jump.

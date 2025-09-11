@@ -1,0 +1,52 @@
+PSXSPX SPECIFICATIONS - CDROM FILE ARCHIVE GAME.RSC (COLONLY WARS RED SUN)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Archive GAME.RSC (Colonly Wars Red Sun)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1605 characters
+Lines: 44
+================================================================================
+
+CDROM File Archive GAME.RSC (Colonly Wars Red Sun)
+
+Colony Wars Red Sun (MagDemo31: CWREDSUN\GAME.RSC, 13Mbyte)
+
+| 0000h 4 Offset to Bonkers List (2794h)
+0004h F*8 Folder List (80h bytes, 10h entries)
+0084h N*14h File List(s) for each folder (2710h bytes, 1F4h entries)
+2794h 4 Number of Bonkers (FE3h)
+2798h B*8 Bonkers List (7F18h bytes, FE3h entries)
+A6B0h 8 Unknown (zerofilled)
+A6B8h .. File Data area
+
+Folder List entries:
+
+| 000h 4 Offset to File List for this folder ;\both zero when empty
+004h 4 Number of Files in this folder ;/
+
+File List entries:
+
+| 000h 10h Filename ("FILENAME_EXT", zeropadded)
+010h 3 Index (in Bonkers list) (000h..Fxxh)
+013h 1 Folder Number where the file is stored (00h..0Fh)
+
+Bonkers List entries:
+
+| 000h 4 File Offset (to Data, inreasing, 4-byte aligned, A6B8h and up)
+004h 4 Folder Number where the file is stored (00h..0Fh)
+
+Offsets/Indices in Folder/File list are unsorted (not increasing).
+
+Offsets in Bonkers List are increasing (so filesizes can be computed as
+size=next-curr, except, the LAST file must be computed as size=total-curr).
+
+There is no "number of folders entry" nor "folder list end marker", as
+workaround, while crawling the folder list, search the smallest file list
+offset, and treat that as folder list end offset.
+
+In the demo version, all File List entries for Folder 5 are pointing to files
+with filesize=0, however, the Bonkers List has a lot more "hidden" entries that
+are marked to belong to Folder 5 with nonzero filesize.
+
+Note: Older Colony Wars titles did also have a GAME.RSC file (but in different
+format, without folder structure).

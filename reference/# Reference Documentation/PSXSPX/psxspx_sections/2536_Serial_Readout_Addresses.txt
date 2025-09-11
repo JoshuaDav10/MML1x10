@@ -1,0 +1,65 @@
+PSXSPX SPECIFICATIONS - SERIAL READOUT ADDRESSES:
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Serial Readout Addresses:
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1903 characters
+Lines: 56
+================================================================================
+
+Serial Readout Addresses:
+
+| Addr Data Content
+00h 8bit VC input signal
+01h 8bit SE input signal
+02h 8bit TE input signal
+03h 8bit FE input signal
+04h-07h 9bit TE AVRG register (mirrored to 04h-07h)
+08h-0Bh 9bit FE AVRG register (mirrored to 08h-0Bh)
+0Ch-0Fh 9bit VC AVRG register (mirrored to 0Ch-0Fh)
+12h 8bit RFDC envelope (peak)
+13h 8bit RFDC envelope (bottom)
+1Ch 9bit TRVSC register
+1Dh 9bit FBIAS register
+1Eh 8bit RFDC input signal
+1Fh 8bit RF AVRG register
+20h-3Fh 16bit Data RAM (M00-M1F)
+40h-7Fh 8bit Coefficient RAM (K00-K3F) (note: K40-K4F cannot be read out)
+
+CXD2545Q - CX(3Ax000) - Focus BIAS addition enable
+
+| 23-16 8bit Command (3Ah)
+15 1bit Zero (0)
+14 1bit FBON: FBIAS register addition (0=off, 1=Add FBIAS to FCS)
+13-0 14bit Zero (0)
+
+CXD2545Q - CX(3Bxxxx) - Operation for MIRR/DFCT/FOK
+
+| 23-16 8bit Command (3Bh)
+15-14 2bit SFO FOK Slice Level (...depends on SFOX)
+13-12 2bit SDF DFCT Slice Level (0=89mV, 1=134mV, 2=179mV, 3=224mV)
+11-10 2bit MAX DFCT Maximum Time (0=No Limit, 1=2ms, 2=2.36ms, 3=2.72ms)
+9 1bit SFOX FOK Slice Level (...depends on SFO)
+8 1bit BTF Bottom Hold Double-Speed Count-Up mode for MIRR (0=off)
+7-6 2bit D2V Peak Hold 2 for DFCT (0=22.05kHz, 1=44.1, 2=88.2, 3=176.4)
+5-4 2bit D1V Peak Hold 1 for DFCT (0=176.4kHz, 1=352.8, 2=705.6, 3=1411)
+3-0 4bit Zero (0)
+
+CXD2545Q - CX(3Cxxxx) - TZC for COUT SLCT HPTZC (Default)
+
+| 23-16 8bit Command (3Ch)
+15-0 16bit Unused (don't care)
+
+CXD2545Q - CX(3Dxxxx) - TZC for COUT SLCT DTZC
+
+| 23-16 8bit Command (3Dh)
+15-0 16bit Unused (don't care)
+
+CXD2545Q - CX(3Exxxx) - Filter
+
+| 23-16 8bit Command (3Eh)
+15-14 2bit F1NDM FCS servo filter 1st stage (1=normal, 2=down)
+13-12 2bit F3NUM FCS servo filter 3rd stage (1=normal, 2=up)
+11-10 2bit T1NDM TRK servo filter 1st stage (1=normal, 2=down)
+9-8 2bit T3NUM TRK servo filter 3rd stage (1=normal, 2=up)
+7 1bit DFIS FCS hold filter input extraction node (0=M05, 1=M04)

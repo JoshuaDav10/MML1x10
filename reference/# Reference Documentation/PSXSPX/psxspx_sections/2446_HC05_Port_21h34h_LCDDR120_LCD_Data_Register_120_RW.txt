@@ -1,0 +1,42 @@
+PSXSPX SPECIFICATIONS - HC05 PORT 21H..34H - LCDDR1..20 - LCD DATA REGISTER 1..20 (R/W)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: HC05 Port 21h..34h - LCDDR1..20 - LCD Data Register 1..20 (R/W)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1101 characters
+Lines: 33
+================================================================================
+
+HC05 Port 21h..34h - LCDDR1..20 - LCD Data Register 1..20 (R/W)
+
+| 0-3 First Data Unit ;\Fourty 4bit LCD values (in the twenty registers)
+4-7 Second Data Unit ;/(some duties use only the LSBs of that 4bit values)
+
+HC05 Port 34h - PWMCR - PWM Pulse Width Modulation Control Register (R/W)
+
+| 0-3 CH0-3 PWM Channel 0..3 on Port G.Bit4-7 Enable (0=Disable, 1=Enable)
+4-7 - Not used (0)
+
+HC05 Port 35h - PWMCNT - PWM Counter Register (R) (W=Set Counter to FFh)
+
+| 0-7 PWM Counter, incremented at PHI2 (range 01h..FFh)
+
+HC05 Port 36h - PWMDR0 - PWM Duty Register 0 (R/W)
+
+HC05 Port 37h - PWMDR1 - PWM Duty Register 1 (R/W)
+
+HC05 Port 38h - PWMDR2 - PWM Duty Register 2 (R/W)
+
+HC05 Port 39h - PWMDR3 - PWM Duty Register 3 (R/W)
+
+| 0-7 Duty (N cycles High, 255-N cycles Low)
+
+HC05 Port 3Ah - ADR - A/D Data Register (R)
+
+| 0-3 A/D Conversion result (probably unsigned, 00h=Lowest, FFh=Max voltage?)
+
+HC05 Port 3Bh - ADSCR - A/D Status and Control Register (R/W)
+
+| 0-3 CH0-3 A/D Channel (0..7=PortF.Bit0-7, 8..0Fh=Reserved/Vref/FactorTest)
+4 - Not used (0)
+5 ADON A/D Charge Pump enable (0=Disable, 1=Enable)

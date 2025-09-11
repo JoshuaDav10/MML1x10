@@ -1,0 +1,45 @@
+PSXSPX SPECIFICATIONS - BIOS CONTROL BLOCKS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: BIOS Control Blocks
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1377 characters
+Lines: 36
+================================================================================
+
+BIOS Control Blocks
+
+Exception Control Blocks (ExCB) (4 blocks of 8 bytes each)
+
+| 00h 4 ptr to first element of exception chain
+04h 4 not used (zero)
+
+Event Control Blocks (EvCB) (usually 16 blocks of 1Ch bytes each)
+
+| 00h 4 class (events are triggered when class and spec match)
+04h 4 status (0=free,1000h=disabled,2000h=enabled/busy,4000h=enabled/ready)
+08h 4 spec (events are triggered when class and spec match)
+0Ch 4 mode (1000h=execute function/stay busy, 2000h=no func/mark ready)
+10h 4 ptr to function to be executed when ready (or 0=none)
+14h 8 not used (uninitialized)
+
+Thread Control Blocks (TCB) (usually 4 blocks of 0C0h bytes each)
+
+| 00h 4 status (1000h=Free TCB, 4000h=Used TCB)
+04h 4 not used (set to 1000h by OpenThread) (not for boot executable?)
+08h 80h r0..r31 (entries for r0/zero and r26/k0 are unused)
+88h 4 cop0r14/epc (aka r26/k0 and pc when returning from exception)
+8Ch 8 hi,lo (the mul/div registers)
+94h 4 cop0r12/sr (stored/restored by exception, NOT init by OpenThread)
+98h 4 cop0r13/cause (stored when entering exception, NOT restored on exit)
+9Ch 24h not used (uninitialized)
+
+Process Control Block (1 block of 4 bytes)
+
+| 00h 4 ptr to TCB of current thread
+
+The PSX supports only one process, and thus only one Process Control Block.
+
+File Control Blocks (FCB) (16 blocks of 2Ch bytes each)
+
+| 00h 4 status (0=Free FCB) (nonzero=accessmode)

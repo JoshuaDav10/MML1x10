@@ -1,0 +1,94 @@
+PSXSPX SPECIFICATIONS - CDROM FILE ARCHIVE DARKWORKS CHUNKS (ALONE IN THE DARK)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Archive Darkworks Chunks (Alone in the Dark)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 2474 characters
+Lines: 85
+================================================================================
+
+CDROM File Archive Darkworks Chunks (Alone in the Dark)
+
+Interplay Sports Baseball 2000 (MagDemo22: BB2000\* HOG.DAT and HOG.TOC)
+
+| HOG.TOC:
+000h N*14h Folder/File List (starting with root folder)
+HOG.DAT:
+000h .. File Data (referenced from HOG.TOC)
+
+Folder entries:
+
+| 000h 1 Type ("D"=Directory)
+001h 8 Name ("FILENAME", zeropadded if shorter) (or "\" for root)
+009h 3 Extension (usually zero for directories)
+00Ch 4 Folder Offset/14h in .TOC file (aka 1st child file/folder index)
+010h 4 Folder Size/14h (aka number of child files/folders)
+
+File entries:
+
+| 000h 1 Type ("F"=File)
+001h 8 Name ("FILENAME", zeropadded if shorter)
+009h 3 Extension ("EXT", zeropadded if shorter)
+00Ch 4 File Offset/800h in .DAT file (increasing)
+010h 4 File Size in bytes
+
+Tenchu 2 (MagDemo35: TENCHU2\VOLUME.DAT)
+
+| 000h 4 Unknown (demo=A0409901h, us/retail=A0617023h)
+004h 4 Unknown (0h)
+008h 4 Number of files (F) (demo=B7h, us/retail=1294h)
+00Ch 4 Number of folders (D) (demo=0Fh, us/retail=3Eh)
+010h D*8 Folder List
+... .. Zerofilled (padding to 800h-byte boundary)
+800h F*10h File List
+... .. Zerofilled (padding to 800h-byte boundary)
+... .. File Data area
+
+Folder List entries:
+
+| 000h 4 Folder ID (Random, maybe folder name checksum?)
+004h 4 First file number in this folder (0=first, increasing)
+
+File List entries:
+
+| 000h 4 File Offset/800h
+004h 4 File Size in bytes
+008h 4 Folder ID (same as Parent Folder ID in Folder List)
+00Ch 4 File ID (Random, maybe file name checksum?)
+
+Blasto (MagDemo10: BLASTO\BLASTO.DAT and BLASTO\BLASTO.LFS)
+
+| LFS:
+000h N*18h File/Folder List
+DAT:
+000h .. File data
+
+File entries (with [10h]=Positive):
+
+| 000h 10h Filename ("FILENAME.EXT", zeropadded)
+010h 4 Offset in bytes, in BLASTO.DAT
+014h 4 Size in bytes
+
+Folder entries (with [10h]=Negative):
+
+| 000h 10h Foldername ("DIRNAME", zeropadded)
+010h 4 Index to first child (at Offset=(-Index)*18h in BLASTO.LFS)
+014h 4 Zero
+
+Folder end marker (with [00h]=00h or 80h):
+
+| 000h 1 End marker, at end of root & child directories (00h or 80h)
+001h 17h Unknown
+
+Twisted Metal 4 (MagDemo30: TM4DATA\*.MR and *.IMG)
+
+These are relative small archives with hundreds of tiny chunks (with registry
+style Symbol=Value assignments), and a few bigger chunks (with .mod .vab .bit
+.clt files).
+
+| 000h 4 Fixed ID (CCCC0067h)
+004h .. Root Folder (with Name="Root",00h,FDh,FDh,FDh)
+Folder Chunk format:
+000h 1 Length of Name (including 4-byte padding)
+001h 1 Number of Child Folders
+002h 2 Number of Child Files

@@ -1,0 +1,35 @@
+MIPS INSTRUCTION SET REFERENCE - INSTRUCTION CAN NOT BE ABORTED IN THE MIDDLE BY AN INTERRUPT OR EXCEPTION.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: instruction can not be aborted in the middle by an interrupt or exception.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1399 characters
+Lines: 26
+================================================================================
+
+instruction can not be aborted in the middle by an interrupt or exception.
+       This instruction creates an execution hazard between the change to the Status register and the point where the change
+       to the interrupt enable takes effect. This hazard is cleared by the EHB, JALR.HB, JR.HB, or ERET instructions. Soft-
+       ware must not assume that a fixed latency will clear the execution hazard.
+
+
+
+
+128                                                       MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                           Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+ERET
+
+
+
+
+       Exception Return                                                                                                    ERET
+
+         31                   26 25 24                                                                 6   5                  0
+                 COP0           CO                                    0                                           ERET
+                 010000          1                          000 0000 0000 0000 0000                              011000
+                   6             1                                    19                                            6
+
+              Format: ERET                                                                                              MIPS32
+
+              Purpose:

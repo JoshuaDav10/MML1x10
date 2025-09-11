@@ -1,0 +1,34 @@
+PSXSPX SPECIFICATIONS - 5-15 11BIT MDEC SIZE IN 20H-WORD UNITS (80H-BYTE UNITS)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 5-15 11bit MDEC Size in 20h-word units (80h-byte units)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1236 characters
+Lines: 26
+================================================================================
+
+5-15 11bit MDEC Size in 20h-word units (80h-byte units)
+16-23 8bit Unknown (lowbits are often same as bit48 and up?)
+24-31 8bit BS ID/100h (3800h/100h)
+32-47 16bit Frame Number (0=First)
+48-63 16bit Next Sector Number (start of next video frame)
+To decrypt/convert the frame to standard BS v1 format:
+x=[3FF8h] ;get footer
+[3FF8h..3FFFh]=[0000h..0007h] ;last 8 bytes of bitstream
+[0000h]=(x AND FF00FFE0h) ;size and ID=3800h
+[0004h]=(x AND 1Fh)+10000h ;quant and version=v1
+The next_sector number is usually current_sector+1 (or +2 if that would be
+audio), in last frame it does point to end of file.
+Bitstreams smaller than 3FF8h are garbage padded (initially some 32bit garbage
+values, and in later frames leftovers from previous bitstream sectors).
+
+Dummy sectors contain 800h bytes:
+
+| 000h 4 Always FFFFFFFFh (unfortunately, this isn't a unique ID)
+004h 7FCh Garbage (zeroes, random, or even leaked ASM source code)
+Dummy sectors have the same Subheader as video sectors, the leading FFFFFFFFh
+could also occur in BS bitstreams or frames with garbage padding, so one must
+use the sector arrangement pattern to identify dummy sectors.
+
+Audio sectors are XA-ADPCM and can be filtered via Subheader, or via sector
+arrangement pattern.

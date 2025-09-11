@@ -1,0 +1,28 @@
+MIPS INSTRUCTION SET REFERENCE - APPENDIX A INSTRUCTION BIT ENCODINGS
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Appendix A Instruction Bit Encodings
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1222 characters
+Lines: 19
+================================================================================
+
+Appendix A Instruction Bit Encodings
+
+
+      31                  26 25                21 20               16 15                                                             0
+              opcode                   rs                  rt                                     immediate
+                 6                      5                   5                                         16
+                                                                                                                   Binary encoding of
+                                                                                                                   opcode (28..26)
+
+                                                                                               Decimal encoding of
+                                                                                               opcode (28..26)
+
+
+            opcode     bits 28..26
+                            0            1            2             3             4             5             6             7
+           bits 31..29    000           001          010           011           100           101           110           111
+            0 000
+            1 001
+            2 010

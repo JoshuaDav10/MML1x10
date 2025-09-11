@@ -1,0 +1,59 @@
+PSXSPX SPECIFICATIONS - GPU RENDER LINE COMMANDS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: GPU Render Line Commands
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 1412 characters
+Lines: 51
+================================================================================
+
+GPU Render Line Commands
+
+GP0(40h) - Monochrome line, opaque
+
+GP0(42h) - Monochrome line, semi-transparent
+
+GP0(48h) - Monochrome Poly-line, opaque
+
+GP0(4Ah) - Monochrome Poly-line, semi-transparent
+
+| 1st Color+Command (CcBbGgRrh)
+2nd Vertex1 (YyyyXxxxh)
+3rd Vertex2 (YyyyXxxxh)
+(...) VertexN (YyyyXxxxh) (poly-line only)
+(Last) Termination Code (55555555h) (poly-line only)
+
+GP0(50h) - Shaded line, opaque
+
+GP0(52h) - Shaded line, semi-transparent
+
+GP0(58h) - Shaded Poly-line, opaque
+
+GP0(5Ah) - Shaded Poly-line, semi-transparent
+
+| 1st Color1+Command (CcBbGgRrh)
+2nd Vertex1 (YyyyXxxxh)
+3rd Color2 (00BbGgRrh)
+4th Vertex2 (YyyyXxxxh)
+(...) ColorN (00BbGgRrh) (poly-line only)
+(...) VertexN (YyyyXxxxh) (poly-line only)
+(Last) Termination Code (55555555h) (poly-line only)
+
+Note
+
+Lines are displayed up to their lower-right coordinates (ie.
+unlike as for polygons, the lower-right coordinate is not excluded).
+
+If dithering is enabled (via Texpage command), then both monochrome and shaded
+lines are drawn with dithering (this differs from monochrome polygons and
+monochrome rectangles).
+
+Termination Codes for Poly-Lines (aka Linestrips)
+
+The termination code should be usually 55555555h, however, Wild Arms 2 uses
+50005000h (unknown which exact bits/values are relevant there).
+
+Wire-Frame
+
+Poly-Lines can be used (among others) to create Wire-Frame polygons (by setting
+the last Vertex equal to Vertex 1).

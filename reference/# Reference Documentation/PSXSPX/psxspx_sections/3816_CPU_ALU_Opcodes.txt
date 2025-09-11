@@ -1,0 +1,48 @@
+PSXSPX SPECIFICATIONS - CPU ALU OPCODES
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CPU ALU Opcodes
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1338 characters
+Lines: 40
+================================================================================
+
+CPU ALU Opcodes
+
+arithmetic instructions
+
+| addt rd,rs,rt add rd,rs,rt rd=rs+rt (with overflow trap)
+add rd,rs,rt addu rd,rs,rt rd=rs+rt
+subt rd,rs,rt sub rd,rs,rt rd=rs-rt (with overflow trap)
+sub rd,rs,rt subu rd,rs,rt rd=rs-rt
+addt rt,rs,imm addi rt,rs,imm rt=rs+(-8000h..+7FFFh) (with ov.trap)
+add rt,rs,imm addiu rt,rs,imm rt=rs+(-8000h..+7FFFh)
+
+The opcodes "with overflow trap" do trigger an exception (and leave rd
+unchanged) in case of overflows.
+
+comparison instructions
+
+| setlt slt rd,rs,rt if rs
+
+logical instructions
+
+| and rd,rs,rt and rd,rs,rt rd = rs AND rt
+or rd,rs,rt or rd,rs,rt rd = rs OR rt
+xor rd,rs,rt xor rd,rs,rt rd = rs XOR rt
+nor rd,rs,rt nor rd,rs,rt rd = FFFFFFFFh XOR (rs OR rt)
+and rt,rs,imm andi rt,rs,imm rt = rs AND (0000h..FFFFh)
+or rt,rs,imm ori rt,rs,imm rt = rs OR (0000h..FFFFh)
+xor rt,rs,imm xori rt,rs,imm rt = rs XOR (0000h..FFFFh)
+
+shifting instructions
+
+| shl rd,rt,rs sllv rd,rt,rs rd = rt SHL (rs AND 1Fh)
+shr rd,rt,rs srlv rd,rt,rs rd = rt SHR (rs AND 1Fh)
+sar rd,rt,rs srav rd,rt,rs rd = rt SAR (rs AND 1Fh)
+shl rd,rt,imm sll rd,rt,imm rd = rt SHL (00h..1Fh)
+shr rd,rt,imm srl rd,rt,imm rd = rt SHR (00h..1Fh)
+sar rd,rt,imm sra rd,rt,imm rd = rt SAR (00h..1Fh)
+mov rt,i*10000h lui rt,imm rt = (0000h..FFFFh) SHL 16
+
+Unlike many other opcodes, shifts use 'rt' as second (not third) operand.

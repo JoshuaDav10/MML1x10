@@ -1,0 +1,33 @@
+MIPS INSTRUCTION SET REFERENCE - 0..15          00..0F             —           —          CTC1, ETC.). NOT USED FOR FORMAT ENCODING.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: 0..15          00..0F             —           —          CTC1, etc.). Not used for format encoding.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1795 characters
+Lines: 24
+================================================================================
+
+0..15          00..0F             —           —          CTC1, etc.). Not used for format encoding.
+
+                                                                                                                                 Floating
+                  16           10               0              0              S                 Single            32              Point
+
+                                                                                                                                 Floating
+                  17           11               1              1              D               Double              64              Point
+
+              18..19         12..13          2..3          2..3        Reserved for future use by the architecture.
+
+                  20           14               4              4              W                 Word              32            Fixed Point
+
+                  21           15               5              5              L                 Long              64            Fixed Point
+
+                                                                                                Paired                           Floating
+                  22           16               6              6              PS                                 2 × 32
+                                                                                                Single                            Point
+
+                  23           17               7              7       Reserved for future use by the architecture.
+
+
+322                                                                     MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                                Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.

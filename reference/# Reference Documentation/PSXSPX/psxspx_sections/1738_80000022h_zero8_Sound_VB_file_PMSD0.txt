@@ -1,0 +1,53 @@
+PSXSPX SPECIFICATIONS - 80000022H ZERO(8) SOUND .VB FILE ;PM.SD0
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 80000022h zero(8) Sound .VB file ;PM.SD0
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1515 characters
+Lines: 45
+================================================================================
+
+80000022h zero(8) Sound .VB file ;PM.SD0
+80000024h x(2),zero(6) ? ;PM.DT0\4\0
+00000000h Zeropadding to next folder Zeropadding ;PM.*
+
+Project Horned Owl (COMDATA.BIN, DEMODATA.BIN, ROLL.BIN, ST*DATA.BIN)
+
+| 000h .. Chunks
+
+Chunk Format:
+
+| 000h 1 Chunk Type (see below)
+001h 3 Unknown (some flags or file ID, or zero in many files)
+004h 4 Chunk Size (SIZ)
+008h SIZ Chunk Data (eg. SEQ file)
+
+Chunk Type values:
+
+| 02h unknown ST*.BIN
+05h .TXT ROLL.BIN
+05h LZ-compressed TIM DEMODATA.BIN, ST*.BIN (except ST1*.BIN)
+06h DOT1 with stuff and TSQ?? ST*.BIN
+07h .TMD DEMODATA.BIN, ST*.BIN (except ST1*.BIN)
+08h unknown ST*.BIN
+09h "PRM:" ST*.BIN
+0Ah unknown ST*.BIN
+0Bh DOT1 with stuff ST*.BIN (except ST1*.BIN) (odd: ST3*.BIN)
+0Ch .SEQ ROLL.BIN, ST*.BIN
+0Dh unknown COMDATA.BIN
+0Eh unknown ST*.BIN
+0Fh DOT1 with LZ-compressed TIMs ST*.BIN
+10h DEFLATE-compressed TIM COMDATA.BIN, ROLL.BIN, ST*.BIN
+11h DOT1 with stuff ST*.BIN
+Note: Type=05h can be uncompressed TXT or compressed TIM.
+
+For detection, the existing .BIN files start with following values:
+
+| 07 00 00 00 xx xx 00 00 41 00 00 00 .. TMD Model ("A")
+0C 00 00 00 xx xx 00 00 70 51 45 53 .. SEQ Midi ("pQES")
+0E xx 00 00 08 00 00 00 xx xx xx xx .. Whatever in ST7DATA.BIN (see note)
+10 01 00 00 24 28 00 00 EC 9B 7F 70 .. Deflated TIM in COMDATA.BIN
+10 08 1A 00 30 0C 00 00 ED 58 4F 88 .. Deflated TIM in ROLL.BIN
+ST7DATA.BIN has 2 chunks with Type=0Eh, followed by SEQ chunk at offset=20h.
+
+TIMs are compressed via HornedLZ (Type=05h,0Fh) or Deflate (Type=10h).

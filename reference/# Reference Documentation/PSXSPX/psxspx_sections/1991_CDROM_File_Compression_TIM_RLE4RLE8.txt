@@ -1,0 +1,64 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION TIM-RLE4/RLE8
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression TIM-RLE4/RLE8
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1989 characters
+Lines: 56
+================================================================================
+
+CDROM File Compression TIM-RLE4/RLE8
+
+Ape Escape (Sony 1999) (MagDemo22: KIDZ\*) has several compressed and
+uncompressed TIMs in headerless archives, the archives can contain:
+
+| Compressed 4bpp RLE4-TIM with uncompressed CLUT ;\only 4bpp can be compressed
+Compressed 4bpp RLE8-TIM with uncompressed CLUT ;/
+Uncompressed 4bpp TIM with uncompressed CLUT ;\only this type/combinations
+Uncompressed 8bpp TIM with uncompressed CLUT ; are allowed if uncompressed
+Uncompressed 16pp TIM without CLUT ;/
+End code 00000000h (plus more zeropadding) ;-end of headerless archive
+
+The compression method is indicated by changing a reserved halfword in the TIM
+header:
+
+| hdr[02h]=Method (0000h=Uncompressed, 0001h=RLE4, 0002h=RLE8)
+
+The rest of the bytes in TIM header and in CLUT section are same as for normal
+TIMs. The Bitmap section is as follows:
+
+Decompressed size must be computed as Width*Height*2. The Section Size entry
+contains Section header size, plus compressed size, plus padding to 4-byte
+boundary.
+
+Method=0001h (RLE4):
+
+| @@decompress_lop:
+color=[src]/10h, len=([src] AND 0Fh)+1, src=src+1
+for i=1 to len, putpixel(color), next i ;len=1..10h
+if numpixels
+
+Method=0002h (RLE8):
+
+| @@decompress_lop:
+color1=[src]/10h, color2=[src] AND 0Fh, src=src+1
+if color1=color2
+len=[src]+2, src=src+1
+for i=1 to len, putpixel(color1), next i ;len=2..101h
+else
+putpixel(color1), if numpixels
+
+The decompression functions in Ape Escape (MagDemo22: KIDZ\*) are found at:
+
+| 80078760h ape_escape_load_tim_archive
+8007894Ch ape_escape_decompress_with_4bit_lengths
+800789FCh ape_escape_decompress_with_8bit_lengths
+
+Examples for compressed TIMs are found at:
+
+| RLE8: Ape Escape, MagDemo22: KIDZ\KKIIDDZZ.HED\DAT\file004h\1stTIM
+RLE4: Ape Escape, MagDemo22: KIDZ\KKIIDDZZ.HED\DAT\file135h\1stTIM
+RLE8: Ape Escape, MagDemo22: KIDZ\KKIIDDZZ.HED\DAT\file139h\1stTIM
+
+Being made by Sony, this might be an official (but late) TIM format extension,
+unknown if there are any other games using that compression.

@@ -1,0 +1,25 @@
+MIPS INSTRUCTION SET REFERENCE - THE CONFIG CP0 REGISTER.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: the Config CP0 register.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1300 characters
+Lines: 16
+================================================================================
+
+the Config CP0 register.
+      • The Privileged Resource Architecture includes several implementation options and may be subsetted in accordance
+        with those options.
+      • Instruction, CP0 Register, and CP1 Control Register fields that are marked “Reserved” or shown as “0” in the
+        description of that field are reserved for future use by the architecture and are not available to implementations.
+        Implementations may only use those fields that are explicitly reserved for implementation dependent use.
+      • Supported ASEs are optional and may be subsetted out. If most cases, software may determine if a supported ASE is
+        implemented by checking the appropriate bit in the Config1 or Config3 CP0 register. If they are implemented, they
+        must implement the entire ISA applicable to the component, or implement subsets that are approved by the ASE
+        specifications.
+      • EJTAG is optional and may be subsetted out. If it is implemented, it must implement only those subsets that are
+        approved by the EJTAG specification.
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                                 23
+
+                           Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.

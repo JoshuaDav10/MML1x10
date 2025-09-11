@@ -1,0 +1,38 @@
+MIPS INSTRUCTION SET REFERENCE - RESERVED INSTRUCTION
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Reserved Instruction
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1216 characters
+Lines: 29
+================================================================================
+
+Reserved Instruction
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                            137
+
+                          Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+J
+
+
+
+
+    Jump                                                                                                                           J
+
+      31                   26 25                                                                                              0
+                  J
+                                                                         instr_index
+              000010
+                  6                                                          26
+
+           Format:     J target                                                                                        MIPS32
+
+           Purpose:
+           To branch within the current 256 MB-aligned region
+
+           Description:
+           This is a PC-region branch (not PC-relative); the effective target address is in the “current” 256 MB-aligned region.
+           The low 28 bits of the target address is the instr_index field shifted left 2 bits. The remaining upper bits are the corre-

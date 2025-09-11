@@ -1,0 +1,178 @@
+PSYQ DOCUMENTATION - TECHNOTE/Analog.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/TECHNOTE/Analog.pdf
+Converted: Wed Sep 10 02:47:29 PM CDT 2025
+================================================================================
+
+PLAYSTATION TECHNICAL NOTE
+===================================================================
+
+Date:      November 20, 1996
+Ref:
+Author:    Shin'ichi Okamoto, R&D Vice President
+
+Subject: New Model Analog Controller (Revised Version: 11/20/96)
+
+
+ABSTRACT
+--------
+
+"PlayStation Expo" was held from November 1st through 4th, 1996, at
+Makuhari Messe. We, SCEI, exhibited the new model analog controller with
+vibration device. Following is the release schedule and technical
+information for this new controller:
+
+
+CONTROLLER INFORMATION
+----------------------
+
+[1]   Overview
+   The new controller is a standard controller with two 2-axis
+   (horizontal and vertical directions) analog levers and a vibration
+   device to support an even wider range of games than previously
+   possible. All software functions, except those for the vibration
+   device, are equivalent to either the analog joystick mode or the
+   analog controller mode, with additional buttons allocated to the
+   analog levers.
+
+[2]   Design Overview
+   The new controller is the standard controller plus 2 analog levers.
+   One lever is placed between the "SELECT" and downward directional
+   buttons, and the other between the "START" and "X" buttons.
+
+[3]   Release
+   As of today, the detailed schedules for both tool and mass production
+   have not been determined. Please contact SCE Business Affairs if you
+   have a plan to support the new model controller for titles that will
+   be released by the end of this year.
+
+[4]   Technical Information
+   4-A: Controller ID
+      The three controller IDs below can be selected with a mechanical
+      switch:
+         - 0x41: Standard Controller
+         - 0x53: Analog Joystick
+         - 0x73: Analog Controller
+
+  4-B: Vibration Device
+     The vibration device can be set ON/OFF only through software. From
+     a safety point of view, when there is no data transmission with
+     the controller for more than 140 msec, the vibration device will
+     be turned off.
+
+  4-C: Updated Library (LIBAPI)
+     As stated in Section 4-D, a new LIBAPI function for sending data
+     to the controller is required for the ON/OFF operations. The
+     updated LIBAPI library is planned to be released at the same time
+  as the controller with the vibration device. Since data can be
+  sent and received in parallel (e.g. status data of controller
+  buttons) at every V-Sync interrupt, it will not affect the CPU
+  time available for an application. Moreover, sending ON/OFF data
+  to a controller which does not have the vibration device will not
+  cause any problem.
+
+4-D: Specification of the New Library Function
+
+  SendPAD: Sets controller send buffer
+
+  Syntax
+     void     SendPAD(bufA, lenA, bufB, lenB)
+     char     *bufA, *bufB;
+     long     lenA, lenB;
+  Arguments
+     bufA, bufB Buffer for sending data
+     lenA, lenB Length (in bytes) of the buffer for sending data
+  Explanation
+     This function registers sending data buffer for controller. At
+     every V-Sync interruption, the target device ID and data set to
+     the buffer is sent. The buffer becomes invalid once it is sent.
+  ==================================================================
+     Byte     Description
+     ---------------------------------------------------------------
+     0     Flag to specify validity of the buffer data
+           0x00 invalid, 0x01 valid, other values undefined
+     1     Target Device ID
+     2     Data to be Sent (Sending data length = Received
+           data length)
+     ---------------------------------------------------------------
+
+  Return Value
+     None
+  Remarks
+     Buffer Setting for New Analog Controller with Vibration device:
+  ==================================================================
+     Target Device ID     0x03: Vibration On, others: Vibration Off
+     Data to be sent   (First Byte) 0x01: Vibration ON, 0x00: OFF,
+     other values: undefined
+                 (Second byte and after): Always 0x00, other values:
+              undefined
+  ------------------------------------------------------------------
+  Warning:
+     The vibration device can be set ON only within one V-Sync
+     interval, between two V-Sync interrupts. Thus to keep the
+     vibration device on, the following must be set at every V-Sync
+     interrupt.
+        - Target device ID
+        - Vibration: ON
+        - Buffer data flag: VALID
+
+4-E: Maximum Number of Concurrent Connections
+   Up to 2 controllers without multi-tap and 8 controllers with two
+   multi-taps can be concurrently connected. This limit is equivalent
+   to a standard controller.
+
+  Due to electrical limitations, only two controllers can set the
+  vibration device on at the same time. This number may be changed
+  to a larger value upon release.
+4-F How to operate the vibration device with multi-tap
+   To operate the new analog controller with the vibration device
+   when it is connected to a multi-tap, you need to use the data
+   transmission function SendTAP, in LIBTAP. This function will be
+   released at the same time as the development hardware with the
+   vibration device. SendTAP has the same functional specification as
+   SendPAD. The following shows the details of the send buffer used
+   for the SendTAP function:
+   ==============================================
+      Byte     Description
+      ------------------------------------------------------------
+      0     Flag to specify validity of the buffer data
+            0x00: invalid, 0x01: valid, other values: undefined
+      1     Target device ID of Controller A
+      2-6   Data to be sent to Controller A
+      7     Target device ID of Controller B
+      8-12 Data to be sent to Controller B
+      13    Target device ID of Controller C
+      14-18 Data to be sent to Controller C
+      19    Target device ID of Controller D
+      20-24 Data to be sent to Controller D
+      ------------------------------------------------------------
+
+  To send data in a buffer:
+     - Write 0x01 into byte 0
+     - Call SendTAP function
+
+  Upon the V-Sync interrupt immediately after the function call, the
+  data in the buffer is sent. The target device ID (0x03 for the
+  vibration device) and the data to be sent (0x01 for ON) are the
+  same as for the SendPAD function.
+
+4-G: Calibration
+   In Japan, the current acceptance criteria for master titles that
+   support the analog controller require the inclusion of at least
+   the built-in calibration function described below. The same
+   criteria apply to the analog controller with the vibration device
+   as well.
+
+     ========================================
+     0 position calibration
+     Setting the play (space for movement)
+     Sensitivity
+     Detection of maximum stick movement value
+     ---------------------------------------------------------------
+
+4-H: Life of the Vibration Device
+   The life of the vibration device depends on the number of ON/OFF
+   operations it is subjected to. It is highly recommended not to set
+   the vibration device ON and OFF many times, as this can extremely
+   shorten its life.
+

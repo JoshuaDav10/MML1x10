@@ -1,0 +1,1932 @@
+PSYQ DOCUMENTATION - TRAINING/FALL96/gte.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/TRAINING/FALL96/gte.pdf
+Converted: Wed Sep 10 02:47:42 PM CDT 2025
+================================================================================
+
+GTE & Advanced Graphics
+
+
+
+
+   CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Organization of this talk
+
+    Part 1: description of GTE hardware
+    Part 2: the new, improved DMPSX
+    Part 3: revisit some old favorites
+    Q&A
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+          Part 1:
+Everything there is to know
+ about the GTE Hardware
+
+
+
+
+    CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+MIPS R3000 and
+COPROCESSOR UNITS
+    MIPS architecture defines fourcoprocessor
+    units, Coprocessor 0-3
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+CPU+GTE
+                                                                                    Memory
+
+
+                                                    CPU
+
+
+                                                   GTE
+                                         Co-Processor 2
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+CPU Block Diagram
+
+                                     Scratch Pad
+                                      1K Bytes                            CPU         GTE
+           I-cache
+          4K Bytes
+
+
+
+
+                  BIU
+
+
+
+
+                DRAM
+                                                                                    VRAM
+                 main                                         GPU
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+What exactly is the GTE ?
+
+
+
+
+  CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+                                              3D->2D
+                                        2D screen
+
+
+
+
+                                                                                    3D World
+
+
+       Viewpoint
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+...What exactly is the GTE ?
+
+    GTE is a vector/matrix high speed
+    geometric processor with its own
+    multiplier, accumulator and divider,
+    implemented as “coprocessor 2” under
+    the MIPS architecture specification.
+    The data format supported by GTE
+    consists of fixed decimal(fractional) real
+    numbers.
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE features
+
+    High speed matrix calculations
+    High speed coordinate transformations
+    High speed perspective projections
+    High speed lighting calculations
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+    The Mathematics
+    Behind the GTE
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+The mathematics behind the GTE
+
+    Number system representation
+    The GTE calculations
+         coordinate calculations
+         light source calculations
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Fixed point representations
+
+                        Fixed point bit arrangement
+
+                                          a                        b                c
+
+
+                                                   a: Signed bit
+                                                 b: Integer bits
+                                                 c: Decimal bits
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Some existing representations...
+               Rotational matrix [Rij] (1, 3, 12)
+               Translating vector (TRX, TRY, TRZ) (1, 31, 0)
+               Local light matrix [Lij] (1, 3, 12)
+               Local color matrix [L (R, G, B)ij] (1, 3, 12)
+               Back color (RBK, GBK, BBK) (0, 8, 0)
+               Far color (RFC, GFC, BFC) (0, 8, 0)
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+A sample geometry pipeline...
+               …for vertex transformation...
+
+                                                                                    Perspective
+                               Modelview                    Projection               division
+        VERTEX                  Matrix                       Matrix                  Viewport
+                                                                                     mapping
+
+
+           x
+           y
+           z
+
+        object                                  eye                          clip               screen
+     coordinates                            coordinates                  coordinates          coordinates
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+    GTE implementation
+
+           Local                                   World                                             2D
+         Coordinate                              Coordinate                              View      Screen
+          System                                  System                                Volume   Coordinates
+
+
+
+
+     Local coordinates                   World coordinates        3D View Volume Clipping            2D
+are defined in 16bit integer         are defined in 32bit integer  perspective projections     SXY coords
+         (1, 15, 0)                           (1, 31, 0)                                        (for GPU)
+                                                                                           Screen coordinates
+                                                                                       are defined in 16bit integer
+                                                                                                 (1, 15, 0)
+
+
+
+    CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE coordinate system
+                                                                             Viewpoint
+               y
+
+
+
+
+                                                                                         z
+                                                                                             local origin
+                                                                                             (0, 0, 0)
+                                                                                             x
+
+
+
+
+                                                                                                    x
+        (0, 0, 0)
+                                                                     y
+        world origin                                                                z
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+     GTE calculations                                                                                                    aggregate
+                            rot,trans,                 World                                                          local-to-screen
+                             matrix                      to                                                             translation
+    Screen Vertex                                      Screen                                                             vector
+                                                    translation                Screen Vertex
+      SSXn                    WX
+1     SSYn                 R2 WY                                                    SSXn                         LX
+                                                            WT               1’                   R2 R1
+       SZn                    WZ                                                    SSYn                         LY             T
+                                                                                     SZn                         LZ
+
+                                                                                                        Local Coordinates
+          WX                          LX                                                          aggregate
+2
+          WY             R1           LY                     LT                                local-to-screen
+          WZ                          LZ                                                       transformation
+                                                                                                   matrix
+
+                                 Local Coordinates
+
+                      rot,trans
+                       matrix                              Local
+                                                             to
+                                                           World
+                                                        translation
+     CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE calculations...
+                                              World Level
+
+
+  WS11     WS12        WS13                            1     0      0               Cy 0         Sy   Cz Sz       0
+
+  WS21     WS22 WS23                                   0    Cx Sx                    0     1     0    -Sz Cz      0
+
+ WS31      WS32 WS33                                  0     -Sx Cx                  -Sy    0     Cy   0     0     1
+
+   Transformation                                          X-rot                         Y-rot            Z-rot
+      Matrix R2
+   World -to- Screen
+
+      C =cos(α)
+       S =sin(α)
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+  GTE calculations...
+                                                 Object Level
+
+
+LW11    LW12 LW13                                1     0       0              Cy 0         Sy   Cz Sz       0
+LW21    LW22 LW23                                0                             0           0
+                                                       Cx Sx                          1         -Sz Cz      0
+LW31   LW32 LW33                                 0                           -Sy      0    Cy
+                                                      -Sx Cx                                    0     0     1
+ Transformation                                                                    Y-rot            Z-rot
+                                                     X-rot
+    Matrix R1
+ Local -to- World
+
+  C =cos(α)
+  S =sin(α)
+
+
+
+
+  CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE calculations...
+                                               Object Level
+
+
+   R11     R12 R13                                  WS11         WS12 WS13          LW11   LW12 LW13
+   R21    R22 R23                                   WS21         WS22 WS23          LW21   LW22 LW23
+
+   R31    R32 R33                                   WS31         WS32 WS33          LW31   LW32 LW33
+
+      aggregate                                        World -to- Screen              Local -to- World
+   local-to-screen                                     Transformation                 Transformation
+   transformation                                         Matrix R2                      Matrix R1
+       matrix
+        R2 R1
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE calculations...
+                                               Object Level
+
+
+          TrX                               WS11         WS12 WS13                    TLX           TWX
+          TrY                               WS21         WS22        WS23             TLY           TWY
+          TrZ                                                                          TLZ          TWZ
+                                            WS31         WS32        WS33
+
+           T                                   World -to- Screen                       LT           WT
+       aggregate                               Transformation                          Local         World
+    local-to-screen                               Matrix R2                              to            to
+      translation                                                                      World         Screen
+        vector                                                                      translation   translation
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE calculations...
+                                            Polygon Level
+
+               SSXn                         R11
+                                                                                               TrX
+                                                      R12 R13                VXn
+               SSYn                                                          VYn               TrY
+                                            R21       R22 R23
+                SZn                                                          VZn                TrZ
+                                            R31       R32 R33
+         Screen Vertex                                                     local Vertex
+                                               R2 R1                                            T
+                                                                                             aggregate
+                                              aggregate
+                                                                                          local-to-screen
+                                           local-to-screen
+                                                                                            translation
+                                           transformation
+                                                                                              vector
+                                               matrix
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+  GTE calculations...
+                  perspective calculation
+                                             z distance
+
+                                              w
+view point
+                                    h
+
+
+
+
+                                                           View port
+             View distance h
+
+      SXn = OFX + SSXn * (h/SZn);
+      SYn = OFY + SSYn * (h/SZn);
+
+
+   CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE calculations...
+         hidden surface removal
+
+
+
+
+                                                               z Sort
+
+
+                          OTZ = SZ0 *(1/3) + SZ1*(1/3) + SZ2*(1/3);
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE calculations...
+         hidden surface removal...
+
+
+
+
+                                              Normal Clip
+
+
+   OPZ = (SX1-SX0)(SY2-SY0) - (SX2-SX0)(SY1-SY0);
+       = (SX0SY1+SX1SY2+SX2SY0)-(SX0SY2+SX1SY0+SX2SY1);
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Light source calculations...
+      Light 2                                                                             Light 1
+                                                          Normal
+
+
+
+
+                                                       Base Color
+
+
+
+                                                                                    Ambient
+                                                                                     light
+        Light 3
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE Light Source Calculation
+
+         Normal                             Normal                           Light        Light
+       line vector                        line vector                        source    source color
+       for surface                          (world)                           effect      effect
+
+
+
+
+                                                                                            Color
+                                                                                       effect of world
+
+
+
+
+                                                                                          Display
+                                                                                           Color
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE light source calculations...
+                                           Object Level
+
+
+    L11        L12        L13                        L1X          L1Y         L1Z   LW11   LW12 LW13
+
+    L21        L22       L23                         L2X          L2Y        L2Z    LW21   LW22 LW23
+
+    L31        L32       L33                         L3X          L3Y        L3Z    LW31   LW32 LW33
+
+       Local Lights                                      Light vectors               Transformation
+                                                                                        Matrix R1
+                                                                                     Local -to- World
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE light source calculations...
+                                            Polygon Level
+
+               L1                                      L11           L12        L13       NX
+               L2                                      L21          L22        L23        NY
+               L3                                      L31          L32        L33        NZ
+
+
+                                                       Local Lights                      Local
+                                                                                      Normal Vector
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+    GTE light source calculations...
+                                                Polygon Level
+
+  RLT                           LR1          LR2        LR3                      L1          L1n       RBK
+
+  GLT
+            =                   LG1          LG2        LG3                       L2
+                                                                                        or
+                                                                                             L2n
+                                                                                                   + GBK
+  BLT                           LB1          LB2        LB3                       L3         L3n     BBK
+
+
+   Local                          Light                                     Light                   Ambient
+Light color                    Color Matrix                              Source Effect             Light color
+
+
+
+
+    CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE light source calculations
+                                            Polygon Level
+
+        R0                                               R x RLT                         RFC
+        G0              =           (1-p) Gx GLT                                    +p   GFC
+        B0
+                                                         B x BLT                         BFC
+
+
+        Screen                                     Polygon                                Far
+        Color                                       Color                                Color
+
+
+                                       p=DQA*h/SZn +DQB
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE Register Set
+
+    The GTE has two sets of registers
+    32 control registers and 32 general
+    ( data ) registers
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE register set...
+               general(data) registers
+               VX0             VY0              VZ0
+               VX1             VY1              VZ1
+               VX2             VY2              VZ2
+
+               Input vector-Vn(dreg0~5) R/W
+
+               R               G                B                cd
+
+
+               24bit Color Input+GPU code (dreg 6) R/W
+
+               OTZ
+
+               Average of Z-data(dreg7) 1,15,0 R OTZ Register
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE register set...
+               general(data) registers
+
+                IR0
+
+               Intermediate Register (dreg8) R/W (p)
+
+                IR1
+               Intermediate Register (dreg9) R/W
+
+
+                IR2
+
+               Intermediate Register (dreg10) R/W
+
+                IR3
+
+               Intermediate Register (dreg11) R/W
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE register set...
+               general(data) registers
+
+                SX0             SY0
+                SX1             SY1                              SX0SY0<-SX1SY1<-SX2SY2<-input
+                                                  FIFO
+                SX2             SY2
+
+           2D Vertex FIFO registers
+           (dreg12~14) R/W
+
+
+
+
+                SX2’            SY2’
+               Vertex FIFO register input
+               (dreg15) W
+
+
+
+
+CONFIDENTIAL    PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE register set...
+               general(data) registers
+                   SZx(0)
+                   SZ0(1)
+                                        FIFO                      SZx(0)<-SZ0(1)<-SZ1(2)-<SZ2(3)<-input
+                   SZ1(2)
+                   SZ2(3)
+                 Screen-Z Vertex FIFO registers
+                 (dreg16~19) R/W
+
+                   R0, G0, B0, cd
+                   R1, G1, B1, cd
+                                                    C-FIFO
+                   R2, G2, B2, cd
+
+                 Color FIFO registers
+                 (dreg20~22) R/W
+                 RGB0-23;code:24-31
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE register set...
+               general(data) registers
+
+                MAC-0
+
+               MAC-0 Output (dreg24) R
+
+                MAC-1
+
+               MAC-1 Output (dreg25) R/W
+
+
+                MAC-2
+
+               MAC-2 Output (dreg26) R/W
+
+               MAC-3
+
+               MAC-3 Output (dreg27) R/W
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE register set...
+           general(data) registers
+               iRGB
+
+               15 bit color input (dreg28) W
+
+
+               oRGB
+
+               15 bit color output (dreg29) R
+
+               LZCS                            Leading Zero Count Set
+
+
+               Leading Zero counter input (dreg30) W
+
+
+               LZCR                           Leading Zero Count Read
+
+
+               Leading Zero counter output (dreg31) R 0-5;0:6-31;
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE register set...
+          control registers...
+                 R11              R12              R13
+                 R21              R22              R23
+                 R31              R32              R33
+
+               Rotation Matrix (creg0~4) R/W (1,3,12)
+
+                 TRX
+                 TRY
+                 TRZ
+
+               TranslationVector (creg5~7) R/W (1,31,0)
+
+                 L11              L12              L13
+                 L21              L22              L23
+                 L31              L32              L33
+
+               Light Source direction vectorX3 (creg8~12) R/W (1,3,12)
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE register set...
+          control registers...
+               RBK
+               GBK
+               BBK
+           background color (creg13~15) R/W (1,19,12)
+
+               LR1           LR2              LR3
+               LG1           LG2              LG3
+               LB1           LB2              LB3
+          Light Source color vectorX3 (creg16~20) R/W (1,3,12)
+
+               RFC
+               GFC
+               BFC
+
+          far color (creg21~23) R/W (1,27,4)
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE register set...
+               control registers...
+                  OFX
+                  OFY
+                Screen Offset X&Y (creg24~25)R/W (1,15,16)
+
+                  H
+
+                Screen Position (creg26) R/W (0,16,0)
+
+
+                  DQA
+                Depth parameter A(coefficient) (creg27) R/W (1,7,8)
+
+
+                  DQB
+
+                Depth parameter B(offset) (creg28) R/W (1,7,24)
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE register set...
+               control registers...
+
+                ZSF3
+                ZSF4
+
+                Z-averaging scale factors (creg29~30) R/W (1,3,12)
+
+
+
+
+                          ZSF3=1/3*2 10~14/216
+                           ZSF4=1/4*2 10~14/216
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE register set...
+          control registers...
+
+               FLAG
+
+               FLAG register (creg31) R
+
+               only care for bits 12~31
+
+
+
+
+CONFIDENTIAL    PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+     GTE Calculation Format
+RTPS&RTPT&MVMVA(F3)                                F3                      SSXn = TrX+R11*VXn+R12*VYn+R13*VZn;
+                                                   MVMVA                   SSYn = TrY+R21*VXn+R22*VYn+R23*VZn;
+                                                                           SZn = TrZ+R31*VXn+R32*VYn+R33*VZn;
+   SSXn = TrX+R11*VXn+R12*VYn+R13*VZn;
+VRX(1,31,0)                   R11(1,3,12)             *               VCX(1,15,0)
+
+                              R11*VCX(1,19,12)
+                     +
+    VRX(1,31,0)                                                  +low12(0)
+
+                Feedback(1,31,12)
+
+        SSX (1,31,0)
+
+        LIMITER-1
+
+                                  IR1(1,15,0)
+
+         MAC-1 (1,31,0)
+      CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+                                                          Decimal point
+limiters?
+
+    please refer to GTE Command
+    Reference ver 1.0 page 2
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Programming the GTE
+
+
+
+
+ CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE access instructions
+                                                              GTE                            CPU
+                                                       coprocessor 2
+                                     swc2
+  Scratch Pad                                                                       mfc2
+       or                                                 General
+ Main Memory                         lwc2               Registers 0-31              mtc2
+                                                                                            Registers
+                                                                                    cfc2      0-31
+
+                                                         Control
+                                                                                     ctc2
+                                                       Registers 0-31
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+   Existing GTE command set
+             coordinate calculations
+
+                                                                 SSXn = TrX+R11*VXn+R12*VYn+R13*VZn;
+Rot Trans Pers                    F1,2
+                                                                 SSYn = TrY+R21*VXn+R22*VYn+R23*VZn;
++                                 (x3)                           SZn = TrZ+R31*VXn+R32*VYn+R33*VZn;
+Depth Calc                        RTPS
+                                                                 SXn = OFX + SXn*(h/SZn);
+                                                                 SYn = OFY + SYn*(h/SZn);
+                                  (RTPT)
+                                                                 p = DQB+DQA*(h/SZn);
+
+
+                                                                 SSXn = TrX+R11*VXn+R12*VYn+R13*VZn;
+Rot Trans                        F3                              SSYn = TrY+R21*VXn+R22*VYn+R23*VZn;
+                                 MVMVA                           SZn = TrZ+R31*VXn+R32*VYn+R33*VZn;
+
+
+
+   CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+    Existing GTE command set…
+              lighting calculations
+
+Normal Color                       F14,15                        L1 = L11*NXn+L12*NYn+L13*NZn;
++ Depth Cue                        (x3)                          L2 = L21*NXn+L22*NYn+L23*NZn;
+                                   NCDS                          L3 = L31*NXn+L32*NYn+L33*NZn;
+                                   (NCDT)                        RLT = RBK+LR1*L1+LR2*L2+LR3*L3;
+                                                                 GLT = GBK+LG1*L1+LG2*L2+LG3*L3;
+                                                                 BLT = BBK+LB1*L1+LB2*L2+LB3*L3;
+                                                                 R0 = R*RLT+IR0*(RFC - R*RLT);
+                                                                 G0 = G*GLT+IR0*(GFC-G*GLT);
+                                                                 B0 = B*BLT+IR0*(BFC-B*BLT);
+
+
+
+
+    CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+   Existing GTE command set…
+              lighting calculations cont..
+
+Normal ColorCol F16,17                                            L1 = L11*NXn+L12*NYn+L13*NZn;
+                (x3)                                              L2 = L21*NXn+L22*NYn+L23*NZn;
+(no depth cue)                                                    L3 = L31*NXn+L32*NYn+L33*NZn;
+                                     NCCS
+                                     (NCCT)                       RLT = RBK+LR1*L1+LR2*L2+LR3*L3;
+                                                                  GLT = GBK+LG1*L1+LG2*L2+LG3*L3;
+                                                                  BLT = BBK+LB1*L1+LB2*L2+LB3*L3;
+                                                                  R0 = R*RLT
+                                                                  G0 = G*GLT;;
+                                                                  B0 = B*BLT;;
+
+
+
+
+   CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+    Existing GTE command set...
+                    lighting calculations cont..
+
+Material Screen Color                  F18               RLT = RBK+LR1*L1^n+LR2*L2^n+LR3*L3^n;
++ Depth Queuing                        CDP               GLT = GBK+LG1*L1^n+LG2*L2^n+LG3*L3^n;
+(textured poly screen                                    BLT = BBK+LB1*L1^n+LB2*L2^n+LB3*L3^n;
+color)                                                   R0 = R*RLT+IR0*(RFC - R*RLT);
+                                                         G0 = G*GLT+IR0*(GFC-G*GLT);
+                                                         B0 = B*BLT+IR0*(BFC-B*BLT);
+
+
+
+
+     CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+ Existing GTE command set…
+                lighting calculations cont...
+
+Screen Color Material F19                          RLT = RBK+LR1*L1^n+LR2*L2^n+LR3*L3^n;
+without Depth Cue     CC                           GLT = GBK+LG1*L1^n+LG2*L2^n+LG3*L3^n;
+                                                   BLT = BBK+LB1*L1^n+LB2*L2^n+LB3*L3^n;
+                                                   R0 = R*RLT;
+                                                   G0 = G*GLT;
+                                                   B0 = B*BLT;
+
+
+
+
+ CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+  Existing GTE command set…
+          lighting subset utils
+Light Source                        F4                               L1 = L11*NXn+L12*NYn+L13*NZn;
+Effect                              MVMVA                            L2 = L21*NXn+L22*NYn+L23*NZn;
+                                                                     L3 = L31*NXn+L32*NYn+L33*NZn;
+
+
+Light Source                        F5                               RLT = RBK+LR1*L1+LR2*L2+LR3*L3;
+Color Effect                        MVMVA                            GLT = GBK+LG1*L1+LG2*L2+LG3*L3;
+(without material)                                                   BLT = BBK+LB1*L1+LB2*L2+LB3*L3;
+
+
+                                                                     R0 = R*IR1+IR0*(RFC - R*IR1);
+Screen Color                        F6                               G0 = G*IR2+IR0*(GFC-G*IR2);
+with Depth Cue                      DCPL                             B0 = B*IR3+IR0*(BFC-B*IR3);
+
+  CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Existing GTE command set…
+         lighting subset utils
+
+           Screen Color                                    F7,8                     R0 = R+IR0*(RFC-R);
+           with Depth Cue                                  (x3)                     G0 = G+IR0*(GFC-G);
+                                                           DPCS                     B0 = B+IR0*(BFC-B);
+                                                           (DPCT)
+
+
+           Screen Color with                                F9                      R0 = IR1+IR0*(RFC-IR1);
+           Interpolation                                    INTPL                   G0 = IR2+IR0*(GFC-IR2);
+                                                                                    B0 = IR3+IR0*(BFC-IR3);
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Existing GTE command set…
+           math utils
+               F10,11      L1^2=(L1*L1);
+               (shift0&12) L2^2=(L2*L2);
+               SQR         L3^2=(L3*L3);
+
+
+
+               F20                   OPZ =            SX0*SY1+SX1*SY2+SX2*SY0
+               NCLIP                                  -SX0*SY2-SX1*SY0-SX2*SY1;
+
+
+
+
+CONFIDENTIAL    PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Existing GTE command set…
+               math utils
+
+          F21                   OTZ = ZSF3*SZ0(1)+ZSF3*SZ1(2)+ ZSF3*SZ2(3);
+          AVSZ3
+          Z average for 3 vertices
+
+
+
+          F22                   OTZ =ZSF4*SZx(0)+ZSF4*SZ0(1)+ZSF4*SZ1(2)+ZSF4*SZ2(3);
+          AVSZ4
+
+          Z average for 4 vertices
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Existing GTE command set…
+          additional utils
+
+          F23,(F24)                  OPX(MAC-1, IR1) = DY1(R22)*DZ2(IR3) - DY2(IR2)*DZ1(R33);
+          (shift0&12)                OPY(MAC-2, IR2) = DZ1(R33)*DX2(IR1) - DZ2(IR3)*DX1(R11);
+          OP                         OPZ(MAC-3, IR3) = DX1(R11)*DY2(IR2) - DX2(IR1)*DY1(R22);
+
+
+          3D outer product
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+ Existing GTE command set…
+             additional utils
+general purpose                  F25,F26                        IPX(MAC-1, IR1) = p(IR0)*PX0(IR1);
+interpolation                    (shift0&12)                    IPY(MAC-2, IR2) = p(IR0)*PY0(IR2);
+                                 GPF                            IPZ(MAC-3, IR3) = p(IR0)*PZ0(IR3);
+
+
+
+
+general purpose               F27,F28                           IPX(MAC1, IR1) = MAC1+p(IR0)*PXn(IR1);
+interpolation                 (shift0&12)                       IPY(MAC2, IR2) = MAC2+p(IR0)*PYn(IR2);
+                              GPL                               IPZ(MAC3, IR3) = MAC3+p(IR0)*PZn(IR3);
+
+
+
+
+  CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Walkthrough of a basic GTE
+command
+    RotTransPers3
+         Performs coordinate transformation of
+         three vertices and perspective
+         transformation.
+    Please refer to GTE Command
+    Reference ver 1.0 page 6
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Walkthrough of a basic GTE
+command: RTPT
+    Functionally you input set of 3 local
+    coordinate vectors and obtain
+    corresponding screen coordinates
+    but wait ...
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Walkthrough of a basic GTE
+command: RTPT...
+    Make sure of the following...
+         Set your incoming local coordinate vectors.
+         Set the desired objects const rotmatrix and
+         translation vector.
+         Set the screen offset, distance to viewpoint
+         and depth coefficients.
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Walkthrough...
+
+    Okay now invoke RTPT
+         the results are available 23 cycles later...
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Walkthrough...
+    what exactly did RTPT do?
+    Calculations:
+    n=0,1,2{
+                   (1,31,12)        SSXn = TRX + R11*VXn + R12*VYn + R13*VZn;        <1>
+                   (1,31,12)        SSYn = TRY + R21*VXn + R22*VYn + R23*VZn;        <2>
+                   (1,31,12)        SSZn = TRZ + R31*VXn + R32*VYn + R33*VZn;        <3>
+                   (1,27,16)        SXn = OFX + IR1*(H/SZ n);    <4>
+                   (1,27,16)        SYn = OFY + IR2*(H/SZ n);    <4>
+                   (1,15,0)         SXn = limD1( SXn);
+                   (1,15,0)         SYn = limD2( SYn);
+    }
+    (0,16,0)       SZ0(1) = limC( SSZ0 );
+    (0,16,0)       SZ1(2) = limC( SSZ1 );
+    (0,16,0)       SZ2(3) = limC( SSZ2 );
+    (0,16,0)       SZx(0) = SZ2(3);
+    (1,19,24)      P = DQB + DQA*(H/SZ2);
+    (1,3,12)       IR0 = limE( P);        <4>
+    (1,15,0)       IR1 = limA1S( SSX2 );
+    (1,15,0)       IR2 = limA2S( SSY2 );
+    (1,15,0)       IR3 = limA3S( SSZ2 );
+    (1,7,24)       MAC0 = P;
+    (1,31,0)       MAC1 = SSX2 ;
+    (1,31,0)       MAC2 = SSY2 ;
+    (1,31,0)       MAC3 = SSZ2 ;vv
+CONFIDENTIAL    PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Walkthrough...
+   What exactly did RTPT do?
+    n=0,1,2{
+                  (1,31,12) SSXn = TRX + R11*VXn + R12*VYn + R13*VZn;               <1>
+                  (1,31,12) SSYn = TRY + R21*VXn + R22*VYn + R23*VZn;               <2>
+                  (1,31,12) SSZn = TRZ + R31*VXn + R32*VYn + R33*VZn;               <3>
+                  (1,27,16) SXn = OFX + IR1*(H/SZ n);     <4>
+                  (1,27,16) SYn = OFY + IR2*(H/SZ n);     <4>
+                  (1,15,0) SXn = limD1(SXn);
+                  (1,15,0) SYn = limD2(SYn);
+    }
+
+
+
+
+                           n=0,1,2{}
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Walkthrough ...
+     What exactly did RTPT do?
+
+    n=0,1,2{
+                   (1,31,12) SSXn = TRX + R11*VXn + R12*VYn + R13*VZn;              <1>
+                   (1,31,12) SSYn = TRY + R21*VXn + R22*VYn + R23*VZn;              <2>
+                   (1,31,12) SSZn = TRZ + R31*VXn + R32*VYn + R33*VZn;              <3>
+                   (1,27,16) SXn = OFX + IR1*(H/SZ n);     <4>
+                   (1,27,16) SYn = OFY + IR2*(H/SZ n);     <4>
+    }
+    (1,3,12) IR0 = limE(P);                          <4>
+
+
+
+
+                                   <n>
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Walkthrough...
+    What exactly did RTPT do?
+      n=0,1,2{
+                    (1,31,12)        SSXn = TRX + R11*VXn + R12*VYn + R13*VZn;      <1>
+                    (1,31,12)        SSYn = TRY + R21*VXn + R22*VYn + R23*VZn;      <2>
+                    (1,31,12)        SSZn = TRZ + R31*VXn + R32*VYn + R33*VZn;      <3>
+                    (1,27,16)        SXn = OFX + IR1*(H/SZ n);    <4>
+                    (1,27,16)        SYn = OFY + IR2*(H/SZ n);    <4>
+                    (1,15,0)         SXn = limD1( SXn);
+                    (1,15,0)         SYn = limD2( SYn);
+      }
+      (0,16,0)      SZ0(1) = limC( SSZ0 );
+      (0,16,0)      SZ1(2) = limC( SSZ1 );
+      (0,16,0)      SZ2(3) = limC( SSZ2 );
+      (1,19,24)     P = DQB + DQA*(H/SZ2);
+      (1,3,12)      IR0 = limE( P);        <4>
+      (1,15,0)      IR1 = limA1S( SSX2 );
+      (1,15,0)      IR2 = limA2S( SSY2 );
+      (1,15,0)      IR3 = limA3S( SSZ2 );
+      (1,7,24)      MAC0 = P;
+
+
+
+                                                                    VAL
+      (1,31,0)      MAC1 = SSX2 ;
+      (1,31,0)      MAC2 = SSY2 ;
+      (1,31,0)      MAC3 = SSZ2 ;
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Walkthrough...
+   What exactly did RTPT do?
+
+
+    n=0,1,2{
+    (1,31,12) SSXn = TRX + R11*VXn + R12*VYn + R13*VZn;                             <1>
+    (1,31,12) SSYn = TRY + R21*VXn + R22*VYn + R23*VZn;                             <2>
+    (1,31,12) SSZn = TRZ + R31*VXn + R32*VYn + R33*VZn;                             <3>
+    }
+
+
+
+
+                                          OBJ
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Walkthrough...
+    What exactly did RTPT do?
+       n=0,1,2{
+                       (1,15,0) SXn = limD1(SXn);
+                       (1,15,0) SYn = limD2(SYn);
+       }
+       (0,16,0)        SZ0(1) = limC(SSZ0);
+       (0,16,0)        SZ0(2) = limC(SSZ1);
+       (0,16,0)        SZ0(3) = limC(SSZ2);
+       (1,3,12)        IR0 = limE(P);  <4>
+       (1,15,0)        IR1 = limA1S(SSX2);
+       (1,15,0)        IR2 = limA2S(SSY2);
+       (1,15,0)        IR3 = limA3S(SSZ2);
+
+
+
+                                     limX()
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Walkthrough...
+    What exactly did RTPT do?
+   n=0,1,2{
+                (1,15,0) SXn = limD1(SXn);
+                (1,15,0) SYn = limD2(SYn);
+   }
+   (0,16,0) SZ0(1) = limC(SSZ0);
+   (0,16,0) SZ0(2) = limC(SSZ1);
+   (0,16,0) SZ0(3) = limC(SSZ2);
+   (1,3,12) IR0 = limE(P);
+   (1,15,0) IR1 = limA1S(SSX2);
+   (1,15,0) IR2 = limA2S(SSY2);
+   (1,15,0) IR3 = limA3S(SSZ2);
+   (1,7,24) MAC0 = P;
+
+
+                                                                 results
+   (1,31,0) MAC1 = SSX2;
+   (1,31,0) MAC2 = SSY2;
+   (1,31,0) MAC3 = SSZ2;
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+  Walkthrough...
+     corresponding assembler source...
+            .globl          RotTransPers3
+            .text
+            .set            noat
+RotTransPers3:
+            .set            noreorder
+
+
+
+                                                 }
+            lwc2            C2_VXY0,(a0)
+            lwc2            C2_VZ0,4(a0)
+            lwc2            C2_VXY1,(a1)                                 input local vector
+            lwc2            C2_VZ1,4(a1)
+            lwc2            C2_VXY2,(a2)
+            lwc2            C2_VZ2,4(a2)
+            nop
+            RTPT
+            lw              t0,16(sp)
+            lw              t1,20(sp)
+            lw              t2,24(sp)
+            lw              t3,28(sp)
+
+
+
+
+                                                  }
+            swc2            C2_SXY0,(a3)
+            swc2            C2_SXY1,(t0)
+            swc2            C2_SXY2,(t1)
+            swc2            C2_IR0,(t2)                                  output screen coordinates
+            cfc2            v1,C2_FLAG0
+            mfc2            v0,C2_SZ2
+            sw              v1,(t3)
+            j               ra
+            sra             v0,v0,2
+            .set            reorder
+  CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE Machine Language
+    Programming
+
+
+
+
+ CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+CPU Pipeline
+
+IF         RD               ALU              MEM                  WB
+
+               IF            RD               ALU               MEM                  WB
+
+                               IF              RD               ALU                  MEM   WB
+
+                                                 IF               RD                 ALU   MEM   WB
+
+                                                                    IF               RD    ALU   MEM   WB
+
+
+
+
+CONFIDENTIAL    PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE machine language
+programming...
+               • Handling of delay slots
+                               • Insertion of dangerous commands
+                                  into delay slot
+
+                               • Careless deletion of nop
+
+
+    Be careful with programs that appear
+      to work correctly on the surface
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+GTE machine language
+programming tips
+
+        cfc2 v0,C2_FLAG0
+                                                                     cfc2 v0,C2_FLAG0
+        nop
+                                                                     and v0, v0,v1
+        and v0, v0,v1
+                                                                           :
+              :
+                                                                           :
+              :
+
+
+
+               CORRECT                                                         INCORRECT
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Some additional caveats
+
+    GTE instructions cannot be used in
+    exception handler.
+    GTE instructions (mfc2, mtc2, cfc2, ctc2,
+    lwc2, swc2) cannot be used in branch
+    delay slot.
+    load instructions(lwc2, mtc2, ctc2)
+    cannot be used between cop2(GTE) and
+    save instructions(swc2, mfc2, cfc2)
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Some additional caveats…
+
+    If the destination register of load
+    instruction is not used in the
+    cop2(GTE), it is possible to use load
+    instructions between cop2 and save
+    instruction
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+  Some additional caveats…
+       more examples...
+
+RTPT             /* GTE instr*/                                         RTPT             /*GTE instr */
+ :      /* cpu inst */                                                     :    /*cpu instr */
+mtc2 v0,C2_RGB/* OK */                                                  mtc2 v0,C2_VXY0 /* BAD */
+   :    /* cpu instr */                                                    :    /* cpu instr */
+cfc2 v0,C2_FLAG0 /* save */                                             cfc2 v0,C2_FLAG0 /* save */
+
+
+
+         CORRECT                                                                       INCORRECT
+
+
+
+
+   CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Some additional caveats…
+    more examples...
+
+RTPS            /* GTE instr*/                                       RTPS            /*GTE instr */
+ :     /* cpu inst */                                                  :    /*cpu instr */
+mtc2 v0,C2_VXY1/* OK */                                              mtc2 v0,C2_VXY0 /* BAD */
+   :   /* cpu instr */                                                 :    /* cpu instr */
+NCLIP /* GTE instr */                                                NCLIP           /*GTE instr */
+
+
+
+               CORRECT                                                        INCORRECT
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+More examples...
+
+RTPS                                                                 RTPS
+## interlock                                                         add v1,v2,v3
+cfc2 v0,C2_FLAG                                                      sub v1,v2,v3
+                                                                     ## interlock
+                                                                     cfc2 v0,C2_FLAG
+
+
+                CPU interlock                                                       CPU interlock
+                for 15 cycles                                                       for 13 cycles
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+thus ...
+
+    develop your programs in the following
+    order
+
+
+               libgte                             DMPSX(C)                          DMPSX
+                                                                                    (assembler)
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Conclusion
+
+    significance of all this information
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+                                       Existing GS to GTE Pipeline
+           TMD File
+           (Main Mem.)                                       GTE Reg                 RTPT     GPU Command
+                                                                                       +      Packet
+           Header                                           VX0, VY0                 NCDT     (Main Mem)
+                                                            VZ0
+               Object                                       VX1, VY1                  G3
+                                                            VZ1                             R0, G0, B0, cd
+           Primitive0                                       VX2, VY2                        SX0,    SY0
+           R, G, B, cd                                      VZ2                             R1, G1, B1, cd
+           V0 | N0                                                                          SX1,    SY1
+           V1 | N1                                                                          R2, G2, B2, cd
+           V2 | N2                                                                          SX2,    SY2
+           Primitive 1                                      SX0, SY0
+                    .
+                    .
+   V0          VX0, | VY0
+               VZ0 |                                     R0, G0, B0,cd
+  V1           VX1 | VY1
+               VZ1 |
+   V2          VX2 | VY2
+               VZ2 |
+CONFIDENTIAL
+                     .
+                PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Conclusion...
+
+    one immediate speedup would be to
+    describe quadrilaterals as two
+    connected triangles
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+ Quadrilateral as two connected
+ triangles
+           TMD primitive (G3x2)                                                 TMD primitive (G4)
+
+          G3   Primitive0                                                   G4       Primitive0
+               R, G, B, cd                                                           R, G, B, cd
+               V0 | N0                                                               V0 | N0
+               V1 | N1                                                               V1 | N1
+               V2 | N2                                                               V2 | N2
+            G3 Primitive 1
+                                                                                     V3 | N3
+               R, G, B, cd
+               V1 | N1
+               V2 | N2
+               V3 | N3
+
+Primitive: 4x2 = 8 words                                                             Primitive: 5      = 5 words
+Vector: 6x2x2 = 24 words                                                             Vector: 8x2 = 16 words
+                   32 words                                                                            21 words
+
+ CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Quadrilateral...
+                                                                    GTE Reg
+               RTPT
+                +                                          12         SX0 | SY0
+               NCLIP                                       13         SX1 | SY1
+                                                           14         SX2 | SY2      unable to do NCIP
+                +
+                                                            15            |          on last vertex
+               RTPS
+                                  16                                       .
+  Using connected triangles instead
+                                    12                                   SX0 | SY0
+               RTPT
+                +                                             13         SX1 | SY1
+                                                              14         SX2 | SY2
+               NCLIP                                           15                       12
+                                                                             |                SX1 | SY1
+                +                                                                             SX2 | SY2
+                                                              16              .         13
+               RTPS                                                                     14    SX3 | SY3
+                +                                                                        15        .
+               NCLIP                                                                    16
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+    Quadrilateral...                                                                  0                 1
+
+                           G4                                                             NCLIP1
+                                        Primitive0
+                                        R, G, B, cd
+                                        V0 | N0
+                                                                                              NCLIP2
+                                        V1 | N1
+                                        V2 | N2                                       2                  3
+                                        V3 | N3
+
+
+                     G4 + NCLIP x2
+
+
+GPU Packet                                                                                         GPU Packet
+G4                                                                                                 G3
+        R0, G0, B0, cd                             R0, G0, B0, cd                     R1, G1, B1, cd
+        SX0,      SY0                              SX0,           SY0                 SX1,    SY1
+        R1, G1, B1, cd                             R1, G1, B1, cd                     R2, G2, B2, cd
+        SX1,      SY1                              SX1,           SY1                 SX2,    SY2
+        R2, G2, B2, cd                             R2, G2, B2, cd                     R3, G3, B3, cd
+        SX2,      SY2                              SX2,           SY2                 SX3,    SY3
+        R3, G3, B3, cd                                            GPU Packet
+        SX3, SY3
+     CONFIDENTIAL PlayStation Developer Seminar / Fall ‘96 / GTE &G3
+                                                                  Advanced Graphics
+                                                        End of
+                                                        Part 1
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+PART 2: DMPSX 3.01
+
+
+
+
+ CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+DMPSX 3.01 Overview
+
+    What is it?
+         A tool for three level optimization of GTE
+         commands
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+DMPSX 3.01 components
+   GTEMAC.H
+        A series of replacement macros for most
+        GTE functions
+    #define gte_RotTransPers(r1,r2,r3,r4,r5)                                        \
+                 { gte_ldv0(r1);                                                    \
+                   gte_rtps();                                                      \
+                   gte_stsxy(r2);                                                   \
+                   gte_stdp(r3);                                                    \
+                   gte_stflg(r4);                                                   \
+                   gte_stszotz(r5);
+                           }
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+DMPSX 3.01 components...
+   INLINE_C.H
+        Assembly macros for subcomponents of
+        larger macros in GTEMAC.H
+
+          #define gte_rtps() {                                               \
+          "nop;"                                                             \
+          "nop;"                                                             \
+          ".word 0x0000007f" )
+          }
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+DMPSX 3.01 components...
+   INLINE_A.H
+        Macro definitions for assembler programs
+        nRTPS
+          macro
+          nop
+          nop
+          dw                                $0000007f
+          endm
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+DMPSX 3.01 components...
+   GTEREG.H
+        GTE registers macros for assembler
+        programs
+   INLINE_O.H
+        Dummy macros from older version of
+        DMPSX
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+DMPSX 3.01
+Optimization Level 1
+    Designed to help programs run within
+    the I-cache
+    Programs which currently run on
+    within the I-cache may experience slow-
+    down
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+DMPSX 3.01
+Optimization Level 1 (cont.)
+Replace functions found in gtemac.h
+    Prefix function with “gte_”
+      RotTransPers()                                                   gte_RotTransPers()
+    Add return value to end of argument list
+      otz=RotTransPers()                                               gte_RotTransPers(...,&otz)
+    If GTE constants destroyed, save and load these
+    constants
+               OuterProduct12()                                        gte_ReadRotMatrix(&m)
+                                                                       gte_OuterProduct12()
+                                                                       gte_SetRotMatrix(&m)
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+DMPSX 3.01
+Optimization Level 1 (cont.)
+  Write inline functions directly in the
+  program
+   RotTransPers4()                                                          gte_RptTransPers3()
+                                                                            gte_RotTransPers()
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+DMPSX 3.01
+Optimization Level 2
+    Use the sub-macros in gtemac.h to delete unneeded
+    GTE commands
+{                                                                               {
+     gte_ldv0(v0);                                                                  gte_ldv0(v0);
+     gte_rtps();                                                                    gte_rtps();
+     gte_stsxy(sxy);                                                                gte_stsxy(sxy);
+     gte_stdp(p);                                                                   gte_stdp(p);
+     gte_stflg(flag);                                                               gte_stflg(flag);
+     gte_stszotz(otz);                                                              gte_stszotz(otz);
+}                                                                               }
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+DMPSX 3.01
+Optimization Level 3
+       Insert R3000 commands
+               Three types of GTE commands:
+               Type 1: Load GTE register                                             Fast
+               Type 2: Execute GTE instruction                                       Slow
+               Type 3: Read GTE register                                             Fast
+
+               Example:                          {
+                                                       gte_ldv0(v0);                 Type 1
+                                                       gte_rtps();                   Type 2
+                                                       gte_stsxy(sxy);               Type 3
+                                                       gte_stszotz(otz);             Type 3
+                                                 }
+CONFIDENTIAL    PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+DMPSX 3.01
+Optimization Level 3 (cont.)
+     Insert R3000 commands
+{                                                                               {
+    gte_ldv0(v0);                                                                   gte_ldv0(v0);
+    gte_rtps();                                                                     gte_rtps();
+    /* Type 2 = wait for GTE */                                                     R3000 Process
+    gte_stsxy(sxy);                                                                 gte_stsxy(sxy);
+    gte_stszotz(otz);                                                               gte_stszotz(otz);
+}                                                                               }
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+                                                        End of
+                                                        Part 2
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+            Part 3:
+Revisiting Some Old Favorites
+
+
+
+
+    CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Methods for speeding
+up polygon division
+
+
+
+
+ CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Problems involved in
+displaying ground
+
+
+
+
+                                                                             1. Warping of texture
+               Intended result
+                                                                        2. Near clipping problems
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Solution using clipping
+
+
+                                                                      O allows more polygons
+                                                                        to be used
+
+
+
+                                                                      X texture jumping
+                                                                      X texture warping
+                                                                      X calculations become
+                                                                        more complex
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Solution using division
+
+                                                             O less texture jumping
+                                                             O texture warping is eliminated
+
+
+
+
+                                                             X the polygon count is increased
+
+
+
+
+    Using the division method is better!
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Divide in 2 dimensions or 3 dimensions?
+
+
+
+
+          3 dimensions                                                              2 dimensions
+
+                         Divide in three dimensions
+  • 3 dimensions provides more accuracy
+  • Because GTE calculations are performed at high speeds,
+    there is no overhead with 3-dimensional division
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Active division or fixed division?
+
+
+
+
+                 Active                                                               Fixed
+
+                                    Use active method
+               Advantages                                                           Disadvantages
+
+  1. Polygon count is decreased                                            1. Gaps are generated
+  2. Improves speed                                                        2. Textures become non- continuous
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Actual programming
+
+
+       Principle
+
+                Display ground using active,
+                   3-dimensional division
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Recursive call
+
+
+
+
+                                 n
+                                2 division
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Conditions for stopping
+           <Polygon vertex distance>
+       Reasons
+
+                    • GPU rendering limit 1024x512
+
+                    • Polygon warping is most
+                      noticeable with larger polygons
+
+                    • Used together with Area Clipping
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+3-Dimensional 2n division
+
+   1                   2                       1
+                                                                  ordered as follows: A->B->C->D
+
+        A B                             x, 3y, z coordinates
+   3                   4
+                                            r, g, b color
+        D C                               u, v      texture
+   1                   2                  1 are all divided by two
+                                       These
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Fixing gaps
+
+A                                            B            Reason
+
+                      E                                        Due to the margin of error, the center point
+                                                               does not necessary lie on the axis
+
+
+    H                                 F
+                                                            Solution
+                                                               Draw a triangle for the gap as well
+                      G
+                                                               However, Back Clip is necessary
+C                                            D
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Solving the Z-sort problem
+                     B                                                       Z
+                                                                                    Set the Z-sort
+                                                                                    point to the
+                             A                                                      furthest point (B)
+                                                                                    rather than the
+                                                                                    center of gravity
+                                                                                    (A)
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+     Split processing for before and after division
+Processing that is performed just once before division
+
+• back clip
+                                                                      r 0 , g0 , b0
+• light source
+   calculations
+• Z sort
+
+ (r2+r0)/2, (g 2+g0) /2, (b 2+b0) /2                                                      (r0+r1)/2, (g 0+g1) /2, (b 0+b1) /2
+
+
+
+
+r 2 , g2 , b2                                                                                               r 1 , g1 , b1
+                                              (r1+r2)/2, (g 1+g2) /2, (b 1+b2) /2
+
+
+
+
+     CONFIDENTIAL    PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+READ modeling data
+  (x0, y0, z0)                            (x1, y1, z1)
+
+                                                                        Reading 4 vertices, 12 words takes
+                                                                                 about 70 cycles
+
+
+
+                                                                        If the data can be expressed
+                                                                       as w,h,d, about 7 words and 20
+                                                                              cyclescan be saved
+  (x2, y2, z2)                            (x3, y3, z3)
+
+
+               Modeling data formats should take into
+                     consideration the fact that
+                   memory reads are very slow
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Polygons that will not be displayed
+should be rejected early on
+
+
+                  decision A                                                    the rejection amount is
+
+                  decision B
+
+                  decision C
+                                                                                A>B>C
+                                                                                A is the GTE
+                         :
+                                                                                flag clip
+
+             MAIN LOOP
+
+
+
+
+   CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+    Clipping (1)
+                   HW clip                                                              4-vertex min-max
+                                                   (SCR_maxx,
+                                                   SCR_maxy)                     y
+                                                                         maxy
+
+                   SCREEN
+
+
+(SCR_minx,                                                               miny
+                          C
+SCR_miny)
+                   B            B
+                          B                                                                                 x
+             A                          A                                                 minx       maxx
+
+                                                                                  Clip conditions
+                                                                                  maxx           >   SCR_minx
+                           A                                                      maxy           >   SCR_miny
+                                                                                  minx           >   SCR_maxx
+                                                                                  miny           >   SCR_maxy
+
+
+    CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Clipping (2)
+NEAR Z clipping
+
+                                                                            Clip conditions
+                   C
+                       C
+                                A                VIEW
+                                                                            SZ0     <    projection/2
+               C                                                                     &
+                           B                                                SZ1     <    projection/2
+               C
+               C
+                   C                          A                                      &
+                                                                            SZ2     <    projection/2
+                               A                                            SZ3     <
+                                                                                     &
+                                                                                         projection/2
+
+
+               projection/2
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+ Eliminating useless OT
+                                          Elimination of NULL OT
+
+Number of
+registered
+packets
+
+                                                               OT
+
+                                               Packets are not registered
+
+
+
+
+                           OT-1                                                       OT-2
+
+                                                       Stretch a link
+
+  CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+Conclusion
+
+      Rendering ground in
+      3-dimensions
+
+                              1. Active 3-dimension divisions
+                              2. Recursive call
+                              3. On cache
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+                                                        End
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / GTE & Advanced Graphics
+

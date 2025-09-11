@@ -1,0 +1,50 @@
+PSXSPX SPECIFICATIONS - MOST CDROM DRIVES FOR PC'S DO NOT ALLOW TO READ ISRC NUMBERS (OR EVEN WORSE,
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Most CDROM drives for PC's do not allow to read ISRC numbers (or even worse,
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1554 characters
+Lines: 42
+================================================================================
+
+Most CDROM drives for PC's do not allow to read ISRC numbers (or even worse,
+they may accidently return the same ISRC number on every two tracks).
+
+If present, ADR=3 should exist in at least 1 out of 100 consecutive sectors.
+However, reportedly, ADR=3 should not occur in Lead-in.
+
+Subchannel Q with ADR=5 in Lead-in -- Multisession Lead-In Info
+
+When Point=B0h:
+
+| 8 Track number (fixed, must be 00h=Lead-in)
+8 POINT = B0h (multi-session disc)
+24 MM:SS:FF = the start time for the next possible session's program area,
+a final session is indicated by FFh:FFh:FFh,
+or when the ADR=5 / Point=B0h is absent.
+8 Number of different Mode-5 pointers present.
+24 MM:SS:FF = the maximum possible start time of the outermost Lead-out
+
+When Point=C0h:
+
+| 8 Track number (fixed, must be 00h=Lead-in)
+8 POINT = C0h (Identifies a Multisession disc, together with POINT=B0h)
+24 ATIP values from Special Information 1, ID=101
+8 Reserved (must be 00h)
+24 MM:SS:FF = Start time of the first Lead-in area of the disc
+
+And, optionally, when Point=C1h:
+
+| 8 Track number (fixed, must be 00h=Lead-in)
+8 POINT=C1h
+8x7 Copy of information from A1 point in ATIP
+
+Subchannel Q with ADR=5 in Lead-Out -- Multisession Lead-Out Info
+
+| 8 Track number (fixed, must be AAh=Lead-out)
+8 POINT = D1h (Identifies a Multisession lead-out)
+24 Usually zero (or maybe ATIP as in Lead-In with Point=C0h...?)
+8 Seems to be the session number?
+24 MM:SS:FF = Absolute address of the First data sector of the session
+
+Present in 3 consequtive sectors (3x ADR=1, 3x ADR=5, 3x ADR=1, 3x ADR=5, etc).

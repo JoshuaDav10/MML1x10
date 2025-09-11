@@ -1,0 +1,9 @@
+PSXSPX SPECIFICATIONS - SERIAL PORT (SIO)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Serial Port (SIO)
+Chunked: Wed Sep 10 03:31:04 PM CDT 2025
+Size: 18 characters
+================================================================================
+
+Serial Port (SIO)

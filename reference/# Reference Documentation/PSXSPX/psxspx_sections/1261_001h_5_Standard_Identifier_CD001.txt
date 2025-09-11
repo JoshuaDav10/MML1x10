@@ -1,0 +1,39 @@
+PSXSPX SPECIFICATIONS - 001H 5 STANDARD IDENTIFIER ("CD001")
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 001h 5 Standard Identifier ("CD001")
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1621 characters
+Lines: 30
+================================================================================
+
+001h 5 Standard Identifier ("CD001")
+006h 1 Volume Descriptor Version (01h=Standard)
+007h 1 Reserved (00h)
+008h 32 System Identifier (a-characters) ("PLAYSTATION")
+028h 32 Volume Identifier (d-characters) (max 8 chars for PSX?)
+048h 8 Reserved (00h)
+050h 8 Volume Space Size (2x32bit, number of logical blocks)
+058h 32 Reserved (00h)
+078h 4 Volume Set Size (2x16bit) (usually 0001h)
+07Ch 4 Volume Sequence Number (2x16bit) (usually 0001h)
+080h 4 Logical Block Size in Bytes (2x16bit) (usually 0800h) (1 sector)
+084h 8 Path Table Size in Bytes (2x32bit) (max 800h for PSX)
+08Ch 4 Path Table 1 Block Number (32bit little-endian)
+090h 4 Path Table 2 Block Number (32bit little-endian) (or 0=None)
+094h 4 Path Table 3 Block Number (32bit big-endian)
+098h 4 Path Table 4 Block Number (32bit big-endian) (or 0=None)
+09Ch 34 Root Directory Record (see next chapter)
+0BEh 128 Volume Set Identifier (d-characters) (usually empty)
+13Eh 128 Publisher Identifier (a-characters) (company name)
+1BEh 128 Data Preparer Identifier (a-characters) (empty or other)
+23Eh 128 Application Identifier (a-characters) ("PLAYSTATION")
+2BEh 37 Copyright Filename ("FILENAME.EXT;VER") (empty or text)
+2E3h 37 Abstract Filename ("FILENAME.EXT;VER") (empty)
+308h 37 Bibliographic Filename ("FILENAME.EXT;VER") (empty)
+32Dh 17 Volume Creation Timestamp ("YYYYMMDDHHMMSSFF",timezone)
+33Eh 17 Volume Modification Timestamp ("0000000000000000",00h)
+34Fh 17 Volume Expiration Timestamp ("0000000000000000",00h)
+360h 17 Volume Effective Timestamp ("0000000000000000",00h)
+371h 1 File Structure Version (01h=Standard)
+372h 1 Reserved for future (00h-filled)

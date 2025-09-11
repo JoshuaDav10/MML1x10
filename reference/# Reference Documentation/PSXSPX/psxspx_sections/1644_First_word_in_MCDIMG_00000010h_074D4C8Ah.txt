@@ -1,0 +1,43 @@
+PSXSPX SPECIFICATIONS - FIRST WORD IN MCD.IMG 00000010H 074D4C8AH
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: First word in MCD.IMG 00000010h 074D4C8Ah
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1456 characters
+Lines: 35
+================================================================================
+
+First word in MCD.IMG 00000010h 074D4C8Ah
+
+Star Wars Rebel Assault 2 (RESOURCE.*, and nested therein)
+
+BallBlazer Champions (*.DAT, and nested therein)
+
+The Rebel RESOURCE.* files start with name "bigEx" or "fOFS", BallBlazer *.DAT
+start with "SFXbase" or "tpage", nested files start with whatever other names.
+
+| 000h N*10h File List
+... (4) CRC32 on above header (Top-level only, not in Nested archives)
+... .. File Data area
+... (..) Huge optional padding to xx000h-byte boundary (in BallBlazer .DAT)
+File List entries in Top-level archives (with [0Ch].bit31=1):
+000h 8 Filename (zeropadded if less than 8 chars)
+008h 4 Decompressed Size (or 0=File isn't compressed)
+00Ch 4 Offset, self-relative from current List entry (plus bit31=1)
+File List entries in Nested archives (with [0Ch].bit31=0):
+000h 0Ch Filename (zeropadded if less than 12 chars)
+00Ch 4 Offset, self-relative from current List entry (plus bit31=0)
+Last File List entry has [00h..0Bh]=zerofilled, and Offset to end of file.
+
+Uncompressed Data Format (when List entry [08h]=0 or [0Ch].bit31=0):
+
+| 000h .. Uncompressed Data
+... .. CRC32 on above Data (Top-level only, not in Nested archives)
+
+Compressed Data Format (when List entry [08h]>0 and [0Ch].bit31=1)::
+
+| 000h 1 Compression Method (01h=LZ/16bit, 02h=LZ/24bit)
+001h 3 Decompressed Size (big-endian)
+004h .. Compressed Data
+... .. Zeropadding to 4-byte boundary
+... .. CRC32 on above bytes (method, size, compressed data, padding)

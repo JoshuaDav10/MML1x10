@@ -1,0 +1,52 @@
+PSXSPX SPECIFICATIONS - SYSTEM NEED TO USE SOME OF THAT MEMORY).
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: system need to use some of that memory).
+Chunked: Wed Sep 10 03:34:25 PM CDT 2025
+Size: 1528 characters
+Lines: 44
+================================================================================
+
+system need to use some of that memory).
+
+Using the 32bit debugger-built-in version as 32bit standalone editor
+
+I haven't yet compiled a 32bit standalone version, however, any of the no$xxx
+32bit debuggers can be used for that purpose. By commandline input:
+
+| no$xxx /x Edit text file in standalone mode
+no$xxx /b Edit binary file in standalone hexedit mode
+
+Standalone Commandline Syntax
+
+Syntax: XED [/l:
+• ] | /?
+
+| Filename, optionally d:\path\name.ext
+/? Displays commandline help
+/l: Moves to line number nnn after loading
+
+The filename does not require to include an extension, the program
+automatically loads the first existing file with any of following extensions
+appended: XED, ASM, ASC, INC, BAT, TXT, HTM, DOC, A22, PAS.
+
+Standalone DOS Return Value
+
+XED returns a three-byte return value after closing the program. This data is
+used when calling XED as external editor from inside of nocash DOS debuggers,
+but it might be also useful for other purposes.
+
+Because normal DOS return values are limited to 8bits only, the three bytes are
+written into video RAM at rightmost three character locations in first line:
+
+| VSEG:77*2 Exit code (00h=Exit normal, F9h=Exit by F9-key)
+VSEG:78*2 Line number (Lower 8bits, 1..65536 in total)
+VSEG:79*2 Line number (Upper 8bits)
+
+The color attribute for these characters is set to zero (invisible, black on
+black). Use INT 10h/AH=0Fh to determine the current video mode (AL AND 7Fh), if
+it is monochrome (07h) then use VSEG=B000h, otherwise VSEG=B800h.
+
+About & Credits
+
+Credits

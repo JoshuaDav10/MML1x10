@@ -1,0 +1,42 @@
+PSXSPX SPECIFICATIONS - DECOMPRESSED CHD CDROM SECTORS ARE ALWAYS 990H BYTES TALL (930H+60H). HOWEVER,
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Decompressed CHD CDROM Sectors are always 990h bytes tall (930h+60h). However,
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1547 characters
+Lines: 34
+================================================================================
+
+Decompressed CHD CDROM Sectors are always 990h bytes tall (930h+60h). However,
+the Metadata TYPE/SUBTYPE entries may specify smaller sizes (corresponding to
+the format of the original TOC/BIN or CUE/BIN image). CHD does arrange that
+data as so:
+
+| 000h Sector Data (800h, 914h, 920h or 930h bytes)
+... Subchannel Data (0 or 60h bytes)
+... Zeropadding to 990h-byte size (0..190h bytes)
+
+That is somewhat okay for V3/V4 files, but involves two design mistakes that
+conflict with the V5 format:
+
+| - The ECC-Filter works only for 930h-byte sectors (920h does also contain
+ECC, but CHD can't filter that, resulting in very bad compression ratio)
+- The last 60h-byte are supposed to be Deflate-compressed Subchannel Data
+(but 800h..920h+60h sectors actually contain Zeropadding in that location)
+
+Note: The CHD Map CRC checks are done on the above arrangement (including
+zeropadding, and any prior ECC-unfiltering).
+
+After the CRC check, one most relocate the Sector/Subchannel parts to their
+actual locations (and replace zeropadding by actual Sync marks, header,
+sub-header, ECC/EDC, and Subchannel data as needed).
+
+| __________________________ CHD Compression Methods ___________________________
+
+Deflate
+
+This is raw Deflate (despite of being called "zlib" in chd headers and source
+code; there aren't any ZLIB headers nor Adler checksums). V1-V4 does
+distinguish between "zlib" and "zlib+" (both are using normal Deflate) (V3/V4
+are always using "zlib+") (the "+" does probably just mean that file was
+compressed with improved compression ratio).

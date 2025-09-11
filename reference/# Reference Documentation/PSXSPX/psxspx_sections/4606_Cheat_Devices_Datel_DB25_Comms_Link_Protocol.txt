@@ -1,0 +1,44 @@
+PSXSPX SPECIFICATIONS - CHEAT DEVICES - DATEL DB25 COMMS LINK PROTOCOL
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Cheat Devices - Datel DB25 Comms Link Protocol
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1554 characters
+Lines: 35
+================================================================================
+
+Cheat Devices - Datel DB25 Comms Link Protocol
+
+Boot Command Handler
+
+The Boot Command Handler is executed once at Pre-Boot, and also (at least in
+some firmware versions) once before displaying the GUI. Following command(s)
+can be sent from PC side:
+
+| Repeatedly send 8bit "W", until receiving "R"
+Repeatedly send 8bit "B", until receiving "W"
+Send 8bit command "X" (upload/exec) or "U" (upload/flash), and receive ECHO
+Send 32bit ADDRESS, and receive ECHO or "BX" (bad command)
+Send 32bit LENGTH, and receive ECHO
+Send DATA[LENGTH], and receive ECHO
+Send 16bit CHECKSUM, and receive ECHO
+(for upload/flash and if checksum was good, PSX will now BURN ADDR,LENGTH)
+Send 16bit DUMMY, and receive "OK"/"BC"/"BF" (okay, bad chksum, bad flash)
+(for upload/exec and if checksum was good, PSX will now CALL ADDR)
+(thereafter, PAR2.0 and up will reboot via jmp BFC00000h)
+
+Data is always transferred as byte-pair (send one byte, receive one byte),
+16bit/32bit values are transferred MSB first (with ECHO after each byte).
+
+The upload/exec command is supported by both Datel and Caetla, the upload/flash
+command is supported by Datel only (but it's totally bugged in PAR1.99, and
+might also have upwards compatiblity issues in later versions, so it's better
+to upload a custom flash function via upload/exec instead of using
+upload/flash).
+
+The 16bit checksum is all DATA[len] bytes added together, and then ANDed with
+0FFFh (ie. actually only 12bit wide).
+
+Menu/Game Command Handler
+
+There must be some further command handler(s) after the Boot Command Handler,

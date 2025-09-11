@@ -1,0 +1,56 @@
+PSXSPX SPECIFICATIONS - INCREDIBLE CRISIS (MAGDEMO38: IC\TAN_DAT.CDB\)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Incredible Crisis (MagDemo38: IC\TAN_DAT.CDB\)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1746 characters
+Lines: 48
+================================================================================
+
+Incredible Crisis (MagDemo38: IC\TAN_DAT.CDB\)
+
+| 000h N*4 Offsets to File data (increasing, usually 4-byte aligned)
+... (4) Filesize (end-offset for last file) (only in Ape Escape)
+... ... File Data
+
+Like DOT1, but without Number of Files entry (instead, the first offset does
+imply the end of file list). There's no extra entry for end of last file
+(instead, that's implied in the total filesize). Most files have at least 5
+entries, but HSG\TITLE0.DAT seems to contain only one entry (ie. the whole
+header contains only one value, 00000004h, followed by something that looks
+like raw bitmap data).
+
+Also used by Ape Escape (MINIGAME\* included nested ones), the Ape Escape files
+do have an end-marker with last-offset (that will appear as an empty 0-byte
+file at end of list when not specifically handling it).
+MINIGAME\MINI2\BXTIM.BIN does also have several 0-byte files inside of the file
+list.
+
+Twisted Metal: Small Brawl (MagDemo54: TMSB\SHL\*.TMS)
+
+| 000h 4 Size of Data Area (total filesize minus 0D0h)
+004h 4 Number of files
+008h N*4 File List (zerobased offsets from begin of Data Area)
+... .. Zeropadding to 0D0h
+0D0h .. File Data Area
+
+This resembles DOT1, with an extra size entry and padding to 0D0h.
+
+Ridge Racer Type 4 (MagDemo19: R4DEMO\R4.BIN, 39Mbyte)
+
+Ridge Racer Type 4 (MagDemo21: R4DEMO\R4.BIN, 39Mbyte)
+
+Basically, this is alike DOT1, but SECTOR numbers, and with extra entries...
+
+| 000h 4 Number of Files (N) (3C9h)
+004h N*4 File List (Offset/800h)
+... 4 Total Size/800h ;
+
+Legend of Legaia (MagDemo20: LEGAIA\PROT.DAT)
+
+| 000h 4 Zero
+004h 4 Number of Entries (4D3h)
+008h N*4 File List (Offset/800h)
+... 4 Total Size/800h (aka end Offset/800h of last file)
+... .. Zeropadding to 800h-byte boundary
+... .. File Data area

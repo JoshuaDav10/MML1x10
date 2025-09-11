@@ -1,0 +1,41 @@
+MIPS INSTRUCTION SET REFERENCE - COPROCESSOR UNUSABLE, RESERVED INSTRUCTION
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Coprocessor Unusable, Reserved Instruction
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1771 characters
+Lines: 33
+================================================================================
+
+Coprocessor Unusable, Reserved Instruction
+
+
+
+
+228                                                              MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                                 Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+RDHWR
+
+
+
+
+  Read Hardware Register                                                                                                             RDHWR
+
+        31                   26 25               21 20              16 15               11 10                      6   5               0
+              SPECIAL3                  0                                                               0                  RDHWR
+                                                            rt                  rd
+               0111 11                00 000                                                          000 00               11 1011
+                  6                     5                   5                   5                2             3               6
+
+             Format:      RDHWR rt,rd                                                                                  MIPS32 Release 2
+
+             Purpose:
+
+             To move the contents of a hardware register to a general purpose register (GPR) if that operation is enabled by privi-
+             leged software.
+
+             Description: rt ← HWR[rd]
+             If access is allowed to the specified hardware register, the contents of the register specified by rd is loaded into gen-
+             eral register rt. Access control for each register is selected by the bits in the coprocessor 0 HWREna register.
+             The available hardware registers, and the encoding of the rd field for each, are shown in Table 3-31.

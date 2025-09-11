@@ -1,0 +1,25 @@
+MIPS INSTRUCTION SET REFERENCE - COP1                                     0                                                      MOV
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: COP1                                     0                                                      MOV
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1235 characters
+Lines: 16
+================================================================================
+
+COP1                                     0                                                      MOV
+                                       fmt                                   fs                fd
+                 010001                                  00000                                                   000110
+                    6                   5                  5                 5                 5                    6
+
+               Format:    MOV.S fd, fs                                                                             MIPS32
+                          MOV.D fd, fs                                                                             MIPS32
+                          MOV.PS fd, fs                                                                            MIPS64
+                                                                                                           MIPS32 Release 2
+
+               Purpose:
+               To move an FP value between FPRs
+
+               Description: fd ← fs
+               The value in FPR fs is placed into FPR fd. The source and destination are values in format fmt. In paired-single for-
+               mat, both the halves of the pair are copied to fd.

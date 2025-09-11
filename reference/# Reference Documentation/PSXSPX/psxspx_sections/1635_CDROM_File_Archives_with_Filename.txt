@@ -1,0 +1,56 @@
+PSXSPX SPECIFICATIONS - CDROM FILE ARCHIVES WITH FILENAME
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Archives with Filename
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1420 characters
+Lines: 48
+================================================================================
+
+CDROM File Archives with Filename
+
+| _______________________________ Entrysize=08h ________________________________
+
+WWF Smackdown (MagDemo33: TAI\*.PAC)
+
+| 000h 4 ID ("DPAC") ;\
+004h 4 Unknown (100h) ;
+008h 4 Number of files (N) ;
+00Ch 4 Directory Size (N*8) ; Header
+010h 4 File Data area size (SIZE = Totalsize-Headersize) ;
+014h 4 Unknown (1) ;
+018h 7E8h Zerofilled (padding to 800h-byte boundary) ;
+800h N*8 File List ;
+... .. Zerofilled (padding to 800h-byte boundary) ;/
+... SIZE File Data area ;-Data area
+File List entries:
+000h 8 Filename ("NAME")
+004h 2 File Offset/800h (increasing)
+006h 2 File Size/800h
+
+The DPAC archives can contain generic files (eg .TIM) and child archives (in a
+separate archive format, with ID "PAC ").
+
+| _______________________________ Entrysize=10h ________________________________
+
+Championship Motocross (MagDemo25: SMX\RESHEAD.BIN and RESBODY.BIN)
+
+RESHEAD.BIN:
+
+| 000h N*10h File List (220h bytes)
+File List entries:
+000h 8 Filename ("FILENAME", if shorter: terminated by 00h plus garbage)
+008h 4 Filesize in bytes
+00Ch 4 Offset/800h in RESBODY.BIN (increasing) (or FFFFFFFFh if Size=0)
+
+RESBODY.BIN:
+
+| 000h .. File Data (referenced from RESHEAD.BIN)
+
+One (DIRFILE.BIN\w*\sect*.bin)
+
+| 000h N*10h File List
+... .. File Data area
+File List entries:
+000h 0Ch Filename (eg. "FILENAME 001") ;for last entry: "END 000"
+00Ch 4 Offset (increasing, N*10h and up) ;for last entry: zero

@@ -1,0 +1,43 @@
+PSXSPX SPECIFICATIONS - COP2R22 - RGB2 RW|CD2 |B2 |G2 |R2 |
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: cop2r22 - RGB2 rw|CD2 |B2 |G2 |R2 |
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 1154 characters
+Lines: 34
+================================================================================
+
+cop2r22 - RGB2 rw|CD2 |B2 |G2 |R2 |
+cop2r23 - (RES1) | Prohibited
+
+RES1 seems to be unused... looks like an unused Fifo stage... RES1 is
+read/write-able... unlike SXYP (for SXYn Fifo) it does not mirror to RGB2, nor
+does it have a move-on-write function...
+
+Interpolation Factor
+
+| cop2r8 IR0 rw|Sign |IR0 1, 3,12| Intermediate value 0.
+
+Used as Output for RTPS/RTPT, and as Input for various commands.
+
+XX...
+
+| cop2r24 MAC0 rw|MAC0 1,31,0 | Sum of products value 0
+
+XX...
+
+| cop2r25 MAC1 rw|MAC1 1,31,0 | Sum of products value 1
+cop2r26 MAC2 rw|MAC2 1,31,0 | Sum of products value 2
+cop2r27 MAC3 rw|MAC3 1,31,0 | Sum of products value 3
+
+cop2r28 - IRGB - Color conversion Input (R/W)
+
+Expands 5:5:5 bit RGB (range 0..1Fh) to 16:16:16 bit RGB (range 0000h..0F80h).
+
+| 0-4 Red (0..1Fh) (R/W) ;multiplied by 80h, and written to IR1
+5-9 Green (0..1Fh) (R/W) ;multiplied by 80h, and written to IR2
+10-14 Blue (0..1Fh) (R/W) ;multiplied by 80h, and written to IR3
+15-31 Not used (always zero) (Read only)
+
+After writing to IRGB, the result can be read from IR3 after TWO nop's, and
+from IR1,IR2 after THREE nop's (for uncached code, ONE nop would work). When

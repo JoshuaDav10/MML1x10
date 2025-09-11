@@ -1,0 +1,31 @@
+PSXSPX SPECIFICATIONS - WHEN READING FROM MEMORY; SEE THERE FOR DETAILS).
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: when reading from memory; see there for details).
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1049 characters
+Lines: 23
+================================================================================
+
+when reading from memory; see there for details).
+
+Reportedly, the Load Delay applies for the next TWO opcodes after coprocessor
+reads, but, that seems to be nonsense (the PSX does finish both COP0 and COP2
+reads after ONE opcode).
+
+Caution - Store Delay
+
+In some cases, a similar delay occurs when writing to a coprocessor register.
+COP0 is more or less free of store delays (eg. one can read from a cop0
+register immediately after writing to it), the only known exception is the cop2
+enable bit in cop0r12.bit30 (setting that cop0 bit acts delayed, and cop2 isn't
+actually enabled until after 2 clock cycles or so).
+
+Writing to cop2 registers has a delay of 2..3 clock cycles. In most cases, that
+is probably (?) only 2 cycles, but special cases like writing to IRGB (which
+does additionally affect IR1,IR2,IR3) take 3 cycles until the result arrives in
+all registers).
+
+Note that Store Delays are counted in numbers of clock cycles (not in numbers
+of opcodes). For 3 cycle delay, one must usually insert 3 cached opcodes (or
+one uncached opcode).

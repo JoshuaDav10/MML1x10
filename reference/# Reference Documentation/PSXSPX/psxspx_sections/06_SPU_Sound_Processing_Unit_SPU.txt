@@ -1,0 +1,35 @@
+PSXSPX SPECIFICATIONS - SOUND PROCESSING UNIT (SPU)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Sound Processing Unit (SPU)
+Chunked: Wed Sep 10 03:31:04 PM CDT 2025
+Size: 300 characters
+================================================================================
+
+Sound Processing Unit (SPU)
+
+SPU Overview
+
+SPU ADPCM Samples
+
+SPU ADPCM Pitch
+
+SPU Volume and ADSR Generator
+
+SPU Voice Flags
+
+SPU Noise Generator
+
+SPU Control and Status Register
+
+SPU Memory Access
+
+SPU Interrupt
+
+SPU Reverb Registers
+
+SPU Reverb Formula
+
+SPU Reverb Examples
+
+SPU Unknown Registers

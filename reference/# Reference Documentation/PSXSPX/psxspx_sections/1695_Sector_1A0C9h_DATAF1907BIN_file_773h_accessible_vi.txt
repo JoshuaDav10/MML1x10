@@ -1,0 +1,31 @@
+PSXSPX SPECIFICATIONS - SECTOR 1A0C9H DATA\F1907.BIN ;FILE 773H ;/ ;/ACCESSIBLE VIA PSX KERNEL
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Sector 1A0C9h DATA\F1907.BIN ;file 773h ;/ ;/accessible via PSX kernel
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1162 characters
+Lines: 23
+================================================================================
+
+Sector 1A0C9h DATA\F1907.BIN ;file 773h ;/ ;/accessible via PSX kernel
+Sector 1AAF1h DUMMY.BIN ;-iso root folder (padding)
+
+Demo version in Playstation Magazine is a bit different: It has only two large
+.BIN files (instead of hundreds of smaller .BIN files). The directory is stored
+in first 2800h bytes of MINGOL2.BIN. The MM:SS:FF offsets are numbered as if
+they were located on sector 00:06:00 and up (to get the actual location:
+subtract 00:06:00 and then add the starting sector number of MINGOL2.BIN).
+
+| Sector 07148h HSG2\MINGOL2.BIN ;file 000h..590h ;demo binary files
+Sector 0AC1Dh HSG2\MINGOL2X.BIN ;file 76Ch ;demo streaming file(s)
+Sector 0B032h HSG2\SCUS_944.95 ;exefile ;demo exe file
+
+Note: File 000h is a dummy entry referring to the 2800h-byte list itself
+(retail file 000h has offset=00:06:00 but size=0, demo file 000h has offset and
+size set to zero). File 001h is the first actual file (at offset=00:06:05, ie.
+after the 2800h-byte list)
+
+Threads of Fate (MagDemo33: TOF\DEWPRISM.HED+.EXE+.IMG)
+
+The demo version uses "Virtual Sectors" in HED+EXE+IMG files. Apart from that,
+the format is same as for the "Hidden Sectors" in retail version:

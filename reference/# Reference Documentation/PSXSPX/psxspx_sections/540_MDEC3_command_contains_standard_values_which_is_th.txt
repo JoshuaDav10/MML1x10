@@ -1,0 +1,39 @@
+PSXSPX SPECIFICATIONS - MDEC(3) COMMAND CONTAINS STANDARD VALUES (WHICH IS THE CASE FOR ALL KNOWN PSX
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: MDEC(3) command contains standard values (which is the case for all known PSX
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 1046 characters
+Lines: 31
+================================================================================
+
+MDEC(3) command contains standard values (which is the case for all known PSX
+games).
+
+| src=blk, dst=temp_buffer
+for pass=0 to 1
+for i=0 to 7
+if src[(1..7)*8+i]=0 then ;when src[(1..7)*8+i] are all zero:
+dst[i*8+(0..7)]=src[0*8+i] ;quick fill by src[0*8+i]
+else
+z10=src[0*8+i]+src[4*8+i], z11=src[0*8+i]-src[4*8+i]
+z13=src[2*8+i]+src[6*8+i], z12=src[2*8+i]-src[6*8+i]
+z12=(1.414213562*z12)-z13 ;=sqrt(2)
+tmp0=z10+z13, tmp3=z10-z13, tmp1=z11+z12, tmp2=z11-z12
+z13=src[3*8+i]+src[5*8+i], z10=src[3*8+i]-src[5*8+i]
+z11=src[1*8+i]+src[7*8+i], z12=src[1*8+i]-src[7*8+i]
+z5 =(1.847759065*(z12-z10)) ;=sqrt(2)*scalefactor[2]
+tmp7=z11+z13
+tmp6=(2.613125930*(z10))+z5-tmp7 ;=scalefactor[2]*2
+tmp5=(1.414213562*(z11-z13))-tmp6 ;=sqrt(2)
+tmp4=(1.082392200*(z12))-z5+tmp5 ;=sqrt(2)/scalefactor[2]
+dst[i*8+0]=tmp0+tmp7, dst[i*8+7]=tmp0-tmp7
+dst[i*8+1]=tmp1+tmp6, dst[i*8+6]=tmp1-tmp6
+dst[i*8+2]=tmp2+tmp5, dst[i*8+5]=tmp2-tmp5
+dst[i*8+4]=tmp3+tmp4, dst[i*8+3]=tmp3-tmp4
+endif
+next i
+swap(src,dst)
+next pass
+
+real_idct_core(blk) ;low level "idct_core" version

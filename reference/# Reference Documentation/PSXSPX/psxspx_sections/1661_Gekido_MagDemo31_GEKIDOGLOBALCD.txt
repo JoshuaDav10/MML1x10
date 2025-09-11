@@ -1,0 +1,92 @@
+PSXSPX SPECIFICATIONS - GEKIDO (MAGDEMO31: GEKIDO\GLOBAL.CD)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Gekido (MagDemo31: GEKIDO\GLOBAL.CD)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 2538 characters
+Lines: 83
+================================================================================
+
+Gekido (MagDemo31: GEKIDO\GLOBAL.CD)
+
+| 0000h N*28h File List
+21C0h ... Unknown random gibberish? (23h,E8h,0Ch,1Dh,79h,C5h,24h,...)
+4000h ... File Data area
+
+File List entries:
+
+| 000h 1Ch Filename ("\PATH\FILENAME.EXT;0", zeropadded)
+01Ch 4 Filesize in bytes
+020h 4 Fileoffset in bytes (4000h and up, increasing)
+024h 4 Filechecksum (32bit sum of all bytes in the file)
+
+There is no "number of files" entry, and no "file list end marker" (though the
+"random gibberish" might serve as end marker, as long it doesn't start with "\"
+backslash).
+
+Team Buddies (MagDemo37: BUDDIES\BUDDIES.DAT\* and nested *.BND files)
+
+| 000h 4 ID "BIND"
+004h 4 Number of files (N)
+008h N*28h File List
+... .. File Data area
+
+File List entries:
+
+| 000h 20h Filename ("\FILENAME.EXT", zeropadded)
+020h 4 File Offset (increasing, 4-byte aligned) ;\see note
+024h 4 File Size in bytes (always a multiple of 4) ;/
+
+Note: There is a 4-byte gap between most files, that appears to be caused by
+weird/bugged alignment handling done as so:
+
+| size=((filesize+3) AND not 3) ;size entry for curr file (plus 3)
+offs=((filesize+4) AND not 3)+offs ;offs entry for next file (plus 4 !!!)
+
+Namely, odd filesizes (eg. for TXT files in BUDDIES.DAT\00D2h..00D7h) are
+forcefully rounded-up to 4 bytes boundary. If that rounding has occurred then
+there is no additional 4-byte gap (but the 4-byte gap will appear if the
+original filesize was already 4-byte aligned).
+
+JumpStart Wildlife Safari Field Trip (MagDemo52: DEMO\DATA.DAT)
+
+| 000h 4 Number of entries (N)
+004h 4 Number of entries (same as above)
+008h 4 Number of entries (same as above)
+00Ch 4 Number of entries (same as above)
+010h N*28 File List
+... .. Zeropadding to 800h-byte boundary
+... .. File Data area
+File List entries:
+000h 20h Filename ("\PATH\FILENAME.EXT", zeropadded)
+020h 4 Offset/800h, from begin of Data area (increasing)
+024h 4 Filesize in bytes
+
+| _______________________________ Entrysize=34h ________________________________
+
+Army Men: Air Attack (MagDemo28: AMAA\PAK\*.PAK)
+
+| 000h 4 Number of Files
+004h N*34h File List
+... .. Zeropadding to 4000h
+4000h .. File Data area
+File List entries:
+000h 10h Filename ("FILENAME.EXT", zeropadded)
+010h 4 Filesize in bytes ;\always both same, always
+014h 4 Filesize in bytes ;/both multiple of 800h
+018h 4 Zero
+01Ch 4 Type (07h..1Ah)
+020h 4 Subtype (00h..01h)
+024h 10h Zero
+
+The used Type.Subtype values are:
+
+| 07h.0 .TIM (*.TIM)
+07h.01h .TIM (HUD_*.TIM)
+08h.0 .TIM (PSTART.TIM)
+09h.0 .TIM (FONT.TIM)
+0Ah.0 .SFX
+0Eh.0 .MBL
+10h.0 .ATR
+11h.0 .RLC
+13h.0 .AST

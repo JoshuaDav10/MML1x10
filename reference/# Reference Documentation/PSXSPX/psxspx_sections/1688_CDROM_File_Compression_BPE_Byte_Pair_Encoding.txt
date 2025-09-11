@@ -1,0 +1,69 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION BPE (BYTE PAIR ENCODING)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression BPE (Byte Pair Encoding)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 2215 characters
+Lines: 61
+================================================================================
+
+CDROM File Compression BPE (Byte Pair Encoding)
+
+The game does also use .DBI files (which contain filenames and other strings,
+whatever what for).
+
+Monaco Grand Prix Racing Simulation 2 (MagDemo24: EXE\*\*.SUN)
+
+Same as DFS, but with Total Filesize instead of "DFS_".
+
+| 000h 4 Total used filesize (excluding zeropadding to 2EE000h)
+004h 4 Number of Files (N)
+008h N*8 File List
+... .. File Data area
+... (..) In some files: Zeropadding to 2EE000h (3072Kbytes)
+
+File Entries:
+
+| 000h 4 Offset (increasing, 4-byte aligned, see note)
+004h 4 Filesize in bytes (can be odd in Monaco)
+
+Note: The alignment in Monaco is a bit glitchy:
+
+| If (Size AND 3)=0 then NextOffset=Offset+Size ;Align4
+If (Size AND 3)>0 then NextOffset=Offset+Size+Align800h ;Align800h
+Namely, Monaco has files with Size=3BC5h.
+
+The first file starts with unknown 32bit value, followed by "pBAV".
+
+Rollcage (MagDemo19: ROLLCAGE\SPEED.IMG) (2Mbyte)
+
+Rollcage Stage II (MagDemo31: ROLLCAGE\SPEED.IDX+SPEED.IMG) (3Kbyte+9Mbyte)
+
+Sydney 2000 (MagDemo37: OLY2000\DEMO.IDX+DEMO.IMG) (1Kbyte+2Mbyte)
+
+| Rollcage 1 uses a single IMG file that contains both directory and data:
+000h 4 Header offset (0) ;\
+004h 4 Header size (10h+N*10h) ; this seems to be a File List entry
+008h 4 Header size (10h+N*10h) ; for the header itself
+00Ch 4 Zero ;/
+010h N*10h File List ;-File List for actual files
+... .. Zeropadding to 800h-byte boundary
+... .. File Data area
+Number of files is "IMG[04h]/10h" (minus 1 for excluding the header itself)
+The other titles have seaparate IDX and IMG files for directory and data:
+SPEED.IDX = Directory (N*10h bytes File List with offsets into SPEED.IMG)
+SPEED.IMG = File data
+Number of files is "Filesize(SPEED.IDX)/10h"
+
+File List entries:
+
+| 000h 4 Fileoffset in bytes (800h-byte aligned, increasing)
+004h 4 Filesize in bytes
+008h 4 When compressed: GT20 Header [004h] (decompressed size)
+When uncompressed: Same as filesize
+00Ch 4 When compressed: GT20 Header [008h] (overlap, usuallly 3, or 7)
+When uncompressed: Zero
+
+The compression related entries allow to pre-allocated the decompression buffer
+(without needing to load the actual GT20 file header), and then load the
+comprssed file to the top of the decompression buffer.

@@ -1,0 +1,13 @@
+PSYQ DOCUMENTATION - Core PSYQ library functions and API reference
+================================================================================
+Category: 01_Core_Library
+Description: Core PSYQ library functions and API reference
+Files: 6
+
+FILES IN THIS CATEGORY:
+  LibOver47.txt (813.2 KB)
+  LibRef47.txt (1576.5 KB)
+  dev1.txt (8.2 KB)
+  intro.txt (6.1 KB)
+  psyq10.txt (5.8 KB)
+  user205.txt (74.6 KB)

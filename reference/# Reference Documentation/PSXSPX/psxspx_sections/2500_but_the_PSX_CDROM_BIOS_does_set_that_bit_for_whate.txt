@@ -1,0 +1,90 @@
+PSXSPX SPECIFICATIONS - BUT THE PSX CDROM BIOS DOES SET THAT BIT FOR WHATEVER REASON.
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: but the PSX CDROM BIOS does set that bit for whatever reason.
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2524 characters
+Lines: 82
+================================================================================
+
+but the PSX CDROM BIOS does set that bit for whatever reason.
+
+Alternately, the sector can be forwarded to the Real-time ADPCM decoder:
+
+| ADPMNT = (CMADR AND 7Fh) OR 80h
+
+19h - ADPMNT - ADPCM "MNT" Address (W)
+
+| 0-6 ADPxxx ADPCM source Address bit10-16 (in 1Kbyte-steps)
+7 RTADPEN Real-time ADPCM Enable (0=Disable, 1=Enable Real-time ADPCM)
+
+04h - DLADR-L, Drive Last Address, bit0-7 (W)
+
+05h - DLADR-M, Drive Last Address, bit8-15 (W)
+
+06h - DLADR-H, Drive Last Address, bit16 (W)
+
+| 0-16 DLADR Addr. bit0-16 ...
+17-23 "L" Reserved (should be 0)
+
+10h - DADRC-L - Drive Address Counter, bit0-7 (W)
+
+11h - DADRC-M - Drive Address Counter, bit8-15 (W)
+
+12h - DADRC-H - Drive Address Counter, bit16 (W)
+
+| 0-16 DADRC Incrementing Drive-to-Buffer Write Address, bit0-16
+17-23 "L" Reserved (should be 0)
+
+0Eh - DADRC-L - Drive Address Counter, Bit0-7 (R)
+
+0Fh - DADRC-M - Drive Address Counter, Bit8-15 (R)
+
+| 0-15 DADRC Address bit0-15 ;bit16 is in Port 0Bh ...
+
+0Ch - HXFR-L - Host Transfer Length, bit0-7 (W)
+
+0Dh - HXFR-H - Host Transfer Length, bit8-11 and stuff (W)
+
+| 0-11 HXFR number of data bytes, bit0-11 (0..FFFh) ...
+12 HADR.16 HADR bit16
+13 "L" Reserved (should be 0)
+14 "L" ?? Reserved (should be 0) ;
+
+0Eh - HADR-L - Host Transfer Address, bit0-7 (W)
+
+0Fh - HADR-M - Host Transfer Address, bit8-15 (W)
+
+| 0-15 HADR Addr. bit0-15 ;bit16 in Port 0Dh ...
+
+0Ah - HXFRC-L - Host Transfer Remain Counter, bit0-7 (R)
+
+0Bh - HXFRC-H - Host Transfer Remain Counter, bit8-11, and other bits (R)
+
+| 0-11 HXFRC Host Transfer Counter bit0-11 (number of remaining bytes)
+12 HADRC bit16 ;MSB of Port 0Ch/0Dh
+13 DADRC bit16 ;MSB of Port 0Eh/0Fh
+14-15 - Reserved (undefined) (usually both bits set)
+
+0Ch - HADRC-L - Host Transfer Address Counter, bit0-7 (R)
+
+0Dh - HADRC-M - Host Transfer Address Counter, bit8-15 (R)
+
+| 0-15 HADRC Address bit0-15 ;bit16 is in Port 0Bh
+
+"This counter keeps the addresses which write or read the data with host
+into/from the buffer.
+
+When data from the host is written into the buffer or data to the host is read
+from the buffer, the HADRC value is output from MA0 to 16. HADRC is incremented
+each time one byte of data from the drive is read from the buffer (BFRD is
+high) or written into the buffer (BFWR is high)."
+
+Note
+
+When reading from SRAM, data seems to go through a 8-byte data fifo, the HXFRC
+(remain) and HADRC (addr) values aren't aware of that FIFO (ie. if there's data
+in the fifo, then addr will be 8 bigger and remain 8 smaller than what has
+arrived at the host).
+
+Unclear Notes

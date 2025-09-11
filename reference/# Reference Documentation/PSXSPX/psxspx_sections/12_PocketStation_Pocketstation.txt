@@ -1,0 +1,57 @@
+PSXSPX SPECIFICATIONS - POCKETSTATION
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Pocketstation
+Chunked: Wed Sep 10 03:31:04 PM CDT 2025
+Size: 867 characters
+================================================================================
+
+Pocketstation
+
+Pocketstation Overview
+
+Pocketstation I/O Map
+
+Pocketstation Memory Map
+
+Pocketstation IO Video and Audio
+
+Pocketstation IO Interrupts and Buttons
+
+Pocketstation IO Timers and Real-Time Clock
+
+Pocketstation IO Infrared
+
+Pocketstation IO Memory-Control
+
+Pocketstation IO Communication Ports
+
+Pocketstation IO Power Control
+
+Pocketstation SWI Function Summary
+
+Pocketstation SWI Misc Functions
+
+Pocketstation SWI Communication Functions
+
+Pocketstation SWI Execute Functions
+
+Pocketstation SWI Date/Time/Alarm Functions
+
+Pocketstation SWI Flash Functions
+
+Pocketstation SWI Useless Functions
+
+Pocketstation BU Command Summary
+
+Pocketstation BU Standard Memory Card Commands
+
+Pocketstation BU Basic Pocketstation Commands
+
+Pocketstation BU Custom Pocketstation Commands
+
+Pocketstation File Header/Icons
+
+Pocketstation File Images
+
+Pocketstation XBOO Cable

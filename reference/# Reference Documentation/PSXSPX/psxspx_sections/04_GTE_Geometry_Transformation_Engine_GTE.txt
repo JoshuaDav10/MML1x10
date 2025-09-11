@@ -1,0 +1,25 @@
+PSXSPX SPECIFICATIONS - GEOMETRY TRANSFORMATION ENGINE (GTE)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Geometry Transformation Engine (GTE)
+Chunked: Wed Sep 10 03:31:04 PM CDT 2025
+Size: 238 characters
+================================================================================
+
+Geometry Transformation Engine (GTE)
+
+GTE Overview
+
+GTE Registers
+
+GTE Saturation
+
+GTE Opcode Summary
+
+GTE Coordinate Calculation Commands
+
+GTE General Purpose Calculation Commands
+
+GTE Color Calculation Commands
+
+GTE Division Inaccuracy

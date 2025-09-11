@@ -1,0 +1,94 @@
+PSXSPX SPECIFICATIONS - AND THE GPU IS BARELY USED FOR TRANSFERRING DATA FROM CPU TO VRAM.
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: and the GPU is barely used for transferring data from CPU to VRAM.
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 3428 characters
+Lines: 86
+================================================================================
+
+and the GPU is barely used for transferring data from CPU to VRAM.
+
+The STR header for software-rendered movie frames looks as so:
+
+| 000h 2 STR ID (0160h)
+002h 2 STR Type (0002h=Custom, Software rendering)
+004h 2 Sector number within current Frame (0..num-1)
+006h 2 Number of Sectors in this Frame (varies)
+008h 4 Frame Number (1=First)
+00Ch 4 Frame Size in Bytes/4 (note: first frame in MAP*.STR is quite big)
+010h 2 Rendering Width (0140h)
+012h 2 Rendering Height (00C0h)
+014h 0Ch Unknown (zerofilled or random garbage)
+020h 7E0h Custom data for software rendering
+
+Note: First sector of First frame does usually have byte[22h]=88h (except
+FINMUS.STR). The Custom data part is often have garbage padding (such like
+ASCII strings with "c2str" command line tool usage instructions).
+
+Croc 1 (CUTS\*.AN2)
+
+Probably cut-scenes with polygon animations. The files seem to contain
+2300h-byte data frames (plus XA-ADPCM sectors inserted here and there).
+
+| 000h 4 Number of remaining frames
+... 22FCh Unknown data (zeropadded if smaller)
+
+| _______________ Unknown Streaming Data (Polygons or whatever) ________________
+
+Custom STR - 3D Baseball (BIGFILE.FOO)
+
+This is used for several files in 3D Baseball (BIGFILE.FOO):
+
+| BIGFILE.FOO\0151h\0005h,0009h,000Fh,0017h,001Bh, 02E5h,02E9h,..,0344h,0348h
+BIGFILE.FOO\0152h\0186h,018Ch,0192h,0198h)
+BIGFILE.FOO\0153h\029Ah,02A0h,02A6h,02ACh)
+
+The files contain some kind of custom streaming data, with custom STR header,
+and data containing increasing/decreasing bytes... maybe non-audio waveforms?
+
+| 000h 2 STR ID (0160h)
+002h 2 STR Type (0001h=Custom)
+004h 2 Sector number within current Frame (always 0)
+006h 2 Number of Sectors in this Frame (always 1)
+008h 4 Frame Number (1=First)
+00Ch 4 Frame Size (6FAh or 77Ah, sometimes 17Ah or 1FAh or 20Ah)
+010h 2 Unknown (280h, or sometimes 300h or 340h)
+012h 2 Frame Time (0=First, increases with step [19h], usually +5 or +7)
+014h 2 Unknown (280h, or sometimes 300h or 3C0h, or 0)
+016h 1 Frame Time (same as [012h] AND FFh)
+017h 1 Unknown (0 or 1)
+018h 1 Unknown (40h, or 80h, or C0h)
+019h 1 Duration? (5 or 7, or sometimes less, step for Frame Time)
+01Ah 1 Unknown (3, or less in last some frames)
+01Bh 5 Zerofilled
+020h 7E0h Data (increasing/decreasing bytes... maybe non-audio waveforms?)
+
+Army Men Air Attack 2 (MagDemo40: AMAA2\*.PMB)
+
+| 000h 2 STR ID (0160h)
+002h 2 STR Type (0000h=Custom)
+004h 2 Sector number within current Frame (0..2)
+006h 2 Number of Sectors in this Frame (always 4) (3xSTR + 1xADPCM)
+008h 4 Frame Number (1=First)
+00Ch 4 Frame Size? (800h, despite of having 3 sectors with 7E0h each?)
+010h 2 Unknown (00h or 01h)
+012h 2 Unknown (A3h or ABh ... 6Ch or 7Bh ... or 43h or 49h)
+014h 2 Sector number within current Frame (0..2) (same as [004h])
+016h 0Ah Zerofilled
+020h 7E0h Data (polygon streaming or so?)
+
+Note: The .PMB file is bundled with a .PMH file, which might contain header
+info?
+
+Bits Laboratory games (Charumera, and True Love Story series)
+
+| Charumera ENDING.XA (with dummy/zero data)
+True Love Story TLS\MULTI.XA (with nonzero data)
+True Love Story 2 TLS2\ENDING.STR and TLS2\MULTI.XA
+True Love Story Fan Disc ;\probably use that format, too
+True Love Story: Remember My Heart ;/(not verified)
+
+The STR headers have STR ID=0160h and STR Type=0001h, STR header[10h..1Fh]
+contains nonsense BS video info (with BS ID=3800h, although there isn't any BS
+data in the actual data part at offset 20h and up).

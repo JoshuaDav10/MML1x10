@@ -1,0 +1,146 @@
+PSYQ DOCUMENTATION - MAIN INDEX
+================================================================================
+Organized PSYQ Documentation for Mega Man Legends Decompilation
+Generated: Wed Sep 10 03:18:25 PM CDT 2025
+
+CATEGORIES:
+
+01_Core_Library: Core PSYQ library functions and API reference
+  Files: 7
+    LibOver47.txt
+    LibRef47.txt
+    dev1.txt
+    intro.txt
+    psyq10.txt
+    user205.txt
+
+02_Hardware: Hardware specifications and low-level programming
+  Files: 9
+    Hardware.txt
+    PDAKern.txt
+    armref.txt
+    controll.txt
+    memcard.txt
+    os.txt
+    os2.txt
+    pdahware.txt
+
+03_Graphics: GPU, GTE, and graphics programming
+  Files: 11
+    3dgraph.txt
+    Sprite.txt
+    adv_gpu.txt
+    adv_gte.txt
+    anim.txt
+    art5.txt
+    artpath.txt
+    gpu6.txt
+    graph.txt
+    gte7.txt
+
+04_Audio: Sound system and audio programming
+  Files: 7
+    Sound20.txt
+    rvsndpg.txt
+    snd3.txt
+    sound.txt
+    sounread.txt
+    xa_sound.txt
+
+05_CDROM: CD-ROM system and file formats
+  Files: 10
+    Cdemul.txt
+    Cdgen.txt
+    FileFormat47.txt
+    Filefrmt.txt
+    adv_cd.txt
+    cd4.txt
+    cd_ovw.txt
+    cdmaster.txt
+    cdrom.txt
+
+06_System: OS, kernel, and system programming
+  Files: 12
+    Dataconv.txt
+    bdldex.txt
+    bdmcard.txt
+    dcenvmp.txt
+    dcglddsk.txt
+    fsdbovl.txt
+    fsgpont.txt
+    fsinlin.txt
+    fslnklb.txt
+    optimize.txt
+    overlay.txt
+
+07_Development: Development tools and guidelines
+  Files: 24
+    BASE.SRG.txt
+    Dtlh2000.txt
+    Dtlh2500.txt
+    Inlinref.txt
+    Libovr.txt
+    Libref.txt
+    MC32.SCR.txt
+    MSPPT8VR.OLB.txt
+    Readme.txt
+    SERVRDEP.SRG.txt
+    SERVRIND.SRG.txt
+    SSHOW.SRG.txt
+    gte.txt
+    index.txt
+    note520.txt
+    note588.txt
+    ordtbl.txt
+    palguide.txt
+    pretech.txt
+    readme.txt
+    sdevtc.txt
+    sound.txt
+    tech205.txt
+
+08_Conferences: Conference materials and presentations
+  Files: 29
+    Analog.txt
+    Ds_servc.txt
+    Guncont.txt
+    NeGcon.txt
+    epda1.txt
+    epda2.txt
+    joystk.txt
+    lcable.txt
+    mdecnote.txt
+    mfanlog.txt
+    mflibds.txt
+    mfmovi.txt
+    mfprfanl.txt
+    mtrc13.txt
+    perfpapr.txt
+    rvsart.txt
+    scea_bbs.txt
+    scee_bbs.txt
+    scee_dev.txt
+    sceenews.txt
+    scej_bbs.txt
+    shft_jis.txt
+    snide.txt
+    swsart.txt
+    tgpasqa.txt
+    upgtedv.txt
+    upgtelt.txt
+    webmsg.txt
+
+09_Technical_Notes: Technical notes and specialized topics
+  Files: 9
+    Fmv_tips.txt
+    XATUT.txt
+    doc11.txt
+    gs.txt
+    gs8.txt
+    libpdfaq.txt
+    mdec.txt
+    sio9.txt
+
+10_FAQ: Frequently asked questions and troubleshooting
+  Files: 2
+    emul_faq.txt

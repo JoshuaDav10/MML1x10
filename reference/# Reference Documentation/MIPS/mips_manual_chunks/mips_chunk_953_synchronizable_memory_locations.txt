@@ -1,0 +1,24 @@
+MIPS INSTRUCTION SET REFERENCE - SYNCHRONIZABLE MEMORY LOCATIONS.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: synchronizable memory locations.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1307 characters
+Lines: 15
+================================================================================
+
+synchronizable memory locations.
+             The contents of the 32-bit word at the memory location specified by the aligned effective address are fetched and
+             written into GPR rt. The 16-bit signed offset is added to the contents of GPR base to form an effective address.
+             This begins a RMW sequence on the current processor. There can be only one active RMW sequence per processor.
+             When an LL is executed it starts an active RMW sequence replacing any other sequence that was active. The RMW
+             sequence is completed by a subsequent SC instruction that either completes the RMW sequence atomically and suc-
+             ceeds, or does not and fails.
+             Executing LL on one processor does not cause an action that, by itself, causes an SC for the same block to fail on
+             another processor.
+             An execution of LL does not have to be followed by execution of SC; a program is free to abandon the RMW
+             sequence without attempting a write.
+
+             Restrictions:
+             The addressed location must be synchronizable by all processors and I/O devices sharing the location; if it is not, the
+             result in UNPREDICTABLE. Which storage is synchronizable is a function of both CPU and system implementa-

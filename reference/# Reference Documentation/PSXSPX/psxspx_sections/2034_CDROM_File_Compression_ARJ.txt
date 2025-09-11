@@ -1,0 +1,186 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION ARJ
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression ARJ
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 7090 characters
+Lines: 177
+================================================================================
+
+CDROM File Compression ARJ
+
+ARJ archives contain several chunks
+
+| Main header chunk
+Local file chunk(s)
+Chapter chunk(s), backup related, exist only in newer archives
+End Marker
+
+ARJ main "comment" header, with [00Ah]=2
+
+This is stored at the begin of the archive. The format is same as for local
+file header (but with file-related entries set to zero, or to global security
+settings).
+
+| 000h 2 ARJ ID (EA60h, aka 60000 decimal)
+002h 2 Header size (from 004h up to including Filename+Comment) (max 2600)
+004h 1 Header size (from 004h up to including Extra Data) (1Eh+extra)
+005h 1 Archiver version number (01h..0xh)
+006h 1 Minimum archiver version to extract (usually 01h)
+007h 1 Host OS
+008h 1 ARJ Flags (bit0-7, see below)
+009h 1 Security version (2 = current)
+00Ah 1 File Type (must be 2=ARJ Comment in main header)
+00Bh 1 Reserved/Garbage (LSB of Archive creation Date/Time, same as [00Ch])
+00Ch 4 Date/Time when archive was created
+010h 4 Date/Time when archive was last modified
+014h 4 Zero (or Secured Archive size, excluding Security and Protection)
+018h 4 Zero (or Security envelope file position) (after End Marker)
+01Ch 2 Zero (or Filespec position in filename) (0) (what is that??)
+01Eh 2 Zero (or Security envelope size in bytes) (78h, if any)
+020h 1 Zero (or >2.50?: Encryption version, 0-1=Old, 2=New, 4=40bit GOST)
+021h 1 Zero (or >2.50?: Last chapter (eg. 4 when having chapter 1..4)
+022h (1) Extra data: ARJ Protection factor ;\extra,
+023h (1) Extra data: ARJ Flags (bit0=ALTVOLNAME, bit1=ReservedBit) ; if any
+024h (2) Extra data: Spare bytes ;/
+... .. Filename, max 500 bytes ("FILENAME.ARJ",00h)
+... .. Comment, max 2048 bytes ("ASCII Comment",00h)
+... 4 CRC32 on Header (from 004h up to including Comment)
+... 2 Size of 1st extended header (usually 0=none)
+... (0) Extended Header(s?) (usually none such)
+
+ARJ local file header, with [00Ah]=0,1,3,4
+
+This occurs at the begin of each file in the archive.
+
+| 000h 2 ARJ ID (EA60h, aka 60000 decimal)
+002h 2 Header size (from 004h up to including Filename+Comment) (max 2600)
+004h 1 Header size (from 004h up to including Extra Data) (1Eh+extra)
+005h 1 Archiver version number
+006h 1 Minimum archiver version to extract (usually 01h)
+007h 1 Host OS
+008h 1 ARJ Flags (bit0,2-5)
+009h 1 Method
+00Ah 1 File Type (0=Binary, 1=Text, 3=Directory Name, 4=Volume Name)
+00Bh 1 Reserved/Garbage (LSB of Archive update Date/Time?)
+00Ch 4 Date/Time modified
+010h 4 Filesize, compressed (max 7FFFFFFFh)
+014h 4 Filesize, uncompressed
+018h 4 CRC32 on uncompressed file data
+01Ch 2 Zero (or Filespec position in filename) (what is that??)
+01Eh 2 File access mode (aka MSDOS file attribute) (20h=Normal)
+020h 1 Zero (or >2.50?: first chapter of file's lifespan)
+021h 1 Zero (or >2.50?: last chapter of file's lifespan)
+022h (4) Extra data: Extended file position (maybe for split?) ;\extra,
+026h (4) Extra data: Date/Time accessed ;\ARJ ; 0,4 or 10h
+03Ah (4) Extra data: Date/Time created ; 2.62 ; bytes
+03Eh (4) Extra data: Original file size even for volumes ;/ ;/
+... .. Filename, max 500 bytes ("PATH/FILENAME.EXT",00h)
+... .. Comment, max 2048 bytes ("ASCII Comment",00h)
+... 4 CRC32 on Header (from 004h up to including Comment)
+... 2 Size of 1st extended header (usually 0=none)
+... (0) Extended Header(s?) (usually none such)
+... .. Compressed file data
+
+Entry 3Eh might be meant to contain Original Size of TEXT files (with CR,LFs),
+however, the entry is just set to 00000000h in ARJ 2.75a. Or maybe it's meant
+to mean size of whole file (in split-volumes)?
+
+ARJ backup "chapter" header (ARJ >2.50?) (exists in 2.75a), with [00Ah]=5
+
+This is rarely used and supported only in newer ARJ versions. The format is
+same as for local file header (but with file-related entries being nonsense in
+TECHNOTE; in practice, those nonsense values seem to be zero).
+
+| 000h 2 ARJ ID (EA60h, aka 60000 decimal)
+002h 2 Header size (from 004h up to including Filename+Comment) (max 2600)
+004h 1 Header size (from 004h up to including Extra Data) (1Eh+extra)
+005h 1 Archiver version number (eg. 0Ah=2.75a)
+006h 1 Minimum archiver version to extract (usually 01h)
+007h 1 Host OS
+008h 1 ARJ Flags (usually 00h)
+009h 1 Method (usually 01h, although chapters have no data) what file???
+00Ah 1 File Type (must be 5=ARJ Chapter)
+00Bh 1 Reserved/Garbage (LSB of Chapter Date/Time, same as [00Ch])
+00Ch 4 Date/Time stamp created
+010h 4 Zero (or reportedly, ?) what question?
+014h 4 Zero (or reportedly, ?) what question?
+018h 4 Zero (or reportedly, original file's CRC32) what file???
+01Ch 2 Zero (or reportedly, entryname position in filename) what file???
+01Eh 2 Zero (or reportedly, file access mode) what file???
+020h 1 Chapter range start (01h=First chapter?) what range???
+021h 1 Chapter range end (contains same value as above) what range???
+022h (4) Extra data: Extended file position (usually none such)what extra???
+... .. Filename (">>",00h for First chapter)
+... .. Comment ("",00h)
+... 4 CRC32 on Header (from 004h up to including Comment)
+... 2 Size of 1st extended header (usually 0=none)
+... (0) Extended Header(s?) (usually none such)
+
+ARJ End Marker (with [002h]=0000h)
+
+This is stored at the end of the archive.
+
+| 000h 2 ARJ ID (EA60h, aka 60000 decimal)
+002h 2 Header size (0=End)
+
+Note: The End Marker may be followed by PROTECT info and Security envelope.
+
+ARJ Method [009h]
+
+| 0 = stored (uncompressed)
+1 = compressed most (default) (Window=6800h=26Kbyte, Chars=255, Tree=31744)
+2 = compressed medium (Window=5000h=20Kbyte, Chars=72, Tree=30720)
+3 = compressed less (Window=2000h=8Kbyte, Chars=32, Tree=30720)
+4 = compressed least/fastest (Window=6800h? or 8000h?)
+8 = no data, no CRC ;\unknown if/where that is used (maybe only used
+9 = no data ;/internally, and never stored in actual files?)
+
+ARJ File Type [00Ah]
+
+| 0 = binary file (default)
+1 = text file (with converted line breaks, via -t1 switch)
+2 = ARJ comment header (aka ARJ main file header)
+3 = directory name
+4 = volume label (aka disc name)
+5 = ARJ chapter label (aka begin of newer backup sections)
+
+ARJ Flags (in Main [008h])
+
+| 0 GARBLED
+1 OLD_SECURED has old signature (with signature in Main Header?)
+1 ANSIPAGE ANSI codepage used by ARJ32 (for what? for "FILENAME.ARJ"?)
+2 VOLUME presence of succeeding volume
+3 ARJPROT
+4 PATHSYM archive name translated ("\" changed to "/")
+5 BACKUP obsolete
+6 SECURED has new signature (in security envelope?)
+7 ALTNAME dual-name archive
+
+ARJ Flags (in Local [008h])
+
+| 0 GARBLED passworded file
+1 NOT USED
+2 VOLUME continued file to next volume (file is split)
+3 EXTFILE file starting position field (for split files)
+4 PATHSYM filename translated ("\" changed to "/")
+5 BACKUP_FLAG obsolete
+
+ARJ Flags (in Chapter [008h])
+
+| 0 GARBLED ;\
+1 RESERVED ;
+2 VOLUME ; what does that mean in Chapters???
+3 EXTFILE ;
+4 PATHSYM ;/
+5 BACKUP obsolete 
+
+Host OS [007h]
+
+| 0=MSDOS, 1=PRIMOS, 2=UNIX, 3=AMIGA, 4=MACDOS (aka MAC-OS)
+5=OS/2, 6=APPLE GS, 7=ATARI ST, 8=NEXT
+9=VAX VMS, 10=WIN95, 11=WIN32 (aka WinNT or so?)
+
+ARJ Method 1-3 (LHA/LZH compression)
+
+These methods are same as LHA's "-lh6-" compression method (albeit the three

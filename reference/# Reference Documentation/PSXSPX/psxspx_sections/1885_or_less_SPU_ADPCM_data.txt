@@ -1,0 +1,48 @@
+PSXSPX SPECIFICATIONS - OR LESS SPU-ADPCM DATA.
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: or less SPU-ADPCM data.
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1286 characters
+Lines: 40
+================================================================================
+
+or less SPU-ADPCM data.
+
+RADIO.DAT:
+
+Whatever, contains chunks with text messages, chunks are about as so:
+
+| 000h 4 Unknown (eg. 36h,BFh,5Eh,00h)
+004h 4 Unknown (eg. 03h,13h,00h,00h)
+008h 1 Unknown (eg. 80h)
+009h 2 Chunk Size (eg. 0xh,xxh) ;big-endian
+.. .. Chunk Data (Chunk Size-2 bytes) (binary stuff, and text strings)
+
+BRF.DAT:
+
+Contains several "folders" in this format:
+
+| 000h 4 Number of files in this folder
+004h .. File(s)
+... .. 01h-padding to 800h-byte boundary
+Files have this format:
+000h .. Filename ("name.pll",00h)
+... .. Zeropadding to 4-byte boundary (aligned to begin of BRF.DAT)
+... 4 File data size (usually a multiple of 4)
+... .. File data
+... 1 Zero (00h)
+
+The above "folders" are then followed by several PCX files:
+
+| 000h .. PCX file (starting with 0A,05,01,01 or 0A,05,01,08)
+... .. 01h-padding to 800h-byte boundary
+
+The first part with .pll files does contain some kind of chunk sizes that could
+be used to find the next entry (but that would be very slow).
+
+The second part with .PCX files doesn't have any chunk sizes at all (though one
+could decompress the .PCX file to find the end of each file) (also one could
+guess/find them by looking for 0A,05,01,01/08 on 800h-byte boundaries).
+
+ZMOVIE.STR (movie archive with several STR files with subtitles)

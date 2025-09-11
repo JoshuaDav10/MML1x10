@@ -1,0 +1,43 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION EA METHODS (RLE)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression EA Methods (RLE)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1168 characters
+Lines: 35
+================================================================================
+
+CDROM File Compression EA Methods (RLE)
+
+Run-Length Encoding
+
+| 000h 2 Method (4AFBh=24bit or 4A31h=16bit) (big-endian)
+... 2/3 Decompressed Size (24bit or 16bit) (big-endian)
+... .. Compressed Data
+
+Compression codes are:
+
+| 00h..3Fh Copy 0..3Fh uncompressed bytes
+40h..7Fh Load new fillbyte and fill 0..3Fh bytes
+80h..BFh Use old fillbyte and fill 0..3Fh bytes (initial fillbyte=00h)
+C0h..FFh Copy 0..3Fh bytes with constant value in upper 4bit
+
+decompress_bpe:
+
+| method=BigEndian16bit[src], src=src+2
+if (method AND 00FFh)=31h then dst_size=BigEndian16bit[src], src=src+2
+if (method AND 00FFh)<>31h then dst_size=BigEndian24bit[src], src=src+3
+fillbyte=00h ;initially zero
+@@decompress_lop:
+type=[src]/40h, len=[src] AND 3Fh, src=src+1, dst_size=dst_size-len
+if type=0 then ;\uncompressed bytes
+for i=1 to len, [dst]=[src], src=src+1, dst=dst+1 ;/
+elseif type=1 then ;\
+fillbyte=[src], src=src+1 ; fill with new dat
+for i=1 to len, [dst]=fillbyte, dst=dst+1 ;/
+elseif type=2 then ;\fill with old dat
+for i=1 to len, [dst]=fillbyte, dst=dst+1 ;/
+elseif type=3 then
+x=[src], [dst]=x, src=src+1, dst=dst+1, x=x AND F0h
+for i=2 to len ;0 then goto @@decompress_lop
+ret

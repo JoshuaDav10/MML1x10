@@ -1,0 +1,2326 @@
+PSYQ DOCUMENTATION - Devrefs/Sound20.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/Devrefs/Sound20.pdf
+Converted: Wed Sep 10 02:47:34 PM CDT 2025
+================================================================================
+
+Sound Artist Tool
+© 1998 Sony Computer Entertainment Inc.
+
+Publication date: August 1998
+
+
+Sony Computer Entertainment America
+919 E. Hillsdale Blvd., 2nd floor
+Foster City, CA 94404
+
+Sony Computer Entertainment Europe
+Waverley House
+7-12 Noel Street
+London W1V 4HH, England
+
+
+The Sound Artist Tool manual is supplied pursuant to and subject to the terms of the Sony Computer
+Entertainment PlayStation® License and Development Tools Agreements, the Licensed Publisher
+Agreement and/or the Licensed Developer Agreement.
+The Sound Artist Tool manual is intended for distribution to and use by only Sony Computer Entertainment
+licensed Developers and Publishers in accordance with the PlayStation® License and Development Tools
+Agreements, the Licensed Publisher Agreement and/or the Licensed Developer Agreement.
+Unauthorized reproduction, distribution, lending, rental or disclosure to any third party, in whole or in part,
+of this book is expressly prohibited by law and by the terms of the Sony Computer Entertainment
+PlayStation® License and Development Tools Agreements, the Licensed Publisher Agreement and/or the
+Licensed Developer Agreement.
+Ownership of the physical property of the book is retained by and reserved by Sony Computer
+Entertainment. Alteration to or deletion, in whole or in part, of the book, its presentation, or its contents is
+prohibited.
+The information in the Sound Artist Tool manual is subject to change without notice. The content of this
+book is Confidential Information of Sony Computer Entertainment.
+PlayStation and PlayStation logos are registered trademarks of Sony Computer Entertainment Inc. All other
+trademarks are property of their respective owners and/or their licensors.
+Table of Contents
+              List of Figures                                                iii
+              List of Tables                                                 v
+       About This Manual                                                   vii
+              Changes Since Last Release                                   vii
+              Related Documentation                                        vii
+              Manual Structure                                             vii
+              Developer Reference Series                                   vii
+              Typographic Conventions                                      viii
+              Developer Support                                             ix
+Chapter 1: Overview
+       Operating Rules                                                    1-2
+       Features                                                           1-2
+       System Configuration and Music Creation                            1-3
+Chapter 2: Installation
+       Setting up DTL-H800                                                2-3
+       Installing DTL-S810                                                2-4
+       Testing System                                                     2-5
+Chapter 3: Tutorials
+       Creating Sound Data for PlayStation Unit                          3-3
+       SMF2SEQ - Creating Sequence Data                                  3-4
+       AIFF2VAG - Creating Waveform Data                                 3-6
+       VAG Player - Reproduces Waveform Data                             3-8
+       SoundDelicatessen-Implements Sound Source Data                    3-9
+       RAW2DA - Creates CD-DA Data                                      3-20
+       RAW2XA - Creates CD-ROM XA Voice Data                            3-21
+       Reproduction by DTL-H2000                                        3-22
+Chapter 4: References
+       Sound File Formats                                                4-3
+       Commands and Names of Window Components                           4-9
+       Supporting MIDI in Sound Library                                 4-25
+
+List of Figures
+       Figure 1–1: Example of Music Creation Environment                  1-4
+       Figure 1–2: Macintosh                                              1-5
+       Figure 1–3: PC/AT-compatible machine                               1-5
+       Figure 2–1: Installing Board                                       2-3
+       Figure 2–2: Installing Software                                    2-4
+       Figure 2–3: Error Message Panel                                    2-5
+       Figure 2–4: “SoundBoard” Menu                                      2-6
+       Figure 2–5: “Keyboard” Window                                      2-6
+       Figure 3–1: SMF Output in Performer                                3-4
+       Figure 3–2: SMF2SEQ File Menu                                      3-5
+       Figure 3–3: SMF2SEQ                                                3-5
+       Figure 3–4: SMF2SEQ Deleted Messages                               3-5
+       Figure 3–5: SMF2SEQ Mode Menu                                      3-6
+       Figure 3–6: AIFF Output in SoundDesignerII                         3-6
+       Figure 3–7: AIFF2VAG File Menu                                     3-7
+       Figure 3–8: AIFF2VAG Conversion File                               3-7
+       Figure 3–9: AIFF2VAG Compression Mode Menu                         3-7
+       Figure 3–10: AIFF2VAG Conversion Mode Menu                         3-8
+
+                                                           Sound Artist Tool
+iv   Table of Contents
+
+                         Figure 3–11: Dialog Box for Dragging and Dropping VAG Player Icon    3-8
+                         Figure 3–12: VAB Structure                                           3-9
+                         Figure 3–13: Example of VAB                                          3-9
+                         Figure 3–14: Message Displayed during SoundDelicatessen Startup     3-10
+                         Figure 3–15: Error Message Panel during SoundDelicatessen Startup   3-10
+                         Figure 3–16: Dialog Box after Board Initialization                  3-10
+                         Figure 3–17: SoundDelicatessen Program List Window                  3-11
+                         Figure 3–18: SoundDelicatessen Tone List Window                     3-12
+                         Figure 3–19: SoundDelicatessen VAG List Window                      3-12
+                         Figure 3–20: Cataloging to SoundDelicatessen VAG List               3-13
+                         Figure 3–21: Setting SoundDelicatessen Tone Attributes              3-13
+                         Figure 3–22: Keyboard Window                                        3-14
+                         Figure 3–23: Dialog Box for Saving SoundDelicatessen File           3-14
+                         Figure 3–24: ADSR Setting Window                                    3-15
+                         Figure 3–25: Dialog Box for Saving SoundDelicatessen File           3-16
+                         Figure 3–26: DEVICE Setting Example in Performer 5.02               3-17
+                         Figure 3–27: Setting SoundDelicatessen Reverb                       3-18
+                         Figure 3–28: Printing Option Dialog Box                             3-19
+                         Figure 3–29: Printing Setting Dialog Box                            3-19
+                         Figure 3–30: Printing Dialog Box                                    3-20
+                         Figure 3–31: “Format” Menu                                          3-22
+                         Figure 3–32: Monitor Output of Sample Program                       3-23
+                         Figure 4–1: SEQ Format                                               4-3
+                         Figure 4–2: SEP Format                                               4-4
+                         Figure 4–3: VAG Format                                               4-5
+                         Figure 4–4: VAB Format                                               4-6
+                         Figure 4–5: VAB Program Attribute Table                              4-6
+                         Figure 4–6: VAB Tone Attribute Table                                 4-7
+                         Figure 4–7: VH Format                                                4-7
+                         Figure 4–8: VB Format                                                4-8
+                         Figure 4–9: DA Format                                                4-8
+                         Figure 4–10: SMF2SEQ Panel                                           4-9
+                         Figure 4–11: SMF2SEQ: “File” Menu                                    4-9
+                         Figure 4–12: SMF2SEF File Selection Dialog Box                       4-9
+                         Figure 4–13: SMF2SEQ: SEQ File Specification Dialog Box              4-9
+                         Figure 4–14: SMF2SEQ "Output Mode" Menu                             4-10
+                         Figure 4–15: AIFF2VAG Panel                                         4-10
+                         Figure 4–16: AIFF2VAG: “File” Menu                                  4-10
+                         Figure 4–17: AIFF2VAG: AIFF File Selection Dialog Box               4-11
+                         Figure 4–18: AIFF2VAG: Conversion Panel                             4-11
+                         Figure 4–19: AIFF2VAG: VAG File Specification Dialog Box            4-11
+                         Figure 4–20: AIFF2VAG: “Compression” Menu                           4-12
+                         Figure 4–21: AIFF2VAG "Mode" Menu                                   4-12
+                         Figure 4–22: AIFF2VAG Playback Confirmation Panel                   4-13
+                         Figure 4–23: VAG Player Panel                                       4-13
+                         Figure 4–24: VAG Player: “File” Menu                                4-13
+                         Figure 4–25: VAG Player: VAG File Selection Dialog Box              4-13
+                         Figure 4–26: VAG Player: Dialog box for dragging and dropping       4-14
+                         Figure 4–27: SoundDelicatessen Panel                                4-14
+                         Figure 4–28: SoundDelicatessen: “File” menu                         4-14
+                         Figure 4–29: SoundDelicatessen: Program list window                 4-15
+                         Figure 4–30: SoundDelicatessen: Program Import                      4-15
+                         Figure 4–31: SoundDelicatessen: Program Export                      4-16
+                         Figure 4–32: SoundDelicatessen: Print setting dialog box            4-16
+                         Figure 4–33: SoundDelicatessen Printer Dialog Box                   4-17
+                         Figure 4–34: SoundDelicatessen: Print option dialog box             4-17
+
+
+        Sound Artist Tool
+                                                               Table of Contents   v
+
+     Figure 4–35: SoundDelicatessen: “Edit” menu                         4-18
+     Figure 4–36: SoundDelicatessen: “Windows” menu                      4-19
+     Figure 4–37: SoundDelicatessen: Tone list window                    4-19
+     Figure 4–38: SoundDelicatessen: ADSR setting window                 4-20
+     Figure 4–39: SoundDelicatessen: VAG list window                     4-20
+     Figure 4–40: SoundDelicatessen: Keyboard window                     4-21
+     Figure 4–41: SoundDelicatessen: “SoundBoard” menu                   4-21
+     Figure 4–42: SoundDelicatessen: “DSP” menu                          4-22
+     Figure 4–43: RAW2A Panel                                            4-23
+     Figure 4–44: RAW2DA: “File” menu                                    4-23
+     Figure 4–45: RAW2DA: “OutputMode” menu                              4-23
+     Figure 4–46: RAW2XA Panel                                           4-24
+     Figure 4–47: RAW2XA: “File” menu                                    4-24
+     Figure 4–48: RAW2XA: “Format” menu                                  4-24
+     Figure 4–49: RAW2XA: “OutputMode” menu                              4-25
+
+List of Tables
+     Table 1–1: Sound Data Formats                                        1-2
+     Table 1–2: PlayStation Sound Formats                                 1-3
+     Table 1–3: Equipment Needed for Creation Environment                 1-4
+     Table 3–1: PlayStation Sound Formats                                 3-3
+     Table 3–2: Applications Supported                                    3-3
+     Table 3–3: Supported DOS Applications                                3-3
+     Table 3–4: Appropriate Format (SMF)                                  3-4
+     Table 3–5: SoundDelicatessen Reverb Type                            3-18
+     Table 3–6: Control Pad Keys                                         3-23
+     Table 4–1: Reverb Types                                             4-22
+     Table 4–2: Data Descriptions                                        4-26
+     Table 4–3: Vibration Types                                          4-26
+     Table 4–4: Reverb Type                                              4-26
+     Table 4–5: Repetition Functions                                     4-27
+     Table 4–6: Marking Function                                         4-27
+
+
+
+
+                                                            Sound Artist Tool
+vi Table of Contents
+
+
+
+
+      Sound Artist Tool
+About This Manual
+   This manual is the latest release of instructions relating to the Sound Artist Tool for the PlayStation® as of
+   Run-Time Library release 4.3. The purpose of this manual is (1) to provide installation and operation
+   instructions for the DTL-H800 Sound Artist Board and (2) to explain how to use the Sound Artist Tool
+   software.
+
+
+Changes Since Last Release
+   There have been no substantial changes to this document since its last release.
+
+
+Related Documentation
+   Developers should use this manual in conjunction with Run-Time Library release 4.3.
+
+
+Manual Structure
+               Section                                             Description
+               Ch. 1: Overview                                     Describes the Sound Artist Board and Sound
+                                                                   Artist Tool in general terms and explains system
+                                                                   requirements for startup.
+               Ch. 2: Installation                                 Describes steps for setting up and testing the
+                                                                   Sound Artist Board and Sound Artist Tool.
+               Ch. 3: Tutorials                                    Describes the following six applications to
+                                                                   develop a procedure for creating sound data:
+                                                                   1. SMF2SEQ (Sequence data converter);
+                                                                   2. AIFF2VAG (Waveform data converter);
+                                                                   3. VAG Player (Waveform data reproduction
+                                                                   tool);
+                                                                   4. SoundDelicatessen (Tool for creating and
+                                                                   reproducing sound source);
+                                                                   5. RAW2DA (CD-DA data creation tool);
+                                                                   6. RAW2XA (CD-ROM XA audio data encoder).
+               Ch. 4: References                                   Provides sound file formats, tool commands,
+                                                                   and names of window components.
+
+
+Developer Reference Series
+   This manual is part of the Developer Reference Series, a series of technical reference volumes covering all
+   aspects of PlayStation development. The complete series is listed below:
+               Manual                                              Description
+               PlayStation Hardware                                Describes the PlayStation hardware architecture
+                                                                   and overviews its subsystems.
+               PlayStation Operating System                        Describes the PlayStation operating system and
+                                                                   related programming fundamentals.
+               Run-Time Library Overview                           Describes the structure and purpose of the
+                                                                   run-time libraries provided for PlayStation
+                                                                   software development.
+               Run-Time Library Reference                          Defines all available PlayStation run-time library
+                                                                   functions, macros and structures.
+               Inline Programming Reference                        Describes in-line programming using DMPSX,
+                                                                   GTE inline macro and GTE register information.
+
+                                                                                                    Sound Artist Tool
+viii   About This Manual
+
+                           SDevTC Development Environment                     Describes the SDevTC (formerly "Psy-Q")
+                                                                              Development Environment for PlayStation
+                                                                              software development.
+                           3D Graphics Tools                                  Describes how to use the PlayStation 3D
+                                                                              Graphics Tools, including the animation and
+                                                                              material editors.
+                           Sprite Editor                                      Describes the Sprite Editor tool for creating
+                                                                              sprite data and background picture
+                                                                              components.
+                           Sound Artist Tool                                  Provides installation and operation instructions
+                                                                              for the DTL-H800 Sound Artist Board and
+                                                                              explains how to use the Sound Artist Tool
+                                                                              software.
+                           File Formats                                       Describes all native PlayStation data formats.
+                           Data Conversion Utilities                          Describes all available PlayStation data
+                                                                              conversion utilities, including both stand-alone
+                                                                              and plug-in programs.
+                           CD Emulator                                        Provides installation and operation instructions
+                                                                              for the CD Emulator subsystem and related
+                                                                              software.
+                           CD-ROM Generator                                   Describes how to use the CD-ROM Generator
+                                                                              software to write CD-R discs.
+                           Performance Analyzer User Guide                    Provides general instructions for using the
+                                                                              Performance Analyzer software.
+                           Performance Analyzer Technical Reference           Describes how to measure software
+                                                                              performance and interpret the results using the
+                                                                              Performance Analyzer.
+                           DTL-H2000 Installation and Operation               Provides installation and operation instructions
+                                                                              for the DTL-H2000 Development System.
+                           DTL-H2500/2700 Installation and Operation          Provides installation and operation instructions
+                                                                              for the DTL-H2500/H2700 Development
+                                                                              Systems.
+
+
+       Typographic Conventions
+            Certain Typographic Conventions are used through out this manual to clarify the meaning of the text. The
+            following conventions apply to all narrative text except for structure and function descriptions:
+                           Convention       Meaning
+                           courier          Indicates literal program code.
+                           Bold             Indicates a document, chapter or section title.
+            The following conventions apply within structure and function descriptions only:
+                           Convention       Meaning
+                           Medium Bold      Denotes structure or function types and names.
+                           Italic           Denotes function arguments and structure members.
+
+
+
+
+         Sound Artist Tool
+                                                                                                About This Manual   ix
+
+Developer Support
+   Sony Computer Entertainment America (SCEA)
+   SCEA developer support is available to licensees in North America only. You may obtain developer support
+   or additional copies of this documentation by contacting the following addresses:
+              Order Information                                Developer Support
+              In North America                                 In North America
+              Attn: Developer Tools Coordinator                E-mail: DevTech_Support@playstation.sony.com
+              Sony Computer Entertainment America              Web: http://www.scea.sony.com/dev
+              919 East Hillsdale Blvd., 2nd floor              Developer Support Hotline: (650) 655-8181
+              Foster City, CA 94404                            (Call Monday through Friday, 8 a.m. to 5 p.m.,
+              Tel: (650) 655-8000                              PST/PDT)
+
+
+   Sony Computer Entertainment Europe (SCEE)
+   SCEE developer support is available to licensees in Europe only. You may obtain developer support or
+   additional copies of this documentation by contacting the following addresses:
+              Order Information                                Developer Support
+              In Europe                                        In Europe
+              Attn: Production Coordinator                     E-mail: dev_support@playstation.co.uk
+              Sony Computer Entertainment Europe               Web: https://www-s.playstation.co.uk
+              Waverley House                                   Developer Support Hotline:
+              7-12 Noel Street                                 +44 (0) 171 447 1680
+              London W1V 4HH                                   (Call Monday through Friday, 9 a.m. to 6 p.m.,
+              Tel: +44 (0) 171 447 1600                        GMT or BST/BDT)
+
+
+
+
+                                                                                              Sound Artist Tool
+x About This Manual
+
+
+
+
+      Sound Artist Tool
+Chapter 1:
+Overview
+
+
+
+
+             Sound Artist Tool
+1-2   Overview
+
+
+
+
+      Operating Rules
+          The Sound Artist Board and Sound Artist Tool are applications which are activated by Macintosh OS and
+          follow Macintosh rules of operation. This manual is designed for the user who is familiar with Macintosh
+          operation, so no explanation is provided for general Macintosh issues. Please refer to the Macintosh User’s
+          Manual for details.
+
+
+
+      Features
+          The PlayStation Sound Artist Board (DTL-H800, hereafter referred to as the PlayStation Sound Board) and
+          the PlayStation Sound Artist Tool (DTL-S810, hereafter referred to as the PlayStation Sound Tool) are
+          applications executed on Apple Macintosh. They are tools for creating sound data for the PlayStation.
+          Using the tools along with existing sound tools enables music creation for the PlayStation.
+          The following are other features of the PlayStation Sound Tool:
+          •      Sound chip SPU for the PlayStation is mounted.
+                 The PlayStation Sound Board is equipped with the same sound chip (SPU) as the PlayStation and with
+                 a sound source memory of 4 M-bits (= 512 k-bytes). Hence, sound data equivalent to data for the
+                 PlayStation can be reproduced on Macintosh. The SPU is provided with DSP for reverb effect
+                 implementation.
+          •      Optical digital output is covered.
+                 The PlayStation Sound Board is equipped with a square optical digital output terminal (TOSLINK). The
+                 terminal allows data creation in a high-quality music reproduction environment.
+          •      FreeMIDI is supported.
+                 The Sound Board driver included in the PlayStation Sound Tool is compatible with the FreeMIDI
+                 System (ver.1.26 ~ ) advocated by Mark of the Unicorn Co. The Sound Tool can be operated directly
+                 from sequencer software and the MIDI keyboard.
+          •      Standard MIDI File (SMF) and Audio Interchange File Format (AIFF) are supported.
+                 The Sound Tool supports SMF and AIFF as source data and is highly compatible with other general
+                 sound tools.
+
+
+      File Formats
+          The PlayStation Sound Tool supports the following sound data formats.
+          Table 1–1: Sound Data Formats
+                        Data format       Definition
+                        SMF               Standard MIDI File (Format 1)
+                        AIFF              16-bit Audio Interchange File Format
+                                          (AIFF)
+                        SDII              SoundDesignerII File Format
+          The PlayStation Sound Tool supports the following sound formats for the PlayStation.
+
+
+
+
+       Sound Artist Tool
+                                                                                                        Overview 1-3
+
+   Table 1–2: PlayStation Sound Formats
+              Sound format        Definition
+              SEQ                 PlayStation sound sequence format
+              VAG                 PlayStation waveform format
+              VAB                 PlayStation wave bank format
+              DA                  PlayStation CD-DA format
+              XA                  PlayStation CD-ROM XA audio channel format
+              SEP                 PlayStation sound sequence chuck format
+              VH                  PlayStation wave bank header format
+              VB                  PlayStation wave bank body format
+   The XA format supported by RAW2XA is based on the following specifications:
+
+   CD-ROM XA
+      SYSTEM DESCRIPTION CD-ROM XA
+       Copyright May 1991
+   For details of the formats, see Chapter 4, References.
+
+
+
+System Configuration and Music Creation
+   The use of the PlayStation Sound Tool involves the following devices and software:
+   •   Apple Macintosh II/Quadra™ series and Power Macintosh™ series
+       – PCI slot x 1 or more
+       – Memory area of 16 M-bytes or more
+       – Hard disk (10 MB or more space needed)
+   •   Peripheral devices
+       – Display of 13 or more inches
+       – D/A converter (such as DAT) with square optical (TOSLINK) input
+       – Reproduction devices including amplifier, speaker and headphone
+   •   Software
+       – MacOS 7.5.3 or later
+       – FreeMIDI System Ver.1.26 or later
+   In order to use the PlayStation Sound Tool comfortably, it is recommended that the following environment
+   be set up:
+   •   Apple PowerMacintosh series
+       – PowerPC 604 / 120 MHz or higher
+       – PCI slot x 2 or more
+       – 32 M bytes or more of memory area
+       – Hard disk (1 GB or more) for saving sound source data
+   •   Peripheral Equipment
+       –   High resolution display of 17 inches or more
+
+
+
+
+                                                                                               Sound Artist Tool
+1-4   Overview
+
+
+
+      Environment for Music Creation
+          Actual music creation using the PlayStation tool involves the following system in addition to the items given
+          in the preceding paragraph for the operating environment.
+          Table 1–3: Equipment Needed for Creation Environment
+                                                   Function                      Device
+                       Sampler                     Records data from DAT, CT     Audiomedia III (Digidesign)
+                                                   and other devices to HD.      Pro Tools III (Digidesign)
+                                                                                 CD-3000 (AKAI)
+                       Waveform editing            Edits stored waveforms.       SoundDesigner II (Digidesign)
+                       software                                                  Alchemy (Passport Design)
+                                                                                 INFINITY (Jupiter)
+                       MIDI keyboard               Enters score data from
+                                                   keyboard.
+                       Sequence software           Enters, edits and             Performer (Mark of the Unicorn)
+                                                   reproduces score data.        Vision (Opcode System)
+                       MIDI Interface              Connects a MIDI device to     MIDI Interface (Apple Computer)
+                                                   the Macintosh serial port.    MIDI Translator (Opcode Systems)
+                                                                                 MIDI Timepiece (Mark of the Unicorn)
+                       MIDI Manager                Patches software and          Free MIDI (Mark of the Unicorn)
+                                                   devices for MIDI.             OMS (Opcode System)
+
+
+      Example of Music Creation Environment
+          Figure 1–1: Example of Music Creation Environment
+
+
+
+
+                           MID I/F, Inst.
+
+                             sam pler
+                                                         Macint osh
+                               amp
+                               DAT
+
+                                            DTL-H8 0 0
+
+
+
+
+       Sound Artist Tool
+                                                                                                     Overview 1-5
+
+
+
+Process of Music Creation
+    The following gives the process of music creation for the PlayStation unit.
+
+On Macintosh
+    •   HD recording and waveform editing
+    •   Waveform data conversion
+    •   Sound source set development and editing
+    •   Sequence development and editing
+    •   Sequence data conversion
+    Figure 1–2: Macintosh
+
+
+
+                            Macintosh
+
+
+
+
+On PC/AT-compatible machine
+    •   Programming and linking
+    •   Final sequence and SE checking
+    •   Inspection of real time effects
+    •   Data conversion and interleave (MovConv *)
+    •   CD-ROM fixing (CD-ROM generator *)
+    •   Completion
+    Figure 1–3: PC/AT-compatible machine
+
+                       IBM PC/AT
+                       compatible
+
+
+
+
+    •   MovConv (MOVCONV.EXE) is included in the PlayStation Runtime Library (DTL-S2310).
+    •   The CD-ROM Generator is a CD-ROM generation tool (DTL-S2210).
+
+
+
+
+                                                                                            Sound Artist Tool
+1-6   Overview
+
+
+
+
+       Sound Artist Tool
+Chapter 2:
+Installation
+
+
+
+
+               Sound Artist Tool
+2-2   Installation
+
+
+
+
+       Sound Artist Tool
+                                                                                                       Installation 2-3
+
+
+
+
+Setting up DTL-H800
+   Setting up the PlayStation Sound Board (DTL-H800) requires the following operations:
+   •   PlayStation Sound Board installation
+   •   Connection of the board output to the D/A converter
+
+Installing PlayStation Sound Board
+   Referring to the Macintosh manual, unplug the power cable and remove the cover of the computer being
+   used (1). Install DTL-H800 in an empty PCI slot (2) and replace the cover (3).
+   Figure 2–1: Installing Board
+
+
+
+
+Connecting Board Output and D/A Converter
+   The rear panel of DTL-H800 is provided with a set of square TOSLINK optical digital output terminals so
+   attach them to the D/A converter (DAT, etc.) using the square optical cable sold separately.
+
+
+
+
+                                                                                               Sound Artist Tool
+2-4   Installation
+
+
+
+
+      Installing DTL-S810
+            The Sound Artist Tool disk for the Macintosh is required in order to perform installation.
+            1. Start up the Macintosh.
+            2. Insert the Sound Artist Tool disk into the floppy disk drive.
+            3. Drag the disk icon to the location where DTL-S810 is to be installed.
+            Figure 2–2: Installing Software
+
+
+
+
+                 DTL-S810 has now been installed.
+                 Should the application icon not be displayed correctly after the installation (becoming the default icon),
+                 reconstruct the desktop computer. This can be accomplished by starting up the Macintosh with both
+                 the option key and the command key (the key with the Apple mark) pressed. For details, refer to the
+                 Macintosh user’s guide.
+
+
+
+
+       Sound Artist Tool
+                                                                                                           Installation 2-5
+
+
+
+
+Testing System
+   Immediately after installing the PlayStation Sound Board (DTL-H800) and the PlayStation Sound Tool (DTL-
+   S810), carry out the following tests to check that the system is installed correctly.
+
+
+Connection Test
+   Check that the PlayStation Sound Board is installed correctly in the PCI slot and that the square optical
+   cable is connected correctly.
+
+
+Reproduction Test
+   Check the actual sound reproduction using PlayStation Sound Tool sample data.
+   Should an error be detected during the test, make sure that the system is properly connected and that the
+   software is installed correctly. Should the cause not be isolated, please contact our business department.
+   1. Open the “sample” folder in the installed Sound Artist Tool folder.
+   2. Open the VAB folder, double click the file named “sample.vab,” and start up the Sound Tool
+      SoundDelicatessen. If the following dialog box is displayed, this indicates that the board is not correctly
+      installed. Immediately shut down the system and check board setup.
+   Figure 2–3: Error Message Panel
+
+
+
+
+       If double clicking the file does not startup SoundDelicatessen, double click and initiate
+       SoundDelicatessen in the “Bank Editor” folder in the installed Sound Artist Tool folder. Then, open the
+       “sample.vab” file within the application.
+
+
+
+
+                                                                                                   Sound Artist Tool
+2-6   Installation
+
+            3. When the SoundDelicatessen is started up, data is automatically transferred to the Sound Board, and
+               the keyboard window is displayed. It is also possible to select ”Mac -> SPU” from the “SoundBoard”
+               menu and then manually transfer sound data to the SPU sound source memory.
+            Figure 2–4: “SoundBoard” Menu
+
+
+
+
+                 When data transfer is complete, the Keyboard window is displayed.
+            Figure 2–5: “Keyboard” Window
+
+
+
+
+            4. Clicking the displayed Keyboard window with the mouse causes a piano sound to be reproduced.
+               Should no piano sound be reproduced, check the D/A converter and amplifier connections, and also
+               the volume.
+            5. Select “Quit” from the “File” menu to terminate SoundDelicatessen.
+
+
+
+
+       Sound Artist Tool
+Chapter 3:
+Tutorials
+
+
+
+
+             Sound Artist Tool
+3-2   Tutorials
+
+
+
+
+       Sound Artist Tool
+                                                                                                          Tutorials 3-3
+
+
+
+
+Creating Sound Data for PlayStation Unit
+   The following are the sound data formats which can be handled by the PlayStation:
+   Table 3–1: PlayStation Sound Formats
+              Data format              Definition
+              SEQ                      PlayStation sound sequence data format
+              SEP                      PlayStation sound multi-track sequence data format
+              VAB                      PlayStation sound bank data format
+              VH                       PlayStation sound bank data format (Attribute part)
+              VB                       PlayStation sound bank data format (Waveform part)
+              DA                       PlayStation CD-DA format
+              XA                       PlayStation CD-ROM XA voice channel format
+              VAG                      PlayStation waveform data format
+                                       (Intermediate data format)
+   The PlayStation Sound Tool supports the following applications to create and edit data:
+   Table 3–2: Applications Supported
+              Application              Definition
+              SMF2SEQ                  Sequence data converter
+              AIFF2VAG                 Waveform data converter
+              VAG Player               Waveform data player
+              SoundDelicatessen        Sound source bank editor (including the Sound Board driver)
+              RAW2DA                   Endian converter for CD-DA data
+              RAW2XA                   Data encoder for CD-ROM XA voice channel
+   The PlayStation programmer tool supports the following two applications for DOS/V to simplify data and
+   memory management:
+   Table 3–3: Supported DOS Applications
+              Application              Definition
+              VABSPLIT.EXE             VAB data separation tool
+              SEQ2SEP.EXE              SEP creation tool
+   Refer to the on-line programmer tools manual for these DOS/V applications.
+
+
+
+
+                                                                                                Sound Artist Tool
+3-4   Tutorials
+
+
+
+
+      SMF2SEQ - Creating Sequence Data
+           SMF2SEQ converts a format 1 standard MIDI file (SMF) created by such sequence software (score editing
+           software) as Performer (Mark of the Unicorn) and Vision (Opcode) into the sequence data format (SEQ file)
+           for the PlayStation.
+           Table 3–4: Appropriate Format (SMF)
+                       Appropriate format              SMF (Format 1)
+                       Sampling frequency              Optional
+                       Appropriate message             Note on/off
+                                                       Program change
+                                                       Pitch bend
+                                                       Control change
+           Resolution in SEQ is optional. But the highest resolution depends on the actual reproduction mode (1/60
+           sec., 1/120 sec., 1/240 sec., etc.).
+
+
+      Setting up SMF File
+           Before using SMF2SEQ, save the sequence to be converted by your sequence software in the SMF format
+           (format 1).
+           Figure 3–1: SMF Output in Performer
+
+
+
+
+       Sound Artist Tool
+                                                                                                          Tutorials 3-5
+
+
+
+SMF2SEQ - Creating Sequence Data
+   Using SMF2SEQ
+   1. Double click the SMF2SEQ icon to start up the application.
+   2. Select “Convert” in the “File” menu, and specify the file to be converted.
+   Figure 3–2: SMF2SEQ File Menu
+
+
+
+
+   3. When prompted to enter the output file name, enter the file name to be assigned after conversion.
+   Figure 3–3: SMF2SEQ
+
+
+
+
+   4. When conversion is complete, the MIDI message summary which was deleted during conversion will
+      be displayed.
+   Figure 3–4: SMF2SEQ Deleted Messages
+
+
+
+
+                                                                                              Sound Artist Tool
+3-6   Tutorials
+
+           5. Select “Quit” from the “File” menu to terminate the application. An SMF file can also be converted by
+              dragging it to the SMF2SEQ icon. (Two or more SMF files can be selected.)
+                  Also, setting the Automatic Conversion Mode (Auto), Interactive Conversion Mode (Interactive) and
+                  BankChange Forced Deletion Mode (Remove BankChange) is possible using the mode menu.
+           Figure 3–5: SMF2SEQ Mode Menu
+
+
+
+
+      AIFF2VAG - Creating Waveform Data
+           AIFF2VAG converts an Apple AIFF (Audio Interchange File Format) file created by such existing waveform
+           editing software as SoundDesigner II™ (Digidesign) and Alchemy™ (Passport Designs) into the waveform
+           data format VAG file for the PlayStation unit.
+           For VAG, a multiple of 28 of samples are handled as one block because of hardware characteristics. Thus,
+           handling a sound source with a loop requires that the loop length be a multiple of 28.
+
+
+      Setting up AIFF File
+           Before using AIFF2VAG, save the waveform data to be converted by your waveform editing software in the
+           AIFF format (16 bits, monophonic, non-compressed).
+           Figure 3–6: AIFF Output in SoundDesignerII
+
+
+
+
+       Sound Artist Tool
+                                                                                                          Tutorials 3-7
+
+Using AIFF2VAG
+   1. Double click the AIFF2VAG icon to start up the application.
+   2. The AIFF file to be converted is requested when “Convert” is selected from the “File” menu, so specify
+      the file at this time.
+   Figure 3–7: AIFF2VAG File Menu
+
+
+
+
+   3. Specify the number of samples to be converted and the loop start point.
+   Figure 3–8: AIFF2VAG Conversion File
+
+
+
+
+   4. When the output file name is requested, enter the file name to be assigned after conversion.
+   5. Select “Quit” from the “File” menu to terminate the application.
+       An AIFF file can also be converted by dragging it to the AIFF2VAG icon. (Two or more AIFF files can be
+       selected.)
+       Setting of the standard, high band components, low band components and 4bit straight compression
+       can be carried out by means of the Compression mode menu. When noise components are
+       conspicuous in normal compression, they can sometimes be made less so when converted in another
+       mode.
+   Figure 3–9: AIFF2VAG Compression Mode Menu
+
+
+
+
+       Setting of the automatic conversion mode (Auto) or Interactive conversion mode (Interactive) and also
+       setting of the modes related to sound reproduction after conversion (Silent, Play after converted, Show
+       panel after conversion) is possible by means of the Conversion mode.
+
+                                                                                                Sound Artist Tool
+3-8   Tutorials
+
+           Figure 3–10: AIFF2VAG Conversion Mode Menu
+
+
+
+
+           It is also possible to reproduce a VAG file which has already been converted by selecting “Select VAG...”
+           from the file menu. By pressing the mouse button on the AIFF2VAG panel after selecting VAG, sound
+           production can be repeatedly checked.
+
+
+
+      VAG Player - Reproduces Waveform Data
+           VAG Player is a tool for using the PlayStation Sound Board to reproduce a waveform data format VAG file
+           for the PlayStation unit converted by AIFF2VAG.
+           This reproduction is based on the AIFF sampling frequency during conversion, and changes the
+           reproduction pitch.
+
+
+      Using VAG Player
+           1. Double click the VAG Player icon to start up the application.
+           2. Select “Open” from the “File” menu, and then select the VAG file to be reproduced.
+           3. When the file has been selected, VAG data is transferred to the PlayStation Sound Board, which in turn
+              reproduces sound.
+           4. When prompted to do so, select the file to be reproduced next. Press “Cancel” to return to activation
+              state.
+           5. Select “Quit” from the “File” menu to terminate the application.
+           A VAG file can also be reproduced by dragging it to the VAG Player icon. (Two or more VAG files can be
+           selected.)
+           The file name, file size and sampling frequency of the selected VAG file are displayed. Pressing the “Play”
+           button reproduces VAG. (If two or more files have been selected, press the “Play” button for each VAG file.)
+           When reproduction of the VAG file is not required, press “Skip”. When canceling the reproduction of all
+           VAG files, select “Skip All”.
+           Figure 3–11: Dialog Box for Dragging and Dropping VAG Player Icon
+
+
+
+
+       Sound Artist Tool
+                                                                                                           Tutorials 3-9
+
+
+SoundDelicatessen-Implements Sound Source Data
+   This section describes the structure of VAB data of created by SoundDelicatessen and how to use
+   SoundDelicatessen, and briefly explains the components of the window.
+   For the screen configuration and component sections, and for the dialog messages, see chapter 4.
+
+
+VAB Data Structure
+   This paragraph first explains the structure of VAB data briefly.
+   VAB data is composed of tone attributes (including program attributes) comprising two hierarchies, and of
+   a list of waveforms (VAG list).
+   Figure 3–12: VAB Structure
+
+
+
+
+   Up to 128 program attributes can be cataloged in one unit of VAB. A program corresponds to a sound
+   source number in MIDI, being equivalent to music instrument levels of “piano”, “guitar”, “drum”, etc.
+   Program changes (patch changes) in the sequence data cause the current program to be altered.
+   The tone attributes are program components. A maximum of 16 tone attributes can be cataloged in one
+   program. Up to 2,048 tone attributes can be cataloged in one VAB.
+   A VAG list can contain up to 254 VAG files converted by AIFF2VAG. Restrictions of the SPU sound source
+   memory requires that the total of VAG data be 520,160 bytes or less.
+   The following gives an example of VAB.
+   Figure 3–13: Example of VAB
+
+
+
+
+   In a program (instrument) level, VAB in the above example is composed of “piano”, “drum”, “guitar” and
+   “effect sound”.
+
+
+                                                                                               Sound Artist Tool
+3-10 Tutorials
+
+          The “drum” comprises four tones of “kick”, “cymbals”, “snare” and “tambourine”. The tones are based on
+          an independent VAG list.
+
+
+     Preparing Required Data
+          SoundDelicatessen requires a VAG file created by the above-mentioned AIFF2VAG as waveform data. This
+          is explained here using “sample.vag” as an example.
+          Also, the VAB sound source test which uses the second half sequencer, utilizes the “sample.vab”,
+          “sample.vab.s” and “sample.mid” VAB files included in the sample data.
+
+
+     Startup
+          Double click on the SoundDelicatessen icon to start up SoundDelicatessen.
+          If SoundDelicatessen has been started up correctly, the following message is displayed for several
+          seconds.
+          Figure 3–14: Message Displayed during SoundDelicatessen Startup
+
+
+
+
+          If the PlayStation Sound Board is not correctly installed, the following message is displayed.
+          Figure 3–15: Error Message Panel during SoundDelicatessen Startup
+
+
+
+
+          If the message is displayed, immediately shut down the system and check the system setup in accordance
+          with Chapter 2, Installation.
+          When board initialization is complete, the following dialog is displayed and a VAB is requested. When
+          creating a new file, press the ‘cancel’ button.
+          Figure 3–16: Dialog Box after Board Initialization
+
+
+
+
+      Sound Artist Tool
+                                                                                                       Tutorials 3-11
+
+Termination
+    To terminate SoundDelicatessen, select “Quit” from the “File” menu, or enter Command-Q.
+
+Creating a new VAB
+    1. Double click on the SoundDelicatessen icon to start up the application.
+    2. Press “Cancel” in the VAB Open dialog and then select “New” from the “File” menu to open a new
+       VAB.
+    3. The gray window is displayed.
+    Figure 3–17: SoundDelicatessen Program List Window
+
+
+
+
+        This is the program list window. In the program list window, tone names and volume balance can be
+        set for panning.
+        First, enter “drum” in the program name column for program number (Prog#) 0 and, then, press the tab
+        key. Enter “127” for volume (vol) and press the tab key again. Then, enter “64” for panning. Now, the
+        program (instrument) can be developed which provides for the highest volume and center panning, and
+        has a name of the drum.
+
+
+
+
+                                                                                               Sound Artist Tool
+3-12 Tutorials
+
+          4. Press the tone list display button (“>>”) at the top (Prog#0) of the program list window to display the
+             cream-colored window.
+          Figure 3–18: SoundDelicatessen Tone List Window
+
+
+
+
+                 This is the tone list window. In the tone list window, catalog the actual waveforms constituting tones in
+                 the above program window.
+                 Also, selecting “Show Tones” in the “Windows” menu allows the tone list window to be displayed.
+          5. With the tone list window left as it is, press the VAG link button (“>>”) on its top (Tone#) to have the
+             orange window displayed.
+          Figure 3–19: SoundDelicatessen VAG List Window
+
+
+
+
+      Sound Artist Tool
+                                                                                                       Tutorials 3-13
+
+    This is the VAG list window. In the VAG list window, catalog the waveform data VAG file created by
+    AIFF2VAG.
+    Also, selecting “Show VAGs” in the “Window” menu allows the VAG list window to be displayed.
+6. The next step is to actually catalog the VAG. First, click the “append VAG” button in the window. When
+   asked which VAG file is to be cataloged, select the “sample.vag” included in the sample data.
+Figure 3–20: Cataloging to SoundDelicatessen VAG List
+
+
+
+
+If other VAG types have been created, catalog them.
+7. Use the cataloged VAG in the tone list window. Clicking the “Use This” button (“<<”) at the top causes
+   the tone list window to be displayed and the default tone attribute values to be entered automatically.
+Figure 3–21: Setting SoundDelicatessen Tone Attributes
+
+
+
+
+    The tone attributes are: tone number (Tone#); VAG link button (VAG); tone name (name); priority (prior);
+    waveform mode (mode); volume (vol); pan pot (pan); center pitch (center note); fine center pitch (center
+    fine); effective interval (note limit min/max); vertical pitch bend (pit. bend minus/plus); ADSR settings
+    (settings); and VAG reference number (VAG#).
+    The above tone attributes are arranged from the left in that order.
+    For the tone attributes, see chapter 4.
+
+
+
+
+                                                                                               Sound Artist Tool
+3-14 Tutorials
+
+          8. Now, a simple sound source has been implemented. Following is a test of the actual sound
+             reproduction.
+                 First, select “Mac -> SPU” from the SoundBoard menu, and transfer the waveform data to the SPU
+                 sound source memory. The violet keyboard window then appears.
+          Figure 3–22: Keyboard Window
+
+
+
+
+                 This keyboard allows a check of sound production by clicking with the mouse.
+                 Clicking and dragging keys on the keyboard enable reproduction at various intervals.
+                 Pressing the mouse button causes a “note on” message to be sent to the Sound Board and releasing
+                 the button causes a “note off” message to be sent to the Sound Board. Clicking the button with the
+                 shift key pressed causes the “note off” message to be ignored. When continuing loop sound
+                 reproduction, click the keyboard with the shift key pressed.
+          9. Finally, save the created sound source data VAB and terminate SoundDelicatessen.
+                 Saving VAB data requires the selection of “Save ...” or “Save As ...” from the “File” menu. When saving
+                 for the first time or if “Save As ...” has been selected, enter the name of the file to be saved when
+                 requested. Because data is handled by a PC, it is recommended that the file name be “????????.vab”
+                 (eight half-size alphabetic characters plus .vab).
+                 To terminate SoundDelicatessen, select “Quit” from the “File” menu.
+
+
+     Editing VAB
+          1.      Double click the created VAB file and start up SoundDelicatessen. This causes the VAB file to be
+                 opened automatically after the startup and the data to be downloaded to the Sound Board.
+                 With SoundDelicatessen started up and the file opened, press the “Save” button to save the edited
+                 VAB data, the “Don’t Save” button when saving is not needed, and the “Cancel” button to continue
+                 editing, in response to the save prompt.
+          Figure 3–23: Dialog Box for Saving SoundDelicatessen File
+
+
+
+
+          2. The VAB file is opened, with the program list window displayed.
+          3. Press the tone list display button (“>>”) for program number zero to display the tone list for program
+             number zero.
+          4. Select “Mac -> SPU” in the “SoundBoard” menu to transfer sound data to the SPU sound source
+             memory.
+          5. Click on the displayed keyboard window to make sure that sound is produced. Then, click the tone list
+             again for display nearest you.
+
+      Sound Artist Tool
+                                                                                                            Tutorials 3-15
+
+   6. Change the “Pan” item from 64 (center) to 0 (left) or 127 (right). Click the keyboard to make sure that
+      the reproduced sound is accompanied by pan pot effects.
+   7. Change the “note limit/max” item from 127 to 60. Then, drag the keys from the furthest left position to
+      the furthest right position. By setting the note limit at 60, check to make sure that sound is produced
+      only for intervals lower than 60.
+   8. Press the “ADSR ...” button to display the ADSR setting screen.
+   Figure 3–24: ADSR Setting Window
+
+
+
+
+       On the ADSR setting screen, the following can be carried out. 1) Set ADSR. 2) Set the waveform
+       reproduction mode. 3) Test the pitch bend.
+       a.   For ADSR, the change rate or level can be set for any of the following items. The change rate can
+            be set to provide for exponential or linear changes (only in AR, SR and RR). Further, for SR, the
+            mode of increase or decrease can also be set.
+            AR (Attack rate):     Change rate after key-on until the highest volume
+            DR (Decay rate):      Change rate from the highest volume to the threshold level
+            SL (Sustain level):   Continued sound level
+            SR (Sustain rate):    Change rate after the threshold level has been reached
+            RR (Release rate):    Change rate of attenuation after key-off
+       b. In the waveform reproduction mode, the following items can be set.
+
+Vibrate, Portamento
+       depth: Sets the amplitude of vibration in the range from 0 to 127 in units of 1/4 of half tone.
+       time: Sets the time of one period of vibration in the range from 0 to 254 in units of ticks (1/60 seconds).
+       reverb: Specifies the use of reverb effects during tone reproduction.
+
+
+
+
+                                                                                                   Sound Artist Tool
+3-16 Tutorials
+
+
+     Using MIDI to Check VAB
+          SoundDelicatessen supports the FreeMIDI System. SoundDelicatessen allows VAB to be checked by the
+          MIDI sequence software (Performer and Vision) on Macintosh and from the keyboard.
+          1. Double click and open VAB file “sample.vab” included in sample data.
+                 With VAB opened by SoundDelicatessen, the dialog box pops up to inquire whether to save and close
+                 the file. (See the Figure below.) Click the “Save” button to save the file, the “Don’t Save” button to open
+                 the VAB file without saving, and the “Cancel” button to stop opening the VAB file and continue to edit
+                 currently opened VAB.
+          Figure 3–25: Dialog Box for Saving SoundDelicatessen File
+
+
+
+
+          2. Select “Mac -> SPU” in the SoundBoard menu to transfer VAB to the SPU sound source memory.
+          3. Next, start up the sequence software to open the “sample.mid” SMF file included in the sample data.
+          4. Confirm the FreeMIDI System settings in the FreeMIDI Setup application.
+
+
+
+
+                 In the above example, FreeMIDI is installed.
+
+
+
+
+      Sound Artist Tool
+                                                                                                                Tutorials 3-17
+
+   5. Use the sequence software to set the output device to “SONY PSX-1~16”, reproduce the recently-
+      opened SMF data, and make sure that sound is output from the SoundBoard via DAT, etc.
+   Figure 3–26: DEVICE Setting Example in Performer 5.02
+
+
+
+
+   If the MIDI message is sent correctly from the sequence software to the SoundDelicatessen, a red dot
+   flashes above the keyboard in the keyboard window and the indicator to the right of the keyboard expands
+   and contracts.
+   If no sound is reproduced and no changes are observed in the keyboard window, it is possible that MIDI
+   may was not set up properly so check the FreeMIDI System connection and devices.
+
+
+Checking Reverb
+   The PlayStation unit can access nine kinds of reverb effects. This section explains how to set the reverb.
+   1. Double click and open VAB file “sample.vab” included in sample data.
+   2. Select “Mac -> SPU” from the SoundBoard menu to transfer VAB to the SPU sound source memory.
+   3. Click the tone list display button (“>>”) to the left of “piano” in the top line of the program list to display
+      the tone list for program number zero.
+   4. Next, click the “piano2” ADSR setting button (“ADSR ...”) in the top line of the tone list to display the
+      ADSR setting window.
+
+
+
+
+                                                                                                       Sound Artist Tool
+3-18 Tutorials
+
+          5. Click the “reverb” checkbox and declare the use of reverb in this tone. Then press the “Apply” button
+             to fix settings.
+          Figure 3–27: Setting SoundDelicatessen Reverb
+
+
+
+
+                 In the tone list, the “piano2” “mode” item becomes “4”. This tone is thereby set to use reverb. Also, the
+                 reverb can be set by entering a number “4” for this item. For “piano3”, “piano4” and “piano5” a number
+                 of 4 is entered in order that the reverb can take effect.
+                 Now, the reverb for VAB data can be applied.
+          6. Next, in the “DSP” menu, select the “5: Hall” type.
+                 Thus, SPU starts to operate the reverb.
+          7. With the keyboard window displayed, click the keyboard to check effects of reverb sound.
+          The depth (reverb sound volume) can be set in the reverb settings. Also, in the “7:Echo” type, delay and
+          feedback can be set and in the “8:Delay” type, the delay can be set.
+          The use of the reverb requires a reverb operation work area of several k-bytes to several tens of k-bytes.
+          The following table indicates the required sizes. The size of each type is also covered in the DSP menu.
+          Table 3–5: SoundDelicatessen Reverb Type
+                        Type          Work size (bytes)     Effect
+                        Room          9,920                 Small room
+                        Studio A      9,000                 Studio (Small)
+                        Studio B      18,496                Studio (Medium)
+                        Studio C      28,640                Studio (Large)
+                        Hall          44,512                Hall
+                        Space         63,168                Universal space
+                        Echo          98,368                Echo
+                        Delay         98,368                Delay
+                        Pipe          7,072                 In a metal pipe
+
+
+
+
+      Sound Artist Tool
+                                                                                                            Tutorials 3-19
+
+Printing VAB Attribute Table
+   SoundDelicatessen can print the set program, tone and VAG lists. A printed sheet providing effect tone
+   sound layout in a program allows the efficient utilization of the effect sound. The program can use the
+   output sheet along with data for smoother data exchange.
+   1. With the VAB file opened, select “Preferences ...” in the “File” menu to display the print setting dialog
+      box. Specify the printer font to be used for output, the number of printing lines per page, program,
+      tones, and whether or not the VAG list is to be printed.
+   Figure 3–28: Printing Option Dialog Box
+
+
+
+
+   2. Next, select “Page Setup ...” in the “File” menu to have the printing setting dialog box displayed. Check
+      the form size and the printing direction, and press the “OK”button.
+   Figure 3–29: Printing Setting Dialog Box
+
+
+
+
+                                                                                                   Sound Artist Tool
+3-20 Tutorials
+
+          3. Select “Print ...” in the “File” menu to have the printing dialog box displayed. Check the number of
+             prints and press the “Print” button.
+          Figure 3–30: Printing Dialog Box
+
+
+
+
+          Note: In the above example, printer driver LaserWrite 8 is used to display the dialog box for output to Apple
+          LaserWriter II NTX. For other printers, the displayed screen may be different.
+
+
+
+     RAW2DA - Creates CD-DA Data
+          RAW2DA converts the SoundDesigner II format (a sampling rate of 44.1 kHz, 16-bit straight PCM
+          stereophonic (L→R→L→R) data, big Endian) created by such existing waveform editing software as
+          SoundDesigner II (Digidesign) and Alchemy (Passport Designs) into the CD-DA file (little Endian) for the
+          PlayStation.
+          The CD-ROM Generator software which masters disks for the PlayStation supports Windows .WAV
+          waveform format data. When the waveform editing software being used can directly output the .WAV data,
+          there is no need to use RAW2DA. At that time, confirm that it is 44.1 kHz stereo 16 bit.
+
+
+     Preparing DA Data
+          Before using RAW2DA, save the sound data to be converted by your waveform editing (HD recording)
+          software in the SoundDesigner II format (16 bits, stereophonic, 44.1 kHz). Make sure that the sampling rate
+          is 44.1 kHz for stereophonic sound (two channels).
+          Note: The converter does not convert the sampling rate nor make monophonic sound stereophonic. Be
+          sure to use stereophonic data of 16 bits.
+
+
+     Using RAW2DA
+          1. Double click the RAW2DA icon to start up the application.
+          2. Specify a file in response to the request for a SoundDesigner II file to be converted after selecting
+             “Convert ...” in the “File” menu.
+          3. In response to the prompt message for an output file name, enter the file name to be assigned after the
+             conversion.
+          4. Select “Quit” from the “File” menu to terminate the application.
+
+
+
+      Sound Artist Tool
+                                                                                                             Tutorials 3-21
+
+   A SoundDesigner II format file can also be converted by dragging its icon to the RAW2DA icon. (Two or
+   more icons can be selected at a time.) With “Auto” selected in the “OutputMode” menu after having started
+   up the application, the selected files from the second onward are converted consecutively into the
+   corresponding DA data. (An extension of “.da” is appended automatically.)
+
+
+
+RAW2XA - Creates CD-ROM XA Voice Data
+   RAW2XA converts the SoundDesigner II format (a sampling rate of 18.9 or 37.8 kHz, 16-bit straight PCM
+   monophonic or stereophonic data, big Endian) created by such existing waveform editing software (HD
+   recording software) as SoundDesigner II (Digidesign) and Alchemy (Passport Designs) into the CD-ROM XA
+   voice data file for PlayStation.
+   Unlike such typical straight PCM (not compressed) data, XA voice data is compressed by ADPCM and,
+   thus, its data amount can be regulated. Depending on the mode, 4 to 16 channels of voice data can be
+   interleaved during ordinary speed CD reproduction, and 8 to 32 channels of voice data can be interleaved
+   during double speed reproduction. Interleaved desired XA multi-channel voice data on the CD can be
+   selected and reproduced by specifying the channel.
+
+
+Preparing XA Data
+   Before using RAW2XA, save the sound data to be converted by your waveform editing (HD recording)
+   software in the SoundDesigner II format (16 bits, monophonic or stereophonic, 18.9 or 37.8 kHz).
+   The PlayStation unit supports the XA voice data formats for the following four modes:
+   •   37.8 kHz: Stereophonic 8 channels. Interleave supported.
+   •   37.8 kHz: Monophonic 16 channels. Interleave supported.
+   •   18.9 kHz: Stereophonic 16 channels. Interleave supported.
+   •   18.9 kHz: Monophonic 32 channels. Interleave supported.
+   Note: The converter does not convert sampling rates, or the monophonic mode into the stereophonic
+   mode and vice versa. Be sure be develop data for the mode during reproduction.
+
+
+Using RAW2XA
+   1. Double click the RAW2XA icon to start up the application.
+   2. Select “Convert ...” from the “File” menu, and specify the file in the SoundDesigner II format to be
+      converted.
+   3. In response to the prompt message for an output file name, enter the file name to be assigned after
+      conversion.
+   4. Select “Quit” from the “File” menu to terminate the application.
+   A SoundDesigner II format file can also be converted by dragging its icon to the RAW2DA icon. (Two or
+   more icons can be selected at a time.) With “Auto” selected in the “OutputMode” menu after having started
+   up the application, the selected files from the second onward are converted consecutively into the
+   corresponding DA data. (A “.da” extension is automatically appended.)
+   If the data to be converted is not stereophonic at a frequency of 37.8 kHz, select the appropriate data
+   format in the “Format” menu before conversion.
+
+
+
+
+                                                                                                  Sound Artist Tool
+3-22 Tutorials
+
+          Figure 3–31: “Format” Menu
+
+
+
+
+          Interleaving the converted XA file with other data involves programmer movie tool MovPack
+          (MOVPACK.EXE). For details, refer to the programmer tool manual.
+
+
+
+     Reproduction by DTL-H2000
+          This section briefly explains the procedure for using sound data (SEQ and VAB) created by the PlayStation
+          Sound Tool for reproduction by the programmer tool (DTL-H2000).
+          For details of the program and compiler, refer to the programmer tool manual.
+
+
+     Developing Sound Data and Program
+          This paragraph describes sound reproduction using sequence data (SEQ) and sound source data (VAB).
+          The needed sample program is stored in the following directory for the programmer tool.
+          \psx\sample\sound\simple
+          The following are the files to be used:
+          Sample program description file      \psx\sample\sound\simple\readme_e.txt
+          Make file                            \psx\sample\sound\simple\makefile.mak
+          Main program                         \psx\sample\sound\simple\main.c
+          VH (VAB attribute)                   \psx\sample\sound\simple\sample.vh
+          VB (VAB waveform)                    \psx\sample\sound\simple\sample.vb
+          SEQ                                  \psx\sample\sound\basic\fuga.seq
+
+
+     Using DTL-H2000 to Reproduce Sound Data
+          1. Compile the program.
+                 Compiling the program involves movement to the \psx\sample\sound\simple and the entry of “make
+                 all”. The following are the contents of makefile.mak:
+                        makefile.mak
+                               all:
+                                      ccpsx -g -Xo$80100000 -Xm main.c -omain.cpe.main.sym.main.map
+                               load:
+                        pqbload sample.vh 80015000
+                        pqbload sample.vb 80020000
+                        pqbload ..\basic\fuga.seq 80010000
+                               clean:
+                        del *.?~
+                        del *.??~
+                        del *.cpe
+                        del *.sym
+                        del *.map
+                 Entering “make all” causes the following command to be issued in accordance with the description of
+                 makefile.mak.
+                        ccpsx -g -Xo$80100000 -Xm main.c -omain.cpe.main.sym.main.map
+                 Program compilation is now complete.
+
+      Sound Artist Tool
+                                                                                                   Tutorials 3-23
+
+2. Load data.
+    To load data, enter “make load”. The following three commands are executed in accordance with the
+    makefile.mak description:
+           pqbload sample.vh 80015000
+           pqbload sample.vb 80020000
+           pqbload ..\basic\fuga.seq 80010000
+    Each of the commands transfers sample.vh, sample.vb and fuga.seq sound data to the specified
+    addresses.
+3. Use the debugger to execute the program.
+    Executing the program requires that “dbugpax main/r50 /2” be entered. The debugger is started up,
+    with the main program loaded to the debugger. Pressing “F-9” causes the program to be started up.
+    Operate the control pad to reproduce sound.
+    The current tempo, volume and status are displayed.
+Figure 3–32: Monitor Output of Sample Program
+
+
+
+
+The following are the keys on the control pad:
+Table 3–6: Control Pad Keys
+           Key                  Description
+           START                Play (Starts playing.)
+           SELECT               Stop (Stops playing.)
+           X                    Replay
+           •                    Pause
+           R1                   Gradually increases the tempo.
+           L1                   Gradually decreases the tempo.
+           ↑                    Increases the volume.
+           ↓                    Decreases the volume.
+           ←                    Gradually decreases the volume to zero.
+           →                    Gradually increases the volume to 127.
+           SELECT + START       Close (Terminates playing)
+
+
+
+
+                                                                                          Sound Artist Tool
+3-24 Tutorials
+
+     Program Flow
+          This paragraph briefly explains the program flow used for the sample. The items not related to sound are
+          omitted.
+                      main.c
+                      /*
+                       * sample..simple
+                       */
+                      #include <sys/types.h>
+                      #include <libgte.h>
+                      #include <libgpu.h>                         /* Declares the header file of the
+                                                                     library to be used.*/
+                      #include <libetc.h>
+                      #include <libsnd.h>
+                      short vab;                                  /* Declares the variable where the VAB
+                                                                     ID is to be stored.*/
+                      short seq;                                  /* Declares the variable where the SEQ
+                                                                     ID is to be stored.*/
+                      char seq_table[SS_SEQ_TABSIZ * 1 * 1];
+                                                          /* Acquires the attribute table for SEQ
+                                                             to be used.*/
+                      main()
+                      {
+                      SsInit();                                   /* Initializes the sound library.*/
+                      SsSetTableSize (seq_table, 1, 1);           /* Passes the SEQ attribute table to the
+                                                                     library.*/
+                      SsSetTickMode(SS_NOTICK);                   /* Declares the sound interrupt mode.*/
+                      vab = SsVabOpenHead ((u_char *)VAB_HADDR, -1);
+                                                          /* Passes the VAB attribute section to
+                                                              the library.*/
+                             if (vab == -1) {
+                             printf ("SsVabOpenHead : failed !!!\n");
+                             return;
+                             }
+                      if (SsVabTransBody ((unsigned char *)VAB_BADDR, vab) != vab) {
+                                                          /* Starts transferring the VAB waveform
+                                                              section to the sound buffer.*/
+                             printf ("SsVabTransBody : failed !!!\n");
+                             return;
+                             }
+                      SsVabTransCompleted (SS_WAIT_COMPLETED);
+                                                          /* Waits for the completion of the
+                                                              transfer.*/
+                      seq = SsSeqOpen((u_long *)SEQ_ADDR, vab);
+                                                          /* Passes SEQ to the library.*/
+                      SsSetMVol(MVOL, MVOL);                      /* Sets the main volume.*/
+                      SsSeqSetVol(seq, SVOL, SVOL);               /* Sets the SEQ volume.*/
+                      SsStart();                                  /* Starts sound interrupt (play).*/
+                      while (1) {                                 /* Main loop*/
+                                                                  /* Main processing*/
+                      VSync(0);                                   /* Waits for the V blank.*/
+                      SsSeqCalledTbyT();                          /* Sound processing function */
+                      }
+                      SsSeqClose(seq);                            /* Closes SEQ.*/
+                      SsVabClose(vab);                            /* Closes VAB.*/
+                      SsEnd();                                    /* Stops sound library utilization.*/
+                      SsQuit();                                   /* Terminates sound library
+                      utilization.*/
+                             return;
+                      }
+
+
+      Sound Artist Tool
+Chapter 4:
+References
+
+
+
+
+             Sound Artist Tool
+4-2   References
+
+
+
+
+       Sound Artist Tool
+                                                                                                 References 4-3
+
+
+
+
+Sound File Formats
+   This section explains the following file formats.
+   •   SEQ
+   •   SEP
+   •   VAG
+   •   VAB
+   •   VH
+   •   VB
+   •   DA
+   •   XA
+
+
+SEQ
+   SEQ is the PlayStation sequence data format. The typical extension in DOS is “.SEQ”.
+   Figure 4–1: SEQ Format
+
+
+
+
+                                                                                          Sound Artist Tool
+4-4   References
+
+      SEP
+          SEP is the PlayStation multi-track sequence data format. The typical extension in DOS is “.SEP”.
+          Figure 4–2: SEP Format
+
+
+
+
+       Sound Artist Tool
+                                                                                                       References 4-5
+
+VAG
+  VAG is the PlayStation single waveform data format. The typical extension in DOS is “.VAG”.
+  Figure 4–3: VAG Format
+
+
+
+
+                                                                                                Sound Artist Tool
+4-6   References
+
+      VAB
+          VAB is the PlayStation sound source data format. The typical extension in DOS is “.VAB”.
+          Figure 4–4: VAB Format
+
+
+
+
+          The program attribute table has the following structure.
+          Figure 4–5: VAB Program Attribute Table
+
+
+
+
+          The tone attribute table has the following structure.
+
+
+
+
+       Sound Artist Tool
+                                                                                            References 4-7
+
+     Figure 4–6: VAB Tone Attribute Table
+
+
+
+
+VH
+     VH is the VAB attribute table section. The typical extension in DOS is “.VH”.
+     Figure 4–7: VH Format
+
+
+
+
+                                                                                     Sound Artist Tool
+4-8   References
+
+
+
+      VB
+           VB is the VAB waveform data section. The typical extension in DOS is “.VB”.
+           Figure 4–8: VB Format
+
+
+
+
+      DA
+           DA is the PlayStation CD-DA data format. The typical extension in DOS is “.DA”.
+           Figure 4–9: DA Format
+
+
+
+
+      XA
+           XA is the PlayStation CD-ROM XA voice data format. The typical extension in DOS is “.XA”.
+           The XA format is based on the following specifications. The XA file output by RAW2XA has a sub-header.
+
+           CD-ROM XA
+           SYSTEM DESCRIPTION CD-ROM XA
+           Copyright May 1991
+
+
+
+
+       Sound Artist Tool
+                                                                                                           References 4-9
+
+
+Commands and Names of Window Components
+
+SMF2SEQ
+      Upon the startup of SMF2SEQ, the following dialog box is displayed.
+      Figure 4–10: SMF2SEQ Panel
+
+
+
+
+[File] menu
+      Figure 4–11: SMF2SEQ: “File” Menu
+
+
+
+
+[File] - [Convert ...]
+      Starts conversion from SMF into SEQ.
+      Upon the selection of the [Convert ...] command, the SMF file selection dialog box is displayed. Specify an
+      SMF file to be converted.
+      Figure 4–12: SMF2SEF File Selection Dialog Box
+
+
+
+
+      When the [Open] button is pressed, the SEQ file name specification dialog box is displayed.
+      Figure 4–13: SMF2SEQ: SEQ File Specification Dialog Box
+
+
+
+
+      Pressing the [Save] button starts conversion.
+
+
+
+                                                                                                    Sound Artist Tool
+4-10 References
+
+    [File] - [Quit]
+          Terminates the SMF2SEQ application.
+
+    [OutputMode] Menu
+          Figure 4–14: SMF2SEQ "Output Mode" Menu
+
+
+
+
+    [OutputMode] - [Auto]
+          Sets mode to continuous automatic conversion mode. When specifying multiple SMF files through drag
+          and drop, the ‘save to.......’ directory specification panel is displayed only for the first file, all subsequent
+          files are output to the same folder.
+    [OutputMode] - [Interactive]
+          Sets mode to interactive mode. The ‘save to.......’ file specification panel is displayed at conversion.
+    [OutputMode] - {Remove BankChange (#0) ]
+          The BankChange message during conversion is forcibly deleted.
+
+
+    AIFF2VAG
+          Upon the startup of AIFF2VAG, the following dialog box is displayed.
+          Figure 4–15: AIFF2VAG Panel
+
+
+
+
+    [File] menu
+          Figure 4–16: AIFF2VAG: “File” Menu
+
+
+
+
+    [File] - [Convert ...]
+          Starts conversion from AIFF into VAG.
+          Upon the selection of the [Convert ...] command, the AIFF file selection dialog box is displayed. Specify an
+          AIFF file to be converted.
+
+
+
+
+      Sound Artist Tool
+                                                                                                              References 4-11
+
+      Figure 4–17: AIFF2VAG: AIFF File Selection Dialog Box
+
+
+
+
+      When the [Open] button is pressed, the loop point specification dialog box is displayed.
+      Figure 4–18: AIFF2VAG: Conversion Panel
+                                                                                           Number of
+                                                                                           conversion
+                                                                                           source
+                                                                                           samples
+
+                                                                                          Number of
+                                                                                          samples to be
+                                                                                          converted
+
+                     Is looping
+                     present?
+
+
+                                                                                          Loop end
+                                                                                          movement
+                    Loop Start                                                            button
+
+
+
+      When the [Convert] button is pressed, the VAG file name specification dialog box is displayed.
+      Figure 4–19: AIFF2VAG: VAG File Specification Dialog Box
+
+
+
+
+      Pressing the [Save] button starts conversion. When conversion is complete the VAG data is downloaded to
+      the DTL-H800 and reproduced. (The “Mode” can be set so that it does not automatically reproduce).
+[File] - [Select VAG...]
+      Specify the VAG file, download it to the DTL-H800 and reproduce it.
+[File] - [Play]
+      Either the VAG data which was just converted or the VAG data which was downloaded is reproduced for a
+      second time. Clicking the mouse on the AIFF2VAG panel has the same effect.
+
+
+
+
+                                                                                                        Sound Artist Tool
+4-12 References
+
+    [File] - [Stop]
+          Stops repoduction of VAG data (including looped infinite waveforms). Clicking the mouse on the AIFF2VAG
+          panel has the same effect (during downloading, release the button).
+    [File] - [Quit]
+          Terminates the AIFF2VAG application.
+
+    [Compression] menu
+          Figure 4–20: AIFF2VAG: “Compression” Menu
+
+
+
+
+          Specifies the type of compression.
+    [Compress] - [Standard]
+          Selects a typical compression type.
+    [Compress] - [High Band]
+          Selects the compression type adapted to the waveform comprising more high-frequency components.
+    [Compress] - [Low Band]
+          Selects the compression type adapted to the waveform comprising more low-frequency components.
+    [Compress] - [4-bit Straight]
+          Selects the type for compressing 16-bit data simply to 4-bit data.
+
+    [Mode] Menu
+          Specifies the conversion mode and play mode.
+          Figure 4–21: AIFF2VAG "Mode" Menu
+
+
+
+
+    [Mode] - [Continuous]
+          Sets mode to continuous conversion mode. When specifying multiple AIFF files in drag and drop, the ‘save
+          in.......directory’ specification panel is displayed only for the first file, all files after that are output to the same
+          folder.
+    [Mode] - [Interactive]
+          Sets mode to interactive mode. The ‘save in.......directory’ setting panel is displayed at conversion.
+    [Mode] - [Silent]
+          No playing is carried out after conversion.
+    [Mode] - [Play after converted]
+          Automatically plays after conversion.
+
+
+
+
+      Sound Artist Tool
+                                                                                                          References 4-13
+
+[Mode] - [Show panel after converted]
+      The following panel is displayed after conversion.
+      Figure 4–22: AIFF2VAG Playback Confirmation Panel
+
+
+
+
+VAG Player
+      Starting up VAG Player causes the following dialog box to pop up.
+      Figure 4–23: VAG Player Panel
+
+
+
+
+[File] menu
+      Figure 4–24: VAG Player: “File” Menu
+
+
+
+
+[File] - [Select VAG ...]
+      Select VAG to be reproduced.
+      After selecting the [Select VAG ...] command, the VAG file selection dialog box is displayed. Select the VAG
+      to be reproduced.
+      Figure 4–25: VAG Player: VAG File Selection Dialog Box
+
+
+
+
+                                                                                                    Sound Artist Tool
+4-14 References
+
+    [File] - [Quit]
+          Terminates the VAG Player application.
+          Dragging the VAG file to the VAG Player application icon causes the following dialog box to be displayed.
+          Two or more VAG units can be dropped.
+          Figure 4–26: VAG Player: Dialog box for dragging and dropping
+
+
+
+
+          The VAG file reproduction function is also included in AIFF2VAG.
+
+
+    SoundDelicatessen
+          When SoundDelicatessen is started up, the following dialog box is displayed until set up is complete.
+          Figure 4–27: SoundDelicatessen Panel
+
+
+
+
+    [File] menu
+          Figure 4–28: SoundDelicatessen: “File” menu
+
+
+
+
+      Sound Artist Tool
+                                                                                                               References 4-15
+
+[File] - [NEW]
+      Opens new VAB.
+      Upon the selection of the [NEW] command, the following program list window is displayed.
+      Figure 4–29: SoundDelicatessen: Program list window
+                                                                                Total VAG count
+                          Main volume
+                          (0-127)
+                                                                                 Upward movement by item
+                          Tone Display
+                          button
+                                                                                 Upward movement by line
+
+                                                                                 Number of tones included in program
+
+                      Program number
+
+
+
+                      Volume (0-127)
+                                                                                 Program attributes (0-255)
+
+                                                                                 Program pan pot (0-127)
+
+                         Program name
+
+                                                                                 Downward movement by line
+
+                                                                                  Downward movement by item
+                         Total capacity
+                         waveform (VB)                                           Empty buffer capacity
+
+
+[File] - [Open ...]
+      Opens an existing VAB file.
+[File] - [Close]
+      Closes the VAB file currently edited.
+[File] - [Save ...]
+      Saves the VAB file currently edited.
+[File] - [Save As ...]
+      Saves the VAB file currently edited under an alias.
+[File] - [Import program ...]
+      Loads a program unit.
+      Select the [Import program...] command and then the program file to be loaded. When the file has been
+      selected, register the program order by entering a number from 0 to 127 when requested, and clicking the
+      [Import] button.
+      Figure 4–30: SoundDelicatessen: Program Import
+
+
+
+
+                                                                                                         Sound Artist Tool
+4-16 References
+
+    [File] - [Export program...]
+         Writes a program unit.
+         When using the [Export program...] command to output a program, click the tone display button for the
+         program to be output, and select the [Export program...] command with the tone list window displayed.
+         When requested to confirm the number of the program to be output, click the [Export] button if the
+         program is correct.
+         Figure 4–31: SoundDelicatessen: Program Export
+
+
+
+
+    [File] - [Page Setup...]
+         Sets up the printer.
+         Set the paper size. The paper setting dialog box displayed may vary with the printer used.
+         Figure 4–32: SoundDelicatessen: Print setting dialog box
+
+
+
+
+      Sound Artist Tool
+                                                                                                              References 4-17
+
+[File] - [Print]
+      Prints the attribute table (VH section).
+      Clicking the [print] button with the print count set starts printing. The printer dialog box displayed may vary
+      with the printer used.
+      Figure 4–33: SoundDelicatessen Printer Dialog Box
+
+
+
+
+[File] - [Preferences...]
+      Sets the printing option.
+      Specify the printer font to be used.
+      Figure 4–34: SoundDelicatessen: Print option dialog box
+
+
+
+
+[File] - [Quit]
+      Terminates the SoundDelicatessen application.
+
+
+
+
+                                                                                                        Sound Artist Tool
+4-18 References
+
+    [Edit] menu
+          Figure 4–35: SoundDelicatessen: “Edit” menu
+
+
+
+
+    [Edit] - [Cut]
+          Cuts the character pointed to by the inverted cursor.
+    [Edit] - [Copy]
+          Copies the character pointed to be the inverted cursor.
+    [Edit] - [Paste]
+          Pastes the previously cut or copied character to the current cursor position.
+    [Edit] - [Insert new line]
+          Inserts a new program, tone or VAG into the line pointed to by the inverted cursor.
+    [Edit] - [Copy this line]
+          Copies the program or tone pointed to by the inverted cursor. When copying a program, all the tones
+          contained within it are also copied.
+    [Edit] - [Paste this line]
+          Copies the previously copied program or tone to the line pointed to by the cursor. When copying a
+          program, all the tones contained within it are also pasted.
+    [Edit] - [Delete this line]
+          Deletes the program or tone pointed to by the inverted cursor. When copying a program, all the tones
+          contained within it are also deleted.
+    [Edit] - [Top]
+          Movement to the start program, tone or VAG
+    [Edit] - [Buttom]
+          Movement to the end program, tone or VAG
+
+
+
+
+      Sound Artist Tool
+                                                                                                                 References 4-19
+
+
+[Windows] menu
+    Figure 4–36: SoundDelicatessen: “Windows” menu
+
+
+
+
+[Windows] - [Show Programs]
+    Displays the program list window.
+[Windows] - [Show Tones]
+    Displays the tone list window.
+    Figure 4–37: SoundDelicatessen: Tone list window
+
+                                                       Pan pot (0:Left,64: Center, 127:Right)
+                                         Volume
+                                                                 Center note (by half tones)
+                                      Mode                               Fine tune (by 100/127 cents   Mute button
+                      Priority Mode
+
+
+
+
+        Program
+
+                                                                                                               VAG number
+
+                                                                                                               ADSR setting
+                                                                                                               button
+        Tone
+        number
+                                                                                                               Pitch bend
+                                                                                                               (by half tones)
+
+                                                                                                                Note Limit
+                                                                                                                (by half tones)
+         VAG list
+         display
+         button
+
+
+      Tone name                                                                                                  Sound
+      (up to 16                                                                                                  production
+      characters)                                                                                                button
+
+
+
+
+    Clicking the “ADSR...” button in the tone list allows the tone ADSR, etc. to be set.
+
+
+
+
+                                                                                                          Sound Artist Tool
+4-20 References
+
+         Figure 4–38: SoundDelicatessen: ADSR setting window
+
+
+
+
+    [Windows] - [Show VAGs]
+         Displays the VAG list window.
+         Figure 4–39: SoundDelicatessen: VAG list window
+
+
+
+
+         Clicking the [<<(UseThis)] button allows the VAG file to be used in the tone list (a link is applied.)
+         Clicking the [append VAG] button allows a new VAG to be cataloged to the end of the VAG list.
+
+
+
+
+      Sound Artist Tool
+                                                                                                        References 4-21
+
+[Windows] - [Show Keyboard]
+     Displays the keyboard window.
+     Figure 4–40: SoundDelicatessen: Keyboard window
+
+
+
+
+[Windows] - [Regist new VAG...]
+     Catalogs new VAG in the VAG list window.
+     This command is equivalent to [append VAG] on the VAG list window.
+
+[SoundBoard] menu
+     Figure 4–41: SoundDelicatessen: “SoundBoard” menu
+
+
+
+
+[SoundBoard] - [MAC -> SPU]
+     Transfers the VB (waveform data) section of the cataloged VAG to the Sound Board.
+[SoundBoard] - [MIDI]
+     Sets MIDI.
+     With Apple MIDI Manager and MIDI Driver installed correctly, MIDI is connected automatically and this item
+     is checked. Use this function to temporarily disconnect MIDI.
+[SoundBoard] - [All Note Off]
+     Forcibly stops sound production from the Sound Board.
+     When the sequence is suspended or if a low release rate (ADSR RR) for the loop sound source has been
+     set, some sound may remain. Use this function for muting.
+
+
+
+
+                                                                                                  Sound Artist Tool
+4-22 References
+
+    [DSP] menu
+         Figure 4–42: SoundDelicatessen: “DSP” menu
+
+
+
+
+    [DSP] - [Depth]
+         This is a sub-menu for setting reverb depth (reverb volume).
+    [DSP] - [Feed Back]
+         This is a sub-menu for setting the reverb feedback amount.*
+         *The [Feed Back] command can only be set when using “Echo” type reverb.
+    [DSP] - [Delay Time]
+         This is a sub-menu for setting the reverb delay.*
+         * The [Feed Back] command can only be set when using “Echo” or “Delay” type reverbs.
+         The following are specifications of each reverb type:
+         Table 4–1: Reverb Types
+                      Type         Work size (bytes)     Effect
+                      Room         9,920                 Small room
+                      Studio A     9,000                 Studio (Small)
+                      Studio B     18,496                Studio (Medium)
+                      Studio C     28,640                Studio (Large)
+                      Hall         44,512                Hall
+                      Space        63,168                Universal space
+                      Echo         98,368                Echo
+                      Delay        98,368                Delay
+                      Pipe         7,072                 In a metal pipe
+
+
+
+
+      Sound Artist Tool
+                                                                                                                 References 4-23
+
+
+
+RAW2DA
+      When starting up RAW2DA, the following dialog box is displayed.
+      Figure 4–43: RAW2A Panel
+
+
+
+
+[File] menu
+      Figure 4–44: RAW2DA: “File” menu
+
+
+
+
+[File] - [Convert...]
+      Selects a RAW file to be selected and starts conversion.
+      Like the SoundDesigner II format (44.1 kHz, stereophonic), the RAW file contains 16-bit straight PCM data
+      in L→R→L→R order.
+[File] - [Quit]
+      Terminates the RAW2DA application.
+
+[OutputMode] menu
+      Figure 4–45: RAW2DA: “OutputMode” menu
+
+
+
+
+[OutputMode] - [Auto]
+      Sets mode to continuous automatic conversion mode. When specifying multiple SDII data through drag
+      and drop, the ‘save to.......’ directory specification panel is displayed for the first file only and all subsequent
+      files are output to the same folder.
+[OutputMode] - [Interactive]
+      Sets mode to interactive mode. The ‘save to......’ file specification panel is displayed at conversion.
+
+
+
+
+                                                                                                           Sound Artist Tool
+4-24 References
+
+
+    RAW2XA
+          When RAW2XA is started up, the following dialog box is displayed.
+          Figure 4–46: RAW2XA Panel
+
+
+
+
+    [File] menu
+          Figure 4–47: RAW2XA: “File” menu
+
+
+
+
+    [File] - [Convert...]
+          Selects the RAW file or AIFF file to be converted and starts conversion.
+          Like the SoundDesigner II format (44.1 kHz, stereophonic), the RAW file contains 16-bit straight PCM data
+          in L→R→L→R order.
+    [File] - [Quit]
+          Terminates the RAW2XA application.
+
+    [Format] menu
+          Figure 4–48: RAW2XA: “Format” menu
+
+
+
+
+    [Format] - [37.8 kHz - stereo]
+    [Format] - [37.8 kHz - mono]
+    [Format] - [18.9 kHz - stereo]
+    [Format] - [18.9 kHz - mono]
+          Specify the mode for the file to be converted.
+          RAW2XA does not convert the sampling frequency or stereophonic sound to monophonic sound and vice
+          versa. Thus, prepare RAW data or AIFF data adapted to the format in advance.
+
+
+
+
+      Sound Artist Tool
+                                                                                                                References 4-25
+
+
+[OutputMode] menu
+     Figure 4–49: RAW2XA: “OutputMode” menu
+
+
+
+
+[OutputMode] - [Auto]
+     Sets mode to continuous automatic conversion mode. When specifying multiple SDII data or AIFF data
+     through drag and drop, the ‘save to.......’ directory specification panel is displayed for the first file only and
+     all subsequent files are output to the same folder.
+[OutputMode] - [Interactive]
+     Sets mode to interactive mode. The ‘save to......’ file specification panel is displayed at conversion.
+
+
+
+Supporting MIDI in Sound Library
+
+Setting VAB Attribute Data using Control Change
+     NRPN data is so defined that NRPN for MIDI standard Control Change can be used to set the VAB
+     attribute data.
+
+Operation
+     Sequentially sending
+         bnH 99 data1 (NRPN MSB)
+         bnH 98 data2 (NRPN LSB)
+         bnH 06 data3 (Data Entry)
+     when using the sequence to create an SMF file enables VAB attribute data to be set.
+     Given below is a description of data1, data2 and data3.
+     The tone number ranges from 0 to 15. When changing attributes for all tones, set a number of 16.
+     Because of hardware specifications, however, only one set of such factors as reverb depth can be set by
+     SPU. The reverb type, depth and the feedback amount cannot be set for each channel for tones and MIDI.
+     The reverb can be turned on and off only for each voice.
+     This setting requires that the reverb switch on the ADSR setting screen for SoundDelicatessen be checked.
+     ‘Mode’ for NRPN can be used to change setting in real time from the MIDI sequence.
+
+
+
+
+                                                                                                         Sound Artist Tool
+4-26 References
+
+         Table 4–2: Data Descriptions
+                      Attribute             Data1 (CC99)       Data2 (CC98) Data3 (CC06)
+                      Priority              Tone Number        0            0-15
+                      Mode                  “                  1            0-4 (*)
+                      Limit low             “                  2            0-127
+                      Limit high            “                  3            “
+                      ADSR (AR-L)           “                  4            “
+                      ADSR (AR-E)           “                  5            “
+                      ADSR (DR)             “                  6            “
+                      ADSR (SL)             “                  7            “
+                      ADSR (SR-L)           “                  8            “
+                      ADSR (SR-E)           “                  9            “
+                      ADSR (RR-L)           “                  10           “
+                      ADSR (RR-E)           “                  11           “
+                      ADSR (SR-±)           “                  12           0-64:+ , 65-127:-
+                      Vibrate time          “                  13           0-255
+                      Portamento depth      “                  14           0-127
+                      Reverb type           16                 15           0-9 (**)
+                      Reverb depth          16                 16           0-127
+                      Echo feed back        16                 17           “
+                      Echo delay time       16                 18           “
+                      Delay delay time      16                 19           “
+                      Vibrate depth         Tone Number        21           0-127
+                      Portamento time       “                  22           0-255
+                      (*) Mode Type
+                      (**) Reverb Type
+
+         Table 4–3: Vibration Types
+                      Number             Mode
+                      0                  Off
+                      1                  Vibrato
+                      2                  Portamento
+                      3                  1 & 2 (Vibrato & Portamento on)
+                      4                  Reverb
+
+         Table 4–4: Reverb Type
+                      Number             Mode
+                      0                  Off
+                      1                  Room
+                      2                  Studio A
+                      3                  Studio B
+                      4                  Studio C
+                      5                  Hall
+                      6                  Space
+                      7                  Echo
+                      8                  Delay
+                      9                  Pipe
+
+
+
+      Sound Artist Tool
+                                                                                                             References 4-27
+
+Repeated Setting in Music using Control Change
+   A music part repetition function has been implemented by NRPN data. Repetition symbol “||:” serves for
+   Loop1, while “:||” serves for Loop2. The function can be used in a music piece as many times as you
+   desire. A nest of (Loop1...(Loop1’...Loop2’) ...Loop2) for repetition cannot be used.
+   Table 4–5: Repetition Functions
+              Attribute            Data1 (CC99) Data3 (CC06)
+              Loop1 (start)        20                 0-127 (***)
+              Loop2 (end)          30
+              (***) For endless repetition, set a value of 127(0x7f).
+
+   Note 1:
+   For some sequencers, even when the order is input correctly there is the possibility that the order can
+   become changed during conversion into SMF if the data has been set under the same Delta Time.
+   Therefore, try to avoid setting the same Delta Time. Values for VAB attribute data settings become valid
+   from the key-on immediately after Data Entry has been read.
+   Note 2:
+   Until now Loop1 settings were CC99 and CC98, however, from this point onwards they will be CC99 and
+   CC06. Because SMF which were created under CC99 and CC98 are compatible, there is no need to
+   modify the data.
+
+
+Marking Function using Control Change
+   A function which can mark places with music has been implemented by the NRPN data. In the library, a
+   function which registers the function being called is provided when this mark is detected. Below is the
+   marking format.
+   Table 4–6: Marking Function
+              Attribute       Data1(CC99)             Data3(CC06)
+              Mark            40                      Value of 0 to 127 (Passed to the callback function)
+
+
+
+
+                                                                                                       Sound Artist Tool
+4-28 References
+
+
+
+
+      Sound Artist Tool
+

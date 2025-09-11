@@ -1,0 +1,48 @@
+PSXSPX SPECIFICATIONS - ABILITY TO CONVERT STEREO CD OUTPUT TO MONO, OR TO SWAP LEFT/RIGHT CHANNELS).
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: ability to convert stereo CD output to mono, or to swap left/right channels).
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 1509 characters
+Lines: 40
+================================================================================
+
+ability to convert stereo CD output to mono, or to swap left/right channels).
+
+Envelope Operation depending on Shift/Step/Mode/Direction
+
+| AdsrCycles = 1 SHL Max(0,ShiftValue-11)
+AdsrStep = StepValue SHL Max(0,11-ShiftValue)
+IF exponential AND increase AND AdsrLevel>6000h THEN AdsrCycles=AdsrCycles*4
+IF exponential AND decrease THEN AdsrStep=AdsrStep*AdsrLevel/8000h
+Wait(AdsrCycles) ;cycles counted at 44.1kHz clock
+AdsrLevel=AdsrLevel+AdsrStep ;saturated to 0..+7FFFh
+
+Exponential Increase is a fake (simply changes to a slower linear increase rate
+at higher volume levels).
+
+1F801C0Ch+N*10h - Voice 0..23 Current ADSR volume (R/W)
+
+| 15-0 Current ADSR Volume (0..+7FFFh) (or -8000h..+7FFFh on manual write)
+
+Reportedly Release can go down to -1 (FFFFh), but that isn't true; and release
+ends at 0... or does THAT depend on an END flag found in the sample-data?
+
+The register is read/writeable, writing allows to let the ADSR generator to
+"jump" to a specific volume level. But, ACTUALLY, the ADSR generator does
+overwrite the setting (from another internal register) whenever applying a new
+Step?!
+
+1F801DB8h - Current Main Volume Left/Right
+
+1F801E00h+voice*04h - Voice 0..23 Current Volume Left/Right
+
+| 0-15 Current Volume Left (-8000h..+7FFFh)
+16-31 Current Volume Right (-8000h..+7FFFh)
+
+These are internal registers, normally not used by software (the Volume
+settings are usually set via Ports 1F801D80h and 1F801C00h+N*10h).
+
+Note
+
+Negative volumes are phase inverted, otherwise same as positive.

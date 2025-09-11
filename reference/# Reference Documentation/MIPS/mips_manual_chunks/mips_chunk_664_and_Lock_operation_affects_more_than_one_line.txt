@@ -1,0 +1,29 @@
+MIPS INSTRUCTION SET REFERENCE - AND LOCK OPERATION AFFECTS MORE THAN ONE LINE.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: and Lock operation affects more than one line.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1229 characters
+Lines: 20
+================================================================================
+
+and Lock operation affects more than one line.
+                                                        For example, more than one line around the
+                                                        referenced address may be fetched and locked.
+                                                        It is recommended that only the single line
+                                                        containing the referenced address be affected.
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                             95
+
+                         Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+     Perform Cache Operation (cont.)                                                                   CACHE
+
+       Restrictions:
+       The operation of this instruction is UNDEFINED for any operation/cache combination that is not implemented.
+       The operation of this instruction is UNDEFINED if the operaation requires an address, and that address is uncache-
+       able.
+       The operation of the instruction is UNPREDICTABLE if the cache line that contains the CACHE instruction is the
+       target of an invalidate or a writeback invalidate.

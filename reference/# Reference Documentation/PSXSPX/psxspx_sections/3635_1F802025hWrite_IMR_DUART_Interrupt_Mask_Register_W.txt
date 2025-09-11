@@ -1,0 +1,43 @@
+PSXSPX SPECIFICATIONS - 1F802025H/WRITE - IMR - DUART INTERRUPT MASK REGISTER (W)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 1F802025h/Write - IMR - DUART Interrupt Mask Register (W)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1785 characters
+Lines: 34
+================================================================================
+
+1F802025h/Write - IMR - DUART Interrupt Mask Register (W)
+
+| 7 Input Port Change (0=No, 1=Yes) (Ack via reading IPCR) ;see ACR.3-0
+6 Break Change B (0=No, 1=Yes) (Ack via CRB/Command5)
+5 RxRDYB/FFULLB (0=No, 1=Yes) (Ack via reading data) ;see MR1B.6
+4 THRB Empty (TxRDYB) (0=No, 1=Yes) (Ack via writing data) ;same as SRB.2
+3 Counter Ready (0=No, 1=Yes) (Ack via CT_STOP)
+2 Break Change A (0=No, 1=Yes) (Ack via CRA/Command5)
+1 RxRDYA/FFULLA (0=No, 1=Yes) (Ack via reading data) ;see MR1A.6
+0 THRA Empty (TxRDYA) (0=No, 1=Yes) (Ack via writing data) ;same as SRA.2
+
+1F802021h/Read - SRA - DUART Status Register A (R)
+
+1F802029h/Read - SRB - DUART Status Register B (R)
+
+| 7 Rx Received Break* (0=No, 1=Yes) ;received 00h without stop bit
+6 Rx Framing Error* (0=No, 1=Yes) ;received data without stop bit
+5 Rx Parity Error* (0=No, 1=Yes) ;received data with bad parity
+4 Rx Overrun Error (0=No, 1=Yes) ;Rx FIFO full + RxShiftReg full
+3 Tx Underrun (TxEMT) (0=No, 1=Yes) ;both TxShiftReg and THR empty
+2 Tx THR Empty (TxRDY) (0=No, 1=Yes) ;same as ISR.0 / ISR.4
+1 Rx FIFO Full (FFULL) (0=No, 1=Yes) ;set upon 3 or more characters
+0 Rx FIFO Not Empty (RxRDY) (0=No, 1=Yes) ;set upon 1 or more characters
+
+Bit7-5 are appended to the corresponding data character in the receive FIFO. A
+read of the status provides these bits (7:5) from the top of the FIFO together
+with bits (4:0). These bits are cleared by a "reset error status" command. In
+character mode they are discarded when the corresponding data character is read
+from the FIFO. In block error mode, block error conditions must be cleared by
+using the error reset command (command 4x) or a receiver reset.
+
+1F802024h/Write - ACR - DUART Aux. Control Register (W)
+
+| 7 Select Baud Rate Generator (BRG) Set (0=Set1/Set3, 1=Set2/Set4)

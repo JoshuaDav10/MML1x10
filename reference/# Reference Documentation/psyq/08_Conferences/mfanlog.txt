@@ -1,0 +1,239 @@
+PSYQ DOCUMENTATION - TRAINING/Summer97/mfanlog.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/TRAINING/Summer97/mfanlog.pdf
+Converted: Wed Sep 10 02:47:41 PM CDT 2025
+================================================================================
+
+Analog Controller Issues
+
+
+
+
+   CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Analog Controller Issues
+Analog Controller Issues
+  Calibrating Analog Controllers
+  Adjusting Analog Controller Sensitivity
+  Making a Digital Pad or Joystick Act Like an
+  Analog Controller
+
+
+
+
+ CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Analog Controller Issues
+Calibrating Analog Controllers
+  Finding Range of Motion
+
+  Finding The “Idle” Position
+
+
+
+
+  CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Analog Controller Issues
+Calibrating Analog Controllers
+  Finding Range of Motion
+       Ask the user to move the controller as far as possible in
+       all directions.
+             Throughout the entire calibration process, constantly record
+             the minimum and maximum position values returned by the
+             controller.
+             Don’t record minimum or maximum values only at specific
+             points in the process, such as when asking the user to move a
+             joystick to the top left extreme, for example.
+             Warn the user not to use excessive pressure that could cause
+             the controller to break.
+
+
+
+  CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Analog Controller Issues
+Calibrating Analog Controllers
+  Finding Range of Motion
+
+
+
+
+  CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Analog Controller Issues
+Calibrating Analog Controllers
+  Finding Range of Motion
+       Allow tolerance of +/- 4 steps at recorded extremes
+             Current temperature & humidity can affect analog circuitry
+             and values returned.
+       Once you have the complete range of motion recorded,
+       need to find the “centered” or “idle” position.
+
+
+
+
+  CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Analog Controller Issues
+Calibrating Analog Controllers
+  Finding The “Idle” Position
+       Ask user to allow controller to return to the “Idle”
+       position.
+             Normally the center position for a joystick or steering wheel
+             Released position for brake/accelerator controller or pressure-
+             sensitive button.
+
+
+
+
+  CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Analog Controller Issues
+Calibrating Analog Controllers
+  Finding The “Idle” Position
+
+
+
+
+  CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Analog Controller Issues
+Calibrating Analog Controllers
+  Finding The “Idle” Position
+       Record the “Idle” or “Centered” position.
+       Allow movement of +/- 8 steps from idle position
+       before movement generates a game response.
+
+
+
+
+  CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Analog Controller Issues
+Calibrating Analog Controllers
+  Exactly What Is The “Center” Position?
+       May not be exactly halfway between minimum and
+       maximum values returned by controller.
+       Programs must be able to deal with non-linear
+       response.
+
+
+
+
+  CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Analog Controller Issues
+Adjusting Analog Controller
+Sensitivity
+  Don’t use controller values directly
+      It’s tempting to use analog controller values to directly
+      indicate direction, sprite positions, & other
+      information. But don’t do it.
+      Use lookup tables to convert controller values into
+      game-specific information such as brake pressure,
+      acceleration pressure, etc.
+
+
+
+
+ CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Analog Controller Issues
+Adjusting Analog Controller
+Sensitivity
+      Don’t use controller values directly
+        Use lookup tables to convert controller values into
+        game-specific information such as brake pressure,
+        acceleration pressure, etc.
+#define MIN_BRAKE (0)
+#define MAX_BRAKE (100)
+
+char brake_translation[255];                                              /* Contains values in */
+                                                                          /* range of 0-100 which */
+...                                                                       /* are set by calibration */
+
+/* Get analog controller input */
+brake_value = brake_translation[analog_controller_value];
+
+
+  CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Analog Controller Issues
+Adjusting Analog Controller
+Sensitivity
+Values                    Size of Range                                      Performs what action?
+
+0-14                      15                                                 Maximum Turn Left
+15-111                    97                                                 Intermediate Turn Left
+112-128                   17                                                 Center position, no turn
+129-248                   120                                                Intermediate Turn Right
+249-255                   7                                                  Maximum Turn Right
+
+
+            Minimum Controller                                                             Maximum Controller
+            Value = 10                                                                            Value = 253
+            +4 Tolerance = 14                                                              -4 Tolerance = 249
+
+                                                                                “Center” Value = 120
+                                                                                -8 Tolerance = 112
+                                                                                +8 Tolerance = 128
+
+                 Left Turn                                                               Right Turn
+                 Range = 15-111                                                          Range = 128-248
+
+ 0--------------- Controller Values --------------255
+  CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Analog Controller Issues
+Adjusting Analog Controller
+Sensitivity
+       #define MIN_TURN (0)
+       #define MAX_TURN (10000)
+
+       int min_lturn = 111, max_lturn = 15, num_lturn_steps = 97;
+       int min_rturn = 128, max_rturn = 248, num_rturn_steps = 120;
+       int controller_lr_translation[255];
+       int trans;
+       for( i = min_lturn; i >= max_lturn; i-- )
+       {
+                trans = (MAX_TURN * (min_lturn - i)) / num_lturn_steps;
+                controller_lr_translation[i] = trans;
+       }
+       for( i = min_rturn; i <= max_rturn; i++ )
+       {
+                trans = (MAX_TURN * (i - min_rturn)) / num_rturn_steps;
+                controller_lr_translation[i] = trans;
+       }
+
+                 Left Turn                                                               Right Turn
+                 Range = 15-111                                                          Range = 128-248
+
+ 0--------------- Controller Values --------------255
+  CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Analog Controller Issues
+Making a Digital Pad or Joystick Act
+More Like an Analog Controller
+  Provides more comfortable feel for driving and
+  flying games.
+
+  Can be configured to adjust sensitivity and
+  response options
+
+
+
+
+  CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Analog Controller Issues
+Making a Digital Pad or Joystick Act
+Like an Analog Controller
+  How to manage the fact that it’s not really an
+  analog device?
+       Maintaining a position
+             Position maintained while holding down the pad
+                    Allows auto-return to center position when released
+             Position maintained when pad released
+                    Requires manual return to center
+       Analog controllers are usually spring loaded to return
+       to center position when released.
+             Auto-return to center when pad released
+             Using another button to return to center
+
+
+  CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Analog Controller Issues
+Making a Digital Pad or Joystick Act
+Like an Analog Controller
+  Use D-Pad to set ‘virtual’ analog values
+       When get new D-Pad value, zero a VBLANK counter
+             Increment on each VBLANK with that D-Pad value
+             Use table of values used to increment/decrement virtual
+             analog controller position.
+                    The following table will take about 1/2 second to increment the
+                    virtual joystick position from 128 (center) to 255 (max) or
+                    decrement to 0 (min).
+                    1,1,1,1,2,2,2,2,3,3,3,3,4,4,4,4,5,5,5,5
+                    On 10th VBLANK with that value, ‘virtual’ joystick value is
+                    incremented or decremented by 3 units.
+                    Movement accelerates as D-Pad is held down, acceleration
+                    adjustable through table values.
+
+  CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Analog Controller Issues
+                                                The End
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Analog Controller Issues
+

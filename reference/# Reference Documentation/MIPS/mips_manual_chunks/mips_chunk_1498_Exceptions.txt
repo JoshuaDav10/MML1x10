@@ -1,0 +1,40 @@
+MIPS INSTRUCTION SET REFERENCE - EXCEPTIONS:
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Exceptions:
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1568 characters
+Lines: 31
+================================================================================
+
+Exceptions:
+            None
+
+            Programming Notes:
+            The term “unsigned” in the instruction name is a misnomer; this operation is 32-bit modulo arithmetic that does not
+            trap on overflow. It is appropriate for unsigned arithmetic, such as address arithmetic, or integer arithmetic environ-
+            ments that ignore overflow, such as C language arithmetic.
+
+
+
+
+268                                                            MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                               Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+SUXC1
+
+
+
+
+  Store Doubleword Indexed Unaligned from Floating Point                                                               SUXC1
+
+        31                   26 25           21 20             16 15             11 10              6   5                 0
+               COP1X                                                                         0                SUXC1
+                                     base              index              fs
+               010011                                                                     00000               001101
+                  6                   5                 5                 5                  5                   6
+
+             Format:    SUXC1 fs, index(base)                                                                   MIPS64
+                                                                                                        MIPS32 Release 2
+
+             Purpose:

@@ -1,0 +1,64 @@
+PSYQ DOCUMENTATION - TECHNOTE/shft_jis.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/TECHNOTE/shft_jis.pdf
+Converted: Wed Sep 10 02:47:29 PM CDT 2025
+================================================================================
+
+PLAYSTATION TECHNICAL NOTE
+=======================================================================
+
+Date:
+Ref:
+Author:    R&D
+
+Subject:   Shift-JIS Codes
+
+
+ABSTRACT
+---------------
+
+As described below, the specification regarding the memory card file
+header is changed.
+
+The main point is to prohibit the use of ASCII codes. This is because
+only up to 16 characters can be used for text (title) name designation
+with ASCII codes, and confusion must be avoided when displaying a text
+name in the memory card during game play.
+
+We know it is bothersome to designate a text name with Shift-JIS codes
+under the development environment in Europe/U.S.. However, we would
+like you to understand this situation. We attach a utility for
+converting ASCII codes to Shift-JIS codes below.
+
+
+DETAILS
+------------
+
+Memory Card File Header Specification Change
+      December 5. 1995
+      R&D Division
+      SCE
+
+The specification on a title name ("text name" in the Reference) in the
+description of the memory card file has been changed again because of a
+problem of title name designation with ASCII characters. To avoid
+confusion, only the fixed specification is attached below. Note the
+following explanation when displaying the name.
+
+[Fixed Specification]
+      PlayStation Programmer Tool Library Reference Vol. 1
+      (Library Overview)      Page 205
+      The note below "Table 13-6-2: Memory Card File Header"
+
+      *1: Non-kanji and primary standard kanji only, fullsize 32
+characters.
+
+     Fullsize: Shift-JIS code only, 32 characters (64 bytes). If the
+     number of characters is less 32, the character string must be
+     finished with a null character (0x00), or unused space within the
+     32 characters must be padded with blanks(0X8140). The use of
+     ASCII codes is prohibited.
+
+Note: In the current Library Overview (Version 4.1), the above table is
+Table 7 in Chapter 5.
+

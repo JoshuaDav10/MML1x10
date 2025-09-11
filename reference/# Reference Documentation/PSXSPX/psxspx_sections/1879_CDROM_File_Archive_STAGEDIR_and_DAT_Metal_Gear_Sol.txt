@@ -1,0 +1,51 @@
+PSXSPX SPECIFICATIONS - CDROM FILE ARCHIVE STAGE.DIR AND *.DAT (METAL GEAR SOLID)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Archive STAGE.DIR and *.DAT (Metal Gear Solid)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1414 characters
+Lines: 42
+================================================================================
+
+CDROM File Archive STAGE.DIR and *.DAT (Metal Gear Solid)
+
+Metal Gear Solid (MagDemo13: MGS\*)
+
+Metal Gear Solid (MagDemo25: MGS\*)
+
+Metal Gear Solid (MagDemo44: MGS\*) (looks same as in MagDemo13)
+
+Metal Gear Solid (Retail: MGS\*)
+
+Summary of ISO files in MGS folder (with filesizes for different releases)
+
+| File MagDemo13/44 MagDemo25 Retail/PAL
+.EXE 9C000h 9C800h 9D800h ;-executable
+STAGE.DIR 590800h 11A7800h 42AE000h ;-main archive
+FACE.DAT 2CA000h 3Dh (txt) 358800h ;-face animation archive
+ZMOVIE.STR - - 2D4E800h ;-movie archive
+DEMO.DAT 149B000h 3Dh (txt) EC20000h ;\DAT/SYM combos (the .SYM
+DEMO.SYM 88h - - ; files were leaked in
+VOX.DAT 14F2000h 9F800h B054800h ; MagDemo13/MagDemo44 only)
+VOX.SYM 988h - - ;/
+BRF.DAT - 66800h 575800h ;\whatever, unknown format(s)
+RADIO.DAT 16CB8h 3Dh (txt) 1AA956h ;/
+
+STAGE.DIR:
+
+| 000h 4 Size of File List (N*0Ch)
+004h N*0Ch Folder List
+... .. Zeropadding to 800h-byte boundary
+... .. Folder Data
+Folder List entries:
+000h 8 Foldername (zeropadded if less than 8 chars) ;nickname=stg
+008h 4 Offset/800h to File List
+Folder Data (per folder):
+000h 2 Unknown (always 1) (maybe File List size/800h?)
+002h 2 Folder Size/800h (of whole folder, with file list plus file data)
+004h N*8 File List
+... Zeropadding to 800h-byte
+800h Data (for files in current folder)
+File List entries:
+000h 2 File ID (checksum on name)
+002h 1 File Family (one of following chars: "cnrs")

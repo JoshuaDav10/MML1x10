@@ -1,0 +1,38 @@
+PSXSPX SPECIFICATIONS - TRANSFERS DATA FROM FRAME BUFFER TO CPU. WAIT FOR BIT27 OF THE STATUS REGISTER
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Transfers data from frame buffer to CPU. Wait for bit27 of the status register
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 1151 characters
+Lines: 30
+================================================================================
+
+Transfers data from frame buffer to CPU. Wait for bit27 of the status register
+to be set before reading the image data. When the number of halfwords is odd,
+an extra halfword is read at the end (packets consist of 32bit units).
+
+Masking and Rounding for FILL Command parameters
+
+| Xpos=(Xpos AND 3F0h) ;range 0..3F0h, in steps of 10h
+Ypos=(Ypos AND 1FFh) ;range 0..1FFh
+Xsiz=((Xsiz AND 3FFh)+0Fh) AND (NOT 0Fh) ;range 0..400h, in steps of 10h
+Ysiz=((Ysiz AND 1FFh)) ;range 0..1FFh
+
+Fill does NOT occur when Xsiz=0 or Ysiz=0 (unlike as for Copy commands).
+Xsiz=400h works only indirectly: Param=400h is handled as Xsiz=0, however,
+Param=3F1h..3FFh is rounded-up and handled as Xsiz=400h.
+
+Masking for COPY Commands parameters
+
+| Xpos=(Xpos AND 3FFh) ;range 0..3FFh
+Ypos=(Ypos AND 1FFh) ;range 0..1FFh
+Xsiz=((Xsiz-1) AND 3FFh)+1 ;range 1..400h
+Ysiz=((Ysiz-1) AND 1FFh)+1 ;range 1..200h
+
+Parameters are just clipped to 10bit/9bit range, the only special case is that
+Size=0 is handled as Size=max.
+
+Notes
+
+The coordinates for the above VRAM transfer commands are absolute framebuffer
+addresses (not relative to Draw Offset, and not clipped to Draw Area).

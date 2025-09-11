@@ -1,0 +1,78 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION EA METHODS (HUFFMAN)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression EA Methods (Huffman)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2152 characters
+Lines: 70
+================================================================================
+
+CDROM File Compression EA Methods (Huffman)
+
+Huffman
+
+| 000h 2 Method (30FBh..35FBh) (big-endian)
+... (3) Extra 3 bytes (only present if Method.bit8=1)
+... 3 Decompressed Size (big-endian)
+... 1 Escape code
+... .. Number of codes per width
+... .. Data placement for each code
+... .. Compressed Data
+
+Huffman
+
+| decompress_ea_huffman:
+method=GetBits(16) ;3xFBh ;-get method (30FBh..35FBh)
+if method AND 100h then dummy=GetBits(24) ;-skip extra (if any)
+dst_size=GetBits(24) ;-get uncompressed size
+ESC=GetBits(8) ;-get escape code
+huffwidth=0, huffcode=0, totalnumcodes=0 ;\
+while (huffcode shl (10h-huffwidth))0 ;search Nth notyet defined entry ;
+dat=(dat+1) AND FFh ;wrap in 8bit range! ;
+if data_defined_flags[dat]=0 then n=n-1 ;
+data_defined_flags[dat]=1 ;
+data_values[index]=dat, index=index+1 ;/
+huffcode=0000h, index=0 ;\
+InitEmptyHuffTree(data_tree) ;
+for width=1 to huffwidth ;
+for i=1 to numcodes_per_width[width] ; create huffman tree
+dat=data_values[index], index=index+1 ;
+CreateHuffCode(data_tree,dat,huffcode,width) ;
+huffcode=huffcode+(1 shl (10h-width) ;/
+@@decompress_lop: ;\
+dat=GetHuffCode(data_tree) ;
+if dat<>ESC ;
+[dst]=dat, dst=dst+1 ; decompress
+else ;
+num=GetVarLenCode ;
+if num=0 then ;
+if GetBits(1)=1 then goto @@decompress_done ;
+[dst]=GetBits(8), dst=dst+1 ;
+else ;
+dat=[dst-1] ;
+for i=0 to num-1, [dst]=dat, dst=dst+1 ;
+goto @@decompress_lop ;/
+@@decompress_done:
+if (dst-dst_base)<>dst_size then error ;-error check
+dst=dst_base, x=00h, y=00h ;\
+if (method AND FEFFh)=32FBh ; optional final
+for i=0 to dst_size-1, x=x+[dst+i], [dst+i]=x ; unfiltering
+if (method AND FEFFh)=34FBh ;
+for i=0 to dst_size-1, x=x+[dst+i], y=y+x, [dst+i]=y ;/
+ret
+;------------------
+GetVarLenCode:
+num=2
+while GetBits(1)=0, num=num+1
+return (GetBits(num)+(1 shl num)-4)
+GetBits(num):
+return "num" bits, fetched from big-endian bitstream
+GetHuffCode(data_tree):
+...
+InitEmptyHuffTree(data_tree):
+...
+CreateHuffCode(data_tree,dat,huffcode,width):
+...
+numcodes_per_width[10h] ;9bit numcodes per width 0..15 (entry[0]=unused)
+data_values[100h] ;8bit data values for up to 100h huffman codes
+data_defined_flags[100h] ;1bit flags for data(00h..FFh)

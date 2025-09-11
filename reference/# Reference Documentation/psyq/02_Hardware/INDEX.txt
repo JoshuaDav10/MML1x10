@@ -1,0 +1,15 @@
+PSYQ DOCUMENTATION - Hardware specifications and low-level programming
+================================================================================
+Category: 02_Hardware
+Description: Hardware specifications and low-level programming
+Files: 8
+
+FILES IN THIS CATEGORY:
+  Hardware.txt (82.0 KB)
+  PDAKern.txt (56.0 KB)
+  armref.txt (852.4 KB)
+  controll.txt (17.5 KB)
+  memcard.txt (17.9 KB)
+  os.txt (49.8 KB)
+  os2.txt (9.3 KB)
+  pdahware.txt (108.0 KB)

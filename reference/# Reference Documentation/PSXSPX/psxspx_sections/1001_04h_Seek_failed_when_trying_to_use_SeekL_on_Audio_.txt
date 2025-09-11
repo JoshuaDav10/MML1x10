@@ -1,0 +1,47 @@
+PSXSPX SPECIFICATIONS - 04H - SEEK FAILED (WHEN TRYING TO USE SEEKL ON AUDIO CDS)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 04h - Seek failed (when trying to use SeekL on Audio CDs)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1674 characters
+Lines: 39
+================================================================================
+
+04h - Seek failed (when trying to use SeekL on Audio CDs)
+___These values appear even if no command was sent; with stat.bit2 set___
+08h - Drive door became opened
+
+80h appears on some commands (02h..09h, 0Bh..0Dh, 10h..16h, 1Ah, 1Bh?, and 1Dh)
+when the disk is missing, or when the drive unit is disconnected from the
+mainboard.
+
+Stat Seek/Play/Read bits
+
+There's is only max ONE of the three Seek/Play/Read bits set at a time, ie.
+during Seek, ONLY the seek bit is set (and Read or Play doesn't get until seek
+completion), that is important for Gran Turismo 1, which checks for seek
+completion by waiting for READ getting set (rather than waiting for SEEK
+getting cleared).
+
+Getstat - Command 01h --> INT3(stat)
+
+Returns stat (like many other commands), and additionally does reset the shell
+open flag (for the following commands; unless the shell is still opened). This
+is different as for most or all other commands (which may return stat, but
+which do not reset the shell open flag).
+
+In other docs, the command is eventually referred to as "Nop", believing that
+it does nothing than returning stat (ignoring the fact that it's having the
+special shell open reset feature).
+
+Getparam - Command 0Fh --> INT3(stat,mode,null,file,channel)
+
+Returns stat (see Getstat above), mode (see Setmode), a null byte (always 00h),
+and file/channel filter values (see Setfilter).
+
+GetlocL - Command 10h --> INT3(amm,ass,asect,mode,file,channel,sm,ci)
+
+Retrieves 4-byte sector header, plus 4-byte subheader of the current sector.
+GetlocL can be send during active Read commands (but, mind that the
+GetlocL-INT3-response can't be received until any pending Read-INT1's are
+acknowledged).

@@ -1,0 +1,35 @@
+PSXSPX SPECIFICATIONS - CONTROLLER SLOT A IS EMPTY THEN THE SLOT A ACCESS ABORTS AFTER THE FIRST BYTE,
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: controller Slot A is empty then the Slot A access aborts after the FIRST byte,
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1344 characters
+Lines: 26
+================================================================================
+
+controller Slot A is empty then the Slot A access aborts after the FIRST byte,
+and it's thus impossible to send the request in the THIRD byte).
+
+Sending the request works on access to Slot A, trying to send another request
+during the LONG response is glitchy (for whatever strange reason); one must
+thus REPEATEDLY do TWO accesses: one dummy Slot A access (with the request),
+followed by the long Slot A+B+C+D access.
+
+| Previous access had REQ=0 and returned Slot A data ---> returns Slot A data
+Previous access had REQ=0 and returned Slot A-D data -> returns Slot A data
+Previous access had REQ=1 and returned Slot A data ---> returns Slot A-D data
+Previous access had REQ=1 and returned Slot A-D data -> returns garbage
+Previous access had REQ=1 and returned garbage -------> returns Slot A-D data
+
+In practice:
+
+Toggling REQ on/off after each command: Returns responses toggling between
+normal Slot A data and long Slot A+B+C+D data.
+
+Sending REQ=1 in ALL commands: Returns responses toggling between Garbage and
+long Slot A+B+C+D data.
+
+Both of the above is working (one needs only the Slot A+B+C+D part, and it
+doesn't matter if the other part is Slot A, or Garbage; as long as the software
+is able/aware of ignoring the Garbage). Garbage response means that the
+multitap returns ONLY four bytes, like so: Hiz,80h,5Ah,LSB (ie. the leading

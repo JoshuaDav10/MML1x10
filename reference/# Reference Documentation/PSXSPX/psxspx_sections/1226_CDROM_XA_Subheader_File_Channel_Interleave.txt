@@ -1,0 +1,57 @@
+PSXSPX SPECIFICATIONS - CDROM XA SUBHEADER, FILE, CHANNEL, INTERLEAVE
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM XA Subheader, File, Channel, Interleave
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1676 characters
+Lines: 49
+================================================================================
+
+CDROM XA Subheader, File, Channel, Interleave
+
+The Sub-Header for normal data sectors is usually 00h,00h,08h,00h (some PSX
+sectors have 09h instead 08h, indicating the end of "something" or so?
+
+1st Subheader byte - File Number (FN)
+
+| 0-7 File Number (00h..FFh) (for Audio/Video Interleave, see below)
+
+2nd Subheader byte - Channel Number (CN)
+
+| 0-4 Channel Number (00h..1Fh) (for Audio/Video Interleave, see below)
+5-7 Should be always zero
+
+Whilst not officially allowed, PSX Ace Combat 3 Electrosphere does use
+Channel=FFh for unused gaps in interleaved streaming sectors.
+
+3rd Subheader byte - Submode (SM)
+
+| 0 End of Record (EOR) (all Volume Descriptors, and all sectors with EOF)
+1 Video ;\Sector Type (usually ONE of these bits should be set)
+2 Audio ; Note: PSX .STR files are declared as Data (not as Video)
+3 Data ;/
+4 Trigger (for application use)
+5 Form2 (0=Form1/800h-byte data, 1=Form2, 914h-byte data)
+6 Real Time (RT)
+7 End of File (EOF) (or end of Directory/PathTable/VolumeTerminator)
+
+The EOR bit is set in all Volume Descriptor sectors, the last sector (ie. the
+Volume Descriptor Terminator) additionally has the EOF bit set. Moreover, EOR
+and EOF are set in the last sector of each Path Table, and last sector of each
+Directory, and last sector of each File.
+
+4th Subheader byte - Codinginfo (CI)
+
+When used for Data sectors:
+
+| 0-7 Reserved (00h)
+
+When used for XA-ADPCM audio sectors:
+
+| 0-1 Mono/Stereo (0=Mono, 1=Stereo, 2-3=Reserved)
+2-2 Sample Rate (0=37800Hz, 1=18900Hz, 2-3=Reserved)
+4-5 Bits per Sample (0=Normal/4bit, 1=8bit, 2-3=Reserved)
+6 Emphasis (0=Normal/Off, 1=Emphasis)
+7 Reserved (0)
+
+Audio/Video Interleave (Multiple Files/Channels)

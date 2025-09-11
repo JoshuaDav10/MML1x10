@@ -1,0 +1,61 @@
+PSXSPX SPECIFICATIONS - DELAY AFTER THE ACKNOWLEDGE, BUT IT DOES WORK (THE BIOS ACCIDENTLY ACKNOWLEDGES
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: delay AFTER the acknowledge, but it DOES work (the BIOS accidently acknowledges
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2330 characters
+Lines: 52
+================================================================================
+
+delay AFTER the acknowledge, but it DOES work (the BIOS accidently acknowledges
+the IRQ twice; and the delay occurs PRIOR to 2nd acknowledge).
+
+Used in Metal Gear Solid at 8009AAF0h, and in Legacy of Kain at 801A56D8h, and
+in alone1 at 800AE38Ch:
+
+| 24090057 mov r9,57h ;\ ; @@new_data:
+240A00B0 mov r10,0B0h ; B(57h) GetB0Table ; 3C08A001 lui r8,0A001h
+0140F809 call r10 ;/ ; 2508DF80 sub r8,2080h
+00000000 +nop ; 0100F809 call r8 ;=A000DF80h
+8C42016C mov r2,[r2+5Bh*4] ;B(5Bh) ; 00000000 +nop
+00000000 nop ; 00000000 nop
+8C4309C8 mov r3,[r2+9C8h] ;blah ; @@new_data_end:
+3C0Axxxx lui r10,xxxxh ;\@@new_data ; 946F000A movh r15,[r3+0Ah]
+254Axxxx sub r10,xxxxh ;/ ; 3C080000 mov r8,0h
+3C09xxxx lui r9,xxxxh ;\@@new_data_end ; 01E2C025 or r24,r15,r2
+2529xxxx sub r9,xxxxh ;/ ; 37190012 or r25,r24,12h
+@@copy_lop: ; A479000A movh [r3+0Ah],r25
+8D480000 mov r8,[r10] ; 24080028 mov r8,28h
+00000000 nop ; @@wait_lop:
+AC4809C8 mov [r2+9C8h],r8 ;B(5Bh)+9C8h.. ; 2508FFFF sub r8,1h
+254A0004 add r10,4h ; 1500FFFE jnz r8,@@wait_lop
+1549FFFB jne r10,r9,@@copy_lop ; 00000000 +nop
+24420004 +add r2,4h ; 03E00008 ret ;above delay is
+... ; 00000000 +nop ;in UNCACHED RAM
+
+Alternately, slightly different code used in elo2 at800396D4h, and in Resident
+Evil 2 at 800910E4h:
+
+| 240A00B0 mov r10,0B0h ;\ ; @@swap_begin:
+0140F809 call r10 ; B(57h) GetB0Table ; 3C088xxx lui r8,8xxxh
+24090057 +mov r9,57h ;/ ; 2508xxxx sub r8,xxxxh
+8C42016C mov r2,[r2+5Bh*4] ;B(5Bh) ; 0100F809 call r8 ;=8xxxxxxxh
+3C0Axxxx mov r10,xxxx0000h ; 00000000 +nop
+3C09xxxx mov r9,xxxx0000h ; 00000000 nop
+8C4309C8 mov r3,[r2+9C8h] ;blah ; @@swap_end:
+254Axxxx sub r10,xxxxh ;=@@swap_begin ; ;- - -
+2529xxxx sub r9,xxxxh ;=@@swap_end ; 00000000 nop
+@@swap_lop: ; 240800C8 mov r8,0C8h
+8C4309C8 mov r3,[r2+9C8h] ;B(5Bh)+9C8h.. ; @@wait_lop:
+8D480000 mov r8,[r10] ; 2508FFFF sub r8,1h
+254A0004 add r10,4h ; 1500FFFE jnz r8,@@wait_lop
+AD43FFFC mov [r10-4h],r3 ; 00000000 +nop
+24420004 add r2,4h ; 03E00008 ret ;above delay is
+1549FFFA jne r10,r9,@@swap_lop ; 00000000 +nop ;in CACHED RAM
+AC4809C4 +mov [r2+9C4h],r8 ;
+
+patch_card_info_step4:
+
+The "card_info" function sends an incomplete read command to the card; in order
+to receive status information. After receiving the last byte, the function does
+accidently send a further byte to the card, so the card responds by another

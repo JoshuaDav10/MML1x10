@@ -1,0 +1,56 @@
+PSXSPX SPECIFICATIONS - SPU-ADPCM (WHICH USES 4-POINT GAUSSIAN PITCH INTERPOLATIONS). FOR EXAMPLE,
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: SPU-ADPCM (which uses 4-point gaussian pitch interpolations). For example,
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1629 characters
+Lines: 47
+================================================================================
+
+SPU-ADPCM (which uses 4-point gaussian pitch interpolations). For example,
+XA-ADPCM interpolation applied to a square wave looks like this:
+
+| . .
+.--------------. | |
+| .'.'.'----'.'.'.
+| | |
+| |
+| Decompressed | Final |
+| XA-ADPCM | XA-ADPCM |
+| Waveform | Output |
+| | |
+| ---.'.'.' '.'.'.---
+--------' '-------- | |
+' '
+
+The zigzagging does produce some (inaudible) 22050Hz noise, and does produce
+some low-pass (?) filtering ("sinc filter"). The effect can be reproduced
+somewhat like so:
+
+| Output37800Hz(sample):
+ringbuf[p AND 1Fh]=sample, p=p+1, sixstep=sixstep-1
+if sixstep=0
+sixstep=6
+Ouput44100Hz(ZigZagInterpolate(p,Table1))
+Ouput44100Hz(ZigZagInterpolate(p,Table2))
+Ouput44100Hz(ZigZagInterpolate(p,Table3))
+Ouput44100Hz(ZigZagInterpolate(p,Table4))
+Ouput44100Hz(ZigZagInterpolate(p,Table5))
+Ouput44100Hz(ZigZagInterpolate(p,Table6))
+Ouput44100Hz(ZigZagInterpolate(p,Table7))
+endif
+ZigZagInterpolate(p,TableX):
+sum=0
+for i=1 to 29, sum=sum+(ringbuf[(p-i) AND 1Fh]*TableX[i])/8000h, next i
+return MinMax(sum,-8000h,+7FFFh)
+Table1, Table2, Table3, Table4, Table5, Table6, Table7 ;Index
+0 , 0 , 0 , 0 , -0001h, +0002h, -0005h ;1
+0 , 0 , 0 , -0001h, +0003h, -0008h, +0011h ;2
+0 , 0 , -0001h, +0003h, -0008h, +0010h, -0023h ;3
+0 , -0002h, +0003h, -0008h, +0011h, -0023h, +0046h ;4
+0 , 0 , -0002h, +0006h, -0010h, +002Bh, -0017h ;5
+-0002h, +0003h, -0005h, +0005h, +000Ah, +001Ah, -0044h ;6
++000Ah, -0013h, +001Fh, -001Bh, +006Bh, -00EBh, +015Bh ;7
+-0022h, +003Ch, -004Ah, +00A6h, -016Dh, +027Bh, -0347h ;8
++0041h, -004Bh, +00B3h, -01A8h, +0350h, -0548h, +080Eh ;9
+-0054h, +00A2h, -0192h, +0372h, -0623h, +0AFAh, -1249h ;10

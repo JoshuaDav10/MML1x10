@@ -1,0 +1,65 @@
+PSXSPX SPECIFICATIONS - KERNEL (BIOS)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Kernel (BIOS)
+Chunked: Wed Sep 10 03:31:04 PM CDT 2025
+Size: 683 characters
+================================================================================
+
+Kernel (BIOS)
+
+BIOS Overview
+
+BIOS Memory Map
+
+BIOS Function Summary
+
+BIOS File Functions
+
+BIOS File Execute and Flush Cache
+
+BIOS CDROM Functions
+
+BIOS Memory Card Functions
+
+BIOS Interrupt/Exception Handling
+
+BIOS Event Functions
+
+BIOS Event Summary
+
+BIOS Thread Functions
+
+BIOS Timer Functions
+
+BIOS Joypad Functions
+
+BIOS GPU Functions
+
+BIOS Memory Allocation
+
+BIOS Memory Fill/Copy/Compare (SLOW)
+
+BIOS String Functions
+
+BIOS Number/String/Character Conversion
+
+BIOS Misc Functions
+
+BIOS Internal Boot Functions
+
+BIOS More Internal Functions
+
+BIOS PC File Server
+
+BIOS TTY Console (std_io)
+
+BIOS Character Sets
+
+BIOS Control Blocks
+
+BIOS Boot State
+
+BIOS Versions
+
+BIOS Patches

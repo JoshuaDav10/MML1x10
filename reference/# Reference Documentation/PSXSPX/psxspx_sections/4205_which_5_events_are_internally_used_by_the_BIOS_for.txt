@@ -1,0 +1,48 @@
+PSXSPX SPECIFICATIONS - WHICH 5 EVENTS ARE INTERNALLY USED BY THE BIOS FOR CDROM FUNCTIONS, SO, OF THE
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: which 5 events are internally used by the BIOS for CDROM functions, so, of the
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1623 characters
+Lines: 40
+================================================================================
+
+which 5 events are internally used by the BIOS for CDROM functions, so, of the
+16 events, only 11 events are available to the game). A bigger amount of events
+will slowdown the DeliverEvent function (which always scans all EvCBs, even if
+all events are disabled).
+
+B(09h) - CloseEvent(event) - releases event from the event table
+
+Always returns 1 (even if the event handle is unused or invalid).
+
+B(0Ch) - EnableEvent(event) - Turns on event handling for specified event
+
+Always returns 1 (even if the event handle is unused or invalid).
+
+B(0Dh) - DisableEvent(event) - Turns off event handling for specified event
+
+Always returns 1 (even if the event handle is unused or invalid).
+
+B(0Ah) WaitEvent(event)
+
+Returns 0 if the event is disabled. Otherwise hangs in a loop until the event
+becomes ready, and returns 1 once when it is ready (and automatically switches
+the event back to busy status). Callback events (mode=1000h) do never set the
+ready flag (and thus WaitEvent would hang forever).
+
+The main program simply hangs during the wait, so when using multiple threads,
+it may be more recommended to create an own waitloop that checks TestEvent, and
+to call ChangeThread when the event is busy.
+
+BUG: The return value is unstable (sometimes accidently returns 0=disabled if
+the event status changes from not-ready to ready shortly after the function
+call).
+
+B(0Bh) TestEvent(event)
+
+Returns 0 if the event is busy or disabled. Otherwise, when it is ready,
+returns 1 (and automatically switches the event back to busy status). Callback
+events (mode=1000h) do never set the ready flag.
+
+B(07h) DeliverEvent(class, spec)

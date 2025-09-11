@@ -1,0 +1,40 @@
+PSXSPX SPECIFICATIONS - INDICATES THAT COMMUNICATIONS ARE ENABLED, AND THAT THE POCKETSTATION IS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: indicates that communications are enabled, and that the Pocketstation is
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1517 characters
+Lines: 31
+================================================================================
+
+indicates that communications are enabled, and that the Pocketstation is
+believed to be docked to the PSX). ComFlags.9 can be forcefully cleared by
+calling SetComOnOff(0), or it can be updated according to the current
+docking-state by calling SetComOnOff(1) or SenseAutoCom().
+
+SWI 16h - GetDirIndex()
+
+Returns the dir_index for the currently executed file. If that value is zero,
+ie. if there is no file executed, ie. if the function is called by the GUI,
+then it does instead return the "alternate" dir_index (as set via SWI 15h).
+
+SWI 15h - MakeAlternateDirIndex(flag,dir_index) out: alt_dir_index (new/old)
+
+Applies the specified dir_index as "alternate" dir_index (for being retrieved
+via SWI 16h for whatever purpose). The dir_index is applied only when flag=1,
+and only if dir_index is 0=none, or if it is equal to the dir_index of the
+currently executed file (ie. attempts to make other files being the "alternate"
+one are rejected). If successful, the new dir_index is returned, otherwise the
+old dir_index is returned (eg. if flag=0, or if the index was rejected).
+
+SWI 12h - TestSnapshot(dir_index)
+
+Tests if the specified file contains a load-able snapshot, ie. if it does have
+the "SC" and "MCX1" IDs in the title sector, and the 01h,00h,"SE" ID in the
+snapshot header. If so, it returns r0=1, and otherwise returns r0=0.
+
+Snapshot Notes (MCX1 Files)
+
+Snapshots are somewhat automatically loaded/saved when calling DoExecute:
+
+If the old file (the currently executed file) contains "SC" AND "MCX1" IDs in

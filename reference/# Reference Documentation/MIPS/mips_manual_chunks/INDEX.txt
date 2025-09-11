@@ -1,0 +1,968 @@
+MIPS INSTRUCTION SET REFERENCE - CHUNKED INDEX
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Total chunks: 192
+================================================================================
+
+CHUNKED SECTIONS:
+
+mips_chunk_03_PARTY_WITHOUT_THE_EXPRESS_WRITTEN_CONSENT_OF_MIPS_
+  File: mips_chunk_03_PARTY_WITHOUT_THE_EXPRESS_WRITTEN_CONSENT_OF_MIPS_.txt
+  Size: 74.1 KB
+  Lines: 437
+
+mips_chunk_1006_Historical_Information
+  File: mips_chunk_1006_Historical_Information.txt
+  Size: 1.7 KB
+  Lines: 37
+
+mips_chunk_1008_Description_rt__rt_MERGE_memorybaseoffset
+  File: mips_chunk_1008_Description_rt__rt_MERGE_memorybaseoffset.txt
+  Size: 2.0 KB
+  Lines: 31
+
+mips_chunk_1010_0_____1___2_______3_____4________5___6____7_______
+  File: mips_chunk_1010_0_____1___2_______3_____4________5___6____7_______.txt
+  Size: 1.6 KB
+  Lines: 34
+
+mips_chunk_1027_TLB_Refill_TLB_Invalid_Address_Error_Reserved_Inst
+  File: mips_chunk_1027_TLB_Refill_TLB_Invalid_Address_Error_Reserved_Inst.txt
+  Size: 2.1 KB
+  Lines: 40
+
+mips_chunk_1032_COP1X_____________________________________________
+  File: mips_chunk_1032_COP1X_____________________________________________.txt
+  Size: 2.1 KB
+  Lines: 27
+
+mips_chunk_1042_Inexact_Unimplemented_Operation_Invalid_Operation_
+  File: mips_chunk_1042_Inexact_Unimplemented_Operation_Invalid_Operation_.txt
+  Size: 2.1 KB
+  Lines: 40
+
+mips_chunk_1078_Reserved_Instruction
+  File: mips_chunk_1078_Reserved_Instruction.txt
+  Size: 1.4 KB
+  Lines: 33
+
+mips_chunk_1083_Historical_Information
+  File: mips_chunk_1083_Historical_Information.txt
+  Size: 1.8 KB
+  Lines: 36
+
+mips_chunk_1089_COP1_____________________________________0________
+  File: mips_chunk_1089_COP1_____________________________________0________.txt
+  Size: 1.7 KB
+  Lines: 25
+
+mips_chunk_1097_Unimplemented_Operation
+  File: mips_chunk_1097_Unimplemented_Operation.txt
+  Size: 1.7 KB
+  Lines: 39
+
+mips_chunk_1100_Reserved_Instruction_Coprocessor_Unusable
+  File: mips_chunk_1100_Reserved_Instruction_Coprocessor_Unusable.txt
+  Size: 2.2 KB
+  Lines: 40
+
+mips_chunk_1110_Unimplemented_Operation
+  File: mips_chunk_1110_Unimplemented_Operation.txt
+  Size: 1.7 KB
+  Lines: 40
+
+mips_chunk_1112_Exceptions
+  File: mips_chunk_1112_Exceptions.txt
+  Size: 2.3 KB
+  Lines: 45
+
+mips_chunk_1122_Unimplemented_Operation
+  File: mips_chunk_1122_Unimplemented_Operation.txt
+  Size: 1.7 KB
+  Lines: 39
+
+mips_chunk_1125_Reserved_Instruction_Coprocessor_Unusable
+  File: mips_chunk_1125_Reserved_Instruction_Coprocessor_Unusable.txt
+  Size: 2.2 KB
+  Lines: 40
+
+mips_chunk_1135_Unimplemented_Operation
+  File: mips_chunk_1135_Unimplemented_Operation.txt
+  Size: 1.7 KB
+  Lines: 40
+
+mips_chunk_1137_Exceptions
+  File: mips_chunk_1137_Exceptions.txt
+  Size: 2.3 KB
+  Lines: 45
+
+mips_chunk_1147_Unimplemented_Operation
+  File: mips_chunk_1147_Unimplemented_Operation.txt
+  Size: 1.9 KB
+  Lines: 39
+
+mips_chunk_1152_COP1X_____________________________________________
+  File: mips_chunk_1152_COP1X_____________________________________________.txt
+  Size: 1.9 KB
+  Lines: 25
+
+mips_chunk_1162_Inexact_Unimplemented_Operation_Invalid_Operation_
+  File: mips_chunk_1162_Inexact_Unimplemented_Operation_Invalid_Operation_.txt
+  Size: 2.1 KB
+  Lines: 40
+
+mips_chunk_1198_Reserved_Instruction
+  File: mips_chunk_1198_Reserved_Instruction.txt
+  Size: 1.8 KB
+  Lines: 39
+
+mips_chunk_1211_Historical_Information
+  File: mips_chunk_1211_Historical_Information.txt
+  Size: 2.1 KB
+  Lines: 41
+
+mips_chunk_1217_improvement_by_scheduling_the_multiply_so_that_oth
+  File: mips_chunk_1217_improvement_by_scheduling_the_multiply_so_that_oth.txt
+  Size: 2.8 KB
+  Lines: 45
+
+mips_chunk_1225_Inexact_Unimplemented_Operation_Invalid_Operation_
+  File: mips_chunk_1225_Inexact_Unimplemented_Operation_Invalid_Operation_.txt
+  Size: 1.9 KB
+  Lines: 38
+
+mips_chunk_1230_improvement_by_scheduling_the_multiply_so_that_oth
+  File: mips_chunk_1230_improvement_by_scheduling_the_multiply_so_that_oth.txt
+  Size: 2.3 KB
+  Lines: 41
+
+mips_chunk_1236_COP1_____________________________________0________
+  File: mips_chunk_1236_COP1_____________________________________0________.txt
+  Size: 1.8 KB
+  Lines: 25
+
+mips_chunk_1245_COP1X_____________________________________________
+  File: mips_chunk_1245_COP1X_____________________________________________.txt
+  Size: 1.9 KB
+  Lines: 26
+
+mips_chunk_1256_COP1X_____________________________________________
+  File: mips_chunk_1256_COP1X_____________________________________________.txt
+  Size: 2.0 KB
+  Lines: 26
+
+mips_chunk_1266_Inexact_Unimplemented_Operation_Invalid_Operation_
+  File: mips_chunk_1266_Inexact_Unimplemented_Operation_Invalid_Operation_.txt
+  Size: 1.5 KB
+  Lines: 32
+
+mips_chunk_1275_Exceptions
+  File: mips_chunk_1275_Exceptions.txt
+  Size: 1.5 KB
+  Lines: 38
+
+mips_chunk_1279_PLLPS
+  File: mips_chunk_1279_PLLPS.txt
+  Size: 1.6 KB
+  Lines: 31
+
+mips_chunk_1285_PLUPS
+  File: mips_chunk_1285_PLUPS.txt
+  Size: 1.6 KB
+  Lines: 30
+
+mips_chunk_1293_plies_information_about_the_way_that_the_data_is_e
+  File: mips_chunk_1293_plies_information_about_the_way_that_the_data_is_e.txt
+  Size: 1.6 KB
+  Lines: 19
+
+mips_chunk_1295_PREF_never_generates_a_memory_operation_for_a_loca
+  File: mips_chunk_1295_PREF_never_generates_a_memory_operation_for_a_loca.txt
+  Size: 1.8 KB
+  Lines: 27
+
+mips_chunk_1296_Table_3-30_Values_of_the_hint_Field_for_the_PREF_I
+  File: mips_chunk_1296_Table_3-30_Values_of_the_hint_Field_for_the_PREF_I.txt
+  Size: 3.3 KB
+  Lines: 72
+
+mips_chunk_1299_PrepareForStore___________valid_and_dirty_victim_i
+  File: mips_chunk_1299_PrepareForStore___________valid_and_dirty_victim_i.txt
+  Size: 1.6 KB
+  Lines: 34
+
+mips_chunk_1302_Prefetch_does_not_take_any_TLB-related_or_address-
+  File: mips_chunk_1302_Prefetch_does_not_take_any_TLB-related_or_address-.txt
+  Size: 1.7 KB
+  Lines: 23
+
+mips_chunk_1303_retained_software_should_use_the_Cache_instruction
+  File: mips_chunk_1303_retained_software_should_use_the_Cache_instruction.txt
+  Size: 1.7 KB
+  Lines: 34
+
+mips_chunk_1311_PULPS
+  File: mips_chunk_1311_PULPS.txt
+  Size: 1.6 KB
+  Lines: 31
+
+mips_chunk_1317_PUUPS
+  File: mips_chunk_1317_PUUPS.txt
+  Size: 1.6 KB
+  Lines: 31
+
+mips_chunk_1322_Coprocessor_Unusable_Reserved_Instruction
+  File: mips_chunk_1322_Coprocessor_Unusable_Reserved_Instruction.txt
+  Size: 2.1 KB
+  Lines: 41
+
+mips_chunk_1346_COP1____________________________________0_________
+  File: mips_chunk_1346_COP1____________________________________0_________.txt
+  Size: 1.7 KB
+  Lines: 24
+
+mips_chunk_1354_SPECIAL__________________________R________________
+  File: mips_chunk_1354_SPECIAL__________________________R________________.txt
+  Size: 1.5 KB
+  Lines: 25
+
+mips_chunk_1358_Reserved_Instruction
+  File: mips_chunk_1358_Reserved_Instruction.txt
+  Size: 1.9 KB
+  Lines: 41
+
+mips_chunk_1362_Reserved_Instruction
+  File: mips_chunk_1362_Reserved_Instruction.txt
+  Size: 2.7 KB
+  Lines: 44
+
+mips_chunk_1368_Inexact_Unimplemented_Operation_Invalid_Operation_
+  File: mips_chunk_1368_Inexact_Unimplemented_Operation_Invalid_Operation_.txt
+  Size: 2.5 KB
+  Lines: 42
+
+mips_chunk_136_2222_Load_Memory_and_Store_Memory_Functions
+  File: mips_chunk_136_2222_Load_Memory_and_Store_Memory_Functions.txt
+  Size: 1.5 KB
+  Lines: 24
+
+mips_chunk_1374_Inexact_Unimplemented_Operation_Invalid_Operation_
+  File: mips_chunk_1374_Inexact_Unimplemented_Operation_Invalid_Operation_.txt
+  Size: 2.2 KB
+  Lines: 40
+
+mips_chunk_1394_Execution_of_SC_must_have_been_preceded_by_executi
+  File: mips_chunk_1394_Execution_of_SC_must_have_been_preceded_by_executi.txt
+  Size: 2.0 KB
+  Lines: 30
+
+mips_chunk_1402_uniprocessor_systems_that_do_not_support_cached_co
+  File: mips_chunk_1402_uniprocessor_systems_that_do_not_support_cached_co.txt
+  Size: 1.6 KB
+  Lines: 34
+
+mips_chunk_1415_Exceptions
+  File: mips_chunk_1415_Exceptions.txt
+  Size: 1.3 KB
+  Lines: 34
+
+mips_chunk_1428_Exceptions
+  File: mips_chunk_1428_Exceptions.txt
+  Size: 1.9 KB
+  Lines: 42
+
+mips_chunk_1432_Expected_Instruction___________Function___________
+  File: mips_chunk_1432_Expected_Instruction___________Function___________.txt
+  Size: 2.2 KB
+  Lines: 43
+
+mips_chunk_1435_Reserved_Instruction
+  File: mips_chunk_1435_Reserved_Instruction.txt
+  Size: 1.8 KB
+  Lines: 34
+
+mips_chunk_1436_Expected_Instruction___________Function___________
+  File: mips_chunk_1436_Expected_Instruction___________Function___________.txt
+  Size: 1.6 KB
+  Lines: 35
+
+mips_chunk_1443_Exceptions
+  File: mips_chunk_1443_Exceptions.txt
+  Size: 1.9 KB
+  Lines: 42
+
+mips_chunk_1446_SLL_r0_r0_0_expressed_as_NOP_is_the_assembly_idiom
+  File: mips_chunk_1446_SLL_r0_r0_0_expressed_as_NOP_is_the_assembly_idiom.txt
+  Size: 2.1 KB
+  Lines: 41
+
+mips_chunk_1452_Exceptions
+  File: mips_chunk_1452_Exceptions.txt
+  Size: 1.6 KB
+  Lines: 39
+
+mips_chunk_1455_Exceptions
+  File: mips_chunk_1455_Exceptions.txt
+  Size: 1.9 KB
+  Lines: 42
+
+mips_chunk_1471_Invalid_Operation_Inexact_Unimplemented_Operation
+  File: mips_chunk_1471_Invalid_Operation_Inexact_Unimplemented_Operation.txt
+  Size: 1.9 KB
+  Lines: 41
+
+mips_chunk_1473_Exceptions_None
+  File: mips_chunk_1473_Exceptions_None.txt
+  Size: 1.9 KB
+  Lines: 41
+
+mips_chunk_1475_Exceptions
+  File: mips_chunk_1475_Exceptions.txt
+  Size: 1.8 KB
+  Lines: 42
+
+mips_chunk_1477_Exceptions
+  File: mips_chunk_1477_Exceptions.txt
+  Size: 1.9 KB
+  Lines: 42
+
+mips_chunk_1479_Exceptions
+  File: mips_chunk_1479_Exceptions.txt
+  Size: 1.9 KB
+  Lines: 42
+
+mips_chunk_1482_Exceptions
+  File: mips_chunk_1482_Exceptions.txt
+  Size: 1.4 KB
+  Lines: 26
+
+mips_chunk_1483_SSNOP_instructions
+  File: mips_chunk_1483_SSNOP_instructions.txt
+  Size: 1.8 KB
+  Lines: 38
+
+mips_chunk_1488_SUBU_performs_the_same_arithmetic_operation_but_do
+  File: mips_chunk_1488_SUBU_performs_the_same_arithmetic_operation_but_do.txt
+  Size: 2.4 KB
+  Lines: 46
+
+mips_chunk_1495_FPU_Exceptions
+  File: mips_chunk_1495_FPU_Exceptions.txt
+  Size: 1.7 KB
+  Lines: 39
+
+mips_chunk_1498_Exceptions
+  File: mips_chunk_1498_Exceptions.txt
+  Size: 1.9 KB
+  Lines: 40
+
+mips_chunk_1517_Exceptions
+  File: mips_chunk_1517_Exceptions.txt
+  Size: 1.3 KB
+  Lines: 34
+
+mips_chunk_1524_Exceptions
+  File: mips_chunk_1524_Exceptions.txt
+  Size: 1.3 KB
+  Lines: 34
+
+mips_chunk_1526_Description_memorybaseoffset__rt
+  File: mips_chunk_1526_Description_memorybaseoffset__rt.txt
+  Size: 1.5 KB
+  Lines: 21
+
+mips_chunk_1529_GPR_24______________________E_____F______G___H
+  File: mips_chunk_1529_GPR_24______________________E_____F______G___H.txt
+  Size: 1.4 KB
+  Lines: 33
+
+mips_chunk_1538_Description_memorybaseoffset__rt
+  File: mips_chunk_1538_Description_memorybaseoffset__rt.txt
+  Size: 1.5 KB
+  Lines: 21
+
+mips_chunk_1556_Exceptions
+  File: mips_chunk_1556_Exceptions.txt
+  Size: 2.2 KB
+  Lines: 44
+
+mips_chunk_1558_non-zero_values_remove_synchronization_operations
+  File: mips_chunk_1558_non-zero_values_remove_synchronization_operations.txt
+  Size: 1.8 KB
+  Lines: 30
+
+mips_chunk_1564_ory_access_type_occur_in_the_instruction_stream_th
+  File: mips_chunk_1564_ory_access_type_occur_in_the_instruction_stream_th.txt
+  Size: 4.0 KB
+  Lines: 51
+
+mips_chunk_1566_LI_____R2_1
+  File: mips_chunk_1566_LI_____R2_1.txt
+  Size: 1.9 KB
+  Lines: 37
+
+mips_chunk_1568_To_synchronize_all_caches_to_make_instruction_writ
+  File: mips_chunk_1568_To_synchronize_all_caches_to_make_instruction_writ.txt
+  Size: 2.3 KB
+  Lines: 27
+
+mips_chunk_1604_Exceptions
+  File: mips_chunk_1604_Exceptions.txt
+  Size: 1.6 KB
+  Lines: 38
+
+mips_chunk_1625_Exceptions
+  File: mips_chunk_1625_Exceptions.txt
+  Size: 2.0 KB
+  Lines: 44
+
+mips_chunk_1629_Coprocessor_Unusable
+  File: mips_chunk_1629_Coprocessor_Unusable.txt
+  Size: 2.1 KB
+  Lines: 41
+
+mips_chunk_162_Chapter_2_Guide_to_the_Instruction_Set
+  File: mips_chunk_162_Chapter_2_Guide_to_the_Instruction_Set.txt
+  Size: 1.7 KB
+  Lines: 39
+
+mips_chunk_1630_TLB_via_these_registers_in_that
+  File: mips_chunk_1630_TLB_via_these_registers_in_that.txt
+  Size: 1.8 KB
+  Lines: 25
+
+mips_chunk_1638_EntryHi_EntryLo0_and_EntryLo1_registers_in_that
+  File: mips_chunk_1638_EntryHi_EntryLo0_and_EntryLo1_registers_in_that.txt
+  Size: 1.4 KB
+  Lines: 19
+
+mips_chunk_1646_EntryHi_EntryLo0_and_EntryLo1_registers_in_that
+  File: mips_chunk_1646_EntryHi_EntryLo0_and_EntryLo1_registers_in_that.txt
+  Size: 1.4 KB
+  Lines: 19
+
+mips_chunk_1651_Coprocessor_Unusable
+  File: mips_chunk_1651_Coprocessor_Unusable.txt
+  Size: 1.8 KB
+  Lines: 41
+
+mips_chunk_1682_Exceptions
+  File: mips_chunk_1682_Exceptions.txt
+  Size: 2.7 KB
+  Lines: 45
+
+mips_chunk_1688_Unimplemented_Operation_Invalid_Operation_Overflow
+  File: mips_chunk_1688_Unimplemented_Operation_Invalid_Operation_Overflow.txt
+  Size: 2.5 KB
+  Lines: 42
+
+mips_chunk_1694_Inexact_Invalid_Operation_Overflow_Unimplemented_O
+  File: mips_chunk_1694_Inexact_Invalid_Operation_Overflow_Unimplemented_O.txt
+  Size: 3.1 KB
+  Lines: 52
+
+mips_chunk_1706_Reserved_Instruction
+  File: mips_chunk_1706_Reserved_Instruction.txt
+  Size: 1.8 KB
+  Lines: 41
+
+mips_chunk_1710_verted_and_be_sign-extended_into_two_word_values_i
+  File: mips_chunk_1710_verted_and_be_sign-extended_into_two_word_values_i.txt
+  Size: 1.5 KB
+  Lines: 33
+
+mips_chunk_1713_Exceptions
+  File: mips_chunk_1713_Exceptions.txt
+  Size: 1.5 KB
+  Lines: 42
+
+mips_chunk_1721_This_section_provides_various_bit_encoding_tables_
+  File: mips_chunk_1721_This_section_provides_various_bit_encoding_tables_.txt
+  Size: 1.5 KB
+  Lines: 26
+
+mips_chunk_1722_Appendix_A_Instruction_Bit_Encodings
+  File: mips_chunk_1722_Appendix_A_Instruction_Bit_Encodings.txt
+  Size: 1.6 KB
+  Lines: 28
+
+mips_chunk_1753_SPECIAL32
+  File: mips_chunk_1753_SPECIAL32.txt
+  Size: 1.7 KB
+  Lines: 20
+
+mips_chunk_1755_Appendix_A_Instruction_Bit_Encodings
+  File: mips_chunk_1755_Appendix_A_Instruction_Bit_Encodings.txt
+  Size: 6.1 KB
+  Lines: 71
+
+mips_chunk_1766_by_MIPS_Technologies_and_may_or_may_not_cause_a_Re
+  File: mips_chunk_1766_by_MIPS_Technologies_and_may_or_may_not_cause_a_Re.txt
+  Size: 1.6 KB
+  Lines: 27
+
+mips_chunk_1767_Appendix_A_Instruction_Bit_Encodings
+  File: mips_chunk_1767_Appendix_A_Instruction_Bit_Encodings.txt
+  Size: 4.0 KB
+  Lines: 50
+
+mips_chunk_1770_A2_Instruction_Bit_Encoding_Tables
+  File: mips_chunk_1770_A2_Instruction_Bit_Encoding_Tables.txt
+  Size: 1.4 KB
+  Lines: 22
+
+mips_chunk_1772_CSF_______CNGLE_______CSEQ_______CNGL_______CLT___
+  File: mips_chunk_1772_CSF_______CNGLE_______CSEQ_______CNGL_______CLT___.txt
+  Size: 2.1 KB
+  Lines: 25
+
+mips_chunk_1773_1_Format_type_L_is_legal_only_if_64-bit_floating_p
+  File: mips_chunk_1773_1_Format_type_L_is_legal_only_if_64-bit_floating_p.txt
+  Size: 1.6 KB
+  Lines: 23
+
+mips_chunk_1777_Appendix_A_Instruction_Bit_Encodings
+  File: mips_chunk_1777_Appendix_A_Instruction_Bit_Encodings.txt
+  Size: 2.7 KB
+  Lines: 35
+
+mips_chunk_1782_015__________000F_________________________________
+  File: mips_chunk_1782_015__________000F_________________________________.txt
+  Size: 2.3 KB
+  Lines: 33
+
+mips_chunk_1785_Appendix_A_Instruction_Bit_Encodings
+  File: mips_chunk_1785_Appendix_A_Instruction_Bit_Encodings.txt
+  Size: 1.9 KB
+  Lines: 36
+
+mips_chunk_241_The_MIPS32_Instruction_Set
+  File: mips_chunk_241_The_MIPS32_Instruction_Set.txt
+  Size: 1.4 KB
+  Lines: 23
+
+mips_chunk_247_the_Config_CP0_register
+  File: mips_chunk_247_the_Config_CP0_register.txt
+  Size: 1.7 KB
+  Lines: 25
+
+mips_chunk_252_Mnemonic____________________________________Instru
+  File: mips_chunk_252_Mnemonic____________________________________Instru.txt
+  Size: 1.8 KB
+  Lines: 55
+
+mips_chunk_289_Mnemonic_________________________________________I
+  File: mips_chunk_289_Mnemonic_________________________________________I.txt
+  Size: 1.5 KB
+  Lines: 39
+
+mips_chunk_31_COCz_________Coprocessor_unit_z_condition_signal
+  File: mips_chunk_31_COCz_________Coprocessor_unit_z_condition_signal.txt
+  Size: 1.4 KB
+  Lines: 25
+
+mips_chunk_34_instructions
+  File: mips_chunk_34_instructions.txt
+  Size: 2.0 KB
+  Lines: 24
+
+mips_chunk_36_time_of_the_instruction_in_the_branch_delay_slot
+  File: mips_chunk_36_time_of_the_instruction_in_the_branch_delay_slot.txt
+  Size: 1.6 KB
+  Lines: 23
+
+mips_chunk_375_COP1______________________________________0_______
+  File: mips_chunk_375_COP1______________________________________0_______.txt
+  Size: 1.8 KB
+  Lines: 26
+
+mips_chunk_384_Unimplemented_Operation_Invalid_Operation
+  File: mips_chunk_384_Unimplemented_Operation_Invalid_Operation.txt
+  Size: 1.8 KB
+  Lines: 38
+
+mips_chunk_389_ADDU_performs_the_same_arithmetic_operation_but_do
+  File: mips_chunk_389_ADDU_performs_the_same_arithmetic_operation_but_do.txt
+  Size: 2.0 KB
+  Lines: 36
+
+mips_chunk_399_Unimplemented_Operation_Invalid_Operation_Inexact_
+  File: mips_chunk_399_Unimplemented_Operation_Invalid_Operation_Inexact_.txt
+  Size: 1.8 KB
+  Lines: 38
+
+mips_chunk_404_ADDIU_performs_the_same_arithmetic_operation_but_d
+  File: mips_chunk_404_ADDIU_performs_the_same_arithmetic_operation_but_d.txt
+  Size: 1.7 KB
+  Lines: 38
+
+mips_chunk_407_Exceptions
+  File: mips_chunk_407_Exceptions.txt
+  Size: 2.0 KB
+  Lines: 44
+
+mips_chunk_411_ALNVPS
+  File: mips_chunk_411_ALNVPS.txt
+  Size: 2.0 KB
+  Lines: 34
+
+mips_chunk_430_Exceptions
+  File: mips_chunk_430_Exceptions.txt
+  Size: 1.4 KB
+  Lines: 38
+
+mips_chunk_434_BEQ___________________0___________________0
+  File: mips_chunk_434_BEQ___________________0___________________0.txt
+  Size: 1.5 KB
+  Lines: 28
+
+mips_chunk_438_REGIMM___________________0_______________BGEZAL
+  File: mips_chunk_438_REGIMM___________________0_______________BGEZAL.txt
+  Size: 2.1 KB
+  Lines: 33
+
+mips_chunk_442_jump_and_link_register_JALR_instructions_for_proce
+  File: mips_chunk_442_jump_and_link_register_JALR_instructions_for_proce.txt
+  Size: 2.2 KB
+  Lines: 40
+
+mips_chunk_451_field_set_to_0_which_is_implied_by_the_first_forma
+  File: mips_chunk_451_field_set_to_0_which_is_implied_by_the_first_forma.txt
+  Size: 2.8 KB
+  Lines: 46
+
+mips_chunk_463_field_set_to_0_which_is_implied_by_the_first_forma
+  File: mips_chunk_463_field_set_to_0_which_is_implied_by_the_first_forma.txt
+  Size: 2.7 KB
+  Lines: 45
+
+mips_chunk_472_field_set_to_0_which_is_implied_by_the_first_forma
+  File: mips_chunk_472_field_set_to_0_which_is_implied_by_the_first_forma.txt
+  Size: 2.8 KB
+  Lines: 47
+
+mips_chunk_484_field_set_to_0_which_is_implied_by_the_first_forma
+  File: mips_chunk_484_field_set_to_0_which_is_implied_by_the_first_forma.txt
+  Size: 2.9 KB
+  Lines: 50
+
+mips_chunk_488_JR_instructions_to_branch_to_addresses_outside_thi
+  File: mips_chunk_488_JR_instructions_to_branch_to_addresses_outside_thi.txt
+  Size: 2.5 KB
+  Lines: 46
+
+mips_chunk_494_encouraged_to_use_the_BC2F_instruction_instead
+  File: mips_chunk_494_encouraged_to_use_the_BC2F_instruction_instead.txt
+  Size: 2.3 KB
+  Lines: 45
+
+mips_chunk_498_JR_instructions_to_branch_to_addresses_outside_thi
+  File: mips_chunk_498_JR_instructions_to_branch_to_addresses_outside_thi.txt
+  Size: 2.5 KB
+  Lines: 46
+
+mips_chunk_504_encouraged_to_use_the_BC2T_instruction_instead
+  File: mips_chunk_504_encouraged_to_use_the_BC2T_instruction_instead.txt
+  Size: 2.0 KB
+  Lines: 44
+
+mips_chunk_507_JR_instructions_to_branch_to_addresses_outside_thi
+  File: mips_chunk_507_JR_instructions_to_branch_to_addresses_outside_thi.txt
+  Size: 2.0 KB
+  Lines: 40
+
+mips_chunk_522_REGIMM____________________________________BGEZAL
+  File: mips_chunk_522_REGIMM____________________________________BGEZAL.txt
+  Size: 1.6 KB
+  Lines: 25
+
+mips_chunk_529_REGIMM____________________________________BGEZALL
+  File: mips_chunk_529_REGIMM____________________________________BGEZALL.txt
+  Size: 2.4 KB
+  Lines: 33
+
+mips_chunk_538_REGIMM_____________________________________BGEZL
+  File: mips_chunk_538_REGIMM_____________________________________BGEZL.txt
+  Size: 1.8 KB
+  Lines: 28
+
+mips_chunk_551_BGTZL________________________________________0
+  File: mips_chunk_551_BGTZL________________________________________0.txt
+  Size: 1.8 KB
+  Lines: 29
+
+mips_chunk_564_BLEZL________________________________________0
+  File: mips_chunk_564_BLEZL________________________________________0.txt
+  Size: 1.8 KB
+  Lines: 29
+
+mips_chunk_572_REGIMM______________________________________BLTZ
+  File: mips_chunk_572_REGIMM______________________________________BLTZ.txt
+  Size: 1.6 KB
+  Lines: 28
+
+mips_chunk_577_REGIMM____________________________________BLTZAL
+  File: mips_chunk_577_REGIMM____________________________________BLTZAL.txt
+  Size: 2.2 KB
+  Lines: 33
+
+mips_chunk_583_REGIMM____________________________________BLTZALL
+  File: mips_chunk_583_REGIMM____________________________________BLTZALL.txt
+  Size: 2.4 KB
+  Lines: 33
+
+mips_chunk_592_REGIMM_____________________________________BLTZL
+  File: mips_chunk_592_REGIMM_____________________________________BLTZL.txt
+  Size: 1.7 KB
+  Lines: 28
+
+mips_chunk_599_In_the_MIPS_I_architecture_this_instruction_signal
+  File: mips_chunk_599_In_the_MIPS_I_architecture_this_instruction_signal.txt
+  Size: 2.1 KB
+  Lines: 44
+
+mips_chunk_602_JR_instructions_to_branch_to_addresses_outside_thi
+  File: mips_chunk_602_JR_instructions_to_branch_to_addresses_outside_thi.txt
+  Size: 2.2 KB
+  Lines: 44
+
+mips_chunk_616_COP1______________________________________________
+  File: mips_chunk_616_COP1______________________________________________.txt
+  Size: 2.5 KB
+  Lines: 30
+
+mips_chunk_618_instruction_is_UNPREDICTABLE
+  File: mips_chunk_618_instruction_is_UNPREDICTABLE.txt
+  Size: 3.7 KB
+  Lines: 41
+
+mips_chunk_620_Table_3-25_FPU_Comparisons_Without_Special_Operand
+  File: mips_chunk_620_Table_3-25_FPU_Comparisons_Without_Special_Operand.txt
+  Size: 4.5 KB
+  Lines: 59
+
+mips_chunk_621_Table_3-26_FPU_Comparisons_With_Special_Operand_Ex
+  File: mips_chunk_621_Table_3-26_FPU_Comparisons_With_Special_Operand_Ex.txt
+  Size: 4.8 KB
+  Lines: 68
+
+mips_chunk_623_SignalExceptionInvalidOperation
+  File: mips_chunk_623_SignalExceptionInvalidOperation.txt
+  Size: 1.5 KB
+  Lines: 31
+
+mips_chunk_627_Unimplemented_Operation_Invalid_Operation
+  File: mips_chunk_627_Unimplemented_Operation_Invalid_Operation.txt
+  Size: 2.9 KB
+  Lines: 63
+
+mips_chunk_630_possibility_that_a_TLB_Refill_or_TLB_Invalid_excep
+  File: mips_chunk_630_possibility_that_a_TLB_Refill_or_TLB_Invalid_excep.txt
+  Size: 3.2 KB
+  Lines: 52
+
+mips_chunk_641_Invalidate___________________write_the_block_back_
+  File: mips_chunk_641_Invalidate___________________write_the_block_back_.txt
+  Size: 1.8 KB
+  Lines: 28
+
+mips_chunk_656_After_that_operation_is_completed_set_the_state
+  File: mips_chunk_656_After_that_operation_is_completed_set_the_state.txt
+  Size: 1.6 KB
+  Lines: 26
+
+mips_chunk_664_and_Lock_operation_affects_more_than_one_line
+  File: mips_chunk_664_and_Lock_operation_affects_more_than_one_line.txt
+  Size: 1.6 KB
+  Lines: 29
+
+mips_chunk_673_Bus_Error_Exception
+  File: mips_chunk_673_Bus_Error_Exception.txt
+  Size: 3.2 KB
+  Lines: 52
+
+mips_chunk_678_Invalid_Operation_Unimplemented_Operation_Inexact_
+  File: mips_chunk_678_Invalid_Operation_Unimplemented_Operation_Inexact_.txt
+  Size: 3.0 KB
+  Lines: 49
+
+mips_chunk_697_Coprocessor_Unusable_Reserved_Instruction
+  File: mips_chunk_697_Coprocessor_Unusable_Reserved_Instruction.txt
+  Size: 2.1 KB
+  Lines: 43
+
+mips_chunk_700_Exceptions
+  File: mips_chunk_700_Exceptions.txt
+  Size: 2.0 KB
+  Lines: 44
+
+mips_chunk_735_COP1____________________________________0_________
+  File: mips_chunk_735_COP1____________________________________0_________.txt
+  Size: 2.4 KB
+  Lines: 34
+
+mips_chunk_740_Invalid_Operation_Unimplemented_Operation_Inexact
+  File: mips_chunk_740_Invalid_Operation_Unimplemented_Operation_Inexact.txt
+  Size: 3.3 KB
+  Lines: 52
+
+mips_chunk_746_CVTPSS
+  File: mips_chunk_746_CVTPSS.txt
+  Size: 2.0 KB
+  Lines: 45
+
+mips_chunk_753_Invalid_Operation_Unimplemented_Operation
+  File: mips_chunk_753_Invalid_Operation_Unimplemented_Operation.txt
+  Size: 2.8 KB
+  Lines: 49
+
+mips_chunk_759_CVTSPL
+  File: mips_chunk_759_CVTSPL.txt
+  Size: 2.2 KB
+  Lines: 38
+
+mips_chunk_766_CVTSPU
+  File: mips_chunk_766_CVTSPU.txt
+  Size: 2.2 KB
+  Lines: 38
+
+mips_chunk_772_Invalid_Operation_Unimplemented_Operation_Inexact_
+  File: mips_chunk_772_Invalid_Operation_Unimplemented_Operation_Inexact_.txt
+  Size: 3.0 KB
+  Lines: 49
+
+mips_chunk_777_Invalid_Operation_Unimplemented_Operation_Inexact_
+  File: mips_chunk_777_Invalid_Operation_Unimplemented_Operation_Inexact_.txt
+  Size: 1.5 KB
+  Lines: 32
+
+mips_chunk_788_Reserved_Instruction_Exception
+  File: mips_chunk_788_Reserved_Instruction_Exception.txt
+  Size: 1.7 KB
+  Lines: 35
+
+mips_chunk_801_Exceptions
+  File: mips_chunk_801_Exceptions.txt
+  Size: 1.8 KB
+  Lines: 31
+
+mips_chunk_803_improvement_by_scheduling_the_divide_so_that_other
+  File: mips_chunk_803_improvement_by_scheduling_the_divide_so_that_other.txt
+  Size: 2.7 KB
+  Lines: 48
+
+mips_chunk_809_Inexact_Invalid_Operation_Unimplemented_Operation_
+  File: mips_chunk_809_Inexact_Invalid_Operation_Unimplemented_Operation_.txt
+  Size: 1.9 KB
+  Lines: 38
+
+mips_chunk_813_See_Programming_Notes_for_the_DIV_instruction
+  File: mips_chunk_813_See_Programming_Notes_for_the_DIV_instruction.txt
+  Size: 1.9 KB
+  Lines: 39
+
+mips_chunk_817_Exceptions
+  File: mips_chunk_817_Exceptions.txt
+  Size: 2.5 KB
+  Lines: 45
+
+mips_chunk_826_instruction_can_not_be_aborted_in_the_middle_by_an
+  File: mips_chunk_826_instruction_can_not_be_aborted_in_the_middle_by_an.txt
+  Size: 1.8 KB
+  Lines: 35
+
+mips_chunk_833_Coprocessor_Unusable_Exception
+  File: mips_chunk_833_Coprocessor_Unusable_Exception.txt
+  Size: 2.0 KB
+  Lines: 39
+
+mips_chunk_835_Figure_3-3_shows_the_symbolic_operation_of_the_ins
+  File: mips_chunk_835_Figure_3-3_shows_the_symbolic_operation_of_the_ins.txt
+  Size: 1.4 KB
+  Lines: 24
+
+mips_chunk_842_Reserved_Instruction
+  File: mips_chunk_842_Reserved_Instruction.txt
+  Size: 3.2 KB
+  Lines: 52
+
+mips_chunk_847_Invalid_Operation_Unimplemented_Operation_Inexact_
+  File: mips_chunk_847_Invalid_Operation_Unimplemented_Operation_Inexact_.txt
+  Size: 3.0 KB
+  Lines: 49
+
+mips_chunk_852_Invalid_Operation_Unimplemented_Operation_Inexact_
+  File: mips_chunk_852_Invalid_Operation_Unimplemented_Operation_Inexact_.txt
+  Size: 2.2 KB
+  Lines: 40
+
+mips_chunk_854_Figure_3-4_shows_the_symbolic_operation_of_the_ins
+  File: mips_chunk_854_Figure_3-4_shows_the_symbolic_operation_of_the_ins.txt
+  Size: 2.2 KB
+  Lines: 33
+
+mips_chunk_861_Reserved_Instruction
+  File: mips_chunk_861_Reserved_Instruction.txt
+  Size: 1.6 KB
+  Lines: 38
+
+mips_chunk_864_Exceptions
+  File: mips_chunk_864_Exceptions.txt
+  Size: 2.4 KB
+  Lines: 48
+
+mips_chunk_868_Exceptions
+  File: mips_chunk_868_Exceptions.txt
+  Size: 2.2 KB
+  Lines: 44
+
+mips_chunk_871_tion_for_additional_information
+  File: mips_chunk_871_tion_for_additional_information.txt
+  Size: 1.8 KB
+  Lines: 29
+
+mips_chunk_874_JALRHB
+  File: mips_chunk_874_JALRHB.txt
+  Size: 1.6 KB
+  Lines: 31
+
+mips_chunk_876_address_is_always_zero_so_that_no_Address_Exceptio
+  File: mips_chunk_876_address_is_always_zero_so_that_no_Address_Exceptio.txt
+  Size: 3.4 KB
+  Lines: 43
+
+mips_chunk_881_sequence_by_simply_replacing_the_original_instruct
+  File: mips_chunk_881_sequence_by_simply_replacing_the_original_instruct.txt
+  Size: 2.7 KB
+  Lines: 57
+
+mips_chunk_886_Exceptions
+  File: mips_chunk_886_Exceptions.txt
+  Size: 2.2 KB
+  Lines: 49
+
+mips_chunk_887_Description_PC__rs_clear_execution_and_instruction
+  File: mips_chunk_887_Description_PC__rs_clear_execution_and_instruction.txt
+  Size: 2.7 KB
+  Lines: 31
+
+mips_chunk_898_jrhb_AT___________________________Jump_to_next_ins
+  File: mips_chunk_898_jrhb_AT___________________________Jump_to_next_ins.txt
+  Size: 1.4 KB
+  Lines: 35
+
+mips_chunk_953_synchronizable_memory_locations
+  File: mips_chunk_953_synchronizable_memory_locations.txt
+  Size: 1.7 KB
+  Lines: 24
+
+mips_chunk_997_Description_rt__rt_MERGE_memorybaseoffset
+  File: mips_chunk_997_Description_rt__rt_MERGE_memorybaseoffset.txt
+  Size: 1.6 KB
+  Lines: 22
+
+mips_chunk_999_0_____1____2_______3_____4________5___6____7____8_
+  File: mips_chunk_999_0_____1____2_______3_____4________5___6____7____8_.txt
+  Size: 1.6 KB
+  Lines: 31

@@ -1,0 +1,39 @@
+PSXSPX SPECIFICATIONS - INDICATES THE CHIPSET THAT THE CDROM CONTROLLER IS INTENDED TO BE USED WITH.
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Indicates the chipset that the CDROM controller is intended to be used with.
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1566 characters
+Lines: 30
+================================================================================
+
+Indicates the chipset that the CDROM controller is intended to be used with.
+The strings aren't always precisely correct (CXD1782BR is actually CXA1782BR,
+ie. CXA, not CXD) (and CXD1199BQ chips exist on PU-7 boards, but later PU-8
+boards do actually use CXD1815Q) (and CXD1817Q is actually CXD1817R) (and newer
+PSones are using CXD2938Q or possibly CXD2941R chips, but nothing called
+CXD2940Q).
+
+Note: Yaroze responds by CXD1815BQ instead of CXD1199BQ (but not by CXD1815Q).
+
+19h,04h --> INT3(stat) ;Read SCEx string (and force motor on)
+
+Resets the total/success counters to zero, and does then try to read the SCEx
+string from the current location (the SCEx is stored only in the Lead-In area,
+so, if the drive head is elsewhere, it will usually not find any strings,
+unless a modchip is permanently simulating SCEx strings).
+
+This is a raw test command (the successful or unsuccessful results do not
+lock/unlock the disk). The results can be read with command 19h,05h (which will
+terminate the SCEx reading), or they can be read from RAM with command
+19h,60h,lo,hi (which doesn't stop reading). Wait 1-2 seconds before expecting
+any results.
+
+Note: Like 19h,00h, this command forces the drive motor to spin at standard
+speed (synchronized with the data on the disk), works even if the shell is open
+(but stops spinning after a while if the drive is empty).
+
+19h,05h --> INT3(total,success) ;Get SCEx Counters
+
+Returns the total number of "Sxxx" strings received (where at least the first
+byte did match), and the number of full "SCEx" strings (where all bytes did

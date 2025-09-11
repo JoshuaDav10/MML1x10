@@ -1,0 +1,78 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION BZZ
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression BZZ
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2977 characters
+Lines: 70
+================================================================================
+
+CDROM File Compression BZZ
+
+Used in .BZZ archives. Note that there are three slightly different .BZZ
+archive formats (they are all using the same BZZ compression, only the BZZ
+archive headers are different).
+
+| Jersey Devil .BZZ (MagDemo10: JD\*.BZZ)
+Bugs Bunny: Lost in Time (MagDemo25: BBLIT\*.BZZ)
+The Grinch (MagDemo40: GRINCH\*.BZZ)
+
+Neither the file header nor the archive directory entries do contain any
+information about the decompressed size. Best workaround might be to decompress
+the file twice (without storing the output in 1st pass, to determine the size
+of the decompression buffer for 2nd pass).
+
+BZZ Decompression
+
+The compression is fairly standard LZSS, except that it supports non-linear
+length values, and it does support uncommon Len/Disp pairs like
+7bitLen/9bitDisp (though usually, it does use standard 4bitLen/12bitDisp).
+
+| decompress_bzz:
+method=byte[src], src=src+1 ;method (00h..1Fh) ;usually/always 0Bh)
+shifter = ((method/8) and 3) ;00h..03h ;usually 1
+len_bits = ((method and 7) xor 7) ;07h..00h ;usually 4
+len_mask = (1 shl len_bits)-1 ;7Fh..00h ;usually 0Fh
+threshold=len_mask/2, if threshold>07h then threshold=13h ;usually 07h
+for i=0 to len_mask
+if i>threshold then len_table[i] = ((i-threshold) shl shifter)+threshold+3
+else len_table[i] = i+3 ;method=18h max=(7Fh-13h)*8+13h+3=376h=886 decimal
+next i ;method=0Hh max=(0Fh-07h)*2+07h+3=1Ah=26 decimal
+num_flags=bigendian24bit[src]+1, src=src+3 ;NUM24+1
+@@collect_more:
+if src>=src_end then goto @@decompress_error
+flagbits=[src]+100h, src=src+1 ;8bit flags
+@@decompress_lop:
+flagbits=flagbits SHR 1
+if zero then goto @@collect_more
+if carry=1 then
+if src>=src_end then goto @@decompress_error
+[dst]=[src], dst=dst+1, src=src+1
+else
+if src+1>=src_end then goto @@decompress_error
+temp=bigendian16bit[src], src=src+2
+len=len_table[temp AND len_mask]
+disp=temp SHR len_bits, if disp=0 then goto @@decompress_error
+for i=1 to len, [dst]=[dst-disp], dst=dst+1, next i
+endif
+num_flags=num_flags-1, if num_flags>0 then goto @@decompress_lop
+@@decompress_error:
+ret
+
+Bug: Files can randomly contain NUM24 or NUM24+1 codes (that seems to be due to
+a compressor bug or different compressor versions; the two variants are
+unfortunately randomly mixed even within the same game).
+
+And, compressed files are padded to 4-byte boundary (making it impossible to
+distinguish between "NUM24+1" and "NUM24+padding").
+
+| Case 1) source has NUM24+1 codes
+--> decode all NUM24+1 codes (otherwise output will be too small)
+Case 2) source has NUM24 codes (and enough padding for another code)
+--> decode all NUM24+1 codes (for compatibility with case 1)
+--> output will have some constant garbage byte(s) appended
+--> exception: omit last code if it contains invalid disp=0
+Case 3) source has NUM24 codes (and not enough padding for another code)
+--> decode only NUM24 codes (abort if NUM24+1 exceeds src_end)
+--> output should (probably) have correct size
+--> never exceed src_end which would be highly unstable

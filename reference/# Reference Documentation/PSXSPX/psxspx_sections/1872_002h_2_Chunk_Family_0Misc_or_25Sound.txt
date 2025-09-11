@@ -1,0 +1,55 @@
+PSXSPX SPECIFICATIONS - 002H 2 CHUNK FAMILY (0=MISC OR 2..5=SOUND)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 002h 2 Chunk Family (0=Misc or 2..5=Sound)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1728 characters
+Lines: 46
+================================================================================
+
+002h 2 Chunk Family (0=Misc or 2..5=Sound)
+004h 4 Chunk Number*2+1
+008h 4 Number of Files (N) (can be 0, eg. prototype S0000003 chunk21h)
+00Ch 4 Checksum (sum of bytes ar [0..FFFFh], with initial [0Ch]=00000000h)
+010h N*4 File List (Offsets from ID=1234h to entries) (4-byte aligned)
+... .. Offset for end of last File
+... .. File Data (NSF Child Archives) (includes Type/Filename)
+... .. Padding to 10000h-byte boundary
+
+NSF Child Archives
+
+| 000h 4 ID, always 0100FFFFh
+004h 4 Filename (five 6bit characters)
+008h 4 File Type (01h..04h, or 06h..15h)
+00Ch 4 Item Count (I)
+010h I*4 Item List (Offsets from ID=0100FFFFh to items) (...unaligned?)
+... .. Offset for end last item
+... .. Data (Items)
+
+NSF Chunk Loading and Decompression
+
+The compression is a mixup of LZSS and RLE. Compressed chunks are max F800h
+bytes tall (10000h bytes after decompression).
+
+| dst=chunk_buffer_64kbyte
+if chunksize is known (from NSD file)
+src=dest=dst+10000h-chunksize
+diskread(fpos,src,chunksize)
+else (when parsing raw NSF file without NSD file)
+src=temp_buffer_64kbyte
+diskread(fpos,src,10000h)
+dst_start=dst, src_start=src
+if halfword[src+00h]<>1234h then ;check ID (1234h=raw, or 1235h=compressed)
+dst_end=dst+word[src+04h]
+skip_size=word[src+08h]
+src=src+0Ch
+while dstdst then
+while dst
+
+As shown above, the chunk is intended to be loaded to the end of the
+decompression buffer, so trailing uncompressed bytes would be already in place
+without needing further relocation (despite of that intention, the actual game
+code is uselessly relocating src to dst, even when src=dst).
+
+Note: All compressed files seem to have an uncompressed copy with same filename
+in another chunk (the NSD Lookup table does probably(?) point to the compressed

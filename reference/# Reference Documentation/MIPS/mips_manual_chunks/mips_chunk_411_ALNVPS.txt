@@ -1,0 +1,34 @@
+MIPS INSTRUCTION SET REFERENCE - ALNV.PS
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: ALNV.PS
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1712 characters
+Lines: 25
+================================================================================
+
+ALNV.PS
+
+
+
+
+   Floating Point Align Variable                                                                                           ALNV.PS
+
+          31                   26 25               21 20             16 15            11 10               6   5                    0
+                    COP1X                                                                                          ALNV.PS
+                                          rs                 ft                fs                 fd
+                    010011                                                                                          011110
+                      6                   5                  5                  5                 5                    6
+
+                Format:      ALNV.PS fd, fs, ft, rs                                                                   MIPS64
+                                                                                                              MIPS32 Release 2
+
+                Purpose:
+                To align a misaligned pair of paired single values
+
+                Description: fd ← ByteAlign(rs2..0, fs, ft)
+                FPR fs is concatenated with FPR ft and this value is funnel-shifted by GPR rs2..0 bytes, and written into FPR fd. If
+                GPR rs2..0 is 0, fd receives fs. If GPR rs2..0 is 4, the operation depends on the current endianness.
+                Figure 3-1 illustrates the following example: for a big-endian operation and a byte alignment of 4, the upper half of fd
+                receives the lower half of the paired single value in fs, and the lower half of fd receives the upper half of the paired
+                single value in ft.

@@ -1,0 +1,944 @@
+PSYQ DOCUMENTATION - Devrefs/Dtlh2000.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/Devrefs/Dtlh2000.pdf
+Converted: Wed Sep 10 02:47:32 PM CDT 2025
+================================================================================
+
+DTL-H2000 Installation and Operation
+© 1998 Sony Computer Entertainment Inc.
+
+Publication date: August 1998
+
+
+Sony Computer Entertainment America
+919 E. Hillsdale Blvd., 2nd floor
+Foster City, CA 94404
+
+Sony Computer Entertainment Europe
+Waverley House
+7-12 Noel Street
+London W1V 4HH, England
+
+
+The DTL-H2000 Installation and Operation manual is supplied pursuant to and subject to the terms of the
+Sony Computer Entertainment PlayStation® License and Development Tools Agreements, the Licensed
+Publisher Agreement and/or the Licensed Developer Agreement.
+The DTL-H2000 Installation and Operation manual is intended for distribution to and use by only Sony
+Computer Entertainment licensed Developers and Publishers in accordance with the PlayStation® License
+and Development Tools Agreements, the Licensed Publisher Agreement and/or the Licensed Developer
+Agreement.
+Unauthorized reproduction, distribution, lending, rental or disclosure to any third party, in whole or in part,
+of this book is expressly prohibited by law and by the terms of the Sony Computer Entertainment
+PlayStation® License and Development Tools Agreements, the Licensed Publisher Agreement and/or the
+Licensed Developer Agreement.
+Ownership of the physical property of the book is retained by and reserved by Sony Computer
+Entertainment. Alteration to or deletion, in whole or in part, of the book, its presentation, or its contents is
+prohibited.
+The information in the DTL-H2000 Installation and Operation manual is subject to change without notice.
+The content of this book is Confidential Information of Sony Computer Entertainment.
+PlayStation and PlayStation logos are registered trademarks of Sony Computer Entertainment Inc. All other
+trademarks are property of their respective owners and/or their licensors.
+Table of Contents
+               List of Figures                                                                              iv
+               List of Tables                                                                               iv
+        About This Manual                                                                                    v
+               Changes Since Last Release                                                                    v
+               Related Documentation                                                                         v
+               Developer Reference Series                                                                    v
+               Typographic Conventions                                                                      vi
+               Developer Support                                                                            vi
+Chapter 1: DTL-H2000 Equipment
+       Specifications                                                                                 1–3
+       Checklist                                                                                      1–3
+Chapter 2: Installation of Software Tools
+       Insert the Programmer’s Tools CDROM                                                            2–3
+       Install the “psx” Tool                                                                         2–3
+       Install the SN Tools                                                                           2–3
+       Install the “psxgraph” Tools (optional)                                                        2–3
+                 Graphic Artist Tools Program Group                                                   2–4
+                 Movie Converter                                                                      2–4
+                 Movie Pack                                                                           2–4
+                 3D Studio Plug-In                                                                    2–5
+       Add Environment Variables                                                                      2–5
+       Reboot the Computer                                                                            2–6
+Chapter 3: Hardware Installaton
+       Determine a Free Memory Address and a Free IRQ for the Boards                                  3–3
+       Edit the autoexec.bat File                                                                     3–3
+       Install the Development Boards                                                                 3–3
+       Reboot the Computer                                                                            3–4
+Chapter 4: Testing the DTL-H2000
+       Verify Ability to Compile                                                                      4–3
+       Run a Program                                                                                  4–3
+       Run Other Sample Programs                                                                      4–4
+       Run from the CDROM                                                                             4–4
+Chapter 5: Miscellany
+       Installation of the CD-ROM Emulator Software                                                   5–3
+       Kanji ROM Specification                                                                        5–3
+                 Overview                                                                             5–3
+                 Fonts                                                                                5–3
+                 Data Format                                                                          5–4
+                 Service Function                                                                     5–4
+                 Patch for the DTL-H2000                                                              5–4
+                 Sample Program                                                                       5–4
+       cpe2x                                                                                          5–5
+       Procedure for Dealing with a Non-Recoverable Error                                             5–5
+       Other Items                                                                                    5–7
+                 Compiler                                                                             5–7
+                 If There is no Floating Point Processor on the PC                                    5–7
+                 Global Allocation                                                                    5–7
+                 Debugger                                                                             5–7
+
+
+
+
+                                                                     DTL-H2000 Installation and Operation
+iv   Table of Contents
+
+               List of Figures
+                         Figure 5-1: Font Data Format                                5–4
+
+               List of Tables
+                         Table 5-1: SCE-Stipulated System Errors                     5–6
+                         Table 5-2: Error Codes for Internal System Identification   5–6
+
+
+
+
+        DTL-H2000 Installation and Operation
+About This Manual
+   This manual is the latest release of instructions relating to the PlayStation's® DTL-H2000 Development
+   System as of Run-Time Library release 4.3. The purpose of this manual is to provide installation and
+   operation instructions for the DTL-H2000 Development System.
+
+
+Changes Since Last Release
+   There have been no substantial changes in this document since its last release.
+
+
+Related Documentation
+   In addition to this document, you can obtain helpful information from the installation sheets, “PlayStation”
+   Board (for PC/AT), that come with your hardware.
+
+
+Developer Reference Series
+   This manual is part of the Developer Reference Series, a series of technical reference volumes covering all
+   aspects of PlayStation development. The complete series is listed below:
+              Manual                                              Description
+              PlayStation Hardware                                Describes the PlayStation hardware architecture
+                                                                  and overviews its subsystems.
+              PlayStation Operating System                        Describes the PlayStation operating system and
+                                                                  related programming fundamentals.
+              Run-Time Library Overview                           Describes the structure and purpose of the
+                                                                  run-time libraries provided for PlayStation
+                                                                  software development.
+              Run-Time Library Reference                          Defines all available PlayStation run-time library
+                                                                  functions, macros and structures.
+              Inline Programming Reference                        Describes in-line programming using DMPSX,
+                                                                  GTE inline macro and GTE register information.
+              SDevTC Development Environment                      Describes the SDevTC (formerly "Psy-Q")
+                                                                  Development Environment for PlayStation
+                                                                  software development.
+              3D Graphics Tools                                   Describes how to use the PlayStation 3D
+                                                                  Graphics Tools, including the animation and
+                                                                  material editors.
+              Sprite Editor                                       Describes the Sprite Editor tool for creating
+                                                                  sprite data and background picture
+                                                                  components.
+              Sound Artist Tool                                   Provides installation and operation instructions
+                                                                  for the DTL-H800 Sound Artist Board and
+                                                                  explains how to use the Sound Artist Tool
+                                                                  software.
+              File Formats                                        Describes all native PlayStation data formats.
+              Data Conversion Utilities                           Describes all available PlayStation data
+                                                                  conversion utilities, including both stand-alone
+                                                                  and plug-in programs.
+              CD Emulator                                         Provides installation and operation instructions
+                                                                  for the CD Emulator subsystem and related
+                                                                  software.
+
+
+                                                                                DTL-H2000 Installation and Operation
+vi About This Manual
+
+                       CD-ROM Generator                                  Describes how to use the CD-ROM Generator
+                                                                         software to write CD-R discs.
+                       Performance Analyzer User Guide                   Provides general instructions for using the
+                                                                         Performance Analyzer software.
+                       Performance Analyzer Technical Reference          Describes how to measure software
+                                                                         performance and interpret the results using the
+                                                                         Performance Analyzer.
+                       DTL-H2000 Installation and Operation              Provides installation and operation instructions
+                                                                         for the DTL-H2000 Development System.
+                       DTL-H2500/2700 Installation and Operation         Provides installation and operation instructions
+                                                                         for the DTL-H2500/H2700 Development
+                                                                         Systems.
+
+
+    Typographic Conventions
+         Certain Typographic Conventions are used through out this manual to clarify the meaning of the text. The
+         following conventions apply to all narrative text except for structure and function descriptions:
+                       Convention      Meaning
+                       courier         Indicates literal program code.
+                       Bold            Indicates a document, chapter or section title.
+         The following conventions apply within structure and function descriptions only:
+                       Convention      Meaning
+                       Medium Bold     Denotes structure or function types and names.
+                       Italic          Denotes function arguments and structure members.
+
+
+    Developer Support
+         Sony Computer Entertainment America (SCEA)
+         SCEA developer support is available to licensees in North America only. You may obtain developer support
+         or additional copies of this documentation by contacting the following addresses:
+                       Order Information                                 Developer Support
+                       In North America                                  In North America
+                       Attn: Developer Tools Coordinator                 E-mail: DevTech_Support@playstation.sony.com
+                       Sony Computer Entertainment America               Web: http://www.scea.sony.com/dev
+                       919 East Hillsdale Blvd., 2nd floor               Developer Support Hotline: (650) 655-8181
+                       Foster City, CA 94404                             (Call Monday through Friday, 8 a.m. to 5 p.m.,
+                       Tel: (650) 655-8000                               PST/PDT)
+
+
+
+
+      DTL-H2000 Installation and Operation
+                                                                                             About This Manual   vii
+
+Sony Computer Entertainment Europe (SCEE)
+SCEE developer support is available to licensees in Europe only. You may obtain developer support or
+additional copies of this documentation by contacting the following addresses:
+           Order Information                                Developer Support
+           In Europe                                        In Europe
+           Attn: Production Coordinator                     E-mail: dev_support@playstation.co.uk
+           Sony Computer Entertainment Europe               Web: https://www-s.playstation.co.uk
+           Waverley House                                   Developer Support Hotline:
+           7-12 Noel Street                                 +44 (0) 171 447 1680
+           London W1V 4HH                                   (Call Monday through Friday, 9 a.m. to 6 p.m.,
+           Tel: +44 (0) 171 447 1600                        GMT or BST/BDT)
+
+
+
+
+                                                                         DTL-H2000 Installation and Operation
+viii   About This Manual
+
+
+
+
+         DTL-H2000 Installation and Operation
+Chapter 1:
+DTL-H2000 Equipment
+
+
+
+
+                      DTL-H2000 Installation and Operation
+1–2 DTL-H2000 Equipment
+
+
+
+
+     DTL-H2000 Installation and Operation
+                                                                                             DTL-H2000 Equipment     1–3
+
+
+
+Specifications
+   The DTL-H2000 is a development environment equipped with all functions necessary for the PlayStation®.
+   It consists of two full size ISA boards for PC compatible machines. It has the following specifications and
+   functions.
+   CPU-GTE                       Same specification as the PlayStation®
+   Main Memory                   8MByte (access can be limited to 2MByte)
+   Graphics                      Same specification as the PlayStation®
+   Sound                         Same specification as the PlayStation®
+   CD-ROM Subsystem              Equivalent to the PlayStation® (without copy protection)
+   Controller Terminal           Equivalent to the PlayStation® (connector shape is different)
+   SIO/PIO Extension             Equivalent to the PlayStation® (connector shape is different)
+   CD-ROM Drive Terminal         For the DTL-H2010 dedicated CD ROM Drive
+
+
+
+Checklist
+   The complete kit for the DTL-H2000 contains the following items.
+       CPU2 Board
+       PIO2 Board
+       Connecting Cable
+       RCA Cable
+       Installation Dcocumentation
+       Programmer Tools CD (DTL-S2002)
+       Technical Reference CD (DTL-S2003)
+   You should also have a PlayStation® game controller.
+   If your development environment does not have the PlayStation®-dedicated DTL-H2010 CD-ROM drive,
+   make sure that an SPU attachment (“blue dongle”) is attached to the PIO2 Board.
+
+
+
+
+                                                                              DTL-H2000 Installation and Operation
+1–4 DTL-H2000 Equipment
+
+
+
+
+     DTL-H2000 Installation and Operation
+Chapter 2:
+Installation of Software Tools
+
+
+
+
+                                 DTL-H2000 Installation and Operation
+2–2 Installation of Software Tools
+
+
+
+
+       DTL-H2000 Installation and Operation
+                                                                                          Installation of Software Tools 2–3
+
+
+
+
+Insert the Programmer’s Tools CDROM
+   Insert the Programmers Tools CD into your CD-ROM drive of your system (not the DTL-H2010).
+   If you have Windows 95, you can run the Setup program, setup.bat in the root directory of the
+   CDROM. Follow all of the instructions. After the computer reboots (to set environment variables), skip to
+   Add Environmental Variables.
+   Otherwise, proceed with the next step, Install the “psx” Tool.
+
+
+
+Install the “psx” Tool
+   The directory [cdrom]:\psx contains the PlayStation® Development directory, which includes over 100
+   sample programs with full source code, the include files, and the linking libraries.
+   •   If applicable, back up or delete your previous c:\psx directory.
+   •   To be consistent with the automatic installation of the software under Win95, create a parent directory
+       ps into which all PlayStation® software will be installed. Copy the psx directory, [cd]:\psx, from the
+       CD to your local hard drive as c:\ps\psx:
+               Xcopy /s [cdrom]:\psx c:\ps\psx
+       (or just drag and drop the folder).
+   •   Add the following line to the end of your c:\autoexec.bat file.
+               set path=%path%; c:\ps\psx\bin
+
+
+
+Install the SN Tools
+   The directory [cdrom]:\pssn contains the standard PlayStation® development system, which includes
+   an interactive debugger and the C compiler.
+   •   If applicable, back up or delete your previous c:\pssn directory.
+   •   Copy the pssn directory, [cdrom]:\pssn, from the CD to your local hard drive c:\ps\pssn.
+   •   Copy the contents of the gnu directory, d:\gnu, from the CD to your local hard drive c:\ps\pssn:
+               xcopy   /s       [cdrom]:\gnu\*                     c:\ps\pssn
+       The GNU license is labeled gnu.txt.
+   •   Add the following line to the end of your c:\autoexec.bat file.
+               set path=%path%;c:\ps\pssn
+
+
+
+Install the “psxgraph” Tools (optional)
+   In this step, we are setting up the “Graphic Artist Tools program” area. It does not contain the entire tool
+   set for the Graphic Artist Tools but only the format conversion tools. Please contact your regional tool
+   coordinator for information on how to obtain the Graphic Artist Tools CD (DTL-S220).
+   The directory [cdrom]:\psxgraph contains the tools for converting between standard graphics file
+   formats and the PlayStation® formats.
+
+                                                                                DTL-H2000 Installation and Operation
+2–4 Installation of Software Tools
+
+           •   If applicable, back up or delete your previous c:\psxgraph directory.
+           •   Copy the psxgraph directory, [cdrom]:\psxgraph, from the CD to your local hard drive
+               c:\ps\psxgraph.
+           •   Add the following line to the end of your c:\autoexec.bat file.
+                       set path=%path%;c:\ps\psxgraph\bin
+           •   Copy the all files located in the system directory, [cdrom]:\psxgraph\system, to the window's
+               system directory, i.e. c:\windows\system. These files are used by the Movie Converter.
+           •   If you have Windows 95, skip on to the next step. Otherwise, you create the groups and match the
+               icons yourself, by performing the following steps in Windows 3.1:
+
+
+     Graphic Artist Tools Program Group
+           Create a Graphic Artist Tools program group in the Windows 3.1 environment as follows.
+               1. Under the Program Manager "File" pulldown, click the File>New button.
+               2. Select Program Group and click OK.
+               3. Fill in the Description with "Graphic Artist Tools". You may leave the "Group File" field blank. A new
+                  group will be displayed.
+               4. You are now ready to add the individual tool icons. Please follow the individual program installation
+                  instructions listed below.
+                    Note: For additional details on setting up program icons, please refer to your Windows 3.1 manual.
+
+
+     Movie Converter
+           With the "Graphic Artist Tools" program group selected, create a program icon for the Movie Converter
+           tool.
+               1. Under the Program Manager "File" pulldown, click the File>New button.
+               2. Select Program Item and click OK
+               3. A Program Item Properties dialog box will pop up. Fill in the Description field with "Movie
+                  Converter".
+               4. Use Browse to identify the name of the executable to be placed in the Command Line field (i.e.,
+                  c:\ps\psxgraph\bin\movconv.exe).
+               5. Click OK.
+
+
+     Movie Pack
+           With the "Graphic Artist Tools" program group selected, create a program icon for the Movie Pack tool.
+               1. Under the Program Manager "File" pulldown, click the File>New button.
+               2. Select Program Item and click OK
+               3. A Program Item Properties dialog box will pop up. Fill in the Description field with "Movie Pack".
+               4. Use Browse to identify the name of the executable to be placed in the Command Line field (i.e.,
+                  c:\ps\psxgraph\bin\movpack.exe).
+               5. Click OK.
+
+
+
+
+       DTL-H2000 Installation and Operation
+                                                                                   Installation of Software Tools 2–5
+
+3D Studio Plug-In
+When using the 3D Studio plug-in utilities, we highly recommend the following. Please attach the 3DStudio
+dongle before progressing with a modeling session.
+Warning: Do not remove or add dongles while the PC is powered on.
+Do not start a 3DStudio plug-in session before doing the following:
+    1. Remove dexbios (if dexbios is installed)
+    2. Remove mess1.com (if mess1 is installed)
+    3. Remove cdbios (if cdbios is installed)
+Please read the *.doc and *.txt files in the c:\ps\psxgraph\doc\3ds directory. Specific installation
+instructions are included in the 3dstod_e.txt file.
+
+
+
+Add Environment Variables
+Edit your autoexec.bat file to contain the lines listed below.
+Note: This example depends on where you have set up your root PSX and PSSN directories. The file paths
+contain forward slashes, unlike the normal DOS convention which uses backward slashes.
+           REM ===== PSX Development Environment Variables =====
+           set SN_PATH=c:/ps/pssn
+           set COMPILER_PATH=c:/ps/pssn
+           set PSX_PATH=c:/ps/psx/bin
+           set C_INCLUDE_PATH=c:/ps/psx/include
+           set C_PLUS_INCLUDE_PATH=c:/ps/psx/include
+           set LIBRARY_PATH=c:/ps/psx/lib
+           set GO32=DMPISTACK 1000000
+           REM ===== GNU C/C++==================================
+           set GO32TMP=c:/tmp
+           set TMPDIR=c:/TMP
+           REM If your computer does not have a floating point
+           REM co-processor then uncomment the following line:
+           REM set GO32=emu c:\pssn\emu387
+           REM =================================================
+
+SDevTC users -- Please Note:
+The file c:\ps\pssn\SN.INI is referenced by the compiler. This file can be used to contain some of the
+DOS environment variables. When the environment variables and SN.INI are both defined, SN.INI is
+given preference.
+Due to the way the new SDevTC environment is laid out, it may be necessary to manually make changes to
+your SN.INI file. SN.INI has been configured to work with the default install directory structure. If you
+have deviated from the default path, you will need to modify the following lines within the file
+\ps\pssn\bin\sn.ini to reflect your computer's directory structure:
+           [ccpsx]
+           LIBRARY_PATH=c:\ps\psx\lib
+           C_INCLUDE_PATH=c:\ps\psx\include
+           COMPILER_PATH=c:\ps\pssn\bin
+           assembler_path=c:\ps\pssn\bin
+           linker_path=c:\ps\pssn\bin
+
+
+
+
+                                                                         DTL-H2000 Installation and Operation
+2–6 Installation of Software Tools
+
+           Additional Note: To run any of the samples that use a .lnk file, the following lines need to be modified to
+           reflect your library path:
+                       [psylink]
+                       library_path=c:\ps\psx\lib
+
+           As a bug fix, it is necessary to define an environment variable PSYQ_PATH. In ccpsxd version 3.05.0009,
+           an error will be returned if PSYQ_PATH is not defined. However, it is the directory specified in SN_PATH
+           which will actually be referred to.
+           Example:
+                       > set PSYQ_PATH=c:\temp
+
+           For more information, please refer to the following documents:
+                    \pssn\bin\Readme.1st
+                    \pssn\bin\Readme.txt
+
+
+
+         Reboot the Computer
+           This completes the installation of the software tools. The installation of the DTL-H2000 hardware follows.
+
+
+
+
+       DTL-H2000 Installation and Operation
+Chapter 3:
+Hardware Installaton
+
+
+
+
+                       DTL-H2000 Installation and Operation
+3–2 Hardware Installation
+
+
+
+
+      DTL-H2000 Installation and Operation
+                                                                                              Hardware Installation 3–3
+
+
+
+
+Determine a Free Memory Address and a Free IRQ for the Boards
+By default, the dip-switch/jumper settings of the board are set to
+            IRQ: OFF
+            Base Port Address: 1340
+
+You will have to set the jumpers of the board to an available interrupt and address. Follow the installation
+instructions entitled "PlayStation” Board (for PC/AT) that is packaged with the boards. The interrupt
+and address you choose should not be in conflict with other boards in the system.
+There are a number of ways to determine which interrupts and addresses are available. You can use the
+"MSD" program included in most versions of DOS. Or, if you are running Windows 95, you can see what
+interrupts are assigned by performing the following:
+1. Go the “My Computer” icon. Yours may be named differently, but it looks like a computer:
+
+
+
+
+2. Right click on it and select “Properties”.
+3. Select the Device Manager tab.
+4. Select the Print… button.
+5. Choose "All devices and system summary".
+6. Print out the document. For available IRQs, read the IRQ SUMMARY section. For available I/O port
+   addresses, refer to the IO PORT SUMMARY section.
+Alternatively, some PC-Compatibles are equipped with a "Setup" routine hidden in the boot sector of the
+boot-up hard drive accessed during a cold-boot (activated by turning off the computer's power supply and
+then turning it back on). After the computer runs its memory check, and the cursor moves to the top-right
+corner of the screen, you can hit a function key (F1 through F10) to get into the "setup" mode. Since
+computers vary, you may have try the function keys one at a time. If you have a manual for your computer,
+read it for more information.
+
+
+
+Edit the autoexec.bat File
+The autoexec.bat file is edited to include the dexbios device driver.
+Suppose you moved the interrupt jumper on the board from OFF to an unused interrupt 11. Then the
+dexbios line in the autoexec.bat file must be modified as follows.
+            c:\ps\pssn\dexbios /a1340 /i11
+This example assumes that you placed pssn directly under the c:\ps directory.
+In general, the syntax of the line should be as follows:
+            <parent>\ps\pssn\dexbios /a<address> /I<interrupt>
+
+Modify your autoexec.bat and save your changes.
+
+
+
+Install the Development Boards
+The two development boards will go into two free 16-bit ISA slots in the PC.
+
+                                                                             DTL-H2000 Installation and Operation
+3–4 Hardware Installation
+
+          •   Turn off the computer before installing the boards.
+          •   Make sure that the boards fit snugly in their sockets.
+
+
+
+     Reboot the Computer
+          If you have difficulties during the booting process, you probably have an interrupt or memory conflict.
+          Recheck your work.
+
+
+
+
+      DTL-H2000 Installation and Operation
+Chapter 4:
+Testing the DTL-H2000
+
+
+
+
+                        DTL-H2000 Installation and Operation
+4–2 Testing the DTL-H2000
+
+
+
+
+      DTL-H2000 Installation and Operation
+                                                                                             Testing the DTL-H2000 4–3
+
+
+
+
+Verify Ability to Compile
+   The procedure described here may be done immediately once the software tools have been installed. It
+   isn’t necessary to install the DTL-H2000 hardware to verify ability to compile.
+   To make sure you can compile, reboot your machine to register the environment variables. Make sure your
+   paths are set correctly. If they aren't, you may have to increase the environment memory space in your
+   config.sys file, using a line like this:
+              shell = command.com /E:1024/p
+   The /E:1024 sets the environment size to 1024 bytes (valid ranges are from 160 to 32768), and /p
+   makes this command.com the default command prompt. (See p.342 of Peter Norton's Complete Guide to
+   DOS 6.22 6th Edition for further details.)
+   Once you are certain your paths are set up correctly, you can proceed to compile. At an MS-DOS prompt,
+   type the following two lines:
+                       cd c:\ps\psx\sample\graphics\balls
+                       psymake all
+   The sample should compile with no errors, and return a command-line prompt. If you have problems,
+   please recheck your steps. Otherwise please contact us (refer to the section in the front of this manual on
+   Technical Assistance).
+   Note: If the DTL-H2000 hardware is not yet installed, the program will not run.
+
+
+
+Run a Program
+   Open up a DOS-command window. Alternatively, it may help to run the computer completely in DOS,
+   without Windows 3.1 or Windows 95.
+   •   Type
+              resetps 1
+       This resets the DTL-H2000.
+   •   Type
+              run /w5     c:\ps\pssn\snpatch.cpe
+       This patch fixes a bug in the ROM of the DTL-H2000. Throughout the literature of the PlayStation®,
+       you may see references to "patchw" or "patchx" or "patchj". Ignore them, since "snpatch.cpe" is the
+       current version.
+   •   Type
+              run /w5 main.cpe
+       This loads the file main.cpe into the memory of the DTL-H2000 after pausing for a delay of "5", and
+       runs the program.
+   •   Wait for few seconds. What should appear on your video monitor is a blue screen with a bouncing ball.
+       If the program does not execute, type resetps 1 and repeat the sample program steps. If it fails
+       again, review your setup procedures. Make sure that dexbios is actually running.
+       NOTE: If you receive "Cannot connect to target" while executing your set commands, add a longer
+       pause between your commands or verify your board settings.
+   •   To exit the sample program, press the rectangular button, "Select", on the pad-controller.
+
+
+                                                                               DTL-H2000 Installation and Operation
+4–4 Testing the DTL-H2000
+
+    Run Other Sample Programs
+         Programs can be built by giving the command PSYMAKE. The makefile can also be used to run a program
+         as some programs require the preloading of model and texture data before being executed.
+         For some of the samples you may need to execute psymake load to download the necessary data files to
+         the development boards.
+         The following is a list of file suffixes that may be found in some of the sample directories:
+                     .c       C source
+                     .h       C include (header) file
+                     .obj     object file
+                     .sym     symbol file
+                     .cpe     PS-X executable file
+                     .tim     texture data file
+                     .tmd     3D model data file
+                     .lnk     psylink command file
+                     makefile.mak              makefile for building executable
+         All of the samples assume that you placed the pssn and psx directories directly in the c\ps directory. If
+         you have a different directory structure for the PSX libraries and header files, you will need to modify the
+         .lnk files for some programs. The .lnk linker command file specifies the file path where the libraries and
+         additional object modules used in the program can be found.
+
+
+
+    Run from the CDROM
+         No software drivers need to be installed to run the external CDROM drive DTL-H2010 (the "black box").
+         Running samples: A sample program has already been compiled on the Programmer Tools CDROM
+         (DTL-S2002) and will run directly from the DTL-H2010. The following represents the flow which you may
+         use to execute a program in the CD-ROM player.
+         •    Insert the Programmer Tools CDROM (DTL-S2002) into the DTL-H2010 drive.
+         •    At a DOS-command prompt, type the following:
+                     resetps 1
+                     run /w5 c:\ps\pssn\snpatch
+                     run /w5 c:\ps\pssn\selcd
+                     run /w5 c:\ps\pssn\cdexec
+         The CDMENU.EXE from the CD-ROM will be started and the menu will appear. The Up/Down key and start
+         button on the PAD can access and execute the sample program. The source code for CDMENU.EXE is in
+         \ps\psx\utility\menu\cdexec.
+         Running finished CDROMs: The above procedure can also be used for running commercial CDROMs. On
+         most DTL-H2000s and all DTL-H2500s, you can alternatively run resetps with an argument of 0:
+                     resetps 0
+         This will reboot the development environment and run from the black box.
+
+
+
+
+      DTL-H2000 Installation and Operation
+Chapter 5:
+Miscellany
+
+
+
+
+             DTL-H2000 Installation and Operation
+5–2 Miscellany
+
+
+
+
+      DTL-H2000 Installation and Operation
+                                                                                                               Miscellany   5–3
+
+
+
+Installation of the CD-ROM Emulator Software
+
+    Read the "readme.txt" that came with your CD-ROM emulator kit, which is a full set of instructions for
+    setting up your emulator card. In addition, note that the cdbios driver contains commands of the following
+    form:
+                cdbios /a<address> /d<dma>          /i<interrupt>
+    The address, dma channel, and interrupt number are controlled by the three DIP switches on the PIO2
+    board. Although the emulator board’s actual address is a 4-byte hexadecimal number, the DIP switch
+    positions A15 -A4, three bytes, represent a decimal value. The actual addresses and a table of their
+    equivalents are given below:
+                          Decimal             Hex              Actual     Remarks
+                          Notation            Notation         Address
+                                                               (in hex)
+
+                          300                 0x12C            0x12C0
+                          308                 0x134            0x1340     Default
+                          310                 0x136            0x1360
+                          318                 0x13E            0x13E0
+                          380                 0x17C            0x17C0
+                          388                 0x184            0x1840
+                          390                 0x186            0x1860
+                          398                 0x18E            0x18E0
+    In this case, take A15-A4 from 0x1340 and match it with 0x134 to get “308”. For more information, please
+    refer to the “CD Emulator” book on the Developer Tools CDROM.
+
+
+
+Kanji ROM Specification
+
+Overview
+    Two bitmap (16 dots X 16 dots) Kanji fonts are stored in the kernel ROM of the PlayStation®.
+    The addresses of the font patterns in Production (consumer) PlayStations do not always correspond witrh
+    development systems. The service function described below, Krom2RawAdd, is provided to get the
+    address.
+
+
+Fonts
+    Data format      16 dots X 16 dots        2 level bitmap
+    Character size   15 dots X 15 dots
+
+Content
+    JIS first standard Kanji characters and non Kanji letters. Non Kanji letters include top space (0x2121).
+
+Access Method
+    The head address of the font pattern of the one specific character at the start of the ROM can be obtained
+    by giving its shift JIS code to the service function. After that, direct access of all the font patterns is
+    possible.
+
+
+
+
+                                                                                    DTL-H2000 Installation and Operation
+5–4 Miscellany
+
+    Data Format
+         As shown in the drawing below, the byte on the left hand side top of the pattern is the head. The byte on
+         the right hand side top follows it. The bit ordering has the most significant bit on the left hand side.
+         Figure 5-1. Font Data Format
+                        #0              #1
+                        #2              #3
+                         ...             ...
+                         ...             ...
+                         ...             ...
+                        # 30            # 31
+
+
+
+    Service Function
+         The following function is provided as part of libapi.lib. This function is a system call, and the code, including
+         an address code exchange table, is located in the kernel area (0-0xffff) of RAM.
+
+    Krom2RawAdd
+         The service function that gets the Kanji font pattern address
+
+         Format
+                     unsigned long Krom2RawAdd(sjiscode)
+                     unsigned short sjiscode;
+
+         Argument
+         sjiscode    shift JIS code
+
+         Explanation
+         The function obtains the head address of the font pattern which corresponds to the Kanji character
+         designated by the shift JIS code.
+
+         Return value
+         The function returns the head address of the Kanji font pattern.
+         -1 is returned if there is no font data that corresponds to the designated Kanji character.
+
+
+    Patch for the DTL-H2000
+         After reset, run snpatch.cpe. This allows the service function and font pattern to be used from the program.
+         The address of the font pattern in patchx.cpe is different from its address in the PlayStation (0xbfc66000 in
+         the machine, and 0x1fa66000 in patchx.cpe.). Because of this, do not insert the font address directly in any
+         code. Use the service function to provide the address.
+
+
+    Sample Program
+    The function _get_font()
+         The function _get_font transmits the font pattern corresponding to the designated shift JIS code to VRAM,
+         and returns the developed format which can be used as a 16 bit texture pattern.
+                     unsigned long
+                     _get( sjis )
+                     unsigned char *sjis;
+                     {
+                            unsigned short sjiscode;
+                            sjiscode = *sjis<<8| *(sjis+1);
+                     return Krom2RawAdd(sjiscode); /* getting kanji font pattern address*/
+                     }
+
+
+      DTL-H2000 Installation and Operation
+                                                                                                               Miscellany   5–5
+
+               #define COLOR 0x4210
+               #define BLACK 0x3000
+               _get_font(s, data)
+               char *s;
+               unsigned short *data;
+               {
+                      unsigned short *p, *d, w;
+                      long i,j;
+                      if((p=(unsigned short*)_get(s))!=-1) {
+                             d = data;
+                             for(i=0;i<15;i++) {
+                                    for(j=7;j>=0;j—)
+                                           *d++=(((*p>>j)&0x01)==0x01)?COLOR:BLACK;
+                                    for(j=15;j>=8;j—)
+                                           *d++=(((*p>>j)&0x01)==0x01)?COLOR:BLACK;
+                                    p++;
+                                           }
+                             else {
+                                    for(d=data,i=0;i<2*16*16;i++)
+                                           *d++=BLACK;
+                             }
+                      }
+               }
+
+
+
+cpe2x
+   CPE2X translates a CPE format file created by the PSYLINK linker to a PS-X EXE format file, which is a
+   private execution format. Execution requirements are as follows.
+   Type of operating platform:      PC AT compatible
+   Operating system:                MS-DOS 3.3 or later
+   Details of the CPE format are not disclosed.
+   Information about PS-X EXE format details and its execution method are contained in the following
+   document.
+   Related manual:               DTL-D2140 Library Reference
+   The following is an example of its use.
+               C:>CPE2X MAIN.CPE
+   MAIN.EXE is created by this code.
+
+
+
+Procedure for Dealing with a Non-Recoverable Error
+   The system exit() is called if an error that cannot be dealt with is detected on the PlayStation®.
+   SystemError() is called by an internal call to exit(). This is a system call that displays a system error on the
+   monitor. An application may also call SystemError() directly.
+   The first argument of SystemError() is the error identification character. For SCE system errors, this will
+   always be an "S". In addition to "S", "E" is available to the application. The second argument of
+   SystemError() is the error identification code, consisting of a three digit decimal number. SCE reserves the
+   numbers 7XX, 8XX, and 9XX for the system. The remaining numbers are available for use by the
+   application.
+   When an SCE-stipulated error occurs, please call exit() using the relevant error identification code as the
+   argument.
+
+
+
+                                                                                   DTL-H2000 Installation and Operation
+5–6 Miscellany
+
+         Table 5-1. SCE-Stipulated System Errors
+                     Letter     Number Content
+                     EXXX               Released to the application
+                     S          000-699 Application errors
+                                701     Error occurrence with malloc
+                                751     Cannot open file
+                                752     Cannot read file
+                                753     Cannot write file
+                                754     Error occurrence in file operating functions
+                                801     HwCPU/EvSpTRAP occurrence that cannot be dealt with
+                                811     CD-ROM order register time-out
+                                812     CD-ROM order execution time-out
+                                813     HwCdRom/EvSpACK occurrence that cannot be dealt with
+                                814     HwCdRom/EvSpCOMP occurrence that cannot be dealt with
+                                815     HwCdRom/EvSpDR occurrence that cannot be dealt with
+                                816     HwCdRom/EvSpDE occurrence that cannot be dealt with
+                                817     HwCdRom/EvSpERROR occurrence that cannot be dealt with
+                                818     HwCdRom/EvSpUNKNOWN occurrence that cannot be dealt with
+                                820     SwCARD/EvSpIOE occurrence that cannot be dealt with
+                                821     SwCARD/EvSpERROR occurrence that cannot be dealt with
+                                822     SwCARD/EvSpNEW occurrence that cannot be dealt with
+                                823     SwCARD/EvSpTIMOUT occurrence that cannot be dealt with
+                                824     SwCARD/EvSpPERROR occurrence that cannot be dealt with
+                                825 SwCARD/EvSpUNKNOWN occurrence that cannot be dealt with
+
+         Table 5-2. Error Codes for Internal System Identification
+                     Letter     Number Content
+                     B          001     Adjusting conditions for copy protect
+                                901     Error in boot sequence
+                                902     CD-ROM drive cannot be initialized
+                                903     Device trouble at time of opening SYSTEM.CNF
+                                904     Cannot restructure kernel
+                                905     Cannot load first execution file
+                                906     Data structure trouble with first execution file
+                                907     Trouble during activation of first execution file
+                                908     Cannot activate first execution file
+                                909     Shell open during boot
+                                911     Trouble at time of reading SYSTEM.CNF
+                                912     Trouble at time of SYSTEM.CNF analysis
+                                913     Irregularity in default structure data
+                                921     Bus error related to extension PIO
+                     X          000-015 CPU exceptions
+                     D          011     CD-ROM order register time-out
+                                012     CD-ROM order execution time-out
+                                022     HwCdRom/EvSpERROR occurrence that cannot be recovered
+                                023     HwCdRom/EvSpDE occurrence that cannot be recovered
+                                031     CdGetStatus order register time-out
+                                032     CdGetStatus order execution error
+                                041     CD-ROM motor suspension order register time-out
+                                042 CD-ROM motor suspension order execution error
+
+
+
+
+      DTL-H2000 Installation and Operation
+                                                                                                         Miscellany   5–7
+
+Other Items
+
+Compiler
+   For a quick summary on the compiler, please refer to the ccpsx.pdf document included in the compiler
+   document on the Technical Reference CD, in the directory Progcd\gnu\doc\.
+   The GNU CC document is also available.
+
+
+If There is no Floating Point Processor on the PC
+   If your PC does not have a floating point co-processor, add the following line to its autoexec.bat file:
+              set GO32=emu c:\ps\pssn\emu387
+
+
+Global Allocation
+   Please refer to the file GblReg.pdf included in the Technical Notes directory of the Technical
+   Reference CD.
+
+
+Debugger
+   For a quick tutorial on how to use the debugger, refer to the file debugdoc.pdf in the Technical
+   Reference CD, in the \progcd\notes directory.
+
+
+
+
+                                                                              DTL-H2000 Installation and Operation
+5–8 Miscellany
+
+
+
+
+      DTL-H2000 Installation and Operation
+

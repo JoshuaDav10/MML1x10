@@ -1,0 +1,46 @@
+MIPS INSTRUCTION SET REFERENCE - SUBU PERFORMS THE SAME ARITHMETIC OPERATION BUT DOES NOT TRAP ON OVERFLOW.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: SUBU performs the same arithmetic operation but does not trap on overflow.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 2024 characters
+Lines: 37
+================================================================================
+
+SUBU performs the same arithmetic operation but does not trap on overflow.
+
+
+
+
+266                                                            MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                              Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+SUB.fmt
+
+
+
+
+     Floating Point Subtract                                                                                               SUB.fmt
+[c
+
+
+
+
+          31                   26 25            21 20             16 15              11 10              6   5                  0
+                  COP1                                                                                              SUB
+                                        fmt                ft                 fs                fd
+                 010001                                                                                           000001
+                    6                    5                  5                 5                  5                   6
+
+               Format:    SUB.S fd, fs, ft                                                                          MIPS32
+                          SUB.D fd, fs, ft                                                                          MIPS32
+                          SUB.PS fd, fs, ft                                                                         MIPS64
+                                                                                                            MIPS32 Release 2
+
+               Purpose:
+               To subtract FP values
+
+               Description: fd ← fs - ft
+               The value in FPR ft is subtracted from the value in FPR fs. The result is calculated to infinite precision, rounded
+               according to the current rounding mode in FCSR, and placed into FPR fd. The operands and result are values in for-
+               mat fmt. SUB.PS subtracts the upper and lower halves of FPR fs and FPR ft independently, and ORs together any

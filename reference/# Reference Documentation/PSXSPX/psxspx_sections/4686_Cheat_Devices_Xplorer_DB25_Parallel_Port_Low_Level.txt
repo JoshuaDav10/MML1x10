@@ -1,0 +1,127 @@
+PSXSPX SPECIFICATIONS - CHEAT DEVICES - XPLORER DB25 PARALLEL PORT LOW LEVEL TRANSFER PROTOCOL
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Cheat Devices - Xplorer DB25 Parallel Port Low Level Transfer Protocol
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 4598 characters
+Lines: 119
+================================================================================
+
+Cheat Devices - Xplorer DB25 Parallel Port Low Level Transfer Protocol
+
+All 16bit/24bit/32bit parameters are transferred MSB first.
+
+Tx(Data) - transmit data byte(s)
+
+| Output 8bit data to DATA0-7 (DB25.pin2-9) ;-Send Data (D0-D7)
+Output /SEL=HIGH (DB25.pin17) ;\Handshake High
+Wait until /ACK=HIGH (DB25.pin10) ;/
+Output /SEL=LOW (DB25.pin17) ;\Handshake Low
+Wait until /ACK=LOW (DB25.pin10) ;/
+
+Rx(Data) - receive data byte(s)
+
+| Wait until /ACK=HIGH (DB25.pin10) ;\
+Get 3bit from SLCT,PE,BUSY (DB25.pin13,12,11) ; 1st Part (D6,D7,HIGH)
+Output /SEL=HIGH (DB25.pin17) ;/
+Wait until /ACK=LOW (DB25.pin10) ;\
+Get 3bit from SLCT,PE,BUSY (DB25.pin13,12,11) ; 2nd Part (D3,D4,D5)
+Output /SEL=LOW (DB25.pin17) ;/
+Wait until /ACK=HIGH (DB25.pin10) ;\
+Get 3bit from SLCT,PE,BUSY (DB25.pin13,12,11) ; 3rd Part (D0,D1,D2)
+Output /SEL=HIGH (DB25.pin17) ;/
+Wait until /ACK=LOW (DB25.pin10) ;\4th Part (ver,LOW,LOW)
+Get 3bit from SLCT,PE,BUSY (DB25.pin13,12,11) ; (ver=LOW for v1.091)
+Output /SEL=LOW (DB25.pin17) ;/ (ver=HIGH for v4.52)
+Wait until all 4bits LOW (DB25.pin13,12,11,10);-xlink95 fails if not
+
+RxFast(Data) for TurboGetMem - slightly faster than normal Rx(Data)
+
+First, for invoking the Turbo transfer:
+
+| Wait for BUSY=LOW (DB25.pin11)
+Output DATA = 00h (DB25.pin2-9)
+Wait for BUSY=HIGH (DB25.pin11)
+Output DATA = ECh (DB25.pin2-9)
+
+Thereafter, receive the actual Data byte(s) as so:
+
+| Wait for /ACK transition (DB25.pin10) ;\
+Get 3bit from SLCT,PE,BUSY (DB25.pin13,12,11) ; 1st Part (D6,D7,LOW)
+Output DATA = 02h (DB25.pin2-9) ;/
+Wait for /ACK transition (DB25.pin10) ;\
+Get 3bit from SLCT,PE,BUSY (DB25.pin13,12,11) ; 2nd Part (D3,D4,D5)
+Output DATA = 04h (DB25.pin2-9) ;/
+Wait for /ACK transition (DB25.pin10) ;\
+Get 3bit from SLCT,PE,BUSY (DB25.pin13,12,11) ; 3rd Part (D0,D1,D2)
+Output DATA = 01h (DB25.pin2-9) ;/
+
+The /ACK transitions can be sensed by polling the parallel port IRQ flag on PC
+side.
+
+RxFaster(Data) for OptimalGetMem - much faster than normal Rx(Data)
+
+First, for invoking the Turbo transfer:
+
+| Output DATA = 00h ;
+
+Thereafter, receive the actual Data byte(s) as so:
+
+| Get 4bit from SLCT,PE,BUSY,/ACK (DB25.pin13,12,11,10);\1st Part (D4,D5,D6,D7)
+Output DATA = 00h (DB25.pin2-9) ;/
+Get 4bit from SLCT,PE,BUSY,/ACK (DB25.pin13,12,11,10);\2nd Part (D0,D1,D2,D3)
+Output DATA = 01h (DB25.pin2-9) ;/
+
+BUG: The first received byte will be garbage with upper and lower 4bit both
+containing the lower 4bits (the bugged firmware does explicitely want DATA=00h
+before transfer, although DATA=00h is also 'confirming' that the upper 4bit can
+be 'safely' replaced by lower 4bit).
+
+TxRxChksum for SetMem/GetMem functions
+
+| Tx(chkMsb), Rx(chkMsb), Tx(chkLsb), Rx(chkLsb), Rx("OK" or "CF" or "BG")
+
+The 16bit checksum is all bytes in Data[Len] added together. The two final
+response bytes should be "OK"=Okay, or, if the transmitted chksum didn't match,
+either "CF"=ChecksumFail (for SetMem functions) or "BG"=BadGetChecksum (for
+GetMem functions). MenuSetMemAndBurnFirm is a special case with three response
+codes: "OF"=FlashOkay, "CF"=ChecksumFail, "FF"=FlashWriteFail.
+
+TxFilename for Memcard (bu) functions
+
+| Rx(Addr32), Tx(Addr32,Len32,Data[Len]), TxRxChksum
+
+This is internally using the standard "SetMem" function; preceeded by
+Rx(Addr32). Whereas Addr is the target address for the filename (just pass the
+Rx'ed address to the Tx part), Len should be max 38h, Data should be the
+filename with ending zero (eg. "bu10:name",00h).
+
+TxFiledata for Memcard (bu) WriteFile
+
+| Rx(Filename[26h]) ;-name from TxFilename, echo'ed back
+Rx(Addr32) ;-buffer address for fragments
+Tx(NumFragments8) ;-number of fragments
+Tx(Addr32,Len32,Data[Len]), TxRxChksum ;
+
+This is also using the standard "SetMem" function, plus some obscure extra's.
+The filedata is split into fragments, Len should be max 2000h per fragment.
+
+RxDataFFEEh for Memcard (bu) ReadFile and GetWhatever
+
+| Rx(FFEEh,"W",Len32,Data[Len] ;
+
+Memcard ReadFile does transfer N fragments of Len=2000h (depending on
+filesize). The GetWhatever function transfers one fragment with Len=80h,
+followed by N*6 fragments with Len=40Ah.
+
+RxTurbo for Memcard (bu) GetDirectory/GetFileHeader functions
+
+| Rx(Addr32), Tx(Addr32,Len32), RxFast(Data[Len]), TxRxChksum
+
+This is internally using the standard "TurboGetMem" function; preceeded by
+Rx(Addr32). Whereas Addr is the source address of the actual data (just pass
+the Rx'ed address to the Tx part).
+
+For GetDirectoy, Len should be max 800h (actual/data data is only 4B0h bytes,
+ie. 258h bytes per memcard, aka 28h bytes per directory entry). For
+GetFileHeader, Len should be max 80h.

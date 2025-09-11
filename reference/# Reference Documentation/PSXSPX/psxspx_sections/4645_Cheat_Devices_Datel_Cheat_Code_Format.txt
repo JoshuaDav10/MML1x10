@@ -1,0 +1,40 @@
+PSXSPX SPECIFICATIONS - CHEAT DEVICES - DATEL CHEAT CODE FORMAT
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Cheat Devices - Datel Cheat Code Format
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1304 characters
+Lines: 31
+================================================================================
+
+Cheat Devices - Datel Cheat Code Format
+
+PSX Gameshark Code Format
+
+| 30aaaaaa 00dd ;-8bit Write [aaaaaa]=dd
+80aaaaaa dddd ;-16bit Write [aaaaaa]=dddd
+
+Below for v2.2 and up only
+
+| D0aaaaaa dddd ;-16bit/Equal If dddd=[aaaaaa] then (exec next code)
+D1aaaaaa dddd ;-16bit/NotEqual If dddd<>[aaaaaa] then (exec next code)
+D2aaaaaa dddd ;-16bit/Less If dddd[aaaaaa] then (exec next code)
+E0aaaaaa 00dd ;-8bit/Equal If dd=[aaaaaa] then (exec next code)
+E1aaaaaa 00dd ;-8bit/NotEqual If dd<>[aaaaaa] then (exec next code)
+E2aaaaaa 00dd ;-8bit/Less If dd[aaaaaa] then (exec next code)
+10aaaaaa dddd ;-16bit Increment [aaaaaa]=[aaaaaa]+dddd
+11aaaaaa dddd ;-16bit Decrement [aaaaaa]=[aaaaaa]-dddd
+20aaaaaa 00dd ;-8bit Increment [aaaaaa]=[aaaaaa]+dd
+21aaaaaa 00dd ;-8bit Decrement [aaaaaa]=[aaaaaa]-dd
+
+Below for v2.41 and up only
+
+| D4000000 dddd ;-Buttons/If If dddd=JoypadButtons then (exec next code)
+D5000000 dddd ;-Buttons/On If dddd=JoypadButtons then (turn on all codes)
+D6000000 dddd ;-Buttons/Off If dddd=JoypadButtons then (turn off all codes)
+C0aaaaaa dddd ;-If/On If dddd=[aaaaaa] (turn on all codes)
+
+Below probably v2.41, too (though other doc claims for v2.2)
+
+| 5000nnbb dddd ;\Slide Code aka Patch Code aka Serial Repeater
+aaaaaaaa ??ee ;/for i=0 to nn-1, [aaaaaaaa+(i*bb)]=dddd+(i*??ee), next i

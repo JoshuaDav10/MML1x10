@@ -1,0 +1,274 @@
+--------------------------------------------------------------------------
+Quick CDrom explanation...                                     2000/doomed
+
+There's a *LOT* missing here, and the other half might be incorrect, so
+i won't take any responsibility for strange stuff happening. It should
+give you some pointers in the right direction for your own CD explorations
+though. More might follow at some later time..
+--------------------------------------------------------------------------
+CDREG0 = $1f801800
+CDREG1 = $1f801801
+CDREG2 = $1f801802
+CDREG3 = $1f801803
+--------------------------------------------------------------------------
+CDREG0   write    : 0 - to send a command
+                    1 - to get the result
+         read     : I/O status?
+                    bit 0- 0 REG1 command send
+                         - 1 REG1 data read
+                    bit 1- 0 data transfer finished
+                           1 data transfer ready/in progress
+                    bit 7- 1 command being processed.
+
+CDREG1   write    : command
+         read     : results
+
+CDREG2   write    : send arguments
+         write    : 7 = flush arg buffer?
+
+CDREG3   write    : 7 = flush irq
+         read     : hi nibble: ?
+                    low nibble: interrupt status
+--------------------------------------------------------------------------
+Modes for SetMode:
+M_Speed        bit 7      0: normal speed  1: double speed
+M_Strsnd       bit 6      0: ADPCM off     1: ADPCM on
+M_Size         bit 5      0: 2048 byte     1: 2340 byte
+M_Size2        bit 4      0: -             1: 2328 byte
+M_SF           bit 3      0: Channel off   1: Channel on
+M_Report       bit 2      0: Report off    1: Report on
+M_AutoPause    bit 1      0: AutoPause off 1: AutoPause on
+M_CDDA         bit 0      0: CD-DA off     1: CD-DA on
+
+These modes can be set using the setmode command. 
+--------------------------------------------------------------------------
+Status bits:
+Play       	bit 7      playing CD-DA
+Seek       	bit 6      seeking
+Read       	bit 5      reading data sectors
+ShellOpen  	bit 4      once shell open
+SeekError  	bit 3      seek error detected
+Standby    	bit 2      spindle motor rotating
+Error      	bit 1      command error detected
+
+These are the bit values for the status byte recieved from CD commands.
+--------------------------------------------------------------------------
+Interrupt values:
+NoIntr      $00        No interrupt
+DataReady   $01        Data Ready
+Acknowledge $02        Command Complete
+Complete    $03        Acknowledge
+DataEnd     $04        End of Data Detected
+DiskError   $05        Error Detected
+
+These are returned in the low nibble of CDREG3. First write a 1 to CDREG0
+before reading CDREG3. When a command is completed it returns 3.
+To acknowledge an irq value after you've handled it, write a 1 to CDREG0
+then a 7 to both CDREG2 and CDREG3. Another interrupt may be queued, so
+you should check CDREG3 again if 0 or if there's another interrupt to
+be handled.
+--------------------------------------------------------------------------
+Sync           $00         -                 status
+Nop            $01         -                 status
+Setloc         $02         min,sec,sector    status
+Play           $03    B    -                 status
+Forward        $04    B    -                 status
+Backward       $05    B    -                 status
+ReadN          $06    B    -                 status
+Standby        $07    B    -                 status
+Stop           $08    B    -                 status
+Pause          $09    B    -                 status
+Init           $0a         -                 status
+Mute           $0b         -                 status
+Demute         $0c         -                 status
+Setfilter      $0d         file,channel      status
+Setmode        $0e         mode              status
+Getparam       $0f         -                 status,mode,file?,chan?,?,?
+GetlocL        $10         -                 min,sec,sector,mode,file,channel
+GetlocP        $11         -                 track,index,min,sec,frame,amin,
+                                                 asec,aframe
+GetTN          $13         -                 status,first,total (BCD)
+GetTD          $14         track(BCD)        status,min,sec (BCD)
+SeekL          $15    B    *                 status
+SeekP          $16    B    *                 status
+Test           $19         #                 depends on parameter
+ID             $1A    B    -                 success,flag1,flag2,00
+                                                 4 letters of ID (SCEx)
+ReadS          $1B    B    -                 status
+Reset          $1C         -                 status
+ReadTOC        $1E    B?   -                 status
+
+* These commands' targets are set using Setloc.
+# Command 19 is really a portal to another set of commands.
+
+B means blocking.  These commands return an immediate result saying the
+command was started, but you need to wait for an IRQ in order to get
+real results.
+
+Command descriptions:
+00 Sync:       Command does not succeed until all other commands complete.
+               This can be used for synchronization - hence the name.
+01 Nop:        Does nothing; use this if you just want the status.
+02 Setloc:     This command, with its parameters, sets the target for
+               commands with a * for their parameter list.
+03 Play:       Plays audio sectors from the last point seeked.  This is
+               almost identical to CdlReadS, believe it or not.  The main
+               difference is that this does not trigger a completed read
+               IRQ.  CdlPlay may be used on data sectors.  However, all
+               sectors from data tracks are treated as 00, so no sound is
+               played.  As CdlPlay is reading, the audio data appears in
+               the sector buffer, but is not reliable.  Game Shark
+               "enhancement CDs" for the 2.x and 3.x versions used this
+               to get around the PSX copy protection.
+04 Forward:    Seek to next track ?
+05 Backward:   Seek to beginning of current track, or previous track if
+               early in current track (like a CD player's back button)
+06 ReadN:      Read with retry.  Each sector causes an IRQ (type 1) if
+               ModeRept is on (I think).  ReadN and ReadS cause errors if
+               you're trying to read a non-PSX CD or audio CD without a
+               mod chip.
+07 Standby:    CD-ROM aborts all reads and playing, but continues
+               spinning.  CD-ROM does not attempt to keep its place.
+08 Stop:       Stops motor.  Official way to restart is 0A, but almost
+               any command will restart it.
+09 Pause:      Like Standby, except the point is to maintain the current
+               location within reasonable error.
+0A Init:       Multiple effects at once.  Setmode = 00, Standby, abort
+               all commands.
+0B Mute:       Turn off CDDA stream to SPU.
+0C Demute:     Turn on CDDA streaming to SPU.
+0D Setfilter:  Automatic ADPCM (CD-ROM XA) filter ignores sectors except
+               those which have the same channel and file (parameters)
+               in their subheader area.  This is the mechanism used to
+               select which of multiple songs in a single XA to play.
+               Setfilter does not affect actual reading (sector reads
+               still occur for all sectors).
+0E Setmode:    Sets parameters such as read mode and spin speed.  See
+               chart above the command list.
+0F Getparam:   ??? returns status, mode, file, channel, ?, ?
+10 GetlocL:    Retrieves first 6 (8?) bytes of last read sector (header)
+               This is used to know where the sector came from, but is
+               generally pointless in 2340 byte read mode.  All results
+               are in BCD ($12 is considered track twelve, not eighteen)
+               Command may execute concurrently with a read or play
+               (GetlocL returns results immediately).
+11 GetlocP:    Retrieves 8 of 12 bytes of sub-Q data for the last-read
+               sector.  Same purpose as GetlocL, but more powerful, and
+               works while playing audio.  All results are in BCD.
+                   track:  track number ($AA for lead-out area)
+                   index:  index number (INDEX lines in CUE sheets)
+                   min:    minute number within track
+                   sec:    second number within track
+                   frame:  sector number within "sec" (0 to 74)
+                   amin:   minute number on entire disk
+                   asec:   second number on entire disk
+                   aframe: sector number within "asec" (0 to 74)
+13 GetTN:      Get first track number and number of tracks in the TOC.
+14 GetTD:      Gets start of specified track (does it return sector??)
+15 SeekL:      Seek to Setloc's location in data mode (can only seek to
+               data sectors, but is accurate to the sector)
+16 SeekP:      Seek to Setloc's location in audio mode (can seek to
+               any sector, but is only accurate to the second)
+19 Test:       This function has many subcommands that are completely
+               different.
+1A ID:         Returns copy protection status.  StatError for invalid
+               data CD, StatStandby for valid PSX CD or audio CD.  The
+               following bits I'm unsure about, but I think the 3rd
+               byte has $80 bit for "CD denied" and $10 bit for
+               "import".  $80 = copy, $90 = denied import, $10 =
+               accepted import (Yaroze only).  The 5th through 8th
+               bytes are the SCEx ASCII string from the CD. 
+1B ReadS:      Read without automatic retry.
+1C Reset:      Same as opening and closing the drive door.
+1E ReadTOC:    Reread the Table of Contents without reset. 
+
+-----------------------------------------------------------------------
+--------------------------------------------------------------------------
+To send a command:
+
+- First send any arguments by writing 0 to CDREG0, then all arguments
+  sequentially to CDREG2
+
+- Then write 0 to CDREG0, and the command to CDREG1.
+
+To wait for a command to complete:
+
+- Wait until a CDrom irq occurs (bit 3 of the interrupt regs) The cause
+  of the cdrom irq is in the low nibble of CDREG3. This is usually 3
+  on a succesful comletion. Failure to complete the command will result
+  in a 5. If you don't wish to use irq's you can just check for the
+  low nibble of cdreg3 to become something other than 0, but make sure
+  it doesn't get cleared in any irq setup by the bios or some such.
+
+To Get the results
+
+- Write a 1 to CDREG0, then read CDREG0, If bit 5 is set, read a return
+  value from CDREG1, then read CDREG0 again repeat until bit 5 goes low.
+
+To Clear the irq
+
+- After command completion the irq cause should be cleared, do this by
+  writing a 1 to CDREG0 then 7 to CDREG2 and CDREG3. My guess is that
+  the write to CDREG2 clears the arguments previously set from some
+  buffer.
+  Note that irq's are queued, and if you clear the current, another may
+  come up directly..
+--------------------------------------------------------------------------
+To init the CD:
+
+-Flush all irq's
+-CDREG0=0
+-CDREG3=0
+-Com_Delay=4901 ($1f801020)
+-Send 2 NOP's
+-Command $0a, no args.              (<- what's this??)
+-Demute
+--------------------------------------------------------------------------
+To set up the cd for audio playback, some weird init stuff needs to be
+done:
+
+CDREG0=2
+CDREG2=$80
+CDREG3=0
+CDREG0=3
+CDREG1=$80
+CDREG2=0
+CDREG3=$20
+
+Also don't forget to init the SPU. (CDvol and CD enable especially)
+--------------------------------------------------------------------------
+You should not send some commands while the CD is seeking. (ie. status
+returns with bit 6 set.) Thing is that the status only gets updated after
+a new command. I haven't tested this for other command, but for the
+play command ($03) you can just keep repeating the command and checking
+the status returned by that, for bit 6 to go low(and bit 7 to go high in
+this case) If you don't and try to do a getloc directly after the play
+command reports it's done, the cd will stop. (I guess the cd can't
+get it's current location while it's seeking, so the logic stops the seek
+to get an exact fix, but never restarts..)
+
+
+-----------------------------------------------------------------------
+19 subcommands.
+-----------------------------------------------------------------------
+
+For one reason or another, there is a counter that counts the number of
+SCEx strings received by the CD-ROM controller.
+
+Be aware that the results for these commands can exceed 8 bytes.
+
+04: Read SCEx counter (returned in 1st byte?)
+05: Reset SCEx counter.  This also sets 1A's SCEx response to
+    00 00 00 00, but doesn't appear to force a protection failure.
+20: Returns an ASCII string specifying where the CD-ROM firmware is
+    intended to be used ("for Japan", "for U/C").
+22: Returns a chip number inside the PSX in use.
+23: Returns another chip number.
+24: Returns yet another chip number.  Same as 22's on some PSXs.
+
+--------------------------------------------------------------------------
+3/nov/1999	Initial version
+3/feb/2000	Update. Big thanks to Barubary, who rewrote a large part.
+--------------------------------------------------------------------------
+psx.padua.org                www.padua.org                  doomed@c64.org
+--------------------------------------------------------------------------

@@ -1,0 +1,61 @@
+PSXSPX SPECIFICATIONS - X-FILES (LOGOS\*.BS AND GRAPHICS\GRAPHICS.BIN AND GRAPHICS\PACKEDBS.BIN\*)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: X-Files (LOGOS\*.BS and GRAPHICS\GRAPHICS.BIN and GRAPHICS\PACKEDBS.BIN\*)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 2245 characters
+Lines: 52
+================================================================================
+
+X-Files (LOGOS\*.BS and GRAPHICS\GRAPHICS.BIN and GRAPHICS\PACKEDBS.BIN\*)
+You Don't Know Jack 2 (MagDemo41: YDKJV2\RES\UI\*.BS)
+
+Note: Those .BS files are usually hidden in custom file archives.
+
+BS Picture Resolution
+
+Movies have Width/Height entries (in the .STR header). Raw .BS picture files
+don't have any such information. However, there are ways to guess the correct
+resolution:
+
+| For BS iki format, use resolution from iki header (eg. Gran Turismo 1)
+For MHPB\STILLS.BIN, there's width/height in chunk headers
+Count the number of blocks (EOB codes) during Huffman decompression
+Divide that number by 6 to get the number of Macroblocks
+Search matches for Height=NumBlocks/Width with Width>=Height and Remainder=0
+If Height=300..400, assume double H-resolution, repeat with Width/2>=Height
+And/or use a list of known common resoltions (see below examples)
+Search arrangements with many similar colors on adjacent macroblocks
+
+Common resolutions are:
+
+| Blocks Pixels Example
+F0h 256x240 any?
+12Ch 320x240 Resident Evil 2 (COMMON\BSS\*.BSS)
+1E0h 512x240 Demo Disc 03-54 (MENU.FF\*), Duke Nukem (MagDemo12)
+1E0h 640x192 Less common than above (but used by Witch of Salzburg)
+4B0h 640x480 Vigilante 8 (MagDemo09), Jet Moto 2 (MagDemo03)
+var random Witch of Salzburg has various random resolutions
+iki ikihdr Gran Turismo 1 has A0hxA0h and odd size (!) E8hx28h
+? ? Final Fantasy VII (FF7)
+? ? Ultimate Fighting Championship (UFC\CU00.RBB\3B7h..3E2h)
+118h 320x224 Alice in Cyberland (most files; or two such as panorama)
+230h ? Alice in Cyberland (AD_115.BS and AD_123A.BS)
+
+Some other possible, but rather unlikely results would be:
+
+| C8h 320x160 Unlikely for pictures (but used for STR videos, eg. Alone)
+F0h 320x192 Unlikely for pictures (but used for STR videos, eg. Wipeout)
+1E0h 384x320 Very unlikely to see that vertical resolution on PSX
+
+Witch of Salzburg has many small .BS files with various uncommon resolutions
+(most of them are bundled with 16-byte .TXT files with resolution info).
+
+Extended BS with Width/Height
+
+Starwars Demolition (MagDemo39: STARWARS\SHELL\DEMOLOGO.BS+RESOURCE.TBL\*)
+
+Starwars Demolition (MagDemo41: STARWARS\SHELL\DEMOLOGO.BS+RESOURCE.TBL\*)
+
+| 000h 2 Width (280h) ;\extra header
+002h 2 Height (1E0h) ;/

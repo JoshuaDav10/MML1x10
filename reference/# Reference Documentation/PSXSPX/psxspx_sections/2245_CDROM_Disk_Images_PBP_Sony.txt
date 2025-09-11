@@ -1,0 +1,54 @@
+PSXSPX SPECIFICATIONS - CDROM DISK IMAGES PBP (SONY)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM Disk Images PBP (Sony)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1907 characters
+Lines: 45
+================================================================================
+
+CDROM Disk Images PBP (Sony)
+
+.PBP
+
+Sony's disc image format used on PSP. Can store multi-disc images in a single
+file. Supports deflate data compression and some yet unknown audio compression.
+A homebrew compressor can compress whole discs with deflate (which works, but
+it isn't very good to compress audio sectors that way).
+
+PBP Format (rev-engineered from homebrew DBALL.PBP)
+
+| 000000h 4 ID (00h,"PBP")
+000004h 4 Version? (10000h) (but, reportedly "always 100h or 1000100h")
+000008h 4 Offset of the file PARAM.SFO (28h)
+00000Ch 4 Offset of the file ICON0.PNG (3D8h)
+000010h 4 Offset of the file ICON1.PMF (3D8h) or ICON1.PNG
+000014h 4 Offset of the file PIC0.PNG (3D8h) or UNKNOWN.PNG
+000018h 4 Offset of the file PIC1.PNG (3D8h) or PICT1.PNG
+00001Ch 4 Offset of the file SND0.AT3 (3D8h)
+000020h 4 Offset of the file DATA.PSP (3D8h)
+000024h 4 Offset of the file DATA.PSAR (10000h)
+000028h .. PARAM.SFO file (zerofilled in homebrew PBP)
+0003D8h .. PNG files etc (zerofilled in homebrew PBP)
+010000h 0Ch ID "PSISOIMG0000"
+01000Ch 4 PBP Size-10000h (144740h)
+010010h 4 PBP Size-6420h (???) (14E320h)
+010014h .. Zerofilled
+010400h 0Bh Game ID ("_SCUS_94476" for Hot Shots Golf 2)
+01040Bh .. Zerofilled
+010800h A00h TOC List (0Ah-byte per entry) (unused entries are zerofilled)
+011200h 20h Zerofilled
+011220h 4 PBP Size-D2CFh (???) (147471h)
+011224h 4 Zero
+011228h 4 Unknown (7FFh)
+01122Ch 11h Game Name ("Hot Shots Golf",C2h,AEh,"2")
+01123Dh .. Zerofilled
+014000h .. Sector List (20h-byte per entry) (unused entries are zerofilled)
+... .. Zerofilled
+110000h .. Deflated sectors (9300h bytes after decompression)
+15467Dh B8h One extra compression block that is NOT in Sector List ???
+154735h 0Bh Weird padding with ASCII "00000000000"
+154740h - End of file
+TOC List (Subchannel Q with ADR=1 during Lead-In):
+000h 1 ADR/Control (eg. 41h=Data Track)
+001h 1 Track (always 00h=Lead-in for all TOC List entries)

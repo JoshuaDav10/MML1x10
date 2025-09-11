@@ -1,0 +1,33 @@
+MIPS INSTRUCTION SET REFERENCE - FIGURE 3-4 SHOWS THE SYMBOLIC OPERATION OF THE INSTRUCTION.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Figure 3-4 shows the symbolic operation of the instruction.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1770 characters
+Lines: 24
+================================================================================
+
+Figure 3-4 shows the symbolic operation of the instruction.
+
+                                                                                                           size size-1
+                                    31                                                                                         0
+                                                                                                     msb-lsb+1 msb-lsb
+                      GPR rs                                           ABCD                                            EFGH
+                                                                   32-size                                          size
+                                                               32-(msb-lsb+1)                                     msb-lsb+1
+
+
+
+                                                        pos+size pos+size-1        pos pos-1
+                                     31                                                                                        0
+                                                          msb+1 msb                lsb lsb-1
+
+                         GPR rt                 IJKL                    MNOP                              QRST
+                         Initial            32-(pos+size)                size                              pos
+                         Value               32-(msb+1)                msb-lsb+1                           lsb
+
+
+
+                                                       pos+size pos+size-1         pos   pos-1
+                                    31                                                                                         0
+                                                        msb+1 msb                  lsb   lsb-1

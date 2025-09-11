@@ -1,0 +1,44 @@
+MIPS INSTRUCTION SET REFERENCE - EXCEPTIONS:
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Exceptions:
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1716 characters
+Lines: 35
+================================================================================
+
+Exceptions:
+             None
+
+             Programming Notes:
+             The term “unsigned” in the instruction name is a misnomer; this operation is 32-bit modulo arithmetic that does not
+             trap on overflow. This instruction is appropriate for unsigned arithmetic, such as address arithmetic, or integer arith-
+             metic environments that ignore overflow, such as C language arithmetic.
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                                     37
+
+                                Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+ADDU
+
+
+
+
+  Add Unsigned Word                                                                                                       ADDU
+
+       31                   26 25            21 20              16 15             11 10               6   5                  0
+             SPECIAL                                                                          0                 ADDU
+                                      rs                 rt                rd
+              000000                                                                        00000               100001
+                   6                  5                  5                  5                 5                    6
+
+            Format:    ADDU rd, rs, rt                                                                                 MIPS32
+
+            Purpose:
+            To add 32-bit integers
+
+            Description: rd ← rs + rt
+            The 32-bit word value in GPR rt is added to the 32-bit value in GPR rs and the 32-bit arithmetic result is placed into
+            GPR rd.

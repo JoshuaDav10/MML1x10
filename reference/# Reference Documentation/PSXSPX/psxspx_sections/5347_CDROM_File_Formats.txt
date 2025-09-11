@@ -1,0 +1,51 @@
+PSXSPX SPECIFICATIONS - CDROM FILE FORMATS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Formats
+Chunked: Wed Sep 10 03:34:25 PM CDT 2025
+Size: 1321 characters
+Lines: 42
+================================================================================
+
+CDROM File Formats
+
+XED Editor
+
+XED About
+
+XED Hotkeys
+
+XED Assembler/Debugger Interface
+
+XED Commandline based standalone version
+
+XED About
+
+About XED
+
+XED is a text editor, the executable is fast and small, and it includes
+comfortable editing functions. It is both intended for standard .TXT files (or
+any other ASCII files, such like .ASM for assembler source code). Also, the
+line-wrapping support (.XED files) can be used for authoring stories,
+specifications, etc. Most of the features are much the same as for other text
+editors, some special functions are pointed out below:
+
+Block Selection
+
+XED supports good old quality block mechanisms, allowing to copy/move the
+selection directly to cursor position by Ctrl+K,C/V hotkeys (without needing to
+use paste). For data exchange with other programs or text files, the block can
+be directly written to (or loaded from) file by Ctrl+K,R/W. And, mainstream
+copy/cut/paste functions are supported as well, by Ctrl+Ins, Shift+Del,
+Shift+Ins.
+
+Note: The block remains selected even when typing text, and it won't get
+deleted when touching Del-key.
+
+Condensed Display Mode
+
+Condensed mode is activated by "F6,C" key combination. In this mode, only lines
+beginning with colon ":", or (for assembler source code files) with
+semicolon-colon ";:", for example:
+
+| :Chapter IV

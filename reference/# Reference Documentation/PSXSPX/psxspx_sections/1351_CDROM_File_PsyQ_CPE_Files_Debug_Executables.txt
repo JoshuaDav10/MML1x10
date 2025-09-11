@@ -1,0 +1,74 @@
+PSXSPX SPECIFICATIONS - CDROM FILE PSYQ .CPE FILES (DEBUG EXECUTABLES)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File PsyQ .CPE Files (Debug Executables)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1871 characters
+Lines: 66
+================================================================================
+
+CDROM File PsyQ .CPE Files (Debug Executables)
+
+Fileheader
+
+| 00h 4 File ID (01455043h aka "CPE",01h)
+
+Chunk 00h: End of File
+
+| 00h 1 Chunk ID (00h)
+
+Chunk 01h: Load Data
+
+| 00h 1 Chunk ID (01h)
+01h 4 Address (usually 80010000h and up)
+05h 4 Size (LEN)
+09h LEN Data (binary EXE code/data)
+
+Theoretically, this could contain the whole EXE body in a single chunk.
+However, the PsyQ files are usually containing hundreds of small chunks (with
+each function and each data item in a separate chunk). For converting CPE to
+EXE, use "ExeOffset = (CpeAddress AND 1FFFFFFFh)-10000h+800h".
+
+Chunk 02h: Run Address (whatever, optional, usually not used in CPE files)
+
+| 00h 1 Chunk ID (02h)
+01h 4 Address
+
+Unknown what this is. It's not the entrypoint (which is set via chunk 03h).
+Maybe intended to change the default load address (usually 80010000h)?
+
+Chunk 03h: Set Value 32bit (LEN=4) (used for entrypoint)
+
+Chunk 04h: Set Value 16bit (LEN=2) (unused)
+
+Chunk 05h: Set Value 8bit (LEN=1) (unused)
+
+Chunk 06h: Set Value 24bit (LEN=3) (unused)
+
+| 00h 1 Chunk ID (03h..06h)
+01h 2 Register (usually 0090h=Initial PC, aka Entrypoint)
+03h LEN Value (8bit..32bit)
+
+Chunk 07h: Select Workspace (whatever, optional, usually not used in CPE)
+
+| 00h 1 Chunk ID (07h)
+01h 4 Workspace number (usually 00000000h)
+
+Chunk 08h: Select Unit (whatever, usually first chunk in CPE file)
+
+| 00h 1 Chunk ID (08h)
+01h 1 Unit (usually 00h)
+
+Example from LameGuy's sample.cpe:
+
+| 0000h 4 File ID ("CPE",01h)
+0004h 2 Select Unit 0 (08h,00h)
+0006h 7 Set Entrypoint 8001731Ch (03h,0090h,8001731Ch)
+000Dh 0Dh Load (01h,800195F8h,00000004h,0,0,0,0)
+001Ah .. Load (01h,80010000h,0000002Bh,...)
+004Eh .. Load (01h,8001065Ch,00000120h,...)
+0177h ... Load (01h,8001077Ch,0000012Ch,...)
+02ACh ... Load (01h,800108A8h,000000A4h,...)
+... ... Load (...)
+98F4h ... Load (01h,800195F0h,00000008h,...)
+9905h 1 End (00h)

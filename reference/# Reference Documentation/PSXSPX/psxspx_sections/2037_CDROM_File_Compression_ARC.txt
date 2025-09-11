@@ -1,0 +1,190 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION ARC
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression ARC
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 7389 characters
+Lines: 182
+================================================================================
+
+CDROM File Compression ARC
+
+ARC Archives
+
+ARC is an old DOS and CP/M compression tool from 1985-1990. ARC files contain
+chunks in following format:
+
+| 000h 1 Fixed ID (1Ah)
+001h 1 Compression Method (00h..1Fh)
+002h 13 Filename ("FILENAME.EXT",00h) (garbage-padded if shorter)
+00Fh 4 Filesize, compressed
+013h 4 File Timestamp in MSDOS format
+017h 2 CRC16 with initial value 0000h on uncompressed/decrypted file
+019h (4) Filesize, uncompressed ;
+
+The chunksize depends on the Method:
+
+| Method 00h and 1Fh --> Chunksize=02h (archive/subdir end markers)
+Method 01h --> Chunksize=19h+[0Fh] (old uncompressed ARC archives)
+Others Methods --> Chunksize=1Dh+[0Fh] (normal case)
+
+Compression Methods (aka "header versions"):
+
+| 00h End-of-archive marker (1Ah,00h)
+01h ARC v? Uncompressed (with short 19h-byte header)
+02h ARC v? Uncompressed (with normal 1Dh-byte header)
+03h ARC v? Packed (RLE90) Used for small files
+04h ARC v? Squeezed (RLE90+Huffman) Based on CP/M Squeeze
+05h ARC v4.00 Crunched (OldRandomizedLZW) Derived from LZWCOM
+06h ARC v4.10 Crunched (RLE90+OldRandomizedLZW) Alike CP/M Crunch v1.x
+07h ARC vBeta? Crunched (RLE90+NewRandomizedLZW) Leaked beta version?
+08h ARC v5.00 Crunched (RLE90+ClearGap12bitLZW) Most common ARC method
+09h Inofficial Squashed (ClearGap13bitLZW) Used by PKARC/PKPAK
+0Ah ARC v7.xx Trimmed (RLE90+LZHUF) Based on LHArc lh1
+0Ah Inofficial Crushed (RLE90+LZW/LZMW?) PAK
+0Bh Inofficial Distilled (LZ77+Huffman) PAK v2.0
+14h-1Dh ARC v6.0 Used/reserved for Information items:
+14h Archive info
+15h Extended File info (maybe a prefix(?) for actual file entries?)
+16h OS-specific info
+1Eh-27h ARC v6.0 Used/reserved for Control items:
+1Eh ARC v6.00 Subdir (nested ARC-like format, created by the "z" option)
+1Fh ARC v6.00 End-of-subdir marker (1Ah,1Fh)
+48h Not used in ARC ;\Hyper archives start with 1Ah,48h or 1Ah,53h
+53h Not used in ARC ;/(an unrelated format that also starts with 1Ah)
+80h-xxh Not used in ARC ;-Spark archives (ARC-like, with extended headers)
+
+Information items use standard 1Dh-byte headers (with [002h]="",00h,
+[00Fh]=SizeOfAllItem(s), [019h]=Junk. The data part at offset 01Dh can contain
+one or more item(s) in following format:
+
+| 000h 2 Item size (LEN)
+002h 1 Item Subtype
+003h .. Item Data (LEN-3 bytes)
+
+Information item types as used by ARC 6.0:
+
+| Method=14h, Subtype=0 Archive description (eg. "Comment blah",00h)
+Method=14h, Subtype=1 Archive creator program name (eg. "ARC 7.12 ...",00h)
+Method=14h, Subtype=2 Archive modifier program name
+Method=15h, Subtype=0 File description (eg. "Comment blah",00h)
+Method=15h, Subtype=1 File long filename (if not MS-DOS "8.3" filename)
+Method=15h, Subtype=2 File extended date-time info (reserved)
+Method=15h, Subtype=3 File Icon (reserved)
+Method=15h, Subtype=4 File attributes (see below) (eg. "RWHSN",00h)
+Method=16h, Subtype=.. Operating system info (reserved)
+
+File attributes can contain following uppercase chars:
+
+| R=ReadAccess, W=WriteAccess, H=HiddenFile, 1=SystemFile, N=NetworkShareable
+
+Sub-directories
+
+Sub-directories are implemented as nested ARC files - about same as when
+storing the sub-directory files in SUBDIR.ARC, and including that SUBDIR.ARC
+file in the main archive with Method 02h. Except that:
+
+It's using Method 1Eh (instead Method 02h), with filename SUBDIR (instead
+SUBDIR.ARC), and with [019h]=Nonsense (instead uncompressed size), and the
+nested file ends with Method 1Fh (instead Method 00h).
+
+RLE90 (run-length compression with value 90h used as escape code)
+
+ARC does use raw RLE90 for small files (eg. 4-byte "aaaa"). ARC does also use
+RLE90 combined with other methods (perhaps because ARC wasn't very fast,
+compressing 100Kbytes could reportedly take several minutes; and without RLE90
+pre-compression it might have been yet slower).
+
+| 90h,00h Output 90h, but DON'T change prevbyte ;
+@@decompress_lop:
+if src>=src_end then goto @@decompress_done
+x=[src], src=src+1
+if x<>90h then
+[dst]=x, dst=dst+1, prevbyte=x ;output x, and memorize prevbyte=x
+else ;x=90h
+x=[src], src=src+1
+if x=00h then
+[dst]=90h, dst=dst+1 ;output 90h, but DO NOT change prevbyte
+if BinHex then prevbyte=90h ;for BinHex, DO change prevbyte
+else
+for i=1 to x-1, [dst]=prevbyte, dst=dst+1, next i
+goto @@decompress_lop
+
+RLE90 is used by ARC (and Spark and ArcFS), StuffIt, and BinHex (some of these
+may handle "prevbyte" differently; the handling in ARC is somewhat stupid as it
+cannot compress repeating 90h-bytes).
+
+Squeeze
+
+| 000h 2 Number of Tree entries (0..100h) (when 0, assume tree=FEFFh,FEFFh)
+002h N*4 Tree entries (16bit node0, 16bit node1)
+... .. Huffman bitstream (starting in bit0 of first byte)
+... .. Maybe supposedly padding to byte boundary?
+The 16bit nodes are:
+0000h..00FFh Next Tree index
+0100h..FEFEh Invalid
+FEFFh End of compressed data
+FF00h..FFFFh Data values FFh..00h (these are somewhat inverted/reversed)
+arc_decumpress_squeeze:
+if [src]=0000h then tree=empty_tree, else tree=src+2 ;-start tree
+InitBitstreamLsbFirst(src+2+[src]*4) ;-start bitstream
+@@decompress_lop:
+index=0000h ;\
+while indexFEFFh then ;-check end code
+[dst]=(index XOR FFh) AND FFh), dst=dst+1 ;-store data
+goto @@decompress_lop
+return
+empty_tree dw FEFFh,FEFFh ;upen empty tree, ARC defines two 1bit END codes
+
+http://fileformats.archiveteam.org/wiki/Squeeze
+
+Randomized LZW
+
+| arc_decompress_randomized_lzw:
+num_free=1000h, stack=empty, oldcode=-1
+for i=0 to FFFh, lzw_parent[i]=EEEEh ;mark all codes as unused
+for i=0 to FFh, create_code(FFFFh,i) ;codes for 00h..FFh with parent=none
+@@decompress_lop:
+if src>=src_end then goto @@decompress_done
+code=GetBitsMsbFirst(12), i=code
+if lzw_parent[i]=EEEEh then i=oldcode, push(oldbyte) ;-for KwKwK strings
+while lzw_parent[i]<>FFFFh, push(lzw_data[i]), i=lzw_parent[i]
+oldbyte=lzw_data[i], [dst]=oldbyte, dst=dst+1
+if oldcode<>-1 then create_code(oldcode,oldbyte)
+oldcode=code
+while stack<>empty, [dst]=pop(), dst=dst+1
+goto @@decompress_lop
+@@decompress_done:
+ret
+;---
+create_code(parent,data):
+if num_free=0 then goto @@no_further_codes, else num_free=num_free-1 ;-full
+i=(parent+data) AND 0000FFFFh ;\
+if method=7 then i=(i*3AE1h) AND FFFh ;new "fast" randomizer ;
+else i=(sqr(i OR 800h)/40h) AND FFFh ;old "slow" randomizer ;
+if lzw_parent[i]=EEEEh then goto @@found_free ; alloc
+while lzw_sibling[i]>0000h, do i=lzw_sibling[i] ;find chain end ; code
+e=i, i=(i+65h) AND FFFh ;memorize chain end & do some random skip ;
+while lzw_parent[i]<>EEEEh, do i=(i+1) AND FFFh ;find a free code ;
+lzw_sibling[e]=i ;weirdly, i=0 will make it behave as sibling=none ;
+@@found_free: ;/
+lzw_data[i]=data, lzw_parent[i]=parent, lzw_sibling[i]=0000h ;-apply
+@@no_further_codes:
+ret
+
+Codes are always 12bit (unlike normal LZW that often starts with 9bit codes).
+
+There won't be any new codes created if the table is full, the existing codes
+can be kept used if they do match the remaining data (unfortunatly this LZW
+variant has no Clear code for resetting the table when they don't match).
+
+Instead of just using the first free entry, code allocation is using some weird
+pseudo-random-sibling logic (which is totally useless and will slowdown
+decompression, but compressed files do contain such randomized codes, so it
+must be reproduced here).
+
+ClearGap LZW
+
+This is more straight non-randomized LZW with Clear codes (and weird gaps after
+Clear codes). The compression (and gaps) are same as for nCompress (apart from
+different headers):

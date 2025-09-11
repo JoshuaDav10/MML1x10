@@ -1,0 +1,61 @@
+PSYQ DOCUMENTATION - TECHNOTE/note588.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/TECHNOTE/note588.pdf
+Converted: Wed Sep 10 02:47:29 PM CDT 2025
+================================================================================
+
+PLAYSTATION TECHNICAL NOTE
+========================================================================
+
+
+Date:     March 17,1997
+Ref:      tech-support 588
+Author:   Keiso Shimakawa, SCEI R&D
+
+Subject: Methods for reducing data access and loading time from the
+         CD-ROM subsystem.
+
+
+ABSTRACT
+--------
+The following provides methods for reducing the data access and loading times
+from the PlayStation CD-ROM subsystem.
+
+Many quick-loading games implement the methods described.
+
+From the experience of technical support activity in R&D division in SCE Tokyo,
+it can be assumed that the loading time will be less than 10 seconds by applying
+method(s) below.
+
+
+METHODS FOR REDUCING DATA ACCESS AND LOADING TIME
+-------------------------------------------------
+
+1.   Reduction of data access time
+
+     a) Perform background reading.
+        Make assumption of the data area to be read in and start
+        background reading before actual data usage.
+
+     b) Process all necessary CdSearchFile() at the beginning.
+        Process all CdSearchFile() calls at the beginning and create a
+        table that holds the information obtained.
+
+          CdSearchFile() function is used to obtain file location and size
+          information. Calling this function upon each file read will
+          result in long loading time.
+
+2.   Reduction of data loading time
+
+     a) Minimize the number of seek commands.
+        In case of reading two or more files, put them contiguously on
+        the disc and read them with only a single seek command.
+
+     b) Compress Data.
+        The amount of the data that should be read from CD can be
+        reduced by compressing the data.
+
+     c) Read in double-speed and do not stop rotation.
+        Needless to say, read data in double-speed and NEVER stop
+        rotation (never issue a STOP command).
+

@@ -1,0 +1,17 @@
+PSXSPX SPECIFICATIONS - MACROBLOCK DECODER (MDEC)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Macroblock Decoder (MDEC)
+Chunked: Wed Sep 10 03:31:04 PM CDT 2025
+Size: 95 characters
+================================================================================
+
+Macroblock Decoder (MDEC)
+
+MDEC I/O Ports
+
+MDEC Commands
+
+MDEC Decompression
+
+MDEC Data Format

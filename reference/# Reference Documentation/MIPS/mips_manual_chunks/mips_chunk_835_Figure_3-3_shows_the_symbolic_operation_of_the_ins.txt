@@ -1,0 +1,24 @@
+MIPS INSTRUCTION SET REFERENCE - FIGURE 3-3 SHOWS THE SYMBOLIC OPERATION OF THE INSTRUCTION.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Figure 3-3 shows the symbolic operation of the instruction.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1035 characters
+Lines: 15
+================================================================================
+
+Figure 3-3 shows the symbolic operation of the instruction.
+
+                                                    pos+size pos+size-1       pos pos-1
+                                31                                                                                           0
+                                                lsb+msbd+1 lsb+msbd           lsb lsb-1
+
+                    GPR rs                   IJKL                 MNOP                               QRST
+                    Initial           32-(pos+size)                size                               pos
+                    Value            32-(lsb+msbd+1)              msbd+1                              lsb
+
+
+
+                                                                                                     size size-1
+                               31                                                                                            0
+                                                                                                  msbd+1 msbd

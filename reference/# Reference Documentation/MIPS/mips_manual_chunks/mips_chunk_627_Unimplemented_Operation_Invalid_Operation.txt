@@ -1,0 +1,63 @@
+MIPS INSTRUCTION SET REFERENCE - UNIMPLEMENTED OPERATION, INVALID OPERATION
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Unimplemented Operation, Invalid Operation
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 2537 characters
+Lines: 54
+================================================================================
+
+Unimplemented Operation, Invalid Operation
+
+        Programming Notes:
+        FP computational instructions, including compare, that receive an operand value of Signaling NaN raise the Invalid
+        Operation condition. Comparisons that raise the Invalid Operation condition for Quiet NaNs in addition to SNaNs
+        permit a simpler programming model if NaNs are errors. Using these compares, programs do not need explicit code
+        to check for QNaNs causing the unordered relation. Instead, they take an exception and allow the exception handling
+        system to deal with the error when it occurs. For example, consider a comparison in which we want to know if two
+        numbers are equal, but for which unordered would be an error.
+            # comparisons using explicit tests for QNaN
+                c.eq.d $f2,$f4# check for equal
+                nop
+                bc1t   L2     # it is equal
+                c.un.d $f2,$f4# it is not equal,
+                              # but might be unordered
+                bc1t   ERROR # unordered goes off to an error handler
+            # not-equal-case code here
+                ...
+            # equal-case code here
+            L2:
+            # --------------------------------------------------------------
+            # comparison using comparisons that signal QNaN
+                c.seq.d $f2,$f4 # check for equal
+                nop
+                bc1t   L2        # it is equal
+                nop
+            # it is not unordered here
+                ...
+            # not-equal-case code here
+                ...
+            # equal-case code here
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                            89
+
+                          Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+CACHE
+
+
+
+
+         Perform Cache Operation                                                                                          CACHE
+
+        31                  26 25              21 20              16 15                                                              0
+               CACHE
+                                      base                op                                         offset
+               101111
+                  6                    5                   5                                          16
+
+             Format: CACHE op, offset(base)                                                                                    MIPS32
+
+             Purpose:

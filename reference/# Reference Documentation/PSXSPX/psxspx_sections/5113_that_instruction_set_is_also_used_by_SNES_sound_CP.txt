@@ -1,0 +1,42 @@
+PSXSPX SPECIFICATIONS - THAT INSTRUCTION SET IS ALSO USED BY SNES SOUND CPU).
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: that instruction set is also used by SNES sound CPU).
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1313 characters
+Lines: 33
+================================================================================
+
+that instruction set is also used by SNES sound CPU).
+
+IC109 "TLC2932" (PLL) (14pin)
+
+| 1-LOGIC_VDD=5V 5-FIN-B=HSYNC.PLL 9-PFD_INHIBIT=GND 13-BIAS
+2-SELECT=5V 6-PFD_OUT 10-VCO_INHIBIT=GND 14-VCO_VDD=5V
+3-VCO_OUT=RGB.DAC.CLK.PLL 7-LOGIC_GND=GND 11-VCO_GND=GND
+4-FIN-A=FID/FHREF.PLL 8-NC 12-VCO_IN
+
+Used to generate the CLK for the TDA chip (that is, the dotclk, paused during
+VSYNC, or so?). The same CLK, divided by two, is also used as OSD.OSCIN.
+
+IC112 "74HCT32" (Quad OR gate) (14pin)
+
+| 1-FID/FHREF.MPEG 4-HSYNC.MPEG 8-(low) 11-RGB.DAC.CLK.TDA 7-GND
+2-FID/FHREF.MPEG 5-HSYNC.MPEG 9-GNDed 12-RGB.DAC.CLK.PLL 14-VCC/5V
+3-FID/FHREF.PLL 6-HSYNC.PLL 10-GNDed 13-RGB.DAC.CLK.PLL
+
+Used to sharpen the output from the PLL chip, and to level-shift signals for
+the two PLL inputs from 3.5V to 5V. The input-pairs for the OR gates are
+shortcut with each other, so the chip isn't actually ORing anything.
+
+IC113 "H74 7H" (single D-type flip-flop; OSD clock divider) (8 pin)
+
+| 1-CLK 2-D 3-/Q 4-GND 5-Q 6-/RES 7-/SET 8-VCC
+
+Used to divide the RGB DAC CLK by two. CLK comes from TDA.pin31, D and /Q are
+shortcut with each other, /RES and /SET are wired to VDD, and Q goes to
+OSD.OSCIN.
+
+ICnnn "4053C" (Triple multiplexor, for Audio LRCK,BCLK,DATA) (16pin)
+
+| 1-IN2B=DATA.VCD 5-IN3A=LRCK.SPU 9-SEL3=LRCK.SEL 13-IN1B=BCLK.VCD

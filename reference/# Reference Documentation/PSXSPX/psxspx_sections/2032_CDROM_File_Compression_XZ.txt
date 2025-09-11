@@ -1,0 +1,184 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION XZ
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression XZ
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 6266 characters
+Lines: 176
+================================================================================
+
+CDROM File Compression XZ
+
+Overall Structure of .xz File
+
+| 000h .. Stream(s)
+
+Note: To determine the total uncompressed size, one must process the file
+backwards, starting at footer of last stream.
+
+Stream
+
+| 000h 6 Header ID (FDh,"7zXZ",00h) (FDh,37h,7Ah,58h,5Ah,00h) ;\
+006h 2 Checksum Type (0000h, 0100h, 0400h or 0A00h) ; Header
+008h 4 Header CRC32 on above 2 bytes ;/
+00Ch .. Compressed Block(s) ;-Block(s)
+... .. Index List ;-Index
+... 4 Footer CRC32 on below 6 bytes ;\
+... 4 Index List Size/4-1 ; Footer
+... 2 Checksum Type (must be same as in Header) ;
+... 2 Footer ID ("YZ") (59h,5Ah) ;/
+... .. Optional Zeropadding (multiple of 4 bytes) ;-Padding
+Checksum Type (for Block checksums):
+0000h=None
+0100h=CRC32 (little-endian)
+0400h=CRC64 (little-endian)
+0A00h=SHA256 (big-endian)
+Other=Reserved
+
+Index List
+
+| 000h 1 Index Indicator (00h) (as opposed to 01h..FFh in Block Headers)
+001h VL Number of Records (must be same as number of Blocks in Stream)
+... .. Index Record(s)
+... .. Zeropadding to 4-byte boundary
+... 4 CRC32 on above bytes
+Index Record:
+000h VL Unpadded Block Size (BlockHeader + CompressedData + 0 + Checksum)
+... VL Uncompressed Block Size
+
+Compressed Block
+
+| 000h 1 Block Header Size/4-1 (01h..FFh = 8..400h bytes) ;\
+001h 1 Block Flags ;
+002h (VL) Compressed Size ;present if Flags.bit6 = 1 ; Header
+... (VL) Uncompressed Size ;present if Flags.bit7 = 1 ;
+... .. Filter Info 0 (LAST filter when DECOMPRESSING) ;
+... (..) Filter Info 1 ;present if Flags.bit0-1 = 1,2,3 ;
+... (..) Filter Info 2 ;present if Flags.bit0-1 = 2,3 ;
+... (..) Filter Info 3 ;present if Flags.bit0-1 = 3 ;
+... .. Zeropadding to 4-byte boundary ;
+... (..) Optional Zeropadding (multiple of 4 bytes) ;
+... 4 CRC32 on above bytes ;/
+... .. Compressed Data ;-Data
+... .. Zeropadding to 4-byte boundary ;-Pad
+... (..) Checksum on uncompressed Data (None/CRC32/CRC64/SHA256) ;-Check
+Block Flags:
+0-1 Number of filters-1 (0..3 = 1..4 filters)
+2-5 Reserved (0)
+6 Compressed Size field is present (0=No, 1=Present)
+7 Uncompressed Size field is present (0=No, 1=Present)
+Filter Info:
+000h VL Filter ID
+... VL Size of Filter Properties
+... .. Filter Properties
+Filter IDs:
+03h Delta Filter (with 1 byte param)
+04h..09h Executable Filters (with 0 or 4 byte param)
+21h LZMA2 Compression (with 1 byte param)
+300h..4FFh Reserved to ease .7z compatibility
+20000h..7FFFFh Reserved to ease .7z compatibility
+2000000h..7FFFFFFh Reserved to ease .7z compatibility
+xxxxxxxxxxxxxxxxh Custom Registered IDs (obtained from Lasse Collin)
+3Frrrrrrrrrriiiih Custom Random IDs (40bit random+16bit filterno)
+4000000000000000h and up Reserved for internal use (don't use in xz files)
+
+Note: The first decompression filter must be LZMA2, which reads from compressed
+data stream, and writes to decompressed data (and also implies the size of
+compressed/decompressed data). The other filters (if any) are unfiltering the
+decompressed data.
+
+Filter 21h: LZMA2 Compression Method
+
+This "filter" is the actual compression method (XZ supports only one method).
+
+It can be combined with BCJ/Delta filters (whereas, LZMA2 must be always used
+as LAST compression filter, aka FIRST decompression filter).
+
+| The filter parameter is 1 byte tall:
+Dictionary Size byte (00h..28h = 4K,6K,8K,12K,16K,24K,..,2G,3G,4G)
+The compressed data contains:
+LZMA2 chunks (with LZMA-compressed data and/or uncompressed data)
+
+Filter 03h: Delta Filter
+
+The filter parameter is 1 byte tall:
+
+| Distance-1 (00h..FFh = distance 1..100h)
+unfilter_delta(buf,len,param_byte):
+dist=byte(param)+1, i=dist ;init dist and skip first some unfiltered bytes
+while i
+
+Filter 04h-09h: Executable Branch/Call/Jump (BCJ) Filters
+
+These filters can replace relative jump addresses by absolute values.
+
+| ID Parameters Alignment Description
+04h 0 or 4 bytes 1 byte 80x86 filter (32bit or 64bit)
+05h 0 or 4 bytes 4 bytes PowerPC filter (big endian)
+06h 0 or 4 bytes 16 bytes IA64 filter
+07h 0 or 4 bytes 4 bytes ARM filter (little endian)
+08h 0 or 4 bytes 2 bytes ARM Thumb filter (little endian)
+09h 0 or 4 bytes 4 bytes SPARC filter
+0Ah,0Bh Inofficial hacks/proposals for ARM64?
+
+The filter parameter field can 0 or 4 bytes tall:
+
+| if param_size=0 then offset=00000000h
+if param_size=4 then offset=LittleEndian32bit(param)
+Nonzero offsets are intended for executables with multiple sections and
+cross-section jumps. The offset shall/must match the filter's alignment.
+unfilter_bcj_x86(buf,len,offset):
+i=0, len=len-4, offset=offset+4
+while i unfilter_bcj_arm(buf,len,offset):
+i=0, len=len/4, offset=(offset+8)/4
+while i unfilter_bcj_armthumb(buf,len,offset):
+i=0, len=len/2-1, offset=(offset+4)/2
+while i unfilter_bcj_sparc(buf,len,offset):
+i=0, len=len/4, offset=offset/4
+while i unfilter_bcj_powerpc(buf,len,offset):
+i=0, len=len/4, offset=offset/4
+while i unfilter_bcj_ia64(buf,len,offset):
+i=0, len=len/10h, offset=offset/10h
+xlat[0..1Fh]=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,4,6,6,0,0,7,7,4,4,0,0,4,4,0,0
+while i
+
+Cyclic Redundancy Checks (CRCs)
+
+CRC32 uses 32bit (with polynomial=EDB88320h). CRC64 does basically use the same
+function (with 64bit values and polynomial=C96C5795D7870F42h).
+
+Endianness and Variable Length (VL) Integers
+
+Little-endian is used for 16bit/32bit/64bit values (Flags, Sizes, CRCs).
+
+Big-endian is used for 256bit SHA256 and for values within LZMA2 chunks.
+
+Variable length integers (marked VL in above tables) are used for Sizes and
+IDs, these values may contain max 63bit, stored in 1-9 bytes:
+
+| decode_variable_len_integer:
+i=0, num=0
+@@lop:
+x=[src], src=src+1, num=num+((x and 7Fh) shl i), i=i+7
+if x AND 80h then goto @@lop
+return num
+
+Notes and References
+
+XZ Utils for Windows is claimed to work on Win98 (that is, it will throw an
+error about missing MSVCRT.DLL:___mb_cur_max_func). XZ Utils for DOS does work
+on Win98.
+
+Official XZ file format specs for can be found at:
+
+| https://tukaani.org/xz/format.html
+
+If your browser can't break the https encryption, try this link:
+
+| http://web.archive.org/web/20220603034213/https://tukaani.org/xz/format.html
+
+The BCJ filters aren't documented in XZ specs, but are defined in XZ source
+code, see src\liblzma\simple\*.c). There's also this mail thread about
+semi-official ARM64 filters:
+
+| https://www.mail-archive.com/xz-devel@tukaani.org/msg00537.html

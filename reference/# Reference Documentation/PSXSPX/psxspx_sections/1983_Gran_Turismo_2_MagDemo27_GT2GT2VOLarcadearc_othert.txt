@@ -1,0 +1,54 @@
+PSXSPX SPECIFICATIONS - GRAN TURISMO 2 (MAGDEMO27: GT2\GT2.VOL\ARCADE\ARC_OTHER.TIM\*) - WITH HEADER
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Gran Turismo 2 (MagDemo27: GT2\GT2.VOL\arcade\arc_other.tim\*) - with header
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1643 characters
+Lines: 46
+================================================================================
+
+Gran Turismo 2 (MagDemo27: GT2\GT2.VOL\arcade\arc_other.tim\*) - with header
+
+| 000h 0Ch ID "@(#)GT-ZIP",0,0
+00Ch 4 Decompressed Size
+010h .. Compressed Data (unknown compressed size due to below padding)
+... .. Zeropadding to 4-byte boundary (when stored in DOT1 archives)
+
+This is used for compressing some files in one DOT1 archive (most other files
+in Gran Turismo 2 are using GZIP compression; with corrupted/zeropadded GZIP
+footers).
+
+Decompression function
+
+| if [src]="@(#)GT-ZIP",0,0 then dst.end=dst+[src+0Ch], src=src+10h
+@@collect_more:
+flagbits=[src]+100h, src=src+1 ;8bit flags
+@@decompress_lop:
+if src>=src.end then goto @@decompress_done ;(when src.end is known)
+if dst>=dst.end then goto @@decompress_done ;(when dst.end is known)
+flagbits=flagbits SHR 1
+if zero then goto @@collect_more
+if carry=0 then
+[dst]=[src], dst=dst+1, src=src+1
+else
+len=[src], src=src+1, disp=[src], src=src+1 ;len, disp
+if disp>=80h then disp=(disp-80h)*100h+[src], src=src+1 ;longer disp
+for i=1 to (len+3), [dst]=[dst-(disp+1)], dst=dst+1, next i
+endif
+goto @@decompress_lop
+@@decompress_done:
+ret
+
+Notes
+
+Depending on the source, only the compressed or decompressed size may be known:
+
+| Source Compressed Size Decompressed Size
+Compressed GAMEFONT.DAT In ISO Filesystem Unknown (n/a)
+Compressed GT-ARC In ISO Filesystem Unknown (n/a)
+Files in GT-ARC In GT-ARC In GT-ARC
+Files with GT-ZIP header Unknown (due to padding) In GT-ZIP
+DC values in IKI videos Unknown (due to padding) From Width*Height
+
+Gran Turismo 1 has ID "@(#)GT-ZIP" (and "@(#)G.T-ZIPB" whatever that is) stored
+in Main RAM (though unknown if/which/any files do have those IDs).

@@ -1,0 +1,43 @@
+PSXSPX SPECIFICATIONS - SAMPLE DATA (SPU-ADPCM)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Sample Data (SPU-ADPCM)
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 1323 characters
+Lines: 34
+================================================================================
+
+Sample Data (SPU-ADPCM)
+
+Samples consist of one or more 16-byte blocks:
+
+| 00h Shift/Filter (reportedly same as for CDROM XA-ADPCM) (see there)
+01h Flag Bits (see below)
+02h Compressed Data (LSBs=1st Sample, MSBs=2nd Sample)
+03h Compressed Data (LSBs=3rd Sample, MSBs=4th Sample)
+04h Compressed Data (LSBs=5th Sample, MSBs=6th Sample)
+... ...
+0Fh Compressed Data (LSBs=27th Sample, MSBs=28th Sample)
+
+Flag Bits (in 2nd byte of ADPCM Header)
+
+| 0 Loop End (0=No change, 1=Set ENDX flag and Jump to [1F801C0Eh+N*10h])
+1 Loop Repeat (0=Force Release and set ADSR Level to Zero; only if Bit0=1)
+2 Loop Start (0=No change, 1=Copy current address to [1F801C0Eh+N*10h])
+3-7 Unknown (usually 0)
+
+Possible combinations for Bit0-1 are:
+
+| Code 0 = Normal (continue at next 16-byte block)
+Code 1 = End+Mute (jump to Loop-address, set ENDX flag, Release, Env=0000h)
+Code 2 = Ignored (same as Code 0)
+Code 3 = End+Repeat (jump to Loop-address, set ENDX flag)
+
+Looped and One-shot Samples
+
+The Loop Start/End flags in the ADPCM Header allow to play one or more sample
+block(s) in a loop, that can be either all block(s) endless repeated, or only
+the last some block(s) of the sample.
+
+There's no way to stop the output, so a one-shot sample must be followed by
+dummy block (with Loop Start/End flags both set, and all data nibbles set to

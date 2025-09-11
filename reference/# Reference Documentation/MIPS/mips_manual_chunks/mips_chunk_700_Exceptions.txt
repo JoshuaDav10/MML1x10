@@ -1,0 +1,44 @@
+MIPS INSTRUCTION SET REFERENCE - EXCEPTIONS:
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Exceptions:
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1711 characters
+Lines: 35
+================================================================================
+
+Exceptions:
+           None
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                                 103
+
+                              Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+CLZ
+
+
+
+
+       Count Leading Zeros in Word                                                                                CLZ
+
+
+      31                   26 25            21 20             16 15              11 10              6   5                  0
+            SPECIAL2                                                                         0                  CLZ
+                                     rs                rt                 rd
+             011100                                                                       00000               100000
+                  6                  5                  5                 5                  5                   6
+
+           Format: CLZ rd, rs                                                                                        MIPS32
+
+           Purpose
+           Count the number of leading zeros in a word
+
+           Description: rd ← count_leading_zeros rs
+           Bits 31..0 of GPR rs are scanned from most significant to least significant bit. The number of leading zeros is counted
+           and the result is written to GPR rd. If no bits were set in GPR rs, the result written to GPR rt is 32.
+
+           Restrictions:
+           To be compliant with the MIPS32 and MIPS64 Architecture, software must place the same GPR number in both the
+           rt and rd fields of the instruction. The operation of the instruction is UNPREDICTABLE if the rt and rd fields of the

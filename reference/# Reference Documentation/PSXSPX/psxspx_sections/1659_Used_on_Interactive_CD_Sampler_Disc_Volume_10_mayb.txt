@@ -1,0 +1,49 @@
+PSXSPX SPECIFICATIONS - USED ON INTERACTIVE CD SAMPLER DISC VOLUME 10 (MAYBE OTHERS, BUT NOT VOL 4,5)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Used on Interactive CD Sampler Disc Volume 10 (maybe others, but not Vol 4,5)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1482 characters
+Lines: 41
+================================================================================
+
+Used on Interactive CD Sampler Disc Volume 10 (maybe others, but not Vol 4,5)
+
+| 000h 4 Number of entries (eg. 20h or 28h)
+004h N*28h File List
+... .. Garbage padding to 800h-byte boundary
+... .. File Data
+... .. Huge zeropadding to 200000h or 2EE000h (2048Kbyte or 3000Kbyte)
+
+File List entries:
+
+| 000h 20h Filename (terminated by 00h, padded with... looks like garbage)
+020h 4 Size/800h
+024h 4 Offset/800h (increasing)
+
+Contains .BS, .TIM, .TXT, .VH, .VB files. The size seems to be always(?)
+2048Kbytes, 2992Kbytes, 2000Kbytes, or 3000Kbytes (often using only the first
+quarter, and having the remaining bytes zeropadded).
+
+Test Drive 4 (MagDemo03: TD4.DAT) (headersize=2000h, used=0...h)
+
+Test Drive 5 (MagDemo13: TD5.DAT) (headersize=3000h, used=1EF8h)
+
+Demolition Racer (MagDemo27: DR\DD.DAT) (headersize=5000h, used=2328h)
+
+This is used by several games, with different Headersizes (2000h or 3000h or
+5000h), with Offsets relative to the Headersize. To detect the Headersize, skip
+used entries, skip following zeropadding, then round-down to 800h-byte boundary
+(in case the 1st file contains some leading zeroes).
+
+| 000h N*28h File List (less than 0C00h bytes used in TD4 demo)
+... .. Zeropadding to Headersize (2000h or 3000h or 5000h)
+... .. File Data
+
+File List entries:
+
+| 000h 20h Filename ("PATH\FILENAME.EXT", zeropadded)
+020h 4 Size in bytes
+024h 4 (Offset-Headersize)/800h (increasing)
+
+TD5.DAT and DD.DAT contain DOT1 child archives and many RNC compressed files:

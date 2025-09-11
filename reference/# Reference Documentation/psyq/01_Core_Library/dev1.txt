@@ -1,0 +1,255 @@
+PSYQ DOCUMENTATION - FAQ/dev1.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/FAQ/dev1.pdf
+Converted: Wed Sep 10 02:47:39 PM CDT 2025
+================================================================================
+
+============================================
+     T H E   " U N - O F F I C I A L"
+       PLAYSTATION DEVELOPMENT FAQ
+
+          Development Tools
+              CONFERENCE
+============================================
+
+             Release v1.2
+       Last Updated: February 29, 1996
+
+---------------------------------------------
+
+----------
+DISCLAIMER
+----------
+
+This FAQ is to aid in informing the licensed game
+developer about the development environment provided
+by Sony Computer Entertainment.
+
+The Development System Tool to which this manual
+relates is supplied pursuant to and subject to the
+terms of the Sony Playstation Licensed Developer Agreement.
+
+This FAQ is intended for distribution to and use only
+by Sony PlayStation Licensed Developers in accordance with
+the Sony Playstation Licensed Developer Agreement. The
+information in thismanual is subject to change without
+notice.
+
+The content of this manual is Confidential Information
+of Sony for the purposes of the Sony PlayStation Licensed
+Developer Agreement and otherwise.
+
+---------------------
+TRADEMARK INFORMATION
+---------------------
+PlayStation and Sony Computer Entertainment names and logos
+are trade names and/or trademarks and/or copyright artwork
+of Sony Corporation(or its subsidiaries).
+
+All specific names included herein are trademarks and are
+so acknowledged: IBM, Microsoft, MS-DOS. Any trademarks not
+mentioned here are still hypothetically acknowledged.
+
+----------------
+COPYRIGHT NOTICE
+[1.]: DEVELOPMENT TOOLS
+
+[1.1. ]: Questions on development board hardware?
+
+[1.1.1.]: How do I set the base address for the DTL-2000 and
+the graphic card?
+There are dip switches which are located on the board to set the base
+address. These swiches represents the A4-A15 address. When changing
+these values note that "0" represents "ON" as shown in the board docs.
+This is opposite of what you would think. Also, when setting the address
+"drop" the last value. For example,0x1360 the zero is dropped. 0001-
+0011-0100
+
+
+[1.2. ]: Questions on using C++ comments?
+
+[1.2.1.]: Is there any way to use C++ style // comments in
+my C code ?
+Use -comments-c++ on your ccpsx line.
+
+
+[1.3. ]:   How do I increase the stack space?
+If you get a compiler error something like:
+
+>C:\PSX\BIN\ccpsx.EXE   -O2 -c -g -o o\psxmodel.obj c\psxmodel.c
+>Stack Fault at eip=ce163
+>eax=000000bc ebx=000033c0 ecx=00336108 edx=00001778 esi=0017714c
+edi=00000000
+>ebp=0016c730 esp=0011b0f0 cs=ef ds=e7 es=e7 fs=e7 gs=ff ss=f7
+cr2=0000cff4
+>Call frame traceback EIPs:
+> 0x000ce163
+> 0x000266d4
+> 0x00015dd7
+> 0x000073c1
+> 0x000255f4
+> 0x00027bc1
+
+
+It isn't a compiler bug. The compiler has run out of stack space. This
+is presumably because the user is in a DPMI environment (e.g. windows or
+running something like QDPMI). To increase the amount of stack space
+you can set the dpmistack parameter in the GO32 environment variable.
+e.g.
+
+set GO32=dpmistack 500000
+
+The default size for the stack is 256k
+
+
+[1.4. ]: What is    rdata?
+.text executable code
+.data initialized data
+.bss uninitialized data
+.rdata      read only data(e.g. constants)
+.sdata      small size initialized data*
+.sbss small size uninitialized data*
+
+*small - the size limit is configurable with the -G# compiler switch.
+The # respresents the maximum byte size entity to put into sdata or
+sbss. Use -G0 for event handlers. The default is -G8, or an 8 byte limit
+for an item to be put into sdata or sbss.
+
+
+[1.5. ] : Why does a program not work properly if booting from
+a CD-ROM?
+We are very sorry for it.
+The used ROM version on DTL-H2000 is different from that on PlayStation,
+and contains a little lack of functionality and malfunction. In order to
+solve the problems, a patch program (patchx.cpe) is provided for
+developing applications. However, since this patch information is lost
+by resetting (booting), as a result, the operation equivalent to
+PlayStation will not be ensured if booting from a CD-ROM or CD-ROM
+Emulator. That is to say, it cannot be checked by booting from the CD-
+ROM or CD-ROM Emulator even under development. Therefore, the first
+program must be placed on the hard disk of the host machine, and be
+executed by run command or the debugger after the execution of patchx.
+Moreover, the following program execution will enable the applications
+on the CD-ROM or CD-ROM Emulator (default-setting) to be activated.
+
+main() {
+        _96_remove();
+        _96_init();
+        LoadExec("cdrom:\\PSX.EXE;1",0x8001fff0, 0); }
+
+
+
+[1.6. ]: Questions on development board hardware?
+
+[1.6.1.]: How do I set the base address for the DTL-H2000 and
+the graphic card?
+There are dip switches which are located on the board to set the base
+address. These switches represents the A4-A15 address. When changing
+these values note that "0" represents "ON" as shown in the board docs.
+This is opposite of what you would think. Also, when setting the address
+"drop" the last value. For example,0x1360 the zero is dropped. 0001-
+0011-0100
+
+
+ [1.6.2.]: How do I set the IRQ and DMA for the DTL-H2000?
+There are jumpers which are located on the board to set the IRQ and DMA.
+The IRQ can be set to 10, 11, 12, or 15, by placing the jumper correct
+location. The DMA may also be set, but is not used, so leave it in the
+default position, disabled.
+[1.7. ]: Questions on using C++ comments?
+
+[1.7.1.]: Is there any way to use C++ style // comments in
+my C code ?
+Use -comments-c++ on your ccpsx line.
+
+
+[1.8. ]:    How do I increase the stack space?
+If you get a compiler error something like:
+
+>C:\PSX\BIN\ccpsx.EXE   -O2 -c -g -o o\psxmodel.obj c\psxmodel.c
+>Stack Fault at eip=ce163
+>eax=000000bc ebx=000033c0 ecx=00336108 edx=00001778 esi=0017714c
+edi=00000000
+>ebp=0016c730 esp=0011b0f0 cs=ef ds=e7 es=e7 fs=e7 gs=ff ss=f7
+cr2=0000cff4
+>Call frame traceback EIPs:
+> 0x000ce163
+> 0x000266d4
+> 0x00015dd7
+> 0x000073c1
+> 0x000255f4
+> 0x00027bc1
+
+
+It isn't a compiler bug. The compiler has run out of stack space. This
+is presumably because the user is in a DPMI environment (e.g. windows or
+running something like QDPMI). To increase the amount of stack space
+you can set the dpmistack parameter in the GO32 environment variable.
+e.g.
+
+set GO32=dpmistack 500000
+
+The default size for the stack is 256k
+
+
+[1.9. ]:What is      rdata?
+.text executable code
+.data initialized data
+.bss uninitialized data
+.rdata      read only data(e.g. constants)
+.sdata      small size initialized data*
+.sbss small size uninitialized data*
+
+*small - the size limit is configurable with the -G# compiler switch.
+The # respresents the maximum byte size entity to put into sdata or
+sbss. Use -G0 for event handlers. The default is -G8, or an 8 byte limit
+for an item to be put into sdata or sbss.
+
+
+[1.10. ]:How to use cpe2x?
+
+      *    Command line:   CPE2X [option] <cpe file>
+
+           Option:         /C[area]
+           J : for Japan (default)
+           A : for the U. S.
+           E : for Europe
+
+    Example:
+
+    DOS> cpe2x test.cpe            for Japan
+    DOS> cpe2x /CA test.cpe        for the U.S.
+    DOS> cpe2x /CE test.cpe        for Europe
+
+
+*   Character information included in the header can be
+    selected area by area with the option switch.
+
+*   In the previous version, when converting a CPE file,
+    the execution is sometimes terminated with the message,
+    "Sorry! CPE2X cannot convert this CPE file. Please
+    use EXEHEADX."
+
+    This version can process these files therefore EXEHEADX.EXE
+    is not necessary from now on.
+
+*   When converting a CPE file, a temporary file is occasionally
+    created in the current directory, and the following message
+    is displayed.
+
+    Using tmp-file: CPE2XTMP.XXX
+
+    The temporary file will be deleted at the end of the
+    conversion.
+
+
+*   Warning & Error message:
+    Please inform SCEA, if the following messages is displayed.
+
+      WARNING: overwrite. size:XXXXXXXX addr:XXXXXXXX
+      Address duplication is detected in the CPE file.
+
+      ERROR: too many sector of CPE file.
+      The number of sectors in the CPE file exceeds the
+      limitation.
+

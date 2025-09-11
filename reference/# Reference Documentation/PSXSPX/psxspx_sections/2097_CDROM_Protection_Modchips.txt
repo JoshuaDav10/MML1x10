@@ -1,0 +1,118 @@
+PSXSPX SPECIFICATIONS - CDROM PROTECTION - MODCHIPS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM Protection - Modchips
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 3892 characters
+Lines: 109
+================================================================================
+
+CDROM Protection - Modchips
+
+Modchip Source Code
+
+The Old Crow mod chip source code works like so:
+
+| entrypoint: ;at power_up
+gate=input/highz
+data=input/highz
+wait 50 ms
+data=output/low
+wait 850 ms
+gate=output/low
+wait 314 ms
+loop:
+wait 72 ms ;pause (eighteen "1=low" bits)
+sendbyte("S") ;1st letter
+sendbyte("C") ;2nd letter
+sendbyte("E") ;3rd letter
+sendbyte(...) ;4th letter (A, E, or I, depending on region)
+goto loop
+sendbyte(char):
+sendbit(0) ;one start bit (0=highz)
+for i=0 to 7
+sendbit(char AND 1) ;output data (LSB first)
+char=char/2
+next i
+sendbit(1) ;1st stop bit (1=low)
+sendbit(1) ;2nd stop bit (1=low)
+return
+sendbit(bit):
+if bit=1 then data=output/low elseif bit=0 then data=input/highz
+wait 4 ms ;4ms per bit = 250 bits per second
+return
+
+That is, 62 bits per transfer at 250bps = circa 4 transfers per second.
+
+Connection for the data/gate/sync signals:
+
+For older PSX boards (data/gate):
+
+| Board data gate
+PU-xx unknown? unknown? ;older PSX boards
+
+For newer PSX and PSone boards (data/sync):
+
+| Board data sync
+PU-23, PM-41 CXD2938Q.Pin42 CXD2938Q.Pin5 ;newer PSX and older PSone
+PM-41(2) CXD2941R.Pin36 CXD2941R.Pin76 ;newer PSone boards
+
+On the mainboard should be a big SMD capacitor (connected to the "data" pin),
+and a big testpoint (connected to the "sync" pin); it's easier to connect the
+signals to that locations than to the tiny CXD-chip pins.
+
+gate and data must be tristate outputs, or open-collector outputs (or normal
+high/low outputs passed through a diode).
+
+Note on "data" pin (all boards)
+
+Transfers the "SCEx" data. Note that the signal produced by the modchip is
+looking entirly different than the signal produced by original disks, the real
+signal would be modulated 22050Hz wobble, while the modchip is simply dragging
+the signal permanently LOW throughout "1" bits, and leaves it floating for "0"
+bits. Anyways the "faked" signal seems to be accurate enough to work.
+
+Note on "gate" pin (older PSX boards only)
+
+The "gate" pin needs to be LOW only for use with original licensed disks
+(reportedly otherwise the SCEx string on that disks would conflict with the
+SCEx string from the modchip).
+
+At the mainboard side, the "gate" signal is an input, and "data" is an inverted
+output of the gate signal (so dragging gate to low, would cause data to go
+high).
+
+Note on "sync" pin (newer PSX and PSone boards only)
+
+The "sync" pin is a testpoint on the mainboard, which does (at single speed)
+output a frequency of circa 44.1kHz/6 (of which some clock pulses seem to be
+longer or shorter, probably to indicate adjustments to the rotation speed).
+
+Some modchips are connected directly to "sync" (so they are apparently
+synchronizing the data output with that signal; which is not implemented in the
+above source code).
+
+Anyways, other modchips are using a more simplified connection: The modchip
+itself connects only to the "data" pin, and "sync" is required to be wired to
+IC723.Pin17.
+
+Note on Multi-Region chips
+
+Modchips that are designed to work in different regions are sending a different
+string (SCEA, SCEE, SCEI) in each loop cycle. Due to the slow 250bps transfer
+rate, it may take a while until the PSX has received the correct string, so
+this multi-region technique may cause a noticeable boot-delay.
+
+Stealth (hidden modchip)
+
+The Stealth connection is required for some newer games with anti-modchip
+protection, ie. games that refuse to run if they detect a modchip. The
+detection relies on the fact that the SCEx signal is normally received only
+when booting the disk, whilst older modchips were sending that signal
+permanently. Stealth modchips are sending the signal only on power-up (and when
+inserting a new disk, which can be sensed via SHELL_OPEN signal).
+
+Modchip detection reportedly works like so (not too sure if all commands are
+required, some seem to be rather offtopic):
+
+| 1. Com 19h,20h ;Retrieve CDROM Controller timestamp

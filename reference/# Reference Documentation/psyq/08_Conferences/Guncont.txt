@@ -1,0 +1,48 @@
+PSYQ DOCUMENTATION - TECHNOTE/Guncont.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/TECHNOTE/Guncont.pdf
+Converted: Wed Sep 10 02:47:29 PM CDT 2025
+================================================================================
+
+PLAYSTATION TECHNICAL NOTE
+=======================================================================
+
+Date:
+Ref:
+Author:
+
+Subject:   Gun Controller Sample Program
+
+
+ABSTRACT
+--------
+
+Document Release 1.0 for Run-time Library Release 3.7
+
+
+DETAILS
+-------
+
+After using the libgun functions to detect the position of the TV
+screen towards which the gun controller is facing, this program will be
+displayed on the screen.
+
+• Execution method
+      psymake
+      resetps
+      run main
+
+• File explanation
+      makefile.mak           make file
+      main.cpe               execution file
+      main.c                 main routine
+
+• Gun controller operation is as follows:
+Trigger button:         displays the location in which the gun is
+                        pointing
+      SELECT button:          termination
+
+
+Copyright© 1996 Sony Computer Entertainment
+All rights reserved.
+

@@ -1,0 +1,94 @@
+PSXSPX SPECIFICATIONS - RAM SETTINGS, AND CX(39XXXX) ALLOWS TO READOUT SOME OF THOSE VALUES SERIALLY.
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: RAM settings, and CX(39xxxx) allows to readout some of those values serially.
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2903 characters
+Lines: 86
+================================================================================
+
+RAM settings, and CX(39xxxx) allows to readout some of those values serially.
+
+CXD2545Q - Coefficient Preset Values
+
+| Addr Val Expl.
+K00 E0 Sled input gain
+K01 81 Sled low boost filter A-H
+K02 23 Sled low boost filter A-L
+K03 7F Sled low boost filter B-H
+K04 6A Sled low boost filter B-L
+K05 10 Sled output gain
+K06 14 Focus input gain
+K07 30 Sled auto gain
+K08 7F Focus high cut filter A
+K09 46 Focus high cut filter B
+K0A 81 Focus low boost filter A-H
+K0B 1C Focus low boost filter A-L
+K0C 7F Focus low boost filter B-H
+K0D 58 Focus low boost filter B-L
+K0E 82 Focus phase compensate filter A
+K0F 7F Focus defect hold gain
+K10 4E Focus phase compensate filter B
+K11 32 Focus output gain
+K12 20 Anti shock input gain
+K13 30 Focus auto gain
+K14 80 HPTZC / Auto Gain High pass filter A
+K15 77 HPTZC / Auto Gain High pass filter B
+K16 80 Anti shock high pass filter A
+K17 77 HPTZC / Auto Gain low pass filter B
+K18 00 Fix (should not change this preset value)
+K19 F1 Tracking input gain
+K1A 7F Tracking high cut filter A
+K1B 3B Tracking high cut filter B
+K1C 81 Tracking low boost filter A-H
+K1D 44 Tracking low boost filter A-L
+K1E 7F Tracking low boost filter B-H
+K1F 5E Tracking low boost filter B-L
+K20 82 Tracking phase compensate filter A
+K21 44 Tracking phase compensate filter B
+K22 18 Tracking output gain
+K23 30 Tracking auto gain
+K24 7F Focus gain down high cut filter A
+K25 46 Focus gain down high cut filter B
+K26 81 Focus gain down low boost filter A-H
+K27 3A Focus gain down low boost filter A-L
+K28 7F Focus gain down low boost filter B-H
+K29 66 Focus gain down low boost filter B-L
+K2A 82 Focus gain down phase compensate filter A
+K2B 44 Focus gain down defect hold gain
+K2C 4E Focus gain down phase compensate filter B
+K2D 1B Focus gain down output gain
+K2E 00 Not used
+K2F 00 Not used
+K30 80 Fix (should not change this preset value)
+K31 66 Anti shock low pass filter B
+K32 00 Not used
+K33 7F Anti shock high pass filter B-H
+K34 6E Anti shock high pass filter B-L
+K35 20 Anti shock filter comparate gain
+K36 7F Tracking gain up2 high cut filter A
+K37 3B Tracking gain up2 high cut filter B
+K38 80 Tracking gain up2 low boost filter A-H
+K39 44 Tracking gain up2 low boost filter A-L
+K3A 7F Tracking gain up2 low boost filter B-H
+K3B 77 Tracking gain up2 low boost filter B-L
+K3C 86 Tracking gain up phase compensate filter A
+K3D 0D Tracking gain up phase compensate filter B
+K3E 57 Tracking gain up output gain
+K3F 00 Not used
+K40 04 Tracking hold filter input gain
+K41 7F Tracking hold filter A-H
+K42 7F Tracking hold filter A-L
+K43 79 Tracking hold filter B-H
+K44 17 Tracking hold filter B-L
+K45 6D Tracking hold filter output gain
+K46 00 Not used
+K47 00 Not used
+K48 02 Focus hold filter input gain
+K49 7F Focus hold filter A-H
+K4A 7F Focus hold filter A-L
+K4B 79 Focus hold filter B-H
+K4C 17 Focus hold filter B-L
+K4D 54 Focus hold filter output gain
+K4E 00 Not used
+K4F 00 Not used

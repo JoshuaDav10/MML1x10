@@ -1,0 +1,41 @@
+MIPS INSTRUCTION SET REFERENCE - INVALID OPERATION, INEXACT, UNIMPLEMENTED OPERATION
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Invalid Operation, Inexact, Unimplemented Operation
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1557 characters
+Lines: 33
+================================================================================
+
+Invalid Operation, Inexact, Unimplemented Operation
+
+
+
+
+260                                                                   MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                                   Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+SRA
+
+
+
+
+  Shift Word Right Arithmetic                                                                                             SRA
+
+      31                   26 25            21 20             16 15              11 10              6   5                  0
+            SPECIAL                  0                                                                          SRA
+                                                       rt                 rd                sa
+             000000                00000                                                                      000011
+                  6                  5                  5                 5                  5                   6
+
+           Format: SRA rd, rt, sa                                                                                    MIPS32
+
+           Purpose:
+           To execute an arithmetic right-shift of a word by a fixed number of bits
+
+           Description: rd ← rt >> sa               (arithmetic)
+           The contents of the low-order 32-bit word of GPR rt are shifted right, duplicating the sign-bit (bit 31) in the emptied
+           bits; the word result is placed in GPR rd. The bit-shift amount is specified by sa.
+
+           Restrictions:
+           None

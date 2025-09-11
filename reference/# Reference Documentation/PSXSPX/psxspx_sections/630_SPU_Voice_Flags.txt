@@ -1,0 +1,41 @@
+PSXSPX SPECIFICATIONS - SPU VOICE FLAGS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: SPU Voice Flags
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 1066 characters
+Lines: 32
+================================================================================
+
+SPU Voice Flags
+
+1F801D88h - Voice 0..23 Key ON (Start Attack/Decay/Sustain) (KON) (W)
+
+| 0-23 Voice 0..23 On (0=No change, 1=Start Attack/Decay/Sustain)
+24-31 Not used
+
+Starts the ADSR Envelope, and automatically initializes ADSR Volume to zero,
+and copies Voice Start Address to Voice Repeat Address.
+
+1F801D8Ch - Voice 0..23 Key OFF (Start Release) (KOFF) (W)
+
+| 0-23 Voice 0..23 Off (0=No change, 1=Start Release)
+24-31 Not used
+
+For a full ADSR pattern, OFF would be usually issued in the Sustain period,
+however, it can be issued at any time (eg. to abort Attack, skip the Decay and
+Sustain periods, and switch immediately to Release).
+
+1F801D9Ch - Voice 0..23 ON/OFF (status) (ENDX) (R)
+
+| 0-23 Voice 0..23 Status (0=Newly Keyed On, 1=Reached LOOP-END)
+24-31 Not used
+
+The bits get CLEARED when setting the corresponding KEY ON bits.
+
+The bits get SET when reaching an LOOP-END flag in ADPCM header.bit0.
+
+R/W
+
+Key On and Key Off should be treated as write-only (although, reading returns
+the most recently 32bit value, this doesn't doesn't provide any status

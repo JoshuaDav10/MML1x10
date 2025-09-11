@@ -1,0 +1,76 @@
+PSXSPX SPECIFICATIONS - NOTE: FILENAMES CAN BE EMPTY ("",00H) (EG. IN WCWDEMO\ZSOUND.BIG)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Note: Filenames can be empty ("",00h) (eg. in WCWDEMO\ZSOUND.BIG)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 2302 characters
+Lines: 68
+================================================================================
+
+Note: Filenames can be empty ("",00h) (eg. in WCWDEMO\ZSOUND.BIG)
+
+Used by PGA Tour 96, 97, 98 (*.VIV)
+
+Used by FIFA - Road to World Cup 98 (MOP*.BK*, Z4TBLS.BIG\*.t, ZMO*.BIG\*.viv)
+
+Used by Fifa 2000 (Best Sports demo: FIFADEMO\*.BIG, *.SBK, and nested .viv)
+
+Used by Need for Speed 3 Hot Pursuit (*.VIV)
+
+Used by WCW Mayhem (MagDemo28: WCWDEMO\*.BIG) (odd filesizes & nameless
+files)
+
+This is reportedly also used for various other Electronic Arts games for PC,
+PSX, and PS2 (often with extension *.BIG, *.VIV).
+
+Reportedly also "BIGH" and "BIG4" exist:
+
+| http://wiki.xentax.com/index.php/EA_BIG_BIGF_Archive
+
+Other Electronic Arts file formats (used inside or alongside big archives):
+
+| https://wiki.multimedia.cx/index.php/Electronic_Arts_Formats_(2) - BNK etc
+
+Electronic Arts 24bit C0FB archives
+
+| 000h 2 ID C0FBh (C0h,FBh) (big-endian) ;\
+002h 2 Size of Header-4 (00h,15h) (big-endian) ; Header
+004h 2 Number of Files (00h,01h) (big-endian) ;
+006h .. File List ;/
+019h .. Padding to 4-byte boundary? ;-Padding
+01Ch .. File Data ;-Data
+... 4 "CRCF" ;\
+... 4 Unknown (0C,00,00,00) (chunk-size little-endian?) ; Footer
+... 4 Unknown (3B,2E,00,00) (checksum maybe?) ;/
+
+File List entries (with variable length names, and unaligned 24bit values):
+
+| 000h 3 Offset in bytes (increasing) ;(big-endian, 24bit)
+004h 3 Size in bytes ;(big-endian, 24bit)
+008h .. Filename (ASCII, terminated by 00h) ;variable length
+
+Used by FIFA - Road to World Cup 98 (*.BIG)
+
+Used by Sled Storm (MagDemo24: ART\ZZRIDER.UNI, with 8 files insides)
+
+Destruction Derby Raw (MagDemo35: DDRAW\*.PTH+.DAT, and nested therein)
+
+| PTH File:
+000h N*var File List
+DAT File:
+000h .. File Data area
+
+File List entries:
+
+| 000h .. Filename ("FILENAME.EXT",00h) (variable length)
+... 4 File Size in bytes (can be odd)
+... 4 File Offset in bytes in DAT file (increasing, unaligned)
+
+Caution: Filenames in PTH archives aren't sorted alphabetically (so DAT isn't
+always guaranteed to be the previous entry from PTH, namely, that issue occurs
+in MagDemo35: DDRAW\INGAME\NCKCARS.PTH\*.PTH+DAT).
+
+Caution: The whole .DAT file can be compressed: If the sum of the filesizes in
+PTH file does exceed the size of the DAT file then assume compression to be
+used (normally, the top-level DATs are uncompressed, and nested DATs are
+compressed).

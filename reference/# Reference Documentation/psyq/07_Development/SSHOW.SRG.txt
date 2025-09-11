@@ -1,0 +1,7 @@
+PSYQ DOCUMENTATION - CONF/SCEE/98July/SSHOW.SRG.html
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/CONF/SCEE/98July/SSHOW.SRG.html
+Converted: Wed Sep 10 02:47:42 PM CDT 2025
+================================================================================
+
+REGEDIT4 # ======================================================================= # Cornolio Viewer Registration File # Owner: PaulWa # FileName: sshow.srg # Install: Install if PPT 95 is the latest version #====================================================================== #====================================================== #************ ENTRIES for Sound Registration ************ #====================================================== [HKEY_LOCAL_MACHINE\Software\Microsoft\Office\8.0\PowerPoint\Sound] "Wave"=".wav" #=================================================== #************ ENTRIES for OLE Play Options ************ #=================================================== [HKEY_LOCAL_MACHINE\Software\Microsoft\Office\8.0\PowerPoint\OLE Play Options] "AddImpact"="Movie" "AIPlayer"="Movie" "LotusMedia"="Movie" "LotusSound"="Sound" "MPlayer"="Movie,1,1" "PlayerFrameClass"="Movie" "SoundRec"="Sound" "AVIFile"="Movie,1,1" "MIDFile"="Sound,1,1"

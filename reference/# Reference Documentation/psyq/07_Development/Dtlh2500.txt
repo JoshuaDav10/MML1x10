@@ -1,0 +1,1990 @@
+PSYQ DOCUMENTATION - Devrefs/Dtlh2500.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/Devrefs/Dtlh2500.pdf
+Converted: Wed Sep 10 02:47:33 PM CDT 2025
+================================================================================
+
+DTL-H2500/H2700 Installation and Operation
+© 1998 Sony Computer Entertainment Inc.
+
+Publication date: August 1998
+
+
+Sony Computer Entertainment America
+919 E. Hillsdale Blvd., 2nd floor
+Foster City, CA 94404
+
+Sony Computer Entertainment Europe
+Waverley House
+7-12 Noel Street
+London W1V 4HH, England
+
+
+The DTL-H2500/H2700 Installation and Operation manual is supplied pursuant to and subject to the terms
+of the Sony Computer Entertainment PlayStation® License and Development Tools Agreements, the
+Licensed Publisher Agreement and/or the Licensed Developer Agreement.
+The DTL-H2500/H2700 Installation and Operation manual is intended for distribution to and use by only
+Sony Computer Entertainment licensed Developers and Publishers in accordance with the PlayStation®
+License and Development Tools Agreements, the Licensed Publisher Agreement and/or the Licensed
+Developer Agreement.
+Unauthorized reproduction, distribution, lending, rental or disclosure to any third party, in whole or in part,
+of this book is expressly prohibited by law and by the terms of the Sony Computer Entertainment
+PlayStation® License and Development Tools Agreements, the Licensed Publisher Agreement and/or the
+Licensed Developer Agreement.
+Ownership of the physical property of the book is retained by and reserved by Sony Computer
+Entertainment. Alteration to or deletion, in whole or in part, of the book, its presentation, or its contents is
+prohibited.
+The information in the DTL-H2500/H2700 Installation and Operation manual is subject to change without
+notice. The content of this book is Confidential Information of Sony Computer Entertainment.
+PlayStation and PlayStation logos are registered trademarks of Sony Computer Entertainment Inc. All other
+trademarks are property of their respective owners and/or their licensors.
+Table of Contents
+       About This Manual                                                                            v
+              Changes Since Last Release                                                            v
+              Related Documentation                                                                 v
+              Developer Reference Series                                                            v
+              Typographic Conventions                                                              vi
+              Developer Support                                                                    vii
+Chapter 1: Preliminary Points
+       Before Beginning Setup                                                                    1–3
+Chapter 2: Setting Up the Hardware
+       Notes Regarding Board Settings                                                            2–3
+       Connecting and Setting Up the DTL-H2500                                                   2–4
+       Connecting and Setting Up the DTL-H2700                                                   2–9
+Chapter 3: Installing the Software
+       Prior to Installation                                                                     3–3
+       Installation                                                                              3–4
+       Environment Settings for SDevTC                                                           3–7
+       Rebooting the System                                                                      3–9
+Chapter 4: Checking the Setup
+       Checking the DTL-H2500                                                                    4–3
+       Checking the DTL-H2700                                                                    4–3
+       Compiling and Executing Sample Programs                                                   4–3
+       Checking the CD-ROM Drive                                                                 4–4
+       Checking the CD-ROM Emulator                                                              4–5
+Appendix A: Troubleshooting the Installation
+      Preliminaries                                                                               A-3
+      Problem: PC fails to recognize board                                                        A-3
+      Known Problems with BIOS of PC                                                              A-3
+      Diagnostic Checks                                                                           A-3
+      Problem: Board Will Not Reset/Can’t Run Programs                                            A-5
+      General Known Compatibility Issues With PC Brands and Models                                A-6
+Appendix B: Installing to an AMI BIOS Machine
+Appendix C: Commands for the Flash-ROM
+Appendix D: DTL-H2500 Questionnaire
+
+
+
+
+                                                          DTL-H2500/H2700 Installation and Operation
+iv   Table of Contents
+
+
+
+
+        DTL-H2500/H2700 Installation and Operation
+About This Manual
+   This manual is the initial release of documentation combining instructions for the installation and operation
+   of the DTL-H2500 and H2700 Development Systems for the PlayStation®. Please read this document
+   before installing the DTL-H2500 or the H2700.
+   Note: This manual was written with the assumption that you are using the Windows 95 operating system.
+
+
+Changes Since Last Release
+   Chapters 1 through 4 of this manual consist of new material that consolidates installation and operation
+   instructions for both the DTL-H2500 and DTL-H2700 Development Systems.
+   Appendices A through D are based upon similar material in the previously available DTL-H2500 Installation
+   and Operation manual, through version 1.020 dated July 15, 1998.
+
+
+Related Documentation
+   Use this manual in conjunction with the instruction sheets included in the DTL-H2500 or DTL-H2700
+   programmer toolkit package.
+   Developers should also use this manual in conjunction with Run-Time Library release 4.3. The Technical
+   Reference CD-ROM contains the Library and other relevant documentation in PDF format; this information
+   can be searched and read using the Adobe Acrobat readers supplied on the CD-ROM. Insert the Technical
+   Reference CD-ROM into your PC and run the setup programs to install the Adobe Acrobat reader.
+   Note: Discard the black diskette that came with your development system because it is now out of date.
+   More up-to-date versions are on the CD-ROM that came with your system. The latest software and
+   patches can be obtained from our websites. Read the section "Developer Support" below for more details.
+
+
+Developer Reference Series
+   This manual is part of the Developer Reference Series, a series of technical reference volumes covering all
+   aspects of PlayStation development. The complete series is listed below:
+              Manual                                              Description
+              PlayStation Hardware                                Describes the PlayStation hardware architecture
+                                                                  and overviews its subsystems.
+              PlayStation Operating System                        Describes the PlayStation operating system and
+                                                                  related programming fundamentals.
+              Run-Time Library Overview                           Describes the structure and purpose of the
+                                                                  run-time libraries provided for PlayStation
+                                                                  software development.
+              Run-Time Library Reference                          Defines all available PlayStation run-time library
+                                                                  functions, macros and structures.
+              Inline Programming Reference                        Describes in-line programming using DMPSX,
+                                                                  GTE inline macro and GTE register information.
+              SDevTC Development Environment                      Describes the SDevTC (formerly "Psy-Q")
+                                                                  Development Environment for PlayStation
+                                                                  software development.
+              3D Graphics Tools                                   Describes how to use the PlayStation 3D
+                                                                  Graphics Tools, including the animation and
+                                                                  material editors.
+
+
+
+                                                                         DTL-H2500/H2700 Installation and Operation
+vi About This Manual
+
+                       Sprite Editor                                      Describes the Sprite Editor tool for creating
+                                                                          sprite data and background picture
+                                                                          components.
+                       Sound Artist Tool                                  Provides installation and operation instructions
+                                                                          for the DTL-H800 Sound Artist Board and
+                                                                          explains how to use the Sound Artist Tool
+                                                                          software.
+                       File Formats                                       Describes all native PlayStation data formats.
+                       Data Conversion Utilities                          Describes all available PlayStation data
+                                                                          conversion utilities, including both stand-alone
+                                                                          and plug-in programs.
+                       CD Emulator                                        Provides installation and operation instructions
+                                                                          for the CD Emulator subsystem and related
+                                                                          software.
+                       CD-ROM Generator                                   Describes how to use the CD-ROM Generator
+                                                                          software to write CD-R discs.
+                       Performance Analyzer User Guide                    Provides general instructions for using the
+                                                                          Performance Analyzer software.
+                       Performance Analyzer Technical Reference           Describes how to measure software
+                                                                          performance and interpret the results using the
+                                                                          Performance Analyzer.
+                       DTL-H2000 Installation and Operation               Provides installation and operation instructions
+                                                                          for the DTL-H2000 Development System.
+                       DTL-H2500/2700 Installation and Operation          Provides installation and operation instructions
+                                                                          for the DTL-H2500/H2700 Development
+                                                                          Systems.
+
+
+    Typographic Conventions
+         Certain Typographic Conventions are used through out this manual to clarify the meaning of the text. The
+         following conventions apply to all narrative text except for structure and function descriptions:
+                       Convention       Meaning
+                       courier          Indicates literal program code.
+                       Bold             Indicates a document, chapter or section title.
+         The following conventions apply within structure and function descriptions only:
+                       Convention       Meaning
+                       Medium Bold      Denotes structure or function types and names.
+                       Italic           Denotes function arguments and structure members.
+
+
+
+
+      DTL-H2500/H2700 Installation and Operation
+                                                                                                About This Manual   vii
+
+Developer Support
+   Sony Computer Entertainment America (SCEA)
+   SCEA developer support is available to licensees in North America only. You may obtain developer support
+   or additional copies of this documentation by contacting the following addresses:
+              Order Information                                Developer Support
+              In North America                                 In North America
+              Attn: Developer Tools Coordinator                E-mail: DevTech_Support@playstation.sony.com
+              Sony Computer Entertainment America              Web: http://www.scea.sony.com/dev
+              919 East Hillsdale Blvd., 2nd floor              Developer Support Hotline: (650) 655-8181
+              Foster City, CA 94404                            (Call Monday through Friday, 8 a.m. to 5 p.m.,
+              Tel: (650) 655-8000                              PST/PDT)
+
+
+   Sony Computer Entertainment Europe (SCEE)
+   SCEE developer support is available to licensees in Europe only. You may obtain developer support or
+   additional copies of this documentation by contacting the following addresses:
+              Order Information                                Developer Support
+              In Europe                                        In Europe
+              Attn: Production Coordinator                     E-mail: dev_support@playstation.co.uk
+              Sony Computer Entertainment Europe               Web: https://www-s.playstation.co.uk
+              Waverley House                                   Developer Support Hotline:
+              7-12 Noel Street                                 +44 (0) 171 447 1680
+              London W1V 4HH                                   (Call Monday through Friday, 9 a.m. to 6 p.m.,
+              Tel: +44 (0) 171 447 1600                        GMT or BST/BDT)
+
+
+
+
+                                                                     DTL-H2500/H2700 Installation and Operation
+viii   About This Manual
+
+
+
+
+         DTL-H2500/H2700 Installation and Operation
+Chapter 1:
+Preliminary Points
+
+
+
+
+                     DTL-H2500/H2700 Installation and Operation
+1–2 Preliminary Points
+
+
+
+
+      DTL-H2500/H2700 Installation and Operation
+                                                                                                   Preliminary Points 1–3
+
+
+
+
+Before Beginning Setup
+    This section describes a few points to be aware of before installing the board.
+    In some cases, the software included with the DTL-S2100A or DTL-S2200 may not be the most recent
+    version. Be sure to update your software first so that the development environment can be set up
+    smoothly.
+    Please review the following information before beginning hardware setup.
+
+DTL-H2500
+    The DTL-H2500 is a PCI-bus slot PlayStation® board. The board is Plug&Play compatible, allowing it to be
+    installed without setting up interrupt requests (IRQs) or I/O addresses.
+    To use the DTL-H2500, you must have a PC-AT compatible computer with at least one free PCI slot.
+
+DTL-H2700
+    The DTL-H2700 is an ISA-bus slot PlayStation® board. In addition to the normal PlayStation® board
+    features, the DTL-H2700 also includes a performance analyzer.
+    The DTL-H2700 requires a single ISA slot, however, it comes with 2 daughterboards so it occupies the
+    equivalent of three slots. When choosing a PC-AT compatible, please keep this requirement in mind.
+
+DTL-H2510 CD-ROM Drive (sold separately)
+    The DTL-H2510 CD-ROM Drive is a CD-ROM drive that connects to the PlayStation® board. A special
+    cable connects the drive to the DTL-H2500 or the H2700. This allows games to be debugged during
+    development using a CD-R.
+    A 5-inch drive bay is required.
+
+DTL-S2020 CD-ROM Emulator (sold separately)
+    The CD-ROM Emulator board is used together with the PlayStation® board to emulate a CD-ROM drive
+    using a hard disk. The CD-ROM Emulator is an ISA-bus board and requires another free ISA slot in addition
+    to the slots taken up by the PlayStation® boards. The hard disk connected to the Emulator board is a SCSI
+    hard disk but is independent from any other SCSI devices installed on the PC. Please use hard disks that
+    have been recommended by Sony. Compatible hard disks are listed on the Web site for your region.
+
+
+
+
+                                                                         DTL-H2500/H2700 Installation and Operation
+1–4 Preliminary Points
+
+
+
+
+      DTL-H2500/H2700 Installation and Operation
+Chapter 2:
+Setting Up the Hardware
+
+
+
+
+                          DTL-H2500/H2700 Installation and Operation
+2–2 Setting Up the Hardware
+
+
+
+
+      DTL-H2500/H2700 Installation and Operation
+                                                                                             Setting Up the Hardware 2–3
+
+
+
+
+Notes Regarding Board Settings
+
+Assigning Resources in Windows 95
+   When using ISA boards such as the DTL-H2700 and the DTL-S2020 under Windows 95, it is first
+   necessary to assign interrupt requests (IRQs) and DMA resources. Resources can be assigned by opening
+   up the Windows 95 Control Panel and accessing Device Manager/Computer Properties/Resource settings.
+   If no resources are available, remove unnecessary devices and reassign those resources. Once proper
+   assignments have been made, the corresponding IRQ and DMA settings should be indicated as "Reserved
+   by the system". These settings must be made before setting up the boards in the PC. The DTL-H2700
+   requires IRQ assignments and the DTL-S2020 requires IRQ and DMA assignments.
+   The DTL-H2500 is a Plug&Play compatible PCI board and does not require the system resource settings to
+   be made as described above. However, at least one IRQ must be free under the Device
+   Manager/Computer Properties/Resource window. If no IRQs are available, an unused device must be
+   removed to free up an IRQ.
+   If the desired IRQ setting is already assigned to another device, open up the Device Manager Properties
+   window for the corresponding device and check the "Disable for this hardware environment" checkbox. Or,
+   if the device is an ISA or PCI expansion board, remove the board. In some cases, freeing up PC resources
+   requires changing BIOS settings in addition to Windows settings. For details, please refer to the instruction
+   manual that comes with your PC.
+   Make sure the power to the PC is turned off when setting up boards and peripherals.
+
+
+On-Board Settings for the DTL-H2500
+   The DTL-H2500 is a Plug&Play compatible PCI board and does not require special on-board settings.
+
+
+On-Board Settings for the DTL-H2700
+   When setting up the DTL-H2700, the on-board I/O address DIP switches and IRQ jumpers must first be set
+   as described below (no DMA settings are required). The settings below are example settings, and other I/O
+   addresses and IRQ settings can be used.
+   When the component side of the board is up and the back panel (where the video output and combat
+   cable jacks are located) is to the right, the I/O address DIP switches are located near the top center of the
+   board.
+   The I/O addresses are set up in the following manner.
+   Factory default (0x1340)
+
+
+
+
+   The DIP switches represent the upper 12 bits of 0x1340 (0x134X). In the example below, the setting has
+   been changed to 0x1840.
+   Example setting (0x1840)
+
+
+
+
+   The IRQ jumper pin is located in the lower left section of the board and should be set to 11 (there is no
+   factory default setting). Refer to the silkscreened diagram on the board.
+
+
+                                                                         DTL-H2500/H2700 Installation and Operation
+2–4 Setting Up the Hardware
+
+         Example settings
+                     Device type      I/O address IRQ                     DMA
+                     DTL-H2700 PlayStation® board   0x1840                11     ------- (not required)
+
+
+    Setting Up the CD-ROM Emulator Board
+         When setting up the CD-ROM Emulator board, the on-board jumpers should first be set as shown below.
+         These settings are example settings, and other I/O address, IRQ, and DMA settings can be used. Jumpers
+         for setting up the I/O address are located toward the bottom center of the board. The jumpers should be
+         set to an address that does not conflict with other boards (the factory default is 0x308). Next, set up the
+         DMA channel, located to the left of the jumpers. Please note that on some boards the numbers 5 and 7
+         printed on the board are reversed (the leftmost jumper is 7). Finally, set up the interrupt (IRQ) jumper,
+         located below the DMA jumpers (the factory default is 15). All other jumpers should be left untouched.
+         Some CD-ROM Emulator boards may use DIP switches instead of jumpers. Follow the diagrams
+         silkscreened onto the board.
+         In this example, IRQ 5 is used. In some PCs, IRQ 5 is assigned to a sound device. If this is the case, free
+         up the resource by removing the sound card. If the sound card is an on-board device, disable the card
+         through the Sound Properties Device setting. Next, reserve (assign) the IRQ5 resource as a system
+         resource by following the steps described above.
+         Example settings
+                     Device type    I/O address IRQ               DMA
+                     DTL-S2020 CD-ROM Emulator board              0x398            5          7
+
+
+
+    Connecting and Setting Up the DTL-H2500
+         This section describes how to set up the following boards and peripherals.
+
+    Boards and peripherals
+         DTL-H2500                    PlayStation® board
+         DTL-S2020                    CD-ROM Emulator board
+         DTL-H2510                    CD-ROM drive for the H2500/H2700
+
+    Board and peripheral settings
+         Example settings
+                     Device type      I/O address IRQ    DMA
+                     DTL-H2500 PlayStation® board automatic                     automatic ------- (not required)
+                     DTL-S2020 CD-ROM Emulator board     0x398                  5         7
+
+
+         In the following sections, the four possible configurations of these devices are described. Please select the
+         one that matches your environment.
+
+
+
+
+      DTL-H2500/H2700 Installation and Operation
+                                                                                                    Setting Up the Hardware 2–5
+
+
+
+Example 1: Set Up All Devices
+    Devices to be set up:
+        •     DTL-H2500 PlayStation® board (PCI)
+        •     DTL-H2510 CD-ROM drive
+        •     DTL-S2020 CD-ROM Emulator board (ISA)
+    Slots used:
+        •     PCI bus: 1 slot
+        •     ISA bus: 1 slot
+
+
+
+                                                                                    CTR1
+                                              Connector board
+
+                                                                                    CTR2
+
+                                                  (1)
+
+
+
+
+                                                                                     AV (Video output jack)
+
+                                Main board
+                                                                                    COM #(Combat cable jack)
+
+
+
+                                                        (2)          (3)
+
+
+                                                                                CD-ROM
+                     CD-ROM
+                     Emulator board                                               Drive
+
+
+
+
+                                        (4)                     External HDD
+                                      Internal HDD
+
+
+
+
+    Make sure the board is oriented properly.
+
+Description
+    1. Use the 10-pin flat cable that comes with the H2500 to connect the Main board to the Connector
+       board.
+    2. Use the 34-pin flat cable that comes with the S2020 to connect the Main board to the Emulator board.
+    3. Use the 50-pin flat cable that comes with the CD-ROM drive to connect the Main board to the CD-
+       ROM drive.
+    4. Use the SCSI cable that comes with the S2020 to connect the Emulator board to the Emulator HDD
+       (connect internally or externally depending on the HDD type). The HDD is set to SCSI ID 0 (an ID other
+       than 0 can be used, but if only one HDD is connected the ID should be set to 0).
+
+
+                                                                               DTL-H2500/H2700 Installation and Operation
+2–6 Setting Up the Hardware
+
+
+    Example 2: Set Up the PlayStation® and CD-ROM Emulator Boards
+         Devices to be set up:
+             •    DTL-H2500 PlayStation® board (CD-ROM drive not connected, PCI)
+             •    DTL-S2020 CD-ROM Emulator board (ISA)
+         Slots used:
+             •    PCI bus: 1 slot
+             •    ISA bus: 1 slot
+
+
+
+                                                                                CTR1
+                                              Connector board
+
+                                                                                CTR2
+
+                                                     (1)
+
+
+
+
+                                                                                 AV # (Video output jack)
+
+                                 Main board
+                                                                                COM (Combat cable jack)
+
+
+
+                                                           (2)
+
+
+                        CD-ROM
+
+                        Emulator board
+
+
+
+
+                                              (3)
+                                                                 External HDD
+                                      Internal HDD
+
+
+
+
+         Make sure the board is oriented properly.
+
+    Description
+         1. Use the 10-pin flat cable that comes with the H2500 to connect the Main board to the Connector
+            board.
+         2. Use the 34-pin flat cable that comes with the S2020 to connect the Main board to the Emulator board.
+         3. Use the SCSI cable that comes with the S2020 to connect the Emulator board to the Emulator HDD
+            (connect internally or externally depending on the HDD type). The HDD is set to SCSI ID 0 (an ID other
+            than 0 can be used, but if only one HDD is connected, the ID should be set to 0).
+
+
+
+
+      DTL-H2500/H2700 Installation and Operation
+                                                                                          Setting Up the Hardware 2–7
+
+
+
+Example 3: Set up the PlayStation® Board and CD_Rom Drive
+    Devices to be set up:
+        •     DTL-H2500 PlayStation® board (PCI)
+        •     DTL-H2510 CD-ROM drive
+    Slots used:
+        •     PCI bus: 1 slot
+
+
+
+
+                                                                               CTR1
+                                        Connector board
+
+                                                                               CTR2
+
+                                                (1)
+
+
+
+
+                                                                               AV    (Video output jack)
+
+                                Main board
+                                                                               COM (Combat cable jack)
+
+
+
+
+                                                                (2)
+
+                                                                           CD-ROM
+
+                                                                           Drive
+
+
+
+    Make sure the board is oriented properly.
+
+Description
+    1. Use the 10-pin flat cable that comes with the H2500 to connect the Main board to the Connector
+       board.
+    2. Use the 50-pin flat cable that comes with the CD-ROM drive to connect the Main board to the CD-
+       ROM drive.
+
+
+
+
+                                                                      DTL-H2500/H2700 Installation and Operation
+2–8 Setting Up the Hardware
+
+
+    Example 4: Set Up the PlayStation® Board Alone
+         Device to be set up:
+             •    DTL-H2500 PlayStation® board (CD-ROM drive not connected, PCI)
+         Slots used:
+             •    PCI bus: 1 slot
+
+
+
+
+                                                                                   CTR1
+                                               Connector board
+                                                                                   CTR2
+
+                                                     (1)
+
+
+
+
+                                                                                  AV    (Video output jack)
+                                    Main board
+
+                                                                                  COM (Combat cable jack)
+
+
+
+
+         Make sure the board is oriented properly.
+
+    Description
+         1. Use the 10-pin flat cable that comes with the H2500 to connect the Main board to the Connector
+            board.
+
+
+
+
+      DTL-H2500/H2700 Installation and Operation
+                                                                                                 Setting Up the Hardware 2–9
+
+
+
+
+Connecting and Setting Up the DTL-H2700
+     This section describes how to set up the following boards and peripherals.
+
+Boards and peripherals
+     DTL-H2700                    PlayStation® board
+     DTL-S2020                    CD-ROM Emulator board
+     DTL-H2510                    CD-ROM drive for the H2500/H2700
+
+Board and peripheral settings
+     Example settings
+                Device type      I/O address IRQ    DMA
+                DTL-H2700 PlayStation® board 0x1840 11                     -------   (not required)
+                DTL-S2020 CD-ROM Emulator board     0x398                  5         7
+
+
+     In the following sections, the four possible configurations of these devices are described. Please select the
+     one that matches your environment.
+
+
+
+
+                                                                          DTL-H2500/H2700 Installation and Operation
+2–10 Setting Up the Hardware
+
+
+    Example 1: Set Up All Devices
+         Devices to be set up:
+             •    DTL-H2700 PlayStation® board (ISA)
+             •    DTL-H2510 CD-ROM drive
+             •    DTL-S2020 CD-ROM Emulator board (ISA)
+         Slots used:
+             • ISA bus: 2 slots
+             Note that the DTL-H2700 takes up the equivalent of three slots.
+
+
+
+                          To PC internal power                                                             CTR1
+                               supply connector                      Connector board
+
+                                                                                                           CTR2
+                                   (1)
+                                                                                    (2)
+
+
+
+
+                                                                                              AV # (Video output jack)
+                                          Main board
+                                                                                              COM (Combat cable jack)
+
+
+
+                                                               (3)
+                                                                              (4)
+
+                                                                                           CD-ROM
+                                 CD-ROM
+                                                                                           Drive
+                               Emulator board
+
+
+
+
+                                                    (5)                     External HDD
+                                                Internal HDD
+
+
+
+
+             Make sure the board is oriented properly.
+
+    Description
+         1. Use the power-supply extension cable that comes with the H2700 to connect the Main board to the
+            internal power supply connector on the motherboard.
+         2. Use the 10-pin flat cable that comes with the H2700 to connect the Main board to the Connector
+            board.
+         3. Use the 34-pin flat cable that comes with the S2020 to connect the Main board to the Emulator board.
+         4. Use the 50-pin flat cable that comes with the CD-ROM drive to connect the Main board to the CD-
+            ROM drive.
+         5. Use the SCSI cable that comes with the S2020 to connect the Emulator board to the Emulator HDD
+            (connect internally or externally depending on the HDD type). The HDD is set to SCSI ID 0 (an ID other
+            than 0 can be used, but if only one HDD is connected the ID should be set to 0).
+
+
+      DTL-H2500/H2700 Installation and Operation
+                                                                                                   Setting Up the Hardware 2–11
+
+
+
+Example 2: Set Up the PlayStation® and CD-ROM Emulator Boards
+    Devices to be set up:
+        •     DTL-H2700 PlayStation® board (CD-ROM drive not connected, ISA)
+        •     DTL-S2020 CD-ROM Emulator board (ISA)
+    Slots used:
+        • ISA bus: 2 slots
+        Note that the DTL-H2700 takes up the equivalent of three slots.
+
+
+                To P C internal pow er
+                                                                                                    C TR 1
+                  sup p ly connector
+                                                           C onnector board
+
+                                                                                                    C TR 2
+                   (1)                                                  (2)
+
+
+
+
+                                                                                       AV # (Video output jack)
+                               M ain b oard
+                                                                                       C O M (C om bat cable jack)
+
+
+
+                                                     (3)
+
+
+
+                  C D -R O M
+
+                  E m ulator b oard
+
+
+
+
+                                        (4)                       E xternal H D D
+                                    Internal H D D
+
+
+
+
+    Make sure the board is oriented properly.
+
+Description
+    1. Use the power-supply extension cable that comes with the H2700 to connect the Main board to the
+       internal power supply connector on the motherboard.
+    2. Use the 10-pin flat cable that comes with the H2700 to connect the Main board to the Connector
+       board
+    3. Use the 34-pin flat cable that comes with the S2020 to connect the Main board to the Emulator board.
+    4. Use the SCSI cable that comes with the S2020 to connect the Emulator board to the Emulator HDD
+       (connect internally or externally depending on the HDD type). The HDD is set to SCSI ID 0 (an ID other
+       than 0 can be used, but if only one HDD is connected the ID must be set to 0).
+
+
+                                                                                DTL-H2500/H2700 Installation and Operation
+2–12 Setting Up the Hardware
+
+
+    Example 3: Set up the PlayStation® Board and CD_Rom Drive
+         Devices to be set up:
+             •    DTL-H2700 PlayStation® board (ISA)
+             •    DTL-H2510 CD-ROM drive
+         Slots used:
+             • ISA bus: 1 slot
+             Note that the DTL-H2700 takes up the equivalent of three slots.
+
+
+
+                  To PC internal power                                                         CTR1
+                   supply connector                  Connector board
+
+                                                                                               CTR2
+                         (1)
+                                                                        (2)
+
+
+
+
+                                                                                  AV # (Video output jack)
+                                  Main board
+                                                                                  COM (Combat cable jack)
+
+
+
+
+                                                                  (3)
+
+                                                                               CD-ROM
+
+                                                                               Drive
+
+
+
+         Make sure the board is oriented properly.
+
+    Description
+         1. Use the power-supply extension cable that comes with the H2700 to connect the Main board to the
+            internal power supply connector on the motherboard.
+         2. Use the 10-pin flat cable that comes with the H2700 to connect the Main board to the Connector
+            board.
+         3. Use the 50-pin flat cable that comes with the CD-ROM drive to connect the Main board to the CD-
+            ROM drive.
+
+
+
+
+      DTL-H2500/H2700 Installation and Operation
+                                                                                             Setting Up the Hardware 2–13
+
+
+
+Example 4: Set Up the PlayStation® Board Alone
+    Device to be set up:
+        •     DTL-H2700 PlayStation® board (CD-ROM drive not connected, ISA)
+    Slots used:
+        • ISA bus: 1 slot
+        Note that the DTL-H2700 takes up the equivalent of three slots.
+
+
+
+
+          To PC internal power                                                                  CTR1
+              supply connector                  Connector board
+
+                                                                                                CTR2
+                    (1)
+                                                                (2)
+
+
+
+
+                                                                                   AV # (Video output jack)
+                            Main board
+                                                                                   COM (Combat cable jack)
+
+
+
+
+    Make sure the board is oriented properly.
+
+Description
+    1. Use the power-supply extension cable that comes with the H2700 to connect the Main board to the
+       internal power supply connector on the motherboard.
+    2. Use the 10-pin flat cable that comes with the H2700 to connect the Main board to the Connector
+       board.
+
+
+
+
+                                                                          DTL-H2500/H2700 Installation and Operation
+2–14 Setting Up the Hardware
+
+
+
+
+      DTL-H2500/H2700 Installation and Operation
+Chapter 3:
+Installing the Software
+
+
+
+
+                          DTL-H2500/H2700 Installation and Operation
+3–2 Installing the Software
+
+
+
+
+       DTL-H2500/H2700 Installation and Operation
+                                                                                                Installing the Software 3–3
+
+
+
+
+Prior to Installation
+
+Checking System Startup
+   Before setting up the software, check to see if the system starts up properly. If the system does not start
+   up properly, check the following items.
+   •   Is the board firmly inserted into its slot?
+   •   Are the various cables firmly attached?
+   •   Are the DIP switches on the board set properly? (DTL-H 2700 only)
+   If a Plug&Play error comes up during system start-up, try temporarily removing boards that are not needed
+   for development work and restarting the system. Also, in Windows 95, check Control
+   Panel/System/System Properties/Device Manager to see if there are any resource conflicts with other
+   devices. If the system still does not start up properly, please refer to Appendix A – Troubleshooting the
+   Installation..
+
+
+Recognizing the DTL-H2500 Under Windows 95
+   The DTL-H2500 driver is an MS-DOS program. Therefore, the device cannot be installed using the
+   Windows 95 hardware wizard.
+   When using Windows 95, Plug&Play will indicate that the hardware wizard has detected the DTL-H2500
+   and will ask whether or not to install a driver. Please select "Do not install driver."
+   If Windows 95 has detected the DTL-H2500 properly, it will be displayed as "PCI Card" under Device
+   Manager/Other Devices. Also, under the computer's Properties/Resource window, check to see that the
+   interrupt setting (IRQ) is not in conflict with other devices. The card should be displayed as "PCI Card" here
+   as well.
+
+
+Recognizing the DTL-H2700 Under Windows 95
+   As with the DTL-H2500, the driver for the DTL-H2700 is an MS-DOS program. Likewise, since the DTL-
+   H2700 is a standard ISA board, it is not Plug&Play compatible. Therefore, the DTL-H2700 will not be
+   recognized by the Windows 95 hardware wizard. There should be no problems as long as the on-board
+   DIP switches for the DTL-H2700 and the corresponding Windows 95 system resource settings are set
+   properly.
+
+
+Recognizing the CD-ROM Emulator under Windows 95
+   The driver for the CD-ROM Emulator is also an MS-DOS program. As with the DTL-H2700, the CD-ROM
+   Emulator board is a standard ISA board and is not Plug&Play compatible. Thus, the Windows 95 hardware
+   wizard will not detect the CD-ROM Emulator board. There should be no problems as long as the on-board
+   DIP switches and the corresponding Windows 95 system resource settings are set properly.
+
+
+Installation Requirements
+   The following items are required to install the software:
+               Item name       Description Media
+               DTL-S2340 Runtime Library Version 4.3           Library          CD-ROM (1 disc)
+               DTL-D2340 Technical Reference Version 4.3       Document         CD-ROM (1 disc)
+
+
+                                                                         DTL-H2500/H2700 Installation and Operation
+3–4 Installing the Software
+
+          Note: The programmer toolkit comes with a number of setup floppies. However, all of the files needed to
+          install the software are contained on the run-time library CD-ROM. When performing an operation check,
+          first use the tools on the CD-ROM.
+          Note, however, that the software for the DTL-S2020 CD-ROM Emulator is not on this CD-ROM. Use the
+          files on the floppy disks that come with the toolkit or, better yet, download the current versions from the
+          Web site for your region. Please refer to your Web site for installation instructions.
+          Software is being continuously updated on your Web site, so please be sure to download the most recent
+          version.
+
+
+
+     Installation
+          In the following steps, it is assumed that your local hard drive is the "c:\" drive, and that your PC CD-ROM
+          drive is "d:\".
+
+
+     Installation for Windows 95
+          •    Insert the Programmer's Tools CD (DTL-S2002) into the CD-ROM drive (not the DTL-H2510) of your
+               system. If auto-run is enabled the setup will begin automatically.
+          •    Run the Setup program, setup.exe, that is in the root directory of the CD. Follow all of the
+               instructions.
+
+     Win95 (32 Bit) SDevTC users -- Please Note:
+          Due to the way the new SDevTC environment is laid out it may be necessary to manually make changes to
+          your SN.INI file. SN.INI has been configured to work with the default directory structure. If you have
+          deviated from the default path, you will need to modify the following lines within the file
+          \ps\PSSN\bin\sn.ini to reflect your directory structure:
+                       [ccpsx]
+                       library_path=c:\ps\psx\lib
+                       c_include_path=c:\ps\psx\include
+                       compiler_path=c:\ps\pssn\bin
+                       assembler_path=c:\ps\pssn\bin
+                       linker_path=c:\ps\pssn\bin
+          Additional Note: To run any of the samples that use a .lnk file, the following lines need to be modified to
+          reflect your library path:
+                       [psylink]
+                       library_path=c:\ps\psx\lib
+          Additional Note: Define the environment variable PSYQ_PATH (Bug fix). In ccpsxd ver.3.05.0009, an error
+          will be returned if PSYQ_PATH is not defined. However, it is the directory specified in SN_PATH which will
+          actually be referred to.
+          Example:
+                       > set PSYQ_PATH=C:\TEMP
+          For more information please refer to the following documents:
+                   \PSSN\BIN\Readme,1st & \PSSN\BIN\readme.txt
+
+
+     Notes
+          Note (1): Previous development hardware and software included the "Psy-Q" tools. However, these tools
+          are now known as the "SDevTC"(Standard Development Tool Chain). The PsyQ tools have been inherited
+          by the SDevTC, so the contents should be the same, but some directories and environment variables were
+
+       DTL-H2500/H2700 Installation and Operation
+                                                                                                 Installing the Software 3–5
+
+     renamed starting with run-time library CD-ROM ver.4.1. Please be aware of this if you are still using the
+     older version. For more information, please refer to the documents in \PSSN.
+
+     Note (2): The \PSSN directory corresponds to the \PSYQ directory in older versions of the CD-ROM
+     (ver.4.0 and earlier).
+
+     Note (3): The \PSXGRAPH directory formerly contained the PSX sound tools. These tools have been
+     relocated to the \PSXSOUND directory.
+
+
+Installation for Windows 3.1 or Windows NT
+     In Windows 3.1 or NT, installation is performed from the MS-DOS prompt.
+     To be consistent with the automatic installation of the software under Windows 95, a parent directory PS
+     will be created, under which all PlayStation® software will be installed.
+
+Insert the Programmer’s Tools CD-ROM
+     •   Insert the Programmer’s Tools CD (DTL-S2002) into your CD-ROM drive (not the DTL-H2510) of your
+         system.
+Install the "psx" Tool
+     The directory [cdrom]:\psx contains the PlayStation® Development directory, which includes over 100
+     sample programs with full source code, the includes, and the linking libraries.
+     •   If applicable, back up or delete your previous c:\psx directory.
+     •   Copy the "psx" directory, d:\psx, from the CD to your local hard drive c:\ps\psx:
+                  xcopy /s d:\psx c:\ps\psx
+         (or just drag and drop the folder).
+     •   Add the following line to the end of your c:\autoexec.bat file.
+                 set path=%path%;c:\ps\psx\bin;
+
+Install the "pssn" Tools
+     The directory [cdrom]:\pssn contains the standard PlayStation® development system, which includes
+     an interactive debugger and the C compiler.
+     •   If applicable, back up or delete your previous c:\pssn directory.
+     •   Copy the "pssn" directory, d:\pssn, from the CD to your local hard drive c:\ps\pssn.
+     •   Copy the contents of the "gnu" directory, d:\gnu, from the CD to your local hard drive
+         c:\ps\pssn\bin:
+                 xcopy     /s    d:\gnu\*          c:\ps\pssn\bin
+     •   Add the following line to the end of your c:\autoexec.bat file.
+                 set path=%path%;c:\ps\pssn\bin;
+
+Add Environment Variables
+     Edit your autoexec.bat file to contain the lines listed below.
+     Note: This example depends on where you have set up your root psx and pssn directories. The file paths
+     contain forward slashes, unlike the normal DOS convention which uses backward slashes.
+                 REM ===== PSX Development Environment Variables =====
+                 set SN_PATH=c:/ps/pssn/bin
+                 set COMPILER_PATH=c:/ps/pssn/bin
+                 set PSX_PATH=c:/ps/psx/bin
+                 set C_INCLUDE_PATH=c:/ps/psx/include
+                 set C_PLUS_INCLUDE_PATH=c:/ps/psx/include
+                 set LIBRARY_PATH=c:/ps/psx/lib
+
+                                                                          DTL-H2500/H2700 Installation and Operation
+3–6 Installing the Software
+
+
+                       set GO32=DMPISTACK 1000000
+
+                       REM ===== GNU C/C++ ==================================
+                       set GO32TMP=c:/tmp
+                       set TMPDIR=c:/TMP
+
+                       REM If your computer does not have a floating point
+                       REM co-processor then uncomment the following line:
+                       REM set GO32=emu c:\ps\pssn\bin\emu387
+                       REM ==================================================
+
+
+     Install the "psxgraph"Tools (Optional)
+          The directory [cdrom]:\psxgraph contains the tools for converting between standard graphics file
+          formats and the PlayStation® formats. Although we are setting up the “Graphic Artist Tools program” area,
+          this CD does not contain the entire tool set for the Graphic Artist Tools. Only the conversion tools are
+          included. Please contact your regional tools coordinator for information on how to obtain the Graphic Artist
+          Tools CD (DTL-S220).
+          •    If applicable, back up or delete your previous c:\psxgraph directory.
+          •    Copy the "psxgraph" directory, d:\psxgraph, from the CD to your local hard drive
+               c:\ps\psxgraph.
+          •    Add the following line to the end of your c:\autoexec.bat file.
+                       set path=%path%;c:\ps\psxgraph\bin;
+          •    Copy all the files located in the "system" directory, d:\psxgraph\system, to the window's system
+               directory, c:\windows\system. These files are used by the Movie Converter.
+          •    If you have Windows 95, this completes the installation. Otherwise, you will have to create the groups
+               and match the icons yourself, by performing the following steps in Windows 3.1:
+
+     Graphic Artist Tools Program Group
+          Create a Graphic Artist Tools program group in the Windows 3.1 environment.
+          1. Under the Program manager "File" pulldown click on the "File>New" button.
+          2. Select Program Group; click OK.
+          3. Fill in the Description "Graphic Artist Tools". You may leave the "Group File" field blank. A new group
+             will be displayed.
+          4. You are now ready to add the individual tool icons. Please follow the individual program installation
+             instructions listed below if you are using Windows 3.1.
+          Note: For additional details on setting up program icons, please refer to your Windows 3.1 manual.
+
+     Movie Converter
+          With the "Graphic Artist Tools" program group selected, create a program icon for the Movie Converter
+          tool:
+          1. Under the Program manager "File" pulldown, click on "File->New" button.
+          2. Select Program Item and click OK.
+          3. A Program Item Properties dialog will pop up. Type “Movie Converter” in the Description field.
+          4. Use Browse to identify the name of the executable to be placed in the "Command Line" field (i.e.,
+             c:\ps\psxgraph\bin\mc32.exe).
+          5. Click OK.
+
+       DTL-H2500/H2700 Installation and Operation
+                                                                                                Installing the Software 3–7
+
+Movie Pack
+    With the "Graphic Artist Tools" program group selected, create a program icon for the Movie Pack tool:
+    1. Under the Program manager "File" pulldown, click on "File>New" button.
+    2. Select Program Item and click OK.
+    3. A Program Item Properties dialog will pop up. Type "Movie Pack" in the Description field.
+    4. Use Browse to identify the name of the executable to be placed in the "Command Line" field (i.e.,
+       c:\ps\psxgraph\bin\movpack.exe).
+    5. Click OK.
+
+3DStudio Plug-In
+    This release is for 3DStudio plug-in utilities. We highly recommend attaching the 3DStudio dongle before
+    progressing with a modeling session utilizing the 3DStudio plug-in.
+    Warning: Do not remove or add dongles while the PC is powered on. Do not start a 3DStudio plug-in
+    session before performing the following:
+    1. Remove dexbios (if installed)
+    2. Remove mess1.com (if installed)
+    3. Remove cdbios (if installed)
+    Please read the files *.doc and *.txt in the c:\ps\3rdParty\3ds directory. Specific installation
+    instructions are included in the 3dstod_e.txt file.
+
+
+
+Environment Settings for SDevTC
+    Once the files have been copied, various environment settings must be made to ensure proper operation of
+    the software.
+    The DTL-H2500 and the DTL-H2700 use different drivers. Please choose environment settings
+    according to the PlayStation® board you are using.
+
+
+Driver Settings for the DTL-H2500
+    First, initialize the flash memory on the DTL-H2500 board.
+    Execute the following commands from the MS-DOS prompt (DOS window)
+                DOS> cd \ps\pssn\bin\dtlh2500\h25bios
+                DOS> flash.bat
+    This completes initialization of the flash memory. This operation need only be performed once when the
+    board is first used. However, the Web site for your region may release new versions of the flash image. In
+    this case, perform this operation again to update the flash image.
+    If an error occurs during initialization, please check the board and PC settings.
+    Next, install the H25BIOS.COM driver for the DTL-H2500. In a similar manner as described above, enter
+    the following commands:
+                DOS> cd \ps\pssn\bin
+                DOS> h25bios
+    Use the /p option for PAL video format (in Europe, for example). The /p option is not needed for NTSC
+    (Japan, US, etc.). If installation is successful, the following messages should be displayed.
+             SN-BIOS for Sony DTL-H2500. Version 1.44
+
+                                                                          DTL-H2500/H2700 Installation and Operation
+3–8 Installing the Software
+
+                   Installed OK - card address: E7000 Interrupt: 9 Video: NTSC
+          The card address and Interrupt display will depend on the PC environment.
+          Tools for executing and debugging programs, such as resetps, run, pqbload, and dbugpsx can now be
+          used.
+          If a "Cannot locate DTL-H2500 PCI card" message is output during execution of H25BIOS, the DTL-H2500
+          has not been properly recognized. Please check the board and PC settings.
+          Note: The DTL-H2500 driver is an MS-DOS program, and therefore cannot be installed via the Windows
+          95 hardware wizard. If you are using Windows 95, the Plug&Play feature will cause the hardware wizard to
+          indicate that the H2500 has been detected. You will then be asked to install a driver. Select "Do not install
+          driver."
+          When using a DOS window within Windows 95, it is necessary to run H25BIOS each time a DOS window
+          is opened. H25BIOS cannot be installed in multiple DOS windows simultaneously.
+          Since H25BIOS is a 16-bit driver, it should not be entered into the Windows 95 c:\autoexec.bat file, as
+          this may create a conflict with the operating system.
+
+
+     Driver Settings for the DTL-H2700
+          First, initialize the flash memory on the DTL-H2700. To initialize the flash memory, execute the command:
+                       FLASH <I/O address>
+          For <I/O address>, specify the I/O address used in the H2700 on-board settings. For example, if the I/O
+          address=0x1840, enter the following from the MS-DOS prompt (DOS window):
+                       DOS> cd \ps\pa\dtlh2700
+                       DOS> flash 1840
+          This completes initialization of the flash memory. This operation need only be performed once when the
+          board is first used. However, the Web site for your region may release new versions of the flash image. In
+          this case, perform this operation again to update the flash image.
+          If an error occurs during initialization, please check the board and PC settings.
+          Next, install the DEXBIOS.COM driver for the DTL-H2700. If the on-board DIP switch is set to I/O
+          address=0x1840 and IRQ=11, enter the following commands:
+                       DOS> cd \ps\pssn\bin
+                       DOS> dexbios /a1840          /i11
+          If installation is successful, the following messages will be displayed.
+                   DEXBIOS version 1.27
+                   Installed OK - card address 1840, Interrupt 11
+          Tools for executing and debugging programs, such as resetps, run, pqbload, and dbugpsx can now be
+          used.
+          If DEXBIOS is executed and an I/O address and an IRQ are displayed that differ from the board settings,
+          the DTL-H2700 has not been properly recognized. Please check the board and PC settings.
+          Note: The driver for the DTL-H2700 is an MS-DOS program. The DTL-H2700 is not Plug&Play compliant
+          and therefore the Windows 95 hardware wizard cannot be used to detect the board or install drivers.
+          When using a DOS window within Windows 95, it is necessary to run DEXBIOS each time a DOS window
+          is opened. DEXBIOS cannot be installed in multiple DOS windows simultaneously. Since DEXBIOS is a 16-
+          bit driver, it should not be entered into the Windows 95/3.1 c:\autoexec.bat file as this may cause a
+          conflict with the operating system.
+
+
+
+
+       DTL-H2500/H2700 Installation and Operation
+                                                                                                Installing the Software 3–9
+
+Installing DTL-H2700 Performance Analyzer Software
+   The DTL-H2700 comes with performance analysis software (the DTL-S2710 performance analyzer). To
+   install this software, please refer to the documentation contained on the floppy disk or in the \PA directory
+   on the run-time library CD-ROM.
+
+
+
+Rebooting the System
+   Reboot the system after the operations described above have been performed.
+
+
+
+
+                                                                         DTL-H2500/H2700 Installation and Operation
+3–10 Installing the Software
+
+
+
+
+       DTL-H2500/H2700 Installation and Operation
+Chapter 4:
+Checking the Setup
+
+
+
+
+                     DTL-H2500/H2700 Installation and Operation
+4–2 Checking the Setup
+
+
+
+
+      DTL-H2500/H2700 Installation and Operation
+                                                                                                  Checking the Setup 4–3
+
+
+
+
+Checking the DTL-H2500
+   First, load the DTL-H2500 driver. Then enter the following commands from the MS-DOS prompt (DOS
+   window).
+               DOS> cd \ps\pssn\bin
+               DOS> h25bios
+   If the driver fails to load, check the following items:
+   •   Is \ps\pssn\bin\h25bios.com in the specified drive?
+   •   Has the flash memory been initialized?
+
+
+
+Checking the DTL-H2700
+   First, load the DTL-H2700 driver. Then, enter the following commands from the MS-DOS prompt (DOS
+   window).
+               DOS> cd \ps\pssn\bin
+               DOS> dexbios /a1840 /i11            (example: I/O address = 0x1840, IRQ=11)
+   If the driver fails to load, check the following items:
+   •   Is \ps\pssn\bin\dexbios.com in the specified drive?
+   •   Has the flash memory been initialized?
+
+
+
+Compiling and Executing Sample Programs
+
+Compiling and Executing the Sample Graphics Code
+   Test the environment by compiling and executing sample programs. Perform the following operations from
+   the MS-DOS prompt (DOS window).
+               C:\> cd \ps\psx\sample\graphics\tmdview\shuttle
+               C:\PS\PSX\SAMPLE\GRAPHICS\TMDVIEW\SHUTTLE> psymake all
+   The operation is successful if the command exits normally with no error messages and control returns to
+   the MS-DOS prompt. Check to see that a file named tuto0.cpe has been created within the same
+   directory. The CPE extension is used for a file format that can be executed on the development board.
+   Perform the following steps to execute the compiled program:
+               C:\PS\PSX\SAMPLE\GRAPHICS\TMDVIEW\SHUTTLE> resetps 1
+               C:\PS\PSX\SAMPLE\GRAPHICS\TMDVIEW\SHUTTLE> psymake load
+               C:\PS\PSX\SAMPLE\GRAPHICS\TMDVIEW\SHUTTLE> run tuto0.cpe
+   If these operations complete normally, a shuttle will appear on the video monitor connected to the
+   PlayStation® board. This sample program is described in
+               \PS\PSX\SAMPLE\GRAPHICS\TMDVIEW\SHUTTLE\README.TXT
+   If compilation does not complete normally, check the following item:
+   •   Are the environment variables and the PATH set properly?
+   If nothing is displayed on the monitor, check the following items:
+   •   Is the video cable connected to the monitor?
+   •   Is PATCH.CPE being run (See "Note" below)?
+
+                                                                          DTL-H2500/H2700 Installation and Operation
+4–4 Checking the Setup
+
+         If the sample code still does not execute properly, please contact Sony.
+         The basic steps involved in running a program are as follows:
+                  DOS> resetps 1                                                Reset the PlayStation® board
+                  DOS> pqbload <filename> <load address>                        Download data as necessary
+                  DOS> run <executable file (*.CPE)>                            Run program
+         Repeat these steps to confirm proper operation of the program.
+         Note: In older PlayStation® boards (DTL-H2000: discontinued), it was necessary to perform this step:
+                     DOS> run patch.cpe
+         right after the RESETPS command. However, this patch has been incorporated into the flash memory for
+         the DTL-H2500 and H2700, so this step should not be performed.
+
+
+    Compiling and Executing the Sound Sample
+         Test the environment by compiling and executing sample programs. Perform the following operations from
+         the MS-DOS prompt (DOS window).
+                     C:\> cd \ps\psx\sample\sound\simple
+                     C:\PS\PSX\SAMPLE\SOUND\SIMPLE> psymake all
+         The operation is successful if the command exits normally with no error messages and control returns to
+         the MS-DOS prompt.
+         Next, run the compiled program.
+                     C:\PS\PSX\SAMPLE\SOUND\SIMPLE> resetps 1
+                     C:\PS\PSX\SAMPLE\SOUND\SIMPLE> psymake load
+                     C:\PS\PSX\SAMPLE\SOUND\SIMPLE> run main.cpe
+         If these operations complete properly, a sound will be output from the video monitor connected to the
+         PlayStation® board. This sample program is described in
+                     \PS\PSX\SAMPLE\SOUND\SIMPLE\README.TXT.
+         If compilation does not complete normally, check the following item:
+         •   Are the environment variable and PATH settings correct?
+         If nothing is displayed on the monitor, check the following items:
+         •   Is the video cable connected to the monitor?
+         •   Is PATCH.CPE being run (See "Note" above)?
+         If the program runs but there is no sound, check the following item:
+         •   Is the audio cable connected to the monitor?
+         If you cannot get the sample code to work, please contact Sony.
+
+
+
+    Checking the CD-ROM Drive
+         If you have the DTL-H2510 CD-ROM drive, perform the following operations.
+         Insert a commercial PlayStation® title into the CD-ROM drive and enter the following command.
+                     DOS> resetps 0
+         This will run the program from the CD-ROM drive.
+
+
+
+
+      DTL-H2500/H2700 Installation and Operation
+                                                                                             Checking the Setup 4–5
+
+  If the program does not boot properly, check the following item:
+  •   Is the DTL-H2510 CD-ROM drive connected correctly?
+
+
+
+Checking the CD-ROM Emulator
+  If you have the DTL-S2020 CD-ROM Emulator, download the latest tools from the Web site for your region.
+  Refer to the documentation included in the download package.
+
+
+
+
+                                                                     DTL-H2500/H2700 Installation and Operation
+4–6 Checking the Setup
+
+
+
+
+      DTL-H2500/H2700 Installation and Operation
+Appendix A:
+Troubleshooting the Installation
+
+
+
+
+                           DTL-H2500/H2700 Installation and Operation
+A-2   Troubleshooting the Installation
+
+
+
+
+       DTL-H2500/H2700 Installation and Operation
+                                                                                       Troubleshooting the Installation A-3
+
+
+
+
+Preliminaries
+   Check your board. It should have at least a PD2 chip on it.
+   Check your interrupts. Your PCI card should be assigned to one interrupt, and no other peripherals
+   can be assigned to that interrupt. You can use the "MSD" program included in most versions of DOS.
+   Alternatively, in Windows 95, you can see what interrupts are assigned by performing the following:
+   1. Go the “My Computer” icon. Yours may be named differently, but it looks like a computer:
+
+
+
+
+   2. Right click on the icon and select “Properties”.
+   3. Select the “Device Manager” tab.
+   4. Select the “Print…” button.
+   5. Choose the "All devices and system summary".
+   6. Print out the document. For available IRQs, read the "IRQ SUMMARY" section.
+   Alternatively, some IBM PC-Compatibles are equipped with a "Setup" routine hidden in the boot sector of
+   the boot-up hard drive which can be accessed during a cold-boot (turning off the computer's power
+   supply, then turning it back on). After the computer runs its memory check and the cursor moves to the
+   top-right corner of the screen, you can hit a function key (F1 through F10) to get into the "setup" mode.
+   Since computers vary, you may have try them one at a time. If you have a manual for your computer, read
+   it for more information.
+   We are working on improving the PCI card so that it will not have this problem in the future.
+
+
+
+Problem: PC fails to recognize board
+   The DTL-H2500 main board is the board for the PCI slot. When a PC is started up with the main board
+   mounted into the slot, the PC usually recognizes the main board automatically. However, some models of
+   PCs may fail to recognize it. The problem with the PCI BUS interface can be caused by BIOS bugs or
+   hardware bugs. Currently, there are no general purpose solutions for either bug. PC models which may
+   cause problems should not be used. Please check the table at the end of this chapter.
+
+
+
+Known Problems with BIOS of PC
+              Problem             Workaround
+              AMIBIOS Intel Endeavour version 1005C B0              Use AMIBIOS Version 1002CB0
+
+
+
+Diagnostic Checks
+   If your board is not in the tables below, in the section “General known compatibility …”, then the
+   board's addresses could be incorrect, or the PCI bus is malfunctioning. Before you can proceed with the
+   diagnosis, the H25DRV.EXE must be installed, and the BIOS settings may need to be changed. These are
+   explained in Step 1 and Step 2 below.
+
+
+                                                                        DTL-H2500/H2700 Installation and Operation
+A-4   Troubleshooting the Installation
+
+      1: Install the H25DRV.EXE driver.
+           H25DRV.exe is an older driver formerly used by the DTL-H2500. It has been retained on the Programmer
+           Tools CD for diagnostic purposes.
+           Follow the instructions in “\psx\bin\dtlh2500\h25drv\h25drv.doc” for installing H25DRV.EXE. Be sure that
+           h25bios is no longer loaded before loading H25DRV.EXE. By following the steps outlined in h25drv.doc
+           you should be able to tell if your board is functioning properly.
+
+      2: Change the BIOS settings.
+           The BIOS settings may need to be changed for some models of PCs. A setup utility is usually accessible on
+           PCs by hitting the F10 key:
+           •    Turn off your computer.
+           •    Turn on your computer. A memory check will be run.
+           •    When the memory check finishes, the cursor will appear on the right of the screen. Hit the F10 key to
+                invoke the CMOS setup program.
+           The main changes to be made to the settings are as follows:
+           •    Enable the PCI BUS
+           •    Disable the Shadow area in RAM
+           •    Disable the 4 KB Shadow area to be allocated to the DTL-H2500.
+
+      3: Check for failure in address mapping.
+           Executing FRESET.EXE informs you which addresses the PC allocates for the PCI card. Generally, the PC
+           allocates an area with one of addresses 0x000C8000 to 0x000EFFFF.
+                        C:\ps\psx\bin\FRESET.EXE
+           The following message should appear:
+                    PCI version 2.10 Special Cycle 1, Config Mechanism 1 1 bus
+                    bus 0: dev=13 func=0 irq=11, io=000C8000
+                    UNIT 0: I/O addr=0x000C8000, IRQ=11(vect=0x0073, 8259=a0)
+           If “addr” is set to any of the addresses outside of the range from 0x00000001 to 0x000FFFFF (1 M or less),
+           the address mapping by the PCI will fail.
+           The solution is to modify the mapping with a special utility for modifying the address mapping called
+           REALLOC.EXE. Typing the following will allocate some PCI memory at 0x000c8000
+                        realloc 0x000c8000
+           When the address has been modified, warm-boot the PC (with Alt+Ctrl+Del). The address should be
+           mapped to 0x000c8000, and the main board should begin to work properly. This method has been shown
+           to work for DEC PCs (DECpc XL 466d2 and DECpc LPx 560).
+
+      4: If the previous step did not work, check for problems with the PCI bus interface.
+           If the address mapping succeeds, check the PCI interface operation with the DOS debug command by
+           doing the following:
+           •    Type “debug”. You are now in the debugging mode of DOS.
+           •    At the “-” prompt, type “d c800:0000”. This number is the lead address of the area allocated to the PCI
+                board.
+           You should see something similar to the following:
+                             C800:0000 01 01 00 09 01 01 00 09-01 01 00 09 01 01 00 09 ................
+                             C800:0010 01 01 00 09 01 01 00 09-01 01 00 09 01 01 00 09 ................
+
+       DTL-H2500/H2700 Installation and Operation
+                                                                                       Troubleshooting the Installation A-5
+
+   If the PCI works properly, a large quantity of numeric characters are displayed with regular patterns by 4
+   bytes. If numeric characters are displayed with an irregular pattern, there is a problem with the PCI BUS
+   interface.
+
+
+
+Problem: Board Will Not Reset/Can’t Run Programs
+   Step 1:  If you are using decicons, and the boards do not reset correctly (F9, F10) or download
+      programs (F4): Try reinstalling the PlayStation® OS ROM image on the board, using Flashb8.bat.
+      (Remember not to use PFLASH.BAT if you wish to use DECICONS).
+   Step 2:   If you are using decicons, try running decicons on your Win95 PC in “DOS” mode, rather than
+      in a DOS shell. If this works, it would imply that you have a Win95-related clash.
+   Step 3:    If step (2) did not help (or you are not using decicons), use the standard DOS debug option to
+      examine the memory used by the driver. That is, if 0xE7000 is the start of the address space allocated
+      for the driver, run debug, and type “-d e800:0”. A hex dump will be displayed. If the sequence is not of
+      the form “01 00 09 00 01 00 09 00-01 00 09 00 01 00 09 00”, then review the "shadow" setting of
+      BIOS. The "shadow" at E7000h (in this case) must be disabled.
+   Step 4:   If this does not cure the problem, check the version of BIOS that you are using. SCEE found
+      problems with some H2500s in PCs with AMI BIOS and Intel mother boards. In particular, BIOS version
+      1.00.02.CB0 works, but later versions do not. Their solution was to downgrade the PC's BIOS to
+      1.00.02.CB0 and reinstall Win95. (Win95’s installer appears to make some choices about the hardware
+      and these cannot be changed once the program in installed.) This file can be downloaded from:
+              ftp://ftp.funet.fi/pub/hw/vendors/intel/bios
+       There is a known problem with this version of the BIOS in that sometimes it does not recognize the PC
+       hard-disk. Rebooting with CTRL+ALT+Delete seems to cure the problem. We will let you know when
+       we find the latest version of the BIOS which works correctly.
+
+
+
+
+                                                                        DTL-H2500/H2700 Installation and Operation
+A-6   Troubleshooting the Installation
+
+
+
+
+      General Known Compatibility Issues With PC Brands and Models
+             The following table lists known computer compatibility issues with the DTL-H2500 board. It consists of lists
+             compiled from SCEI, SCEE, SCEA, and licensees. Note that, although the boards may have worked for the
+             computers here, you may have differing levels of success. This list is not a guarantee that the boards will
+             work for all instances of these computers. Contact Technical Support if you have further difficulties. We use
+             Compaq computers, and do not recommend Dell or Gateway because they tend to use a custom BIOS
+             that makes installation very painful.
+             Known Compatibility Issues
+      Brand             Assus             Archipelego     AST                        Compaq          Compaq          Compaq
+      Model             Tech P/I -        P133            Manhattan V Series 5090 Deskpro 575        Deskpro 5100 Deskpro 5166
+                        P55TP4N / 100
+      Cpu               -                 -               Pentium 90 MHz             Pentium 75      Pentium 100     Pentium 166
+                                                                                     MHz             MHz             MHz
+      BIOS              Award Modula      -               AST Manhattan BIOS         -               -               -
+                        Bios V.4.51                       Rel 1.12
+                        PG from Award
+                        Software
+      Motherboard       P166              -               -                          -               -               -
+      Slot              -                 -               -                          -               -               -
+      HDD               -                 -               -                          -               -               -
+      Video             -                 -               -                          -               -               -
+      Memory            -                 -               -                          -               -               -
+      PCI Chipset       -                 Intel Endeavour -                          Compaq          Compaq          Compaq
+      OS                -                 -               Windows 95                 Windows 95      Windows 95      Windows 95
+      Problem           OK                OK              OK, but see warnings       OK, but see    OK, but see    OK, but see
+                                                          below                      solution below solution below solution below
+      Solution          -                 -               You will need to try the     You can assign the PCI interrupts by invoking
+                                                          PCI board in different PCI the Compaq setup utility at boot up time. Cold
+                                                          slots. If your machine       boot the machine, then hit F10 after the
+                                                          does not finish booting      memory test finishes. Navigate to the main
+                                                          properly, try the next slot. screen and select the "Add-In Devices" screen.
+                                                          If H25DRV.EXE does not You can thereby change PCI interrupts.
+                                                          work, skip to the section
+                                                          "Installing the
+                                                          H25Bios.com Driver"
+
+
+
+
+       DTL-H2500/H2700 Installation and Operation
+                                                                                                Troubleshooting the Installation A-7
+
+
+
+Brand         Compaq                       Compaq
+Model         Deskpro 6000                 Compaq Deskpro 6200
+Cpu           Pentium 200 MHz              Pentium Pro 200MHz
+BIOS          -                            Unidentified (specifically designed by Compaq)
+Motherboard   -                            PCI 1-Slot + ISA 1-Slot + PCI/ISA 1-Slot
+Slot          -                            -
+HDD           -                            -
+Video         -                            Matrox MGA Millennium 4MB
+Memory        -                            16MB x 2 (SIMM Socket x 8)
+PCI Chipset
+OS            Windows 95                   "Windows NT 3.51 Workstation" and "Windows 95" coexisted. Both OSs were set
+                                           bootable.
+Problem       OK, but see Solution         The unit operated correctly with factory setting, after following the steps presented
+              below.                       in "Solution" below.
+Solution      You can assign the PCI       Step 1.   Prior to connecting H2500, start BIOS SETUP(DIAG) once. Check that
+              interrupts by invoking the             no message from SETUP, such as "The boards have been
+              Compaq setup utility at                detected/deleted" is displayed at this point.
+              boot up time. Cold boot      Step 2.   Check that the boards are recognized by SETUP. If they are, select
+              the machine, then hit F10              "Save and Exit".
+              after the memory test
+              finishes. Navigate to the    Step 3.   Power off the unit and connect H2500. Start BIOS SETUP once again.
+              main screen, and select                Check that the message, "The new board has been detected", is
+              the "Add-In Devices"                   displayed. H2500 must have been recognized as "Other Device". You
+              screen. You can thereby                can find it from the description, "SONY", at the Inquiry indicator. Check
+              change PCI interrupts.                 that IRQ and Memory are allocated. If they are, select "Save and Exit".
+                                                     (The actual figures were 4 for IRQ and C8000-C8FFF for Memory.)
+                                           Step 4.   Start Windows 95. (It may be better to power off once before starting
+                                                     Windows 95.) Check that the new board has been detected. Then at
+                                                     driver installation select "Without Driver". After executing H25BIOS from
+                                                     DOS Prompt, if Color-Bar gets displayed there is no problem. You may
+                                                     make sure of it with "System Property" just in case.
+                                           Step 5 (Optional) If Color-Bar is not displayed at this point, you need to do the
+                                                     set-up again from the first after following the steps below:
+                                                     A.   Delete H2500 at "System Property" and power off.
+                                                     B.   Remove H2500 and restart Windows 95. Check that H2500 has
+                                                          been deleted with "System Property" (The message from BIOS
+                                                          SETUP, "The board has been deleted", must be displayed.)
+
+
+
+
+                                                                               DTL-H2500/H2700 Installation and Operation
+A-8   Troubleshooting the Installation
+
+
+
+      Brand            DEC                                      DEC        DEC      DEC         DEC        DEC        DELL
+      Model            DEC Personal Workstation 200i            Celebris   Celebris Celebris    Celebris   Venturis   MT XPS
+                                                                FP590      GL5133ST GL6200ST    XL5100     FP5100
+      Cpu              Pentium Pro 200MHz                       -          -        Pentium Pro -          -          Pentium
+                                                                                    200 MHz                           Pro 200N
+      BIOS             Phoenix ROM BIOS 4.05                    -          -        -           -          -          -
+      Motherboard      (specifically designed by DEC)           -          -        -           -          -          -
+      Slot             PCI 2-Slot + PCI/ISA 3-Slot              -          -        -           -          -          -
+      HDD              2.1GB(SCSI)                              -          -        -           -          -          -
+      Video            AccelGraphics AccelR8                    -          -        -           -          -          -
+      Memory           96MB [32x2 + 16x2] (SIMM Socket x 8) -              -        -           -          -          -
+      PCI Chipset      -                                        -          Triton               Neptune -             -
+      OS               "Windows 95 " only                       -          -        -           -          -          -
+      Problem          The unit operated correctly with the     OK         OK       OK          OK         OK         OK
+                       factory setting. However, for the set-up
+                       you need to follow the steps below in
+                       "Solution".
+      Solution         Connect H2500 to the second              -          -        -           -          -          -
+                       connector from the uppermost.
+                       (Usually, Video Card is connected
+                       here.) If you connect H2500 to a
+                       connector other than that above, you
+                       will see a message informing you that it
+                       has caused a conflict with the
+                       Motherboard Resource, and the unit
+                       does not operate correctly
+
+
+
+
+       DTL-H2500/H2700 Installation and Operation
+                                                                                                    Troubleshooting the Installation A-9
+
+
+
+Brand          DELL                      DELL              DELL         DELL          DELL      DELL        DELL       DELL
+Model          OptiPlex GXPro 200        OptiPlex GXi      Optiplex GXM P120T         XM5100    XMT5100 XMT5120 XPS P120C
+                                         5200M             5200         Pentium
+Cpu            Pentium Pro 200MHz        Pentium           200 MHz      -             -         -           -          -
+                                         200MHz
+BIOS           Phoenix ROM BIOS          Phoenix ROM       -            -             -         -           -          -
+               PLUS 1.10.A02             BIOS PLUS
+                                         1.10.A00
+Motherboard (specifically designed       (specifically     -            -             -         -           -          Specifically
+               by DELL)                  designed by                                                                   designed by
+                                         DELL)                                                                         Dell
+Slot           PCI 3-Slot + PCI/ISA 2- PCI 2-Slot +        -            -             -         -           -          -
+               Slot                    ISA 2-Slot +
+                                       PCI/ISA 1-Slot
+HDD            2 + 2GB(IDE)              3.0GB(IDE)        -            -             -         -           -          -
+Video          #9 Imagine128             S3 Trio64V+       -            -             -         -           -          -
+Memory         64MB EDO x 1              96MB SDRAM -                   -             -         -           -          -
+               (DIMM Socket x 4)         [64x1 + 32x1]
+                                         (DIMM Socket x
+                                         4)
+PCI Chipset    -                         -                 -            -             Neptune   Neptune     Neptune    -
+OS             "Windows NT 4.0           "Windows 95       -            -             -         -           -          Windows 95
+               Workstation" (pre-        (OSR2)" only
+               installed) overwritten by (pre-installed)
+               "Windows 95" (Only
+               "Windows 95" was set
+               bootable.)
+Problem        The unit operated       The unit            Incompatible. Incompatible? OK       OK          OK         Incompatible
+               correctly with the      operated            (There are
+               factory setting.        correctly with      unsolvable
+               However, for the set- factory setting.      difficulties in
+               up you need to follow (There may            modifying the
+               the steps below. (There difficulties in     interrupts.)
+               may be difficulties in  modifying the
+               modifying the           interrupts.)
+               interrupts.)
+Solution       Connect H2500 to one Not applicable. -                   -             -         -           -          Do not use!
+               of the two PCI
+               Connectors in the
+               lowest part (either PCI1
+               or PCI2). If you connect
+               H2500 to connector
+               other than those above
+               you will see the error
+               messages "Plug & Play
+               Configuration Error"
+               and "Strike the F1 key
+               to continue, F2 to run
+               the setup utility", and
+               the unit will not operate
+               correctly.
+
+
+
+
+                                                                                  DTL-H2500/H2700 Installation and Operation
+A-10 Troubleshooting the Installation
+
+
+
+      Brand          FMV      Fujitsu Gateway                  Gateway           GoodTech HotChips HP        IBM     IBM
+      Model          -        FMV       Gateway2000            Gateway 2000      P200     Pentium   Vectra XM PC 750 PS/V
+                              590DE     GP6-400                P5-200                     Pro 200                    Master 100
+
+      Cpu            Pentium -          P6 400                 Pentium 200 MHz   -        -         -        -       -
+                     Pro 200
+                     MHz
+      BIOS           -        -         Phoenix                AMI 1.00.06.CY1T -         -         -        -       -
+      Motherboard -           -                                Intel ATX         -        -         -        -       -
+                                                               Motherboard
+      Slot           -        -                                PCI 3-Slot +      -        -         -        -       -
+                                                               ISA 2-Slot +
+                                                               PCI/ISA 1-Slot
+      HDD            -        -                                -                 -        -         -        -       -
+      Video          -        -         STB NVIDIA RIVA        -                 -        -         -        -       -
+                                        128 4MB AGP
+      Memory         -        -                                -                 -        -         -        -       -
+      PCI Chipset    -        -                                                  -        -         VLSI     -       -
+      OS             -        -         Win 95                 "Windows 95" only -        -                  -
+                                                               (pre-installed)
+      Problem        OK       OK        Because of the         The unit operated OK       OK        OK       OK      OK
+                                        BIOS setting a         correctly with the
+                                        conflict occurs with   factory setting
+                                        the DTL-H2500 on       when used as
+                                        the video card         stand alone.
+                                        installed in the       However, with
+                                        GP6-400                Network Card or
+                                                               SCSI Card installed
+                                                               in the unit, it hung
+                                                               up after executing
+                                                               H25bios.
+      Solution       -        -         At BIOS Setup,      Set either           -        -         -        -       -
+                                        change: Advanced "Standard" or
+                                        -> Video Config -> "OFF" at Power
+                                        AGP Aperature       Management
+                                        Size-> from 64MB setting in Windows
+                                        (default) to 256MB. 95 Control Panel.
+                                                            ("Details" is set as
+                                                            default setting.)
+
+
+
+
+       DTL-H2500/H2700 Installation and Operation
+                                                                                           Troubleshooting the Installation A-11
+
+
+
+Brand         IBM            Mesh           Micron                        Micron                       Micron
+Model         PS/V           Elite 120R     Client D (MARL-P200-MT) Millennia D                        Millennia Plus
+              Master P120    Pentium                                (M55HIPLUS-P200-MT)
+Cpu           -              -              Pentium 200MHz                Pentium 200MHz               Pentium 200
+                                                                                                       MHz
+BIOS          -              -              AMI 1.00.07.DB05              Phoenix 4.05                 -
+Motherboard   -              -              (Intel ATX Motherboard)       (MICRONICS Motherboard)      -
+Slot          -              -              PCI 3-Slot + ISA 2-Slot +     PCI 3-Slot + ISA 3-Slot +    -
+                                            PCI/ISA 1-Slot                PCI/ISA 1-Slot
+HDD           -              -              2.1GB(IDE)                    3.1GB(IDE)                   -
+Video         -              -              #9 9FX Motion                 #9 Imagine128 4MB VRAM       -
+                                            2MB EDO DRAM
+Memory        -              -              8MB EDO x 2                   16MB EDO x 2                 -
+                                            (SIMM Socket x 4)             (SIMM Socket x 4)
+PCI Chipset   Triton         -              -                             -                            -
+OS            -              -              "Windows 95" only             "Windows 95" only            -
+                                            (pre-installed)               (pre-installed)
+Status        Incompatible   Incompatible   The unit did not operate      The unit did not operate with Incompatible
+                                            correctly with the default    factory setting.
+                                            setting. Plug & Play failed
+                                            and Color-Bar was
+                                            displayed.
+Solution      -              -              Clear the check of auto    Set "OFF" at Plug & Play OS -
+                                            setting and manually reset setting in BIOS setting.
+                                            "Memory Range" at
+                                            System Device Manager in
+                                            Windows 95 Control
+                                            Panel. (e.g., Memory
+                                            Range is D0000-D0FFF)
+
+
+
+
+                                                                              DTL-H2500/H2700 Installation and Operation
+A-12 Troubleshooting the Installation
+
+
+
+      Brand                 Micron                                           Olivetti       Oki
+      Model                 Millenia Pro A (LIGHT-PP200-MT)                  M4 82          IF Station 590/DG
+      Cpu                   Pentium Pro 200MHz                               -              -
+      BIOS                  Phoenix 4.05                                     -              -
+      Motherboard           (MICRONICS Motherboard)                          -              -
+      Slot                  PCI 3-Slot + ISA 1-Slot + PCI/ISA 1-Slot         -              --
+      HDD                   3.1GB(IDE)                                       -              -
+      Video                 #9 Imagine128                                    -              -
+      Memory                32MB EDO x 1 (DIMM Socket x 4)                   -              -
+      PCI Chipset           -                                                -              -
+      OS                    "Windows NT 3.51 Workstation" and                -              -
+                            "Windows 95" coexisted (Both OSs were set
+                            bootable.).
+      Problem               The unit operated correctly with the factory     Incompatible   OK
+                            setting for the reason described below.
+      Solution              The unit operated correctly with the factory     -              -
+                            setting, because the factory setting of the Plug
+                            & Play OS setting in the BIOS was set "OFF".
+
+
+
+
+       DTL-H2500/H2700 Installation and Operation
+Appendix B:
+Installing to an AMI BIOS Machine
+
+
+
+
+                          DTL-H2500/H2700 Installation and Operation
+B-2   Installing to an AMI BIOS Machine
+
+
+
+
+       DTL-H2500/H2700 Installation and Operation
+                                                                                 Installing to an AMI BIOS Machine B-3
+
+Machines using AMI BIOS may cause problems when you are installing the DTL-H2500. Follow these
+steps:
+Step 1: "Uninstall" the PCI card.
+        •   Go the “My Computer” icon. Yours may be named differently, but it looks like a computer:
+
+
+
+
+        •   Right click on it; select “Properties”.
+        •   Select the "Device Manager" tab (see figure below).
+        •   Double-click on "Other Devices", then select "PCI card" (circled in the figure below).
+
+
+
+
+        •   Select "Remove".
+Step 2: Shutdown Windows 95.
+Step 3: Reboot the machine.
+       When Win95 displays the message "New Hardware Found", select "Do not install a driver".
+Step 4: Change the memory location of the PCI Card Resource.
+       The operating system, under the AMI BIOS, may allocate the PCI card to an unsuitable memory
+       space. This needs to be changed by performing the following:
+        •   Open the "Device manager" as in Step 1.
+        •   Double-click on the PCI card icon (ignore the warning icon). If the icon does not appear,
+            reboot the machine, so that the Windows 95 operating system can install the icon. Again, if
+            you are asked to install a device driver, choose NOT to install one.
+        •   Select the resources tab, which will show the memory range.
+        •   Clear the "Automatic settings" check box.
+        •   Change the memory to a non-conflicting memory address, such as D4000-D4FFF:
+
+
+
+                                                                     DTL-H2500/H2700 Installation and Operation
+B-4   Installing to an AMI BIOS Machine
+
+
+
+
+                    •   After modification, Win95 asks you "Do you want to restart now?". Select "Yes".
+           Step 6: Verify that the PCI card uses the addresses you specified.
+                    After Win95 is restarted, open the "PCI Card Resources" as before, and check to see that the
+                    Memory Range has been changed to the address you specified. Again ignore the warning icon.
+                    At this stage, issuing the "freset" from the DOS prompt will show that the H2500 is allocated to
+                    C8000 and at the same time, it is reset. When the PCI Card is once allocated correctly as above, it
+                    will be kept allocated to the same Memory Range (C8000-C8FFF for this example), even after
+                    rebooting with the PCI card resources being set to "automatic settings".
+           These steps may also be used to alter the memory address automatically assigned to the DTL-H2500 if it is
+           conflicting with another device (ie. a SCSI card).
+
+
+
+
+       DTL-H2500/H2700 Installation and Operation
+Appendix C:
+Commands for the Flash-ROM
+
+
+
+
+                       DTL-H2500/H2700 Installation and Operation
+C-2   Commands for the Flash-ROM
+
+
+
+
+       DTL-H2500/H2700 Installation and Operation
+                                                                                               Commands for the Flash-ROM     C-3
+
+        “flash.bat”, “flashb8.bat”, and the “pflash.bat” are simple batch files which call more primitive commands to
+        the DTL-H2500; therefore, it is necessary to run the batch files in the same directory which contains
+        “freset”, “fload”, and “fquit”. You will almost never need to know what the parameters do; but if you are
+        curious, here is the information.
+
+flash.bat
+        A batch file to write the OS binary image into the flash ROM. It uses the file 'h2500.img' and is equivalent to
+        typing the commands shown below in an MS-DOS prompt:
+                   freset -r 1
+                   fload h2500.img
+                   fquit
+                   freset 1
+
+freset
+        Resets the boot mode and the DTL-H2500 video mode.
+        Syntax
+                   freset [-r] [-p|-n] [switch(hex)]
+        where
+                   -r      The main board is booted by EPROM.
+                           (Default booted by flash ROM.)
+                   -n      video mode is set to NTSC mode
+                   -p      video mode is set to PAL mode
+                           if both are not specified, the previous mode is kept.
+                   The switch option can have the following values:
+                   0       boot PlayStation® CD-ROM
+                   1       wait to load files
+                           If no switch is specified, the previous mode continues.
+
+fload
+        Load a file to the main board and run that program. This should be done after the main board has been set
+        to wait for loading.
+        Syntax
+                   fload [-l|-r|-b<address>] file_name
+        where
+                   file_name         loaded file name
+                   -l                only loads a file
+                   -r                only runs without loading a file
+                                     if both are not specified, load a file and run.
+                   -b<address>       loads a binary file to the specified address
+
+fquit
+        Causes the main board to quit waiting mode.
+        Syntax
+                   fquit
+
+
+
+                                                                                 DTL-H2500/H2700 Installation and Operation
+C-4   Commands for the Flash-ROM
+
+
+
+
+       DTL-H2500/H2700 Installation and Operation
+Appendix D:
+DTL-H2500 Questionnaire
+
+
+
+
+                          DTL-H2500/H2700 Installation and Operation
+D-2   DTL-H2500 Questionnaire
+
+
+
+
+       DTL-H2500/H2700 Installation and Operation
+                                                                                     DTL-H2500 Questionnaire D-3
+
+We would greatly value your help with the attached questionnaire so that we can let other developers know
+about other problematic PCs.
+
+
+
+                                DTL-H2500 QUESTIONNAIRE
+
+ Please FAX back to:
+       Attention: Developer Support
+       44 (0) 171 390 4324 (Europe)
+       1-650-655-5511 (United States)
+
+ General Information
+         Your Company Name                         Contact Name                   Telephone Number
+
+
+
+ System Information
+
+   DTL-H2500 Serial No.
+
+   Is your system in use?
+   If yes, for how long ?
+
+   Make of PC and OS
+   (e.g., Archipelego, Win95)
+
+   PC Speed and RAM
+   (e.g., 120MHz, 16Mb)
+
+   PC Chipset
+   (e.g., Triton)
+
+   PC BIOS Manufacturer/Version
+   (e.g., AMIBIOS 1.00.02.CB0)
+
+
+
+
+                                                                  DTL-H2500/H2700 Installation and Operation
+D-4   DTL-H2500 Questionnaire
+
+
+
+
+       DTL-H2500/H2700 Installation and Operation
+

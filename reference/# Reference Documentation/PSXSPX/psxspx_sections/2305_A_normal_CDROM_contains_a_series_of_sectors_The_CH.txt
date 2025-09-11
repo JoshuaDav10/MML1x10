@@ -1,0 +1,39 @@
+PSXSPX SPECIFICATIONS - A NORMAL CDROM CONTAINS A SERIES OF SECTORS. THE CHD FORMAT IS VIOLATING THAT
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: A normal CDROM contains a series of sectors. The CHD format is violating that
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1227 characters
+Lines: 30
+================================================================================
+
+A normal CDROM contains a series of sectors. The CHD format is violating that
+in several ways: It's removing Index0/Pregap sectors, and it's instead
+inserting dummy/padding sectors between tracks.
+
+| Track 
+Section Index0 IndexN TrackPad Index0 IndexN TrackPad HunkPad
+Real Disc Yes Yes - Yes Yes - -
+CHD Header - Yes Yes - Yes Yes -
+CHD Data - Yes Yes - Yes Yes Yes
+
+That is, the critical parts are:
+
+| Index0/pregap: Metadata PREGAP:sectors isn't stored in compressed data
+Track padding: Metadata FRAMES:sectors is rounded up to N*4 sectors
+Hunk padding: The last hunk is additionally rounded up to hunksize
+
+Missing Index0 might be a problem if a disc contains nonzero data between
+tracks (like audio discs with applause in Index0 periods).
+
+Track padding is total nonsense. The final hunk padding makes sense (but
+confusingly that extra padding isn't included in the uncompressed size entry in
+CHD header).
+
+Parent references
+
+Parent files are only used for writeable media like harddisks. The idea is to
+store the original installation and operating system in a readonly Parent file,
+and to store changes that file in a writeable Child file.
+
+Unknown what determines which parent belongs to which child, and if parents can

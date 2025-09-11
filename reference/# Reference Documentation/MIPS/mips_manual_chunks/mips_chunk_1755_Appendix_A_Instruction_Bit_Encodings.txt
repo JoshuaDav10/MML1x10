@@ -1,0 +1,71 @@
+MIPS INSTRUCTION SET REFERENCE - APPENDIX A INSTRUCTION BIT ENCODINGS
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Appendix A Instruction Bit Encodings
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 5797 characters
+Lines: 62
+================================================================================
+
+Appendix A Instruction Bit Encodings
+
+
+                                Table A-3 MIPS32 SPECIAL Opcode Encoding of Function Field
+          function      bits 2..0
+                           0             1             2              3              4             5              6                 7
+          bits 5..3       000           001           010            011            100           101            110               111
+          0 000          SLL1         MOVCI δ        SRL δ           SRA           SLLV            *            SRLV δ            SRAV
+          1 001           JR2          JALR2         MOVZ           MOVN         SYSCALL         BREAK            *               SYNC
+          2 010         MFHI           MTHI          MFLO           MTLO             β             *              β                 β
+          3 011         MULT          MULTU           DIV           DIVU             β             β              β                 β
+          4 100          ADD           ADDU           SUB           SUBU           AND            OR             XOR              NOR
+          5 101            *             *            SLT           SLTU             β             β              β                 β
+          6 110          TGE           TGEU           TLT           TLTU           TEQ             *             TNE                *
+          7 111            β             *             β              β              β             *              β                 β
+        1. Specific encodings of the rt, rd, and sa fields are used to distinguish among the SLL, NOP, SSNOP and EHB functions.
+        2. Specific encodings of the hint field are used to distinguish JR from JR.HB and JALR from JALR.HB
+
+
+
+                                         Table A-4 MIPS32 REGIMM Encoding of rt Field
+             rt        bits 18..16
+                            0           1             2         3                     4             5              6             7
+         bits 20..19      000          001           010       011                   100           101            110           111
+          0     00       BLTZ         BGEZ         BLTZL φ   BGEZL φ                  *             *              *             *
+          1     01       TGEI         TGEIU          TLTI     TLTIU                 TEQI            *            TNEI            *
+          2     10     BLTZAL        BGEZAL       BLTZALL φ BGEZALL φ                 *             *              *             *
+          3     11          *           *             *         *                     *             *              *          SYNCI ⊕
+
+
+                                     Table A-5 MIPS32 SPECIAL2 Encoding of Function Field
+          function      bits 2..0
+                           0            1              2               3             4             5               6             7
+          bits 5..3       000          001            010             011           100           101             110           111
+          0 000         MADD          MADDU           MUL              θ           MSUB          MSUBU             θ             θ
+          1 001            θ            θ              θ               θ             θ             θ               θ             θ
+          2 010            θ            θ              θ               θ             θ             θ               θ             θ
+          3 011            θ            θ              θ               θ             θ             θ               θ             θ
+          4 100          CLZ           CLO             θ               θ             β             β               θ             θ
+          5 101            θ            θ              θ               θ             θ             θ               θ             θ
+          6 110            θ            θ              θ               θ             θ             θ               θ             θ
+          7 111            θ            θ              θ               θ             θ             θ               θ          SDBBP σ
+
+
+              Table A-6 MIPS32 SPECIAL31 Encoding of Function Field for Release 2 of the Architecture
+          function      bits 2..0
+                           0             1              2            3               4              5              6               7
+          bits 5..3       000           001            010          011             100            101            110             111
+          0 000         EXT ⊕            β              β            β             INS ⊕            β              β               β
+          1 001            *             *              *            *               *              *              *               *
+          2 010            *             *              *            *               *              *              *               *
+          3 011            *             *              *            *               *              *              *               *
+          4 100        BSHFL ⊕δ          *              *            *               β              *              *               *
+          5 101            *             *              *            *               *              *              *               *
+          6 110            *             *              *            *               *              *              *               *
+          7 111            *             *              *         RDHWR ⊕            *              *              *               *
+
+
+
+318                                                                  MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                               Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.

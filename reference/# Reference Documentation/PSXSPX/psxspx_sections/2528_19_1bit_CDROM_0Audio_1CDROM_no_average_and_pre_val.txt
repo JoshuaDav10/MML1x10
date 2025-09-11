@@ -1,0 +1,131 @@
+PSXSPX SPECIFICATIONS - 19 1BIT CDROM (0=AUDIO, 1=CDROM; NO AVERAGE AND PRE-VALUE STUFF)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 19 1bit CDROM (0=Audio, 1=CDROM; no average and pre-value stuff)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 4458 characters
+Lines: 123
+================================================================================
+
+19 1bit CDROM (0=Audio, 1=CDROM; no average and pre-value stuff)
+18 1bit DOUT Mute (0=Not muted, 1=Mute DOUT)
+17 1bit D.out Mute-F (0=Not muted, 1=Mute DA)
+16 1bit WSEL (0=Enhanced Sync Window, 1=Enhanced Anti-Rolling)
+15 1bit VCO SEL (0=Double Correction, 1=Quadruple Correction)
+14 1bit ASHS (0=Double Correction, 1=Quadruple Correction)
+13 1bit SOCT (0=Output SubQ to SQSO, 1=Output Each? to SQSO)
+12 1bit Unused (zero)
+11-8 4bit Unused (don't care on CXD2510Q, zero on CXD2545Q)
+7-0 8bit Unused (don't care)
+
+CXD2510Q - CX(9xx) - Function Specification
+
+| 23-20 4bit Command (9)
+19 1bit DCLV ON-OFF (complex stuff, related to gain and frequencies)
+18 1bit DSPB ON-OFF (0=Normal Speed, 1=Double Speed; fixed pitch)
+17 1bit ASEQ ON-OFF (select output on SENS pin)
+16 1bit DPLL ON-OFF (0=Analog RFPLL, 1=Digital RFPLL)
+15-14 1bit Bilingual Audio (0=Stereo, 1=RightOnly, 2=LeftOnly, 3=Mute)
+13 1bit FLFC (normally 0)
+12 1bit Unused (zero)
+11-8 4bit Unused (don't care on CXD2510Q, zero on CXD2545Q)
+7-0 8bit Unused (don't care)
+
+CXD2510Q - CX(Axx) - Audio Control
+
+| 23-20 4bit Command (0Ah)
+19 1bit Vari Up (write 1-then-0 to increase pitch by +0.1%)
+18 1bit Vari Down (write 1-then-0 to decrease pitch by -0.1%)
+17 1bit Mute (0=Not muted; unless muted elsewhere, 1=Mute & Peak=0)
+16 1bit ATT (0=Attentuation off, 1=Minus 12 dB)
+15-14 2bit PCT (0=Normal, 1=LevelMeter, 2=PeakMeter, 3=Normal) (0-1=QuadC2)
+13-12 2bit Unused (zero)
+11-8 4bit Unused (don't care on CXD2510Q, zero on CXD2545Q)
+7-0 8bit Unused (don't care)
+
+Normal: SQSO outputs... WHAT?
+
+PeakMeter: SQSO outputs highest peak ever on any channel (bit15: usually 0)
+
+LevelMeter: SQSO outputs recent peak (with bit15 toggled: 0=Right, 1=Left)
+
+CXD2510Q - CX(Bxxxx) - Traverse Monitor Counter Setting
+
+| 23-20 4bit Command (0Bh)
+19-4 16bit Traverse Monitor Count (used when monitored by COMP and COUT) (?)
+3-0 4bit Unused (don't care)
+
+CXD2510Q - CX(Cxx) - Spindle Servo Coefficient Setting
+
+| 23-20 4bit Command (0Ch)
+19-18 2bit Gain MDP for CLVP mode (0=-6db, 1=0dB, 1=+6dB, 3=Reserved)
+17-16 2bit Gain MDS for CLVS/CLVP (0=-12dB, 1=-6dB, 2=0dB, 3=Reserved)
+15 1bit Zero (zero)
+14 1bit Gain DCLV0 overall gain (0=0dB, 1=+6dB
+13-12 2bit Unused (zero)
+11-8 4bit Unused (don't care on CXD2510Q, zero on CXD2545Q)
+7-0 8bit Unused (don't care)
+
+CXD2510Q - CX(Dx) - CLV Control
+
+| 23-20 4bit Command (0Dh)
+19 1bit DCLV PWM MD Digital CLV PWM mode (0=Use MDS+MDP, 1=Ternary MDP)
+18 1bit TB Bottom Hold in CLVS/CLVH modes (0=At cycle RFCK/32, 1=RFCK/16)
+17 1bit TP Peak Hold in CLVS mode (0=At cycle RFCK/4, 1=RFCK/2)
+16 1bit Gain CLVS for CLVS mode (0=0dB, 1=+6dB)(always +6dB in CLVP mode)
+15-8 8bit Unused (don't care on CXD2510Q, zero on CXD2545Q)
+7-0 8bit Unused (don't care)
+
+CXD2510Q - CX(Ex) - CLV Mode
+
+| 23-20 4bit Command (0Eh)
+19-16 4bit CM3-0
+15-8 8bit Unused (don't care on CXD2510Q, zero on CXD2545Q)
+7-0 8bit Unused (don't care)
+
+Values for CM (CLV Mode):
+
+| 00h Stop Spindle Motor Stop mode
+06h CLVA Automatic CLVS/CLVP switching mode, normally used for playback
+08h Kick Spindle Motor Forward rotation mode
+0Ah Brake Spindle Motor Reverse rotation mode
+0Ch CLVH Peak hold at 34kHz
+0Eh CLVS Rough Servo Mode, RF-PLL related
+0Fh CLVP PLL Servo mode
+
+N/A - CX(F) - Reserved
+
+| 23-0 N/A Don't use
+
+SUBQ Output
+
+| 80bit subq
+15bit peak level (lsb first) (absolute/unsigned value)
+1bit peak l/r flag (aka appears as "MSB" of peak level)
+
+L/R is toggled after each SUBQ reading, however the PSX Report mode does
+usually forward SUBQ only every 10 frames, so it stays stuck in one setting
+(but may toggle after one second; ie. every 75 frames). And, peak is reset
+after each read, so 9 of the 10 frames are lost.
+
+CXD2510Q - SENS output
+
+| Index ASEQ=0 ASEQ=1 ;
+
+Whereas,
+
+| FZC Focus Zero Cross
+DEFECT Defect?
+TZC Tracking Zero Cross
+SSTOP Gain or Balance adjust reached wanted level
+XBUSY Low while the auto sequencer operation is busy
+FOK High for "focus OK" (same as FOK pin)
+GFS High when the played back frame sync is obtained with correct timing
+COMP Measures the number of tracks set with Reg B. High when Reg B is
+latched, low when the initial Reg B number is input by CNIN
+COUT Measures the number of tracks set with Reg B. High when Reg B is
+latched, toggles each time the Reg B number is input by CNIN. While
+$44 and $45 are being executed, toggles with each CNIN 8-count
+instead of the Reg B number
+OV64 Low when filtered EFM signal is lengthened by 64 channel clock
+pulses or more

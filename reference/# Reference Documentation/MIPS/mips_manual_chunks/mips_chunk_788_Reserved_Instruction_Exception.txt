@@ -1,0 +1,35 @@
+MIPS INSTRUCTION SET REFERENCE - RESERVED INSTRUCTION EXCEPTION
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Reserved Instruction Exception
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1372 characters
+Lines: 26
+================================================================================
+
+Reserved Instruction Exception
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                        119
+
+                         Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+DI
+
+
+
+
+     Disable Interrupts                                                                                                               DI
+
+        31                   26 25            21 20              16 15             11 10               6   5    4       3   2         0
+                COP0                 MFMC0                                  12                 0           sc   0                0
+                                                          rt
+               0100 00               01 011                               0110 0             000 00        0    00              000
+                  6                    5                  5                  5                 5           1        2           3
+
+             Format:     DI                                                                                MIPS32 Release 2
+                         DI rt                                                                             MIPS32 Release 2
+
+             Purpose:
+             To return the previous value of the Status register and disable interrupts. If DI is specified without an argument, GPR

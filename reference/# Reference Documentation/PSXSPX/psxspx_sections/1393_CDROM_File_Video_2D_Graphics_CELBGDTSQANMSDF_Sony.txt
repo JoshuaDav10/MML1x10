@@ -1,0 +1,209 @@
+PSXSPX SPECIFICATIONS - CDROM FILE VIDEO 2D GRAPHICS CEL/BGD/TSQ/ANM/SDF (SONY)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Video 2D Graphics CEL/BGD/TSQ/ANM/SDF (Sony)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 7474 characters
+Lines: 201
+================================================================================
+
+CDROM File Video 2D Graphics CEL/BGD/TSQ/ANM/SDF (Sony)
+
+CEL/BGD/TSQ/ANM/SDF
+
+CEL: Cell Data (official format with 8bit header entries)
+
+This does merely translate Tile Numbers to VRAM Addresses and Attributes (with
+the actual VRAM bitmap data usually being stored in .TIM files).
+
+| 000h 1 File ID (22h)
+001h 1 Version (3)
+002h 2 Flag (bit15=WithAttr, bit14=AttrDataSize:0=8bit,1=16bit, bit13-0=0)
+004h 2 Number of cell data items (in cell units) (N)
+006h 1 Sprite Editor Display Window Width (in cell units)
+007h 1 Sprite Editor Display Window Height (in cell units)
+008h .. Cell Data[N] (64bit entries)
+... .. Cell Attr[N] (0bit/8bit/16bit user data? depending on Flag)
+
+Cell Data:
+
+| 0-7 Tex Coord X (8bit)
+8-15 Tex Coord Y (8bit)
+16-21 Clut X (6bit)
+22-30 Clut X (9bit)
+31 Semi-transparency enable ;-only in Version>=3
+32 Vertical Reversal (Y-Flip) ;\only in Version=0 and Version>=2
+33 Horizontal Reversal (X-Flip) ;/
+34-47 Unused
+48-52 Texture Page (5bit)
+53-54 Semi Transparency (0=B/2+F/2, 1=B+F, 2=B-F, 3=B+F/4)
+55-56 Texture page colors (0=4bit, 1=8bit, 2=15bit, 3=Reserved)
+57-60 Sprite Editor Color Set Number ;\
+61 Unused ; only in Version>=3
+62-63 Sprite Editor TIM Bank ;/ XXX else hardcoded?
+
+This is used in R-Types, CG.1\file3Dh\file00h, but [6,7] are 16bit wide! And
+there are a LOT of ZEROes appended (plus FFh-padding due to CG.1 archive size
+units).
+
+Used by R-Types (CG.1\file07h\file01h, size 08h*04h, with 8bit attr)
+
+Used by R-Types (CG.1\file07h\file03h, size 10h*08h, with 16bit attr)
+
+Used by R-Types (CG.1\file07h\file05h, size 04h*04h, with 16bit attr)
+
+Used by Tiny Tank (MagDemo23: TINYTANK\TMD05.DSK\*.CEL, size 08h*05h)
+
+CEL16: Inofficial CEL hack with 16bit entries and more extra data (R-Types)
+
+This is an inofficial hack used by R-Types, the game does use both the official
+CEL and inofficial CEL16 format.
+
+| 000h 1 File ID (22h) ;\same as in official CEL version
+001h 1 Version (3) ;/
+002h 2 Flag (...unknown meaning in this case...?) ;
+
+Used by R-Types (CG.1\file12h\file00h, size 0120h*000Fh with 192bit attr)
+
+Used by R-Types (CG.1\file15h\file00h, size 0168h*000Fh with ? attr)
+
+Used by R-Types (CG.1\file1Ch\file00h, size 00D8h*000Fh with ? attr)
+
+BGD: BG Map Data (official format with 8bit header entries)
+
+| 000h 1 File ID (23h)
+001h 1 Version (0)
+002h 2 Flag (bit15=WithAttr, bit14=AttrDataSize:0=8bit,1=16bit, bit13-0=0)
+004h 1 BG Map Width (in cell units) (W)
+005h 1 BG Map Height (in cell units) (H)
+006h 1 Cell Width (in pixels)
+007h 1 Cell Height (in pixels)
+008h .. BG Map Data[W*H] (16bit cell numbers)
+... .. BG Map Attr[W*H] (0bit/8bit/16bit user data? depending on Flag)
+
+Used by R-Types (CG.1\file07h\file00h, official BGD format)
+
+Used by Cardinal Syn (MagDemo03,09: SYN\SONY\KROLOGO.WAD\*.BGD)
+
+Used by Tiny Tank (MagDemo23: TINYTANK\TMD05.DSK\*.BGD, with 8bit entries).
+
+BGD16: Inofficial BGD hack with 16bit entries (R-Types)
+
+This is an inofficial hack used by R-Types, the game does use both the official
+BGD and inofficial BGD16 format. Apparently invented to support bigger BG Map
+Widths for huge sidescrolling game maps.
+
+| 000h 1 File ID (23h) ;\same as in official BGD version
+001h 1 Version (0) ;/
+002h 2 Flag (bit15=WithAttr, bit14=AttrDataSize:0=8bit,1=16bit, bit13-0=0)
+004h 2 BG Map Width (in cell units) (W) ;
+
+Used by R-Types (CG.1\file3Ch\file00h, inofficial BGD16 format)
+
+TSQ: Animation Time Sequence
+
+| 000h 1 File ID (24h)
+001h 1 Version (1)
+002h 2 Number of Sequence data entries (N)
+004h N*8 Sequence Data (64bit entries)
+
+Sequence Data:
+
+| 0-15 Sprite Group Number to be displayed
+16-23 Display Time
+24-27 Unused
+28-31 Attribute (user defined) (only in Version>=1)
+32-47 Hotspot X Coordinate
+48-63 Hotspot Y Coordinate
+
+There aren't any known games using .TSQ files.
+
+ANM: Animation Information
+
+| 000h 1 File ID (21h)
+001h 1 Version (3=normal) (but see below notes on older versions)
+002h 2 Flag (bit0-1=TPF, bit2-11=0, bit12-15=CLT)
+0-1 TPF PixFmt (0=4bpp, 1=8bpp, 2/3=Reserved) ;version>=2 only
+2-11 - Reserved (0)
+12-15 CLT Number of CLUT Groups, for color animation
+004h 2 Number of Sprites Groups
+006h 2 Number of Sequences (N) (can be 0=None)
+008h N*8 Sequence(s) (64bit per entry) ;Num=[004h]
+... .. Sprite Group(s) ;Num=[006h]
+... .. CLUT Group(s) ;Num=[002h].bit12-15
+
+Sequence entries:
+
+| 000h 2 Sprite Group Number to be displayed (range 0..AnimHdr[004h]-1)
+002h 1 Display Time (can be 00h or 0Ah or whatever)
+003h 1 Attribute (bit0-3=Unused/Zero, bit4-7=User defined) ;version>=3 only
+004h 2 Hotspot X Coordinate (usually 0, or maybe can be +/-NN ?)
+006h 2 Hotspot Y Coordinate (usually 0, or maybe can be +/-NN ?)
+
+Sprite Group entries:
+
+| Each "Group" seems to represent one animation frame.
+Each "Group" can contain one or more sprites (aka metatiles).
+Below stuff is "4+N*14h" bytes, that seems to repeat "AnmHeader[004h] times"
+XXX... actually below can be "4+N*10h" or "4+N*14h" bytes
+XXX... so, maybe maybe some entries like width/height are optional?
+000h 4 Number of Sprites in this Sprite Group ("sprites per metatile"?)
+004h 14h*N Sprite(s) (see below)
+Sprites:
+000h 1 Tex Coord X (8bit)
+001h 1 Tex Coord Y (8bit)
+002h 1 Offset X from Hotspot within frame (maybe vertex x ?)
+003h 1 Offset Y from Hotspot within frame (maybe vertex y ?)
+004h 2 CBA Clut Base (bit0-5=ClutX, Bit6-14=ClutY, bit15=SemiTransp)
+006h 2 FLAGs (bit0-4, bit5-6, bit7-8, bit9, bit10, bit11, bit12-15)
+0-4 TPN Texture Page Number
+5-6 ABR Semi-Transparency Rate
+7-8 TPF Pixel depth (0=4bpp, 1=8bpp, 2=16bpp)
+9 - Reserved
+10 RSZ Scaling (0=No, 1=Scaled)
+11 ROT Rotation (0=No, 1=Rotated)
+12-15 THW Texture Width/Height div8 (0=Other custom width/height)
+008h (2) Texture Width "of optional size" (uh?) ;\only present if
+00Ah (2) Texture Height "of optional size" (uh?) ;/FLAGs.bit12-15=0 ?)
+00Ch 2 Angle of Rotation (in what units?)
+00Eh 2 Sprite Editor info (bit0-7=Zero, bit8-13=ClutNo, bit14-15=TimBank)
+010h 2 Scaling X (for Vertex?) (as whatever fixed point number) (eg. 1000h)
+012h 2 Scaling Y (for Vertex?) (as whatever fixed point number) (eg. 1000h)
+
+CLUT Group entries:
+
+| 000h 4 CLUT size in bytes (Width*Height*2+0Ch)
+004h 2 Clut X Coordinate
+006h 2 Clut Y Coordinate
+008h 2 Clut Width
+00Ah 2 Clut Height
+00Ch .. CLUT entries (16bit per entry, Width*Height*2 bytes)
+
+Note: ALICE.PAC\MENU.PAC\CON00.ANM has NumSequences=0 and NumSpriteGroups=2Dh
+(unknown if/how that is animated, maybe it has 2Dh static groups? or the groups
+are played in order 0..2Ch with display time 1 frame each?).
+
+Used by Alice in Cyberland (ALICE.PAC\*.ANM) (ANM v3)
+
+Unknown if there are any other games are using that format.
+
+SDF: Sprite Editor Project File
+
+This is an ASCII text file for "artist boards" with following entries:
+
+| TIM0 file0.tim ;\
+TIM1 file1.pxl file1.clt ; four TIM banks (with TIM or PXL/CLT files)
+TIM2 ; (or no filename for empty banks)
+TIM3 ;/
+CEL0 file0.cel ;-one CEL (with CEL, or no filename if none)
+MAP0 file0.bgd ;\
+MAP1 file1.bgd ; four BG MAP banks (with BGD filenames)
+MAP2 ; (or no filename for empty banks)
+MAP3 ;/
+ANM0 file0.anm ;-one ANM (with ANM, or no filename if none)
+DISPLAY n ;0-3=256/320/512/640x240, 4-7=256/320/512/640x480
+COLOR n ;0=4bpp, 1=8bpp ;docs are unclear, is it COLORn or COLOR n?
+ADDR0 texX texY clutX clutY numColorSets ;\
+ADDR1 texX texY clutX clutY numColorSets ; four texture/palette offsets
+ADDR2 texX texY clutX clutY numColorSets ; for the corresponding TIM banks
+ADDR3 texX texY clutX clutY numColorSets ;/ (or whatever for empty banks?)

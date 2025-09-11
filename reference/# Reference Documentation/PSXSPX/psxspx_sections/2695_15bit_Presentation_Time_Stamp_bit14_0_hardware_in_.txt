@@ -1,0 +1,48 @@
+PSXSPX SPECIFICATIONS - (15BIT) PRESENTATION TIME STAMP, BIT14-0 ; HARDWARE, IN 90KHZ CYCLES)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: (15bit) Presentation Time Stamp, bit14-0 ; hardware, in 90kHz cycles)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1455 characters
+Lines: 40
+================================================================================
+
+(15bit) Presentation Time Stamp, bit14-0 ; hardware, in 90kHz cycles)
+(1bit) Marker (1) ;/
+
+If DTS Flag set (in this case PTS Flag must be also set):
+
+| (4bit) Fixed (0001b) ;\
+(3bit) Decoding Time Stamp, bit32-30 ; optional 5 bytes
+(1bit) Marker (1) ; (recommended time when
+(15bit) Decoding Time Stamp, bit29-15 ; to decode the block,
+(1bit) Marker (1) ; in 90kHz cycles)
+(15bit) Decoding Time Stamp, bit14-0 ;
+(1bit) Marker (1) ;/
+
+If PTS and DTS Flags are both zero:
+
+| (4bit) Fixed (1111b) ;-optional 0.5 bytes
+
+Always:
+
+| ... packet data bytes ;-data...(not crossing sector)
+
+Note: The first Multiplex Video Packet would usually start with a Sequence
+Header Code (000001B3h), and the first Multiplex Audio Packet should always
+start with an Audio Sync Word (FFFh).
+
+However, the size of the Multiplex packets does usually differ from the size of
+the packets in the audio/video stream, so new Multiplex Packets may occur
+anywhere in the middle of those streams (eg. in the middle of a video slice,
+the next Multiplex Video packet would then begin with the remaining slice
+bytes, rather than with a 000001xxh code; it's also possible that a Multiplex
+Audio packet gets inserted in the middle of the video slice).
+
+The best (or easiest) way to get continous data for the lower level streams
+might be to memcopy the data from Multiplex packets to separate Audio &
+Video buffers.
+
+MPEG-1 Multiplex End Code (4 bytes)
+
+| 32bit END_CODE (000001B9h) ;-4byte

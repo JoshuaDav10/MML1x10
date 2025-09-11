@@ -1,0 +1,49 @@
+PSXSPX SPECIFICATIONS - BELOW), THE HARDWARE DOES THEN AUTOMATICALLY GO THROUGH ATTACK/DECAY/SUSTAIN,
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: below), the hardware does then automatically go through Attack/Decay/Sustain,
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 1540 characters
+Lines: 41
+================================================================================
+
+below), the hardware does then automatically go through Attack/Decay/Sustain,
+and switches from Sustain to Release when the software sets the Key OFF flag.
+
+1F801D80h - Mainvolume left
+
+1F801D82h - Mainvolume right
+
+1F801C00h+N*10h - Voice 0..23 Volume Left
+
+1F801C02h+N*10h - Voice 0..23 Volume Right
+
+Fixed Volume Mode (when Bit15=0):
+
+| 15 Must be zero (0=Volume Mode)
+0-14 Voice volume/2 (-4000h..+3FFFh = Volume -8000h..+7FFEh)
+
+Sweep Volume Mode (when Bit15=1):
+
+| 15 Must be set (1=Sweep Mode)
+14 Sweep Mode (0=Linear, 1=Exponential)
+13 Sweep Direction (0=Increase, 1=Decrease)
+12 Sweep Phase (0=Positive, 1=Negative)
+7-11 Not used? (should be zero)
+6-2 Sweep Shift (0..1Fh = Fast..Slow)
+1-0 Sweep Step (0..3 = "+7,+6,+5,+4" or "-8,-7,-6,-5") (inc/dec)
+
+Sweep is another Volume envelope, additionally to the ADSR volume envelope
+(unlike ADSR, sweep can be used for stereo effects, such like blending from
+left to right).
+
+Sweep starts at the current volume (which can be set via Bit15=0, however,
+caution - the Bit15=0 setting isn't applied until the next 44.1kHz cycle; so
+setting the initial level with Bit15=0, followed by the sweep parameter with
+Bit15=1 works only if there's a suitable delay between the two operations).
+Once when sweep is started, the current volume level increases to +7FFFh, or
+decreases to 0000h.
+
+Sweep Phase should be equal to the sign of the current volume (not yet tested,
+in the negative mode it does probably "increase" to -7FFFh?). The Phase bit
+seems to have no effect in Exponential Decrease mode.

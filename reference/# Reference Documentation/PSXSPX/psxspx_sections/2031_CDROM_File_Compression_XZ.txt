@@ -1,0 +1,82 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION XZ
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression XZ
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2857 characters
+Lines: 74
+================================================================================
+
+CDROM File Compression XZ
+
+.7z files (7-Zip archives)
+
+| 000h 6 ID ("7z",BCh,AFh,27h,1Ch)
+... .. ..
+
+The 7z format defines many compression methods. The ones normally used are
+LZMA2 (default for 7-Zip 9.30 alpha +), LZMA (default for 7-Zip prior to 9.30
+alpha), PPMd, and bzip2.
+
+http://fileformats.archiveteam.org/wiki/7z
+
+LZMA2 (used in .7z and .xz files)
+
+LZMA2 is a container format with LZMA chunks. The LZMA function is slightly
+customized: It can optionally skip some LZMA initialization steps (and thereby
+re-use the dictionary/state from previous chunks). The chunks are:
+
+| ChunkID=00h - Last chunk:
+000h 1 Chunk ID (00h=End)
+ChunkID=01h..02h - Uncompressed chunks:
+000h 1 Chunk ID (01h=Uncompressed+ResetDictionary, 02h=Uncompressed)
+001h 2 Uncompressed Data Size-1 (big-endian)
+003h .. Uncompressed Data (to be copied to destination and dictionary)
+Note: The uncompressed data is stored in LZMA dictionary, and
+the last uncompressed byte is updating the LZMA prevbyte.
+ChunkID=03h..7Fh - Invalid chunks:
+000h 1 Chunk ID (03h..7Fh=Invalid)
+ChunkID=80h..FFh - LZMA-compressed chunks:
+000h 1 Chunk ID (80h/A0h/C0h/E0h + Upper5bit(UncompressedSize-1))
+001h 2 LSBs(UncompressedSize-1) (big-endian)
+003h 2 CompressedSize-1 (big-endian)
+005h (1) Parameters (((pb*5)+lp)*9)+lc (only present if ChunkID=C0h..FFh)
+... .. LZMA bitstream (without EOS end code)
+
+LZMA status gets reset depending on the Chunk ID:
+
+| ChunkID dict/prev lc/lp/pb state dist[0-3] probabilities code/range
+01h reset - - - - -
+02h - - - - - -
+80h+n - - - - - reset
+A0h+n - - reset reset reset reset
+C0h+n - reset reset reset reset reset
+E0h+nn reset reset reset reset reset reset
+(Note: Those resets occur before processing the chunk data)
+
+Note: dict/prev reset means that previous byte is assumed to be 00h (and old
+dictionary content isn't used, somewhat allowing random access or multicore
+decompression).
+
+Apart from the chunks, LZMA2 does usually contain a Dictionary Size byte:
+
+| Dictionary Size byte (00h..28h = 4K,6K,8K,12K,16K,24K,..,2G,3G,4G)
+Which can be decoded as so:
+if (param AND 1)=0 then dict_size=1000h shl (param/2)
+if (param AND 1)=1 then dict_size=1800h shl (param/2)
+if param=28h then dict_size=FFFFFFFFh ;4GB-1
+if param>28h then error
+In .xz files, that byte is stored alongsides with the Filter ID.
+
+LZMA Source code
+
+Compact LZMA decompression ASM code can be found here:
+
+| https://github.com/ilyakurdyukov/micro-lzmadec
+
+Above code is for self-decompressing executables (for plain LZMA, ignore the
+stuff about EXE/ELF headers). The two "static" versions are size-optimized
+(they contain weird and poorly commented programming tricks, and do require
+additional initialization code from "test_static.c"). For normal purposes, it's
+probably better to port the 64bit fast version to 32bit (instead of dealing
+with the trickery in the 32bit static version).

@@ -1,0 +1,51 @@
+PSXSPX SPECIFICATIONS - PSX CDROM CONTROLLER).
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: PSX cdrom controller).
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1055 characters
+Lines: 42
+================================================================================
+
+PSX cdrom controller).
+
+Registers
+
+| A 8bit accumulator
+X 8bit index register
+SP 6bit stack pointer (range 00C0h..00FFh)
+PC 16bit program pointer (range 0000h..FFFFh)
+CCR 5bit condition code register (flags) (111HINZC)
+
+Pushed on IRQ are:
+
+| SP.highest PC.lo
+PC.hi
+X
+A
+SP.lowest Flags (CCR, 5bit condition code register) (111HINZC)
+
+Addressing Modes
+
+| nn immediate ;00h..FFh
+[nn] direct address ;[0000h..00FFh]
+[nnmm] extended address ;[0000h..FFFFh]
+[X] indexed, no offset ;[0000h..00FFh]
+[X+nn] indexed, 8bit offset ;[0000h..01FEh]
+[X+nnmm] indexed, 16bit offset ;[0000h..FFFFh]
+[nn].i bit ;[0000h..00FFh].bit0..7
+dd relative ;$+2..3+(-80h..+7Fh)
+
+Notes:
+
+| operand "X+nn" performs an unsigned addition, and can address 0000h..01FEh.
+16bit operands (nnmm) are encoded in BIG-ENDIAN format (same for pushed PC).
+
+Exception Vectors
+
+Exception vectors are 16bit BIG-ENDIAN values at FFF0h-FFFFh (or at FFE0h-FFEFh
+when running in Motorola Bootstrap mode).
+
+| Vector Prio Usage
+FFF0h 7=lo TBI Vector (Timebase)
+FFF2h 6 SSPI Vector (SPI bus) (SPI1 and SPI2)

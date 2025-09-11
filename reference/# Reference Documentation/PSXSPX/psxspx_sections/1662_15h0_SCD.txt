@@ -1,0 +1,79 @@
+PSXSPX SPECIFICATIONS - 15H.0 .SCD
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 15h.0 .SCD
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 2284 characters
+Lines: 71
+================================================================================
+
+15h.0 .SCD
+16h.0 .TXT (PAUSED.TXT)
+17h.0 .TXT (OBJECT*.TXT)
+18h.0 .BIN
+1Ah.0 Misc (.3DO=TIM, .V=TXT, and TERRAIN.CLP .HI .LIT .MAP .PAT .POB .TER)
+
+| _______________________________ Entrysize=40h ________________________________
+
+Ninja (MagDemo13: NINJA\CUTSEQ\*.WAD and NINJA\WADS\*.WAD)
+
+| 000h 4 Number of Files (N)
+004h 4 Size of File Data area (SIZ) (total filesize-8-N*40h)
+008h N*40h File List
+... SIZ File Data area
+File List entries:
+000h 4 Filesize in bytes
+004h 4 Fileoffset in bytes (zerobased, from begin of File Data area)
+008h 38h Filename, zeropadded
+
+You Don't Know Jack (MagDemo23: YDKJ\RES\*.GLU)
+
+You Don't Know Jack 2 (MagDemo41: YDKJV2\*\*.GLU)
+
+| 000h 4 ID ("GLUE")
+004h 4 Unknown (always 400h)
+008h 4 Number of Files (N)
+00Ch 4 Header Size (40h+N*40h)
+010h 30h Zerofilled
+040h N*40h File List
+... .. Garbage padding to alignment boundary
+... .. File Data area
+File List entries:
+000h 20h Filename ("FILENAME.EXT", zeropadded)
+020h 4 File Offset in bytes (increasing, 800h-byte aligned)
+024h 4 File Size in bytes
+028h 2 File ID Number 1 (eg. 1-71 for C01.GLU-C71.GLU)
+02Ah 2 Unknown (random, checksum, ?)
+02Ch 4 File ID Number 2 (eg. increasing: 1, 2, 3)
+030h 10h Zerofilled
+
+Most .GLU files are 800h-byte aligned (except SHORTY\*.GLU and THREEWAY\*GLU
+which use 4-byte alignment).
+
+The files do start on alignment boundaries, but there is no alignment padding
+after end of last file.
+
+| _______________________________ Entrysize=60h ________________________________
+
+Army Men Air Attack 2 (MagDemo40: AMAA2\*.PCK\*.PAK)
+
+| 000h 4 Number of entries (N)
+010h N*60h File List
+... .. Zeropadding to 2000h
+2000h .. File Data area
+File List entries:
+000h 4 Timestamp? (BFxxxxh..C0xxxxh) (or zero, in first file)
+004h 4 Unknown (always 421C91h)
+008h 4 Unknown (200h or 60200h)
+00Ch 4 Filesize (uncompressed)
+010h 4 Filesize (compressed, or 0 when not compressed)
+014h 4 File Checksum (sum of all bytes in uncompressed file data)
+018h 4 Unknown (random 32bit value?)
+01Ch 10h Filename ("FILENAME.EXT", zeropadded)
+02Ch 4 Zerofilled
+030h 4 Unknown (0 or 1 or 8)
+034h 4 File Type (see below)
+038h 8 Zerofilled
+040h 4 Offset MSBs (Fileoffset-2000h)/800h ;\increasing, 4-byte aligned
+044h 4 Offset LSBs (Fileoffset AND 7FFh) ;/(or zero when filesize=0)
+048h 18h Zerofilled

@@ -1,0 +1,28 @@
+PSXSPX SPECIFICATIONS - IS CLOSELY BOUND TO COLORS AVAILABLE IN CGA GRAPHICS MODES. COLOR0 IS DEFINED
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: is closely bound to colors available in CGA graphics modes. Color0 is defined
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1027 characters
+Lines: 19
+================================================================================
+
+is closely bound to colors available in CGA graphics modes. Color0 is defined
+in [10h], and Color1-3 were originally defined in [13h], and later in
+[14h,15h]:
+
+| color0=[10h].bit7-4 ;(Color0 IRGB) ;CGA Port 3D9h.bit3-0 (usually 0=black)
+bright=[13h].bit5 ;CGA Port 3D9h.bit4 ;\
+palette=[13h].bit6 ;CGA Port 3D9h.bit5 ; old method
+if [13h].bit7 then palette=2 ;CGA Port 3D8h.bit2 ;/
+if [01h]=05h and [44h]=0001h then ;\new "smart"
+if [14h]>200 or [15h]>200 then bright=1, else bright=0 ; method used in
+if [14h]>[15h] then palette=0 else palette=1 :/Paintbrush IV
+if palette=0 and bright=0 then color1..3=02h,04h,06h ;\green-red-yellow
+if palette=0 and bright=1 then color1..3=0Ah,0Ch,0Eh ;/
+if palette=1 and bright=0 then color1..3=03h,05h,07h ;\cyan-magenta-white
+if palette=1 and bright=1 then color1..3=0Bh,0Dh,0Fh ;/
+if palette=2 and bright=0 then color1..3=03h,04h,07h ;\cyan-red-white
+if palette=2 and bright=1 then color1..3=0Bh,0Ch,0Fh ;/
+
+Palette=2 uses some undocumented CGA glitch, it was somewhat intended to output

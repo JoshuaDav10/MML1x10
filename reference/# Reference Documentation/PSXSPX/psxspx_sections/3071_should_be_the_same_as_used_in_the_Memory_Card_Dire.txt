@@ -1,0 +1,32 @@
+PSXSPX SPECIFICATIONS - SHOULD BE THE SAME AS USED IN THE MEMORY CARD DIRECTORY. THE TITLE IS MORE OR
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: should be the same as used in the Memory Card Directory. The title is more or
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1054 characters
+Lines: 23
+================================================================================
+
+should be the same as used in the Memory Card Directory. The title is more or
+less don't care; it may be the SHIFT-JIS title from the Title Sector converted
+to ASCII.
+
+Other
+
+"There exists another single-save format with a 128 byte header containing a
+raw index frame for the initial block, which must be updated to match the
+destination card, and the raw save data. I have seen this format once, but I
+don't remember what it was called or where it came from. You may want to
+account for this possibility in your format detection logic."
+
+.GME Files (usually 20F40h bytes)
+
+InterAct GME format, produced by the DexDrive.
+
+| 000h 12 ASCII String "123-456-STD",00h
+00Ch 4 Usually zerofilled (or meaningless garbage in some files)
+010h 5 Always 00h,00h,01h,00h,01h
+015h 16 Copy of Sector 0..15 byte[00h] ;"M", followed by allocation states
+025h 16 Copy of Sector 0..15 byte[08h] ;00h, followed by next block values
+035h 11 Usually zerofilled (or meaningless garbage in some files)
+040h F00h Fifteen Description Strings (each one 100h bytes, padded with 00h)

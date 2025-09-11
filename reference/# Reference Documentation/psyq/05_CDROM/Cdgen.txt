@@ -1,0 +1,3112 @@
+PSYQ DOCUMENTATION - Devrefs/Cdgen.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/Devrefs/Cdgen.pdf
+Converted: Wed Sep 10 02:47:36 PM CDT 2025
+================================================================================
+
+CD-ROM Generator
+
+
+
+
+                   Developer
+
+                   Reference
+
+                      Series
+
+
+
+
+September 1995
+•     This manual is distributed to Sony PlayStation licensed developers. Information in this manual is subject to change
+      without notice. Unauthorised reproduction, distribution or disclosure to third parties of the whole or any part of this
+      manual, in any form or by any means, for any purpose, is expressly prohibited by U.S. copyright laws and the applicable
+      Sony PlayStation™ developer and publisher license agreements.
+
+•     Where applicable the company and product names used in this manual are registered trademarks of their respective
+      owners.
+
+© 1995 Sony Computer Entertainment
+
+Sony Computer Entertainment America
+919 E. Hillsdale Blvd., 2nd Flr
+Foster City, CA 94404
+
+Publication date: December 1994
+Reprinted: September 1995
+                                                                                                                 Contents
+    About this Manual
+          About this Manual . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .1
+
+
+1   Overview
+    1.1   Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .3
+          1.1.1      File structure format . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .3
+          1.1.2      System structure . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .4
+
+
+2   Preparation
+    2.1   Setup       . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .5
+          2.1.1      Setting up the CD recording unit(s) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .5
+          2.1.2      To install the Adaptec SCSI host adapter . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .5
+          2.1.3      To install the device driver for the SCSI host adapter . . . . . . . . . . . . . . . . . . . . . . . . .5
+          2.1.4      To connect the CD recording unit(s) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .5
+    2.2   Installing the CD-ROM Generator . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .6
+    2.3   Testing the System Setup . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .8
+
+
+3   Operations
+    3.1   Getting started . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .11
+          3.1.1      Generating a CD-ROM disk . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .11
+          3.1.2      The procedure for generating a CD-ROM disk . . . . . . . . . . . . . . . . . . . . . . . . . . . . .11
+          3.1.3      About the source files . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .11
+    3.2   Activating and terminating the CD-ROM Generator . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .13
+          3.2.1      Activating the CD-ROM Generator . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .13
+          3.2.2      Terminating the CD-ROM Generator . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .16
+    3.3   Specifying the Disk Recording Time . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .17
+    3.4   Specifying the Volume Descriptor . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .17
+          3.4.1      Volume identifier . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .18
+          3.4.2      Volume Set identifier . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .18
+          3.4.3      Publisher identifier . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .18
+          3.4.4      Data Preparer identifier . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .18
+          3.4.5      Application identifier . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .19
+          3.4.6      Copyright identifier . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .19
+          3.4.7      Abstract identifier . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .19
+          3.4.8      Bibliography identifier . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .19
+          3.4.9      Creation (volume creation date) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+          3.4.10 Modification (volume modification date) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+          3.4.11 Expiration (volume expiration date) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+          3.4.12 Effective (volume effective date) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .20
+          3.4.13 Comments . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .21
+          3.4.14 Additional information . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .21
+    3.5   Specifying the Directory Structure . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .22
+          3.5.1      Selecting files and directories . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .23
+          3.5.2      Copying files and directories . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .23
+          3.5.3      Creating a directory . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .24
+          3.5.4      Moving files and directories . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .24
+          3.5.5      Deleting files and directories . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .25
+
+
+
+
+                                                                                                                 C D - R O M G E N E R AT O R V E R S I O N 1 . 0   i
+Contents
+
+
+                                     3.5.6       Renaming files and directories . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .25
+                                     3.5.7       Updating files and directories . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .26
+                                     3.5.8       Specifying file attributes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .26
+                                     3.5.9       Changing the directory tree display . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .29
+                                     3.5.10 Changing the contents list window . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .30
+                         3.6         Specifying the Disk Layout . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .30
+                                     3.6.1       Displaying the file for a track . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .33
+                                     3.6.2       Copying a file to a track . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .33
+                                     3.6.3       Copying a file to a specific location on a track . . . . . . . . . . . . . . . . . . . . . . . . . . . . .34
+                                     3.6.4       Changing the order of the tracks . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .34
+                                     3.6.5       Changing the location of several files at once . . . . . . . . . . . . . . . . . . . . . . . . . . . . .35
+                                     3.6.6       Moving a file or directory to a different track . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .35
+                                     3.6.7       Deleting a track . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .36
+                                     3.6.8       Deleting a file . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .36
+                                     3.6.9       Creating or dividing a track . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .37
+                                     3.6.10 Adding an index . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .38
+                                     3.6.11 Specifying the location of a file . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .38
+                                     3.6.12 Specifying the ISRC of a track . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .39
+                                     3.6.13 Specifying the file number . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .39
+                                     3.6.14 Specifying the CD-ROM disk catalogue number . . . . . . . . . . . . . . . . . . . . . . . . . . .40
+                                     3.6.15 Specifying the CD-ROM disk catalogue information . . . . . . . . . . . . . . . . . . . . . . . . .40
+                         3.7         Writing to the CD-R Disk . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .41
+                                     3.7.1       Selecting the CD recording units you are going to use . . . . . . . . . . . . . . . . . . . . . . .41
+                                     3.7.2       Selecting the recording speed . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .41
+                                     3.7.3       Starting the recording operation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .41
+                                     3.7.4       Verifying the output . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .42
+                                     3.7.5       Terminating the write operation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .42
+                         3.8         Saving the Edited Format Information as a File . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .43
+                                     3.8.1       Saving the file . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .43
+                                     3.8.2       Saving the information as a disk image format information file . . . . . . . . . . . . . . . . .44
+                                     3.8.3       Creating a disk image file . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .44
+                         3.9         Opening an Existing File . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .45
+                         3.10        Creating a New File . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .45
+
+
+                                     Appendix
+                         A           Messages . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .47
+                         A-1         The Message Box . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .47
+                         A-2         Format Information Error Messages . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .51
+                         A-3         Format Information Warning Messages . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .52
+                         B           Menu Functions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .53
+                         B-1         Menu Bar . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .53
+                         B-2         File Menu . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .54
+                         B-3         Edit Menu . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .54
+                                     B-3-1       Directory mode . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .55
+                                     B-3-2       Layout mode . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .55
+                         B-4         Tree Menu (Directory mode only) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .56
+                         B-5         View Menu (Directory mode only)                    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .56
+                         B-6         Help Menu . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .56
+
+
+                                     Index                 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .57
+
+
+
+
+ii C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                             About this Manual
+ABOUT THIS MANUAL
+
+
+This manual explains how to set up the DTL-S2030 CD-ROM Generator system, and how to write
+source files on CD-R disks (writable compact disks) loaded in the CD recording unit.
+
+
+
+          The structure of this manual
+
+          Chapter 1 Overview
+          This chapter gives an overview of the CD-ROM Generator and describes the conditions relating to the system, in
+          terms of activating the software.
+
+          Chapter 2 Preparation
+          This chapter gives a step-by-step explanation of the procedures for setting up and testing the CD-ROM Generator
+          system.
+
+          Chapter 3 Operations
+          This chapter gives a detailed explanation of the procedure for generating a CD-ROM disk, including the following four
+          operations.
+
+          ■   Specifying the volume descriptor
+          ■   Specifying the directory structure
+          ■   Specifying the disk layout
+          ■   Writing source files to a CD-R disk
+
+          Appendix
+          The Appendix gives information on the following:
+          ■   Messages
+          ■   Menu functions
+
+
+
+
+          Stipulations regarding operations
+
+          The CD-ROM Generator is an application which runs in Windows, and complies with the Windows operating
+          stipulations. This manual assumes that the reader is familiar with Windows and MS-DOS operations, so general
+          Windows-related items are explained in brief only. For more details of Windows, refer to your Windows manuals.
+
+
+
+
+                                                                                             C D - R O M G E N E R AT O R V E R S I O N 1 . 0 1
+                                                                                                Overview
+1   OVERVIEW
+
+
+
+    1.1     Introduction
+
+
+            The CD-ROM Generator, which is an application running in Windows, is a CD-ROM generation tool designed for
+            Playstation disks. It can construct and alter the logical file structure on the CD-ROM. The files can be output on CD-R
+            disk(s) loaded in one or more CD recording units. Debugging disks and master disks can be generated.
+
+
+            The CD-ROM Generator also has the following features.
+
+            ■   It supports CD recording unit(s)
+                The CD-ROM Generator can control the Sony CDW-900E CD recording unit, so it can write data directly on to
+                the CD-R disk. When used together with CD recording unit(s), it provides a faster and cheaper way to create CD-
+                ROM disks, as long as the number of disks handled at once is not too great. If the CDW-900E is connected to a
+                Windows-based host computer, CD-R disks can be written twice as fast: for example, a 540MB CD-ROM disk
+                can be written in approximately 30 minutes. And, since up to 16 CDW-900E units can be connected, up to 16
+                disks can be generated at once.
+            ■   It is easy to operate
+                The mouse can be used to create directory structures and to write files to one or more CD-R disks.
+            ■   File location can be selected
+                The location of each file on the CD-ROM can be specified.
+            ■   Data validation
+                The conformity of the data written to the CD-R disk can be validated using the CDW-900E.
+
+
+
+
+    1.1.1   File structure format
+
+
+            The format of logical file structures on the CD-ROM conforms to the ISO9660 standard, which is the format to which
+            most CD-ROM disks now conform.
+
+            The file structure format for the CD-ROM Generator conforms to the following specifications.
+            ■   ISO9660
+                Information processing - Volume and file structure of CD-ROM for information interchange (1988-09-01)
+            ■   CD-ROM XA
+                SYSTEM DESCRIPTION CD-ROM XA
+                Copyright May 1991
+
+
+
+
+                                                                                                C D - R O M G E N E R AT O R V E R S I O N 1 . 0 3
+Overview
+
+
+
+
+1.1.2            System structure
+
+
+                 To use the CD-ROM Generator, you will need the following equipment.
+                 ■     An IBM PC/AT or compatible machine
+                 ■     An i486SX/25MHz processor, or upwards
+                 ■     At least 8MB of memory area
+                 ■     A high-capacity hard disk to hold the source files (one CD-ROM disk can hold up to 660MB of data)
+                 ■     An AHA-154x (x being any number) Adaptec SCSI host adapter or compatible device
+
+                 Required software:
+                 ■     Microsoft MS-DOS version 5.0 or greater
+                 ■     Microsoft Windows 3.1
+                 ■     ASPI device driver for the Adaptec SCSI host adapter
+                 ■     CD recording unit(s)
+                 ■     CDW-900E (up to 16 units, capable of double-speed recording)
+
+                 The CDW-900E is connected to the computer via SCSI, so at least one unused SCSI bus ID is required.
+
+
+
+
+4 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                                                            Preparation
+2   P R E PA R AT I O N
+
+
+
+     2.1       Setup
+
+
+
+    2.1.1      Setting up the CD recording unit(s)
+
+
+               Setting up one or more CD recording units involves the following operations.
+               ■   Installing the Adaptec SCSI host adapter
+               ■   Installing the device driver for the SCSI host adapter
+               ■   Connecting the CD recording unit(s)
+
+
+
+
+    2.1.2      To i n s t a l l t h e A d a p t e c S C S I h o s t a d a p t e r
+
+
+               Referring to the manuals provided with the Adaptec SCSI host adapter, install the adapter on the computer you are
+               using. If your computer already has a built-in adapter, you can skip this operation.
+
+
+
+
+    2.1.3      To i n s t a l l t h e d e v i c e d r i v e r f o r t h e S C S I h o s t a d a p t e r
+
+
+               If you have EZ-SCSI (the Adaptec SCSI host adapter installation program), install the device driver as explained in the
+               manual that comes with it.
+
+               If you do not have EZ-SCSI, copy the driver to the hard disk and add the device name and pathname to the
+               “CONFIG.SYS” file.
+
+               Notes
+               ■   No device driver is provided with the CD recording unit.
+               ■   If you are using Microsoft’s extended memory manager for Windows, be careful not to use the memory area
+                   destined for use by the host adapter BIOS.
+
+
+
+
+    2.1.4      To c o n n e c t t h e C D r e c o r d i n g u n i t ( s )
+
+
+               Set the DIP switches as instructed in the manual for the CD recording unit you are using, then connect the CD
+               recording unit(s) to the computer.
+
+               Note the following points
+               ■   If you connect more than one CD recording unit, be sure to use a unique writer ID for each device.
+               ■   Set the encoder bit of the CDW-900E directly connected to the SCSI host adapter to ON, and set the encoder
+                   bits of the other CDW-900E units to OFF.
+               ■   Set the SCSI parity to ON.
+               ■   For details, see the installation instructions for the CDW-900E.
+
+
+
+
+                                                                                                      C D - R O M G E N E R AT O R V E R S I O N 1 . 0 5
+Preparation
+
+
+
+
+ 2.2             Installing the CD-ROM Generator
+
+
+                 To carry out the installation operation, you will need the CD-ROM Generator set-up disk for Windows (this disk comes
+                 with the CD-ROM Generator).
+
+                 ➀ Insert the set-up disk into the floppy drive (drive A in this example).
+                 ➁ Activate Windows. For details, refer to your Windows manual.
+                 ➂ Select “run” from the Program Manager File menu. The “run” dialogue box will appear. (In the following example,
+                        it is selected from the Program Manager’s file menu.)
+
+
+                                               Specify filename and execute
+                          Current directory is C: ù                            OK
+                          Command line (C):
+                                                                            Cancel
+                           A: SETUP
+                              Execute in [] icon state (M)                  Help(H)
+
+
+
+                 ➃ Type the following string into the command line box:
+                             A:SETUP
+
+                 ➄ Click the “OK” button. When the message box appears, you will know that the CD-ROM Generator has been
+                        initialized. When you have finished the initialization operation, the following box will appear.
+
+
+
+
+                 ➅ To continue the operation, click the “Continue” button.
+                       The “Set Dest Path” dialogue box will appear.
+
+
+
+
+6 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                                                                                 Preparation
+
+
+
+
+➆ If necessary, type the new directory into the “Path” box, then click the “Continue” button. (To go back to the
+    previous step, click the “Back” button.) The “Set Working Directory” dialogue box will then appear.
+
+
+
+
+➇ If necessary, type the new directory into the “Path” box, then click the “Continue” button. The “CREATE” dialogue
+    box will appear, showing that the specified file has been copied to the hard disk. When the copying is
+    finished, the following dialogue box will appear.
+
+
+
+
+➈ Click the “OK” button. The following two icon applications will be shown in the group window for the CD-ROM
+    Generator.
+
+
+
+
+    The installation operation is now over. Next, click the “Controller” icon to test the system setup. Refer to the
+    following explanation.
+
+
+
+
+                                                                                      C D - R O M G E N E R AT O R V E R S I O N 1 . 0 7
+Preparation
+
+
+
+
+ 2.3             Te s t i n g t h e S y s t e m S e t u p
+
+
+                 As soon as you have connected the CD recording unit(s) and installed the CD-ROM Generator program, check that
+                 the system setup is correct by carrying out the five tests listed below.
+
+
+                 ■     Connection test
+                       This test checks whether the CD recording unit has been connected correctly.
+                 ■     Read test
+                       This test checks whether data can be read from the hard disk.
+                 ■     Dummy write test
+                       This test checks whether data can be transmitted to the CD recording unit.
+                 ■     Write test
+                       This test checks whether data can be written to the CD-R.
+                 ■     Verification test
+                       This test checks whether the data was written correctly to the disk in the write test.
+
+
+                 If an error is generated in one of the tests, check that the connection and software installation has been carried out
+                 correctly. If this does not solve the problem, contact the Operations Division of Sony Computer Entertainment Inc.,
+                 whose address is given at the back of this manual.
+                 When you are performing the tests, the “CONTROLLER” dialogue box for the next step will appear. Note that when
+                 you carry out the write test, actual data is not required: the necessary data is generated automatically by the system.
+
+
+
+                 ➀ Click the “Controller” icon in the CD-ROM Generator group window. (Alternatively, you could use the File
+                        Manager and click the “CDREC.EXE” file.) The following dialogue box will appear.
+
+
+
+
+                                           Yes (Y)        No (N)
+
+
+
+
+8 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                                                                                 Preparation
+
+
+
+
+➁ Click the “Y” (Yes) button. The “CONTROLLER” dialogue box will appear in diagnostic mode (a mode with several
+    more items than the normal mode).
+
+     Source data                                                     CD recording
+     drop-down menu                                                  unit ID box
+
+     Diagnostic mode
+     drop-down menu
+
+
+
+
+                            Counter/status message area
+
+
+     Carry out the tests by specifying options from this dialogue box.
+
+
+To check the connection:
+To check the physical connection, click “Inquiry” button. The “Inquiry” information window will appear, showing the
+ROM version (both encoder and writer parts) of all the CD recording units connected to the computer. For devices
+other than CD recording units, only the names of the manufacturer and the model will appear.
+
+If the CD recording units have not been correctly connected, a message will appear.
+
+If the information which appears does not match your actual system structure, refer to the explanation of the CD
+recording unit installation operation and carry out the connection operation correctly.
+
+
+To carry out the read test:
+➀ Select “No Rec” from the diagnostic mode drop-down menu.
+➁ From the source data drop-down menu, select the hard disk which is to be tested.
+➂ Click the “Rec” button. The read test will begin.
+➃ When the dialogue box appears, click the “OK” button. This dialogue box will show you whether the test has
+    terminated normally or whether an error has occurred.
+
+Notes
+■   The test carried out here only confirms whether data can be read from the hard disk: it has nothing to do with
+    whether or not the CD recording unit is connected.
+■   The verification test cannot be executed in this mode.
+
+
+
+
+                                                                                      C D - R O M G E N E R AT O R V E R S I O N 1 . 0 9
+Preparation
+
+
+
+
+                  To carry out the dummy write test:
+                  ➀ Select “Pseudo Rec” from the diagnostic mode drop-down menu.
+                  ➁ Select “Auto Data” from the source data drop-down menu.
+                  ➂ In the CD recording unit ID box, select the number of the CD recording unit to be tested.
+                  ➃ Load a CD-R disk in the CD recording unit which is to be tested.
+                  ➄ Click the “Rec” button. The dummy write test will begin.
+                  ➅ Confirm that you want to perform the dummy write test. When the dummy write test begins, the test processing
+                        status is displayed in the status message area as “Lead in”, or “Track”, or “Lead out”. When the data is
+                        transmitted to the CD recording unit, the counter starts counting.
+                  ➆ When the dialogue box appears, click the “OK” button. This dialogue box will tell you whether the test has
+                        terminated normally or whether an error has occurred.
+
+                  Note
+                  In this test, the data is only transmitted to the CD recording unit: it is not actually written to the disk. However, you
+                  must be sure to load the disk. During this test, the WRITE lamp on the CD recording unit will light up, and the READ
+                  lamp will flash.
+
+                  If you do not specify the number of the CD recording unit in step 3, data cannot be transmitted from the CD
+                  recording unit to the recording processing block. In this case, there is no need to load the disk, and neither the
+                  WRITE nor the READ lamp will light up during the test.
+
+
+
+                  To carry out the write test:
+                  ➀ Select “Real Rec” from the diagnostic mode drop-down menu.
+                  ➁ Select “Auto Data” from the source data drop-down menu.
+                  ➂ In the CD recording unit ID box, select the number of the CD recording unit which is to be tested.
+                  ➃ Load a CD-R disk in the CD recording unit which is to be tested.
+                  ➄ Click the “Rec” button. The write test will begin, using test data generated automatically.
+                  ➅ Check the progress status of the write operation. When the write test begins, the state of progress will be
+                        indicated in the status message area as either “Lead in”, or “Rec”, “Lead out”. When the data is transmitted to
+                        the CD recording unit, the counter will start counting. While the write operation is in progress, the WRITE lamp on
+                        the CD recording unit will light up.
+                  ➆ When the dialogue box is displayed, click the “OK” button. This dialogue box will tell you whether the test has
+                        terminated normally, or whether an error has occurred.
+
+
+                  To carry out the verification test:
+                  To carry out the verification test on the CDW-900E which is directly connected to the SCSI host adapter (using the
+                  disk to which data was written in the write test), perform the following operations.
+                  ➀ Select “Auto Data”from the source data drop-down menu.
+                  ➁ On the CD recording unit ID box, select the CD recording unit which is directly connected to the SCSI host
+                        adapter.
+                  ➂ Load the disk (the one to which the data was written in the actual write test) in the CD recording unit selected in
+                        step 2.
+                  ➃ Click the “Verify” button.
+                  ➄ When the confirmation dialogue box appears, click the “OK” button.
+                  ➅ Check that, when the verification test begins, the counter starts counting, and the READ lamp on the CD
+                        recording unit lights up.
+                  ➆ When the dialogue box appears, click the “OK” button. This dialogue box will tell you whether the test has
+                        terminated normally or whether an error has occurred.
+
+
+
+
+10 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                                                                Operations
+3   O P E R AT I O N S
+
+
+
+     3.1       Getting Started
+
+
+
+    3.1.1      Generating a CD-ROM disk
+
+
+               Before generating a CD-ROM disk, you must prepare the original data files on your computer. In this manual, the data
+               files recorded on the CD-ROM disk are called the “source files”. The information indicating how the CD-ROM volume
+               descriptor, the directory structure, and the source files are to be recorded is called the “format information”. Before
+               the disk write operation is carried out, the format information is converted into a temporary file known as the “format
+               data file”. This file contains file allocation information, source files (such as volume descriptors, path tables and the
+               files in the directories) as well as the files needed to generate the disk. This section gives an overview of the
+               procedure for generating a CD-ROM disk.
+
+
+
+
+    3.1.2      The procedure for generating a CD-ROM disk
+
+
+               A CD-ROM disk is generated by carrying out the following operations.
+               ➀ Preparing the source file
+               ➁ Activating the CD-ROM Generator
+               ➂ Editing the format information
+               ➃ Writing the source files and the format data file to the CD disk loaded in the CD recording unit
+
+
+    3.1.3      About the source files
+
+
+               Accessing source files
+               The CD recording unit records in real time, so the computer needs to output the converted data to the CD recording
+               unit at the transmission speed of the CD. When double-speed writing is executed on the CDW-900E, data has to be
+               transmitted at twice the normal speed. Accordingly, the source files have to be readable at high speed, and they must
+               all be in file systems on the hard disk. If the source files are stored in a network file system connected to the
+               computer, it may not be possible to write them to the CD. Care is also needed when carrying out other tasks in
+               parallel, as disk access from these tasks may delay output to the CD recording unit.
+
+               If the individual source files are too small, or if there is too much fragmentation, it may not be possible to achieve
+               sufficient data transfer speed, and this may make it impossible to write the source files to the CD-R disk. Note that, if
+               this is a high possibility, a warning message will appear when you are editing the format information. If such a
+               message appears, save the information in the form of a format file with a disk image, then output it to the CD
+               recording unit. For details, see “Saving the information as a disk image” on Page 44.
+
+
+               The names of the source files
+               The names of the source files are used without modification on the CD-ROM disk. The characters and numbers
+               which can be used in filenames on the CD-ROM disk are listed below. Please use these characters when
+               naming files.
+
+               ■   Upper case letters from A to Z
+               ■   Numbers from 1 to 9
+               ■    “_” (underscore)
+
+
+
+
+                                                                                                       C D - R O M G E N E R AT O R V E R S I O N 1 . 0 11
+Operations
+
+
+
+
+                  Filename format
+                  The names of files on disks for the PlayStation should usually be given in the following format.
+
+                  name.ext;1
+
+                  A filename on the disk consists of the name of the file (“name”), a separator (“.”), an extension (“ext”), another
+                  separator (“;”) and “1” (this number is usually appended to the filename automatically). Always specify the filename
+                  with the extension.
+
+                  Extensions are not used in the names of directories.
+
+
+
+                  Filename length
+                  Filenames can be up to 8 characters long, and extensions can be up to 3 characters long.
+
+
+
+                  Source file directory structure
+                  If the source file directory structure is the same as the directory structure you want to create on the CD-ROM disk,
+                  you can simply copy it to the CD-ROM disk. Even if the source files are arranged in a directory tree with many levels,
+                  the directory structure can be generated easily on the CD-ROM disk.
+
+
+
+                  Standard source files
+                  A standard source file is a file in which the size of the data in the logical block is the same as the length of the logical
+                  block. CD-DA (digital audio) files and PlayStation real-time files (streaming data files and so on) are excluded from this
+                  category: the amount of data which is actually recorded in such files is different from the file size on the CD-R disk. In
+                  a standard source file, the unmodified data is divided up into units the size of logical blocks and recorded as Mode 2
+                  Form 1 sectors. In this case, the subheader is added by the CD-ROM Generator and the EDC and ECC (error
+                  detection code and error correction code) are generated by the CD recording unit.
+
+
+
+                  Subheader source files
+                  A real-time file on a PlayStation disk needs subheader information, which indicates which data is to be recorded on
+                  each sector.
+
+                  When you specify this subheader information, you should prepare a source file with a data structure in which 2,336
+                  bytes are allocated to each sector of the subheader. In other words, the data structure must conform to the structure
+                  of a CD-ROM Mode 2 sector of Form 1 or Form 2. The structures of Form 1 and Form 2 sectors are shown below.
+
+
+                  Form 1 Sector structure
+
+                         Subheader                    Data field                    EDC                             ECC
+                         8bytes                       2,048 bytes                   4 bytes                         276 bytes
+
+
+                  Form 2 Sector structure
+
+                         Subheader                    Data field                    Reserved
+
+                         8bytes                       2,324 bytes                   4 bytes
+
+
+
+
+12 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                                                                                              Operations
+
+
+
+
+        The contents of the subheader should be written to the source file beforehand. However, the file number will be
+        overwritten, so this value will not be the same as in the source file. The subheader of the last sector of the file must
+        always hold the EOF bit. The reserved area of the Form 2 sector will have NULL data written into it. If it is evident
+        from the subheader contents that the sector conforms to Form 1, the EDC and ECC will be automatically generated
+        in this sector, so you should enter NULL data into the EDC and ECC fields of the source file.
+
+
+
+        CD-DA source files
+
+            Byte0              Byte1               Byte2                Byte3               ...                            Byte 3251
+
+            LLSB               LMSB                RLSB                 RMSB                ...                            RMSB
+
+
+        In the case of a CD-DA source file, you must give the source file a data structure in which 2,352 bytes are allocated
+        to each sector. The 16 bits of sampled data (the top byte and the bottom byte) will be arranged as shown below, with
+        the left channel (L) coming before the right channel (R).
+
+
+
+        “.WAV” files (16-bit PCM/44.1kHz) can also be used as CD-DA source files.
+
+
+
+
+3.2     A c t i v a t i n g a n d Te r m i n a t i n g t h e C D - R O M G e n e r a t o r
+
+
+        As well as explaining how to activate and terminate the CD-ROM Generator, this section gives a brief explanation of
+        each part of the window.
+
+
+
+
+3.2.1   Activating the CD-ROM Generator
+
+
+        To activate the CD-ROM Generator, carry out the following operations.
+        ➀ Activate the system and Windows.
+        ➁ Click the CD-ROM Generator icon on the CD-ROM Generator group window. (Alternatively, use the File Manager
+            and click the file “CDGEN.EXE”.) The CD-ROM Generator window will then appear.
+
+
+
+        Changing the editing mode
+        The following three editing modes are available on the CD-ROM Generator.
+        ■   Volume mode
+        ■   Directory mode
+        ■   Layout mode
+
+        When you activate the CD-ROM Generator, you will enter Volume mode, which is the default mode. However, you can
+        easily change the mode. The diagram on the previous page shows the window in Volume mode.
+
+
+
+        Errors
+        If a format error occurs while you are editing the format information, the error/warning message window will appear,
+        and the appropriate error/warning message will be output. For details of error messages and warning messages, see
+        “Format information error messages” on Page 51, and “Format information warning messages” on Page 52.
+
+
+
+
+                                                                                                  C D - R O M G E N E R AT O R V E R S I O N 1 . 0 13
+Operations
+
+
+
+
+                  The name and function of each part of the window
+                  The design of each of the CD-ROM Generator windows conforms to the stipulations for Microsoft Windows. The
+                  following diagram gives a brief explanation for each part of the Volume mode window. For more details, consult your
+                  Windows manual.
+
+                  ➀ Control Menu box
+                        This box can be used to change the size and location of the window. By double-clicking it, you can close the
+                        current window.
+
+                  ➁ Menu bar
+                        This is used to display menus for editing files, fields and so on.
+
+                  ➂ Iconify button
+
+                         Mode selection window            Disk recording time
+
+                                                                     Time remaining
+                                                                                         Rec panel button
+
+
+
+
+                                                                                                      Editing panel
+
+
+                        When you click this button, the window shrinks and the CD-ROM Generator application icon appears.
+                        If you double-click the application icon, it turns back into a window.
+
+                  ➃ Maximize button
+                        By clicking this button you can enlarge the window until it takes up the whole of the screen.
+
+                  ➄ Clock button
+                        If you click this button, a dialogue box appears, allowing you to specify the time and the date.
+
+                  ➅ Vertical and horizontal scroll bars
+                        These are used to display information not currently displayed.
+
+                  ➆ Mouse pointer
+                        When you move the mouse, the mouse pointer moves accordingly on the screen. You can select an item by
+                        moving the mouse pointer on to that item and then clicking the mouse button.
+
+
+
+14 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                                                                               Operations
+
+
+
+
+➇ Input marker
+   The position of the input marker is the position at which you can now input text.
+
+
+
+
+Control menu box                                                     Maximize button
+
+
+           Menu bar                                            Iconify button
+
+
+
+
+                                                      Clock button
+
+                                            Vertical and
+                      Mouse pointer         horizontal
+              Input marker                  scroll bars
+
+
+
+
+Using the mouse and the keyboard
+For details, consult your Microsoft Windows manual.
+
+
+
+
+                                                                                   C D - R O M G E N E R AT O R V E R S I O N 1 . 0 15
+Operations
+
+
+
+
+                  Using text boxes
+
+                  ■     How to input text
+                        To input text in a text box, move the mouse pointer on to the text box and click the mouse button. The input
+                        marker will appear in the text box. If you type in letters from the keyboard, the letters will be input from the
+                        location of the input marker, and the input marker will move, staying one character ahead of the last character
+                        input. While the input marker is displayed in a text box, all input from the keyboard will be displayed at the
+                        location of the input marker.
+
+                  ■     How to copy text to the clip-board (temporary storage area)
+                        Move the mouse pointer to the beginning of the block of text you want to copy to the clip-board. While pressing
+                        the mouse button, drag the mouse until all of the desired block of text is highlighted. Next, select “Copy” from the
+                        Edit menu.
+
+                  ■     How to paste text from the clip-board
+                        Move the input marker to the position at which you want to paste in the text from the clip-board, then select
+                        “Paste” from the Edit menu.
+
+                  ■     How to delete text
+                        Following the same method used to copy text to the clip-board, select the block of text you want to delete, then
+                        select “Cut” from the Edit menu. The highlighted block of text will be copied to the clip-board and will disappear
+                        from the text box. Text can also be deleted by pressing the Backspace key or by selecting “Delete” from the Edit
+                        menu, but if either of these methods is used, the text will not be copied to the clip-board.
+
+
+
+
+3.2.2             Te r m i n a t i n g t h e C D - R O M G e n e r a t o r
+
+
+                  To terminate the CD-ROM Generator, carry out the following operations.
+
+                  ➀ Double-click the Control Menu box, or alternatively, select “Exit” (Alt + F4) from the File Menu.
+                        If you do not save the current file information after editing it, the “File Changed” dialogue box will appear.
+
+
+
+
+                                        Yes (Y)         No (N)          Cancel
+
+
+
+                  ➁ If you want to save the changes you have just made, click the “Yes” (Y) button, and if not, click the “No” (N)
+                        button. If you decide not to terminate the CD-ROM Generator after all, click the “Cancel” button.
+
+                        If you click the “Yes” (Y) button, and the format information does not have a name (i.e. if no name has
+                        been registered yet), the “File Save As” dialogue will appear and attempt to elicit a filename. (For details,
+                        see “Saving edited format information as a file” on Page 43.) If a name has already been specified for the
+                        format information, the format information will be saved and no dialogue box will appear.
+                        When the file has been saved, the CD-ROM Generator program terminates.
+
+
+
+
+16 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                                                                                    Operations
+
+
+
+
+3.3   Specifying the Disk Recording Time
+
+
+      The following three types of CD-R disks - each with a different recording time - can be used on the CD-ROM
+      Generator.
+
+
+           Recording time              Data capacity
+
+            18 minutes              Approx. 160 megabytes
+
+            63 minutes              Approx. 540 megabytes
+
+            74minutes               Approx. 660 megabytes
+
+
+
+      On the disk recording time drop-down menu, specify the type of CD-R disk. The time remaining on the selected disk
+      will be displayed on the right side of this box.
+
+
+
+
+3.4   S p e c i f y i n g t h e Vo l u m e D e s c r i p t o r
+
+
+      In Volume mode, you can specify the contents of the volume descriptor containing the volume information for the CD-
+      ROM disk.
+
+      If you click the “Volume” button, Volume mode will be selected, as shown below.
+
+
+
+
+      In Volume mode, the following items are displayed.
+      ■   Volume identifier
+      ■   Volume Set identifier
+      ■   Publisher identifier
+      ■   Data preparer identifier
+      ■   Application identifier
+      ■   Copyright identifier
+      ■   Abstract identifier
+      ■   Bibliography identifier
+
+
+
+
+                                                                                        C D - R O M G E N E R AT O R V E R S I O N 1 . 0 17
+Operations
+
+
+
+
+                  ■     Creation (volume creation date)
+                  ■     Modification (volume modification date)
+                  ■     Expiration (volume expiration date)
+                  ■     Effective (volume effective date)
+                  ■     Comments
+                  ■     Additional information
+
+                  When inputting the information, use the following two character sets given in ISO-9660, in accordance with the item
+                  in question.
+
+                  ■     “d” character set A to Z and 0 to 9
+                  ■     “a” character set A to Z and 0 to 9
+
+                                                      Space ! “ % & ‘ ( ) * , - . / : ; < = > ? _
+
+                  Information items for which no data is input are treated as “unspecified”.
+
+
+
+
+3.4.1             Volume identifier
+
+
+                  In the “Volume” text box, type in the name of the volume to be generated on the CD-ROM disk. For a PlayStation
+                  disk, input a disk name which indicates the title of the software. The volume name should be given in characters from
+                  the “d” character set, and should be no more than 32 characters long.
+
+
+
+
+3.4.2             Volume Set identifier
+
+
+                  In the “Volume Set” text box, insert the name of the volume set to which the volume belongs. The CD-ROM
+                  Generator cannot handle several volumes as a volume set, so only one volume can be specified for any given volume
+                  set. The volume set name should be given in “d” set characters and should be no more than 128 characters long (for
+                  PlayStation disks, a volume set is usually not used).
+
+
+
+
+3.4.3             Publisher identifier
+
+
+                  In the “Publisher” text box, insert the name of the software publishing company or the name of the producer.
+
+                  If the first character is “_” (underscore), the subsequent characters are treated as the name of the file containing the
+                  publisher information. This file must be in the root directory of the CD-ROM disk. The publisher name should be given
+                  in “a” character set characters and should be no more than 128 characters long.
+
+
+
+
+3.4.4             Data Preparer identifier
+
+
+                  In the “Data Preparer” text box, specify the name of the author of the software, or the copyright holder.
+
+                  If the first character is “_” (underscore), the subsequent characters are treated as the name of the file containing the
+                  information relating to the data preparer. This file must be in the root directory of the CD-ROM disk. The data preparer
+                  name should be given in “a” character set characters and should be no more than 128 characters long.
+
+
+
+
+18 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                                                                                           Operations
+
+
+
+
+3.4.5   Application identifier
+
+
+        In the “Application” text box, you should always enter the 11 characters “PLAYSTATION” to indicate that this is a disk
+        for the PlayStation.
+
+
+
+
+3.4.6   Copyright identifier
+
+
+        In the “Copyright” text box, specify the name of the file containing the text relating to the copyright of this volume.
+
+        This file must be in the root directory of the CD-ROM disk.
+
+
+
+
+3.4.7   Abstract identifier
+
+
+        In the “Abstract” text box, specify the name of the file containing an abstract of this volume.
+
+        This file must be in the root directory of the CD-ROM disk.
+
+
+
+
+3.4.8   Bibliography identifier
+
+
+        In the “Bibliography” text box, specify the name of the file containing the record relating to the contract conditions.
+        The contract conditions record consists of information regarding an interpretation in accordance with the agreement
+        between the volume creator and the receiving party.
+
+
+
+
+3.4.9   Creation (volume creation date)
+
+
+        When you click the clock button next to the “Creation” label, the “Creation Date & Time” dialogue box appears.
+
+
+
+
+        Input the creation date and click the “OK” button.
+
+
+
+
+                                                                                               C D - R O M G E N E R AT O R V E R S I O N 1 . 0 19
+Operations
+
+
+
+
+3.4.10            Modification (volume modification date)
+
+
+                  When you click the clock button next to the “Modification” label, the “Modification Date & Time” dialogue box
+                  appears.
+                  Enter the date on which the modification was carried out, then click the “OK” button.
+
+
+
+
+3.4.11            Expiration (volume expiration date)
+
+
+                  When you click the clock button next to the “Expiration” label, the “Expiration Date & Time” dialogue box appears.
+                  Enter the date on which the volume expires, then click the “OK” button.
+
+
+
+
+3.4.12            Effective (volume effective date)
+                  When you click the clock button next to the “Effective” label, the “Effective Date & Time” dialogue box appears.
+                  Enter the date on which the volume becomes effective, then click the “OK” button.
+
+
+
+
+20 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                                                                                            Operations
+
+
+
+
+3.4.13   Comments
+
+
+         In the “Comments” text box, you can enter detailed information on the CD-ROM disk you are generating. However,
+         this information will not be written to the CD-R disk.
+
+
+3.4.14   Additional information
+
+
+         When you click the “Additional Information” button, the “Additional Information” dialogue box appears.
+
+
+
+
+         ■   System Identifier
+             In the “System Identifier” text box, input the identifier of the system which checks the contents of the system area
+             (logical sectors 0 to 15) and executes commands in accordance with these contents. The system identifier should
+             be specified in characters from the “a” character set and should be no more than 32 characters long.
+
+
+
+         ■   System Area File
+             In the “System Area File” text box, input the name of the source file which has to be recorded in the system area
+             (logical sectors 0 to 15). If the source file is not contained in the system area, the remaining data will be stored in
+             logical sectors 16 and onwards.
+
+             However, it will not then be stored in the logical sectors reserved for the volume descriptor. Create a system file
+             with the same sector structure as the track mode. In other words, on a disk for the PlayStation, you must create
+             a system file with a sector length of 2336 bytes, using “Mode 2 Form 1/ Form 2”.
+
+
+
+         ■   Volume Descriptor File
+             The CD-ROM Generator creates both the primary volume descriptor and the terminal volume descriptor. If you
+             want to add a different volume descriptor, you can use a volume descriptor file in which 1 sector holds 2048
+             bytes. This data is positioned with logical sector 16 at the top, and the contents of the application specification
+             area of the first volume descriptor created by the CD-ROM Generator are overwritten on this. The data in the
+             other sectors is allocated after the volume descriptor. You should also note that the volume descriptor must
+             comply with ISO-9660. The terminal volume descriptor is always added after the last sector of the volume
+             descriptor file.
+
+
+
+
+                                                                                                C D - R O M G E N E R AT O R V E R S I O N 1 . 0 21
+Operations
+
+
+
+
+ 3.5              Specifying the Directory Structure
+
+
+                  You must specify how the location of the source files on the hard disk are to be changed before being recorded on
+                  the CD-R disk.
+
+                  Clicking the “Directory” button takes you into Directory mode, in which the screen looks like the illustration below. You
+                  will then be able to define the directories and files to be used when writing the source files to the CD-R disk.
+
+
+
+
+                  This screen works like the File Manager.
+
+
+
+                  The Directory window is made up of the following 2 windows.
+
+                  ■     The directory tree window on the left displays the directory tree, starting from the root directory at the top left.
+
+                  ■     The contents list window on the right displays the files and sub directories in the current directory. It also shows
+                        the file type icon, filename, file size, date, mode and format, interface function, user ID, permissions and source
+                        path for each file.
+
+
+
+                  The file type icons displayed are as follows.
+
+                              : directory
+
+                              : standard file
+                         S
+                              : subheader file
+
+                              : CD-DA source file
+
+
+
+
+22 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                                                                                             Operations
+
+
+
+
+3.5.1   Selecting files and directories
+
+
+        ■   To select a single file or directory:
+            Click the name of the desired file or directory in the directory tree or in the contents list.
+
+        ■   To select several files or directories en bloc:
+
+            ➀ Click the first of the desired files or directories.
+            ➁ While pressing the SHIFT key, click the last of the desired files or directories.
+        ■   To select several files or directories regardless of the order in which they are displayed:
+            While pressing the CTRL key, click each file or directory.
+
+        ■   To select all the files and sub directories in the current directory:
+            Select “Select all” from the Edit menu.
+
+
+
+
+3.5.2   Copying files and directories
+
+
+        To copy a source file on the hard disk to a directory on the CD-ROM Generator, carry out the following operations.
+
+        Note
+        The actual copy operation does not start until you click the “Rec” button on the “CONTROLLER” dialogue box. For
+        details, see “Writing to the CD-R disk” on Page 41.
+
+        ■   Using the mouse:
+            Drag the marked file or directory from the window on the left side of the file manager to the desired directory in
+            the directory tree window.
+
+
+
+
+        ■   Using the menu:
+
+        ➀ Select the intended CD-ROM directory from the directory window.
+        ➁ Select “Put Files and Directories” from the Edit menu. The “Put Files and Directories” dialogue box will appear.
+        ➂ Select the desired source file or directory. (If you select a directory, all the files and sub directories it contains will
+            be copied to the CD-ROM directory.)
+        ➃ Click the “OK” button.
+
+
+
+
+                                                                                                 C D - R O M G E N E R AT O R V E R S I O N 1 . 0 23
+Operations
+
+
+
+
+3.5.3             Creating a directory
+
+
+                  ➀ Select “Create Directory” from the Edit menu. The “Create Directory” dialogue box will appear.
+
+
+
+
+                  ➁ Enter the path for the new directory in the “Directory Name” box. Be sure to obey the CD-ROM directory name
+                        restrictions. Do not give the directory name an extension.
+                  ➂ Click the “OK” button.
+
+
+3.5.4             Moving files and directories
+
+
+                  ■     Using the mouse:
+                        Select the file or directory you want to move, and drag it to the directory which is your intended destination.
+
+                  ■     Using the menu:
+                  ➀ Select the file or directory you want to move.
+                  ➁ Select “Move” from the Edit menu. The “Move To” dialogue box will appear.
+
+
+
+
+                  ➂ Select the intended destination directory from menu. To display a directory which is not currently shown in the
+                        window, either double-click the directory name on the menu, or click the “Change” button.
+                  ➃ Click the “OK” button.
+                  Notes
+                  ■     When you select a directory, all the files and sub directories it contains will be moved.
+                  ■     You cannot move a directory to its own sub directory or move a sub directory to its parent directory.
+
+
+
+
+24 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                                                                                                Operations
+
+
+
+
+3.5.5   Deleting files and directories
+
+
+        ■   Using the keyboard:
+            Select the file or directory you want to delete, and press the DEL key. A confirmation dialogue box will appear.
+            Click the “OK” button.
+
+        ■   Using the menu:
+        ➀ Select the file or directory you want to delete.
+        ➁ Select “Delete” from the Edit menu. The “Delete File” dialogue box will appear.
+
+
+
+
+        ➂ Click the “OK” button.
+        Note
+        If you select a directory, all the files and sub directories it contains will be deleted.
+
+
+
+
+3.5.6   Renaming files and directories
+
+
+        If a name contains characters which may not be used, or if a name is too long, you must change it.
+        ➀ Select the file or directory you want to rename.
+        ➁ Select “Rename” from the Edit menu. The “Rename” dialogue box will appear.
+
+
+
+
+        ➂ Enter the new name.
+        ➃ Click the “OK” button.
+
+
+
+
+                                                                                                    C D - R O M G E N E R AT O R V E R S I O N 1 . 0 25
+Operations
+
+
+
+
+3.5.7             Updating files and directories
+
+
+                  When you click the “Rec” button when you are writing to the CD-R disk, a message will appear if the CD-ROM format
+                  information includes any source files not found in the DOS file system, or if there are discrepancies in file size.
+
+                  If such a message appears, you should update the CD-ROM format information, correcting any contradictions: that
+                  is, deleting the names of any non-existent files, and altering the size where necessary.
+
+                  ➀ Select the directory you want to update.
+                  ➁ Select “Update” from the Edit menu. The “Update Files” checkbox will appear. Select the appropriate update
+                        operation.
+
+
+
+
+                  ■      “Update Date & Time”
+                        Compare the date and time of the file given in the CD-ROM format information with the date and time of the file in
+                        the actual DOS file system, and if they differ, update to the most recent date and time.
+
+                  ■     “Add New File in Directory”
+                        Add a DOS file missing from the CD-ROM format information to the CD-ROM format information.
+
+                  ■      “Include Sub directories”
+                        Specify whether the two options above are also to be carried out on the sub directories of the current directory.
+
+
+                  ➂ Click the “OK” button.
+
+
+3.5.8             Specifying file attributes
+
+
+                  You can specify the following attributes for the selected file.
+                  ■     File type
+                  ■     Date
+                  ■     Interleave
+                  ■     Permissions
+                  ■     User ID
+
+
+                  Changing the file type
+                  The following three file types can be specified, depending on the CD-ROM format information.
+                  ■     Standard file
+                  ■     Subheader file
+                  ■     CD-DA file
+
+
+
+
+26 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                                                                                  Operations
+
+
+
+
+When you click the “File Type” button, the “File Type” dialogue box appears.
+
+
+
+
+■   Standard file
+    In the case of a standard source file (for details, see “Standard source files” on Page 12), click the “Standard
+    File(s)” radio button.
+
+■   Subheader file
+    In the case of a subheader file (for details, see “Subheader source files” on Page 12), click the “Subheader File(s)”
+    radio button. The attributes shown in the checkbox can be specified. Set the appropriate attributes, in
+    accordance with the contents of the source file.
+
+■   CD-DA file
+    In the case of a CD-DA source file (for details, see “CD-DA source files” on Page 13), click the “CD-DA File(s)”
+    radio button.
+
+
+    To execute the change, click the “OK” button. If you decide not to change the file attributes after all, click the
+    “Cancel” button.
+
+
+
+Changing the date and time
+By clicking the “Date & Time” button, you can specify the date and time of the file’s creation. If you do not specify a
+date and time, the date and time of the last modification carried out on the source file in the DOS file system is used.
+For details, see your DOS manual.
+
+When you click the “Date & Time” button, the “Recording Date & Time” dialogue box appears.
+
+
+
+
+Enter the last two digits of the year, the month, day, hour, minute, second and offset value, then click the “OK” button.
+The creation time and date will now be changed to the specified time and date.
+
+
+
+
+                                                                                      C D - R O M G E N E R AT O R V E R S I O N 1 . 0 27
+Operations
+
+
+
+
+                  Specifying interleave mode
+                  By clicking the “Interleave” button, you can store the file in interleave mode (the file data blocks can be stored with
+                  gaps between them). This is used mainly for ADPCM audio files (streaming audio for the PlayStation) and other files
+                  which need to be stored in interleave mode.
+
+                  In interleave mode, no sector is needed for the source gap.
+
+                  Note
+                  A directory will not be interleaved, even if interleave mode is specified. The term “interleaving” is here used to mean
+                  interleaving in file units. If you want to carry out channel interleaving of files, you must provide channel interleave
+                  source files.
+
+                  When you click “Interleave”, the “Interleave” dialogue box will appear.
+
+
+
+
+                  In the “Unit Size” text box, enter the maximum unit size (the number of blocks which can fit in one section), and in the
+                  “Gap Size” text box, enter the interleave gap size (the number of blocks between one section and the next). The unit
+                  size and the gap size should come to no more than 225 in total.
+
+                  If you do not want to set the file to interleave mode, enter “0” in the “Unit Size” and “Gap Size” text boxes.
+
+                  To execute the changes you have just specified, click the “OK” button. If you decide not to change the file attributes
+                  after all, click the “Cancel” button.
+
+
+
+                  Setting the permissions
+                  By clicking the “Permission” button, you can specify whether the following three user categories are allowed to
+                  execute and read the source file.
+
+                  ■     Owner           owner only
+                  ■     Group           only users belonging to the group
+                  ■     World           any user
+
+                  If you do not carry out this setting, any user will be allowed to execute and read the source file.
+
+                  When you click the “Permission” button, the “Permission” dialogue box will appear.
+
+
+
+
+                  To execute the changes you have just specified, click the “OK” button. If you decide not to change the file attributes
+                  after all, click the “Cancel” button.
+
+
+
+
+28 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                                                                                          Operations
+
+
+
+
+        Specifying the user ID
+        By clicking the “User ID” button, you can specify the owner ID and group ID for each source file.
+
+        Unless you specify them, the file will have no owner ID or user ID. When you click the “User ID” button, the “Owner &
+        Group ID” dialogue box will appear.
+
+
+
+
+        To execute the changes you have just specified, click the “OK” button. If you decide not to change the file attributes
+        after all, click the “Cancel” button.
+
+
+
+
+3.5.9   Changing the directory display
+
+
+        To expand the directory by one level:
+        On the directory tree, select the directory you want to change, then select “Expand One Level” from the Tree menu.
+        The next directory level will then be displayed.
+
+
+        To display the whole directory:
+        On the directory tree, select the directory you want to display, then select “Expand Branch” from the Tree menu. All
+        the sub directories in the selected directory will then be displayed.
+
+
+        To display the whole directory tree:
+        Select “Expand All” from the Tree menu. The whole directory will then be displayed.
+
+
+
+        To delete a directory:
+        On the directory tree, select the directory you want to delete, then select “Collapse Branch” from the Tree menu. The
+        sub directories of the selected directory will disappear.
+
+
+
+
+                                                                                              C D - R O M G E N E R AT O R V E R S I O N 1 . 0 29
+Operations
+
+
+
+
+3.5.10            Changing the contents list window
+
+
+                  To display all the file information:
+                  Select “All File Details” from the View menu.
+
+
+                  To display part of the file information:
+                  Select “Partial File Details” from the View menu. When the “Partial Details” checkbox appears, select the item you
+                  want to display.
+
+
+
+
+                  When you have selected the item, click the “OK” button. The selected item of information about the file will then be
+                  displayed on its own.
+
+
+
+
+ 3.6              Specifying the Disk Layout
+
+
+                  In Layout mode, you can arrange the files which are not displayed in the directory structure, such as non-formatted
+                  source files. In this mode, you can also create tracks and change the location of files on the track. By clicking the
+                  “Layout” button, you can select Layout mode, in which the screen looks like this:
+
+
+
+
+                  The Layout mode screen is made up of the following two windows.
+                  ■     The track window at the top displays track and index information.
+                  ■     The location window at the bottom displays the location information file for the track selected on the track window.
+
+
+
+
+30 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                                                                                 Operations
+
+
+
+
+The icons displayed in the track window are as follows:
+           : lead-in
+           : pause
+           : track
+           : index
+           : lead-out
+
+
+Using the following command buttons at the bottom of the window, you can edit the information displayed in the
+window (see pages 34-40).
+           - Track
+           - Index
+           - Location
+           - File No.
+           - ISRC
+           - Catalogue
+           - Master
+
+
+
+Heading missing
+The track window displays information showing how the data is recorded on the CD-R disk. This information is used
+to create the TOC (table of contents) and index for the CD-ROM disk. Each line on the track window contains the
+following items:
+
+Track Index Time Form Control Trackname ISRC
+
+
+Track
+This is the track number on the CD-ROM disk. The CD player only displays the track numbers from 01 to 99, but the
+track window also displays the tracks 00 and AA. 00 stands for the lead-in area on the disk, and AA stands for the
+lead-out area on the disk. The lead-in area indicates the inside of the track, and the lead-out area indicates the
+outside.
+
+
+Index
+This is the index number on the CD-ROM disk. The index “00” indicates a pause.
+
+
+
+Time
+This is an absolute time indicating a specific location on the CD-ROM disk. It is expressed in minutes, seconds and
+frames, in that order. A frame is 1/75th of a second. The time displayed for Track number AA is the total time on the
+disk. The value usually displayed is 00:00:00.
+
+
+Form
+This is the track mode for the CD-ROM disk. It can be either CDROM1, CDROM2 or CDDA. The number (for example
+“_0”) which follows the track mode code is not important for your purposes, so you do not need to check it.
+
+■   CDROM1               Mode 1 data track
+■   CDROM2               Mode 2 Form 1/Form 2 data track
+■   CDDA                 Audio track
+
+
+
+
+                                                                                     C D - R O M G E N E R AT O R V E R S I O N 1 . 0 31
+Operations
+
+
+
+
+                  Control
+                  This is the type of information recorded on the track.
+
+                  ■     2CHAN           2-channel audio track without play impulse
+                  ■     DATA            Audio track
+
+                  Trackname
+                  A track name is displayed if specified, but it is not recorded on the CD-ROM disk.
+
+
+                  ISRC
+                  This is the international standard recording code for the track.
+
+                  A catalogue number will be displayed after this, if specified.
+
+                  In addition to this, master disk information is displayed, consisting of the disk name, the producer’s name, the
+                  copyright holder’s name, and the creation date. An example is shown below.
+
+                              Disc Name:                      Sample
+                              Producer Name:                  T.I. Company
+                              Copyright Holder Name:          Pearl Co.
+                              Creation Date:                  930713
+
+
+
+                  The location window display
+                  The location window displays the location of each file, as shown below.
+
+
+
+
+                  Each line consists of the following information.
+
+                  START END MODE FNO [UNIT:GAP] -> PATH
+
+                  START                 logical block number of head of file
+                  END                   logical block number of end of file
+                  MODE                  recording mode
+                  FNO                   file number used in CD-ROM XA and CD-I format
+                  UNIT:GAP              file unit size and interleave gap size
+                  PATH                  path on CD-ROM disk
+
+                  In Layout mode, the path displayed for an added file is not the directory level on the CD-ROM disk but the whole path
+                  of the source file on the hard disk.
+
+
+
+
+32 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                                                                                              Operations
+
+
+
+
+3.6.1   Displaying the file for a track
+
+
+        When you select a track in the track window, the file belonging to the selected track is displayed in the location
+        window.
+
+
+
+
+3.6.2   Copying a file to a track
+
+        Note
+        The actual copying operation does not begin until you click the “Rec” button in the “CONTROLLER” dialogue box.
+        For details, see “Writing to the CD-R disk” on Page 41.
+
+        ■   Using the mouse:
+            Select a file from the window to the left of the File Manager, and drag it to the desired track.
+        ■   Using the menu:
+            ➀ Select the desired destination track from the track window.
+            ➁ Select “Put Files” from the Edit menu. The “Put Files” dialogue box will appear.
+            ➂ Select the file or directory you want to copy.
+
+
+
+
+            ➃ Click the “OK” button.
+            Notes
+        ■   If you select a directory, all the files and sub directories it contains will be copied. Also, because the file you want
+            to copy is not in the CD-ROM directory, it will not appear in Directory mode.
+        ■   The selected file will be copied to the position after the last file or the last directory. If you want to copy it to
+            somewhere else, see over page.
+
+
+
+
+                                                                                                  C D - R O M G E N E R AT O R V E R S I O N 1 . 0 33
+Operations
+
+
+
+
+3.6.3             Copying a file to a specific location on a track
+
+
+                  You can copy the file to the position after a specific file or directory.
+
+                  Note
+                  The actual copy operation does not begin until you click the “Rec” button in the “CONTROLLER” dialogue box. For
+                  details, see “Writing to the CD-R disk” on Page 41.
+
+                  ■     Using the mouse:
+                        Select the desired file or directory from the window at the right of the File Manager, then drag it to the location of
+                        the desired file or directory.
+                  ■     Using the menu:
+                        ➀ Select the desired destination file or directory from the location window.
+                        ➁ Select “Put Files” from the Edit menu. The “Put Files” dialogue box will appear.
+
+
+
+
+                        ➂ Select the file or directory you want to copy.
+                        ➃ Click the “OK” button.
+                  Note
+                  If you select a directory, all the files and sub directories it contains will be copied. Also, because the copied file is not
+                  in the CD-ROM directory, it will not appear in Directory mode.
+
+
+
+3.6.4             Changing the order of the tracks
+
+                  ■     Using the mouse:
+                        From the track window, select the track you want to move. Drag the selected track to the desired location in the
+                        track window.
+                  ■     Using the menu:
+                        ➀ Select the desired track from the track window.
+                        ➁ Select “Move” from the Edit menu. The “Move To” dialogue box will appear.
+                        ➂ Enter the new track number of the desired destination track.
+                        ➃ Click the “OK” button.
+
+
+
+
+34 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                                                                                         Operations
+
+
+
+
+3.6.5   Changing the location of several files at once
+
+
+        ■   Using the mouse:
+            From the location window, select the file or directory you want to move. Drag the selected file or directory to the
+            desired destination on the location window
+        ■   Using the menu:
+            ➀ From the track window, select the track you want to move.
+            ➁ Select “Move” from the Edit menu. The “Move To” dialogue box will appear.
+
+
+
+
+            ➂ Click the “Logical Block Number” radio button, and input the logical block number of the desired destination
+                track.
+            ➃ Click the “OK” button.
+
+
+3.6.6   Moving a file or directory to a different track
+
+
+        ■   Using the mouse:
+            From the location window, select the file or directory you want to move. Drag the selected file or directory to the
+            desired destination on the track window.
+        ■   Using the menu:
+        ➀ From the location window, select the file or directory you want to move.
+        ➁ Select “Move” from the Edit menu. The “Move To” dialogue box will appear.
+
+
+
+
+        ➂ Click the “Track Number” radio button, and enter the track number of the destination track.
+        ➃ Click the “OK” button.
+
+
+
+
+                                                                                             C D - R O M G E N E R AT O R V E R S I O N 1 . 0 35
+Operations
+
+
+
+
+3.6.7             Deleting a track
+
+
+                  Tracks created in Layout mode can be deleted.
+
+                  ■     Using the keyboard:
+                        From the track window, select the track you want to delete, then press the “DEL” key. When the confirmation
+                        dialogue box appears, click the “OK” button.
+                  ■     Using the menu:
+                  ➀ From the track window, select the track you want to delete.
+                  ➁ Select “Delete” from the Edit menu. The “Delete” dialogue box will appear.
+
+
+
+
+                  ➂ Click the “OK” button.
+
+
+3.6.8             Deleting a file
+
+
+                  Files created in Layout mode can be deleted.
+                  ■     Using the keyboard:
+                        From the location window, select the file you want to delete, then press the DEL key. When the confirmation
+                        dialogue box appears, click the "OK" button.
+                  ■     Using the menu:
+                  ➀ From the location window, select the file you want to delete.
+                  ➁ Select "Delete" from the Edit menu. The "Delete File" dialogue box will appear.
+
+
+
+
+                  ➂ Click the "OK" button.
+
+
+
+
+36 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                                                                                        Operations
+
+
+
+
+3.6.9   Creating or dividing a track
+
+
+        Creating a track
+        ➀ On the track window, select the track or index to add a new track.
+        ➁ Click the "Track" button. The "Track" dialogue box will appear.
+
+
+
+
+        ➂ Set the mode for the track you want to create, and specify a pause if necessary.
+        ➃ Click the "Append New Track" button. The new track will be appended immediately in front of the selected track.
+
+
+        Dividing a track
+        ➀ On the location window, select the file for the location at which you want to divide the track.
+        ➁ Click the "Track" button. The "Track" dialogue box will appear.
+
+
+
+
+        ➂ Set the mode for the track you want to divide, and specify a pause if necessary.
+        ➃ Click the "Append New Track" button. The new track will divide in front of the selected file.
+
+
+        Changing the current track mode and the pause
+        ➀ On the track window, select the track or index for which you want to change the current track mode and pause.
+        ➁ Click the "Track" button. The "Track" dialogue box will appear.
+
+
+
+
+        ➂ Set the track mode, then specify the pause.
+        ➃ Click the "Change Current Track" button. The track mode and the pause will be changed.
+
+
+
+
+                                                                                            C D - R O M G E N E R AT O R V E R S I O N 1 . 0 37
+Operations
+
+
+
+
+3.6.10            Adding an index
+
+
+                  By using the "Index" button, you can add a track index in a specified relative time slot.
+                  ➀ Select the track on the track window, or alternatively, select the file on the location window.
+                  ➁ Click the "Index" button. The "Index" dialogue box will appear.
+
+
+
+
+                  ➂ Enter the relative time of the track (or file) in minutes, seconds and frames.
+                  ➃ Click the "OK" button.
+
+
+3.6.11            Specifying the location of a file
+
+
+                  Using the "Location" button, you can save the file selected by specifying the logical block location. However, the
+                  "Location" command cannot change the file location's position in the order. All the files after the specified file will have
+                  their locations shifted, in a knock-on effect.
+                  ➀ Click the "Location" button. The "Location" dialogue box will appear.
+
+
+
+
+                  The source file will be saved to the position after the specified location. The value indicating the location must be the
+                  value following on from the previous file location. The current location of the head of the selected source file will be
+                  displayed in the text box.
+
+                  ➁ Enter the desired logical block number in the "Location Number" text box.
+                  ➂ Click the "OK" button.
+                  If you select the "Relative" checkbox option, the value specified in the "Location Number" text box will be the relative
+                  value (the offset) from the end of the file.
+
+                  If you select the "Relative" checkbox option and specify "0" as the logical block value in the "Location Number" text
+                  box, this has a special meaning. If the file is interleaved, it will be positioned so that it does not overlap the area for
+                  the file directly in front. In short, instead of the files being written into the gap, the gap is kept as it is, and the file in
+                  question is placed after the end of the file directly in front.
+
+                  Note
+                  On the location window, the file in the specified location appears with an asterisk to the right of "Start Field".
+
+
+
+
+38 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                                                                                           Operations
+
+
+
+
+3.6.12   Specifying the ISRC of a track
+
+
+         Using the "ISRC" button, you can specify the ISRC (International Standard Recording Code) for each number
+         recorded on the disk. With the CDW-900E, you can write the ISRC for each number recorded on each track on the
+         disk. The ISRC consists of the country code, the owner code, the year of recording, and the manufacturing number.
+         It is used for copyright control.
+
+
+         Note
+         Please select the ISR code carefully, in accordance with compact disk manufacturing standards. If there is no
+         particular requirement for an ISRC code, you may omit this specification.
+
+         ➀ Click the "ISRC" button. The "ISR Code" dialogue box will appear.
+
+
+
+
+         ➁ Input the information.
+         ➂ Click the "OK" button.
+
+
+3.6.13   Specifying the file number
+
+
+         Using the "File No."button, you can specify the file number for a subheader source file.
+
+         Note
+         An interleaved file which has already been given an updated file number cannot be changed.
+         ➀ Select the file for which you want to specify the file number.
+         ➁ Click the "File No." button. The "File Number" dialogue box will appear.
+
+
+
+
+         ➂ Input the file number.
+         ➃ Click the "OK" button.
+         For a standard file, the file number is always 0. For a subheader source file, the file number is 1, and the number is
+         incremented so that the file is not interleaved and so that it does not have the same number as another file.
+
+         When you input the file number, the file number of the following interleaved file will be incremented, starting from the
+         number you have specified.
+
+         Note
+         On the location window, an asterisk appears to the right of the file whose number you have specified.
+
+
+
+
+                                                                                               C D - R O M G E N E R AT O R V E R S I O N 1 . 0 39
+Operations
+
+
+
+
+3.6.14            Specifying the CD-ROM disk catalogue number
+
+
+                  If you are using the CDW-900E, you can use the "Catalog" button to specify the CD-ROM catalogue number.
+
+                  Notes
+                  When you specify the catalogue number, please adhere to compact disk manufacturing standards. If there is no
+                  particular requirement for a catalogue number, you may omit this specification.
+                  ➀ Click the "Catalog" button. The "Catalog Number" dialogue box will appear.
+                  ➁ Input a 13-digit barcode catalogue number.
+                  ➂ Click the "OK" button.
+
+
+
+
+3.6.15            Specifying the master information for the CD-ROM disk
+
+
+                  You can use the "Master" button to add the master information required when creating a master disk. For details of
+                  the parameters to be set, see the "Master Disk Creation Handbook".
+                  ■     Disk Name (name of CD-ROM disk)
+                  ■     Producer Name
+                  ■     Copyright Holder
+                  ■     Licence Area (area code)
+                  ■     Creation Date
+
+                  ➀ Click the "Master" button. The "Master Information" dialogue box will appear.
+
+
+
+
+                  ➁ Input the required information.
+                  ➂ Click the "OK" button.
+
+
+
+
+40 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                                                                                          Operations
+
+
+
+
+3.7     Writing to the CD-R Disk
+
+
+        When you have defined the volume descriptor, the directory structure and the disk layout, you can load the CD-R disk
+        in a connected CD recording unit and write the source files to the CD-R disk.
+
+
+        When you click the "Rec" panel button, the format data file is created, then the CD recording unit connection is
+        checked. Next, the "CONTROLLER" dialogue box - shown below - appears.
+
+
+
+
+                                                                           CD recording unit ID box
+
+
+
+
+                                                                        Status message area
+
+
+
+3.7.1   Selecting the CD recording units you are going to use
+
+
+        In the CD recording unit ID box, select only the checkboxes for the units you require. Each of the checkboxes
+        available stands for one of the CD recording units connected to the computer. By clicking the "All" button, you can
+        select all the available checkboxes, and by clicking the "Clear" button, you can clear all the checkboxes.
+
+
+
+
+3.7.2   Selecting the recording speed
+        In accordance with the computer you are using, select one of the options in the "Rec speed" box. For details, see
+        "Accessing source files" on Page 11.
+
+
+
+
+3.7.3   Starting the recording operation
+
+
+        ➀ Load CD-R disk(s) in the selected CD recording unit(s).
+        ➁ Click the "Rec" button. The confirmation message will appear.
+        ➂ Click the "OK" button. Recording will begin.
+        ■   To abort recording:
+            Click the "Stop" button. A message will appear. Confirm whether you want to abort the recording operation. If you
+            do want to abort, click Yes ("Y"). The output operation currently in progress will be cancelled.
+
+
+        During recording processing:
+
+
+
+
+                                                                                              C D - R O M G E N E R AT O R V E R S I O N 1 . 0 41
+Operations
+
+
+
+
+                  During recording processing, messages will appear in the status message line to indicate the current stage of the
+                  recording operation.
+
+                  ■     Setup           (the system and write environment are being set)
+                  ■     Lead in         (data is being written to the lead-in area)
+                  ■     Track           (data is being written to the track area)
+                  ■     Lead out (data is being written to the lead-out area)
+
+                  When data begins to be written to the track area, the counter starts counting. By clicking one of the following
+                  buttons, you can change the information displayed by the counter.
+
+                  ■     Total           (total time needed to write the data to the track area)
+                  ■     Duration (time spent so far in writing data to the track area)
+                  ■     Remain          (time remaining until the writing of data to the track area terminates)
+
+                  Note
+                  The total time displayed does not include the lead-in and lead-out time, so it is not the true output time. When
+                  recording is carried out at double speed, the time displayed on the counter is twice the actual time taken.
+
+                  ■     When the output terminates
+                        When the output terminates, a message will appear, showing you that the operation is over.
+                  ■     If an error occurs:
+                        If an error occurs, an error message will appear. Check the message, refer to "The message box" on Page 47,
+                        and carry out the appropriate operation.
+
+
+
+
+3.7.4             Verifying the output
+
+
+                  This function only allows you to check the output on the CDW-900E unit which is connected to the computer via the
+                  SCSI interface. If you select a CD recording unit which is not directly connected to the computer, an error message
+                  will appear.
+
+                  To verify the output, click the "Verify" button.
+                  ■      If an error is generated during verification:
+                        The verification function compares the data actually written on the disk with the original data on the hard disk. If
+                        there is a difference between the two, a verification error message is displayed. Errors can be caused by
+                        hardware errors, a scratch on a disk, dust or fingerprints on the surface of a disk, and so on.
+
+                  Note
+                  Even when two or more CDW-900E units are connected, the CD recording unit connected via the SCSI interface is
+                  the only one used in the verification operation. The verification operation is carried out at normal speed.
+
+
+
+
+3.7.5             Te r m i n a t i n g t h e w r i t e o p e r a t i o n
+
+
+                  To terminate the write operation, click "Quit".
+
+
+
+
+42 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                                                                                        Operations
+
+
+
+
+3.8     Saving the Edited Format Information as a File
+
+
+        The edited format information can be saved as a named file. This makes it much easier to repeat the whole operation
+        when creating an identical CD-ROM disk in the future.
+
+
+        The following two type of files can be stored on the CD-ROM Generator.
+        ■   Standard format information files (*.CCS)
+        ■   Disk image format information files (*.CCI)
+
+
+
+
+3.8.1   Saving the file
+
+
+        Saving newly-created or edited format information
+
+        ➀ Select "Save" from the Edit menu. If you are saving newly-created format information, the directory dialogue box
+            will appear, asking you to input a filename.
+        ➁ Input the filename and click the "OK" button.
+        Notes
+        ■   Specify the name of the file in accordance with the DOS name restrictions.
+        ■   When you open and edit an existing format information file, the changes you have made will be saved without the
+            directory dialogue boxes being displayed.
+
+
+
+        Saving edited format information under a different name
+        When you have opened and edited an existing format information file, you can save the edited file under a new name,
+        leaving the original file unchanged.
+
+        ➀ Select "Save As" from the File menu. The "File Save As" dialogue box will appear.
+        ➁ Specify the directory you want to save the file to, and input the new filename. Next, select the appropriate file
+            type in the "Save File as Type" drop-down menu.
+
+
+
+
+        ➂ Click the "OK" button.
+
+
+
+
+                                                                                            C D - R O M G E N E R AT O R V E R S I O N 1 . 0 43
+Operations
+
+
+
+
+3.8.2             Saving the information as a disk image format information file
+
+
+                  In the case of the last CD-ROM disk you create in a session on the CD-ROM Generator, there is no need to put a
+                  disk image on the hard disk for the purpose of outputting data to the CD recording unit. This means that you can
+                  save the time and hard disk space this disk image would otherwise take up. However, creating a disk image for the
+                  output has the following advantages:
+
+                  ■     It is easier to control the source files
+                        For example, if the source files have been split up and saved under several volumes, creating a disk image makes
+                        the file control operation easier. If you ever need to create an identical disk in the future, you can copy it using this
+                        disk image. However, you should save the original source files as they are, in preparation for future changes.
+                  ■     You don't have to worry about the transmission speed
+                        If several small source files are allocated to the disk in succession, the transmission of the data to the CD
+                        recording unit may not reach an adequate speed, and data transmission will then be impossible. This is
+                        particularly likely to happen when double-speed data transmission is carried out. If you create a disk image for the
+                        output, this problem can be avoided.
+
+
+
+
+3.8.3             Creating a disk image file
+
+
+                  ➀ Select "Save As" from the File menu. The "File Save As" dialogue box will appear.
+
+
+
+
+                  ➁ Input the filename, then select "DiscImage (*.CCI)" on the "Save File as Type" drop-down menu.
+                  ➂ Click the "OK" button. During the file write operation, a dialogue box will be displayed, showing that write
+                        processing is in progress.
+
+
+
+
+44 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                                                                                         Operations
+
+
+
+
+3.9    Opening an Existing File
+
+
+       You can open an existing file to carry out the following operations:
+       ■   Editing the file
+       ■   Editing the file and saving it under another name
+       ■   Creating a CD-ROM disk which uses the file.
+
+
+       ➀ Select "Open" from the File menu. The "File Open" dialogue box will appear.
+
+
+
+
+       ➁ Select the desired file type from the "Open File as Type" list box.
+       ➂ Select the file you want to open, then click the "OK" button.
+
+
+3.10   Creating a New File
+
+
+       To create a new file, select "New" from the File menu.
+       If you do not save the edited format information, the "File Changed" dialogue box will appear. To save the information,
+       click the "Yes" button (if you have not specified a name for the information, another dialogue box will appear, asking
+       you to input the filename). If you do not want to save the information, click the "No" button.
+
+
+       A new untitled file will then be opened, and you can edit it.
+
+
+
+
+                                                                                             C D - R O M G E N E R AT O R V E R S I O N 1 . 0 45
+46 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+Appendix
+A     MESSAGES
+
+
+      This section explains the messages which appear when the CD-ROM Generator is in use.
+
+
+       A-1         The Message Box
+
+                   If you carry out the wrong operation, or fail to confirm an operation, on the CD-ROM Generator, a message
+                   will appear.
+
+
+
+    Message                                           Meaning
+
+    <FILE> is not CD-ROM Generator's                  Check whether the file you are trying to open is in fact a CD-ROM
+    Format Information File.                          Generator information file.
+
+
+    <FILE> is not found.                              Check whether you have specified the correct file.
+
+
+    Aborted.                                          The operation has been aborted.
+
+
+    Abort recording.                                  If you abort recording now, this disk cannot be used again for writing
+                                                      data, and you will have to carry out the recording again, from the
+                                                      beginning, on a new disk. Also, if data is being written to the lead-in or
+                                                      the lead-out area, recording cannot be aborted until the data has
+                                                      finished being written to the area in question. After aborting recording,
+                                                      open the tray of the CD recording unit and shut it again immediately to
+                                                      reset it and prevent the error recurring.
+
+
+    Abort the verify operation?                       Check whether you really want to abort the verify operation.
+
+
+    Bad track pause: <PAUSE>                          An error has occurred in the pause value for the specified track head.
+                                                      Specify the pause value in seconds and frames.
+
+
+    Cannot change the track that includes files       The specified track is in a CD-ROM directory structure, so the mode
+    CD-ROM Directory Structure                        cannot be changed.
+
+
+    Cannot change the track that includes             The specified track contains a volume descriptor and path tables, so
+    Volume Descriptor and Path Tables.                neither the mode nor the pause length can be changed.
+
+
+    Cannot find the DPMI server.                      Add     the EMM386 expanded memory emulator to the file
+                                                      "CONFIG.SYS".
+
+
+    Cannot find the SCSI device driver.               Add the SCSI device driver to the file "CONFIG.SYS" on your
+                                                      computer.
+
+
+    Cannot find the SCSI Host Adapter.                You need an Adaptec AHA-154x SCSI host adapter. Read your host
+                                                      adaptor manual, install the board and connect it to the CD
+                                                      recording unit.
+
+
+
+
+                                                                                                  C D - R O M G E N E R AT O R V E R S I O N 1 . 0 47
+Appendix
+
+
+
+
+     Message                                          Meaning
+
+     Cannot initialize CD Recording Unit.             If your last action was to abort recording, or if an error has occurred on
+                                                      the CD recording unit, you should either switch the power off and then
+                                                      on again, or open the CD recording unit tray and then close it again
+                                                      immediately. If you activate the controller before this operation has
+                                                      been safely carried out, you may not be able to initialize the CD
+                                                      recording unit. If this is the case, terminate the controller operation,
+                                                      open the tray and then close it again immediately. The
+                                                      "CONTROLLER" dialogue box will appear again.
+
+
+     Cannot obtain enough memory.                     This software needs at least 450KB in addition to the amount of
+                                                      memory normally used by MS-DOS. Check your "CONFIG.SYS" and
+                                                      "AUTOEXEC.BAT" files, delete any superfluous files from the memory,
+                                                      then reboot the computer.
+
+
+     Cannot read the format data file.                The format data file is not in the working directory. Re-execute the
+                                                      procedure for creating the CD-ROM disk. There may also be problems
+                                                      regarding the system setup: if so, re-install the CD-ROM Generator.
+
+
+     Cannot save a format information file.           The current format information file cannot be written to the disk
+                                                      (probably because there is not enough space on the disk).
+
+
+     CD Recording Unit error occurs.                  Close the "CONTROLLER" dialogue box, open and close the tray of
+                                                      the CD recording unit to reset it. If this does not solve the problem,
+                                                      check the hardware connections and the DIP switch settings. If this
+                                                      still does not solve the problem, contact Sony Computer
+                                                      Entertainment's Operations Division, whose address is given at the
+                                                      end of this manual.
+
+
+     Data transfer operation fails.                   The data read operation cannot keep pace with the data write
+                                                      operation. You should either create a disk image or set the recording
+                                                      speed to normal speed. Try carrying out the write operation again and
+                                                      make sure no other problems occur while the data is being written.
+
+
+     No disk is loaded in the tray.                   Check the lamps on the CD recording unit, and check whether a disk
+                                                      has been loaded in each unit.
+
+
+     File <FILE> has changed. Save?                   Changes have been made to the current file (<FILE>). Before carrying
+                                                      out any other operation, click the "Yes" button to save the file (i.e. to
+                                                      overwrite <FILE>). If you do not want to save the changes, click the
+                                                      "No" button. If you want to continue with the current file operation
+                                                      instead of carrying out a new operation, click the "Cancel" button.
+
+
+     Format information mismatches.                   Either the CD-ROM format information contains a source file not found
+                                                      in the DOS file system, or the file size is different. You should either
+                                                      provide the required file or update the format information.
+
+
+
+
+48 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                                                                                            Appendix
+
+
+
+
+Message                                           Meaning
+
+Old version of DPMI server is used.               Add the EMM386 expanded memory emulator for the DPMI server
+                                                  Version 0.90 or upward to the file "CONFIG.SYS".
+
+
+Recording is completed.                           Recording has terminated normally.
+
+
+Start recording.                                  Start recording when you are ready.
+
+
+Start verifying.                                  Start verifying when you are ready.
+
+
+Starting up in diagnostic mode.                   Select this mode if you want to test whether the system is connected
+                                                  correctly.
+
+
+The CD Recording Unit is not connected.           Check the connection. If it is not correct, switch off the power and
+                                                  connect the unit again (see "To connect the CD recording unit(s)" on
+                                                  Page 5).
+
+
+The file is not 441.kHz, 16bit format: <PATH>     The file has to be a waveform audio file with 16 quantization bits and
+                                                  a sampling frequency of 44.1kHz (these are the specifications for files
+                                                  used as CD-DA source files).
+
+
+The File Number is illegal.                       The specified file number is wrong, so the file cannot be changed.
+                                                  The file number should be a number between 1 and 254.
+The file(s) cannot be deleted.                    The specified file or directory is in a CD-ROM directory structure, so it
+                                                  cannot be deleted in Layout mode. Delete it in Directory mode.
+
+
+The file(s) cannot be located at the position.    Files and directories cannot be placed in the load-in or lead-out area,
+                                                  or in front of the volume descriptor. Also, a file in a CD-ROM directory
+                                                  structure cannot be moved to a track which has a different mode.
+
+
+The same file or directory name exists            There is a file or directory with the same name in the specified path, so
+in the CD-ROM directory structure.                the directory cannot be created.
+
+
+The same file name exists. Overwrite?             A file with this name already exists. Select "Yes" if you want to
+                                                  overwrite this file, and "No" if you do not want to save to this file.
+
+
+The SCSI Host Adapter is incorrect.               Check whether the SCSI host adapter is an Adaptec AHA-154x. You
+                                                  should also install the board in accordance with the adapter manual,
+                                                  and check that it is connected to the CD recording unit.
+
+
+The time slot is illegal.                         The specified time is incorrect, so the index cannot be added.
+
+
+The track(s) cannot be located at the position.   A track cannot be placed in the lead-in or lead-out area.
+
+
+There is no space to save disk image.             There is not enough free space to save the disk image. Delete some
+                                                  files to increase the free area on the disk.
+
+
+
+
+                                                                                            C D - R O M G E N E R AT O R V E R S I O N 1 . 0 49
+Appendix
+
+
+
+
+     Message                                            Meaning
+
+     Too many indexes in track <NUM>.                   According to CD standards, up to 99 indexes may be recorded. If
+                                                        track <NUM> has 100 or more as an index, this message will appear.
+                                                        You should reduce the number of track divisions.
+
+
+     Total time exceeds disk recording time.            Check the time remaining on the CD-ROM Generator time counter. If
+                                                        necessary, change the data size or use a disk with a longer recording
+                                                        time.
+
+
+     Untitled file has changed. Save?                   The current untitled file has been edited. Before carrying out another
+                                                        operation, click the "Yes" button (if you want to save it as a new file). If
+                                                        you do not want to save it, click the "No" button. If you want to cancel
+                                                        the new operation and carry out an operation on this file, click the
+                                                        "Cancel" button.
+
+
+     Verify fails.                                      The data on the CD-ROM disk is different from the data prepared on
+                                                        the CD-ROM Generator. Check whether the data write operation
+                                                        terminated normally, and check whether the disk in the tray is the disk
+                                                        to which the data was written. It is also possible that the disk is
+                                                        scratched, so take a new disk and repeat the data write operation. If
+                                                        the same problem occurs, contact Sony Computer Entertainment's
+                                                        Operations Division, whose number is given at the end of this manual.
+
+
+     Verify is completed.                               Verification has terminated normally.
+
+
+     Verify is limited to one CD Recording Unit only.   The verify operation can only be carried out on the single CD recording
+                                                        unit which is connected via the SCSI cable. Select one CD recording
+                                                        unit only and carry out verification again.
+
+
+
+
+50 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                                                                                                  Appendix
+
+
+
+
+A-2         Format Information Error Messages
+
+
+            If format conversion cannot be carried out, a message appears in the "Error and Warning Message" window. Format
+            conversion errors occur when the specified file is not found, or when the filename is incorrect or contravenes name
+            restrictions. In the following table, the symbol "<SYMBOL>" stands for the variable to be substituted for the
+            appropriate character string in the actual error message.
+
+
+
+  Message                                                Meaning
+
+  bad isrc format: <VALUE>                               There is a format error in the value specified as the ISRC (International
+                                                         Standard Recording Code).
+
+
+  cannot find system area file: <PATH>                   The file specified as the source file in the system area is not found.
+
+
+  cannot find message sector file: <PATH>                The file specified as the source file for the message sector is not found.
+
+
+  catalogue number must consist                          The catalogue number has to have 13 digits. For details, see
+  of 13 digits: <VALUE>                                  "Specifying the CD-ROM disk catalogue number” on Page 40.
+
+
+
+  directory ID includes extension field: <PATH>          A directory name cannot have an extension.
+
+
+  directory ID shall not include                         A directory name must not include a version number.
+  version number: <PATH>
+
+
+  directory nest is too deep: <PATH>                     The directory tree can have no more than 8 levels.
+
+
+  file ID extension exceeds 3 chars: <PATH>              An extension can be no more than 3 characters long.
+
+
+  file size differs from source file: <PATH>             Update or delete the file.
+
+
+  file/directory ID body exceeds 8 chars: <PATH>         Filenames and directory names can be no more than 8
+                                                         characters long.
+
+
+  file/directory ID conflicts with                       There are certain restrictions concerning the characters which may be
+  <PATH 1>:<PATH 2>                                      used in filenames on the CD-ROM disk, so MS-DOS filenames cannot
+                                                         be converted just as they are. Convert all the filenames in accordance
+                                                         with "Filenames of source files" on Page 11.
+
+
+  illegal file version number: <PATH>                    Any characters following a comma in a filename are perceived as the
+                                                         version number. The version number must be a number between 1
+                                                         and 32768.
+
+
+  isrc must consist of 12 characters: <VALUE>            The ISRC must be 12 characters long.
+
+
+  no such file or directory: <PATH>                      The specified source file is not found. Either delete the file or provide
+                                                         the source file.
+
+
+
+
+                                                                                                  C D - R O M G E N E R AT O R V E R S I O N 1 . 0 51
+Appendix
+
+
+
+
+     Message                                                 Meaning
+
+     too many extension fields: <PATH>                       Any characters following a full stop in a filename are perceived as the
+                                                             extension. If a filename has more than one full stop in it, this message
+                                                             will appear.
+
+
+     too many version fields: <PATH>                         Any characters following a semi-colon (;) in a filename are perceived as
+                                                             the version number. If a filename contains more than one semi-colon,
+                                                             this message will appear.
+
+
+     version field includes illegal char: <PATH>             Any characters following a semi-colon (;) in a filename are perceived as
+                                                             the version number. The version number must be a number from 1 to
+                                                             32768.
+
+
+
+
+ A-3              F o r m a t I n f o r m a t i o n Wa r n i n g M e s s a g e s
+
+
+                  If an abnormality is found during format conversion processing, a warning message is displayed. Always check
+                  whether or not the message is a warning message. If a warning message is displayed, we recommend that you
+                  check the format information.
+
+
+
+     Message                                                 Meaning
+
+     cannot find Abstract File:<FILE>                        The file specified in the volume information stating the publisher,
+     cannot find Application File:<FILE>                     copyright and other data is not found in the directory. Specify the
+     cannot find Bibliographic File:<FILE>                   correct filename as described in "Specifying the volume descriptor" on
+     cannot find Copyright File:<FILE>                       Page 17.
+     cannot find Data Preparer File:<FILE>
+     cannot find Publisher File:<FILE>
+
+
+     file is modified after Volume Creation                  The file "<PATH>" has been created or modified since the creation or
+     or Modification:<PATH>                                  modification of the specified volume. Correct the volume creation or
+                                                             modification date.
+
+
+     output may be failed:<LOCATION>                         This message is displayed if an adequate data transmission speed
+                                                             cannot be maintained in the vicinity of the logical block
+                                                             "<LOCATION>", making it impossible to perform output.
+
+
+     specified time is after Volume Creation                 The recording date specified in the disk volume is later than the volume
+     or Modification:<PATH>                                  creation date. Correct the recording date.
+
+
+     the assigned location is <LOCATION>c,                   This message is displayed if <PATH> is not allocated as specified.
+     but located at <LOCATION>:<PATH>
+     the assigned relative location is +<LOCATION>,
+     but located +<LOCATION>:<PATH>
+
+
+
+
+52 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                                                                                                   Appendix
+
+
+
+
+       Message                                              Meaning
+
+       too small track                                      Each track on the CD-ROM disk must be at least 3 seconds long.
+                                                            Check the track window and increase the quantity of data for the track.
+
+
+       Volume Creation after Modification                   The specified volume modification date is before the volume creation
+       Date and Time                                        date. Correct the specified date, or the volume creation
+                                                            date/modification date.
+
+
+
+
+B   MENU FUNCTIONS
+
+
+    This section gives tables showing the menu functions available on the CD-ROM
+    Generator menu bar.
+
+
+    You can select a command directly by pressing the shortcut keys.
+
+
+    Some commands also have mnemonics (the mnemonic is the underlined character in the menu item name):
+    when the desired command is useable (i.e. when the pull-down menu is displayed), you can execute the
+    command by pressing the key for the corresponding mnemonic.
+
+
+
+       B-1      Menu Bar
+
+
+                  Item               Function                                           Shortcut          Mnemonic                See Page:
+
+                  File               File operations                                      Alt+F                  F                       -
+
+
+                  Edit               Edit format information                              Alt+E                  E                       -
+
+
+                  Tree               Control directory structure                          Alt+T                  E                       -
+
+
+                  View               Change contents list window                          Alt+V                  V                       -
+
+
+                  Help               Display help message                                 Alt+H                  H                       -
+
+
+
+
+                                                                                                   C D - R O M G E N E R AT O R V E R S I O N 1 . 0 53
+Appendix
+
+
+
+
+      B-2         File Menu
+
+
+                      Item                        Function                                      Shortcut    Mnemonic   See Page:
+
+                      New                         Open new format file                              -          N          45
+
+
+                      Open                        Open existing format file                         -          O          45
+
+
+                      Save                        Save changes to existing                          -          S          43
+                                                  format file
+
+
+                      Save As                     Save format file or                               -          A          44
+                                                  disk image file
+
+
+                      Preference                  Change working directory                          -          P           -
+
+
+                      Exit                        Terminate CD-ROM Generator                     Alt+F4        X          16
+
+
+
+
+      B-3         Edit Menu
+
+
+                      Item                        Function                                      Shortcut    Mnemonic   See Page:
+
+                      Undo                        Cancel last operation                         Alt-BsSp       U           -
+
+
+                      Cut                         Delete highlighted text                       Shift-Del      C           -
+                                                  and move it to clipboard
+
+
+                      Copy                        Copy highlighted text to clipboard Ctrl-Ins                  O           -
+
+
+                      Paste                       Copy contents of clipboard                    Shift-Ins      P           -
+                                                      to current location
+
+
+                      Delete                      Delete highlighted text                         Del          D           -
+
+
+                      Clear All                   Delete all changes you                        Ctrl-Del       L           -
+                                                  have entered
+
+
+
+
+54 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                                                                      Appendix
+
+
+
+
+B-3-1   Directory mode
+
+
+         Item            Function                          Shortcut          Mnemonic                See Page:
+
+         Put Files and   Copy files and directories          Ins                    P                      23
+         Directories     to specified directory
+
+
+         Create          Create new directory                 -                     C                      24
+         Directory
+
+
+         Move            Move file or directory               -                     M                      24
+                         to another directory
+
+
+         Delete          Delete file or directory            Del                    D                      25
+
+
+         Rename          Change name of file                  -                     R                      25
+                         or directory
+
+
+         Select All      Select all files and                 -                     S                        -
+                         sub directories in
+                         current directory
+
+
+         Update          Check whether volume                 -                     U                      26
+                         descriptor information
+                         matches actual source file
+
+
+         Property        Select function which is             -                     T                       -
+                         the same as the command at
+                         the bottom of the window
+
+
+
+
+B-3-2   Layout mode
+
+         Item            Function                          Shortcut          Mnemonic                See Page:
+
+         Put Files       Copy file to specified position     Ins                    P                   33, 34
+
+
+         Move            Move file on track to                -                     M                   34, 35
+                         specified location
+
+
+         Delete          Delete file                         Del                    D                      36
+
+
+         Property        Select function which is             -                     T                       -
+                         the same as the command at
+                         the bottom of the window
+
+
+
+
+                                                                      C D - R O M G E N E R AT O R V E R S I O N 1 . 0 55
+Appendix
+
+
+
+
+      B-4         Tr e e m e n u ( D i r e c t o r y m o d e o n l y )
+
+                      Item                        Function                           Shortcut   Mnemonic   See Page:
+
+                      Expand One                  Expand by one directory level         -          X          29
+                      Level
+
+
+                      Expand                      Display whole directory               -          B          29
+                      Branch
+
+
+                      Expand All                  Display all directories               -          A          29
+                                                  in directory tree
+
+
+                      Collapse                    Delete directory                      -          C          29
+                      Branch
+
+
+
+
+      B-5         View menu (Directory mode only)
+
+
+                      Item                        Function                           Shortcut   Mnemonic   See Page:
+
+                      All File                    Display all file information          -          A          30
+                      Details
+
+
+                      Partial File                Display part of file information      -          P          30
+                      Details
+
+
+
+
+      B-6         Help menu
+
+
+                      Item                        Function                           Shortcut   Mnemonic   See Page:
+
+                      Contents                    Display help                          -          C           -
+
+
+                      About                       Display version number                -          A           -
+                      CD-ROM
+                      Generator
+
+
+
+
+56 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+                                                                                                                Index
+ A                                         D                                          F
+
+Abstract identifier, 18, 19,              Data Preparer identifier, 17-18            Features, 3
+Accessing the source files, 11            Date and time,                             File,
+Activating:                                      changing the, 19, 20, 26, 27               specifying the location of a, 38
+      the CD-ROM Generator, 13-16         Deleting:                                         deleting a, 25, 36, 51
+      write processing, 44                       tracks, 36,                                changing the order-position
+Adaptec SCSI host adapter, 4, 5,                 files, 25, 36, 51, 55                      of a, 35
+      installing the, 5                          files and directories, 25, 51, 55          saving a, 11, 43
+Additional information, 18, 21            Directory,                                 File attributes,
+Application identifier, 17, 19                   creating a, 24, 51                         specifying, 26, 28-29, 51-52
+                                                 deleting a, 25                      Filename:
+                                                 displaying all, 30                         format, 12, 51
+ B                                        Directory level,                                  length, 12
+                                                 expanding the, 29, 56               Filenames of source files, 12, 51
+Bibliography file identifier, 18, 19      Directory structure,                       Files and directories,
+                                                 specifying the, 22, 29                     moving, 24, 35
+                                          Directory tree,                                   updating, 26
+ C                                               displaying the whole, 29                   copying, 23, 33-34
+                                          Directory tree display,                           deleting, 25, 36
+Catalogue number,                                changing the, 29-30                        renaming, 25
+      specifying the, 40, 51-52           Disk image files,                                 selecting, 23
+CD-DA (digital audio) source files               creating, 43-45, 48                        several, 23, 35, 44
+CD recording unit,                        Disk recording time,                       Format, 11-13, 43-45, 47-49, 51-54
+      connecting the, 5                          specifying the, 14-17
+      setting up the, 5                   Disk layout,                               Format information,
+      selecting a, 42                            specifying the, 22, 30, 51-52            saving edited, 16, 43
+CD-ROM Generator,                         Displaying:                                Format information file,
+      installing the, 6-7                        one level of the directory, 29           saving the, 43-44
+      activating the, 13-16                      the whole directory, 29             Format,
+      terminating the, 16                        the whole directory tree, 29             of filenames, 14, 51
+Changing:                                        the file for a track, 33
+      the directory tree display, 29             part of the file information, 30
+      the track order, 34                        all the file information, 30,        I
+      the contents list window, 30        Dummy write test,
+      the file type, 26-27                       executing a, 8, 10                  Identifier,
+      the order-position of a file, 24                                                      Abstract, 17, 19
+      the editing mode, 13                                                                  Application, 17,19
+Checking an error, 47-53                   E                                                Bibliography, 18-19
+Checking the actual connection, 8, 9                                                        Copyright, 17-19
+Comments, 18, 21                          Edit mode,                                        Data Preparer, 17-19
+Connecting the CD recording unit, 5,            changing the, 14                            Publisher,17-19
+49                                        Erasing:                                          Volume, 17-19, 52-55
+Connections,                                    a directory, 25, 51, 55                     Volume set, 17-19
+      checking, 8, 9                      Errors:                                    Indexes,
+Contents list display,                          checking, 47                                adding, 38
+      changing the, 22-30                 Executing:                                        the Adaptec SCSI host adapter,
+Copying:                                        a write test, 8, 10                         4-5
+      files and directories, 23, 49, 55         a dummy write test, 8, 10                   the device driver for the SCSI host
+Copyright file identifier, 17, 19               a verify test, 8, 10                        adapter, 5
+Creating:                                       a read test, 8, 9                    Interleave mode,
+      a CD-ROM, 11, 41, 47, 49                                                              specifying, 26, 28
+      a new file, 45, 50
+      a disk image file, 44
+      a directory, 24, 51
+
+
+
+
+                                                                                           C D - R O M G E N E R AT O R V E R S I O N 1 . 0 57
+Index
+
+
+
+
+ L                                                     R                                          T
+
+Length,                                               Read test,                                 Terminating:
+     of filename, 12                                        executing a, 8, 9                          the CD-ROM Generator, 13, 16
+                                                      Recording processing,                            the write operation, 10, 42, 48
+                                                            starting, 41, 49
+ M                                                    Recording speed,                           Text boxes,
+                                                            selecting the, 41                           using, 16
+Master information,                                                                              Track,
+     specifying the, 40                                                                                 file, copying a, 34
+                                                       S                                                file, displaying the, 33
+Menu functions:
+     Edit menu, 53-54                                                                                   ISRC, specifying the, 39
+                                                      Saving:                                           order, changing the, 34
+     File menu, 53-54
+                                                            newly-created or edited format       Track window,
+     Help menu, 53-56
+                                                            information, 16, 43                         contents of, 30-32
+     Tree menu, 29, 53-56
+                                                            as a disk image format               Track,
+     View menu, 30, 53-56
+                                                            information file, 44                        deleting a, 36
+     Menu bar, 14, 53
+                                                            files, 41, 43-44, 47-49, 51, 54             creating and dividing a, 37
+Messages:
+                                                            edited format information, 43, 45,
+     format information error
+                                                      SCSI host adapter device driver,
+     messages, 51
+                                                            installing the, 5                     U
+     format information warning
+                                                      Selecting:
+     messages,52
+                                                            a CD recording unit, 41              Updating:
+Message box, 6, 42, 47
+                                                            the recording speed, 41, 48                files and directories, 26, 55
+Moving:
+                                                            files and directories, 23            User ID,
+     files and directories, 24, 35
+                                                            a file or directory, 23                    specifying the, 29
+                                                            several files or directories, 23
+                                                      Setup,
+ N
+                                                            of CD recording unit, 6, 8
+Name,                                                 Single file or directory,                   V
+      changing the name of a file or                        selecting a, 23
+      directory, 25                                   Source files,                              Verification,
+New file,                                                   CD-DA, 12-13, 22, 26-27, 49                 of output, 8, 10
+      editing a, 45                                         subheader, 12-13, 22, 26-27, 39      Verify test,
+Newly-created or edited format                              directory structure, 12                     executing a, 8, 10
+information,                                                standard, 12, 22, 26-27, 39          Volume descriptor,
+      saving, 16, 43                                        filenames of, 12                            specifying the,
+                                                            accessing, 11, 44                    17
+                                                      Specifying:                                Volume identifier, 17-18
+ O                                                          the interleave mode, 26, 28          Volume Set identifier, 17-18
+                                                            the disk recording time, 17
+Opening:                                                    the disk layout, 30
+     a previously-created file, 45                          the directory structure, 22           W
+Output,                                                     the file attributes, 27-29
+     validating the, 42                                     the file location, 38                Window,
+                                                            the volume descriptor, 17, 21               names of parts of the, 14-15
+                                                            the master information, 40           Write operation,
+ P                                                          the user ID, 29                             terminating the, 10, 42, 48
+                                                      Standard source files, 12, 22, 26-27,      Write test,
+Permissions,                                          39                                                executing a, 8, 12
+      specifying, 22, 26, 28                          Subheader files, 12, 26-27
+Publisher identifier, 17-18                           System structure, 4, 9
+                                                      System set-up,
+                                                            testing the, 8
+
+
+
+
+58 C D - R O M G E N E R AT O R V E R S I O N 1 . 0
+

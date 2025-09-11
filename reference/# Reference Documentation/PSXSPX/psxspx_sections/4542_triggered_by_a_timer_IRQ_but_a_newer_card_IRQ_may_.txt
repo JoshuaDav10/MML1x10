@@ -1,0 +1,80 @@
+PSXSPX SPECIFICATIONS - TRIGGERED BY A TIMER IRQ, BUT A NEWER CARD IRQ MAY OCCUR DURING IRQ HANDLING,
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: triggered by a timer IRQ, but a newer card IRQ may occur during IRQ handling,
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 3180 characters
+Lines: 72
+================================================================================
+
+triggered by a timer IRQ, but a newer card IRQ may occur during IRQ handling,
+in that case, the card IRQ may get processed and acknowledged without the
+required delay.
+
+Used in Metal Gear Solid at 8009AA5Ch, and in alone1 at 800AE2F8h:
+
+| 24090056 mov r9,56h ;\ ; @@new_data:
+240A00B0 mov r10,0B0h ; B(56h) GetC0Table ;3C02A001 lui r2,0A001h
+0140F809 call r10 ; ;2442DFAC sub r2,2054h
+00000000 +nop ;/ ;00400008 jmp r2 ;=@@new_cont_d
+8C420018 mov r2,[r2+06h*4] ;\get C(06h) ;00000000 +nop ;=A000DFACh
+00000000 nop ;/ ;00000000 nop
+8C430070 mov r3,[r2+70h] ;\ ; @@new_data_end:
+00000000 nop ; get ; @@new_cont_d:
+3069FFFF and r9,r3,0FFFFh ; early_card ;8C621074 mov r2,[r3+1074h]
+00094C00 shl r9,10h ; irq_handler ;00000000 nop
+8C430074 mov r3,[r2+74h] ; ;30420080 and r2,80h ;I_STAT.7
+00000000 nop ; ;1040000B jz r2,@@ret
+306AFFFF and r10,r3,0FFFFh ;/ ;00000000 +nop
+012A1821 add r3,r9,r10 ; @@wait_lop:
+24620028 add r2,r3,28h ;=early+28h ;8C621044 mov r2,[r3+1044h]
+3C0Axxxx lui r10,xxxxh ;\@@new_data ;00000000 nop
+254Axxxx sub r10,xxxxh ;/ ;30420080 and r2,80h ;JOY_STAT.7
+3C09xxxx lui r9,xxxxh ;\@@new_data_end ;1440FFFC jnz r2,@@wait_lop
+2529xxxx sub r9,xxxxh ;/ ;00000000 +nop
+@@copy_lop: ;3C020001 lui r2,0001h
+8D430000 mov r3,[r10] ;8C42DFFC mov r2,[r2-2004h]
+00000000 nop ;00000000 nop
+AC430000 mov [r2],r3 ;00400008 jmp r2 ;=[0000DFFCh]
+254A0004 add r10,4h ;00000000 +nop
+1549FFFB jne r10,r9,@@copy_lop ; @@ret:
+24420004 +add r2,4h ;03E00008 ret
+3C010001 lui r1,0001h ;\[DFFCh]=r2 ;00000000 +nop
+0xxxxxxx call xxxxxxxxh ; and call ... ;
+AC22DFFC +mov [r1-2004h],r2 ;/ ;
+
+Alternately, elo2 uses slightly different code at 8003961Ch:
+
+| 240A00B0 mov r10,0B0h ;\ ; @@new_data:
+0140F809 call r10 ; B(56h) GetC0Table ;3C02xxxx lui r2,8xxxh
+24090056 +mov r9,56h ;/ ;2442xxxx sub r2,xxxxh
+8C420018 mov r2,[r2+06h*4] ;\get C(06h) ;00400008 jmp r2 ;=@@new_cont_d
+00000000 nop ;/ ;00000000 +nop ;=8xxxxxxxh
+8C430070 mov r3,[r2+70h] ;\ ;00000000 nop
+00000000 nop ; get ; @@new_data_end:
+3069FFFF and r9,r3,0FFFFh ; early_card ; @@new_cont_d:
+8C430074 mov r3,[r2+74h] ; irq_handler ;8C621074 mov r2,[r3+1074h]
+00094C00 shl r9,10h ; ;00000000 nop
+306AFFFF and r10,r3,0FFFFh ; ;30420080 and r2,80h ;I_STAT.7
+012A1821 add r3,r9,r10 ;/ ;1040000B jz r2,@@ret
+3C0Axxxx mov r10,xxxx0000h ;00000000 +nop
+3C09xxxx mov r9,xxxx0000h ; @@wait_lop:
+24620028 add r2,r3,28h ;=early+28h ;8C621044 mov r2,[r3+1044h]
+254Axxxx sub r10,xxxxh ;=@@new_data ;00000000 nop
+2529xxxx sub r9,xxxxh ;=@@new_data_end ;30420080 and r2,80h ;JOY_STAT.7
+@@copy_lop: ;1440FFFC jnz r2,@@wait_lop
+8D430000 mov r3,[r10] ;00000000 +nop
+254A0004 add r10,4h ;3C02xxxx lui r2,8xxxh
+24420004 add r2,4h ;8C42xxxx mov r2,[r2-xxxxh]
+1549FFFC jne r10,r9,@@copy_lop ;00000000 nop
+AC43FFFC +mov [r2-4h],r3 ;00400008 jmp r2 ;=[8xxxxxxxh]
+3C018xxx mov r1,8xxx0000h ;\[...]=r2, ;00000000 +nop
+0xxxxxxx call xxxxxxxxh ; and call ... ; @@ret:
+AC22xxxx +mov [r1+xxxxh],r2 ;/ ;03E00008 ret
+... ;00000000 +nop
+
+Note: The above @@wait_lop's should be more preferably done with timeouts (else
+they may hang endless if a Sony Mouse is newly connected; the mouse does have
+/ACK stuck LOW on power-up).
+
+patch_uninstall_early_card_irq_handler:

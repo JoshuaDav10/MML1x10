@@ -1,0 +1,40 @@
+MIPS INSTRUCTION SET REFERENCE - UNIMPLEMENTED OPERATION
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Unimplemented Operation
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1334 characters
+Lines: 32
+================================================================================
+
+Unimplemented Operation
+
+
+
+
+186                                                  MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                        Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+MOVN
+
+
+
+
+  Move Conditional on Not Zero                                                                                          MOVN
+
+       31                   26 25            21 20             16 15              11 10              6   5               0
+             SPECIAL                                                                          0                MOVN
+                                     rs                 rt                 rd
+              000000                                                                       00000               001011
+                   6                  5                  5                 5                  5                  6
+
+            Format:    MOVN rd, rs, rt                                                                               MIPS32
+
+            Purpose:
+            To conditionally move a GPR after testing a GPR value
+
+            Description: if rt ≠ 0 then rd ← rs
+            If the value in GPR rt is not equal to zero, then the contents of GPR rs are placed into GPR rd.
+
+            Restrictions:
+            None

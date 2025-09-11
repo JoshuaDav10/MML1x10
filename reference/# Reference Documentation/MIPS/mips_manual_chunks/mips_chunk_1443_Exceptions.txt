@@ -1,0 +1,42 @@
+MIPS INSTRUCTION SET REFERENCE - EXCEPTIONS:
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Exceptions:
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1553 characters
+Lines: 34
+================================================================================
+
+Exceptions:
+             TLB Refill, TLB Invalid, TLB Modified, Address Error, Watch
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                                     253
+
+                                Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+SLL
+
+
+
+
+      Shift Word Left Logical                                                                                                SLL
+
+         31                   26 25            21 20            16 15              11 10              6   5                 0
+               SPECIAL                  0                                                                        SLL
+                                                           rt               rd                sa
+                000000                00000                                                                     000000
+                     6                  5                  5                5                 5                    6
+
+              Format:    SLL rd, rt, sa                                                                                MIPS32
+
+              Purpose:
+              To left-shift a word by a fixed number of bits
+
+              Description: rd ← rt << sa
+              The contents of the low-order 32-bit word of GPR rt are shifted left, inserting zeros into the emptied bits; the word
+              result is placed in GPR rd. The bit-shift amount is specified by sa.
+
+              Restrictions:
+              None

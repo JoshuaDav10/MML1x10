@@ -1,0 +1,53 @@
+PSXSPX SPECIFICATIONS - 000H 4 SPU OFFSET (1010H AND UP) (SPUOFFSET=1010H IS FILEOFFSET=E5CH)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 000h 4 SPU Offset (1010h and up) (SpuOffset=1010h is FileOffset=E5Ch)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1511 characters
+Lines: 45
+================================================================================
+
+000h 4 SPU Offset (1010h and up) (SpuOffset=1010h is FileOffset=E5Ch)
+004h 4 Sample Size in bytes
+008h 4 Unknown (0)
+00Ch 4 Unknown (0)
+010h 4 Pitch (400h=11025Hz, 800h=22050Hz, 2E7h=8000Hz, 8B5h=24000Hz)
+014h 4 Unknown (0 or 1)
+018h 4 File ID (00001F08h and up)
+
+Part 2 Info (Texture info):
+
+| B28h 4 Random/Checksum?
+B2Ch 4 Faded ID (FADED007h)
+B30h 4 Part 2 Size (N*16000h) ;Width=2C0h halfwords, Height=N*64
+B34h 4 Zero (0h)
+B38h 4 Some RAM Address (8010xxxxh)
+B3Ch 4 Unknown (eg. 195h or E3h) ;same as at [DA4h]
+B40h 4+4 VRAM Address X,Y (140h,0) ;maybe load target
+B48h 4+4 VRAM Address X,Y (140h,0) ;maybe palette base?
+B50h 4+4 VRAM Address X,Y (xx0h,Height-40h) ;often at/near end of used area
+B58h 4 Unknown (eg. 1D0h or 1E0h)
+B5Ch 4 Unknown (eg. 1Ah or 0Dh)
+B60h 200h Some halfwords? (most are FFFFh, some are 0000h)
+D60h 40h Zerofilled (0)
+DA0h 4 Unknown (eg. 185h or E2h)
+DA4h 4 Unknown (eg. 195h or E3h) ;same as at [B3Ch]
+DA8h 9x10h Special Texpages (VramX,Y, SizeX,Y, StepX,Y, Flag/Type/Num or so?)
+E38h 4 Some RAM Address (800Axxxxh)
+
+Part 3 Info:
+
+| E3Ch 4 Random/Checksum?
+E40h 4 Faded ID (FADED007h)
+E44h 4 Part 3 Size (eg. A9728h or 51264h)
+E48h 4 RAM End Address (start+size) (eg. 801Fxxxxh) (near memtop)
+E4Ch 4 RAM Start Address (end-size) (eg. 801xxxxxh)
+
+Part 4 Info:
+
+| E50h 4 Random/Checksum?
+E54h 4 Faded ID (FADED007h)
+E58h 4 Part 4 Size (usually 10CCCh) (or 105E0h in demo version)
+
+Note: File CAT\RDS.CAT does also start with ID=FADED007h (but contains whatever
+different stuff).

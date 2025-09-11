@@ -1,0 +1,57 @@
+PSXSPX SPECIFICATIONS - ECM CAN BE APPLIED TO VARIOUS CDROM-IMAGE FORMATS (LIKE .BIN, .CDI, .IMG, .ISO,
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: ECM can be applied to various CDROM-image formats (like .BIN, .CDI, .IMG, .ISO,
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1885 characters
+Lines: 48
+================================================================================
+
+ECM can be applied to various CDROM-image formats (like .BIN, .CDI, .IMG, .ISO,
+.MDF, .NRG), as indicated by the double-extension. Most commonly it's applied
+to .BIN files (hence using extension .BIN.ECM).
+
+Example / File Structure
+
+| 45 43 4D 00 ;FileID "ECM",00h
+3C ;Type 0, Len=10h (aka 0Fh+1)
+00 FF FF FF FF FF FF FF FF FF FF 00 00 02 00 02 ;16 data bytes
+02 ;Type 2, Len=1 (aka 00h+1)
+00 00 08 00 00 00 00 00 00 00 00 ..... 00 00 00 ;804h data bytes
+3C ;Type 0, Len=10h (aka 0Fh+1)
+00 FF FF FF FF FF FF FF FF FF FF 00 00 02 01 02 ;16 data bytes
+02 ;Type 2, Len=1 (aka 00h+1)
+00 00 08 00 00 00 00 00 00 00 00 ..... 00 00 00 ;804h data bytes
+...
+FC FF FF FF 3F ;End Code (Len=FFFFFFFFh+1)
+NN NN NN NN ;EDC (on decompressed data)
+
+Type/Length Byte(s)
+
+Type/Length is encoded in 1..5 byte(s), with "More=1" indicating that further
+length byte(s) follow:
+
+| 1st Byte: Bit7=More, Bit6-2=LengthBit4-0, Bit1-0=Type(0..3)
+2nd Byte: Bit7=More, Bit6-0=LengthBit5-11
+3rd Byte: Bit7=More, Bit6-0=LengthBit12-18
+4th Byte: Bit7=More, Bit6-0=LengthBit19-25
+5th Byte: Bit7-6=Reserved/Zero, Bit5-0=LengthBit26-31
+
+Length=FFFFFFFFh=End Indicator
+
+The actual decompression LEN is: "LEN=Length+1"
+
+ECM Decompression
+
+Below is repeated LEN times (with LEN being the Length value plus 1):
+
+| Type 0: load 1 byte, save 1 byte
+Type 1: load 803h bytes [0Ch..0Eh,10h..80Fh], save 930h bytes [0..92Fh]
+Type 2: load 804h bytes [14h..817h], save 920h bytes [10h..92Fh]
+Type 3: load 918h bytes [14h..91Bh], save 920h bytes [10h..92Fh]
+
+Type 1-3 are reconstructing the missing bytes before saving. Type 2-3 are
+saving only 920h bytes, so (if the original image contained full 930h byte
+sectors) the missing 10h bytes must be inserted via Type 0. Type 0 can be also
+used for copying whole sectors as-is (eg. Audio sectors, or Data sectors with
+invalid Sync/Header/ECC/EDC values). And, Type 0 can be used to store

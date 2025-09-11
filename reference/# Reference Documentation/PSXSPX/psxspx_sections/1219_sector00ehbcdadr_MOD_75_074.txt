@@ -1,0 +1,79 @@
+PSXSPX SPECIFICATIONS - SECTOR[00EH]=BCD(ADR MOD 75) ;0..74
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: sector[00eh]=bcd(adr MOD 75) ;0..74
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 2039 characters
+Lines: 71
+================================================================================
+
+sector[00eh]=bcd(adr MOD 75) ;0..74
+sector[00fh]=mode
+if mode=00h then
+sector[010h..92Fh]=zerofilled
+if mode=01h then
+adjust_edc(sector+0, 800h+10h)
+sector[814h..817h]=00h,00h,00h,00h,00h,00h,00h,00h
+calc_p_parity(sector)
+calc_q_parity(sector)
+if mode=02h and form=1
+sector[012h]=sector[012h] AND (NOT 20h) ;indicate not form2
+sector[014h..017h]=sector[010h..013h] ;copy of sub-header
+adjust_edc(sector+10h,800h+8)
+push sector[00ch] ;\temporarily clear header
+sector[00ch]=00000000h ;/
+calc_p_parity(sector)
+calc_q_parity(sector)
+pop sector[00ch] ;-restore header
+if mode=02h and form=2
+sector[012h]=sector[012h] OR 20h ;indicate form2
+sector[014h..017h]=sector[010h..013h] ;copy of sub-header
+adjust_edc(sector+10h,914h+8) ;edc is optional for form2
+
+calc_parity(sector,offs,len,j0,step1,step2)
+
+| src=00ch, dst=81ch+offs, srcmax=dst
+for i=0 to len-1
+base=src, x=0000h, y=0000h
+for j=j0 to 42
+x=x xor GF8_PRODUCT[j,sector[src+0]]
+y=y xor GF8_PRODUCT[j,sector[src+1]]
+src=src+step1, if (step1=2*44) and (src>=srcmax) then src=src-2*1118
+sector[dst+2*len+0]=x AND 0FFh, [dst+0]=x SHR 8
+sector[dst+2*len+1]=y AND 0FFh, [dst+1]=y SHR 8
+dst=dst+2, src=base+step2
+
+calc_p_parity(sector) = calc_parity(sector,0,43,19,2*43,2)
+
+calc_q_parity(sector) = calc_parity(sector,43*4,26,0,2*44,2*43)
+
+adjust_edc(addr,len)
+
+| x=00000000h
+for i=0 to len-1
+x=x xor byte[addr+i], x=(x shr 8) xor edc_table[x and FFh]
+word[addr+len]=x ;append EDC value (little endian)
+
+init_tables
+
+| for i=0 to FFh
+x=i, for j=0 to 7, x=x shr 1, if carry then x=x xor D8018001h
+edc_table[i]=x
+GF8_LOG[00h]=00h, GF8_ILOG[FFh]=00h, x=01h
+for i=00h to FEh
+GF8_LOG[x]=i, GF8_ILOG[i]=x
+x=x SHL 1, if carry8bit then x=x xor 1dh
+for j=0 to 42
+xx=GF8_ILOG[44-j], yy=subfunc(xx xor 1,19h)
+xx=subfunc(xx,01h), xx=subfunc(xx xor 1,18h)
+xx=GF8_LOG[xx], yy = GF8_LOG[yy]
+GF8_PRODUCT[j,0]=0000h
+for i=01h to FFh
+x=xx+GF8_LOG[i], if x>=255 then x=x-255
+y=yy+GF8_LOG[i], if y>=255 then y=y-255
+GF8_PRODUCT[j,i]=GF8_ILOG[x]+(GF8_ILOG[y] shl 8)
+
+subfunc(a,b)
+
+| if a>0 then
+a=GF8_LOG[a]-b, if a

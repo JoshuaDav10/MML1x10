@@ -1,0 +1,54 @@
+PSXSPX SPECIFICATIONS - V2 USED BY PERFECT ASSASSIN (CDV\*.STR)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: v2 used by Perfect Assassin (CDV\*.STR)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1702 characters
+Lines: 46
+================================================================================
+
+v2 used by Perfect Assassin (CDV\*.STR)
+v2 used by Pandemonium 2 (*.STR)
+v2 used by Die Hard Trilogy 2 (MOVIE\*.STR)
+v2 used by Need for Speed 3 (MOVIES\*.STR) (oddly with [14h,18h]<>[20h,24h])
+v2 used by Wild Arms (STR\*.STR)
+v2 used by Wild Arms 2 (STR\*.STR)
+v2 used by Frogger (*.STR)
+v2 used by Gundam Battle Assault (XA\*.STR)
+v2 used by Alundra (MOVIE\*.MOV)
+v2 used by Spec Ops (file 95h,96h within BIGFILE.CAT)
+v2 used by Crash Team Racing (file 1E1h..1F8h,1FAh within BIGFILE.BIG)
+(and many more)
+
+Same as v1, but without the compressor bug.
+
+BS v3 (used by some newer games, some of them also having v2 videos)
+
+| v2/v3 used by Lemmings Oh No More Lemmings (ANIMS\*.STR)
+v2/v3 used by Castlevania (*.STR)
+v3 used by Heart of Darkness (CINE\*.STR, SETUP\*.STR)
+v3 used by R-Types (MV\*.STR)
+v3 used by Black Matrix (MOVIE\*.STR)
+v3 used by Nightmare Creatures II (INTRO\*.STR, LEVEL*\*.STR)
+(and many more)
+
+Same as v2, but using Huffman compressed DC values.
+
+BS ea (Electronic Arts)
+
+Used by many EA Sports titles and several other titles from Electronic Arts:
+
+| Castrol Honda Superbike Racing
+EA Sports Supercross 2000, 2001
+Future Cop - L.A.P.D. (retail and MagDemo14: FCOPLAPD\*.WVE and *.FSV)
+Hot Wheels - Turbo Racing
+Jampack Vol. 2
+Knockout Kings 99, 2000, 2001
+Madden NFL 99, 2000, 2001, 2002, 2003, 2004, 2005 (eg. MADN00\FMVIDEO.DAT\*)
+NASCAR 98, 99, 2000, 2001 (and 98 Collector's Edition, and 99 Legacy)
+NASCAR Thunder 2002, 2003, 2004 and NASCAR Rumble
+Nuclear Strike
+Official U.S. PlayStation Magazine Demo Disc 39 (...XXX which game?)
+PlayStation Underground Jampack - Winter 2000
+Road Rash Jailbreak, and Road Rash 3D
+Tiger Woods PGA Tour Golf, and Tiger Woods USA Tour 2001

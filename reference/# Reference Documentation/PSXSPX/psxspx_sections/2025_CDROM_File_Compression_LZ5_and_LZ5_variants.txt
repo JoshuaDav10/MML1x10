@@ -1,0 +1,169 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION LZ5 AND LZ5-VARIANTS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression LZ5 and LZ5-variants
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 6515 characters
+Lines: 161
+================================================================================
+
+CDROM File Compression LZ5 and LZ5-variants
+
+Overall File Format
+
+Default archive filename extension is .LZH for LHarc/LHA (lh*-methods), or .LZS
+for LArc (lz*-methods).
+
+Archives can contain multiple files, and are usually terminated by a 00h-byte:
+
+| LHA Header+Data for 1st file
+LHA Header+Data for 2nd file
+End Marker (00h)
+
+There is no central directory, one must crawl all headers to create a list of
+files in the archive.
+
+Caution: There is a hacky test file (larc333\initial.lzs) with missing end byte
+(it does just end at filesize).
+
+LHA Header v2 Headersize=xx00h would conflict with End Byte (as workaround,
+insert a Nullbyte between Ext.Headers and Data to change Headersize to xx01h.
+
+LHA Header v0 (with [14h]=00h)
+
+| 00h 1 Header Size (Method up to including Extended Area) (=16h+F+E)
+01h 1 Header Checksum, sum of bytes at [02h+(0..15h+F+E)]
+02h 5 Compression Method (eg. "-lh0-"=Uncompressed)
+07h 4 Compressed Size
+0Bh 4 Uncompressed Size
+0Fh 2 Last modified time (in MS-DOS format)
+11h 2 Last modified date (in MS-DOS format)
+13h 1 MS-DOS File attribute (usually 20h)
+14h 1 Header level (must be 00h for v0)
+15h 1 Path\Filename Length
+16h (F) Path\Filename (eg. "PATH\FILENAME.EXT")
+'\' may apper in the 2nd byte of Shift_JIS, processing
+of Shift_JIS is indispensable when you need full
+implementation of reading Pathname.
+16h+F 2 CRC16 (with initial value 0000h) on uncompressed file
+18h+F (E) Extended area (used by UNIX in v0)
+18h+F+E .. Compressed data
+
+Note: Reportedly, old LArc files don't have CRC16 (unknown if that is true, the
+ONLY known version is LArc v3.33, which DOES have CRC16, if older versions
+didn't have that CRC then they did perhaps behave as if E=(-2)?).
+
+LHA Header v1 (with [14h]=01h)
+
+| 00h 1 Header Size (Method up to including 1st Ext Size) (=19h+F+E)
+01h 1 Base Header Checksum, sum of bytes at [02h+(0..18h+F+E)]
+02h 5 Compression Method (eg. "-lh0-"=Uncompressed)
+07h 4 Skip size (size of all Extended Headers plus Uncompressed Size)
+0Bh 4 Uncompressed Size
+0Fh 2 Last modified time (in MS-DOS format)
+11h 2 Last modified date (in MS-DOS format)
+13h 1 Reserved (must be 20h) (but is 02h on Amiga)
+14h 1 Header level (must be 01h for v1)
+15h 1 Length of Filename (or 00h when name is in Extended Header)
+16h (F) Filename (eg. "FILENAME.EXT; path (if any) is in Extended Header)
+16h+F 2 CRC16 (with initial value 0000h) on uncompressed file
+18h+F 1 Compression Tool OS ID (eg. "M"=MSDOS)
+19h+F (E) Extended area (unused in v1, use Ext Headers instead)
+19h+F+E 2 Size of 1st Extended Header (0000h=None)
+1Bh+F+E .. Extended Header(s) (optional stuff)
+... .. Compressed data
+
+LHA Header v2 (with [14h]=02h)
+
+| 00h 2 Header Size (whole Header including all Extended Headers)
+02h 5 Compression Method (eg. "-lh0-"=Uncompressed)
+07h 4 Compressed Size
+0Bh 4 Uncompressed Size
+0Fh 4 Last modified date and time (seconds since 1st Jan 1970 UTC)
+13h 1 Reserved (must be 20h) (but is 02h on Amiga)
+14h 1 Header level (must be 02h for v2)
+15h 2 CRC16 (with initial value 0000h) on uncompressed file
+17h 1 Compression Tool OS ID (eg. "M"=MSDOS)
+18h 2 Size of first Extended Header (0000h=None)
+1Ah .. Extended Header(s) (filename and optional stuff)
+... 0/1 Nullbyte (End-Marker conflict: change Headersize xx00h to xx01h)
+... .. Compressed data
+
+LHA Header v3 (with [14h]=03h)
+
+Kinda non-standard (supported only in late japanese LHA beta versions): Allows
+Header and Ext.Headers to exceed 64Kbyte, which is rather useless.
+
+| 00h 2 Word size for 32bit Header entries (always 4=32bit)
+02h 5 Compression Method (eg. "-lh0-"=Uncompressed)
+07h 4 Compressed Size
+0Bh 4 Uncompressed Size
+0Fh 4 Last modified date and time (seconds since 1st Jan 1970 UTC)
+13h 1 Reserved (must be 20h)
+14h 1 Header level (must be 03h for v3)
+15h 2 CRC16 (with initial value 0000h) on uncompressed file
+17h 1 Compression Tool OS ID (eg. "M"=MSDOS)
+18h 4 Header Size (whole Header including all Extended Headers)
+1Ch 4 Size of first Extended Header (00000000h=None)
+20h .. Extended Header(s) (filename and optional stuff)
+... .. Compressed data
+
+Compression Methods
+
+| Method Len Window
+-lz4- - - - LArc Uncompressed File
+-lh0- - - - LHA Uncompressed File
+-lhd- - - - LHA Uncompressed Directory name entry
+-lzs- 2..17 2Kbyte LArc LZSS-Compressed (rare, very-very old) ;-15bit
+-lz5- 3..17 4Kbyte LArc LZSS-Compressed (LArc srandard) ;-16bit
+-lh1- 3..60 4Kbyte LHA LZHUF-Compressed (old LHA standard)
+-lh2- 3..256 8Kbyte LHA Obscure test (used in self-extractor)
+-lh3- 3..256 8Kbyte LHA Obscure test (experimental)
+-lh4- 3..256 4Kbyte LHA AR002-Compressed (rare, for small RAM) ;\4bit
+-lh5- 3..256 8Kbyte LHA AR002-Compressed (new LHA standard) ;/
+-lh6- 3..256 32Kbyte LHA AR002-Compressed (rare) ;\
+-lh7- 3..256 64Kbyte LHA AR002-Compressed (rare) ; 5bit
+-lh8- 3..256 64Kbyte LHA AR002-Compressed (accidently same as lh7) ;
+-lh9- 3..256 128Kbyte LHA AR002-Compressed (unimplemented proposal) ;
+-lha- 3..256 256Kbyte LHA AR002-Compressed (unimplemented proposal) ;
+-lhb- 3..256 512Kbyte LHA AR002-Compressed (unimplemented proposal) ;
+-lhc- 3..256 1Mbyte LHA AR002-Compressed (unimplemented proposal) ;
+-lhe- 3..256 2Mbyte LHA AR002-Compressed (unimplemented proposal) ;
+-lhx- 3..256 512Kbyte LHA AR002-Compressed (rare) ;/
+
+Apart from above methods, there are various other custom hacks/extensions.
+
+Extended Headers
+
+| 00h 1 Extension Type (00h..FFh, eg. 01h=Filename)
+01h .. Extension Data
+... 2/4 Size of next Extended Header (0=None) (v1/v2=16bit, v3=32bit)
+
+Extension Type values:
+
+| 00h CRC16 on whole Header with InitialValue=0000h and InitialCrcEntry=0000h
+01h Filename
+02h Directory name (with FFh instead of "\", and usually with trailing FFh)
+3Fh Comment (unspecified format/purpose)
+40h MS-DOS File attribute of MS-DOS format
+41h Windows FILETIME for last access, creation, and modification
+42h Filesize (uncompressed and compressed size, when exceeding 32bit)
+50h Unix Permission
+51h Unix User ID and Group ID
+52h Unix Group name
+53h Unix User name (owner)
+54h Unix Last modified time in time_t format
+7Dh Capsule offs/size (if the OS adds extra header/footer to the filebody)
+7Eh OS/2 Extended attribute
+7Fh Level 3 Attribute in Unix form and MS-DOS form
+FFh Level 3 Attribute in Unix form
+
+Note: There appears to be no MAC specific format (instead, the LHA MAC version
+is including a MacBinary header in the compressed files).
+
+See also
+
+The site below has useful links with info about headers (see LHA Notes), source
+code, and test archives:
+
+| http://fileformats.archiveteam.org/wiki/LHA

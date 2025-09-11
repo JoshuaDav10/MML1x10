@@ -1,0 +1,318 @@
+PSYQ DOCUMENTATION - CONF/SCEE/96April/cdmaster.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/CONF/SCEE/96April/cdmaster.pdf
+Converted: Wed Sep 10 02:47:40 PM CDT 2025
+================================================================================
+
+How to Master a PlayStation™
+            CD
+
+    Creating a “Gold Disc” ready
+       for product submission
+        Paul Holman, SCEE               TM
+
+
+
+
+   Sony Computer Entertainment Europe
+            Objectives
+          Overview of PlayStation™ CD’s
+          SYSTEM.CNF
+          Introduction to CD-GEN
+          How to Create a Master CD
+          Tips and Hints
+          Summary
+
+
+PlayStation™ CD Mastering
+                                          TM
+            Overview of PlayStation™
+            CD’s
+          Can hold upto 640Mb information
+          Has an ISO-9660 file/directory hierarchy
+          Can contain many forms of data
+               Executable files
+               CD-DA
+               Interleaved Video and/or Audio
+               Binary data
+
+
+PlayStation™ CD Mastering
+                                                     TM
+            Key Files on the Disc
+          Track 1:
+               SYSTEM.CNF
+               Your Boot file executable
+               Associated Data Files
+          Track 2 … N
+               Optional CD-DA tracks
+
+
+
+
+PlayStation™ CD Mastering
+                                           TM
+            SYSTEM DESIGNATION
+            FILE
+      Contents
+                BOOT = cdrom:\SLES_123.45;1
+                            device name:\Product number; version
+                TCB = 4
+                            Number of task control blocks / possible threads
+                EVENT = 10
+                            Number of possible events (in hex)
+                STACK = 801ffff0
+                            Stack pointer
+
+
+
+PlayStation™ CD Mastering
+                                                                               TM
+            Boot Executable File
+          Must be named “\XXXX_AAA.AA”,
+          reflecting your titles product code (and
+          the BOOT parameter in SYSTEM.CNF)
+           e.g. SLES-12345 maps to SLES_123.45
+          Created from a .CPE using CPE2X
+
+      Remember your product code should also map
+       to your memory card filenames and the Disc
+       “Mastering Information”
+PlayStation™ CD Mastering
+                                                     TM
+            The Hardware:
+            CD ROM Burners
+         Types of Burners
+              Sony CDW-900E
+              Sony CDU-921S *New*
+         How do they work ?
+              burner laser melts dye layer of gold CD
+              recording pits (submicron deformations) are
+              formed
+
+
+
+PlayStation™ CD Mastering
+                                                            TM
+            Hardware (continued)
+          Burner Pros
+               Burns with constant linear velocity
+               CDU & CDW very high quality - required to
+               produce CD that can be used as Masters
+               CDW-900E can be daisy chained
+          Burner Cons
+               Temperature and Vibration Sensitive
+               Designed for mastering not copying.
+
+PlayStation™ CD Mastering
+                                                           TM
+            The Software: CD-GEN
+          Version 1.10
+               Windows 3.11/WFW
+               Very demanding in terms of low memory
+               several notable problems
+               Based upon a Sony Music product - some
+               features don’t apply to PlayStation™
+
+
+
+
+PlayStation™ CD Mastering
+                                                        TM
+               The Software: CD-GEN
+
+
+          Version (1.3) *New*
+          Supports both Win3.11 and Windows95
+          Supports CDW and CDU Burners
+          Supports many forms of Adaptec SCSI Adapters
+          Supports new CDU-921S
+          Removes low (DOS) memory limitations
+
+
+
+
+PlayStation™ CD Mastering
+                                                         TM
+            How to Create a Master CD
+          Development Using Emulator
+          Preparing to create your CD
+             Output .CCS file from CDBUILD (-g
+             option)
+           or
+             Handbuild .CCS file using CD-GEN (best)
+          Use defrag’ed local SCSI discs for
+          source where possible
+
+PlayStation™ CD Mastering
+                                                       TM
+            Using CDGEN - Volume
+            Screen
+   Not all fields are
+   meaningful on a
+   PlayStation™ Disc
+   Set to 74min
+   Remember to
+   specify the license
+   file !
+
+
+PlayStation™ CD Mastering
+                                   TM
+            The Directory Screen
+      Drag & Drop using File Manager
+
+
+
+
+PlayStation™ CD Mastering
+                                       TM
+            Disc Information (Layout)
+          Drag and drop CD-DA tracks to re-
+          arrange
+
+
+
+
+PlayStation™ CD Mastering
+                                              TM
+            Optimising your CD Layout
+                                 Merge related data files
+                                 into one file (best)
+                            or
+                                 Use “Layout” section to
+                                 make files contiguous
+
+
+
+
+PlayStation™ CD Mastering
+                                                            TM
+            Disc Information (Layout)
+          Drag and drop files, to re-arrange
+          position of files on disc
+
+
+
+
+PlayStation™ CD Mastering
+                                               TM
+            Disc Information (Mastering)
+      Screen must match description on disc
+
+
+
+
+PlayStation™ CD Mastering
+                                              TM
+            File Types
+
+                            Standard file
+                            Subheader
+                              XA Form 1
+                              XA Form 2
+                            CD-DA
+
+
+
+
+PlayStation™ CD Mastering
+                                            TM
+            Note on XA Frames
+          XA Form 1
+               Includes CRC and error correction
+          XA Form 2
+               No error correction.
+      XA-ADPCM is form 2, and should be
+       interleaved with other Audio files, or
+       video to make the best use of disc.
+      See CD-II
+PlayStation™ CD Mastering
+                                                   TM
+            CD-DA Tracks
+          Promote to CD-DA type with “File Type”
+          In “Layout”
+               By default CD-DA track appear in Track 2
+               Use Track/Append New Track to create
+               new track
+               Re-order with drag/drop into position
+      or
+               Drag directly from the file manager
+
+PlayStation™ CD Mastering
+                                                          TM
+            Caveats
+          Issues when moving from Emulator to
+          Gold Disc:
+          CdSearchFile limitations
+               limits on number of files per directory
+               CD-DA files are counted as files
+           2Mb Ram Limitation
+           Rules on track lay out (3 minute rule for
+          last track)
+PlayStation™ CD Mastering
+                                                         TM
+            Tips
+          Use Windows Properties to specify
+          default directory for ..CCS files
+          Use Update/Date & Time (with subdirs)
+          to ensure that time stamps on disc
+          matches those of source files
+          Use Mcheck to verify Mastering Infor
+          Use BUILDCD with -1 (ISO) during
+          design
+PlayStation™ CD Mastering
+                                                  TM
+            Associated Tools
+          mcheck
+          ccs2cti
+               V1.02a needs comments fields
+               V1.02a has problems with complicated
+               ..CCS files
+          buildcd “-g” option (to output a ..CCS
+          file)
+
+
+PlayStation™ CD Mastering
+                                                      TM
+            Tools - Error Checkers
+
+
+
+
+PlayStation™ CD Mastering
+                                     TM
+            Problems (Hardware related)
+          Use Probe SCSI (and Adaptec utility) to
+          verify unit can be “seen”
+          Try powering everything off an on
+          Keep it (and You!) cool
+
+
+
+
+PlayStation™ CD Mastering
+                                                    TM
+            Problems (Software related)
+          Doesn’t start up ?
+          Often memory related (<640K DOS
+          barrier) - tidy up CONFIG.SYS, or use
+          QEMM etc...
+          Won’t restart ?
+          Try cleaning up temporary files, and
+          reviewing the log file.
+
+
+PlayStation™ CD Mastering
+                                                  TM
+            Summary
+          Creating a PlayStation™ CD
+          The Tools
+          Next Step ... submitting for approval
+
+
+
+
+PlayStation™ CD Mastering
+                                                  TM
+

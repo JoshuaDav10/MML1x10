@@ -1,0 +1,60 @@
+PSXSPX SPECIFICATIONS - CDROM SUBCHANNELS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM Subchannels
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1839 characters
+Lines: 51
+================================================================================
+
+CDROM Subchannels
+
+Subchannel P
+
+Subchannel P contains some kind of a Pause flag (to indicate muted areas
+between Audio Tracks). This subchannel doesn't have any checksum, so the data
+cannot be trusted to be intact (unless when sensing a longer stream of
+all-one's, or all zero's). Theoretically, the 98 pause bits are somehow
+associated to the 98 audio frames (with 24 audio bytes each) of the sector.
+However, reportedly, Subchannel P does contain two sync bits, if that is true,
+then there'd be only 96 pause flags for 98 audio frames. Strange.
+
+Note: Another way to indicate "paused" regions is to set Subchannel Q to ADR=1
+and Index=00h.
+
+Subchannel Q
+
+contains the following information:
+
+| Bits Expl.
+2 Sub-channel synchronization field
+8 ADR/Control (see below)
+72 Data (content depends on ADR)
+16 CRC-16-CCITT error detection code (big-endian: bytes ordered MSB, LSB)
+
+Possible values for the ADR/Control field are:
+
+| Bit0-3 ADR (0=No data, 1..3=see below, 4..0Fh=Reserved)
+Bit4 Audio Preemphasis (0=No, 1=Yes) (Audio only, must be 0 for Data)
+Bit5 Digital Copy (0=Prohibited, 1=Allowed)
+Bit6 Data (0=Audio, 1=Data)
+Bit7 Four-Channel Audio (0=Stereo, 1=Quad) (Audio only, must be 0 for Data)
+
+The 72bit data regions are, depending on the ADR value...
+
+Subchannel Q with ADR=1 during Lead-In -- Table of Contents (TOC)
+
+| 8 Track number (fixed, must be 00h=Lead-in)
+8 Point (01h..99h or A0h..A2h, see last three bytes for more info)
+24 MSF address (incrementing address within the Lead-in area)
+Note: On some disks, these values are choosen so that the lead-in
+at 00:00:00, on other disks so that it at 99:59:74.
+8 Reserved (00h)
+
+When Point=01h..99h (Track 1..99) or Point=A2h (Lead-Out):
+
+| 24 MSF address (absolute address, start address of the "Point" track)
+
+When Point=A0h (First Track Number):
+
+| 8 First Track number (BCD)

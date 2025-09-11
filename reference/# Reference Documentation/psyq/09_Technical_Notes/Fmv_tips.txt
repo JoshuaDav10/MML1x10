@@ -1,0 +1,111 @@
+PSYQ DOCUMENTATION - CONF/SCEE/98July/Fmv_tips.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/CONF/SCEE/98July/Fmv_tips.pdf
+Converted: Wed Sep 10 02:47:40 PM CDT 2025
+================================================================================
+
+           Getting Your FMV Right First Time
+                                                                          SCEE Technical Note
+                                                                                                June 1998
+
+Overview
+I’m sure some of you are wondering why this has been included in the technical notes. Well just have a
+look at the FMV on the majority of games to see why, plus Developer Support gets calls on a daily
+basis with questions like ‘Why does Tekken’s FMV look good, and mine crap?’. Hopefully this should
+help, and reduce the amount of trial and error normally involved with making FMV.
+
+NOTE: I’m assuming you have a version of Adobe Premiere, which I find is the easiest video package
+available, plus the latest version of MovConv, which is currently version 3.1. Although the others work
+I find that 3.1 offers better compression, plus runs much quicker then the Win3.1 version of MovConv
+Also this is just concerned with the conversion process, either myself or Tom Oswold (SCEE
+Cambridge) will put together a doc for artists, with hints and tips.
+
+Creating the AVI
+This should really be done by an artist, and shouldn’t be thrown at the PlayStation programmer at the
+last minute.
+
+Get your series of tga’s / tiff’s etc and load them into Premiere. Try not to have too much red in any of
+the stills as this will end up looking crap on the PlayStation.
+
+Set up the frame rate etc. I recommend using 15fps for most cases, using this method you can do full
+screen 320 / 256 with 37.8 kHz audio at 25fps, but 15fps offers higher quality visuals.
+
+Compression settings:
+       - Compression Method – None
+       - Depth – Millions
+
+Fps – set to the required frame rate
+
+Set Optimise Stills
+
+Special Processing
+         Settings – Noise Reduction – Gaussian Blur
+
+I usually use a slight Gaussian blur on the complete AVI, this removes much of the noise found around
+different objects in the AVI. For higher quality I suggest you get your artist to add different blurs etc to
+different parts of the AVI to remove as many hard edges as possible.
+The Subject. File/Properties                                       SCEE Developer Conference ‘98
+
+
+Here’s the setting I use.
+
+
+
+
+When setting the output options make sure you disable the sound.
+
+Converting the Sound
+Simple really, get a 44 kHz stereo, 16-bit WAV, run MovConv and convert to an XA file with 37.8
+kHz stereo settings.
+
+
+
+
+Confidential                                   Page 2                                     29/06/98
+The Subject. File/Properties                                      SCEE Developer Conference ‘98
+
+
+
+
+Converting to a PlayStation Stream
+Run MovConv and load in your uncompressed AVI
+
+Use the following settings.
+
+
+
+
+Always use MDEC image version 3, as this gives better compression. Even though the AVI has no
+sound you need to enable sound so that MovConv will leave space for your audio.
+
+
+
+
+Confidential                                 Page 3                                      29/06/98
+The Subject. File/Properties                                           SCEE Developer Conference ‘98
+
+
+
+
+Interleaving Video and Sound
+Easy one again. If you’ve done the above it’s just simply a case of selecting your stream and WAV and
+click go. See below
+
+
+
+
+Obviously if you’re using a different frame rate / audio then change the settings accordingly.
+
+
+Playback on the PlayStation
+Full Screen streams should always be played back in 24-bit mode, this is another reason a lot of the
+FMV isn’t up to scratch as it’s being played back in 16bit mode. Don’t bother writing you own
+streaming code, as there’s some on the programmer tools CD that works just fine. In fact a modified
+version of this code is used in most of our in house projects. It can be found in
+\psx\sample\scee\cd\movie2\, or in the samples area of the web site.
+
+
+
+
+Confidential                                     Page 4                                          29/06/98
+

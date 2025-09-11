@@ -1,0 +1,42 @@
+PSXSPX SPECIFICATIONS - J803 9PIN REAR CONNECTOR: SERIAL PORT (3.3V) (AKA "J308") (DB9) (5+4PIN)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: J803 9pin rear connector: Serial Port (3.3V) (aka "J308") (DB9) (5+4pin)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1865 characters
+Lines: 33
+================================================================================
+
+J803 9pin rear connector: Serial Port (3.3V) (aka "J308") (DB9) (5+4pin)
+J802 15pin rear connector: AV Multi-out (5+5+5pin)
+CN881 98pin ISA Bus Cart-edge (2x31 basic pins, plus 2x18 extended pins)
+
+Sony DTL-H2000 PIO Board
+
+| JP72x 68pin Black connector (maybe equivalent to 68pin PSX expansion port?)
+SWI 5pin solder pads...
+U371 40pin HN27C4000G-12 (512Kx8 / 256Kx16 EPROM) (sticker: "94/7/27")
+U370 84pin Altera EPM7160ELC84-12 (sticker: "U730, cntl 1")
+U3 14pin SN74ALS1004N (hex inverters)
+U43 44pin Altera EPM7032LC44-10 (sticker: "U43, add 1")
+U716 28pin Sharp LH5498D-35 (FIFO 2Kx9)
+U717 28pin Sharp LH5498D-35 (FIFO 2Kx9)
+U719 28pin Sharp LH5498D-35 (FIFO 2Kx9)
+U720 28pin Sharp LH5498D-35 (FIFO 2Kx9)
+U724 20pin SN74ALS688N (8bit inverting identity comparator with enable)
+U722 20pin SN74ALS245AN (8bit tristate noninverting bus transceiver)
+U47 20pin 74FCT244ATP (dual 4-bit 3-state noninverting buffer/line driver)
+U732 48pin LVT16245? (dual 8-bit 3-state noninverting bus transceiver)
+U711 20pin SN74ALS244BN (dual 4-bit 3-state noninverting buffer/line driver)
+U712 20pin SN74ALS244BN (dual 4-bit 3-state noninverting buffer/line driver)
+U713 20pin 74HC244AP (dual 4-bit 3-state noninverting buffer/line driver)
+U714 20pin 74HC244AP (dual 4-bit 3-state noninverting buffer/line driver)
+U721 20pin SN74ALS244BN (dual 4-bit 3-state noninverting buffer/line driver)
+U55 14pin SN74ALS08N (quad 2-input AND gates)
+U726 20pin SN74ALS245AN (8bit tristate noninverting bus transceiver)
+U715 20pin 74HC244AP (dual 4-bit 3-state noninverting buffer/line driver)
+JPxx 100pin Blue connector (to other ISA board)
+U738 20pin LVT244 (SMD) (dual 4-bit 3-state noninverting buffer/line driver)
+U734 32pin KM684000G-7 (SRAM 512Kx8) ;\maybe 1Mbyte EXP3 RAM ?
+U733 32pin KM684000G-7 (SRAM 512Kx8) ;/
+U725 20pin SN74ALS688N (8bit inverting identity comparator with enable)

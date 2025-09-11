@@ -1,0 +1,33 @@
+PSXSPX SPECIFICATIONS - OUT: R2 = ADDRESS IN BIOS ROM OF THE DESIRED CHARACTER (OR -1 = ERROR)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Out: r2 = address in BIOS ROM of the desired character (or -1 = error)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1028 characters
+Lines: 24
+================================================================================
+
+Out: r2 = address in BIOS ROM of the desired character (or -1 = error)
+
+r4 should be 8140h..84BEh (charset 2), or 889Fh..9872h (charset 3).
+
+B(53h) Krom2Offset(shiftjis_code)
+
+| In: r4 = 16bit Shift-JIS character code
+Out: r2 = offset within charset (without charset base address)
+
+This is a subfunction for B(51h) Krom2RawAdd(shiftjis_code).
+
+Character Sets in ROM (112Kbytes)
+
+The character sets are located at BFC64000h and up, intermixed with some other
+stuff:
+
+| BFC64000h Charset 1 (16x15 pix, letters with accent marks) (NOT in JAPAN)
+BFC65CB6h Garbage (four-and-a-half reverb tables, ioports, printf strings)
+BFC66000h Charset 2 (16x15 pix, various alphabets, english, greek, etc.)
+BFC69D68h Charset 3 (16x15 pix, japanese or chinese symbols or so)
+BFC7F8DEh Charset 4 (8x15 pix, mainly ASCII letters)
+BFC7FE6Fh Charset 5 (8x15 pix, additional punctuation marks) (NOT in PS2)
+BFC7FF32h Version (Version and Copyright strings) (NOT in SCPH1000)
+BFC7FF8Ch Charset 6 (8x15 pix, seven-and-a-half japanese chars) (NOT in PS2)

@@ -1,0 +1,112 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION LZ5 AND LZ5-VARIANTS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression LZ5 and LZ5-variants
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 3985 characters
+Lines: 104
+================================================================================
+
+CDROM File Compression LZ5 and LZ5-variants
+
+Original LArc LZ5 (method "-lz5-")
+
+LZ5 was used by LArc compression tool from 1988/1989, decompression is also
+supported by LHarc/LHA. LZ5 is basically LZSS compression, but with some
+oddities:
+
+| LZ5 is often implemented with a ringbuf (instead of actual sliding window)
+LZ5 uses absolute ringbuf indices (instead of relative sliding dest indices)
+LZ5 requires the ringbuf to be initially prefilled with constants
+LZ5 ringbuf is 1000h bytes tall and starts with write index FEEh
+
+LArc was discontinued in 1989, but LZ5-variants have been kept used on PSX and
+Nintendo DSi; those variants are just using the raw compression, without LArc
+archive headers.
+
+DSi Dr. Mario (DSiware, Nintendo/Arika, 2008-2009)
+
+| INFO.DAT
+encrypted directory with filename, offset and compressed/uncompressed size
+GAME.DAT
+000h 4 ID "ALZ1"
+004h ... ALZ1 Compressed data (with size as defined in INFO.DAT)
+... 4 ID "ALZ1"
+... ... ALZ1 Compressed data (with size as defined in INFO.DAT)
+...
+
+PSX Final Fantasy VII (FF7)
+
+ALZ1 compression is used in various folders (ENEMY*, STAGE*, STARTUP, MAGIC,
+FIELD, MINI, MOVIE, WORLD) with various filename extensions (.LZS .BSX .DAT
+.MIM .TIZ .PRE .BSZ .TXZ).
+
+| 000h 4 Compressed Size ;=Filesize-4
+004h .. ALZ1 Compressed data (Filesize-4 bytes)
+
+Detection can be more or less reliably done by checking [000h]=Filesize-4, one
+could also check the filename extensions, although .DAT doesn't qualify as
+unique extension.
+
+The file doesn't contain any info on the decompressed size, so one cannot know
+the decompression buffer size without first decompressing the file.
+
+Note: For whatever reason, the game does also have one GZIP compressed file
+(BATTLE\TITLE.BIN).
+
+PSX Final Fantasy VIII (FF8)
+
+About same as FF7, but detection is less reliable because there are no
+filenames or extensions, and the file header is somewhat randomly set to
+[000h]=(Filesize-4)+0..7, unknown why, maybe it's allocating dummy bytes to
+last some compression flags.
+
+| 000h 4 Compressed Size+0..7 ;=(Filesize-4)+0..7
+004h .. ALZ1 Compressed data (Filesize-4 bytes)
+
+ALZ1 is used in four Root files (0001h,0002h,0017h,001Ah), and in many Field
+files, and maybe in further files elsewhere.
+
+PSX Ultimate Fighting Championship (MagDemo38: UFC\CU00.RBB\383h\*)
+
+| 000h 8 ID "00zLATAD" (aka DATALz00 backwards) ;\PreHeader
+008h 4 Total Filesize excluding PreHeader+Padding (SIZ+0Ch) ;/
+00Ch 4 Unknown (always 1000h) ;\
+010h 4 Compressed data size (SIZ) ; Header
+014h 4 Decompressed data size ;/
+018h SIZ zLATAD Compressed data ;-Data
+... .. Padding to 4-byte boundary ;-Padding
+
+Ninja (MagDemo13: NINJA\LOADPICS\*.PAK and NINJA\VRW\FOREST.VRW\*)
+
+| 000h 8 ID "VRAM-WAD"
+008h 4 Compressed size (Filesize-Padding-10h)
+00Ch 4 Decompressed size (18000h, 28000h, 40000h bytes)
+010h .. VRAMWAD Compressed data (192x256, 320x256, 512x256 halfwords)
+... (..) Padding to 4-byte boundary (if any, in files in .VRW archives)
+
+Observe that Ninja is using the same ID="VRAM-WAD" for .PAK files and .VRW
+archives (if [008h]=Filesize-Padding-10h then it's a compressed .PAK file,
+otherwise it's a .VRW archive; whereas, those .VRW archives do themselves
+contain several .PAK files).
+
+PSX Power Spike (MagDemo43: POWER\GAME.IDX\*.BIZ)
+
+BIZ compression is used in BIZ archives (which are nested in IDX/HUG archive).
+The compressed & decompressed size is stored in the BIZ archive.
+
+Note: Power Spike 20h-filled initial BIZ ringbuf is required for sky pixels in:
+
+| MagDemo43: POWER\GAME.IDX\PERSOS\PSX\CUSTOM\\TEXTURE\NFIELD.BIZ\LPORJ.PSI
+
+PSX Army Men Air Attack 2 (MagDemo40: AMAA2\*.PCK\*.PAK)
+
+SCRATCH compression is used in PAK archives (which are nested in PCK archive).
+The compressed & decompressed size is stored in the PAK archive.
+
+Note: The decompressor uses half of the 1Kbyte Scratchpad RAM at 1F800000h as
+ringbuf (hence the name and unusual small 200h-byte ringbuf size).
+
+Alice in Cyberland (ALICE.PAC\*.FA2)
+
+| 000h .. FA2 Compressed .FA archive

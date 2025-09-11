@@ -1,0 +1,85 @@
+PSXSPX SPECIFICATIONS - ALIGN2, NO EXTRA ENTRY INCREDIBLE CRISIS (IC\TAN_DAT.CDB\*\*)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Align2, no extra entry Incredible Crisis (IC\TAN_DAT.CDB\*\*)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 2941 characters
+Lines: 77
+================================================================================
+
+Align2, no extra entry Incredible Crisis (IC\TAN_DAT.CDB\*\*)
+Align800h, with extra entry MLB 2000 (DATA.WAD)
+Align10h, with extra entry Witch of Salzburg (*.ANM/BIN/BSS/DAT/MDL/SCE)
+Align4, with extra entry Rayman (*.XXX, *.ALL)
+
+The files can be detected by checking [004h]=4+(N*4), 4+(N*4)+Align800h,
+4+(N*4)+4, or 4+(N*4)+4+Align10h, and checking that the offsets are increasing
+with correct alignment (Rayman has some empty files with same offset), and
+don't exceed the total filesize. And that the alignment space is zeropadded (in
+case of R-Types, only the header is 00h-padded, but files are FFh-padded).
+
+The detection could go wrong, especially if the archive contains very few
+files, some of the nested DOT1's contain only one file (header "00000001h,
+00000008h", without any further increasing offsets or padding). As workaround,
+accept such files only if they have a ".1" filename extension, or if they were
+found inside of a bigger DOT1, IMG, or DB archive.
+
+Final Fantasy IX contains some DOT1's with fewer than few entries (the file
+being only 4-bytes tall, containing value NumEntries=00000000h).
+
+NFL Gameday '98 (MagDemo04: GAMEDAY\*.FIL) (32bit) (with nested FIL's)
+
+NFL Gameday '99 (MagDemo17: GAMEDAY\*.FIL) (32bit)
+
+NFL Gameday 2000 (MagDemo27: GAMEDAY\*.FIL) (16bit and 32bit)
+
+NCAA Gamebreaker '98 (MagDemo05: GBREAKER\*.FIL,*.BIN) (16bit and 32bit)
+
+NCAA Gamebreaker 2000 (MagDemo27: GBREAKER\*.FIL) (16bit and 32bit)
+
+FIL/32bit (with [02h]=FFFFh):
+
+| 000h 2 Number of Files (N)
+002h 2 ID for 32bit version (FFFFh=32bit entries)
+004h N*4 File List (offsets to each file, increasing, 4-byte aligned)
+... .. File Data
+
+FIL/16bit (with [02h]<>FFFFh, eg. FLAG*.FIL and VARS\STARTUP2.FIL\0\*):
+
+| 000h 2 Number of Files (N)
+002h N*2 File List (offsets to each file, increasing, 4-byte aligned)
+... .. Zeropadding to 4-byte boundary
+... .. File Data
+
+PreSizeDOT1 (Ace Combat 2) (retail and MagDemo01: ACE2.DAT\*)
+
+Like DOT1, but with Total Filesize being oddly stored at begin of file.
+
+| 000h 4 Total Filesize (aka end-offset for last list entry)
+004h 4 Number of Files (N)
+008h N*4 File List (offsets to each file, increasing, 4-byte aligned)
+... .. File Data
+
+Note: Ace Combat 2 contains PreSizeDOT1 (ACE2.DAT\02h..1Dh,36h..B2h) and normal
+DOT1 archives (nested in PreSizeDOT1's and in ACE2.DAT\B3h..E1h).
+
+DOT-T (somewhat same as DOT1, but with 16bit entries)
+
+Armored Core (MagDemo02, AC10DEMP\*.T)
+
+| 000h 2 Number of Files
+002h N*2 File List (Offset/800h to file data, increasing)
+... 2 Total Size/800h (end-offset for last file)
+... .. Zeropadding to 800h-byte boundary
+... .. File Data
+
+This can contain many empty 0-byte files (aka unused file numbers; though maybe
+those files exist in the retail version, but not in the demo version).
+
+DOTLESS Archive
+
+Hot Shots Golf (MagDemo07: HSG\*.DAT)
+
+Hot Shots Golf 2 (retail: DATA\F0000.BIN\*, MagDemo31/42: HSG2\MINGOL2.BIN\*)
+
+Starblade Alpha (FLT\*.DAT, TEX\*.DAT)

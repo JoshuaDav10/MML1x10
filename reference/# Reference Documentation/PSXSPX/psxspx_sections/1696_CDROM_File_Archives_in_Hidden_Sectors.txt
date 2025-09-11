@@ -1,0 +1,80 @@
+PSXSPX SPECIFICATIONS - CDROM FILE ARCHIVES IN HIDDEN SECTORS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Archives in Hidden Sectors
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1875 characters
+Lines: 72
+================================================================================
+
+CDROM File Archives in Hidden Sectors
+
+WWF Smackdown (MagDemo33: TAI\*.PAC\*, and nested therein)
+
+These "PAC " files are found in the main archives (which use a separate archive
+format, with ID "DPAC").
+
+| 000h 4 ID ("PAC ") ;\
+004h 4 Number of files (N) ; Header
+008h N*8 File List ;/
+... .. File Data area ;-Data area
+
+File List entries:
+
+| 000h 2 File ID (inreasing, but may skip numbers, ie. non-linear)
+002h 3 File Offset (increasing, relative to begin of Data area)
+005h 3 File Size
+
+Bug: TAI\C.PAC\EFFC\0001h has TWO entries with File ID=0002h.
+
+Tyco R/C Racing (MagDemo36: TYCO\MAINRSRC.BFF)
+
+| 000h 4 Unknown (1)
+004h 4 Filelist Offset (800h)
+008h 4 Filelist Size (N*8+4) (7ACh)
+... .. Padding to 800h-byte boundary (see note)
+800h 4 Number of files (N) (F5h)
+804h N*8 File List
+... .. Padding to 800h-byte boundary (see note)
+... .. File Data area
+
+File List entries:
+
+| 000h 4 File Offset in bytes (increasing, 800h-byte aligned)
+004h 4 File Size in bytes
+
+Padding Note: Padding after headers & files is weirdly done in two steps:
+
+| Step 1: Zeropadding to 200h-byte boundary (first 0..1FFh bytes)
+Step 2: Garbagepadding to 800h-byte boundary (last 0..600h bytes)
+
+Team Buddies (MagDemo37: BUDDIES\BUDDIES.DAT)
+
+| 000h 2 ID ("BD")
+002h 2 Number of files (N)
+004h N*8 File List
+... .. Zeropadding to 3000h
+3000h .. File Data area
+
+File List entries:
+
+| 000h 4 File Offset/800h (increasing)
+004h 4 File Size in bytes
+
+Gundam Battle Assault 2 (DATA\*.PAC, and nested therein)
+
+| 000h 4 ID ("add",00h)
+004h 4 Fixed (4)
+008h 4 Offset to File List (usually/always 20h)
+00Ch 4 Number of Files (N)
+010h 4 Fixed (10h)
+014h 0Ch Zerofilled
+020h N*10h File List
+... .. File Data area
+
+File List entries:
+
+| 000h 4 Offset (increasing, 4-byte aligned) ;\or both zero
+004h 4 Size (can be odd) ;/
+008h 4 Unknown (0) (or 00h,10h,11h,20h,30h,40h when Offset/Size=0)
+00Ch 4 Zero (0)

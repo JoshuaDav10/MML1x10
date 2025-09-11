@@ -1,0 +1,30 @@
+PSXSPX SPECIFICATIONS - CHANGING THE MEMORY CONTENT (IE. THE NEW DATA MUST BE DIFFERENT THAN OLD DATA).
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: changing the memory content (ie. the new data must be different than old data).
+Chunked: Wed Sep 10 03:34:25 PM CDT 2025
+Size: 1034 characters
+Lines: 21
+================================================================================
+
+changing the memory content (ie. the new data must be different than old data).
+The ordering (eg. "!!?" or "!?!" or "?!!") is don't care.
+
+Local Conditional Breakpoints
+
+[XXX this isn't yet fully implemented in no$psx]
+
+Press Ctrl-B and define the break by entering "address, condition". The
+emulator will stop when the program counter reaches the address, and when the
+condition is true. The "$" symbol represents the current cursor address of code
+window. Examples:
+
+| $, r1<>0 --> break at cursor position if r1 is non-zero
+$, r1 & 2 --> break at cursor position if bit 1 of r1 is set
+$, r1 !& 2 --> break at cursor position if bit 1 of r1 is zero
+8001234, [r1]=r2 --> break at 8001234 if r1 points at a value equal to r2
+wrchr --> break at wrchr (always, no condition, same as F2-key)
+wrchr, r1=0d --> break at wrchr if r1 contains 0dh
+$, [4000006] > 0A0 --> break at cursor if VCOUNT is greater than 0A0h
+$, r4 break at cursor if r4 is less or equal than r5
+$, [r4] <> [r5] --> break at cursor if r4 points at other value than r5

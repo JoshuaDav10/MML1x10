@@ -1,0 +1,1415 @@
+PSYQ DOCUMENTATION - Devrefs/user205.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/Devrefs/user205.pdf
+Converted: Wed Sep 10 02:47:34 PM CDT 2025
+================================================================================
+
+Performance Analyzer User Guide
+© 1998 Sony Computer Entertainment Inc.
+
+Publication date: August 1998
+
+
+Sony Computer Entertainment America
+919 E. Hillsdale Blvd., 2nd floor
+Foster City, CA 94404
+
+Sony Computer Entertainment Europe
+Waverley House
+7-12 Noel Street
+London W1V 4HH, England
+
+
+The Performance Analyzer User Guide manual is supplied pursuant to and subject to the terms of the Sony
+Computer Entertainment PlayStation® License and Development Tools Agreements, the Licensed
+Publisher Agreement and/or the Licensed Developer Agreement.
+The Performance Analyzer User Guide manual is intended for distribution to and use by only Sony
+Computer Entertainment licensed Developers and Publishers in accordance with the PlayStation® License
+and Development Tools Agreements, the Licensed Publisher Agreement and/or the Licensed Developer
+Agreement.
+Unauthorized reproduction, distribution, lending, rental or disclosure to any third party, in whole or in part, of
+this book is expressly prohibited by law and by the terms of the Sony Computer Entertainment
+PlayStation® License and Development Tools Agreements, the Licensed Publisher Agreement and/or the
+Licensed Developer Agreement.
+Ownership of the physical property of the book is retained by and reserved by Sony Computer
+Entertainment. Alteration to or deletion, in whole or in part, of the book, its presentation, or its contents is
+prohibited.
+The information in the Performance Analyzer User Guide manual is subject to change without notice. The
+content of this book is Confidential Information of Sony Computer Entertainment.
+PlayStation and PlayStation logos are registered trademarks of Sony Computer Entertainment Inc. All other
+trademarks are property of their respective owners and/or their licensors.
+Table of Contents
+       About This Manual                                                                              v
+              Changes Since Last Release                                                              v
+              Related Documentation                                                                   v
+              Manual Structure                                                                        v
+              Developer Reference Series                                                              v
+              Typographic Conventions                                                                vi
+              Developer Support                                                                      vii
+Chapter 1: Overview
+               Required Equipment, Recommended Hardware                                             1-3
+               Features                                                                             1-3
+               Using the Performance Analyzer with the software development tools                   1-3
+Chapter 2: Tutorial
+               Measurement Using the Basic Setup                                                    2-3
+               Basic Operations                                                                     2-5
+               Operation of Analysis Tools                                                         2-17
+Chapter 3: Using the Trigger Function
+               Setting the Trigger Conditions                                                       3-3
+               Setting the Measurement Range                                                        3-5
+               Techniques                                                                           3-6
+Chapter 4: Details
+               Menus and Buttons                                                                   4-3
+               Main Window Description                                                             4-6
+               Option Setup                                                                       4-11
+
+
+
+
+                                                                       Performance Analyzer User Guide
+iv     Table of Contents
+
+
+
+
+     Performance Analyzer User Guide
+About This Manual
+   This manual is the latest release of instructions relating to the PlayStation® Performance Analyzer as of
+   Run-Time Library release 4.3. The purpose of this manual is to provide general instructions on using the
+   Performance Analyzer software.
+
+
+Changes Since Last Release
+   There have been no substantive changes to this manual since the previous release, which described
+   software version 2.04.
+
+
+Related Documentation
+   This manual should be read in conjunction with the Performance Analyzer Technical Reference.
+
+
+Manual Structure
+              Section                                             Description
+              Ch. 1: Overview                                     —
+              Ch. 2: Tutorial                                     Describes, using a sample program, the basics
+                                                                  of operating the Performance Analyzer (hereafter
+                                                                  abbreviated to PA), including measurement using
+                                                                  the basic setup and reading the measured
+                                                                  results.
+              Ch. 3: Using the Trigger Function                   Describes setting the conditions supported by
+                                                                  the trigger function. The use of the trigger
+                                                                  function enables the measurement of the target
+                                                                  frame.
+              Ch. 4: Details                                      Describes the menus, buttons and graphs
+                                                                  displayed in the main window.
+
+
+Developer Reference Series
+   This manual is part of the Developer Reference Series, a series of technical reference volumes covering all
+   aspects of PlayStation development. The complete series is listed below:
+              Manual                                              Description
+              PlayStation Hardware                                Describes the PlayStation hardware architecture
+                                                                  and overviews its subsystems.
+              PlayStation Operating System                        Describes the PlayStation operating system and
+                                                                  related programming fundamentals.
+              Run-Time Library Overview                           Describes the structure and purpose of the
+                                                                  run-time libraries provided for PlayStation
+                                                                  software development.
+              Run-Time Library Reference                          Defines all available PlayStation run-time library
+                                                                  functions, macros and structures.
+              Inline Programming Reference                        Describes in-line programming using DMPSX,
+                                                                  GTE inline macro and GTE register information.
+              SDevTC Development Environment                      Describes the SDevTC (formerly "Psy-Q")
+                                                                  Development Environment for PlayStation
+                                                                  software development.
+
+
+                                                                                   Performance Analyzer User Guide
+vi About This Manual
+
+                       3D Graphics Tools                                  Describes how to use the PlayStation 3D
+                                                                          Graphics Tools, including the animation and
+                                                                          material editors.
+                       Sprite Editor                                      Describes the Sprite Editor tool for creating
+                                                                          sprite data and background picture
+                                                                          components.
+                       Sound Artist Tool                                  Provides installation and operation instructions
+                                                                          for the DTL-H800 Sound Artist Board and
+                                                                          explains how to use the Sound Artist Tool
+                                                                          software.
+                       File Formats                                       Describes all native PlayStation data formats.
+                       Data Conversion Utilities                          Describes all available PlayStation data
+                                                                          conversion utilities, including both stand-alone
+                                                                          and plug-in programs.
+                       CD Emulator                                        Provides installation and operation instructions
+                                                                          for the CD Emulator subsystem and related
+                                                                          software.
+                       CD-ROM Generator                                   Describes how to use the CD-ROM Generator
+                                                                          software to write CD-R discs.
+                       Performance Analyzer User Guide                    Provides general instructions for using the
+                                                                          Performance Analyzer software.
+                       Performance Analyzer Technical Reference           Describes how to measure software
+                                                                          performance and interpret the results using the
+                                                                          Performance Analyzer.
+                       DTL-H2000 Installation and Operation               Provides installation and operation instructions
+                                                                          for the DTL-H2000 Development System.
+                       DTL-H2500/2700 Installation and Operation          Provides installation and operation instructions
+                                                                          for the DTL-H2500/H2700 Development
+                                                                          Systems.
+
+
+    Typographic Conventions
+         Certain Typographic Conventions are used through out this manual to clarify the meaning of the text. The
+         following conventions apply to all narrative text except for structure and function descriptions:
+                       Convention       Meaning
+                       courier          Indicates literal program code.
+                       Bold             Indicates a document, chapter or section title.
+         The following conventions apply within structure and function descriptions only:
+                       Convention       Meaning
+                       Medium Bold      Denotes structure or function types and names.
+                       Italic           Denotes function arguments and structure members.
+
+
+
+
+      Performance Analyzer User Guide
+                                                                                                About This Manual vii
+
+Developer Support
+   Sony Computer Entertainment America (SCEA)
+   SCEA developer support is available to licensees in North America only. You may obtain developer support
+   or additional copies of this documentation by contacting the following addresses:
+              Order Information                                Developer Support
+              In North America                                 In North America
+              Attn: Developer Tools Coordinator                E-mail: DevTech_Support@playstation.sony.com
+              Sony Computer Entertainment America              Web: http://www.scea.sony.com/dev
+              919 East Hillsdale Blvd., 2nd floor              Developer Support Hotline: (650) 655-8181
+              Foster City, CA 94404                            (Call Monday through Friday, 8 a.m. to 5 p.m.,
+              Tel: (650) 655-8000                              PST/PDT)
+
+
+   Sony Computer Entertainment Europe (SCEE)
+   SCEE developer support is available to licensees in Europe only. You may obtain developer support or
+   additional copies of this documentation by contacting the following addresses:
+              Order Information                                Developer Support
+              In Europe                                        In Europe
+              Attn: Production Coordinator                     E-mail: dev_support@playstation.co.uk
+              Sony Computer Entertainment Europe               Web: https://www-s.playstation.co.uk
+              Waverley House                                   Developer Support Hotline:
+              7-12 Noel Street                                 +44 (0) 171 447 1680
+              London W1V 4HH                                   (Call Monday through Friday, 9 a.m. to 6 p.m.,
+              Tel: +44 (0) 171 447 1600                        GMT or BST/BDT)
+
+
+
+
+                                                                                Performance Analyzer User Guide
+viii   About This Manual
+
+
+
+
+         Performance Analyzer User Guide
+Chapter 1:
+Overview
+
+
+
+
+             Performance Analyzer User Guide
+1-2   Overview
+
+
+
+
+       Performance Analyzer User Guide
+                                                                                                           Overview   1-3
+
+
+
+Required Equipment, Recommended Hardware
+The following equipment is necessary to use the Performance Analyzer:
+     •   PlayStation Board (DTL-H2700),
+     •   PS-X Software Development Tool,
+     •   IBM PC/AT or compatible (with one free ISA bus slot (however, space equal to three slots is required),
+         Windows 95 or Windows NT4.0, at least 32 MB of RAM, 200 MB of free disk space, and a monitor
+         supporting a resolution of 1024 x 768, 16-bit color.)
+     •   Performance Analyzer (DTL-S2710).
+
+Features
+The Performance Analyzer provides the following features:
+     •   It incorporates 64 MB of DRAM so that 128-bit data corresponding to about 7.4V blanks (NTSC) or
+         about 6.2V blanks (PAL) can be read per clock and analyzed.
+     •   It can observe most of the external signals of the CPU chips and the video RAM bus of the GPU. As a
+         result, the situations of interrupts, sub bus access and video RAM access can be identified, in addition
+         to the main RAM access status.
+     •   It can easily analyze CPU data duplicate read, write buffer flush, GPU packets, etc.
+     •   It analyzes the main RAM access situation by distinguishing between the normal and DMA transfer of
+         the CPU, GPU, etc. and indicates the bus usage information using colors. This makes it possible for
+         the user to quickly comprehend the bus access situation in a frame section.
+     •   It is capable of displaying waveforms either as a graph or as a listing of figures, in the same way as a
+         logic analyzer.
+     •   It can read map files output from compilers and display the access situation for segments and global
+         symbols.
+     •   It supports the calculation of statistics for a specified range.
+     •   It supports simple mouse-based operation in the GUI environment. Also, thanks to its use of a multi-
+         document configuration and a split-window method, it enables the efficient comparison of large
+         amounts of data, the comparison of data with previously obtained and saved data, and the easy
+         comparison of tuning results.
+     •   An ISA bus add-on board, used as the Performance Analyzer interface, allows measured data to be
+         downloaded quickly.
+     •   The start of measurement can be triggered according to the main RAM bus address and data condition
+         as well as by using the trigger switch.
+     •   It can read and analyze data of up to 6V blanks prior to the trigger position.
+
+Using the Performance Analyzer with the software development tools
+The Performance Analyzer can be used with the PlayStation software development tools concurrently, i.e., users can
+use a tool such as a debugger while running the Performance Analyzer. Both environments work independently.
+Therefore when the PlayStation CPU is reset, the contents of the trace memory in the Performance Analyzer
+remains the same.
+
+
+
+
+                                                                                    Performance Analyzer User Guide
+1-4   Overview
+
+
+
+
+       Performance Analyzer User Guide
+Chapter 2:
+Tutorial
+
+
+
+
+             Performance Analyzer User Guide
+2-2   Tutorial
+
+
+
+
+       Performance Analyzer User Guide
+                                                                                                                  Tutorial 2-3
+
+
+
+Measurement Using the Basic Setup
+The description given in this section covers the installation of PA, how to execute the program to be measured and
+how to perform measurement using the basic setup.
+
+Installing PA and setting up a temporary directory
+Read the “\pa\setup_j.txt” file to install driver and execution files. This file is contained in the CD-ROM.
+As PA uses a large amount of disk space for its temporary files (up to around 100 MB per data item), the temporary
+directory must be created on a drive which has a large amount of free space.
+Execute PA only after the above settings have been completed.
+
+     Figure 2-1 : State of PA before measurement
+
+
+
+
+Executing the program to be measured
+The program to be measured with the Performance Analyzer should be executed independently of PA. The
+program can be executed either from a CD or by downloading. This is outside the scope of this manual, however.
+Note that the program development environment should be set up before executing the program. For details of
+setting up and using the program development environment, refer to DTL-H2500/H2700 Installation and Operation
+and SDevTC Development Environment.
+The following is sample usage with SDevTC combined under the Windows95 environment.
+Execute the following command(s) from the DOS prompt.
+[When executing a program on a CD]
+C:\> resetps 0
+[When downloading a program] (When executing the sample program provided with PA)
+
+                                                                                         Performance Analyzer User Guide
+2-4   Tutorial
+
+      C:\> CD \PA20\SAMPLE
+      C:\PA20\SAMPLE> resetps 1
+      C:\PA20\SAMPLE> run tuto0
+
+            Figure 2-2: Download Screen
+
+
+
+
+      The description in the subsequent sections assumes the use of the downloaded sample program.
+
+      Setting the IO port address
+      The IO port address should be set before using the performance analyzer (PA) to analyze the sample program.
+      From version 2.04, the IO Port Address must be set when the driver is installed. For further details, see
+      \pa\setup_j.txt.
+
+      Executing measurement using the basic setup
+      With the default setup, measurement start timing is specified using only a trigger switch (the provided foot switch).
+      Other conditions that can be used for triggering measurement include the main RAM address and data, which can
+      be selected with "Trigger Condition..." on “Setting” menu. For details, see Section 3.1, "Setting the Trigger
+      Conditions."
+      From “Run” menu, select "Acquisition..." The following dialog box will appear:
+
+
+
+
+       Performance Analyzer User Guide
+                                                                                                              Tutorial 2-5
+
+     Figure 2-3: Measurement Dialog Box
+
+
+
+
+Press the trigger switch when the scene to be measured appears. Data read starts immediately, provided there is
+no trigger condition other than the trigger switch, as in this example. If trigger conditions other than the trigger
+switch are specified, the data to be measured once all the conditions are satisfied starts to be read when the switch
+is pressed.
+
+     Figure 2-4: Dialog Box During Data Read
+
+
+
+
+Basic Operations
+This section describes the basic analysis operations such as main window display setting and cursor manipulation.
+For details of the graphical display of the analysis, waveform and access, see the "Main Window Description."
+section of this manual.
+
+
+
+
+                                                                                     Performance Analyzer User Guide
+2-6   Tutorial
+
+            Figure 2-5: State of PA After Measurement
+
+
+
+
+      Switching the displayed graphs
+      The graphs that can be displayed are seven analysis displays, a waveform display and two access displays.
+      Although all of the graphs are displayed by default, all can be switched on-off independently using the nine buttons
+
+                                            at the right-hand end of the tool bar. The graph corresponding to each button
+      is displayed while the button is depressed, and not displayed while the button is released.
+      Upon the completion of measurement, a slight delay is incurred before a graph is displayed. This delay increases as
+      the view size decreases and the view area increases, but can be minimized by "switching off" any graphs which
+      need not be displayed. For example, it is possible to set the buttons so that only the main RAM bus and video RAM
+      bus analysis graphs are displayed. The other graphs are displayed only when required.
+      Display switching can also be set using the Option dialog box. By saving the setting, it can be set as the default to
+      be used subsequently. For details, see the "Option Dialog Box." section of this manual.
+
+      Using the cursors and markers
+      Clicking the mouse in the main window causes a vertical line to appear. This is the cursor used to indicate the
+      position currently being examined (the cursor is located at the clock 0 point when the view is created for the first
+      time). Then, click the right-hand graph. You will see that a cursor can be set in it, independently of that in the left
+      graph. Now, open “View” menu and execute "Reset M1 to cursor point." (         ) A marker named M1 is displayed
+      on the scale. Clicking a point close to the marker moves the marker to the clicked point. PA has two markers,
+      named M1 and M2. These markers are used for marking positions and setting a range for which statistical
+      measurement is to be performed. Now, click the mouse, move the cursor to another position and click              on the
+      tool bar; M2 moves to the cursor position. As shown here, the markers can also be moved with the tool bar
+      buttons. It is important to note that, while the window is split, the cursors of the left-hand and right-hand graphs
+      function independently, but M1 and M2 are common to both windows.
+       Performance Analyzer User Guide
+                                                                                                                  Tutorial 2-7
+
+
+After measurement, another marker MT, which is used to indicate the trigger point, is displayed. Clicking         on the
+tool bar moves the cursor to the trigger point.
+
+     Figure 2-6: Cursor, Markers and Trigger Position
+
+
+
+
+Enlarging or reducing the view
+To display a wider area by reducing the view, select "Reduce Scale" from ”View” menu. This opens another menu
+which allows you to select any of a variety of view sizes. For example, selecting "Zoom Out" reduces the view to half
+its current size. To enlarge the view, select "Increase Scale" from “View” menu. Then, specify the size in the same
+way as above. Selecting "Zoom In" enlarges the view to twice its current size. To return to the actual size (where
+each pixel corresponds to a clock pulse), select "Normal size" from “View” menu. These view size change
+commands are applicable to all views, even when the window is split. The size is displayed at the top left of the
+view, and the display is scrolled so that the cursor is centered.
+In much the same way as the Move commands, the view size change commands are also registered on the tool
+bar.     is for zoom in,     is for zoom out, and       is for the normal size.     ,    and       allow the user to
+change the view size so that the display of the respective frame sections fills the screen (note, however, that the
+sections may not be displayed correctly when a compact display device is used).
+
+Changing the analysis display and pixel width
+The analysis display is a vertical bar when the view size is set to 1, but reducing the view size turns the one pixel-
+wide bar into a histogram. For example, when the view size is set to 1/16, the histogram shows the percentage of
+each status over 16 clocks as a color display (the order in the vertical direction is fixed in the same way as the label
+on the left). Now, set the view size to 1/512; the histogram is averaged so that the change in the bus usage with
+respect to time is displayed visually. Next, restore the size to 1/64. The analysis display will be as shown below.
+
+
+
+
+                                                                                        Performance Analyzer User Guide
+2-8   Tutorial
+
+            Figure 2-7: Analysis (Size 1/64, Pixel Width 1))
+
+
+
+
+      This display is so fine that colors mix with adjacent colors making identification difficult. Therefore, select
+      "Options..." from “Setting” menu and change "Analysis Pixel Width" in the Option dialog box.
+
+
+
+
+       Performance Analyzer User Guide
+                                                                                                             Tutorial 2-9
+
+     Figure 2-8: Setting Analysis Pixel Width (Option Dialog Box))
+
+
+
+
+This option is provided to make the histogram easier to understand by changing the pixel width. The default pixel
+width is one pixel. If, however, it is changed to five pixels, the analysis display will change as shown below.
+
+
+
+
+                                                                                   Performance Analyzer User Guide
+2-10    Tutorial
+
+            Figure 2-9: Analysis (Size 1/64, Pixel Width 5))
+
+
+
+
+       As described above, the pixel width can be changed as desired to make the display easier to understand.
+
+       Changing the display levels of the waveform display and access display
+       The level at which the waveform display is hidden can be set as follows: First, set the view size to 1/16 and click
+       OK. The waveform is displayed. Then, change the view size to 1/8 then back to 1/16. You will notice that the
+       waveform is displayed at 1/8 but not at 1/16. The level at which the waveform display is displayed or hidden can be
+       set by selecting "Options..." from “Setting” menu then changing the level of "Display level of Waveform" in the Option
+       dialog box. The default hidden level is 16, but if you change this level to 32, the waveform is displayed. The level at
+       which the access display is displayed or hidden can also be set by selecting "Options..." from “Setting” menu then
+       changing the level of "Display level of Access" in the Option dialog box.
+
+
+
+
+        Performance Analyzer User Guide
+                                                                                                               Tutorial 2-11
+
+     Figure 2-10: Waveform and Access Display (Size 1/16, Display Level 32))
+
+
+
+
+Reading the map file
+To read a map file, select "Read file" from “Map Info” menu.
+The system currently supports the reading of the following three kinds of map files.
+Remember, however, that segment information cannot be obtained with map files other than 1).
+     1)   Map files created in the SDevTC development environment (*.map).
+
+          Example: ccpsx -O3 -Xo$80010000 /m tuto0.obj-otuto0.cpe,tuto0.sym,tuto0.map
+
+
+     2)   Symbol files (*.dsm) created using dumpsym from symbol files created in the SDevTC development
+          environment (*.sym).
+
+          Example:ccpsx -O3 -Xo$80010000 tuto0.obj-otuto0.cpe,tuto0.sym
+                  dumpsym tuto0.sym > tuto0.dsm
+
+
+     3)   Symbol files created using nm in a development environment such as NEWS (*.nm).
+
+          Example: nm a.out > a.nm
+
+
+
+
+                                                                                       Performance Analyzer User Guide
+2-12    Tutorial
+
+            Figure 2-11: Read Map File Dialog Box
+
+
+
+
+       Setting the Stack Range
+       In the PlayStation, the stack area is set by the kernel, by the linker or by the user program. The default range of the
+       stack area is from 0x801C0000 to 0x80FFFFFF. These values should be changed to specify the correct stack area
+       for each program to show the access display correctly.
+       From “Setting” menu, select "Options..." then change "Stack Range of a tested program" in the Option dialog box.
+
+
+
+
+        Performance Analyzer User Guide
+                                                                                                                 Tutorial 2-13
+
+     Figure 2-12: Option Dialog Box - Stack Range of a Tested Program
+
+
+
+
+Identifying the Functions Causing Cache Misses (Use Filter)
+First, specify the range of the main RAM bus where instruction burst read (cache misses) is noticeable (see Section
+2.2.2, "Using the cursors and markers").
+Next, check "Use filter" in “Map Info” menu. This displays the global symbols accessed within a specified range.
+Among the global symbol accesses, those for which the main RAM bus is in the instruction bus read state are the
+functions for which cache misses occur.
+Every time the above range specification is changed, it is necessary to repeat filtering by selecting "Filtering" from
+“Map Info” menu.
+
+
+
+
+                                                                                        Performance Analyzer User Guide
+2-14    Tutorial
+
+            Figure 2-13: Use Filter
+
+
+
+
+       Move and Search Move
+
+       When the pull-down “View” menu is displayed, you will see items including "Go to cursor" (        ), "Go to M1" (
+             ), "Go to M2" (       ), “Move cursor to Trigger point” ( ), "Move V Blank point" and "Move in Clocks."
+       These menu items are used to move the view on the screen. Some are registered as tool bar button commands so
+       that they can be executed directly. When the window is split, these move commands are applied to the current
+       view, that is, they scroll that graph on which the mouse was last clicked. When "Move in Clocks" is selected, the
+       dialog box described below appears.
+       Specify the move destination as a clock position, then click OK to move to that point (the initial value is the current
+       cursor position). Note that "Move V Blank point" and "Move in Clocks" scroll the view by moving the cursor position.
+       The view is scrolled so that the move destination is placed at the center of the screen.
+       "Reset M1 to Origin" and "Reset M2 to Origin" in “View” menu move M1 and M2, respectively, to the origin
+       coordinate. These items do not perform scrolling. "Redraw" on “View” menu is used to refresh the view.
+
+            Figure 2-14: Move to Clock Point Dialog Box
+
+
+
+
+        Performance Analyzer User Guide
+                                                                                                         Tutorial 2-15
+
+"Move to Search point" enables movement to the point where the desired conditions are satisfied, among the seven
+analysis displays, waveform display and access displays. Selecting "Move to Search point" on “View” menu allows
+you to specify the following search conditions:
+     1) Main RAM bus condition (instruction burst read, etc.).
+     2) Access to an arbitrarily specified address on the main RAM bus.
+     3) Arbitrarily specified data on the main RAM bus.
+     4) Sub bus condition.
+     5) Video RAM bus condition.
+     6) Range of Video RAM access (location where an access in the specified range occurred)
+     7) Note: Check “Range of Video RAM access” radio button to enable the condition.
+     8) GPU packet type.
+     9) Signal waveform (search according to changes such as positive-going and negative-going).
+     10) Read/Write penalty stall cycle position.
+     11) Write buffer penalty stall cycle position.
+     12) Polygon penalty position.
+
+
+     Figure 2-15: Search Dialog Box
+
+
+
+
+                                                                                 Performance Analyzer User Guide
+2-16    Tutorial
+
+       Click "Previous Search" button or "Next Search" button to start search. To cancel search, click "Stop" button. Use
+       "AND" and "OR" buttons to combine the search conditions.
+       Descriptions of the buttons are as follows:
+       “Method of Search” - AND/OR                      “AND”: Search the position satisfying all conditions.
+                                                          “OR”: Search the position satisfying at least one condition.
+       “Previous Search” button                         Search the previous position satisfying the desired conditions.
+       “Next Search” button                             Search the next position satisfying the desired conditions.
+       “Stop” button                                    Stop searching.
+       “Clear” button                                   Clear search conditions.
+       “Close” button                                   Close the search dialog box.
+
+       Using the Window (Data Comparison)
+       The split bar separates views. Dragging the split bar allows to change the dimensions of the view areas. To
+       temporarily hide split window display, move the split bar to the top/bottom or left/right edge of the screen. The split
+       bar can also be erased completely to return a split window to the original, non-split window by double-clicking the
+       split bar. If the window is split by both vertical and horizontal split bars, the original window can be re-displayed
+       simply by double-clicking the intersection of the vertical and horizontal split bars. Next, if you double-click the small
+       bar at the end of the scroll arrow of the original window, the view is split into two views. While dragging the split bar
+       enables the splitting of the view into arbitrarily sized areas, this operation splits the view into two views of equal
+       areas.
+       The Performance Analyzer supports a multi-document configuration, that is, it is capable of displaying several data
+       items simultaneously to enable their comparison. You can either open and display a previously saved file, or you can
+       select "Open new window" from “Window” menu to display a copy of the data already being displayed. You can
+       also select "New" from “File” menu, measure signals, and select "Tile" in “Window” menu. This will result in the
+       display of the screen shown below.
+
+
+
+
+        Performance Analyzer User Guide
+                                                                                                          Tutorial 2-17
+
+     Figure 2-16: Comparing Data
+
+
+
+
+By combining these functions and the split window function, programs can be tuned while comparing data.
+
+
+Operation of Analysis Tools
+PA incorporates three analysis tools: Dump data, Statistical amount and Video RAM viewer.
+
+Dump Data
+This tool displays the data around the cursor by data dumping.
+
+Select "Dump data..." from “Tool” menu, press the Dump data button      on the tool bar or double-click the
+desired position in the main window.
+
+
+
+
+                                                                                 Performance Analyzer User Guide
+2-18    Tutorial
+
+            Figure 2-17: Dump Data
+
+
+
+
+       The dumped data contents are as follows:
+       POS:                   Indicates the clock position.
+       MB STAT, R/W:          Indicates the main RAM bus status.
+       <Blank>:               Idle.
+       IR:                    Instruction burst read.
+       DR:                    CPU data read access.
+       DW:                    CPU data write access.
+       GR:                    GPU DMA data read access.
+       GW:                    GPU DMA data write access.
+       CR:                    CD read access.
+       CW:                    CD write access.
+       SR:                    SPU DMA read access.
+       SW:                    SPU DMA write access.
+       MR:                    Internal DMA read access. (Includes MDEC and OT clear).
+       MW:                    Internal DMA write access. (Includes MDEC and OT clear).
+       PR:                    PIO DMA read access.
+       PW:                    PIO DMA write access.
+       H:                     RAS pre-charge period. (An extra cycle required to access the main memory.)
+       R:                     Refresh cycle.
+       U:                     Undefined.
+       NWORD:                 Total number of words transferred in RAS cycle.
+       NBYTE:                 Total number of bytes transferred in RAS cycle. (Only write is significant.)
+       MADDR:                 Main RAM bus address. (0x80000000 is assumed as the start address.)
+       SYMBOL:                MADDR global symbol display.
+       OFFSET:                Offset in SYMBOL. (hex notation. Not displayed in stack.)
+       MWEN0-3:               Bytes which are written in a word. ("w": written, "-": not written.)
+       SB STAT, R/W:          Sub bus status.
+
+        Performance Analyzer User Guide
+                                                                                                              Tutorial 2-19
+
+<Blank>:                  Idle.
+RP:                       Read access to PIO.
+                          WP: Write access to PIO.
+                          RC: Read access to CD.
+                          WC: Write access to CD.
+                          RS: Read access to SPU.
+                          WS: Write access to SPU.
+                          RR: Read access to ROM.
+                          RO: Read access to other devices.
+                          WO: Write access to other devices.
+                          U: Undefined.
+                          SA: Sub bus address.
+                          VM MODE:         Video RAM bus mode.
+R/W:                      Pixel read/write access.
+RMW:                      Pixel read modify write (semi-transparent) access.
+TXR:                      Texture read access
+CR4:                      4-bit (16-color) palette read access.
+CR8:                      8-bit (256-color) palette read access.
+SPC:                      Control video RAM cycle.
+VM ACC0:                  Access of video RAM chip 0.
+VM X0:                    X coordinate of video RAM chip 0.
+VM Y0:                    Y coordinate of video RAM chip 0.
+VM ACC1:                  Access of video RAM chip 1.
+VM X1:                    X coordinate of video RAM chip 1.
+VM Y1:                    Y coordinate of video RAM chip 1.
+GUNINT*:                  Interrupt request from Gun.
+RXD1*:                    Link cable signal (received data).
+DSR1*:                    Link cable signal (Data Set Ready).
+                          CTS1*:           Link cable signal (Clear To Send).
+           Note: "*" indicates a negative logic signal.
+Note: If the stack range is not set properly, the global symbol having the highest address may sometimes be
+mistakenly identified and displayed as the stack address.
+
+Statistical Amount
+Statistics enable the investigation of the share of main RAM bus, the memory access penalty frequency and the
+number of each polygon type drawn within the specified range.
+First, specify the statistic investigation range as a range between cursors M1 and M2. Then, select "Statistics..."
+from “Tool” menu or press the Statistics button       on the tool bar. The range confirmation dialog box is displayed.
+Click OK if the range specified with the markers is satisfactory.
+
+     Figure 2-18: Range Confirmation Dialog Box
+
+
+
+
+                                                                                      Performance Analyzer User Guide
+2-20    Tutorial
+
+            Figure 2-19: Statistical Amount
+
+
+
+
+       Main RAM Bus:
+       Time(%):                               Indicates the percentage of the required time.
+            Bytes:                            Indicates the total number of bytes that have been transferred. However, in a
+                                              read cycle which consists only of word accesses, they are regarded as 4-
+                                              byte accesses.
+            Speed(MB/sec):                    Indicates the average transfer speed in each cycle. The maximum value
+                                              is136 MB/sec.
+            Clock Cycles/word:                Indicates the average number of clocks required to transfer a word in each
+                                              cycle.
+            Estimated CPU Stall Cycles:       These are the stall cycles estimated for the Data Read and Instruction Burst
+                                              Read status.
+       GPU Packets:                           Lists the total number of packets of each polygon type.
+
+
+        Performance Analyzer User Guide
+                                                                                                            Tutorial 2-21
+
+Video RAM Viewer
+The video RAM viewer enables the confirmation of the video RAM positions actually accessed by the CPU within the
+specified range, in terms of frame buffer images.
+First, specify the range to be investigated as a section between cursors M1 and M2. Then, select "Video RAM
+viewer..." from “Tool” menu or press the Video RAM viewer button       on the tool bar.
+
+     Figure 2-20: Video RAM Viewer
+
+
+
+
+The accessed pixels are displayed in palette colors according to the access frequency (Low: Blue, High: Red). It is
+also possible to display read and write accesses separately by selecting the Read/Write checkbox accordingly. This
+makes it possible to read the sections where polygons are drawn, the texture and CLUT as well as to identify the
+sections to be subject to semi-transparent processing.
+
+
+
+
+                                                                                    Performance Analyzer User Guide
+2-22   Tutorial
+
+
+
+
+       Performance Analyzer User Guide
+Chapter 3:
+Using the Trigger Function
+
+
+
+
+                             Performance Analyzer User Guide
+3-2   Using the Trigger Function
+
+
+
+
+       Performance Analyzer User Guide
+                                                                                               Using the Trigger Function 3-3
+
+
+
+Setting the Trigger Conditions
+The trigger conditions should be set to specify the timing at which the actual measurement will be started. The
+default trigger condition is set only to the trigger switch (foot switch).
+The trigger conditions include the trigger switch, main RAM address bus, main RAM data bus, device signal (from
+the Gun or link cable). Any number of conditions can be specified. When more than one trigger condition is
+specified, the reading of measurement data starts from the position where all of the specified conditions are
+satisfied. It is also possible to use the measurement data of up to 6V prior to the trigger position where the trigger
+conditions are satisfied.
+Clicking the OK button after changing the parameters applies them to the current file. Clicking the “Save” button
+applies the changed parameters to new files that are next created.
+
+     Figure 3-1: Set Trigger Condition Dialog Box
+
+
+
+
+Types of trigger conditions
+First, select the trigger conditions to be used from the six conditions listed below (more than one can be selected).
+For "Main RAM address bus" and "Main RAM data bus" the related items can be entered only when they are
+selected here. The conditions can be inverted except for "Trigger switch" and "Main RAM address bus". By
+inverting a condition, the condition is satisfied whenever the original condition is not satisfied.
+
+
+
+
+                                                                                       Performance Analyzer User Guide
+3-4   Using the Trigger Function
+
+      Trigger switch:                    Adds the trigger switch to the trigger conditions.
+      Main RAM address bus:              Adds the main RAM address to the trigger conditions.
+      Main RAM data bus:                 Adds the main RAM data value to the trigger conditions.
+      Gun (GUNINT):                      Adds the Gun-related interrupt request signal to the trigger conditions.
+      Link cable (RXD1):                 Adds the link cable signal (received data) to the trigger conditions.
+      Link cable (DSR1):                 Adds the link cable signal (Data Set Ready) to the trigger conditions.
+
+
+           Note: When more than one condition is set, the main RAM address bus and data bus are compared at the
+                 same timing but GUNINT, RXD1 and DSR1 are compared upon the occurrence of timing errors of a few
+                 cycles. When the trigger switch is added to the trigger conditions, other conditions are checked after
+                 the trigger switch is pressed. Therefore, it is not necessary to keep the trigger switch held down.
+
+      Main RAM Address Bus
+      The address value obtained from the main RAM address bus can be specified as a trigger condition. This address
+      covers all main RAM accesses including instruction burst read, data read and data write. The input should be a hex
+      number and the setting range be between 80000000 and 807FFFFF. The lower two bits are invalid if a size is not
+      specified (the size specification is explained below). The mask input should also use a hex number. When the mask
+      bit is 1, the bit of the corresponding address becomes a valid condition. When the mask bit is 0, it is not included in
+      the condition.
+           Example:     To specify 80010000 to 8001FFFF
+                        Address: 80010000
+                        Mask: FFFF0000
+      The address value can also be read from the symbol list, provided the map file has been read.
+
+           Figure 3-2: Reading from the Symbol List
+
+
+
+
+           Note: Care is required when you use the address of a function as a trigger condition, as the Performance
+                 Analyzer cannot observe the functions in the instruction cache. This is because it can measure the
+                 status appearing on the bus, but cannot measure the status within the CPU. Therefore, while it is
+
+       Performance Analyzer User Guide
+                                                                                              Using the Trigger Function 3-5
+
+            possible to use a function which always causes a cache miss as a trigger condition, it is safer to use a
+            data address as the condition.
+
+Main RAM Data Bus
+The data value obtained from the main RAM data bus can be specified as a trigger condition. This data covers all of
+the main RAM accesses including instruction burst read, data read and data write. The read/write distinction and
+size can also be specified but, when a size is specified, a mask appropriate for the size should be used.
+Example:          To specify half-word access with a value of 1234 (hex number)
+                  Data value: 00001234
+                  Mask: 0000FFFF
+
+Read/write and size specifications
+When the "Main RAM address bus" or "Main RAM data bus", described above, is specified as a trigger condition,
+the read/write distinction and size of the access can be added to the conditions. This can be set either
+automatically or manually. Note that the size specification is valid only for write accesses.
+
+                    Specification by data type
+            Read/write specification, which can be set from Read or Write, Read, and Write.
+            Size specification, which can be selected from Byte, Half Word and Long Word. (The size specification
+            can be made only with Write.)
+            (When Byte or Half Word is specified, the word boundary is dependent on the lower two bits of the
+            address. To set Byte or Half Word, which is different from the word boundary of Long Word, as the
+            data condition without specifying the address condition, use manual setup.)
+
+
+                    Specification by hardware signal
+                   Read/write can be specified using four bytes in a word.
+            The checkbox to the right of "3210(byte)" indicates write when checked and read when not checked.
+            As masks are provided below it, check those for which you wish to validate the setup. Those positions
+            for which the masks are not checked are not included in the condition.
+
+NFV (Number of V blanks Before the Conditions are Satisfied) Setting
+This enables the specification of the number of V blanks, before the conditions are satisfied, that are to be included
+in the data measurement. A value of between 1 and 6 can be set. The default is 1, where the data in the V blank
+containing the triggering position is measured.
+
+
+Setting the Measurement Range
+The measurements performed up to this point have been done within the default range (over 2V blanks).
+To change the measurement range, select "Options..." from “Setting” menu then setting “Data Acquisition Range” in
+the Option dialog box.
+
+
+
+
+                                                                                      Performance Analyzer User Guide
+3-6   Using the Trigger Function
+
+           Figure 3-3: Setting the Measurement Range (Option Dialog Box)
+
+
+
+
+      Clicking one of the radio buttons the corresponding clock range. The All memory radio button corresponds to the
+      measurement of about 7.4V blanks (NTSC) or about 6.2V blanks (PAL). Increasing the measurement range enables
+      the analysis of a larger amount of data, but the time taken for data read and hard disk consumption increase
+      accordingly.
+
+
+      Techniques
+      Measurement can be started from the head of a frame or can be started automatically from the position where a
+      frame error occurs, simply by changing the trigger conditions or modifying the program to be measured.
+      For details, refer to the Performance Analyzer Technical Reference.
+
+
+
+
+       Performance Analyzer User Guide
+Chapter 4:
+Details
+
+
+
+
+             Performance Analyzer User Guide
+4-2   Details
+
+
+
+
+       Performance Analyzer User Guide
+                                                                                                                  Details 4-3
+
+
+
+Menus and Buttons
+Description of menus
+The pull-down menus, displayed by selecting menu items, are as follows:
+
+
+File:             The items in this menu are mainly used for file-related operations.
+                  New:                           Create a new file for measuring and saving data.
+                  Open:                          Open a previously saved file.
+                  Close:                         Close the current window.
+                  Save:                          Save the current file, overwriting an existing file.
+                  Save as:                       Save the current file after assigning another name.
+                  Print:                         Print the main graphs.
+                  Preview:                       Display a preview of the main graphs as they will be printed.
+                  Printer setup:                 Set up the printer.
+                  Previously opened file:        Open one of the files in the list.
+                  Exit:                          Terminate the Performance Analyzer.
+
+
+View:             The items in this menu are used to enlarge or reduce the view size and to manipulate the cursors.
+
+                  Reduce Scale:                  A pull-down menu for reducing the view to one of the following
+                                                 sizes.
+                  Zoom Out
+                  x1/2
+                  x1/4
+                  ..
+                  x1/4096
+                  Normal Size:                   Display each clock as one pixel.
+                  Increase Scale:                A pull-down menu for enlarging the view to one of the following
+                                                 sizes.
+                  Zoom In
+                  x2
+                  x4
+                  x8
+                  x16
+                  Redraw:                       Refresh the screen by drawing the view again.
+                  Go to cursor:                 Scroll to the cursor position.
+                  Go to M1:                     Scroll to marker M1.
+                  Go to M2:                     Scroll to marker M2.
+                  Move cursor to Trigger point: Move the cursor to the trigger position.
+                  Move V Blank point:           Move to the origin.
+                  1V blank:                     Move the cursor to the 1V blank point.
+                  2V blank:                     Move the cursor to the 2V blank point.
+                  3V blank:                     Move the cursor to the 3V blank point.
+                  4V blank:                     Move the cursor to the 4V blank point.
+                  5V blank:                     Move the cursor to the 5V blank point.
+                  6V blank:                     Move the cursor to the 6V blank point.
+                  7V blank:                     Move the cursor to the 7V blank point.
+                  Move to Clock point:          Move the cursor to a point specified in terms of clocks.
+                  Move to Search point:         Search for a point according to the set conditions and moves to
+                                                that point.
+                  Reset M1 to cursor point:     Move M1 to the most recently set cursor position.
+                  Reset M2 to cursor point:     Move M2 to the most recently set cursor position.
+                                                                                        Performance Analyzer User Guide
+4-4   Details
+
+                        Reset M1 to Origin:             Move M1 to the origin.
+                        Reset M2 to Origin:             Move M2 to the origin.
+                        Tool bar:                       Switch the tool bar display on/off.
+                        Status bar:                     Switch the status bar display on/off.
+
+
+      Run:              The items in this menu are used to execute measurement and set up triggering.
+                        Acquisition...:                 Displays a dialog box with a trigger button. Pressing the trigger
+                                                        causes the sampling of data to begin immediately following the
+                                                        end of the next V blank period. The data is then transferred into
+                                                        the computer to be displayed. A dialog displays data transfer
+                                                        status. Clicking the cancel button will abort the transfer, but any
+                                                        previous data will be lost.
+                        Read data only:                 Read previously sampled data.
+
+
+      Map Info:         The items in this menu are related to the program segments and global symbol information.
+                        Read file:                     Read the map file output by the linker during compilation to enable
+                                                       symbolic address display.
+                        Use Filter:                    Display only the global symbols obtained by filtering.
+                        Filtering:                     Obtain the accessed global symbols in the section between M1
+                                                       and M2.
+
+                        Note: Executing “Filtering” automatically enables "Use filter".
+
+
+      Tools
+                        Dump data...:                   Dump the data in the window in text format. (Data can also be
+                                                        dumped by double-clicking the cursor position.)
+                        Statistics...:                  Calculate and displays bus usage statistics for the specified range.
+                        Video RAM viewer...:            Display VRAM accesses within the specified range.
+
+
+      Setting:          The items in this menu are used to perform setup.
+                        Trigger Condition...:           Set up the conditions that trigger the start of measurement.
+                        Options...:                     Set up the environment.
+                        IO Port Address...:             Set up the IO address.
+
+
+      Window
+                        New Window:                     Open a new window which uses the same file (data).
+                        Cascade:                        Cascade the displayed windows.
+                        Tile:                           Tile the displayed windows.
+                        Arrange icon:                   Arrange the icons.
+
+
+      Help
+                        About PA:                       Show title, credits, build date, and version.
+
+
+
+      Description of buttons
+      In addition to selecting a command from a pull-down menu, frequently used commands can also be executed
+      directly by clicking buttons. The button commands are displayed below the menu bar.
+
+
+
+       Performance Analyzer User Guide
+                                                                                                        Details 4-5
+
+
+Open a new file.
+
+Open a previously saved file.
+
+Save a file.
+
+Start printing.
+
+Output the version information.
+
+Start measurement.
+
+Read data.
+
+Set up the triggering.
+
+Double the view size.
+
+Half the view size.
+
+Reset the view size to 1.
+
+Change the view size so that the entire data for about 1V blank can be displayed.
+
+Change the view size so that the entire data for about 2V blank can be displayed.
+
+Change the view size so that the entire data for about 4V blank can be displayed.
+
+Search for a point according to the set conditions and moves to that point.
+
+Redraw the view.
+
+Move to the cursor position.
+
+Scroll to M1.
+
+Scroll to M2.
+
+Move the cursor to the trigger position.
+
+Move M1 to the cursor position.
+
+Move M2 to the cursor position.
+
+Dump data in the window in the text format.
+
+Calculate and displays the statistical amounts.
+
+Display VRAM accesses within the specified range.
+
+Switch the main RAM bus analysis display on-off.
+
+
+                                                                              Performance Analyzer User Guide
+4-6   Details
+
+
+            Switch the sub RAM bus analysis display on-off.
+
+            Switch the video RAM analysis display on-off.
+
+            Switch the GPU packet analysis display on-off.
+
+            Switch the read/write penalty display on-off.
+
+            Switch the write buffer penalty display on-off.
+
+            Switch the polygon penalty display on-off.
+
+            Switch the waveform display on-off.
+
+            Switch the access display on-off.
+
+
+      Main Window Description
+      This section describes the graph items.
+
+      Names of parts
+      A scale is displayed at the top of each view. The figures on the scale indicate the number of clock pulses relative to
+      the start of measurement (positive-going of the V blank). (A red line is inserted every 1V blank.)
+      The measured data is displayed below the scale. Vertical color stripes in the display indicate the analyses. There
+      are seven analyses, those for the main RAM bus, sub bus, video RAM, GPU packet, redundant read, write buffer
+      and bad polygon analyses. Small, colored boxes and labels to the left of the analyses indicate the relationship
+      between each color and the corresponding status.
+      The signal waveforms are displayed below the measured data. The signal names are displayed to the left of the
+      waveforms. Below the signal waveforms is the access display for each segment and function, which indicate the
+      status of access to each symbol. The functions of these parts are described in the following sections.
+
+
+
+
+       Performance Analyzer User Guide
+                                                    Details 4-7
+
+Figure 4-1: Main Window
+
+
+
+
+                          Performance Analyzer User Guide
+4-8   Details
+
+      Main RAM Bus Analysis
+      The main RAM bus analysis displays the main RAM bus status as a histogram.
+      The main RAM bus status is as listed below. The area of each item corresponds to the duration it occupies the bus.
+                      Unresolved:           A pattern which cannot be analyzed.
+                      Idle:                 Idle status (this does not mean that the CPU itself is idle.)
+                      Refresh:              Main RAM refresh cycle.
+                      RAS Pre-charge:       RAS pre-charge period of main RAM. (Hardware’s memory access overhead)
+                      PIO DMA Write:        DMA write cycle of PIO.
+                      PIO DMA Read:         DMA read cycle of PIO.
+                      CD Write:             Write cycle of CD.
+                      CD Read:              Read cycle of CD.
+                      SPU DMA Write:        DMA write cycle of SPU.
+                      SPU DMA Read:         DMA read cycle of SPU.
+                      Internal DMA Write:   Internal DMA write cycle (MDEC, OT clear, etc.).
+                      Internal DMA Read:    Internal DMA read cycle (MDEC, OT clear, etc.).
+                      GPU DMA Write:        DMA write cycle of GPU.
+                      GPU DMA Read:         DMA read cycle of GPU.
+                      Data Write:           Data write cycle of CPU.
+                      Data Read:            Data read cycle of CPU.
+                      Inst Burst Read:      Instruction burst read cycle of CPU.
+
+
+      Sub Bus Analysis
+      The sub bus analysis displays the sub bus status as a histogram.
+      The sub bus status is as listed below. The area of each item represents the time it occupies the bus.
+                      Unresolved:           A pattern which cannot be analyzed.
+                      Idle:                 Idle status.
+                      Read PIO:             Read access to PIO.
+                      Write PIO:            Write access to PIO.
+                      Read CD:              Read access to CD.
+                      Write CD:             Write access to CD.
+                      Read SPU:             Read access to SPU.
+                      Write SPU:            Write access to SPU.
+                      Read ROM:             Read access to ROM.
+                      Read Others:          Read access to other devices.
+                      Write Others:         Write access to other devices.
+
+
+      Video RAM Analysis
+      The VRAM analysis displays the video RAM bus status as a histogram.
+      The sub bus status is as listed below. The area of each item corresponds to the amount of data that has been
+      transferred. Therefore, a high pattern value indicates that the data transfer rate is high.
+      Note: Since the CLUT transfer is identified based on the number bytes transferred in a read access, when some
+      other transactions with the same amount of data occur, wrong analysis may result.
+                      Idle:                 Idle status.
+                      Write:                Pixel write cycle.
+                      Read:                 Pixel read cycle.
+                      Read Modify Write:    Pixel read modify write (semi-transparent) cycle.
+                      Texture Read:         Texture read cycle.
+                      Clut Read4:           4-bit (16-color) palette read cycle.
+                      Clut Read8:           8-bit (256-color) palette read cycle.
+
+       Performance Analyzer User Guide
+                                                                                                               Details 4-9
+
+
+
+
+GPU Packet Analysis
+The GPU packet analysis displays the GPU packet execution status as a histogram.
+The GPU packet status is as listed below. The area of each item corresponds to the number of packets. Therefore,
+a high pattern value indicates that the packet transfer rate is high.
+Note: The GPU packet display and the actual drawing on the video RAM bus may deviate in some points. This is
+due to the presence of a packet buffer within the GPU.
+                 None:                 A cycle in which the GPU packet is not processed.
+                 Unknown:              A packet which cannot be analyzed.
+                 Command:              Command packet.
+                 Empty:                Empty packet.
+                 POLY_F3:              Triangle polygon, flat.
+                 POLY_FT3:             Triangle polygon, flat texture.
+                 POLY_G3:              Triangle polygon, glow.
+                 POLY_GT3:             Triangle polygon, glow texture.
+                 POLY_F4:              Quadrangle polygon, flat.
+                 POLY_FT4:             Quadrangle polygon, flat texture.
+                 POLY_G4:              Quadrangle polygon, glow.
+                 POLY_GT4:             Quadrangle polygon, glow texture.
+                 LINE_F2:              Non-concatenated line.
+                 LINE_G2:              Non-concatenated line, with gradation.
+                 LINE_F3:              3-point concatenated line.
+                 LINE_G3:              3-point concatenated line, with gradation.
+                 LINE_F4:              4-point concatenated line.
+                 LINE_G4:              4-point concatenated line, with gradation.
+                 SPRT:                 Sprite (free size).
+                 SPRT_8:               Sprite (8 x 8).
+                 SPRT_16:              Sprite (16 x 16).
+                 TILE:                 Single-color tile (free size).
+                 TILE1:                Dot (1 x 1).
+                 TILE8:                Single-color tile (8 x 8).
+                 TILE16:               Single-color tile (16 x 16).
+                 Block Fill:           Block fill.
+
+
+Read/Write Penalty
+The read/write penalty analysis displays duplicate read accesses.
+A duplicate read is recognized when the valid range (256 cycles by default) is read despite no write operation having
+been performed since it was read last. The number of cycles in this range and the range of the target data area can
+be set using the Option dialog box (the default data area is all of main RAM).
+A typical cause of duplicate read is when data which is not assigned to a register is assigned to a stack and read
+several times. But, duplicate read is also recognized when the same address has been read continuously for
+polling. The area of each item corresponds to the CPU stall cycle time due to duplicate read.
+                 None:                 Normal status.
+                 Duplicate Read:       Duplicate data read cycles.
+
+
+Write Buffer Penalty
+The write buffer penalty analysis displays the stall cycles caused by buffer flush at the instant a write cycle
+completes. This analysis enables the detection of those read/write patterns which adversely affect the write buffer
+efficiency. The area of each item corresponds to the CPU stall cycle time caused by write buffer flush.
+                                                                                     Performance Analyzer User Guide
+4-10    Details
+
+       Note: The areas indicated for write buffer penalty analysis do not always mean that the CPU has stalled for the
+       corresponding period. For details, refer to the Performance Analyzer Technical Reference.
+                         None:                 Normal status.
+                         Flush Penalty:        Write buffer flush penalty.
+
+
+       Polygon Penalty
+       Polygon penalty analysis calculates and displays the wasted cycles by evaluating the pre-processing time and
+       redundant drawing time for each of the polygons which protruded from the frame, which have an area of 0, or
+       which have not been subjected to normal clipping. The default screen size and offset value for clipping are 320 x
+       240 and (0, 0). When the program uses different values, the new screen size and offset value should be specified in
+       the Option dialog box.
+       Note: Those penalties are estimated values and they are not accurate. Please use them as references.
+                         None:                 Normal status.
+                         Outside Frame:        Polygon which is entirely outside the frame (pre-processing time + drawing
+                                               time).
+                         Scissoring:           Polygon which protrudes outside the left or top edge of the frame (redundant
+                                               drawing time).
+                         Back Face:            Back-face polygon (pre-processing time + drawing time).
+                         Zero Area:            Polygon with an area of 0 (pre-processing time only).
+
+
+       Waveform Display
+                         SYSCLK:                System clock.
+                         VBLNK:                 V blank signal.
+                         GUNINT*:               Interrupt request from Gun.
+                         RXD1*:                 Link cable signal.
+                         DSR1*:                 Link cable signal.
+                         CTS1*:                 Link cable signal.
+                         Note: "*" indicates a negative logic signal.
+
+
+       Access Display
+       The following four access displays are shown in the status existing immediately before reading the map file.
+       The colors of the access displays correspond to those of the labels for the main RAM bus status.
+       <Segment accesses>
+                  stack_seg:        Access to a stack segment.
+                  ...               (The segment is displayed when the map file has been read.)
+                  unknown location: Access to a segment other than a stack.
+
+       <Global symbol accesses>
+                  _STACK_:           Access to a stack.
+                  ...               (The global symbol is displayed when the map file has been read.)
+                  unknown location: Access to a global symbol other than a stack.
+
+
+       Note: When the stack range is not set properly, the global symbol having the highest address may sometimes be
+       mistakenly identified and displayed as the stack address.
+
+
+
+
+        Performance Analyzer User Guide
+                                                                                                              Details 4-11
+
+Option Setup
+This section describes the dialog box used for setting the display and changing the measurement range, etc.
+
+Option dialog box
+From “Setting” menu, select "Options..." to open the Option dialog box. This dialog box is used to change or save
+the display-related parameters, measurement range, etc. Clicking the OK button after changing the parameters
+applies them to the current file. Clicking the “Save” button applies the changed parameters to new files that are
+next created.
+
+     Figure 4-2: Option Dialog Box
+
+
+
+
+          Graph Display (on/off)                          Switch the nine graph display on-off.
+                                                          (see Section 2.2.1 Switching the displayed graphs)
+          Data Acquisition Range:                         Set the range in which data is to be measured and read.
+                                                          This setting is applied from the next measurement.
+                                                          (see Section 3.2 Setting the Measurement Range)
+          Video Mode                                      Select NTSC or PAL.
+          Analysis Pixel Width:                           Set the pixel width of the analysis showing the main RAM
+                                                          bus status.
+                                                          (see Section 2.2.4 Changing the analysis display and
+                                                          pixel width)
+
+                                                                                   Performance Analyzer User Guide
+4-12   Details
+
+                 Display Level of Waveform:                   Specify the view size with which the waveform display
+                                                              should begin.
+                                                              (see Section 2.2.5 Changing the display levels of the
+                                                              waveform display and access display)
+                 Display Level of Access:                     Specify the view size with which the access display
+                                                              should begin.
+                                                              (see Section 2.2.5 Changing the display levels of the
+                                                              waveform display and access display)
+                 Stack Range of a tested program:             Set the stack range of the program to be measured.
+                                                              (see Section 2.2.7 Setting the stack range)
+                 Target Range of Read/Write Penalty:          Set the main RAM area which becomes the target of
+                                                              read/write penalty.
+                                                              (see Section 4.2.6 Read/Write Penalty)
+                 The Number of effective clock cycles:        Set the number of effective clock cycles for read/write
+                                                              penalty.
+                                                              (see Section 4.2.6 Read/Write Penalty)
+                 Program’s Screen Size:                       Set screen size for polygon penalty.
+                                                              (see Section 4.2.8 Polygon Penalty)
+                 Offset for drawing:                          Set offset for polygon penalty.
+                                                              (see Section 4.2.8 Polygon Penalty)
+                 Reverse the order of vertices (Back Face):   Check the box if you reverse the order of vertices for
+                                                              polygon penalty.
+                                                              (see Section 4.2.8 Polygon Penalty)
+
+
+
+
+       Performance Analyzer User Guide
+

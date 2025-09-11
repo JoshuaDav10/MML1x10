@@ -1,0 +1,69 @@
+PSXSPX SPECIFICATIONS - CDROM INTERNAL COEFFICIENTS (FOR CXD2545Q)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM Internal Coefficients (for CXD2545Q)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2045 characters
+Lines: 61
+================================================================================
+
+CDROM Internal Coefficients (for CXD2545Q)
+
+CXD2545Q - CX(34Fxxx) - Write to Special Register
+
+| 23-12 12bit Command (34Fh)
+11-10 2bit Index (0=TRVSC, 1=FBIAS, 2=?, 3=?)
+9-0 10bit Data (for FBIAS: bit0=don't care)
+
+CXD2545Q - CX(35xxxx) - FOCUS SEARCH SPEED/VOLTAGE/AUTO GAIN
+
+| 23-16 8bit Command (35h)
+15-14 2bit FT Focus Search-up speed 1
+13-8 6bit FS Focus Search limit voltage (default 011000b) (+/-1.875V)
+7 1bit FTZ Focus Search-up speed 2
+6-0 7bit FG AGF Convergence Gain Setting (default 0101101b)
+
+CXD2545Q - CX(36xxxx) - DTZC/TRACK JUMP VOLTAGE/AUTO GAIN
+
+| 23-16 8bit Command (36h)
+15 1bit Zero (0)
+14 1bit DTZC DTZC Delay (0=4.25us/Default, 1=8.5us)
+13-8 6bit TJ Track Jump voltage (default 001110b) (+/-1.09V)
+7 1bit Zero (0)
+6-0 7bit TG AGT Convergence Gain Setting (default 0101110b)
+
+CXD2545Q - CX(37xxxx) - FZSL/SLED MOVE/Voltage/AUTO GAIN
+
+| 23-16 8bit Command (37h)
+15-14 2bit FZS XXX pg. 84
+13-8 6bit SM Sled Move Voltage
+7 1bit AGS
+6 1bit AGJ
+5 1bit AGGF
+4 1bit AGGT
+3 1bit AGV1
+2 1bit AGV2
+1 1bit AGHS
+0 1bit AGHT
+
+CXD2545Q - CX(38xxxx) - Level/Auto Gain/DFSW (Initialize)
+
+| 23-16 8bit Command (38h)
+15 1bit VCLM VC level measurement on/off
+14 1bit VCLC VC level compensation for FCS_In Register on/off
+13 1bit FLM Focus zero level measurement on/off
+12 1bit FLC0 Focus zero level compensation for FZC Register on/off
+11 1bit RFLM RF zero level measurement on/off
+10 1bit RFLC RF zero level compensation on/off
+9 1bit AGF Focus automatic gain adjustment on/off
+8 1bit AGT Tracking automatic gain adjustment on/off
+7 1bit DFSW Defect switch disable (1=disable defect measurement)
+6 1bit LKSW Lock switch (1=disable sled free-running prevention)
+5 1bit TBLM Traverse center measurement on/off
+4 1bit TCLM Tracking zero level measurement on/off
+3 1bit FLC1 Focus zero level compensation for FCS_In Register on/off
+2 1bit TLC2 Traverse center compensation on/off
+1 1bit TLC1 Tracking zero level compensation on/off
+0 1bit TLC0 VC level compensation for TRK/SLD_In register on/off
+
+VCLM,FLM,RFLM,TCLM are accepted every 2.9ms.

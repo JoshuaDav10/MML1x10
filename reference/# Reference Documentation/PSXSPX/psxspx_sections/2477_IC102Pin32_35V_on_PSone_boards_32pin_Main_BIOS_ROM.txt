@@ -1,0 +1,46 @@
+PSXSPX SPECIFICATIONS - IC102.PIN32 = 3.5V ;-ON PSONE BOARDS (32PIN MAIN BIOS ROM CHIP)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: IC102.Pin32 = 3.5V ;-on PSone boards (32pin Main BIOS ROM chip)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1848 characters
+Lines: 38
+================================================================================
+
+IC102.Pin32 = 3.5V ;-on PSone boards (32pin Main BIOS ROM chip)
+
+The SCOR trace on Pin31, connects to Signal Processor...
+
+| CXD2510Q.Pin63 (eg. on PU-8 boards) ;\
+CXD2545Q.Pin74 (eg. on PU-18 boards) ; either one of these, depending
+CXD1817R.Pin49 (eg. on PU-20 boards) ; on which chipset you have
+CXD2938Q.Pin77 (eg. on PM-41 boards) ;
+CXD2941R.Pin85 (eg. PM-41(2) boards) ;/
+
+cut that trace (preferably on the PCB between two vias or test points, so you
+can later repair it easily) (better don't try to lift Pin31, it breaks off
+easily)
+
+Note: Mode2 also requires Pin16=Low, and Pin30=High (but PSX/PSone boards
+should have those pins at that voltages anyways).
+
+Mode3: Download ROM as ASCII hexdump
+
+This mode is very slow and not too powerful. But it may useful if you can't get
+Mode2 working for whatever reason. Wiring for Mode3 is same as above, plus
+PortB.0=3.5V. In this mode, the chip will send one 0Dh,0Ah," AAAA DD " string
+immediately after /RESET (with 16bit address "AAAA" (initially 1000h), and 8bit
+data "DD"). Thereafter the chip will wait for incoming commands:
+
+| 4-digit ASCII HEX address --> change address, and return 0Dh,0Ah," AAAA DD "
+chr(00h) --> increment address, and return 0Dh,0Ah," AAAA DD "
+chr(07h) --> jump to current address (not so useful)
+other characters --> same as chr(00h)
+All digits/characters sent to RX input will produce an echo on TX output.
+
+Basic setup would be wiring RX to GND (the chip will treat that as infinite
+stream of start bits with chr(00h), so it will respond by sending data from
+increasing addresses automatically; the increment wraps from 4FFFh to FE00h
+(skipping the gap between Main ROM and Bootstrap ROM), and also wraps from
+FFFFh to 0000h; transfer is ultraslow: 13 characters needed per dumped byte:
+chr(00h) to chip, chr(00h) echo from chip, and 0Dh,0Ah," AAAA DD " from chip.

@@ -1,0 +1,43 @@
+PSXSPX SPECIFICATIONS - TEXT THAT IS PRINTED ON THE CD COVER), BUT, WITH THE MINUS REPLACED BY AN
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: text that is printed on the CD cover), but, with the minus replaced by an
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1563 characters
+Lines: 34
+================================================================================
+
+text that is printed on the CD cover), but, with the minus replaced by an
+underscore, and due to the 8-letter filename limit, the last two characters are
+stored in the extension region.
+
+That "XXXX_NNN.NN" naming convention seems to apply for all official licensed
+PSX games. Wild Arms does unconventionally have the file in a separate folder,
+"EXE\SCUS_946.06".
+
+PSX.EXE (Boot-Executable) (default filename when SYSTEM.CNF doesn't exist)
+
+XXXX_NNN.NN (Boot-Executable) (with filename as specified in SYSTEM.CNF)
+
+FILENAME.EXE (General-Purpose Executable)
+
+PSX executables are having an 800h-byte header, followed by the code/data.
+
+| 000h-007h ASCII ID "PS-X EXE"
+008h-00Fh Zerofilled
+010h Initial PC (usually 80010000h, or higher)
+014h Initial GP/R28 (usually 0)
+018h Destination Address in RAM (usually 80010000h, or higher)
+01Ch Filesize (must be N*800h) (excluding 800h-byte header)
+020h Unknown/Unused ;Addr (usually 0) ;\optional overlay?
+024h Unknown/Unused ;Size (usually 0) ;/(not auto-loaded)
+028h Memfill Start Address (usually 0) (when below Size=None)
+02Ch Memfill Size in bytes (usually 0) (0=None)
+030h Initial SP/R29 & FP/R30 Base (usually 801FFFF0h) (or 0=None)
+034h Initial SP/R29 & FP/R30 Offs (usually 0, added to above Base)
+038h-04Bh Reserved for A(43h) Function (should be zerofilled in exefile)
+04Ch-xxxh ASCII marker
+"Sony Computer Entertainment Inc. for Japan area" ;NTSC
+"Sony Computer Entertainment Inc. for Europe area" ;PAL
+"Sony Computer Entertainment Inc. for North America area" ;NTSC
+(or often zerofilled in some homebrew files)

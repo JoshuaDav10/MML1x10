@@ -1,0 +1,34 @@
+PSXSPX SPECIFICATIONS - BIT16-31 NUMBER OF MEMORY CARD BLOCKS FOR A NEW FILE ON THE MEMORY CARD
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: bit16-31 Number of memory card blocks for a new file on the memory card
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1177 characters
+Lines: 25
+================================================================================
+
+bit16-31 Number of memory card blocks for a new file on the memory card
+
+The PSX can have a maximum of 16 files open at any time, of which, 2 handles
+are always reserved for std_io, so only 14 handles are available for actual
+files. Some functions (chdir, testdevice, FileDelete, FileUndelete,
+FormatDevice, firstfile, FileRename) are temporarily allocating 1 filehandle
+(FileRename tries to use 2 filehandles, but, it does accidently use only 1
+handle, too). So, for example, FileDelete would fail if more than 13 file
+handles are opened by the game.
+
+A(01h) or B(33h) - FileSeek(fd, offset, seektype) - Move the file pointer
+
+| seektype 0 = from start of file (with positive offset)
+1 = from current file pointer (with positive/negative offset)
+2 = Bugs. Should be from end of file.
+
+Moves the file pointer the number of bytes in A1, relative to the location
+specified by A2. Movement from the eof is incorrect. Also, movement beyond the
+end of the file is not checked.
+
+A(02h) or B(34h) - FileRead(fd, dst, length) - Read data from an open file
+
+| out: V0 Number of bytes actually read, -1 if failed.
+
+Reads the number of bytes from the specified open file. If length is not

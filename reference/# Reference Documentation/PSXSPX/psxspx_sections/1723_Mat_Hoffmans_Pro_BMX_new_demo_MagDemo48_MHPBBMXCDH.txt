@@ -1,0 +1,44 @@
+PSXSPX SPECIFICATIONS - MAT HOFFMAN'S PRO BMX (NEW DEMO) (MAGDEMO48: MHPB\BMXCD.HED+WAD)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Mat Hoffman's Pro BMX (new demo) (MagDemo48: MHPB\BMXCD.HED+WAD)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1297 characters
+Lines: 36
+================================================================================
+
+Mat Hoffman's Pro BMX (new demo) (MagDemo48: MHPB\BMXCD.HED+WAD)
+
+This format is used by the NEW demo version on MagDemp48 (the OLD demo version
+on MagDemo39 did use Spider-Man-style HED/WAD format with filenames).
+
+| HED:
+000h 2 Number of entries (N)
+002h N*6 File List
+WAD:
+000h ... File data (at 800h-byte aligned locations)
+
+File List entries:
+
+| 000h 3 File ID (24bit)
+003h 3 File Size in bytes (21bit, max 2Mbyte) (upper 3bit=unused?)
+
+Note: HED is processed at 80052AC0h in MagDemo48.
+
+Madden NFL 2000 (MagDemo27: MADN00\*.DAT and nested therein)
+
+Madden NFL 2001 (MagDemo39: MADN01\*.DAT and nested therein)
+
+| 000h 4 Header Size (N*SectorSize) (xxh, 800h, 1000h, 4800h, or 920h)
+004h 4 Sector Size (4=ChildArchive, 800h=MainArchive, 920h=FMV/MADN00)
+008h 4 File List entrysize (0=32bit, 1=16bit/MADN00, 4=16bit/MADN01)
+00Ch N*2/4 File List (16bit or 32bit filesizes in bytes)
+... .. Zeropadding to SectorSize boundary
+... .. Files (with above sizes, each zeropadded to SectorSize boundary)
+
+Dummy files have filesize=1 (but they do nethertheless occupy a whole data
+sector).
+
+Unknown why the FMV file in MADN00 is using SectorSize=920h (it appears to be
+FORM2 related, although the file seems to be stored in FORM1 sectors, but the
+STR movie appears to work okay despite of the odd size).

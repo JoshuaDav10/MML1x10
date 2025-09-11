@@ -1,0 +1,44 @@
+MIPS INSTRUCTION SET REFERENCE - EXCEPTIONS:
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Exceptions:
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1934 characters
+Lines: 35
+================================================================================
+
+Exceptions:
+             TLB Refill, TLB Invalid, TLB Modified, Address Error, Reserved Instruction, Coprocessor Unusable, Watch
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                                277
+
+                                Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+SYNC
+
+
+
+
+  Synchronize Shared Memory                                                                                             SYNC
+
+       31                  26 25           21 20             16 15              11 10              6   5                 0
+             SPECIAL                                  0                                                      SYNC
+                                                                                          stype
+              000000                         00 0000 0000 0000 0                                             001111
+                 6                                   15                                    5                    6
+
+            Format: SYNC (stype = 0 implied)                                                                        MIPS32
+
+            Purpose:
+            To order loads and stores.
+
+            Description:
+            Simple Description:
+        • SYNC affects only uncached and cached coherent loads and stores. The loads and stores that occur before the SYNC
+          must be completed before the loads and stores after the SYNC are allowed to start.
+        • Loads are completed when the destination register is written. Stores are completed when the stored value is visible to
+          every other processor in the system.
+        • SYNC is required, potentially in conjunction with SSNOP, to guarantee that memory reference results are visible
+          across operating mode changes. For example, a SYNC is required on some implementations on entry to and exit

@@ -1,0 +1,55 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION HORNEDLZ
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression HornedLZ
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1394 characters
+Lines: 47
+================================================================================
+
+CDROM File Compression HornedLZ
+
+Used by Project Horned Owl (*.BIN\*) (and within self-decompressing EXE)
+
+HornedLZ Detection
+
+The easiest way to detect HornedLZ files is to check first 4 bytes:
+
+| B3 10 00 4F .. Compressed TIM with TIM Type=00h (4bpp without CLUT)
+DB 10 00 3F .. Compressed TIM with TIM Type=08h,09h,etc.
+
+Alternately, one could check the Chunktype (in the parent archive):
+
+| Type=05h can be uncompressed .TXT or HornedLZ-compressed .TIM
+(check if 2nd data byte is ASCII or 10h)
+Type=0Fh is a DOT1 archive with HornedLZ-compressed .TIMs
+(parse the DOT1 archive and treat its contents as compressed .TIMs)
+Type=10h contains Deflated TIMs
+(a completely different compression method)
+
+DecompressHornedLZ:
+
+| collected=01h ;end-bit
+@@lop:
+if GetBit=1
+[dst]=[src], dst=dst+1, src=src+1 ;uncompressed byte
+else
+if GetBit=1
+tmp=[src], src=src+1
+len=tmp/40h+2, disp=tmp or (-40h) ;len=(2..05h), disp=(-40h..-1)
+else
+tmp=[src]*100h+[src+1], src=src+2
+len=tmp/1000h+2, disp=tmp or (-1000h) ;len=(2..11h), disp=(-1000h..-1)
+if len=2 then
+len=[src]+2, src=src+1 ;len=(2..101h)
+if len=2 then goto decompression_done
+for i=1 to len, [dst]=[dst+disp], dst=dst+1, next i
+goto @@lop
+;---
+GetBit:
+collected=collected SHR 1
+if zero then collected=([src] SHR 1)+80h, src=src+1
+return carry (from shift right)
+
+Note: The end code has all bits zero, except, disp is don't care (it's usually
+FFFh).

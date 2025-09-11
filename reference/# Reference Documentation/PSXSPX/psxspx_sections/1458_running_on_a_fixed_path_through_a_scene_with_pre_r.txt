@@ -1,0 +1,53 @@
+PSXSPX SPECIFICATIONS - RUNNING ON A FIXED PATH THROUGH A SCENE WITH PRE-RECORDED BACKGROUND GRAPHICS,
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: running on a fixed path through a scene with pre-recorded background graphics,
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1734 characters
+Lines: 45
+================================================================================
+
+running on a fixed path through a scene with pre-recorded background graphics,
+the only player interaction is aiming the gun at other people that show up in
+that movie scene. There are two movie types:
+
+| LEVELS\*\*.IXA - Interactive gameplay movies
+CUTS\*.IXA - Non-interactive cut-scene movies
+
+Both CUTS and LEVELS have unusually small 4-byte STR headers:
+
+| 000h 4 Sector number within current Frame (LEVELS=0..8, or CUTS=0..9)
+004h 7FCh Data (see below)
+
+Data for CUTS is 320x240pix (10 sectors per frame):
+
+| Note: CUTS videos have 2 leading XA-ADPCM sectors
+000h .. BS Data (in BS v2/v3 format) ;-BS picture
+
+Data for LEVELS is 320x352pix plus extra stuff (9 sectors per frame):
+
+| Note: LEVELS videos have 1 leading XA-ADPCM sector
+000h 4 Offset to BS Data (always 28h) ;\
+004h 4*6 Offsets to Extra Stuff 1..6 ; extra header
+01Ch 0Ch Zerofilled ;/
+028h .. BS Data (in BS v2/v3 format) ;-BS picture
+... .. Extra Stuff 1..6 ;-extra data
+
+The unusual 320x352pix resoltution contains a 320x240pix BG image, with
+additional 320x112pix texture data appended at the bottom.
+
+Extra Stuff 1..6 does supposedly contain info for animating enemies and/or
+backgrounds.
+
+______________________________________________________________________________
+
+iki
+
+The .iki video format (found in files with .IKI or .IK2 extension) is used in
+several games made by Sony. iki movie sectors have some different properties:
+
+| * There are only as many iki video sectors as needed to hold all the
+frame's data. Remaining sectors are null.
+* The first sector's Submode.Channel starts at zero, then increments for
+each sector after that, and resets to zero after an audio sector.
+* IK2 videos can also have variable frame rates that are very inconsistent.

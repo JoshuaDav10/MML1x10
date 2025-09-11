@@ -1,0 +1,56 @@
+PSXSPX SPECIFICATIONS - CDROM FILE ARCHIVE WAD (CARDINAL SYN/FEAR EFFECT)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Archive WAD (Cardinal Syn/Fear Effect)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1877 characters
+Lines: 48
+================================================================================
+
+CDROM File Archive WAD (Cardinal Syn/Fear Effect)
+
+.WAD files (Cardinal Syn/Fear Effect)
+
+This format exists in two version:
+
+| Old format: Without leading Header Size entry (Cardinal Syn MagDemo03: SYN\*)
+New format: With leading Header Size entry (eg. Fear Effect)
+
+Version detection could be done somewhat as so:
+
+| if [04h]*1Ch+8 >= [00h] then OLD version
+
+For loading the Old Header, one must guess the max header size (4000h should
+work, in fact, most or all Old Headers seem to be max 800h), or load more data
+on the fly as needed.
+
+| 000h (4) Header Size (including folder/type/file directories) (new version)
+... 4 Number of Folders
+... .. Folder List (root)
+... .. Type Lists (for each folder)
+... .. File Lists (for each folder\type)
+... .. File Data (for each folder\type\file)
+Folder List Entries:
+000h 14h Folder name (ASCII, zeropadded)
+014h 4 Offset to Type List
+018h 4 Number of different Types in this folder
+Type List Entries:
+000h 4 Offset to file entries (of same type, eg. .TIM files)
+004h 4 Number of file entries (of same type, eg. .TIM files)
+008h 4 Sum of all Filesizes with that type
+00Ch 4 Group Type (0000000xh)
+File List entries (Files within Type list):
+000h 14h Name (ASCII, terminated by 00h, plus garbage padding)
+014h 4 Offset to File Data (seems 4-byte aligned... always?)
+018h 4 File Type (000x00xxh)
+01Ch 4 Filesize in bytes ;\maybe compressed/uncompressed, or rounded,
+020h 4 Filesize in bytes ;/always both same
+
+Note: The Type List for one folder can contain several entries with same Group
+Type, eg. Fear Effect GSHELLE.WAD\CREDIT has 5 type list entries (with
+2xGroup0, 2xGroup1, 1xGroup2).
+
+The Type List, Group Type and File Type stuff seems to have no function, apart
+from faster look up (the types are also implied in the filename extension).
+Except, Fear Effect .RMD .VB .VH have some unknown stuff encoded in File Type
+bit16-19.

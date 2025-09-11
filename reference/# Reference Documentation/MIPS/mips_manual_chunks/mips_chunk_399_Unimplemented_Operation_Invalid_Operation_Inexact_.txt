@@ -1,0 +1,38 @@
+MIPS INSTRUCTION SET REFERENCE - UNIMPLEMENTED OPERATION, INVALID OPERATION, INEXACT, OVERFLOW, UNDERFLOW
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Unimplemented Operation, Invalid Operation, Inexact, Overflow, Underflow
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1334 characters
+Lines: 29
+================================================================================
+
+Unimplemented Operation, Invalid Operation, Inexact, Overflow, Underflow
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                                       35
+
+                                  Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+ADDI
+
+
+
+
+  Add Immediate Word                                                                                                      ADDI
+
+       31                   26 25             21 20             16 15                                                       0
+               ADDI
+                                      rs                 rt                                   immediate
+              001000
+                   6                  5                   5                                      16
+
+            Format:    ADDI rt, rs, immediate                                                                        MIPS32
+
+            Purpose:
+            To add a constant to a 32-bit integer. If overflow occurs, then trap.
+
+            Description: rt ← rs + immediate
+            The 16-bit signed immediate is added to the 32-bit value in GPR rs to produce a 32-bit result.
+              • If the addition results in 32-bit 2’s complement arithmetic overflow, the destination register is not modified and

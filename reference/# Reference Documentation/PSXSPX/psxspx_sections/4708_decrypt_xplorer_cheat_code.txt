@@ -1,0 +1,42 @@
+PSXSPX SPECIFICATIONS - DECRYPT_XPLORER_CHEAT_CODE:
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: decrypt_xplorer_cheat_code:
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1130 characters
+Lines: 34
+================================================================================
+
+decrypt_xplorer_cheat_code:
+
+| key = x[0] and 07h ;'''''''' AABBCCDD EEFF '''''''';
+x[0] = x[0] xor key ; / / / \ \ \ ;
+if key=0 ; x[0] --' / / \ \ '-- x[5] ;
+;unencrypted (keep as is) ; x[1] ---' / \ '--- x[4] ;
+elseif key=4 ; x[2] ----' '----- x[3] ;
+x[1] = x[1] xor (025h) ;,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,;
+x[2] = x[2] xor (0FAh + (x[1] and 11h))
+x[3] = x[3] xor (0C0h + (x[2] and 11h) + (x[1] xor 12h))
+x[4] = x[4] xor (07Eh + (x[3] and 11h) + (x[2] xor 12h) + x[1])
+x[5] = x[5] xor (026h + (x[4] and 11h) + (x[3] xor 12h) + x[2] + x[1])
+elseif key=5
+x[1] = (x[1] + 057h) ;"W"ayne
+x[2] = (x[2] + 042h) ;"B"eckett
+x[3] = (x[3] + 031h) ;"1"
+x[4] = (x[4] + 032h) ;"2"
+x[5] = (x[5] + 033h) ;"3"
+elseif key=6
+x[1] = (x[1] + 0ABh) xor 01h
+x[2] = (x[2] + 0ABh) xor 02h
+x[3] = (x[3] + 0ABh) xor 03h
+x[4] = (x[4] + 0ABh) xor 04h
+x[5] = (x[5] + 0ABh) xor 05h
+elseif key=7
+x[5] = x[5] + 0CBh
+x[4] = x[4] + 0CBh + (x[5] and 73h)
+x[3] = x[3] + 05Ah + (x[4] and 73h) - (x[5] xor 90h)
+x[2] = x[2] + 016h + (x[3] and 73h) - (x[4] xor 90h) + x[5]
+x[1] = x[1] + 0F5h + (x[2] and 73h) - (x[3] xor 90h) + x[4] + x[5]
+else
+error ;(key=1,2,3)
+endif

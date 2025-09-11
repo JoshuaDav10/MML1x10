@@ -1,0 +1,54 @@
+PSXSPX SPECIFICATIONS - RESTRICTIONS ON OLD CPUS. IN PSX HEART OF DARKNESS THEY ARE CHOSEN SO THAT THE
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: restrictions on old CPUs. In PSX Heart of Darkness they are chosen so that the
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1332 characters
+Lines: 46
+================================================================================
+
+restrictions on old CPUs. In PSX Heart of Darkness they are chosen so that the
+decompressed data is max 3000h bytes per chunk. Unknown if the next chunk may
+copy data from previous chunk.
+
+Links
+
+| http://aminet.net/package/util/pack/RNC_ProPack - official tool & source code
+https://segaretro.org/Rob_Northen_compression - description (contains bugs)
+
+RNC is used in a number of games by UK developers (notably Bullfrog and
+Traveller's Tales), including Sonic 3D: Flickies' Island, Blam! Machinehead,
+Dungeon Keeper 2, Magic Carpet, Syndicate and Syndicate Wars.
+
+RNC in PSX Games
+
+| Method 2: Demolition Racer (MagDemo27: DR\DD.DAT\*.RNC)
+Method 2: Heart of Darkness (IMAGES\US.TIM)
+Method 2: Jonah Lomu Rugby (LOMUDEMO\GFX\*.PAK)
+Method 2: NBA Jam: Tournament Edition (*.RNC, headerless .BIN/.GFX archives)
+Method 2: Test Drive 5 (MagDemo13: TD5.DAT\*.RNC)
+Method 2: Test Drive Off-Road 3 (MagDemo27: TDOR3\TDOR3.DAT\*.rnc)
+
+RNC in Mega Drive games
+
+| 3 Ninjas Kick Back
+Addams Family
+Addams Family Values
+The Adventures of Mighty Max
+Astrix and the Great Rescue
+Astrix and the Power of the Gods
+The Incredible Hulk
+The Itchy & Scratchy Game (unreleased)
+Marsupilami
+Mortal Kombat
+Mr. Nutz
+Outlander
+The Pagemaster
+RoboCop 3
+Spirou
+Spot Goes to Hollywood
+Stargate
+Street Racer
+Tinhead
+Tintin in Tibet
+World Championship Soccer II

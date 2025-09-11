@@ -1,0 +1,27 @@
+PSXSPX SPECIFICATIONS - 04004000H-04FFFFFFH MIRRORS OF 04000000H-04003FFFH (16K BIOS)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 04004000h-04FFFFFFh Mirrors of 04000000h-04003FFFh (16K BIOS)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1132 characters
+Lines: 18
+================================================================================
+
+04004000h-04FFFFFFh Mirrors of 04000000h-04003FFFh (16K BIOS)
+05000000h-05FFFFFFh Invalid (read causes data abort)
+06000014h-060000FFh Zerofilled (or maybe mirror of a ZERO port?) (F_xxx)
+06000140h-060002FFh Zerofilled (or maybe mirror of a ZERO port?) (F_xxx)
+06000400h-06FFFFFFh Zerofilled (or maybe mirror of a ZERO port?) (F_xxx)
+07000000h-07FFFFFFh Invalid (read causes data abort) (unused 16MB area)
+08020000h-08FFFFFFh Mirrors of 08000000h-0801FFFFh (128K Physical FLASH)
+09000000h-09FFFFFFh Invalid (read causes data abort) (unused 16MB area)
+0A000014h-0A7FFFFFh Mirrors of 0A000008h-0A00000Bh (INT_MASK_READ) (I_xxx)
+0A80000Ch Mirror of 0A800000h-0A800003h (T0_RELOAD) (T0_xxx)
+0A80001Ch Mirror of 0A800000h-0A800003h (T0_RELOAD) (T1_xxx)
+0A80002Ch Mirror of 0A800000h-0A800003h (T0_RELOAD) (T2_xxx)
+0A800030h-0AFFFFFFh Mirrors of 0A800000h-0A800003h (T0_RELOAD) (T_xxx)
+0B000008h-0B7FFFFFh Mirrors of .... ? (CLK_xxx)
+0B800010h-0BFFFFFFh Mirrors of 0B800008h-0B80000Bh (RTC_TIME)
+0C00000Ch-0C00000Fh Zero (COM_xxx)
+0C00001Ch-0C7FFFFFh Zerofilled (or maybe mirror of a ZERO port?) (COM_xxx)
+0C800008h-0CFFFFFFh ? (IRDA_xxx)

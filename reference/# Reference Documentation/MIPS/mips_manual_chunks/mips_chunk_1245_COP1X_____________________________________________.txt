@@ -1,0 +1,26 @@
+MIPS INSTRUCTION SET REFERENCE - COP1X                                                                                         NMADD
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: COP1X                                                                                         NMADD
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1459 characters
+Lines: 17
+================================================================================
+
+COP1X                                                                                         NMADD
+                                           fr                  ft                 fs                 fd                            fmt
+                    010011                                                                                           110
+                      6                     5                  5                  5                  5                3            3
+
+                 Format:     NMADD.S fd, fr, fs, ft                                                                      MIPS64
+                             NMADD.D fd, fr, fs, ft                                                                      MIPS64
+                             NMADD.PS fd, fr, fs, ft                                                                     MIPS64
+                                                                                                                 MIPS32 Release 2
+
+                 Purpose:
+                 To negate a combined multiply-then-add of FP values
+
+                 Description: fd ← − ((fs × ft) + fr)
+                 The value in FPR fs is multiplied by the value in FPR ft to produce an intermediate product. The value in FPR fr is
+                 added to the product.
+                 The result sum is calculated to infinite precision, rounded according to the current rounding mode in FCSR, negated

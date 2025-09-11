@@ -1,0 +1,144 @@
+PSYQ DOCUMENTATION - FAQ/gs8.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/FAQ/gs8.pdf
+Converted: Wed Sep 10 02:47:39 PM CDT 2025
+================================================================================
+
+============================================
+     T H E   " U N - O F F I C I A L"
+       PLAYSTATION DEVELOPMENT FAQ
+
+                LIBGS 8
+              CONFERENCE
+============================================
+
+             Release v1.2
+       Last Updated: August 31, 1995
+
+HISTORY:
+07/18/95 - Initial release
+07/28/95 - Update 8-1 to 8-2
+
+---------------------------------------------
+
+----------
+DISCLAIMER
+----------
+
+This FAQ is to aid in informing the licensed game
+developer about the development environment provided
+by Sony Computer Entertainment.
+
+The Development System Tool to which this manual
+relates is supplied pursuant to and subject to the
+terms of the Sony Playstation Licensed Developer Agreement.
+
+This FAQ is intended for distribution to and use only
+by Sony PlayStation Licensed Developers in accordance with
+the Sony Playstation Licensed Developer Agreement. The
+information in this manual is subject to change without
+notice.
+
+The content of this manual is Confidential Information
+of Sony for the purposes of the Sony PlayStation Licensed
+Developer Agreement and otherwise.
+
+---------------------
+TRADEMARK INFORMATION
+---------------------
+PlayStation and Sony Computer Entertainment names and logos
+are trade names and/or trademarks and/or copyright artwork
+of Sony Corporation(or its subsidiaries).
+
+All specific names included herein are trademarks and are
+so acknowledged: IBM, Microsoft, MS-DOS. Any trademarks not
+mentioned here are still hypothetically acknowledged.
+
+----------------
+COPYRIGHT NOTICE
+[1.] Library GS (LIBGS)
+
+[1.1. ]: What are the size requirments of the work buffer?
+The size of the work buffer is
+
+size(unit is long) = (((ScreenW/CellW+1)*(ScreenH/CellH+1+1)*6+4)*2+2)
+
+ScreenH : The number of the vertical pixels on the screen (240/480)
+ScreenW : The number of the horizontal pixels on the screen
+           (256/320/384/512/640)
+CellH   : Height of the cell(the number of pixels)
+CellW   : Width of the cell(the number of pixels)
+
+
+[1.2. ]: What are the advantages and disadvantages compared to
+GsSortBG?
+As compared with the GsSortFastBG(), this function reduces the load on
+the CPU. However, it has the following limitation.
+
+      -BG rotation/scale-up/scale-down are not permitted.
+      -Cell size is fixed. (GsSortFastBG16 is 16*16,
+                            GsSortFastBG32 is 32*32)
+      -Color mode of a texture pattern is only 4-bit/8-bit mode.
+      -Any map size is available.
+      -Scrolling is permitted. (by 1 pixel unit) [8-2]:
+      -Only full screen is permitted.
+
+
+[1.3. ]: Why does the GsSortFlipSprite() function not work
+properly even when setting 'bit 23' of attribute of GsSPRITE
+member?
+  GsSPRITE members 'mx' and 'my' seem not to be set. When the
+      coordinatesdesignated by (x, y) refers to the upper-left corner of
+      a sprite, (mx, my)will be (0, 0). Also, in the related functions,
+      the following of the structure members will be valid.
+
+
+
+     GsSortSprite   GsSortFlipSprite   GsSortFastSprite
+
+
+
+
+[1.4. ]: Why is a program sometimes suspended during the
+GsSortObject2() function processing?
+  The program area and data area may be overlapped. Check up to where
+      the packet area is consumed by the GsGetWorkBase() function.
+[1.5. ]: What is the difference between the GsSetProjection()
+function and the
+
+SetGeomOffset() function?
+  The GsSetProjection() sets 3D projection, and the SetGeomOffset()
+      sets 2D offsets.
+
+
+
+
+ [1.6. ]: How can a double-sided polygon be displayed with
+GsDOBJ5?
+  Unfortunately, the double-sided polygon is not available in GsDOBJ5.
+      Solve this problem, for example, by preparing 2 polygons, back-
+      facing and front-facing polygons.
+
+
+
+
+[1.7. ]: How can the reverse playback of TOD data be performed
+with the GsSetTodFrame2() function?
+  Since TOD doesn't contain any pointer tables, only the following ways
+      are left for the reverse playback.
+
+     * After executing the GsSetTodFrame2() function once with no
+      settings, recording the pointer table from the return value and
+      using it.
+
+     * Creating the original routine to record the pointer table from
+      TOD. In consideration of the CPU load, the second way will be
+      better, (depending on the condition, though).
+
+
+[1.8. ]: How should Z-sort be performed in order to register a
+polygon by model units to display?
+  When sorting by model units, a OT must be prepared for each model,
+      and the OT’s must be sorted by the GsSortOt() function. Refer to
+      the sample in “\psx\sample\graphics\tmdview\tmdview5\tuto2.c”
+

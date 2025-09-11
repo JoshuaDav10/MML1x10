@@ -1,0 +1,199 @@
+PSXSPX SPECIFICATIONS - ... .. VB FILE (SAMPLE DATA, SPU-ADPCM DATA, UP TO END OF FILE)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: ... .. VB file (sample data, SPU-ADPCM data, up to end of file)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 9574 characters
+Lines: 190
+================================================================================
+
+... .. VB file (sample data, SPU-ADPCM data, up to end of file)
+Music.BIN files (MAGMUS.BIN, MUSIC.BIN):
+000h 4 Size-8 of whole file (118h)
+004h .. Increasing 32bit values ;sector numbers in PACK*.STR files or so?
+... 4 Unknown (2EEh or 258h) (aka 750 or 600 decimal)
+... .. Zeropadding
+11Ch 4 Checksum (sum of all of the above bytes)
+Note: MUSIC.BIN has an extra copy (without chksum) in EXCLUDE.WAD\MUSIC.BIN
+Ascii.BIN files (CREDITS*.BIN, MNAME.BIN):
+000h 4 Size-8 of whole file
+004h (2) Type or so? (02h,01h) (only in CREDITS*.BIN, not in MNAME.BIN)
+... .. Ascii strings (each string is: len,"text string",unknown)
+... 4 Checksum (sum of all of the above bytes)
+Texture.BIN files (type 4) (STILLGO.BIN, STILLST.BIN, STILLTL.BIN):
+000h 2 Type (4=Texture/uncompressed, with 0Eh-byte list entries)
+002h 1 Zero (maybe Extra6byte as in type 5,6 Texture.BIN files)
+003h 2 Number of List entries (N) (always 4B0h in all three files)
+005h 2 Number of Texture Pages (usually 2)
+007h 2 Zero (maybe Unknown/Animation as in type 5,6 Texture.BIN files)
+009h N*0Eh Polygon List (?,?,?,?,?,?, x1,y1, x2,y1, x1,y2, x2,y2)
+... 40000h Texture Page uncompressed data (two pages, 20000h bytes each)
+... 4 Checksum (sum of all of the above bytes)
+Texture.BIN files (type 5,6) (ENDTEXT*.BIN, FONT.BIN, FRONTEND.BIN,
+OUTRO.BIN, PUBLISH.BIN, STILL*.BIN, TB*.BIN, TK*.BIN, TPAGE213.BIN):
+000h 4 Zero (0) (in TPAGE213.BIN: Size-8 of whole file)
+004h 2 Type (6=Texture/RLE16) (in TPAGE213.BIN: 5=Texture/uncompressed)
+006h 1 Extra6byte flag/size (0=None, 3=Extra6byte: TB*.BIN, TPAGE*.BIN)
+... (6) Extra6byte data (unknown purpose, only present when [006h]=3)
+... 2 Number of Polygon List entries (N)
+... 2 Number of Texture Pages (usually 1) (in TK*_ENM.BIN: usually 2)
+... 2 Number of Unknown Blocks (0=None, or 1,2,4,8)
+... (..) Unknown Block(s), if any
+... 2 Number of Animation Blocks (0=None)
+... (..) Animation Block(s), if any
+... N*0Ch Polygon List (?,?,?,?, x1,y1, x2,y1, x1,y2, x2,y2) ;x,y or y,x?
+... (4) Texture Page compressed size (T1) ;\only when [004h]=Type=6
+... (T1) Texture Page compressed data ;/
+... (4) Texture Page compressed size (T2) ;\only when [004h]=Type=6
+... (T2) Texture Page compressed data ;/ and NumPages=2
+... 20000h Texture Page uncompressed data ;-only when [004h]=Type=5
+... 4 Checksum (sum of all of the above bytes)
+Unknown Block(s):
+(Unknown purpose, each Unknown Block has the format shown below)
+000h 2 Unknown (looks like some index value, different for each entry)
+002h 2 Number of Unknown Items (eg. 1 or 2 or 4)
+004h .. Unknown Items (NumItems*6 bytes) (three halfwords each?)
+Animation Block(s):
+(This is supposedly used to update portions of the Texture Page for
+animated textures, each Animation Block has the format shown below)
+000h 2 Number of Bitmap Frames in this Animation (usually 8)
+002h 2 Bitmap Width (in halfword units)
+004h 2 Bitmap Height
+006h 2 Unknown (1 or 3) ;\
+008h 2 Unknown (C10h, CC8h, 1E8h, or xxxh) ; maybe vram X,Y address?
+00Ah 2 Unknown (0) ;/
+00Ch .. Bitmap Frames (Width*2*Height*NumFrames bytes, uncompressed)
+Croc 1 RLE16 compression:
+This is using unsigned little-endian 16bit LEN/DATA pairs, LEN can be:
+0000h..7FFFh --> Load one halfword, fill 1..8000h halfwords
+8000h..FFFFh --> Copy 1..8000h uncompressed halfwords
+BUG: Texture pages should be 20000h bytes (256x256 halfwords), but for
+whatever reason, the size of decompressed data can be 1FFEAh, 1FFF0h,
+1FFFAh, 20000h, or 20002h.
+Bytecode.BIN (inside of .WAD files):
+000h 4 Size of whole file
+004h .. Whatever bytecode (starting with initial 16bit program counter?)
+Unknown.BIN (last 1-2 file(s) in EXCLUDE.WAD file):
+000h 4 Number of entries (N)
+004h N*18h Whatever
+... 4 Checksum (sum of above bytes)
+Unknown purpose, retail version has one such file (with 0Ah entries), demo
+version has two such files (with 0Ah and 4Eh entries. The files start with:
+0A,00,00,00,00,00,00,00,00,00,64,00,00,00,EB,FF,... ;demo+retail
+4E,00,00,00,00,00,64,00,00,00,50,00,00,00,64,00,... ;demo
+
+CROCFILE.DIR\*.MOD
+
+| Demo version has one .MOD file in CROCFILE.DIR (retail has more such files):
+000h 2 Number of Models (N) (1 or more) (up to ECh exists) ;\header
+002h 2 Flags (0 or 1) ;/
+004h N*Var SubHeadersWithData ;see below ;-data
+... 4 Checksum (sum of all of the above bytes) ;-checksum
+SubHeadersWithData(N*Var):
+004h 4 Radius ;\
+008h 48h Bounding Box[9*8] (each 8byte are 4x16bit: X,Y,Z,0) ; for each
+050h 4 Number of Vertices (V) ; model
+054h V*8 Vectors (4x16bit: X,Y,Z,0) ;
+... V*8 Normals (4x16bit: X,Y,Z,0) ;
+... 4 Number of Faces (F) (aka Polygons?) ;
+... F*14h Faces (8x16bit+4x8bit: X,Y,Z,0,V1,V2,V3,V4, Tex/RGB) ;
+... 2 Number of collision info 1? (X) ;\ ;
+... 2 Number of collision info 2? (Y) ; only if ;
+... X*2Ch Collision info 1? ; Flags.bit0=1 ;
+... Y*2Ch Collision info 2? ;/ ;/
+There are further .MOD models inside of .WAD files, with slightly
+re-arranged entries (and additional reserved/garbage fields):
+000h 2 Number of Models (N) (1 or more) (up to ECh exists) ;\
+002h 2 Flags (0 or 1) ; header
+004h 4 Reserved/garbage (usually 224460h) (or 22C9F4h/22DF54h) ;/
+008h (4) Number of Models WITH Data arrays (M) ;\
+00Ch (M*2) Model Numbers WITH Data arrays (increasing, 0..N-1) ; ext.hdr
+... (..) Padding to 4-byte boundary (garbage, usually=M) ;/
+... N*68h Subheader(s) ;see below ;-part 1
+... N*Var DataArray(s) ;see below ;-part 2
+Subheaders(N*68h):
+000h 4 Radius ;\
+004h 48h Bounding Box[9*8] (each 8byte are 4x16bit: X,Y,Z,0) ; for each
+04Ch 4 Number of Vertices (V) ; model
+050h 4 Reserved/garbage (usually 0022xxxxh) ;
+054h 4 Reserved/garbage (usually 0022xxxxh) ;
+058h 4 Number of Faces (F) (aka Polygons?) ;
+05Ch 4 Reserved/garbage (usually 0022xxxxh) ;
+060h 2 Number of collision info1? (X) ;
+062h 2 Number of collision info2? (Y) ;
+064h 4 Reserved/garbage (usually 0022xxxxh) or xxxxxxxxh) ;/
+DataArrays(N*Var) with sizes V,F,X,Y from corresponding Subheader:
+(if ext.hdr is present, then below exists only for models listed in ext.hdr)
+000h V*8 Vectors (4x16bit: X,Y,Z,0) ;\
+... V*8 Normals (4x16bit: X,Y,Z,0) ; for each
+... F*14h Faces (8x16bit+4x8bit: X,Y,Z,0,V1,V2,V3,V4, Tex/RGB) ; model
+... X*2Ch Collision info 1? ;
+... Y*2Ch Collision info 2? ;/
+The ext.hdr mentioned above exists only in some .MOD files (usually in one of
+the last chunks of MP*.WAD). Files with ext.hdr have N>1, Flags=1 (but files
+without ext.hdr can also have those settings). Files with ext.hdr do usually
+have uncommon garbage values at hdr[4], which isn't too helpful for detection.
+The only way to detect models with ext.hdr seems to be to check if the ext.hdr
+contains valid increasing entries in range 0..N-1.
+WAD's that do contain a model with ext.hdr do usually also contain an extra
+100h-byte file, that file contains N bytes for model 0..N-1 (plus zeropadding
+to 100h-byte size), the bytes are supposedly redirecting models without Data
+Arrays to some other data source.
+The 100h-byte files don't have any header or checksum, they contain up to 9Ch
+entries (so there's always some zeropadding to 100h), the existing 100h-byte
+files contain following values in first 4 bytes (as 32bit value):
+04141401h, 0C040017h, 01010101h, 09030503h, 0A0B0A0Bh, 03020102h, 0C060900h,
+00060501h, 04040201h, 01010203h, 01030201h, 05000302h, 0C040317h, or Zero.
+To distinguish from other files: BIN/MAP files start with a 4-byte aligned
+Size value; if Size=0 or (Size AND 3)>0 or Size>RemainingSize then it's
+probably a 100h-byte file. Best also check if last some bytes are zeropadded.
+Exceptions:
+Retail MP090..MP100_*.WAD has model with ext.hdr, but no 100h-byte file
+Demo MP041_00.WAD has model with ext.hdr, with zerofilled 100h-byte file
+Note: Some models have ALL models listed in ext.hdr (which is about same as
+not having any ext.hdr at all; except, they ARE bundled with 100h-byte file).
+
+CROCFILE.DIR\MP*.DEM
+
+| Some (not all) MP*.WAD files are bundled with MP*.DEM files, supposedly
+containing data for demonstration mode. There are two versions:
+demo version: size 2584h (9604 decimal) (some files with partial checksum)
+retail version: size 0E10h (3600 decimal) (without checksum)
+
+CROCFILE.DIR\CROCWALK.ANI:
+
+| Animation data, there is only one such file in CROCFILE.DIR:
+000h 2 Value (100h)
+002h 2 Number of Triggers (T) (2)
+004h (T*2) Trigger List (with 2x8bit entries: FrameNo, TriggerID)
+... .. Probably, Padding to 4-byte boundary (when T=odd)
+... 4 Number of entries 1 (X)
+... X*18h Whatever Array 1
+... 4 Number of entries 2 (Y) (usually/always 64h)
+... X*Y*4 Whatever Array 2
+... 4 Number of entries 3 (Z) (usually/always 0Ah)
+... X*Z*18h Whatever Array 3
+There are further .ANI files inside of .WAD files:
+000h 2 Value (100h or 200h) ;Animation Speed?
+002h 2 Number of Triggers (T) (0, 1, 2, 3, 5, or 9)
+004h 4 Garbage/Pointer (usually 224460h) (or zero)
+008h 4 Number of entries 1 (X) (1 or more) ;Num Frames
+00Ch 4 Garbage/Pointer (usually 22C9F4h) (or 224460h or 22DF54h)
+010h 4 Number of entries 2 (Y) (usually 64h) (or 0) ;Num Vertices (?)
+014h 4 Garbage/Pointer
+018h 4 Number of entries 3 (Z) (usually 0Ah) (or 6 or 9)
+01Ch 4 Garbage/Pointer
+020h (T*2) Trigger List (with 2x8bit entries: FrameNo, TriggerID)
+... .. Padding to 4-byte boundary (garbage, usually=X)
+... X*18h Whatever Array 1
+... X*4 Garbage/Pointers (0021EE74h,0021EE74h,xxx,...)
+... X*Y*4 Whatever Array 2 ;Vertex 3x10bit? ;only if Y>0
+... (X*4) Garbage/Pointers (0021EE74h,0021EE74h,xxx,...) ;only if Y>0
+... X*Z*18h Whatever Array 3
+
+CROCFILE.DIR\TCLD.CVG:
+
+| There is only one such file in CROCFILE.DIR:
+000h 4 Size-8 of whole file
+004h 4 Unknown (0)
+008h 4 Unknown (1)

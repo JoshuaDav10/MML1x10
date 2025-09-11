@@ -1,0 +1,67 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION ZIP/GZIP/ZLIB (INFLATE/DEFLATE)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression ZIP/GZIP/ZLIB (Inflate/Deflate)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 2041 characters
+Lines: 59
+================================================================================
+
+CDROM File Compression ZIP/GZIP/ZLIB (Inflate/Deflate)
+
+The game's Inflate function does ignore the 2bit blocktype: All blocks must
+have dynamic trees (fixed trees and uncompressed blocks aren't supported).
+
+Blaster Master (DATA\*.IDX, DATA\*.DAT)
+
+DATA\GRP.IDX, DATA\MAP.IDX, DATA\SEQ.IDX DATA\VAB.IDX:
+
+| 000h N*2 Chunk List (16bit Offset/800h to Part-1-Chunks in .DAT files)
+... .. Zeropadding to 800h-byte boundary
+Notes:
+The Chunk List can contain zeroes (as first entry at offset 0, and as
+unused entries; in VAB.IDX those can be followed by further USED entries).
+For 2-part DAT files, the Chunk List contains offsets for Part 1 only.
+
+DATA\SEQ.DAT:
+
+| 000h 4 Chunksize/800h ;\
+004h 4 Datasize in bytes ; Single
+008h 4 Always 015A5A01h or 015A5A00h ; Part
+00Ch 4 Always 2803h ; with
+010h .. Midi data .SEQ file ; 1 file
+... .. Zeropadding to 800h-byte boundary ;/
+
+DATA\VAB.DAT:
+
+| 000h 4 Chunksize/800h ;\
+004h 4 Size of .VH Voice Header in bytes ; Single
+008h 4 Size of .VB Voice Binary in bytes ; Part
+00Ch .. Voice Header .VH file ; with
+... .. Zeropadding to 800h-byte boundary ; 2 files
+... .. Voice Binary .VB file ;
+... .. Zeropadding to 800h-byte boundary ;/
+
+DATA\GRP.DAT and DATA\MAP.DAT:
+
+| 000h 4 Part 1 Chunksize/800h ;\
+004h 4 Size of all TIM files in bytes (can be 0=None) ; Part 1
+008h .. Texture data (several TIMs appended after each other) ;
+... .. Zeropadding to 800h-byte boundary ;/
+... 4 Number of Files (N) ;\
+... 4 Part 2 Chunksize/800h ;
+... N*8 File List ; Part 2
+... .. Garbage-padding to 800h-byte boundary? ;
+... .. File Data area (each file Garbage-padded to 800h-byte) ;
+File List entries: ;
+000h 4 File Type/ID ;
+004h 4 Size in bytes ;/
+
+The DAT files are chunk-based (unfortunately, each DAT file is using its own
+chunk format, some of them are using 2-part chunks).
+
+The DAT chunks can be parsed without using the IDX file (the IDX can be helpful
+for quick lookup, but even then, one will still need to parse the DAT chunk
+headers to find the actual contents like TIM, SEQ, VB, VH files).
+
+See also

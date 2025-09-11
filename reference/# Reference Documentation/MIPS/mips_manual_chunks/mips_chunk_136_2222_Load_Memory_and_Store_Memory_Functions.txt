@@ -1,0 +1,24 @@
+MIPS INSTRUCTION SET REFERENCE - 2.2.2.2 LOAD MEMORY AND STORE MEMORY FUNCTIONS
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: 2.2.2.2 Load Memory and Store Memory Functions
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1079 characters
+Lines: 15
+================================================================================
+
+2.2.2.2 Load Memory and Store Memory Functions
+
+       Regardless of byte ordering (big- or little-endian), the address of a halfword, word, or doubleword is the smallest byte
+       address of the bytes that form the object. For big-endian ordering this is the most-significant byte; for a little-endian
+       ordering this is the least-significant byte.
+
+       In the Operation pseudocode for load and store operations, the following functions summarize the handling of virtual
+       addresses and the access of physical memory. The size of the data item to be loaded or stored is passed in the
+       AccessLength field. The valid constant names and values are shown in Table 2-1. The bytes within the addressed unit of
+       memory (word for 32-bit processors or doubleword for 64-bit processors) that are used can be determined directly from
+       the AccessLength and the two or three low-order bits of the address.
+
+       AddressTranslation
+
+       The AddressTranslation function translates a virtual address to a physical address and its cache coherence algorithm,

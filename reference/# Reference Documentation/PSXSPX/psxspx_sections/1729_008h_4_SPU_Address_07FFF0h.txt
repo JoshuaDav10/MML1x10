@@ -1,0 +1,46 @@
+PSXSPX SPECIFICATIONS - 008H 4 SPU ADDRESS (0..7FFF0H)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 008h 4 SPU Address (0..7FFF0h)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1524 characters
+Lines: 38
+================================================================================
+
+008h 4 SPU Address (0..7FFF0h)
+00Ch 2 Unknown (0..7) ;\usually both same (or val1=0, val2>0)
+00Eh 2 Unknown (0..7) ;/
+010h (10h) Zerofilled
+File List entries, type 5 (eg. ME*.DAT):
+000h 4 Type (5=Unknown... maybe Midi-style or so)
+004h 4 Size
+008h 4 Load Address (0, or on next 4-byte boundary after previous file)
+00Ch 2 Unknown (0..2) ;\always both same
+00Eh 2 Unknown (0..2) ;/
+010h (10h) Zerofilled
+File List entries, type 6 and 9:
+The EXE code does also accept type 6 and 9 (type 6 is handled same as
+type 0, and type 9 is ignored), but the actual archives don't seem to
+contain any files with those types.
+File List entries, padding for unused entries:
+000h 10h Type ("dummy header ")
+010h (10h) Zerofilled
+
+Size Notes:
+
+| Bitmaps and Palettes can have following sizes:
+Width*Height*2 ;normal case
+Width*Height*2 + Align(1000h) ;eg. Dino Crisis 1 DOOR*.DAT
+Width*Height*2 + Align(800h) ;eg. Dino Crisis 2 DOOR27.DAT
+CompressedBitmaps can have following sizes in compressed form:
+Less than Width*Height*2 ;normal case
+Less than Width*Height*2 + 1000h ;eg. Dino Crisis 2 M_RESULT,ST002.DAT
+CompressedBitmaps can have following sizes after decompression:
+Width*Height*2 + 8 ;normal case
+Width*Height*2 + Align(1000h?) + 8 ;eg. Dino Crisis 2 M_RESULT,ST002.DAT
+
+Note: Dino Crisis DEMO version (MagDemo28: DINO\TRIAL.DAT) does also contain
+"dummy header" DAT archives (but, unlike as in retail version, they are hidden
+somewhere inside of the headerless 14Mbyte TRIAL.DAT archive).
+
+Type 7 and 8 are using LZSS compression:

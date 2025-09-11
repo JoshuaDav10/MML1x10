@@ -1,0 +1,39 @@
+MIPS INSTRUCTION SET REFERENCE - RESERVED INSTRUCTION
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Reserved Instruction
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1446 characters
+Lines: 30
+================================================================================
+
+Reserved Instruction
+
+             Programming Notes
+             When paired with MTC2 to write a value to a 64-bit CPR, the MTC2 must be executed first, followed by the
+             MTHC2. This is because of the semantic definition of MTC2, which is not aware that software will be using an
+             MTHC2 instruction to complete the operation, and sets the upper half of the 64-bit CPR to an UNPREDICTABLE
+             value.
+
+
+
+
+204                                                              MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                                Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+MTHI
+
+
+
+
+  Move to HI Register                                                                                                 MTHI
+
+       31                   26 25            21 20                                                6   5                 0
+             SPECIAL                                                      0                                  MTHI
+                                      rs
+              000000                                              000 0000 0000 0000                        010001
+                   6                  5                                   15                                   6
+
+            Format:    MTHI rs                                                                                     MIPS32
+
+            Purpose:

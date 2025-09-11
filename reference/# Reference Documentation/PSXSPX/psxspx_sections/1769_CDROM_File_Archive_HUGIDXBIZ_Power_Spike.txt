@@ -1,0 +1,62 @@
+PSXSPX SPECIFICATIONS - CDROM FILE ARCHIVE HUG/IDX/BIZ (POWER SPIKE)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Archive HUG/IDX/BIZ (Power Spike)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1450 characters
+Lines: 54
+================================================================================
+
+CDROM File Archive HUG/IDX/BIZ (Power Spike)
+
+Power Spike (MagDemo43: POWER\GAME.IDX and .HUG)
+
+POWER\GAME.HUG
+
+| 000h .. File Data
+
+POWER\GAME.IDX
+
+| 000h 4 ID "HUGE"
+004h 4 Checksum (sum of all bytes at [010h and up])
+008h 4 Number of Folders (D) (87h)
+00Ch 4 Number of Files (F) (F9h)
+010h D*1Ch Folder List (Folder 0..D-1)
+... F*18h File List (File 0..F-1)
+
+Folder List entries:
+
+| 000h 0Ch Folder Name ("DIRNAME", zeropadded)
+00Ch 4 First Child File (or FFFFFFFFh=None)
+010h 4 Number of Child Files (or 00000000h=None)
+014h 4 First Child Folder (or FFFFFFFFh=None)
+018h 4 Next Sibling Folder (or FFFFFFFFh=None)
+
+File List entries:
+
+| 000h 0Ch File Name ("FILENAME.EXT", zeropadded if shorter than 12)
+00Ch 4 File Checksum (sum of all bytes in file added together)
+010h 4 File Offset/800h in GAME.HUG
+014h 4 File Size in bytes
+
+The root entries are Folder 0 (and its siblings). That is, the root can contain
+only folders (not files).
+
+The IDX/HUG archive contains many BIZ archives (and some TXT files).
+
+Power Spike (MagDemo43: POWER\GAME.IDX\*.BIZ) (BIZ nested in IDX/HUG)
+
+| 000h 4 ID "BIG!"
+004h 4 Number of entries (N)
+008h N*1Ch File List
+... .. BIZ compressed File Data
+
+File List entries
+
+| 000h 10h Filename (zeropadded)
+010h 4 File Offset (increasing, unaligned, can be odd)
+014h 4 File Size decompressed
+018h 4 File Size compressed
+
+All files in the BIZ archive are BIZ compressed (unknown if it does also
+support uncompressed files).

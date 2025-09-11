@@ -1,0 +1,119 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION GT20 AND PREGT20
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression GT20 and PreGT20
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 3422 characters
+Lines: 111
+================================================================================
+
+CDROM File Compression GT20 and PreGT20
+
+GT20 Compressed Files
+
+Used by Rollcage (MagDemo19: ROLLCAGE\SPEED.IMG\*)
+
+Used by Rollcage Stage II (MagDemo31: ROLLCAGE\SPEED.IDX\*)
+
+Used by Sydney 2000 (MagDemo37: OLY2000\DEMO.IDX\* and OLY2000\GTO\*.GTO)
+
+Reportedly also Chill (PS1) (*.GTO)
+
+Reportedly also Ducati World: Racing Challenge
+
+Reportedly also Martian Gothic: Unification (PS1) (*.GT20)
+
+| 000h 4 ID ("GT20"=Compressed) (or reportedly "NOGT"=Uncompressed)
+004h 4 Size of decompressed data in bytes
+008h 4 Overlap for in-situ decompression (usually 3, or sometimes 7)
+00Ch 4 Size of Leading Zeropadding in bytes (0..7FFh)
+010h .. Leading Zeropadding (0..7FFh bytes)
+... .. Compressed Data
+
+The Leading Zeropadding can be used to arrange the data to end on a sector
+boundary (useful when loading the file in units of whole sectors, and wanting
+to load it to the end of the decompression buffer).
+
+| DecompressGT20:
+src=src+word[src+0Ch]+10h ;skip header and any leading zeropadding
+collected=00000001h ;end-bit
+@@lop:
+if GetBit=0
+[dst]=[src], dst=dst+1, src=src+1 ;uncompressed byte
+else
+if GetBit=0
+disp=byte[src]-100h, src=src+1 ;disp=(-100h..-1)
+len=(GetBit*2)+(GetBit*1)+2 ;len=(2..5)
+else
+tmp=halfword[src], src=src+2
+disp=(tmp/8)-2000h ;disp=(-2000h..-1)
+len=(tmp AND 7)+2 ;len=(2..9)
+if len=2
+tmp=byte[src], src=src+1
+if (tmp AND 80h) then disp=disp-2000h ;disp=(-4000h..-1)
+len=(len AND 7Fh)+2 ;len=(2..81h)
+if len=3 then goto decompression_done
+if len=2 then len=halfword[src], src=src+2 ;len=(0..FFFFh)
+for i=1 to len, [dst]=[dst+disp], dst=dst+1, next i
+goto @@lop
+;---
+GetBit:
+collected=collected SHR 1
+if zero then collected=(word[src] SHR 1)+80000000h, src=src+4
+return carry (from shift right)
+
+Note: Uncompressed files can reportedly contain "NOGT" in the header, however,
+Rollcage does have compressed files (with GT20 header), and raw uncompressed
+files (without any NOGT header).
+
+See also: https://zenhax.com/viewtopic.php?t=13175
+(specs)
+
+See also: http://wiki.xentax.com/index.php/GT20_Archive
+(blurp)
+
+Pre-GT20 Compressed Files
+
+Used by Bloody Roar 1 (MagDemo06: BL\*.DAT\*)
+
+Used by Bloody Roar 2 (MagDemo22: ASC,CMN,EFT,LON,SND,ST5,STU\*.DAT\*)
+
+| 000h 4 Compression Method (0=None, 2=Compressed, Other=Invalid)
+004h 4 Compressed Size (SIZ) (same as decompressed when method=0)
+008h 4 Decompressed Size
+00Ch SIZ Compressed Data
+... .. Garbagepadding to 4-byte boundary (in 4-byte aligned DAT files)
+
+This is apparently on older version of what was later called GT20. The PreGT20
+decompression works as so:
+
+| DecompressPreGT20:
+src=src+0Ch ;skip header
+collected=80h ;end-bit
+@@lop:
+if GetBit=1
+[dst]=[src], dst=dst+1, src=src+1 ;uncompressed byte
+else
+if GetBit=0
+len=(GetBit*2)+(GetBit*1)+2 ;len=(2..5)
+disp=byte[src]-100h, src=src+1 ;disp=(-100h..-1)
+else
+tmp=bigendian_halfword[src], src=src+2
+disp=(tmp/8)-2000h ;disp=(-2000h..-1)
+len=(tmp AND 7)+2 ;len=(2..9)
+if len=2
+len=byte[src]+1, src=src+1 ;len=(1..100h)
+if len=1 then goto decompression_done
+for i=1 to len, [dst]=[dst+disp], dst=dst+1, next i
+goto @@lop
+;---
+GetBit:
+collected=collected SHL 1 ;8bit shift
+if zero then collected=(byte[src] SHL 1)+01h, src=src+1
+return carry (from 8bit shift left)
+
+Note: Uncompressed files with Method=0 exist in Bloody Roar 2 (CMN\SEL01.DAT).
+
+Bloody Roar 1 (MagDemo06) has decompressor at 8016DD64h (method 0 and 2).
+
+Bloody Roar 2 (MagDemo22) has decompressor at 8015C8C0h (method 0 and 2).

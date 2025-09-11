@@ -1,0 +1,73 @@
+PSXSPX SPECIFICATIONS - CDROM FILE ARCHIVE FADJ0500 (KLONOA)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Archive FAdj0500 (Klonoa)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 2096 characters
+Lines: 65
+================================================================================
+
+CDROM File Archive FAdj0500 (Klonoa)
+
+See also: PKG (a WAD.WAD variant with folders)
+
+Perfect Assassin (*.JFS)
+
+| Overall File Structure
+JFS for root ;\
+JFS for 1st folder ;\these are dupicated, ; header with complete list
+JFS for 2nd folder ; also stored in below ; of all file/folder names
+JFS for 3rd folder ; data area ;
+etc. ;/ ;/
+JFS for 1st folder, plus data for files in that folder ;\
+JFS for 2nd folder, plus data for files in that folder ; data area
+JFS for 3rd folder, plus data for files in that folder ;
+etc. ;/
+
+JFS Headers (0Ch+N*14h bytes)
+
+| 00h 4 ID "JFS",00h
+04h 4 Size in bytes (for root: including nearby child JFS's)
+08h 4 Number of file/folder entries in this folder (N)
+0Ch N*14h File/Folder entries
+
+File Entries (with [10h].bit31=0):
+
+| 00h 12 "FILENAME.EXT" (or zeropadded if shorter)
+0Ch 4 Offset from begin of JFS in data area (without any alignment)
+10h 4 Size in bytes, plus 00000000h=File
+
+Folder Entries (with [10h].bit31=1):
+
+| 00h 12 "DIRNAME.EXT" (or zeropadded if shorter)
+0Ch 4 Offset to child JFS in data area
+10h 4 Offset to child JFS in header area, plus 80000000h=ChildFolder
+
+The JFS format is almost certainly unrelated to IBM's "Journaled File System".
+
+Alone in the Dark The New Nightmare (FAT.BIN=Directory, and DATA.BIN=Data)
+
+| FAT.BIN:
+00h 2 Number of folders (X) (43h)
+02h 2 Number of files (Y) (8F0h)
+04h 4 Unknown (1000h)
+08h X*10h Directory Entry 0000h..X-1 (entry 0000h is named "ROOT")
+.. Y*10h File Entry 0000h..Y-1
+DATA.BIN:
+00h .. File Data area
+
+Directory Entries (10h bytes):
+
+| 00h 8 Name (terminated by 00h if less than 8 chars)
+08h 2 First Subdirectory number (0001h and up, 0000h would be root)
+0Ah 2 Number of Subdirectories (0000h=None, if so above is usually 00FFh)
+0Ch 2 First File number (0000h and up)
+0Eh 2 Number of files (0000h=None, if so above is usually 00FFh)
+
+File Entries (10h bytes):
+
+| 00h 8 Name (terminated by 00h if less than 8 chars)
+08h 4 Offset/800h to DATA.BIN
+0Ch 4 Size in bytes (when compressed: decompressed size+02000000h)
+
+Compressed files (in LEVELS\*\* with Size.bit25=1) can be decompressed as so:

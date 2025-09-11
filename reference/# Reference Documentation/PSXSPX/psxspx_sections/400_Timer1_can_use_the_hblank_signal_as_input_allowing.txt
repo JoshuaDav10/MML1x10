@@ -1,0 +1,34 @@
+PSXSPX SPECIFICATIONS - TIMER1 CAN USE THE HBLANK SIGNAL AS INPUT, ALLOWING TO COUNT SCANLINES (UNLESS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Timer1 can use the hblank signal as input, allowing to count scanlines (unless
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 1151 characters
+Lines: 26
+================================================================================
+
+Timer1 can use the hblank signal as input, allowing to count scanlines (unless
+the display is configured to 0 pixels width, which would cause an endless
+hblank). The hblank signal is generated even during vertical blanking/retrace.
+
+Horizontal Timings
+
+| PAL: 3406 video cycles per scanline (or 3406.1 or so?)
+NTSC: 3413 video cycles per scanline (or 3413.6 or so?)
+
+Dotclocks:
+
+| PSX.256-pix Dotclock = 5.322240MHz (44100Hz*300h*11/7/10)
+PSX.320-pix Dotclock = 6.652800MHz (44100Hz*300h*11/7/8)
+PSX.368-pix Dotclock = 7.603200MHz (44100Hz*300h*11/7/7)
+PSX.512-pix Dotclock = 10.644480MHz (44100Hz*300h*11/7/5)
+PSX.640-pix Dotclock = 13.305600MHz (44100Hz*300h*11/7/4)
+Namco GunCon 385-pix = 8.000000MHz (from 8.00MHz on lightgun PCB)
+
+Dots per scanline are, depending on horizontal resolution, and on PAL/NTSC:
+
+| 320pix/PAL: 3406/8 = 425.75 dots 320pix/NTSC: 3413/8 = 426.625 dots
+640pix/PAL: 3406/4 = 851.5 dots 640pix/NTSC: 3413/4 = 853.25 dots
+256pix/PAL: 3406/10 = 340.6 dots 256pix/NTSC: 3413/10 = 341.3 dots
+512pix/PAL: 3406/5 = 681.2 dots 512pix/NTSC: 3413/5 = 682.6 dots
+368pix/PAL: 3406/7 = 486.5714 dots 368pix/NTSC: 3413/7 = 487.5714 dots

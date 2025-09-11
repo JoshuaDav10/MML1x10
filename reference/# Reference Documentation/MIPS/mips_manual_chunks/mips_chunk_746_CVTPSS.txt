@@ -1,0 +1,45 @@
+MIPS INSTRUCTION SET REFERENCE - CVT.PS.S
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: CVT.PS.S
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1744 characters
+Lines: 39
+================================================================================
+
+CVT.PS.S
+
+
+
+
+   Floating Point Convert Pair to Paired Single                                                                         CVT.PS.S
+
+           31                   26 25                  21 20         16 15           11 10               6   5                0
+                   COP1                     fmt                                                                  CVT.PS
+                                                               ft              fs                   fd
+                  010001                   10000                                                                 100110
+                     6                       5                 5               5                    5               6
+
+                Format:    CVT.PS.S fd, fs, ft                                                                       MIPS64
+                                                                                                             MIPS32 Release 2
+
+                Purpose:
+                To convert two FP values to a paired single value
+
+                Description: fd ← fs31..0 || ft31..0
+                The single-precision values in FPR fs and ft are written into FPR fd as a paired-single value. The value in FPR fs is
+                written into the upper half, and the value in FPR ft is written into the lower half.
+
+
+                                                  fs                                       ft
+
+
+                                  31                           0               31                        0
+
+
+
+
+                                                                     fd
+
+
+                                             63                     32 31                       0

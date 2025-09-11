@@ -1,0 +1,33 @@
+PSXSPX SPECIFICATIONS - "HIDDEN" WITHIN THE BIOS VARIABLES REGION, THE ONLY WAY TO READ FROM THAT
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: "hidden" within the BIOS variables region, the only way to read from that
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1344 characters
+Lines: 24
+================================================================================
+
+"hidden" within the BIOS variables region, the only way to read from that
+internal buffers is to use the ugly "OutdatedPadGetButtons()" function. For
+some strange reason it FFh-fills buf1/buf2, and does then call
+InitPad(buf1,22h,buf2,22) (which does immediately 00h-fill the previously
+FFh-filled buffers), and does then call StartPad().
+
+Finally, it does memorize the "button_dest" address (see
+OutdatedPadGetButtons() for details on that value). The two unused parameters
+have no function, however, they are internally written back to the stack
+locations reserved for parameter 2 and 3, ie. at [SP+08h] and [SP+0Ch] on the
+caller's stack, so the function MUST be called with all four parameters
+allocated on stack. Return value is 2 (or 0 if type was disliked).
+
+B(16h) - OutdatedPadGetButtons()
+
+This is a very ugly function, using the internal "buf1/buf2" values from
+"OutdatedPadInitAndStart" and the "button_dest" value that was passed to that
+function.
+
+If "button_dest" is non-zero, then this function is automatically called by the
+PadCardIrq handler, and stores it's return value at [button_dest] (where it may
+be read by the main program). If "button_dest" is zero, then it isn't called
+automatically, and it be called manually (with return value in R2),
+however, it does additionally write the return value to [button_dest], ie. to

@@ -1,0 +1,35 @@
+MIPS INSTRUCTION SET REFERENCE - EXPECTED INSTRUCTION           FUNCTION           EQUIVALENT INSTRUCTION
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Expected Instruction           Function           Equivalent Instruction
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1128 characters
+Lines: 26
+================================================================================
+
+Expected Instruction           Function           Equivalent Instruction
+                           ZEB rx,ry             Zero-Extend Byte        ANDI rx,ry,0xFF
+                           ZEH rx,ry           Zero-Extend Halfword     ANDI rx,ry,0xFFFF
+
+
+
+
+252                                                     MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                        Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+SH
+
+
+
+
+     Store Halfword                                                                                                               SH
+
+        31                   26 25            21 20              16 15                                                        0
+                 SH
+                                      base                rt                                   offset
+               101001
+                  6                    5                  5                                      16
+
+             Format:    SH rt, offset(base)                                                                            MIPS32
+
+             Purpose:

@@ -1,0 +1,79 @@
+PSXSPX SPECIFICATIONS - CPU PSEUDO OPCODES
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CPU Pseudo Opcodes
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2738 characters
+Lines: 70
+================================================================================
+
+CPU Pseudo Opcodes
+
+Pseudo instructions (native/spasm)
+
+| nop ;alias for sll r0,r0,0
+move rd,rs ;alias for addu rd,rs,r0
+la rx,imm32 ;load address (alias for lui rx / addiu rx)
+li rx,imm32 ;load immediate (alias for lui rx / ori rx)
+li rx,imm16 ;load immediate (alias for ori, range 0..FFFFh)
+li rx,-imm15 ;load immediate (alias for addiu, range -1..-8000h)
+li rx,imm16*10000h ;load immediate (alias for lui)
+lw rx,imm32 ;load from address (lui rx / lw rx,rx)
+sw rx,imm32 ;store to address (lui r1 / sw rx,r1) (destroys r1!)
+lb,lh,lwl,lwr,lbu,lhu;as above pseudo lw
+sb,sh,swl,swr ;as above pseudo sw (ie. also destroys r1!)
+alu rx,op ;alias for alu rx,rx,op
+alu(u) rx,rx,imm ;alias for alui(u) rx,rx,imm
+jalr rx ;alias for jalr (RA,)rx(,RA)
+subi(u) rt,rs,imm ;alias for addi(u) rt,rs,-imm
+beqz rx,dest ;alias for beq rx,r0,dest
+bnez rx,dest ;alias for bne rx,r0,dest
+b dest ;alias for beq r0,r0,dest (jump relative/spasm)
+bra dest ;alias for ...? (jump relative/gnu)
+bal dest ;alias for ...? (call relative/spasm)
+
+Pseudo instructions (nocash/a22i)
+
+| mov rx,NNNN0000h ;alias for lui rx,NNNNh
+mov rx,0000NNNNh ;alias for or rx,r0,NNNNh ;max +FFFFh
+mov rx,-imm15 ;alias for add rx,r0,-NNNNh ;min -8000h
+mov rx,ry ;alias for or rx,ry,0 (or "addiu")
+nop ;alias for shl r0,r0,0
+jrel dest ;alias for blez R0,dest ;relative jump
+crel dest ;alias for callns R0,dest ;relative call
+jz rx,dest ;alias for je rx,R0,dest
+jnz rx,dest ;alias for jne rx,R0,dest
+call rx ;alias for call rx,ret=RA
+ret ;alias for jmp ra
+subt rt,rs,imm ;alias for addt rt,rs,-imm
+sub rt,rs,imm ;alias for add rt,rs,-imm
+alu rx,op ;alias for alu rx,rx,op
+neg(t) rx,ry ;alias for sub(t) rx,R0,ry
+not rx,ry ;alias for nor rx,R0,ry
+neg(t)/not rx ;alias for neg(t)/not rx,rx
+setz rx,ry ;alias for setb rx,ry,1 (set if zero)
+setnz rx,ry ;alias for setb rx,R0,ry (set if nonzero)
+syscall/break ;alias for syscall/break 000000h
+
+Below are pseudo instructions combined of two 32bit opcodes...
+
+| movp rx,imm32 ;alias for lui rx,imm16 -plus- ori rx,rx,imm16)
+movpa rx,imm32 ;alias for lui rx,imm16 -plus- addiu rx,rx,imm16)
+mov(bhs)p rx,[imm32] ;load from address (lui rx,imm16 / mov rx,[rx+imm16])
+movu [rs+imm] ;alias for lwr/swr [rs+imm] plus lwl/swl [rs+imm+3]
+reti ;alias for jmp k0 plus rfe
+
+Below are pseudo instructions combined of two or more 32bit opcodes...
+
+| push rlist ;alias for sub sp,n*4 -- mov [sp+(1..n)*4],r1..rn
+pop rlist ;alias for mov r1..rn,[sp+(1..n)*4] -- add sp,n*4
+pop pc,rlist ;alias for pop ra,rlist -- jmp ra
+
+Possible more Pseudos...
+
+| call x0000000h ;call y0000000h (could be half-working for mem mirrors?)
+setae,setge ;--> setb,setlt with swapped operands
+
+Directives (nocash)
+
+| .mips ;select MIPS instruction set (alternately .hc05 for MC68HC05)

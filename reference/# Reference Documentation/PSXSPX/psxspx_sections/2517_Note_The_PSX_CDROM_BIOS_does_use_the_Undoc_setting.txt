@@ -1,0 +1,41 @@
+PSXSPX SPECIFICATIONS - NOTE: THE PSX CDROM BIOS DOES USE THE "UNDOC" SETTING (IE. BIT17=1), BUT THE
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Note: The PSX CDROM BIOS does use the "Undoc" setting (ie. bit17=1), but the
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1043 characters
+Lines: 33
+================================================================================
+
+Note: The PSX CDROM BIOS does use the "Undoc" setting (ie. bit17=1), but the
+effect is undoc/unknown?
+
+Note: CX(1x) works different on CXD2545Q (some bits are moved around, and the
+"SledKickHeight" bits are renamed to "SledKickLevel" and moved to different/new
+CX(3X) commands.
+
+CXA1782BR - CX(2x) - Tracking and Sled Servo Control - "TZC" at SENS pin
+
+| 23-20 4bit Command (02h)
+19-18 2bit Tracking Control (0=Off, 1=Servo On, 2=F-Jump, 3=R-Jump) ;TM1,3,4
+17-16 2bit Sled Control (0=Off, 1=Servo On, 2=F-Fast, 3=R-Fast) ;TM2,5,6
+15-0 16bit Unused (don't care)
+
+CXA1782BR - CX(3x) - "Automatic Adjustment Comparator Output" at SENS pin
+
+| 23-20 4bit Command (03h)
+19 1bit Value to be adjusted (0=Balance, 1=Gain)
+18-16 3bit New Balance or Gain value (depending on above bit)
+15-0 16bit Unused (don't care)
+
+Note: CX(3x) is extended and works very different on CXD2545Q.
+
+CXA1782BR Command 4x..7x - "HIGH-Z" at SENS pin
+
+| N-N 4bit Command (04h..07h)
+
+CXA1782BR Command 8x..Fx - "UNSPECIFIED???" at SENS pin
+
+| N-N 4bit Command (08h..0Fh)
+
+Note

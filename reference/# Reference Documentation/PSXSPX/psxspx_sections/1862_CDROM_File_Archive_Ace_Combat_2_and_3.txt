@@ -1,0 +1,44 @@
+PSXSPX SPECIFICATIONS - CDROM FILE ARCHIVE ACE COMBAT 2 AND 3
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Archive Ace Combat 2 and 3
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1209 characters
+Lines: 35
+================================================================================
+
+CDROM File Archive Ace Combat 2 and 3
+
+Ace Combat 2 (Namco 1997) (ACE2.DAT and ACE2.STH/STP)
+
+There are two archives, stored in three files:
+
+| ACE2.DAT Directory for Data in ACE2.DAT itself ;normal binary data
+ACE2.STH Directory for Data in separate ACE2.STP file ;streaming data
+
+Directory Format:
+
+| 000h 4 Unknown (1)
+004h 4 Number of entries (N)
+008h N*8 File List
+
+File List entries (64bit):
+
+| 0-27 28bit Size/N (DAT=Size/4, STP=Size/800h)
+28-31 4bit Type or Channel Number (see below)
+32-63 32bit Offset/800h in ACE2.STP or ACE2.DAT file
+
+The files are interleaved depending on the Type/Channel number:
+
+| File Bit28-31 Channel Sector types... Interleave Notes
+DAT 0 ch=0 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 1:1 data (normal)
+DAT 2 ch=0 DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 1:1 data (exe)
+STH 0-6 ch=0-6 S.......S.......S.......S....... 1:8 stereo
+STH 8 ch=1 vvvvvvvSvvvvvvvSvvvvvvvSvvvvvvvS 1:1 video+stereo
+Whereas D=data, S=Stereo/Audio, v=video, .=other channels
+
+Note: The DAT file does additionally contain PreSizeDOT1 and DOT1 child
+archives.
+
+Demo: The archives in demo version (MagDemo01: ACE2.*) contain only a handful
+of files; the two EXE files in demo DAT archive are only 800h-byte dummy files,

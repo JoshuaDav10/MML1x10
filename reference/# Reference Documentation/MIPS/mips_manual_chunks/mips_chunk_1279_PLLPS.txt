@@ -1,0 +1,31 @@
+MIPS INSTRUCTION SET REFERENCE - PLL.PS
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: PLL.PS
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1273 characters
+Lines: 22
+================================================================================
+
+PLL.PS
+
+
+
+
+   Pair Lower Lower                                                                                                       PLL.PS
+
+         31                   26 25            21 20             16 15             11 10              6   5                  0
+                 COP1                  fmt                                                                        PLL
+                                                          ft                fs                 fd
+                010001                10110                                                                      101100
+                   6                    5                 5                 5                  5                   6
+
+              Format:    PLL.PS fd, fs, ft                                                                         MIPS64
+                                                                                                           MIPS32 Release 2
+
+              Purpose:
+              To merge a pair of paired single values with realignment
+
+              Description: fd ← lower(fs) || lower(ft)
+              A new paired-single value is formed by catenating the lower single of fs (bits 31..0) and the lower single of ft (bits
+              31..0).

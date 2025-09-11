@@ -1,0 +1,63 @@
+PSXSPX SPECIFICATIONS - MEANS THAT THE PSX CDROM CONTROLLER WILL IGNORE THEM, AND THE GETLOCP COMMAND
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: means that the PSX cdrom controller will ignore them, and the GetlocP command
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2856 characters
+Lines: 55
+================================================================================
+
+means that the PSX cdrom controller will ignore them, and the GetlocP command
+will keep returning position data from the previous sector).
+
+LibCrypt sectors
+
+The modified sectors could be theoretically located anywhere on the disc,
+however, all known protected games are having them located on the same sectors:
+
+| No. 
+Bit15 14105 (03:08:05) 14110 (03:08:10) 42045 (09:20:45) 42050 (09:20:50)
+Bit14 14231 (03:09:56) 14236 (03:09:61) 42166 (09:22:16) 42171 (09:22:21)
+Bit13 14485 (03:13:10) 14490 (03:13:15) 42432 (09:25:57) 42437 (09:25:62)
+Bit12 14579 (03:14:29) 14584 (03:14:34) 42580 (09:27:55) 42585 (09:27:60)
+Bit11 14649 (03:15:24) 14654 (03:15:29) 42671 (09:28:71) 42676 (09:29:01)
+Bit10 14899 (03:18:49) 14904 (03:18:54) 42813 (09:30:63) 42818 (09:30:68)
+Bit9 15056 (03:20:56) 15061 (03:20:61) 43012 (09:33:37) 43017 (09:33:42)
+Bit8 15130 (03:21:55) 15135 (03:21:60) 43177 (09:35:52) 43182 (09:35:57)
+Bit7 15242 (03:23:17) 15247 (03:23:22) 43289 (09:37:14) 43294 (09:37:19)
+Bit6 15312 (03:24:12) 15317 (03:24:17) 43354 (09:38:04) 43359 (09:38:09)
+Bit5 15378 (03:25:03) 15383 (03:25:08) 43408 (09:38:58) 43413 (09:38:63)
+Bit4 15628 (03:28:28) 15633 (03:28:33) 43634 (09:41:59) 43639 (09:41:64)
+Bit3 15919 (03:32:19) 15924 (03:32:24) 43963 (09:46:13) 43968 (09:46:18)
+Bit2 16031 (03:33:56) 16036 (03:33:61) 44054 (09:47:29) 44059 (09:47:34)
+Bit1 16101 (03:34:51) 16106 (03:34:56) 44159 (09:48:59) 44164 (09:48:64)
+Bit0 16167 (03:35:42) 16172 (03:35:47) 44312 (09:50:62) 44317 (09:50:67)
+
+Each bit is stored twice on Minute=03 (five sectors apart). For some reason,
+there is also a "backup copy" on Minute=09 (however, the libcrypt software
+doesn't actually support using that backup stuff, and, some discs don't have
+the backup at all (namely, discs with less than 10 minutes on track 1?)).
+
+A modified sector means a "1" bit, an unmodified means a "0" bit. The 16bit
+keys of the existing games are always having eight "0" bits, and eight "1" bits
+(meaning that there are 16 modified sectors on Minute=03, and, if present,
+another 16 ones one Minute=09).
+
+Example (Legacy of Kain)
+
+Legacy of Kain (PAL) is reading the LibCrypt data during the title screen, and
+does then display GOT KEY!!! on TTY terminal (this, no matter if the correct
+16bit key was received).
+
+The actual protection jumps in a bit later (shortly after learning to glide,
+the game will hang when the first enemies appear if the key isn't okay).
+Thereafter, the 16bit key is kept used once and when to decrypt 800h-byte
+sector data via simple XORing.
+
+The 16bit key (and some other related counters/variables) aren't stored in RAM,
+but rather in COP0 debug registers (which are mis-used as general-purpose
+storage in this case), for example, the 16bit key is stored in LSBs of the
+"cop0r3" register.
+
+In particuar, the encryption is used for some of the BIGFILE.DAT folder
+headers:

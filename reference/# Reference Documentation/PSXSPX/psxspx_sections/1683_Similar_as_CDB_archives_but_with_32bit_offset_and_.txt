@@ -1,0 +1,65 @@
+PSXSPX SPECIFICATIONS - SIMILAR AS .CDB ARCHIVES (BUT WITH 32BIT OFFSET, AND WITHOUT DUPLICATED SIZE).
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Similar as .CDB archives (but with 32bit offset, and without duplicated size).
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1546 characters
+Lines: 57
+================================================================================
+
+Similar as .CDB archives (but with 32bit offset, and without duplicated size).
+
+| 000h N*8 File List
+... 4 File List end marker (00000000h)
+... .. Garbage padding to 800h-byte boundary
+... .. File Data
+
+File List entries:
+
+| 000h 4 Offset/800h (increasing)
+004h 4 Size in bytes (often zero; for unused file numbers)
+
+Note: Files are usually padded with 0..7FFh bytes to 800h-byte boundary, but
+STARTREK.RES does append additional 800h-byte padding after each file (ie.
+800h..FFFh padding bytes in total).
+
+Einhander (MagDemo08: BININDEX.BIN/BINPACK0.BIN/BINPACK1.BIN)
+
+| 000h X*4 File List for BINPACK0.BIN ;\
+... .. Zeropadding ; BINPACK0
+410h .. Unknown (some/all of it looks like garbage) ;/
+800h Y*4 File List for BINPACK1.BIN ;\
+... .. Zeropadding ; BINPACK1
+C10h .. Unknown (some/all of it looks like garbage) ;/
+
+File List entries:
+
+| 000h 2 Offset/800h in BINPACK0.BIN or BINPACK1.BIN
+002h 2 Size/800h
+
+SO98 Archives (NBA Shootout '98, MagDemo10: SO98\..*.MDL *.TEX *.ANI *.DAT)
+
+Resembles .BZE (in terms of duplicated size entry).
+
+| 000h 4 Number of Files
+004h 4 Size of File Data area (total filesize-N*0Ch-8)
+008h N*0Ch File List
+... .. File Data area
+
+File List entries:
+
+| 000h 4 Offset (zerobased, from begin of File Data area)
+004h 4 Size in bytes
+008h 4 Size rounded to mutiple of 4-bytes
+
+.DAT contains .TIM .SEQ .VB .VH and nested SO98 archives
+
+.MDL contains whatever (and empty 0-byte files)
+
+.TEX contains .TIM
+
+.ANI contains whatever
+
+Gran Turismo 1 (MagDemo10: GT\*.DAT) GT-ARC
+
+Gran Turismo 1 (MagDemo15: GT\*.DAT) GT-ARC

@@ -1,0 +1,36 @@
+PSXSPX SPECIFICATIONS - PINOUTS - AUDIO, VIDEO, POWER, EXPANSION PORTS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Pinouts - Audio, Video, Power, Expansion Ports
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1035 characters
+Lines: 27
+================================================================================
+
+Pinouts - Audio, Video, Power, Expansion Ports
+
+AV Multi Out (Audio/Video Port)
+
+| 1 RGB-Video Green
+2 RGB-Video Red
+3 Supply +5.0V (eg. supply for external RF adaptor)
+4 RGB-Video Blue
+5 Supply Ground
+6 S-Video C (chrominance)
+7 Composite Video (yellow cinch)
+8 S-Video Y (luminance) ____________________________
+9 Audio Left (white cinch) |
+10 Audio Left Ground | 12 11 10 9 8 7 6 5 4 3 2 1 |
+11 Audio Right (red cinch) |____________________________|
+12 Audio Right Ground
+Shield Video Ground
+
+The standard AV-cable connects only to Pins 7,9,10,11,12,Shield (with pin 1 and
+3 and Shield shortcut with each other, used for both audio and video ground).
+
+The plug on that cable does have additional sparings for pin 1,3,5 (though
+without any metal-contacts installed in there) (pin 3,5 would be used as supply
+for external RF modulators) (no idea what pin 1 could be used for though?).
+
+RGB displays may (or may not) be able to extract /SYNC from the Composite
+signal, if that doesn't work, note that /SYNC (and separate /VSYNC, /HSYNC

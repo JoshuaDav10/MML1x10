@@ -1,0 +1,309 @@
+PSYQ DOCUMENTATION - TRAINING/Summer97/upgtedv.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/TRAINING/Summer97/upgtedv.pdf
+Converted: Wed Sep 10 02:47:41 PM CDT 2025
+================================================================================
+
+Methods for Speeding
+up Polygon Division
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Speeding up Polygon Division
+Problems involved in
+displaying ground
+
+
+
+
+                                                                            1. Warping of texture
+               Intended result
+                                                                       2. Near clipping problems
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Speeding up Polygon Division
+Solution using clipping
+
+
+                                                                      O allows more polygons
+                                                                        to be used
+
+
+
+                                                                      X texture jumping
+                                                                      X texture warping
+                                                                      X calculations become
+                                                                        more complex
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Speeding up Polygon Division
+Solution using division
+
+                                                             O less texture jumping
+                                                             O texture warping is eliminated
+
+
+
+
+                                                             X the polygon count is increased
+
+
+
+
+    Using the division method is better!
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Speeding up Polygon Division
+Divide in 2 dimensions or 3 dimensions?
+
+
+
+
+          3 dimensions                                                                     2 dimensions
+
+                         Divide in three dimensions
+  • 3 dimensions provides more accuracy
+  • Because GTE calculations are performed at high speeds,
+    there is no overhead with 3-dimensional division
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Speeding up Polygon Division
+Active division or fixed division?
+
+
+
+
+                 Active                                                                      Fixed
+
+                                    Use active method
+               Advantages                                                                  Disadvantages
+
+  1. Polygon count is decreased                                           1. Gaps are generated
+  2. Improves speed                                                       2. Textures become non- continuous
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Speeding up Polygon Division
+Actual programming
+
+
+       Principle
+
+                Display ground using active,
+                   3-dimensional division
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Speeding up Polygon Division
+Recursive call
+
+
+
+
+                                 n
+                                2 division
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Speeding up Polygon Division
+Conditions for stopping
+           <Polygon vertex distance>
+       Reasons
+
+                    • GPU rendering limit 1024x512
+
+                    • Polygon warping is most
+                      noticeable with larger polygons
+
+                    • Used together with Area Clipping
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Speeding up Polygon Division
+3-Dimensional 2n division
+
+   1                   2                       1
+                                                                  ordered as follows: A->B->C->D
+
+        A B                             x, 3y, z coordinates
+   3                   4
+                                            r, g, b color
+        D C                               u, v      texture
+   1                   2                 1 are all divided by two
+                                      These
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Speeding up Polygon Division
+Fixing gaps
+
+A                                            B            Reason
+
+                      E                                        Due to the margin of error, the center point
+                                                               does not necessary lie on the axis
+
+
+    H                                 F
+                                                            Solution
+                                                               Draw a triangle for the gap as well
+                      G
+                                                               However, Back Clip is necessary
+C                                            D
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Speeding up Polygon Division
+Solving the Z-sort problem
+                     B                                                       Z
+                                                                                  Set the Z-sort
+                                                                                  point to the
+                             A                                                    furthest point (B)
+                                                                                  rather than the
+                                                                                  center of gravity
+                                                                                  (A)
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Speeding up Polygon Division
+     Split processing for before and after division
+Processing that is performed just once before division
+
+• back clip
+                                                                      r0, g0, b0
+• light source
+   calculations
+• Z sort
+
+ (r2+r0)/2, (g 2+g0) /2, (b 2+b0) /2                                                             (r0+r1)/2, (g 0+g1) /2, (b 0+b1) /2
+
+
+
+
+r2, g2, b2                                                                                                         r1, g1, b1
+                                              (r1+r2)/2, (g 1+g2) /2, (b 1+b2) /2
+
+
+
+
+     CONFIDENTIAL    PlayStation Developer Seminar / Summer ‘97 / Speeding up Polygon Division
+READ modeling data
+  (x0, y0, z0)                            (x1, y1, z1)
+
+                                                                        Reading 4 vertices, 12 words takes
+                                                                                 about 70 cycles
+
+
+
+                                                                        If the data can be expressed
+                                                                       as w,h,d, about 7 words and 20
+                                                                              cyclescan be saved
+  (x2, y2, z2)                            (x3, y3, z3)
+
+
+               Modeling data formats should take into
+                     consideration the fact that
+                   memory reads are very slow
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Speeding up Polygon Division
+Polygons that will not be displayed
+should be rejected early on
+
+
+                  decision A                                                    the rejection amount is
+
+                  decision B
+
+                  decision C
+                                                                                A>B>C
+                                                                                A is the GTE
+                         :
+                                                                                flag clip
+
+             MAIN LOOP
+
+
+
+
+   CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Speeding up Polygon Division
+    Clipping (1)
+                   HW clip                                                             4-vertex min-max
+                                                   (SCR_maxx,
+                                                   SCR_maxy)                     y
+                                                                        maxy
+
+                   SCREEN
+
+
+(SCR_minx,                                                              miny
+                          C
+SCR_miny)
+                   B            B
+                          B                                                                                      x
+             A                         A                                                       minx       maxx
+
+                                                                                  Clip conditions
+                                                                                  maxx                >   SCR_minx
+                           A                                                      maxy                >   SCR_miny
+                                                                                  minx                >   SCR_maxx
+                                                                                  miny                >   SCR_maxy
+
+
+    CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Speeding up Polygon Division
+Clipping (2)
+NEAR Z clipping
+
+                                                                           Clip conditions
+                   C
+                       C
+                                A                VIEW
+                                                                           SZ0             <    projection/2
+               C                                                                            &
+                           B                                               SZ1             <    projection/2
+               C
+               C
+                   C                          A                                             &
+                                                                           SZ2             <    projection/2
+                               A                                           SZ3             <
+                                                                                            &
+                                                                                                projection/2
+
+
+               projection/2
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Speeding up Polygon Division
+ Eliminating useless OT
+                                          Elimination of NULL OT
+
+Number of
+registered
+packets
+
+                                                               OT
+
+                                               Packets are not registered
+
+
+
+
+                           OT-1                                                              OT-2
+
+                                                       Stretch a link
+
+  CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Speeding up Polygon Division
+Conclusion
+
+      Rendering ground in
+      3-dimensions
+
+                              1. Active 3-dimension divisions
+                              2. Recursive call
+                              3. On cache
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Speeding up Polygon Division
+

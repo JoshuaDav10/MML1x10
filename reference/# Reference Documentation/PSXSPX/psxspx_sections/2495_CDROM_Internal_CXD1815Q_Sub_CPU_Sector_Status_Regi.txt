@@ -1,0 +1,75 @@
+PSXSPX SPECIFICATIONS - CDROM INTERNAL CXD1815Q SUB-CPU SECTOR STATUS REGISTERS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM Internal CXD1815Q Sub-CPU Sector Status Registers
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2725 characters
+Lines: 66
+================================================================================
+
+CDROM Internal CXD1815Q Sub-CPU Sector Status Registers
+
+00h - ECCSTS - ECC Status (R)
+
+| 0 CFORM FORM assumed by Error Correction (0=FORM1, 1=FORM2)
+1 CMODE MODE assumed by Error Correction (0=MODE1, 1=MODE2)
+2 ECCOK ECC Okay (0=Bad, 1=Okay)
+3 EDCOK EDC Okay (0=Bad, 1=Okay)
+4 CORDONE Correction Done (0=None, 1=Error occurred and was corrected)
+5 CORINH Correction Inhibit (0=Okay,1=AUTODIST couldn't determine MODE/FORM)
+6 ERINBLK Erasure in Block (0=Okay, 1=At least 1 byte is wrong & uncorrected)
+7 EDCALL0 EDC all-zero (0=No/EDC Exists, 1=Yes/All four EDC bytes are 00h)
+
+01h - DECSTS - Decoder Status (R)
+
+| 0 NOSYNC No Sync (0=Okay, 1=Sector Sync Mark Missing)
+1 SHRTSCT Short Sector (0=Okay, 1=Sector Sync Mark within Sector Data)
+2-4 - Reserved (undefined)
+5 RTADPBSY Real-time ADPCM Busy (0=No, 1=Busy/playback)
+6-7 - Reserved (undefined)
+
+02h - HDRFLG - Header/Subheader Error Flags for HDR/SHDR registers (R)
+
+| 0 CI Error in 4th Subheader byte (Coding Info) (0=Okay, 1=Error)
+1 SUBMODE Error in 3rd Subheader byte (Submode) (0=Okay, 1=Error)
+2 CHANNEL Error in 2nd Subheader byte (Channel) (0=Okay, 1=Error)
+3 FILE Error in 1st Subheader byte (File) (0=Okay, 1=Error)
+4 MODE Error in 4th Header byte (MODE) (0=Okay, 1=Error)
+5 BLOCK Error in 3rd Header byte (FF) (0=Okay, 1=Error)
+6 SEC Error in 2nd Header byte (SS) (0=Okay, 1=Error)
+7 MIN Error in 1st Header byte (MM) (0=Okay, 1=Error)
+
+Error flags for current sector are probably stored straight in this register
+(ie. these flags are probably available even without using 9bit SRAM).
+
+Or maybe not... if the chip supports receiving newer sectors during
+time-consuming error corrections... then those newer would need to be stored in
+SRAM, and would thus require 9bit SRAM for the error flags?
+
+03h - HDR - Header Bytes (R)
+
+| 1st read: 1st Header byte (MM)
+2nd read: 2nd Header byte (SS)
+3rd read: 3rd Header byte (FF)
+4th read: 4th Header byte (MODE)
+
+04h - SHDR - Subheader Bytes (R)
+
+| 1st read: 1st Subheader byte (File)
+2nd read: 2nd Subheader byte (Channel)
+3rd read: 3rd Subheader byte (Submode) (SM)
+4th read: 4th Subheader byte (Coding Info) (CI)
+
+The contents of the HDRFLG, HDR, SHDR registers indicate:
+
+| (1) The corrected value in the real-time correction or
+repeat correction mode
+(2) Value of the raw data from the drive in the monitor-only
+or write-only mode
+The CMOME? and CMODE bits (bits 1, 0) of ECCSTS indicate the FORM and MODE
+of the sector the decoder has discriminated by the raw data from the drive.
+Due to erroneous correction, the values of these bits may be at variance
+with those of the HDR register MODE byte and SHDR register submode byte
+bit5.
+
+Unknown when 1st..4th read indices are reset for HDR and SHDR (maybe on access

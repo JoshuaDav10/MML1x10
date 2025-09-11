@@ -1,0 +1,72 @@
+MIPS INSTRUCTION SET REFERENCE - TABLE 3-30 VALUES OF THE HINT FIELD FOR THE PREF INSTRUCTION
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Table 3-30 Values of the hint Field for the PREF Instruction
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 2893 characters
+Lines: 63
+================================================================================
+
+Table 3-30 Values of the hint Field for the PREF Instruction
+
+              Value               Name                       Data Use and Desired Prefetch Action
+
+
+                                                  Use: Prefetched data is expected to be read (not modified).
+                   0    load
+                                                  Action: Fetch data as if for a load.
+
+
+
+
+                                                  Use: Prefetched data is expected to be stored or modified.
+                   1    store
+                                                  Action: Fetch data as if for a store.
+
+
+
+
+                2-3     Reserved                  Reserved for future use - not available to implementations.
+
+
+
+
+                                                  Use: Prefetched data is expected to be read (not modified) but not
+                                                  reused extensively; it “streams” through cache.
+                   4    load_streamed
+                                                  Action: Fetch data as if for a load and place it in the cache so that it
+                                                  does not displace data prefetched as “retained.”
+
+
+
+
+                                                  Use: Prefetched data is expected to be stored or modified but not
+                                                  reused extensively; it “streams” through cache.
+                   5    store_streamed
+                                                  Action: Fetch data as if for a store and place it in the cache so that
+                                                  it does not displace data prefetched as “retained.”
+
+
+
+
+                                                  Use: Prefetched data is expected to be read (not modified) and
+                                                  reused extensively; it should be “retained” in the cache.
+                   6    load_retained
+                                                  Action: Fetch data as if for a load and place it in the cache so that it
+                                                  is not displaced by data prefetched as “streamed.”
+
+
+
+
+                                                  Use: Prefetched data is expected to be stored or modified and reused
+                                                  extensively; it should be “retained” in the cache.
+                   7    store_retained
+                                                  Action: Fetch data as if for a store and place it in the cache so that
+                                                  it is not displaced by data prefetched as “streamed.”
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                                  223
+
+                         Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.

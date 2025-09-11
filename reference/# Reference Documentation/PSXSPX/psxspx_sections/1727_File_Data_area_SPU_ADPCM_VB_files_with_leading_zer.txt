@@ -1,0 +1,48 @@
+PSXSPX SPECIFICATIONS - ... .. FILE DATA AREA (SPU-ADPCM( (.VB FILES WITH LEADING ZEROES)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: ... .. File Data area (SPU-ADPCM( (.VB files with leading zeroes)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1345 characters
+Lines: 39
+================================================================================
+
+... .. File Data area (SPU-ADPCM( (.VB files with leading zeroes)
+File List entries: (Aladdin/Emperor) (Croc2)
+000h 4 Sample Rate in Hertz (AC44h=44100Hz) (5622h=22050Hz)
+004h 2 Sample Rate Pitch (1000h=44100Hz) (0800h=22050Hz)
+006h 2 Unknown (7Fh) (32h)
+008h 4 Unknown (1) (8)
+00Ch 4 Unknown (1FC0001Fh) (40008Fh)
+010h 4 Filesize (xxx0h) (xxx0h)
+
+The number of files is implied in sum of filesizes versus total size.
+
+Dino Crisis 1 and 2 (PSX\DATA\*.DAT and *.DBS and *.TEX) ("dummy header")
+
+| 000h 800h File List (with 10h or 20h bytes per entry)
+800h .. File Data (each file is zeropadded to 800h-byte boundary)
+
+File List entrysize can be 10h or 20h bytes:
+
+| Dino Crisis 1 --> always size 10h
+Dino Crisis 2 --> usually size 20h
+Dino Crisis 2 --> sometimes size 10h (eg. SC24.DAT, SC48.DAT, WEP_*.DAT)
+
+File List entries:
+
+| File List entries, type 0 and 7:
+000h 4 Type (0=Data (or .BS pictures), 7=CompressedData)
+004h 4 Size
+008h 4 RAM Addresss (80000000h..801FFFFFh)
+00Ch 4 Zero
+010h (10h) Zerofilled
+File List entries, type 1 and 2 and 8:
+000h 4 Type (1=Bitmap, 2=Palette, 8=CompressedBitmap)
+004h 4 Size (see below Size Notes)
+008h 2 VRAM Address X (0..3FFh)
+00Ah 2 VRAM Address Y (0..1FFh) (or 280h in Dino 2 ST703.DAT)
+00Ch 2 Width in halfwords (1..400h)
+00Eh 2 Height (1..200h)
+010h (10h) Zerofilled
+File List entries, type 3 and 4:

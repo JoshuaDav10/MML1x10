@@ -1,0 +1,42 @@
+MIPS INSTRUCTION SET REFERENCE - EXCEPTIONS:
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Exceptions:
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1622 characters
+Lines: 33
+================================================================================
+
+Exceptions:
+            None
+
+
+
+
+264                                                             MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                               Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+SSNOP
+
+
+
+
+  Superscalar No Operation                                                                                             SSNOP
+
+
+        31                   26 25             21 20             16 15               11 10              6   5               0
+              SPECIAL                   0                  0                  0                   1              SLL
+               000000                 00000             00000              00000                00001           000000
+                    6                   5                  5                  5                  5                6
+
+             Format:    SSNOP                                                                                         MIPS32
+
+             Purpose:
+             Break superscalar issue on a superscalar processor.
+
+             Description:
+             SSNOP is the assembly idiom used to denote superscalar no operation. The actual instruction is interpreted by the
+             hardware as SLL r0, r0, 1.
+             This instruction alters the instruction issue behavior on a superscalar processor by forcing the SSNOP instruction to
+             single-issue. The processor must then end the current instruction issue between the instruction previous to the SSNOP
+             and the SSNOP. The SSNOP then issues alone in the next issue slot.

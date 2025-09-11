@@ -1,0 +1,114 @@
+PSXSPX SPECIFICATIONS - CDROM ISO MISC
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM ISO Misc
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 3740 characters
+Lines: 106
+================================================================================
+
+CDROM ISO Misc
+
+Both Byte Order
+
+All 16bit and 32bit numbers in the ISO region are stored twice, once in
+Little-Endian order, and then in Big-Endian Order. For example,
+
+| 2x16bit value 1234h ---> stored as 34h,12h,12h,34h
+2x32bit value 12345678h ---> stored as 78h,56h,34h,12h,12h,34h,56h,78h
+
+Exceptions are the 16bit Permission Flags which are stored only in
+Little-Endian format (although the flags are four 4bit groups, so that isn't a
+real 16bit number), and, the Path Tables are stored in both formats, but
+separately, ie. one table contains only Little-Endian numbers, and the other
+only Big-Endian numbers.
+
+d-characters (Filenames)
+
+| "0..9", "A..Z", and "_"
+
+a-characters
+
+| "0..9", "A..Z", SPACE, "!"%&'()*+,-./:;?_"
+
+Ie. all ASCII characters from 20h..5Fh except "#$@[\]^"
+
+SEPARATOR 1 = 2Eh (aka ".") (extension; eg. "EXT")
+
+SEPARATOR 2 = 3Bh (aka ";") (file version; "1".."32767")
+
+Fixed Length Strings/Filenames
+
+The Volume Descriptors contain a number fixed-length string/filename fields
+(unlike the Directory Records and Path Tables which have variable lengths).
+These fields should be padded with SPACE characters if they are empty, or if
+the string is shorter than the maximum length.
+
+Filename fields in Volume Descriptors are referring to files in the Root
+Directory. On PSX disks, the filename fields are usually empty, but some disks
+are mis-using the Copyright Filename to store the Company Name (although no
+such file exists on the disk).
+
+Volume Descriptor Timestamps
+
+The various timestamps occupy 17 bytes each, in form of
+
+| "YYYYMMDDHHMMSSFF",timezone
+"0000000000000000",00h ;empty timestamp
+
+The first 16 bytes are ASCII Date and Time digits (Year, Month, Day, Hour,
+Minute, Second, and 1/100 Seconds. The last byte is Offset from Greenwich Mean
+Time in number of 15-minute steps from -48 (West) to +52 (East); or actually:
+to +56 when recursing Kiribati's new timezone.
+
+Note: PSX games manufactured in year 2000 were accidently marked to be created
+in year 0000.
+
+Recording Timestamps
+
+Occupy only 7 bytes, in non-ascii format
+
+| year-1900,month,day,hour,minute,second,timezone
+00h,00h,00h,00h,00h,00h,00h ;empty timestamp
+
+The year ranges from 1900+0 to 1900+255.
+
+File Flags
+
+If this Directory Record identifies a directory then bit 2,3,7 shall be set to
+ZERO.
+
+If no Extended Attribute Record is associated with the File Section identified
+by this Directory Record then bit positions 3 and 4 shall be set to ZERO.
+
+| 0 Existence (0=Normal, 1=Hidden)
+1 Directory (0=File, 1=Directory)
+2 Associated File (0=Not an Associated File, 1=Associated File)
+3 Record
+If set to ZERO, shall mean that the structure of the information in
+the file is not specified by the Record Format field of any associated
+Extended Attribute Record (see 9.5.8).
+If set to ONE, shall mean that the structure of the information in
+the file has a record format specified by a number other than zero in
+the Record Format Field of the Extended Attribute Record (see 9.5.8).
+4 Restrictions (0=None, 1=Restricted via Permission Flags)
+5 Reserved (0)
+6 Reserved (0)
+7 Multi-Extent (0=Final Directory Record for the file, 1=Not final)
+
+Permission Flags (in Extended Attribute Records)
+
+| 0-3 Permissions for upper-class owners
+4-7 Permissions for normal owners
+8-11 Permissions for upper-class users
+12-15 Permissions for normal users
+
+This is a bit bizarre, an upper-class owner is "an owner who is a member of a
+group of the System class of user". An upper-class user is "any user who is a
+member of the group specified by the Group Identification field". The separate
+4bit permission codes are:
+
+| Bit0 Permission to read the file (0=Yes, 1=No)
+Bit1 Must be set (1)
+Bit2 Permission to execute the file (0=Yes, 1=No)
+Bit3 Must be set (1)

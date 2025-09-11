@@ -1,0 +1,75 @@
+PSXSPX SPECIFICATIONS - FIRST 40H BYTES ARE I/O PORTS (AS IN MC68HC05 DATASHEET):
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: First 40h bytes are I/O ports (as in MC68HC05 datasheet):
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 2340 characters
+Lines: 66
+================================================================================
+
+First 40h bytes are I/O ports (as in MC68HC05 datasheet):
+
+| 000h 4 FF 7B 00 FF (other when disk inserted)
+004h 5 11 00 20 20 0C
+009h 1 00 (when disk inserted: changes between 00 or 80)
+00Ah 2 71 00
+00Ch 1 00 (when disk inserted: changes between 00 or 80)
+00Dh 3 20 20 20
+010h 8 02 80 00 60 00 00 99(orBB) 98
+018h 4 changes randomly (even when no disk inserted)
+01Ch 3 40 00 41
+01Fh 1 changes randomly (even when no disk inserted)
+020h 30 20h-filled
+03Eh 2 82h 20h
+
+Next 200h bytes are RAM:
+
+| 040h 4 08 00 00 00 ;or 98 07 xx 0B when disk inserted ;[40].Bit1=MUTE
+044h 4 00h-filled
+048h 3 40 20 00 ;or 58 71 0F when disk inserted
+04Bh 1 changes randomly (nodisk: 00 or 80 / disk: BFh)
+04Ch 1 Zero (or C0h)
+04Dh 3 MM:SS:FF (begin of current track MM:SS:00h) (or increasing addr)
+050h 10 Subchannel Q (adjusted position values)
+05Ah 2 ...
+05Ch 1 00h (or 64h)
+05Dh 3 MM:SS:FF (current read address) (sticky address during pause)
+060h 1 increments at circa 16Hz or so (or other rate when spinning)
+061h 12 00h-filled ;or else when disk inserted
+06Dh 1 01 ;or 0C when disk inserted
+06Eh 2 SetFilter setting (file,channel)
+070h 16 00h-filled ;or else when disk inserted
+080h 8 00h-filled
+088h 3 03:SS:FF (three, second, fraction)
+08Bh 3 03:SS:FF (three, second, fraction)
+08Eh 2 01 FF (or other values)
+090h 1 00h (or 91h when disk inserted + spinning)
+091h 13 Zero
+09Eh 1 00h (or 01h when disk inserted + spinning)
+09Fh 1 Zero
+0A0h 1 Always 23h
+0A1h 1 09h (5Dh when disk inserted)
+0A2h 7 00h-filled
+0A9h 1 40
+0AAh 4 00h-filled
+0AEh 1 00 (no disk) or 01 (disk) or so
+0AFh 1 00 ;or 06 when disk inserted
+0B0h 7 00 DC 00 02 00 E0 08 ;\or else when disk inserted
+0B7h 1 20 ;Bit6+7=MUTE ;
+0B8h 3 DE 00 00 ;/
+0BBh 1 SetMode setting (mode)
+0BCh 1 GetStat setting (stat)
+0BDh 3 00h-filled
+0C0h 6 FFh-filled ;stack... ;\
+0C6h 1 Usually DFh ;sometimes [0EBh and up] are non-FFh, too
+0C7h 15 FFh-filled ;(depending on disk or commands or so)
+0D6h 1 Usually FDh (or FFh) ; ;
+0D7h 24 FFh-filled ; stack
+0EFh 4 on power-up FFh-filled, other once when disk read ;
+0F3h 7 changes randomly (even when no disk inserted) ;
+0FAh 6 2E 3C 2A D6 10 95 ;/
+100h 2x99 TOC Entries for Start of Track 1..99 (MM:SS)
+1C6h 1 TOC First Track number (usually 01h)
+1C7h 1 TOC Last Track number (usually 01h or higher)
+1C8h 3 TOC Entry for Start of Lead-Out (MM:SS:FF)
+1CBh 2 Zero

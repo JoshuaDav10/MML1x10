@@ -1,0 +1,41 @@
+PSXSPX SPECIFICATIONS - (EITHER BY CONNECTING THE CONTROLLER TO A PSX CONSOLE, OR BY PLAYING A PSX GAME
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: (either by connecting the controller to a PSX console, or by playing a PSX game
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1240 characters
+Lines: 32
+================================================================================
+
+(either by connecting the controller to a PSX console, or by playing a PSX game
+on a PS2 console).
+
+The analog button feature is reportedly rarely used by PS2 games (and there
+aren't any PSX games known to use it).
+
+Config Mode - Command 40h "@" Dualshock2: Get/Set ButtonAttr?
+
+| Send 01h 40h 00h Idx Val 00h 00h 00h 00h ;0Bh)
+
+Allows to change twelve 3bit values (with Idx=00h..0Bh, and Val=00h..03h).
+Default is Val=02h. Purpose is unknown, the 12 values might be related to the
+12 analog buttons, but there is no noticable difference between Val=0,1,2,3.
+Maybe it does have some subtle effects on things like...
+
+| Digital button sensitivity, or Analog button sensitivity, or
+Analog button bit-depth/conversion speed, or something else?
+
+Config Mode - Command 41h "A" Dualshock2: Get Reply Capabilities
+
+| Send 01h 41h 00h 00h 00h 00h 00h 00h 00h
+Reply HiZ F3h 5Ah FFh FFh 03h 00h 00h 00h
+
+This seems to return a constant bitmask indicating which reply bytes can be
+enabled/disabled via Command 4Fh (ie. 3FFFFh = 18 bits).
+
+Config Mode - Command 4Fh "O" Dualshock2: Set ReplyProtocol
+
+| Send 01h 41h 00h aa bb cc dd ee ff
+Reply HiZ F3h 5Ah 00h 00h 00h 00h 00h 00h
+
+This can output some 48bit value (bit0=aa.bit0, bit47=ff.bit7), used to

@@ -1,0 +1,48 @@
+PSXSPX SPECIFICATIONS - CD-ROM XA ADPCM IS USED FOR AUDIO DATA COMPRESSION. EACH 16BIT SAMPLE IS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CD-ROM XA ADPCM is used for Audio data compression. Each 16bit sample is
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1709 characters
+Lines: 40
+================================================================================
+
+CD-ROM XA ADPCM is used for Audio data compression. Each 16bit sample is
+encoded in 4bit nibbles; so the compression rate is almost 1:4 (only almost 1:4
+because there are 16 header bytes within each 128-byte portion). The data is
+usually/always stored on 914h-byte sectors (without error correction).
+
+Subheader
+
+The Subheader (see previous chapter) contains important info for ADPCM: The
+file/channel numbers for Interleaved data, and the codinginfo flags:
+mono/stereo flag, 37800Hz/18900Hz sampling rate, 4bit/8bit format, and
+emphasis.
+
+ADPCM Sectors
+
+Each sector consists of 12h 128-byte portions (=900h bytes) (the remaining 14h
+bytes of the sectors 914h-byte data region are 00h filled).
+
+The separate 128-byte portions consist of a 16-byte header,
+
+| 00h..03h Copy of below 4 bytes (at 04h..07h)
+04h Header for 1st Block/Mono, or 1st Block/Left
+05h Header for 2nd Block/Mono, or 1st Block/Right
+06h Header for 3rd Block/Mono, or 2nd Block/Left
+07h Header for 4th Block/Mono, or 2nd Block/Right
+08h Header for 5th Block/Mono, or 3rd Block/Left ;\unknown/unused
+09h Header for 6th Block/Mono, or 3rd Block/Right ; for 8bit ADPCM
+0Ah Header for 7th Block/Mono, or 4th Block/Left ; (maybe 0, or maybe
+0Bh Header for 8th Block/Mono, or 4th Block/Right ;/copy of above)
+0Ch..0Fh Copy of above 4 bytes (at 08h..0Bh)
+
+followed by twentyeight data words (4x28-bytes),
+
+| 10h..13h 1st Data Word (packed 1st samples for 2-8 blocks)
+14h..17h 2nd Data Word (packed 2nd samples for 2-8 blocks)
+18h..1Bh 3rd Data Word (packed 3rd samples for 2-8 blocks)
+... Nth Data Word (packed Nth samples for 2-8 blocks)
+7Ch..7Fh 28th Data Word (packed 28th samples for 2-8 blocks)
+
+and then followed by the next 128-byte portion.

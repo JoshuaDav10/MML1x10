@@ -1,0 +1,38 @@
+MIPS INSTRUCTION SET REFERENCE - EXCEPTIONS:
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Exceptions:
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1141 characters
+Lines: 29
+================================================================================
+
+Exceptions:
+               None
+
+
+
+
+218                                                            MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                                  Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+ORI
+
+
+
+
+      Or Immediate                                                                                                       ORI
+
+         31                   26 25           21 20             16 15                                                    0
+                  ORI
+                                       rs                  rt                             immediate
+                001101
+                     6                 5                   5                                 16
+
+              Format:    ORI rt, rs, immediate                                                                    MIPS32
+
+              Purpose:
+              To do a bitwise logical OR with a constant
+
+              Description: rt ← rs or immediate
+              The 16-bit immediate is zero-extended to the left and combined with the contents of GPR rs in a bitwise logical OR

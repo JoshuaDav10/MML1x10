@@ -1,0 +1,35 @@
+MIPS INSTRUCTION SET REFERENCE - APPENDIX A INSTRUCTION BIT ENCODINGS
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Appendix A Instruction Bit Encodings
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 2327 characters
+Lines: 26
+================================================================================
+
+Appendix A Instruction Bit Encodings
+
+
+                                            Table A-19 MIPS32 COP2 Encoding of rs Field
+             rs         bits 23..21
+                             0             1             2             3                 4                5              6            7
+         bits 25..24       000            001           010           011               100              101            110          111
+          0     00       MFC2 θ            β           CFC2 θ       MFHC2 θ⊕           MTC2 θ             β            CTC2 θ      MTHC2 θ⊕
+          1     01        BC2 θ            *             *             *                 *                *              *            *
+          2     10
+                                                                               C2 θδ
+          3     11
+
+
+                                        Table A-20 MIPS64 COP1X Encoding of Function Field1
+          function       bits 2..0
+                            0         1                   2              3               4                5         6                 7
+          bits 5..3        000       001                 010            011             100              101       110               111
+          0 000         LWXC1 ∇    LDXC1 ∇                *              *               *             LUXC1 ∇      *                 *
+          1 001         SWXC1 ∇    SDXC1 ∇                *              *               *             SUXC1 ∇      *              PREFX ∇
+          2 010             *         *                   *              *               *                *         *                 *
+          3 011             *         *                   *              *               *                *     ALNV.PS ∇             *
+          4 100         MADD.S ∇ MADD.D ∇                 *              *               *                *     MADD.PS ∇             *
+          5 101         MSUB.S ∇ MSUB.D ∇                 *              *               *                *     MSUB.PS ∇             *
+          6 110        NMADD.S ∇ NMADD.D ∇                *              *               *                *    NMADD.PS ∇             *
+          7 111        NMSUB.S ∇ NMSUB.D ∇                *              *               *                *    NMSUB.PS ∇             *

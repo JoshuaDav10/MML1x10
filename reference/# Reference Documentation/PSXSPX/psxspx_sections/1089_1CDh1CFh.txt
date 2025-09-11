@@ -1,0 +1,48 @@
+PSXSPX SPECIFICATIONS - [1CDH..1CFH]
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: [1CDh..1CFh]
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1452 characters
+Lines: 39
+================================================================================
+
+[1CDh..1CFh]
+01 00 E8 --> licensed/metalgear/kain
+01 00 EE --> licensed/alone2
+06 00 E2 or 00 00 02 00 E8 --> licensed/wipeout
+02 00 DC --> unlicensed/elo
+02 00 D6 --> unlicensed/driver
+00 00 EE --> audio/lola
+00 00 FA --> audio/marilyn
+00 00 F4 --> audio/westen
+00 00 00 --> disk missing
+last byte is always in steps of 6
+1D0h 4 SCEx String
+1D4h 4 Zero
+1D8h 2 SCEx Counters (total,success) ;for command 19h,05h
+1DAh 6 00h-filled (or ... SS:FF)
+1E0h 6 Command Buffer (usually 19h,60h,E2h,01h = Read RAM Command)
+1E6h 7 00h-filled (unless destroyed by more-than-6-byte-commands)
+1EDh 3 Setloc setting (MM:SS:FF)
+1F0h 1 00h (unless destroyed by more-than-6-byte-commands)
+1F1h 3 C0h 00h 00h ;or 20h,0Ch,50h or C0h,0Ch,08h ;for command(19h,75h)
+;or 00h,00h,00h for audio
+;or 80h,00h,00h for disk missing
+1F4h 4 00h-filled ... or SCEx string
+1F8h 1 00h
+1F9h 1 Selected Target (parameter from Play and SetSession commands)
+1FAh 5 00h-filled ;01 01 00 8B 00 00 ;or 01 02 8B 00 00
+01 00 8B 00 00 -- audio/unlicensed
+01 01 00 00 00 -- licensed
+1FFh 1 00h-on power up, changes when disk inserted ;or 01 = Playing
+1FDh 3 MM:SS:FF (only during command 19h,00h) (MM=98..99=TOC)
+200h 10 Subchannel Q (real values)
+20Ah 2 whatever
+20Ch 1 Zero
+20Dh 1 Desired Session (from SetSession command)
+20Eh 1 Current Session (actual location of drive head)
+20Fh 1 Zero
+210h 10 Subchannel Q (adjusted position values)
+21Ah 6 00h-filled
+220h 4 Data Sector Header (MM:SS:FF:Mode)

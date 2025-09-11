@@ -1,0 +1,64 @@
+PSXSPX SPECIFICATIONS - IF SAME --> ASSUME XPLORER HARDWARE (OR DATEL PAR3, WHATEVER THAT IS)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: If same --> assume Xplorer hardware (or Datel PAR3, whatever that is)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2212 characters
+Lines: 55
+================================================================================
+
+If same --> assume Xplorer hardware (or Datel PAR3, whatever that is)
+Exit Chip ID mode (at 1F000000h)
+
+Next, detect the Chip ID for the (first) FLASH chip:
+
+| Enter Chip ID mode (at 1F000000h)
+Read the two ID bytes (at 1F00000xh)
+Exit Chip ID mode (at 1F000000h)
+
+Finally, one needs to check if there's a second FLASH chip, there are two such
+cases:
+
+| If cart=xplorer AND 1st_chip=256K --> might have a 2nd 256K chip
+If cart=datel AND 1st_chip=128K --> might have a 2nd 128K chip
+
+In both cases, the 2nd chip would be mapped at 1F400000h, and one can test the
+following four combinations:
+
+| Enter Chip ID (at 1F000000h) and Enter Chip ID (at 1F400000h) ;id1+id2
+Exit Chip ID (at 1F000000h) and Enter Chip ID (at 1F400000h) ;id2
+Exit Chip ID (at 1F400000h) and Enter Chip ID (at 1F000000h) ;id1
+Exit Chip ID (at 1F400000h) and Exit Chip ID (at 1F000000h) ;none
+
+For each combination compare 400h bytes at 1F000000h vs 1F400000h.
+
+| If they are all same --> there is only one chip (mirrored to both areas)
+If different --> 1F400000h is either garbage, or a 2nd chip
+
+In the latter case, do Chip ID detection at 1F400000h to see if there's really
+another chip there, and which type it is (if present, then it should be usually
+the same type as the 1st chip; and if it's not present, then there might be
+just open bus garbage instead of valid ID values).
+
+FLASH/EEPROM Chip IDs
+
+| ChipID Kbyte Page Maker/Name ;notes
+1Fh,D5h 128K 128 ATMEL AT29C010A ;xplorer/prototypes?
+1Fh,35h 128K 128 ATMEL AT29LV010A ;-
+1Fh,DAh 256K 256 ATMEL AT29C020 ;xplorer
+1Fh,BAh 256K 256 ATMEL AT29BV020 ;xplorer
+1Fh,A4h 512K 256 ATMEL AT29C040A ;xplorer
+1Fh,C4h 512K 256 ATMEL AT29xV040A ;-
+BFh,07h 128K 128 SST SST29EE010 ;-
+BFh,08h 128K 128 SST SST29xE010 ;-
+BFh,22h 128K 128 SST SST29EE010A ;-
+BFh,23h 128K 128 SST SST29xE010A ;-
+BFh,10h 256K 128 SST SST29EE020 ;xplorer & datel
+BFh,12h 256K 128 SST SST29xE020 ;xplorer
+BFh,24h 256K 128 SST SST29EE020A ;-
+BFh,25h 256K 128 SST SST2xEE020A ;-
+BFh,04h 512K 256 SST SST28SF040 ;said to be used in "AR/GS Pro"
+DAh,C1h 128K 128 WINBOND W29EE01x ;-
+DAh,45h 256K 128 WINBOND W29C020 ;-
+DAh,46h 512K 256 WINBOND W29C040 ;xplorer
+01h,20h 128K 1 AMD AM29F010 ;pcb "JSZ-02" (power replay iii)

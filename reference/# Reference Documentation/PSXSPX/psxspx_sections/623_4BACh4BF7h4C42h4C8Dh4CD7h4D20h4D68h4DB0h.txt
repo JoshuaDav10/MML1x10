@@ -1,0 +1,29 @@
+PSXSPX SPECIFICATIONS - 4BACH,4BF7H,4C42H,4C8DH,4CD7H,4D20H,4D68H,4DB0H ;
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 4BACh,4BF7h,4C42h,4C8Dh,4CD7h,4D20h,4D68h,4DB0h ;
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 1071 characters
+Lines: 20
+================================================================================
+
+4BACh,4BF7h,4C42h,4C8Dh,4CD7h,4D20h,4D68h,4DB0h ;
+4DF7h,4E3Eh,4E84h,4EC9h,4F0Eh,4F52h,4F95h,4FD7h ; entry
+5019h,505Ah,509Ah,50DAh,5118h,5156h,5194h,51D0h ; 180h..1FFh
+520Ch,5247h,5281h,52BAh,52F3h,532Ah,5361h,5397h ;
+53CCh,5401h,5434h,5467h,5499h,54CAh,54FAh,5529h ;
+5558h,5585h,55B2h,55DEh,5609h,5632h,565Bh,5684h ;
+56ABh,56D1h,56F6h,571Bh,573Eh,5761h,5782h,57A3h ;
+57C3h,57E2h,57FFh,581Ch,5838h,5853h,586Dh,5886h ;
+589Eh,58B5h,58CBh,58E0h,58F4h,5907h,5919h,592Ah ;
+593Ah,5949h,5958h,5965h,5971h,597Ch,5986h,598Fh ;
+5997h,599Eh,59A4h,59A9h,59ADh,59B0h,59B2h,59B3h ;/
+
+The PSX table is a bit different as the SNES table: Values up to 3569h are
+smaller as on SNES, the remaining values are bigger as on SNES, and the width
+of the PSX table entries is 4bit higher as on SNES.
+
+The PSX table is slightly bugged: Theoretically, each four values
+(gauss[000h+i], gauss[0FFh-i], gauss[100h+i], gauss[1FFh-i]) should sum up to
+8000h, but in practice they do sum up to 7F7Fh..7F81h (fortunately the PSX sum
+doesn't exceed the 8000h limit; meaning that the PSX interpolations won't

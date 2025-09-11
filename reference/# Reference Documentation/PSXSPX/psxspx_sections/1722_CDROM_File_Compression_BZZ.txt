@@ -1,0 +1,57 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION BZZ
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression BZZ
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1270 characters
+Lines: 49
+================================================================================
+
+CDROM File Compression BZZ
+
+Jackie Chan Stuntmaster (RCHARS\*.RR)
+
+NBA Basketball 2000 (MagDemo28: FOXBB\*.RR)
+
+| 000h 2 ID ("PX")
+002h 2 Unknown (1 or 3)
+004h 4 Header Size (eg. 80h, 7C0h, or 1730h) (N*8+8)
+008h N*8 File List
+... .. Zeropadding to 800h-byte boundary
+... .. File Data area
+File List entries:
+000h 4 Offset (increasing, 800h-byte aligned)
+004h 1 Zero
+005h 3 Filesize in bytes (24bit) (can be odd)
+
+Jackie Chan Stuntmaster does always have headersize=1730h (with many unused
+entries with size=0, both in the middle & at the end of File List).
+
+Bomberman World (MagDemo15: BOMBER\*.RC)
+
+| XXX detect this WITH extension=".RC" check before OBJ
+(else type=1 could be mistaken as offs=1) (eg RC1\BP0*.RC)
+
+Resembles .OBJ but contains Filetype? instead of Offset.
+
+| 000h N*8 File List
+... 8 File List end (zerofilled)
+... .. Garbage padding to 800h-byte boundary
+
+File List entries:
+
+| 000h 4 Filetype (see below)
+004h 4 Filesize in bytes
+
+There can be several files with same type in one .RC archive. Type values are:
+
+| 00h = End of File List (at least so when Type and Size are both zero)
+01h = .TIM
+02h = Unknown
+03h = Unknown
+05h = .VH
+06h = .VB
+09h = Unknown
+0Ah = .TIM (left half of a larger image) (right half has type 01h)
+0Bh = Unknown
+0Ch = Unknown

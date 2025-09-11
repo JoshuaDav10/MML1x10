@@ -1,0 +1,38 @@
+PSXSPX SPECIFICATIONS - SLPH-00022 OPTEC AI COMMANDER PRO, DIGITAL PAD WITH EXTRAS / LCD DISPLAY
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: SLPH-00022 Optec AI Commander Pro, digital pad with extras / lcd display
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1441 characters
+Lines: 29
+================================================================================
+
+SLPH-00022 Optec AI Commander Pro, digital pad with extras / lcd display
+SLPH-00023 Namco Joystick (SLEH-00004)
+SLPH-00024 Optec Cockpit Wheel, analog joystick/analog pedals or so
+SLPH-00025 Optec AI Commander Accessory (extended memo repack ZERO2 version)
+SLPH-00026 Hori Command Stick PS (SLPH-00026 aka HPS11)
+SLPH-00027 ASCII Grip, single-handed digital pad (SLEH-00008)
+SLPH-00028 Hori Grip (gray) (see also: SLPH-00040, and 00086..00088)
+SLPH-00029 Hori Horipad (clear), digital pad
+SLPH-00030 Hori Horipad (black), digital pad
+SLPH-00031 Hori Horipad (gray), digital pad
+SLPH-00032 Hori Horipad (white), digital pad
+SLPH-00033 Hori Horipad (blue), digital pad
+SLPH-00034 Namco G-CON 45, Cinch-based Lightgun (SLEH-0007/SLUH-00035)
+SLPH-00035 ASCII Fighter stick V Jr. (SLEH-00009)
+SLPH-00036 Optec Wireless Dual Shot, digital pad with turbo button
+SLPH-00037 ?
+SLPH-00038 ASCII Pad V Jr., digital pad without any extras
+SLPH-00039 ASCII Pad V2 (gray), digital pad with turbo switches (SLEH-00010)
+SLPH-00040 Hori Grip (black)
+SLPH-00041 ASCII Grip V
+SLPH-00042 ASCII Grip V plus (Derby Stallion'99 supplement set), single-hand
+SLPH-00043 ASCII Pad V2 (clear pink)
+SLPH-00044 ASCII Pad V2 (clear white)
+SLPH-00045 ASCII Pad V2 (clear blue)
+SLPH-00046 ASCII Pad V2 (clear green)
+SLPH-00047 ASCII Pad V2 (clear black)
+SLPH-00048 ASCII Pad V2 (clear red/lead?)
+SLPH-00049 ASCII Pad V2 (clear yellow)
+SLPH-00050 ASCII Pad V2 (clear orange)

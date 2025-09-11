@@ -1,0 +1,96 @@
+PSYQ DOCUMENTATION - TECHNOTE/NeGcon.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/TECHNOTE/NeGcon.pdf
+Converted: Wed Sep 10 02:47:29 PM CDT 2025
+================================================================================
+
+PLAYSTATION TECHNICAL NOTE
+=======================================================================
+
+Date:      2/23/96
+Ref:       Note 30
+Author:    sce00003 (tetsu)
+
+Subject:   FAQ: Regarding neGcon Specifications
+
+
+ABSTRACT
+--------
+
+In order to make the neGcon (pronunciation: nejicon) compatible with
+game software for PlayStation, it it is necessary to pay attention to
+the items described below.
+
+
+ITEMS OF CONCERN
+----------------
+
+(1) Library processing
+NeGcon data cannot be read with the libetc PadInit/PadRead interface
+standard controller. Therefore, when using neGcon, please use the
+libapi controller service.
+
+Note: The libetc controller service and libapi controller service
+cannot coexist. That is to say, when reading the neGcon data using
+libapi or when reading the standard controller data with libapi, you
+can never use libetc PadInit/PadRead. In connection with that, the
+mouse, etc. are the same, so please unify with libapi controller
+service.
+
+(2) Game software compatibility processing
+The analog readings from the analog button and the twist control are
+each converted into 1 byte of data with values in the range of 0-255.
+However, since production errors and use over a long period of time can
+cause slight numerical value differences to occur, it is necessary for
+the game software to absorb these individual differences. Also, it is
+necessary for the game software to be able to adjust the twist control
+idle position range [play] and central value offset settings. Please
+strictly observe the following numerical values. Note that when reading
+the ‘twist control center values’ and ‘analog button values’ in the key
+configuration section, the method of absorbing individual differences
+in neGcon is also effective.
+
+(3) Data regarding the extent of the guarantee at time of shipment
+
+     a) Twist Control: Less than 64 is processed as minimum value
+                       More than 192 is processed as maximum value
+                       Valid data range: 64-192 (40H-C0H)
+
+     b) Analog button: Less than 16 is processed as minimum value
+                       More than 192 is processed as maximum value
+                       Valid data range: 16-192 (10H-C0H)
+
+     c) Twist Control center - idle position range [play]: 8
+(4) Button location, serial data
+
+The neGcon buttons are as follows:
+
+Up
+Left
+Right
+Down
+
+Twist
+
+Input data is transmitted as 6-byte serial data as described below:
+
+(The ID is 23H)
+
+1st byte               Digital              No. 1            8 bit
+2nd byte               Digital              No. 2            8 bit
+3rd byte               Analog               Twisting         0~255
+4th byte               Analog               button           0~255
+5th byte               Analog               button           0~255
+6th byte               Analog               button           0~255
+
+Assignments to Each Bit of Digital No. 1 and Digital No. 2
+
+Digital No. 1:
+b7    b6    b5  b4     b3    b2      b1     b0
+Left Down Right Up     S     None    None   None
+
+
+Digital No. 2:
+b7    b6    b5    b4   b3    b2      b1     b0
+None None A       B    R     None    None   None
+

@@ -1,0 +1,58 @@
+PSXSPX SPECIFICATIONS - /EXP? =| 4 38 |= /WR1? (CPU99) |__.-------------------.__|
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: /EXP? =| 4 38 |= /WR1? (CPU99) |__.-------------------.__|
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1234 characters
+Lines: 50
+================================================================================
+
+/EXP? =| 4 38 |= /WR1? (CPU99) |__.-------------------.__|
+NC?GND? =| 5 39 |= GND?NC?
+D0 =| 6 40 |= D1
+D2 =| 7 41 |= D3
+D4 =| 8 42 |= D5
+D6 =| 9 43 |= D7
+D8 =|10 44 |= D9
+D10 =|11 45 |= D11
+D12 =|12 46 |= D13
+D14 =|13 47 |= D15
+A0 =|14 48 |= A1
+A2 =|15 49 |= A3
+NC?GND? =|16 50 |= GND?NC?
++3.5V ==|17 51 |== +3.5V
++7.5V ==|18 52 |== +7.5V
+GND? =|19 53 |= GND?NC?
+A4 =|20 54 |= A5
+A6 =|21 55 |= A7
+A8 =|22 56 |= A9
+A10 =|23 57 |= A11
+A12 =|24 58 |= A13
+A14 =|25 59 |= A15
+A16 =|26 60 |= A17
+A18 =|27 61 |= A19
+A20 =|28 62 |= A21
+A22 =|29 63 |= A23
+/RD =|30 64 |= /WR0
+NC!X? =|31 65 |= X?NC!
+SYSCK? =|32 66 |= LRCK (44.1kHz)
+SCLK? =|33 67 |= SDATA?
+GND ==|34 68 |== GND
+|________|
+
+Lots of pins are still unknown?
+
+| EDIT: see http://cgfm2.emuviews.com/new/psx-pio.png
+apparently, many of the "unknown" pins are just GROUND, is that possible?
+
+Internal Power Supply (PSX)
+
+The PSX contains an internal power supply, however, like the PSone, it's only
+having a "Standby" button, which merely disconnects 3.5V and 7.9V from the
+mainboard. The actual power supply remains powered, and wastes energy day and
+night, thanks Sony!
+
+External Power Supply (PSone)
+
+| Inner +7.5V DC 2.0A (inside diameter 0.8mm)
+Outer GND (outside diameter 5.0mm)

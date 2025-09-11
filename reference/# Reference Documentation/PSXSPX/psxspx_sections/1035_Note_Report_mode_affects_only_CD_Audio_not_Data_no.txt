@@ -1,0 +1,36 @@
+PSXSPX SPECIFICATIONS - NOTE: REPORT MODE AFFECTS ONLY CD AUDIO (NOT DATA, NOR XA-ADPCM SECTORS).
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Note: Report mode affects only CD Audio (not Data, nor XA-ADPCM sectors).
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1278 characters
+Lines: 28
+================================================================================
+
+Note: Report mode affects only CD Audio (not Data, nor XA-ADPCM sectors).
+
+AutoPause --> INT4(stat)
+
+Autopause can be enabled/disabled via Setmode.bit1:
+
+| Setmode.bit1=1: AutoPause=On --> Issue INT4(stat) and PAUSE at end of TRACK
+Setmode.bit1=0: AutoPause=Off --> Issue INT4(stat) and STOP at end of DISC
+
+End of Track is determined by sensing a track number transition in SubQ
+position info. After autopause, the disc stays at the of the old
+track, NOT at the of the next track (so trying to resume playing
+by sending a new Play command without new Seek/Setloc command will instantly
+pause again).
+
+Caution: SubQ track transitions may pause instantly when accidently starting to
+play at the end of the previous track rather than at begin of desired track
+(this happen due to seek inaccuracies, for example, GetTD does
+round down TOC entries from MM:SS:FF to MM:SS:00, which may be off by 0.99
+seconds, although this error should be usually compensated by the leading
+2-second pregap/index0 region at the begin of each track, unfortunately there
+are a few .CUE sheet files that do lack both PREGAP and INDEX 00 entries on
+audio tracks, which might cause problems with autopause).
+
+AutoPause is used by Rayman and Tactics Ogre.
+
+Playing XA-ADPCM Sectors (compressed audio data)

@@ -1,0 +1,68 @@
+PSXSPX SPECIFICATIONS - CDROM FILE VIDEO TEXTURE/BITMAP (TGA)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Video Texture/Bitmap (TGA)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 2410 characters
+Lines: 60
+================================================================================
+
+CDROM File Video Texture/Bitmap (TGA)
+
+Targa TGA
+
+| 000h 1 Image ID Size (00h..FFh, usually 0=None) ;0
+001h 1 Palette Present Flag (0=None, 1=Present) ;0 iv=1
+002h 1 Data Type code (0,1,2,3,9,10,11,32,33) ;NEBULA=2 iv=1
+003h 2 Palette First Color (usually 0) ;0 iv=0
+005h 2 Palette Number of Colors (usually 100h) ;0 iv=100h
+007h 1 Palette Bits per Color (16,24,32, usually 24) ;0 iv=18h
+008h 2 Bitmap X origin (usually 0) ;0
+00Ah 2 Bitmap Y origin (usually 0) ;0
+00Ch 2 Bitmap Width ;NEBULA=20h LOGO=142h
+00Eh 2 Bitmap Height ;NEBULA=20h
+010h 1 Bitmap Bits per Pixel (8,16,24,32 exist?) ;NEBULA=18h iv=8
+011h 1 Image Descriptor (usually 0) ;0
+012h .. Image ID Data (if any, len=[00h], usually 0=None)
+... .. Palette
+... .. Bitmap
+... 1Ah Footer (8x00h, "TRUEVISION-XFILE.", 00h) (not present in iview)
+
+Data Type [02h]:
+
+| 00h = No image data included ;-Unknown purpose
+01h = Color-mapped image ;\
+02h = RGB image ; Uncompressed
+03h = Black and white image ;/
+09h = Color-mapped image ;\Runlength
+0Ah = RGB image ;/
+0Bh = Black and white image ;-Unknown compression method
+20h = Color-mapped image ;-Huffman+Delta+Runlength
+21h = Color-mapped image ;-Huffman+Delta+Runlength+FourPassQuadTree
+
+The official specs do list the above 9 types, but do describe only 4 types in
+detail (type 01h,02h,09h,0Ah).
+
+| Type 01h and 09h lack details on supported bits per pixel (8bpp with 100h
+colors does exist; unknown if less (or more) than 8bpp are supported,
+and if so, in which bit order.
+Type 02h and 0Ah are more or less well documented.
+Type 03h has unknown bit-order, also unknown if/how it differs from type
+01h with 1bpp.
+Type 0Bh, 20h, 21h lack any details on the compression method.
+
+TGA's are used by a couple of PSX games/demos (all uncompressed):
+
+| 16bpp: Tomb Raider 2 (MagDemo01: TOMBRAID\*.RAW)
+24bpp: Tomb Raider 2 (MagDemo05: TOMB2\*.TGA)
+24bpp: Colony Wars Venegance (MagDemo14: CWV\GAME.RSC\NEBULA*.TGA, *SKY.TGA)
+24bpp: Colony Wars Red Sun (MagDemo31: CWREDSUN\GAME.RSC\000A\*)
+16bpp: Colony Wars Venegance (MagDemo14: CWV\GAME.RSC\LOGO.DAT)
+16bpp: X-Men: Mutant Academy (MagDemo50: XMEN2\*)
+16bpp: Disney's Tarzan (MagDemo42: TARZAN\*)
+8bpp+Wrong8bitAttr: SnoCross Championship Racing (MagDemo37: SNOCROSS\*.TGA)
+16bpp+WrongYflip: SnoCross Championship Racing (MagDemo37: SNOCROSS\*.TGA)
+
+For whatever reason, TGA is still in use on newer consoles:
+
+| 32bpp: 3DS AR Games (RomFS:\i_ar\tex\hm*.lz77

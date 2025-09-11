@@ -1,0 +1,740 @@
+PSYQ DOCUMENTATION - TECHNOTE/sounread.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/TECHNOTE/sounread.pdf
+Converted: Wed Sep 10 02:47:29 PM CDT 2025
+================================================================================
+
+ Sound Tools Release 2.1.1
+README Document
+© Copyright 1995-1998
+
+
+PlayStation and Sony Computer Entertainment names and logos
+are trade names and/or trademarks and/or copyright artwork
+of Sony Corporation(or its subsidiaries).
+
+All specific names included herein are trademarks and are
+so acknowledged: IBM, Microsoft, MS-DOS, PKZIP, ADOBE.
+Any trademarks not mentioned here are still hypothetically
+acknowledged.
+
+The information hereby disclosed is based on the contract between your company and our
+company concerning the development and sales of 32 bit home-use video game software.
+Your company shall be able to use only the hardware provided to you based on the above
+contract and shall handle this material in secrecy according to the terms and objective of
+the above-mentioned contract.
+
+
+SONY COMPUTER ENTERTAINMENT OF AMERICA
+919 East Hillsdale Blvd, 2nd Floor
+Foster City CA 94404
+650-655-8000
+Developer Support Hotline: 650-655-8181
+
+Copyright (C) 1994 - 1998 Sony Computer Entertainment America Inc.
+All Rights Reserved
+
+Document history:
+
+Initial version June 29, 1995
+Version 1.1,.. Added comment on MAC download for BBS. (July 7, 1995)
+Release 1.5 . Coincide with the Master Release (Programmer Tools) of CD-ROM v1.5.
+(September 5, 1995).
+Release 1.8 Updates all Sound Tools to 1.8, with the exception of aiff2vag (v1.9.1) p.a.
+(June 26, 1996).
+Release 1.9. Reformatted document from text to include release notes, bold headings,
+table of contents. (February 6, 1997)
+Release 1.9.1. Added “readme.txt”.
+Release 1.9.2 . Added the desription of 28convert.xls.
+Release 2.0. Added descriptions for the new release 3.0 of materials.
+Release 2.0.1. Added release notes for the new release 3.0 of materials.
+Release 2.1. Updated Sound Delicatessen to 3.2E/3.2.1E. Merged the PCI software.
+Release 2.1.1 Folded in Buzz Burrowes’ Loop Calculator (at Stan Weaver’s request).
+Table of Contents
+TABLE OF CONTENTS ..............................................................................................................................3
+
+INTRODUCTION .........................................................................................................................................4
+DISKETTE CONTENTS........................................................................................................................................4
+INSTALLING THE FILES ......................................................................................................................................5
+DOWNLOADING FILES FROM THE WEBSITE .......................................................................................................5
+HOW TO USE THE PROGRAMS ............................................................................................................................5
+OPERATING ENVIRONMENT...............................................................................................................................5
+AIFF2VAG (RELEASE NOTES).................................................................................................................7
+
+SONY LOOP CALCULATOR...................................................................................................................10
+
+RAW2XA (RELEASE NOTES) .................................................................................................................13
+
+RAW2DA (RELEASE NOTES) .................................................................................................................15
+
+SMF2SEQ (RELEASE NOTES) ................................................................................................................17
+
+SOUND DELICATESSEN (RELEASE NOTES) .....................................................................................19
+
+VAG PLAYER (RELEASE NOTES).........................................................................................................22
+Introduction
+Diskette Contents
+This release is for the sound tools and utilities. All executables are for the Macintosh. In
+the listing below, the asterix (*) indicates a new release
+
+File                    Version                 Description                               Location
+aiff2vag                3.0.1                   Waveform data converter for               “NuBus” folder
+                                                NuBus boards.
+                        3.0                     Waveform data converter for PCI           “PCI” folder
+                                                boards
+raw2da                  3.0                     PlayStation(R) CD-DA sound data           Root folder
+                                                endian converter. Works for both
+                                                NuBus and PCI boards.
+raw2xa                  3.0                     PlayStation(R) CD-DA sound data           Root folder
+                                                endian converter. Works for both
+                                                NuBus and PCI boards.
+Sound Delicatessen      *3.2.1e                 Tool for creating and reproducing         “NuBus” folder
+                                                sound source. For Power Macintosh
+                                                with NuBus (6100/7100/8100
+                                                series).
+                        *3.2e                   Tool for creating and reproducing         “PCI” folder
+                                                sound source. 3.2E is for 680x0
+                                                Macintosh with NuBus and Power
+                                                Macintosh with PCI bus.
+smf2seq                 3.0                     Sequence data converter                   Root folder
+vag player              3.0.1                   Waveform data reproduction tool           “NuBus” folder
+                                                for NuBus boards
+                        3.0                     Waveform data reproduction tool           “PCI” folder
+                                                for PCI boards
+Sony Loop               1.5                     After creating a sample with a good       “Loop
+Calculator                                      loop, you enter some information          Calculator”
+                                                into this application, and it will tell
+                                                you what you need to do to make
+                                                the loop meet the PlayStation
+                                                requirements.
+28convert.xls           -                       Spreadsheet that contains a table         Root folder
+                                                for calculating the sample rate
+                                                conversion coefficient in order to
+                                                make the loop size of the sound
+                                                source with loops into a multiple of
+                                                28 using Sound Designer II. (This
+                                              sheet was saved in Microsoft Excel
+                                              3.0 from within Microsoft Excel
+                                              5.0. In order to use this sheet,
+                                              Microsoft Excel 3.0 or later, or
+                                              table calculation software which
+                                              can read Excel format data is
+                                              needed.)
+
+In addition, the folder “Sample data” contains sample files in MIDI, AIFF, VAG, VAB,
+and SMF formats.
+
+
+
+
+Installing the files
+Create a folder on your Macintosh. Drag the Mac sound files to your psx sound tools
+folder. In addition, there are two versions of some of the sound tools. If you have a
+Power Macintosh with NuBus (6100/7100/8100 series), then use the tools found in the
+“NuBus” folder. If you have
+
+
+Downloading files from the Website
+Updated versions of the files are released as “.hqx” files. With Compact Pro, decompress
+the files into Self-Extracting-Archives (“.SEA” files), then double-click on the resulting
+icon. The files will then decompress.
+
+
+
+How to use the programs
+This document only describes the contents of the diskette and the release notes released
+by SCE (Japan).
+
+For instructions on how to use the programs, refer to the the Sound Artist Tool Users
+Manual of the Developer Reference Series.
+
+
+
+Operating environment
+The PlayStation sound artist tool can be used with the following configurations:
+
+Minimum memory requirements: At least 16MB (available space: at least 4MB). The
+avilable memory can be checked when starting up the Macintosh by selecting “About this
+Macintosh” from the Apple menu. Also the memory required depends on the size of the
+data to be converted. The conversion will consume approximately twice the amount of
+memory of the original AIFF file size.
+OS supported: KanjiTalk 7.5.3, 7.5.5, MacOS 7.6.
+
+Disk Drive: An HDD having more than 2MB of available space.
+
+DA converter, amp, speaker, etc.
+Aiff2Vag (release notes)
+Version 3.0.1/3.0 (July 14, 1997)
+ Version 3.0.1
+- supports only DTL-H700 (NuBus)
+- compatible with NuBus PowerMacintosh such as PowerMac 6100/7100/8100
+
+Version 3.0
+- initial version for new PCI Sound Artist Board (DTL-H800)
+- not compatible with NuBus PowerMacintosh such as PowerMac
+
+
+Ver. 2.3: 11/20/96
+• File icon problem has been solved
+- The problem which caused the icon to be changed during conversion in “interactive
+mode” has been solved.
+
+Ver. 2.1: 7/16/96
+• File icon problem has been solved
+- The problem which caused it to be impossible for the post-conversion file type to
+become a normal VAG file in one section of the environment has been corrected.
+
+Ver 2.0: 5/16/96
+• Low sampling rate support
+- Alterations made to correctly recognize sampling rate AIFF data below 8 kHz. In
+versions up until this point files below 8 kHz were all recognized as 8 kHz.
+
+•Preference file support
+- As a result of supporting preference files, convert mode and window position
+information can now be saved.
+
+Ver. 1.9: 4/1/96
+•Strengthening of playback function
+- VAG Player and equivalent functions have been added. In the file menu “Select
+VAG...”, “Play” and “Stop” have been added and the “Output Mode” menu has been
+changed to “Mode” menu. “Silent (no playback)”, “Play after conversion” and “Show
+panel after conversion” have been added as post-conversion modes.
+- Playback and halting of waveform data are possible as a short cut menu by means of the
+following operations.
+Playback: Cmd-P, space key, enter (ten key) or mouse button within the panel down.
+Halting: Cmd-S, return, 0 (ten key) or the mouse button within the panel up (cancel with
+shift key)
+
+• File size problem has been solved.
+- The problems where the output file size was not appropriate and where the waveform
+data registered after the converted file was built to VAB in SoundDelicatessen was
+destroyed have been solved.
+
+Ver. 1.8: 1/16/96
+• Addition of playback function
+- It is now possible for sound production to be recognized on the PS sound board (DTL-
+H700) after conversion.
+• File size problem during re-output has been solved.
+- The problem which made it impossible for the file size to be updated when outputting as
+the same file name has been solved.
+
+Ver. 1.6: 4/17/96
+• Native correspondence to Power Macintosh series
+- From this version onwards native correspondence to the Power Macintosh series is
+possible. When using Power Macintosh series, data is converted at about 10 times the
+previous speed.
+
+Ver. 1.5: 2/1/96
+• Post-conversion file size problem solved
+- The problem which occurred in v.1.4 where the file size after the encoding of the sound
+source with looping became inappropriate has been solved.
+
+• Addition of consecutive conversion mode
+- A mode has been provided for consecutively converting multiple data which will
+automatically attach the .vag extension and save the file, thereby eliminating the need to
+select each file separately.
+- After starting the application set the “Output Mode” menu to “Auto”, select the multiple
+AIFF files you would like to convert, then drag and drop them to the AIFF2VAG icon.
+Since the output destination folder will be opened first, if you press the “Save” button
+after selecting the desired folder consecutive conversion will take place.
+
+Ver. 1.4: 11/16/96
+• Post-conversion file size problem solved
+- The poor post-encoding size problem which occurred in v.1.3 has been solved.
+Problems had occurred with the wave forms becoming strange during registration of the
+VAG encoded in v.1.3 to the SoundDelicatessen. The reason for this is because VAG
+generated in AIFF2VAG are destroyed. Since a VAG file size which cannot be divided by
+16 is unusable, please make sure to re-encode it before using.
+
+Ver. 1.3: 10/17/94
+• Alteration to Loop End Point Display
+- The loop end point display has been made the same as that of Alchemy and Sound
+Designer II.
+
+Ver. 1.1.1: 9/1/94
+• Addition of compression mode
+- It is now possible to select an algorithm for performing a compressed conversion from
+AIFF to VAG format from Standard/High Band/Low Band/4bit Straight.
+         Standard - for general sound source use
+         High Band - for sound sources which include a large number of high area
+elements
+         Low Band - for sound sources which include a large number of low area elements
+         4bit Straight - for 4bit straight compression
+
+•Table which multiplies loop size by 28 (Microsoft Excel 4.0 sheet)
+- This is the table for calculating the sample rate conversion coefficient in order to make
+the loop size of the sound source with loops into a multiple of 28 using Sound Designer
+II. (In order to use this sheet, Microsoft Excel 4.0 or table calculation software which can
+read Excel format data is needed.)
+- Since the necessary coefficient (SR Convert Ratio or new fs) is calculated when loop
+start, end or fs are entered, please do the SR Convert and reset the loop start (new l.start)
+and end (new l.end) accordingly.
+
+Ver.1.1: 8/16/94
+• Straight Compression
+- This version is a temporary start compression edition. It corresponds to that where the
+encode noises appear in the metallic sounds and so on in the v.1.0.1 converter. This
+converter will be integrated in updates from this point onwards.
+
+Ver 1.0.1: 6/16/94
+• Loop start automatic correction function
+- Loop start is automatically parallel transferred in order to become a multiple of 28.
+• VAG Player
+- The post-conversion VAG is played back at that location.
+- Since the VAG file is requested when you double click on the VAG Player icon, please
+select the file you would like to playback.
+- The program terminates when you hit cancel from file select.
+(However, center notes are not reflected and also, fs is sometimes incorrectly reflected.)
+
+Ver. 1.0: 5/31/94
+• Initial version.
+Sony Loop Calculator
+by Buzz Burrowes
+Sony Interactive Studios America
+
+This is an unsupported software utility for use with the Sony Sound Artist Tools.
+
+
+What it does...
+Looping samples to be played on the PlayStation platform must have their loop start and
+end points fall on 28 sample boundaries. This isn't as difficult as it sounds... it just
+requires a little math. Musicians... Math... oh no! (I can joke... I am one•!)•••••
+Anyway...
+
+I created this little app so that you can ignore this issue until the very end of the sample
+creation process. After creating a sample with a good loop, you enter some information
+into this application, and it will tell you what you need to do to make the loop meet the
+PlayStation requirements.
+
+First this message...
+This tool has not been tested using all sample editing packages. •It has been proven to
+work with SoundDesigner II (SDII) from Digidesign, Passport's Alchemy and Bias Peak.
+
+The issue that could cause problems has to do with how sample values are numbered in
+the given sample editing application. Some start counting samples starting at 1, others at
+0. (Specifically: Don't use infinity's display values for loop start and end points... follow
+the procedure shown below!)
+
+When entering values for loop start and end into SLC (Sony Loop calculator), enter
+EXACTLY what you see in SDII's, Alchemy's or Bias Peak's loop info window... DO
+NOT ADD OR SUBTRACT 1!
+
+To get and set the exact loop point values in...
+SDII - Select "Display | Loop Window..." and press the "i" button.
+Peak - Double click the triangular flag at the bottom of the loop point marker in the
+waveform display window.
+Alchemy - Select "File | Soundfile info..."
+
+
+• Typical Procedure...
+1) Take your 44.1k AIFF sample and get a good loop going. Use whatever tools you
+like... Infinity, Alchemy, Bias Peak, SDII... whatever.
+2) Load the sample into one of the supported apps and find the loop start and end values
+using the method described above.
+
+3) Enter these values and the current sample rate (44,100 in ou•r example) into the
+appropriate fields in SLC.
+
+4) Enter your target sample rate. (You can set this to 0 or the current sample rate if you
+want the rate closest to the current rate.)
+
+5) Click "Calc".
+
+6) If you would like a lower or higher rate just click the appropriate button ("Next Lower"
+or "Next Higher")... also... If one of the new loop points is displayed in red, that means
+that rounding errors are likely to cause a click in the loop. I suggest that you use the "Next
+Lower" or "Next Higher" buttons to find a rate where both the New Loop Start and New
+Loop End points are displayed in black.
+
+•••Now you are ready to actually make it happen...
+
+7) Load the sample into whatever editing package you think has the best sample rate
+conversion and convert to the sample rate shown in the SLC window ("Resample to:")
+
+8) Load the new sr converted sample into one of the supported apps and drop a loop start
+and end mark onto the sample anywhere (note: the original loop points will typically be
+deleted during the sr conversion... if they weren't, don't add new points!)
+
+9) Go to the loop info window (in peak go to each loop marker) and enter the exact values
+shown in the SLC window ("New Loop Start" and "New Loop End") into the appropriate
+fields.
+
+10) Zoom WAY in to your waveform display and either add or delete samples from the
+head of the sound file as dictated by SLC ("Trim From Head" or "Add To Head".)
+
+Your loop points are now on 28 sample boundaries and should work great once on the
+PlayStation!
+
+Possible problems...
+1) If you find you need to add or delete too many samples from the head just play with the
+"Next Higher" and "Next Lower" buttons (step 6 above) until you get values you can live
+with.
+
+2) The further your target sample rate is from your current sample rate, the greater the
+possibility of rounding errors causing problems. It doesn't heppen often, but it can
+happen. Either loop point displayed in red in SLC indicates that this problem may occur.
+The symptom is that your new loop clicks. The only solution is to try the "Next Higher"
+or "Next Lower" buttons and try these other sample rates... or...
+
+Once you have your sample s/r converted and the new loop points entered BUT BEFORE
+you trim or add samples from the head check your loop. (If it clicks here it will click
+when it goes through AIFF2VAG.) If it clicks, adjust the loop end point one sample at a
+time until the click goes away. Now go through the procedure described above again, but
+this time enter this new sample's s/r in both the "current" and "target" fields (the s/r of this
+new sample with a good loop.) So, you'll have to s/r convert again, but you'll be much
+closer to your target to start with!
+
+3) Sometimes the math comes out funny when the loop ends up with its start point on the
+very first sample. Again... it is a 0 or 1 sample numbering issue. Typically there is no real
+problem. If you are asked to trim samples off the start of the sample, and this trimming
+deletes your New Loop Start marker, just insert a new loop start marker at the very
+beginning of the sample.
+
+Well, there you go!
+
+GOOD LUCK!
+
+Version Notes:
+1.5
+- Cleaned up the display a bit.
+- Added a popup menu for the Start Sample field
+- The last used "Start Sample" value (0 or 1) is stored in the resource fork of the
+application so that it defaults back to this value the next time the app is run.
+
+1.4
+- Added functionality to display start & end marks in red if rounding errors are likely to
+cause loop clicking.
+- Fixed further problems with rounding errors.
+
+1.3
+- Fixed some errors in rounding.
+
+1.2
+- Added "Target Sample Rate" field so that used doesn't have to work so hard with the
+Next Higher and Next Lower buttons.
+Raw2XA (release notes)
+
+This tool encodes stereo, 16bit, 37.8kHz data into data for CDROM-XA audio track use.
+The corresponding formats are as follows and since Sound Designer II format has the
+same configuration, it can be converted as is.
+
+II       Left I        Right II       Left   I      Right
+II . . .
+All values are big endian 16bit short
+
+Ver 3.0.: July 11, 1997.
+New version for NuBus.
+
+
+Ver.2.1: 7/16/96
+• AIFF handling
+- AIFF format files can also be handled in RAW2XA. With AIFF files the sampling rate
+and number of channels can be acquired from the header information and can then be
+converted to a suitable mode. Also, an error message will be displayed at conversion for
+any formats which cannot be handled.
+
+Ver.2.0: 5/16/96
+• Preference File Support
+- By providing preference file support to each tool, convert mode and window position
+information can now be saved.
+
+Ver.1.8: 1/16/96
+• Solution to problem with file size during re-output
+- The problem whereby the file size when outputting simultaneously with the same file
+name was not updated has been solved.
+
+Ver. 1.6: 4/17/95
+• Native correspondence with Power Macintosh series
+- From this version onwards native correspondence with Power Macintosh series is
+possible. As a result of this, data can now be converted at approximately twice the
+previous speed when using the Power Macintosh series.
+
+Ver. 1.3: 10/17/94
+• Reduction of noise in data end section
+- The occurrence of noise at the end of XA source data when it did not end in a silent
+state has been corrected so that it no longer occurs. Furthermore, this correction does not
+cause the data size to change.
+
+Ver. 1.2.1: 10/2/94
+• Power Mac compatibility
+- The problem whereby version 1.2 was not able to operate on a Power Mac has been
+solved. It now operates on Power Mac 680LC40 emulation mode.
+- There are no other alterations.
+
+• Please pay attention when using 18.9 kHz and monaural mode.
+- When creating 18.9 kHz and monaural mode XA data the corresponding SoundDesigner
+II format data for each mode is needed in advance. In SDII create the data for each 18.9
+kHz/37.8 kHz and monaural/stereo mode, select the ‘Format’ menu after activation of the
+RAW2XA converter, and then convert.
+
+Ver. 1.2: 9/22/94
+• Correspondence with 18.9 kHz and monaural mode
+- Corresponds to each 37.8Khz stereo, 37.8kHz mono, 18.9kHz stereo, 18.9kHz mono
+mode.
+- After activation of the application, please select the desired format from the ‘Format’
+menu and then convert.
+
+• Addition of continuous conversion mode
+- Instead of specifying each file individually when continuously converting multiple data
+a mode which automatically adds the .da extension and saves the file has been provided.
+- After activation set the ‘Output Mode’ menu to ‘Auto’, select the multiple
+37.8/18.9kHz, 16bit stereo/monaural SDII files you would like to convert, then drag and
+drop them into the RAW2XA icon. Since the output destination folder will open first, if
+the ‘save’ button is pressed after specifying the desired folder, it will be continuously
+converted.
+
+Ver 1.1: 8/16/94
+• Solution to memory control problem
+- The problem of there being insufficient memory when continuously converting multiple
+data has been solved.
+
+Ver. 1.0: 7/1/94
+(Initial version)
+Raw2DA (release notes)
+Ver 3.0: July 11, 1997.
+New version for NuBus.
+
+Ver.2.0: 5/16/96
+• Preference File Support
+- By providing preference file support to each tool, convert mode and window position
+information can now be saved.
+
+Ver. 1.8: 1/16/96
+• Solution to problem with file size during re-output
+- The problem whereby the file size when outputting simultaneously with the same file
+name was not updated has been solved.
+
+Ver. 1.6: 4/17/96
+• Native correspondence with Power Macintosh series
+- From this version onwards native correspondence with Power Macintosh series is
+possible. As a result of this, data can now be converted at approximately twice the
+previous speed when using the Power Macintosh series.
+
+Ver. 1.2.1: 10/2/94
+• Power Mac compatibility
+- The problem whereby version 1.2 was not able to operate on a Power Mac has been
+solved. It now operates on Power Mac 680LC40 emulation mode.
+- There are no other alterations.
+
+Ver 1.2: 9/22/94
+• Addition of continuous conversion mode
+- Instead of specifying each file individually when continuously converting multiple data
+a mode which automatically adds the .da extension and saves the file has been provided.
+- After activation set the ‘Output Mode’ menu to ‘Auto’, select the multiple 44.1kHz,
+16bit straight mode SDII files you would like to convert, then drag and drop them into the
+RAW2DA icon. Since the output destination folder will open first, if the ‘save’ button is
+pressed after specifying the desired folder, it will be continuously converted.
+Ver. 1.1: 8/16/94
+• Solution to memory control problem
+- The problem of there being insufficient memory when continuously converting multiple
+data has been solved.
+
+Ver. 1.0: 7/1/94
+(Initial version)
+This tool was created by a Mac sound tool and can convert Endian (bit string order) in
+order to handle stereo,16bit, 44.1kHz data on a PC CD-ROM Generator as DA track data.
+The corresponding format is as follows and since the Sound Designer II format has the
+same configuration it is possible to convert it as is.
+
+II       Left I        Right II        Left   I   Right
+II . . .
+All values are big endian 16 bit short
+SMF2SEQ (release notes)
+
+Ver 3.0.: July 11, 1997.
+Initial version for new PCI Sound Artist Board (DTL-H800).
+
+Ver. 2.3: 11/20/96
+• Solution to problem in which conversion of an SMF containing a Meta event of 128
+bytes or larger was impossible
+- The problem whereby conversion of an SMF containing a meta event of 128 bytes or
+higher was not possible has been solved.
+
+Ver.2.0: 5/16/96
+• Preference file support
+- As a result of preference file support conversion mode and window position information
+can now be saved.
+
+• CC and MetaEvent Recognition
+- A control change/Event message display recognition function has been added and Back
+Change which caused incorrect actions has been deleted from the menu so that an
+effective setting is now possible.
+
+Ver. 1.8: 1/16/96
+• Solution to problem with file size during re-output
+- The problem whereby the file size when outputting simultaneously with the same file
+name was not updated has been solved.
+
+Ver. 1.6: 4/17/95
+• Native correspondence with Power Macintosh series
+- From this version onwards native correspondence with Power Macintosh series is
+possible.
+
+Ver. 1.4: 11/16/94
+• Change to memory control used by an application
+- Corresponds to the insufficient memory which occurred when converting some SMF
+data.
+
+• Deletion of SEP correspondence
+- As a result of the alterations to the SEP format, correspondence to SEP on the converter
+has been temporarily deleted. Please use the SEQ2SEP.EXE tool for DOS attached to
+the programming library when creating SEP data.
+
+Ver. 1.1.1: 9/1/94
+• Answer to delta time processing problem
+Note: Since the Standard MIDI files output by Performer 5.0.1 manufactured by Mark of
+the Unicorn are not in the correct format it is sometimes impossible for SMF2SEQ/P to
+convert them. In such cases, open the MIDI file in another sequencer and use that
+sequencer to save the MIDI file as an SMF. This problem should be solved from
+Performer 5.0.2.
+
+Ver.1.1: 8/16/94
+• Correspondence with SEP format
+- SEP format data cannot be generated in Sound Delicatessen (v1.1).
+- It is possible to generate it in the PlayStation library (version shipped in late August).
+
+• Correspondence with new SEQ format
+- Corresponds to new format.
+- Since the SEP format converts without merging the multiple channel (track) information
+it is possible to describe multiple effective sound sequences within one file.
+- Generation of the new SEQ format is sometimes impossible in Sound Delicatessen
+(v1.1).
+
+Ver. 1.0: 5/31/94
+• Initial version
+Sound Delicatessen (release notes)
+
+SoundDelicatessen is a tool for creating and editing VAB files for the PlayStation system.
+
+Sound preview is made possible by using the Sound Artist Board.
+
+Supports FreeMIDI and OMS as MIDI driver, therefore controllable from sequencers like
+Performer from Mark of the Unicorn Inc. or Vision from Opcode Inc. etc.
+
+v3.2E is for 680x0 Macintosh with NuBus and Power Macintosh with PCI bus. v3.2.1E is
+for Power Macintosh with NuBus (6100/7100/8100 series).
+
+This version supercedes ALL previous versions of this tool. Please upgrade as soon as
+possible.
+
+Version 3.2E3/2/1E (received March 12, 1998)
+
+[ New Features and Bug Fixes ]
+
+- Supports MacOS 8.
+
+- A "maximum simultaneous voices" function has been added. The number is indicated
+on
+keyboard window under "MaxVoices". By pressing the "Reset" button on the keyboard
+window, it is reset to zero.
+
+- A window lock function has been added. There is a KeyLock checkbox on each
+Program, Tone and VAG window. If it is checked, computer keyboard input to the
+window is ignored.
+
+- "New manner of arrow keys" function has been added. If you set the check box of "New
+manner of arrow keys" in the Preferences dialog, it becomes possible to move cursor
+position in the column by using arrow keys.
+
+- The checkbox named "SsVoKeyOn(multiple)" has been changed to "allow multi tones
+preview". This checkbox has also been added to the ADSR setting window. If it is
+checked, all tones which are assigned to the same note number are played when the
+preview button is pressed.
+
+- Some new short cut keys have been added for Copy this line, Paste this line and Delete
+this line in Edit menu.
+- "Close" item has been added on Windows menu for closing current window. The
+function of "Close" item on File menu has been changed to file close function.
+
+- "Receive external MIDI in" item has been added on SoundBoard menu. If it is checked,
+MIDI signals from the serial port can be received in SoundDelicatessen without routing
+through a sequencer first. This feature is available only when FreeMIDI is active.
+
+- The function of mute button on keyboard window has been changed not to cut off the
+reverb sound.
+
+- The malfunction that MIDI item on SoundBoard menu doesn't work properly, has been
+fixed.
+
+- The malfunction that the reverb flag doesn't turn off when changing tone by pulldown
+menu on ADSR setting window, has been fixed.
+
+- The malfunction that only marked programs are saved by selection of "Close" menu
+after
+selection of "Save marked programs" menu, has been fixed.
+
+Version 3.1.1/3.1 (received July 14, 1997)
+- version 3.1
+- initial version for new PCI Sound Artist Board (DTL-H800)
+- PowerPC native application
+- supports DTL-H800 (PCI) as well as DTL-H700 (NuBus)
+- supports FreeMIDI System 1.26 or later
+- supports Open Music System (OMS) 2.0 or later as well as FreeMIDI System
+- not compatible with NuBus PowerMacintosh such as PowerMac 6100/7100/8100
+
+-version 3.1.1
+Supports only DTL-H700 (NuBus)
+Compatible with NuBus PowerMacintosh such as PowerMac 6100/7100/8100
+
+Version 2.4
+-Preview function added to Tone List window.
+-Save preference settings.
+-Set default note limit.
+
+
+Version 1.8
+ SEQ playback function removed
+- ADSR default settings bug fixed
+- Automatic VAB download capability added
+- Popup menu bug fixed
+• Deletion of SEQ playback function
+- The SEQ data playback menu has been deleted.
+- Please perform sequence playback in MIDI.
+- Please perform final SEQ data recognition with the program tools and on an actual
+PlayStation.
+
+• Solution to problem with ADSR setting screen
+- The ‘default settings’ problem with the ADSR settings screen has been solved and the
+initial setting values have also been changed.
+- Also, it is now possible to directly input numerical values .
+
+• VAB file automatic download
+- When a VAB is opened the data is automatically transferred to the PS sound board.
+- When SoundDelicatessen is activated VAB data selection is required.
+- When creating a new document , select ‘cancel’ and then select ‘New’ from the ‘File’
+menu.
+VAG Player (release notes)
+Version 3.0.1/3.0 (July 17, 1997)
+
+Version 3.0:
+- initial version for new PCI Sound Artist Board (DTL-H800)
+- not compatible with NuBus PowerMacintosh such as PowerMac 6100/7100/8100
+
+Version 3.0.1:
+- supports only DTL-H700 (NuBus)
+- compatible with NuBus PowerMacintosh such as PowerMac 6100/7100/8100
+
+Ver.1.8: 1/16/96
+• Addition of continuous playback function
+- A menu which will continuously play back and stop loaded data has been added.
+- re-play function added
+
+Ver. 1.6: 4/17/95
+• Native correspondence with Power Macintosh series
+- From this version onwards native correspondence with Power Macintosh series is
+possible.
+
+Ver.1.1: 8/16/94
+• Playback fs problem handled
+- During VAG playback corresponds to the sampled fs and is then able to playback.
+
+• Correspondence with AppleEvents (Drag and drop)
+
+Ver.1.0.1: 7/1/94
+• Corresponds to PowerMac series
+
+• Solution to conflict problem with graphics board.
+
+Ver.1.0: 6/16/94
+(Initial version)
+

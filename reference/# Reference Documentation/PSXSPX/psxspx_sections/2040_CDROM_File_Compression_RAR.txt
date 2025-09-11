@@ -1,0 +1,160 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION RAR
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression RAR
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 5750 characters
+Lines: 152
+================================================================================
+
+CDROM File Compression RAR
+
+RAR is a compression format for enthusiastic users (who love to download the
+latest RAR version before being able to decompress those RAR files).
+
+RAR v1.3 (March 1994, used only in RAR 1.402)
+
+This format was only used by RAR 1.402, and discontinued after three months
+when RAR 1.5 got released.
+
+| File Header:
+000h 4 ID "RE~^" (aka 52h,45h,7Eh,5Eh)
+004h 2 Header Size (usually 0007h, or bigger when Comment/Ext1 exist)
+006h 1 Archive Flags (80h or xxh)
+... (2) Archive Comment Size ;\Only present when ArchiveFlags.bit1=1
+... (..) Archive Comment Data ;/
+... (2) Ext1 Size ;\Only present when ArchiveFlags.bit5=1
+... (..) Ext1 Data ;/
+... .. Unknown (TECHNOTE hints sth can be here, when bigger HeaderSize?)
+Archive Flags:
+0 Volume (maybe related to split-volume on several floppies?)
+1 Comment
+2 Unknown? (non-english description is in 1.402's TECHNOTE.DOC)
+3 Unknown? (non-english description is in 1.402's TECHNOTE.DOC)
+4 Unknown? (non-english description is in 1.402's TECHNOTE.DOC)
+5 EXT1
+6 Unspecified (maybe unused)
+7 Unspecified (maybe unused, but... it's usually 1)
+File Data blocks:
+000h 4 Filesize, compressed
+004h 4 Filesize, uncompressed
+008h 2 Checksum on uncompressed? file (sum=LeftRotate16bit(sum+byte[i])
+00Ah 2 Header Size (usually 0015h+FilenameLength)
+00Ch 4 File Modification Timestamp in MSDOS format
+010h 1 File Attribute in MSDOS format (20h=Normal)
+011h 1 Flags
+012h 1 Version (0=0.99, 1=1.00, 2=1.30) (always 2 in public version)
+013h 1 Filename Length
+014h 1 Method (00h=m0a=Stored, 03h=m3a=Default) (1..5 = fastest..best)
+... (2) File Comment Length ;\Only present if FileFlags.bit3=1
+... (..) File Comment Data ;/
+... .. Filename ("PATH\FILENAME.EXT", without any end marker)
+... .. Unknown (TECHNOTE hints sth can be here, when bigger HeaderSize?)
+... .. Compressed file data
+File Flags:
+0 Unknown? (non-english description is in 1.402's TECHNOTE.DOC)
+1 Unknown? (non-english description is in 1.402's TECHNOTE.DOC)
+2 Unknown? (non-english description is in 1.402's TECHNOTE.DOC)
+3 Comment (non-english description is in 1.402's TECHNOTE.DOC)
+4-7 Unspecified (maybe unused)
+
+RAR 1.5 (June 1994) and newer
+
+Overall Chunk Format:
+
+| 000h 2 Chunk Header CRC; Lower 16bit of CRC32 on [002h..HdrSize-1 or less]
+002h 1 Chunk Type (72h..7Ah)
+003h 2 Chunk Flags
+005h 2 Chunk Header Size
+007h (4) Data block size ;
+
+Type 72h, Marker Block (MARK_HEAD)
+
+This 7-byte ID occurs at the begin of RAR files (or after the executable in
+case of self-extracting files).
+
+| 000h 7 ID ("Rar!",1Ah,07h,00h) (or "Rar!",1Ah,07h,01h for RAR 5.0)
+The above ID can be somewhat parsed as normal chunk header, as so:
+000h 2 Faux CRC (6152h, no actual valid CRC)
+002h 1 Chunk Type (72h)
+003h 2 Faux Flags (1A21h, no actual meaning)
+005h 2 Chunk Header size (0007h)
+
+Type 73h, Archive Header (MAIN_HEAD)
+
+| 000h 2 CRC32 AND FFFFh of fields HEAD_TYPE to RESERVED2
+002h 1 Chunk Type: 73h
+003h 2 Archive HeaderFlags
+005h 2 Header size (usually 000Dh) (plus Comment Block, if any)
+007h 2 RESERVED1 (0000h)
+009h 4 RESERVED2 (0000011Dh)
+... (..) Comment block ;
+
+Type 74h, File Header (File in Archive)
+
+| 000h 2 CRC32 AND FFFFh on HEAD_TYPE to FILEATTR and file name
+002h 1 Header Type: 74h
+003h 2 Bit Flags
+005h 2 File header full size including file name and comments
+007h 4 Compressed file size (can be bigger than uncompressed)
+00Bh 4 Uncompressed file size
+00Fh 1 Operating system used for archiving
+010h 4 CRC32 on uncompressed file
+014h 4 File Modification Timestamp in MSDOS format
+018h 1 RAR version needed to extract file (Major*10+Minor) (min=0Fh=1.5)
+019h 1 Compression Method (usually 35h in RAR 1.52)
+01Ah 2 Filename size
+01Ch 4 File Attribute in MSDOS format (20h=Normal, Upper24bit=whatever=0)
+... (..) Comment block ;-Only present if Flags.bit3=1
+... (4) MSBs of compressed file size ;\Only present if Flags.Bit8=1
+... (4) MSBs of uncompressed file size ;/
+... .. Filename ("PATH\FILENAME.EXT")
+... (..) Filename extra fields (see Flags.bit9+bit11)
+... (8) Encryption SALT ;-Only present if Flags.Bit10=1
+... (..) Extended Time, variable size ;-Only present if Flags.Bit12=1
+... (..) * other new fields may appear here.
+... .. Compressed file data
+File Chunk Flags:
+0 File continued from previous volume
+1 File continued in next volume
+2 File encrypted with password
+3 File comment present ;
+
+Type 75h, Comment block:
+
+| 000h 2 Header CRC of fields from HEAD_TYPE to COMM_CRC
+002h 1 Chunk Type: 75h
+003h 2 Chunk Flags (unknown if/which flags are used)
+005h 2 Chunk Header size (0Eh+Compressed comment size)
+007h 2 Uncompressed comment size
+009h 1 RAR version needed to extract comment
+00Ah 1 Packing Method
+00Ch 2 Comment CRC
+00Eh .. Compressed comment data
+
+Sub-formats
+
+The RAR format is comprised of many sub-formats that have changed over the
+years. The different formats and their descriptions are as follows:
+
+| * 1.3 (Does not have the RAR! signature)
+o There is difficulty finding information regarding this sub-format.
+* 1.5
+o Utilizes a proprietary compression method that is not public.
+o Considered the root model of subsequent formats.
+o A detailed list of information can be found here.
+* 2.0
+o Utilizes a proprietary compression method that is not public.
+o Based off of version 1.5 of the RAR file format.
+* 3.0
+o Utilizes the PPMII and Lempel-Ziv (LZSS)] algorithms.
+o Encryption now uses cipher block chaining (AES?-CBC) instead of AES
+o Based off of version 1.5 of the RAR file format.
+
+See also
+
+Older RAR versions did include a TECHNOTE file describing the file format of
+those versions (TECHNOTE for 1.402 exist in unknown-language only, perhaps
+russian, and TECHNOTE was discontinued somewhere between 2.5 and 2.9).
+
+There is official decompression source code for newer RAR versions.

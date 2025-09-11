@@ -1,0 +1,37 @@
+PSXSPX SPECIFICATIONS - CDROM INTERNAL HC05 MOTOROLA SELFTEST MODE (52PIN CHIPS)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM Internal HC05 Motorola Selftest Mode (52pin chips)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1055 characters
+Lines: 29
+================================================================================
+
+CDROM Internal HC05 Motorola Selftest Mode (52pin chips)
+
+Motorola Bootstrap ROM
+
+The Motorola MC68HC05 chips are including a small bootstrap ROM which gets
+activated upon /RESET when having two pins strapped to following levels:
+
+| Pin30 PortC.6 (/IRQ2) (/XINT) ----> wire to 3.5V (VCC)
+Pin31 PortC.7 (/IRQ1) (SCOR) ----> wire to 7V (2xVCC)
+
+Moreover, two pins are needed on /RESET for selecting a specific test mode:
+
+| Pin16 PortB.0 ----> ModeSelectBit0 (0=GND, 1=3.5V)
+Pin17 PortB.1 ----> ModeSelectBit1 (0=GND, 1=3.5V)
+
+The selectable four modes are:
+
+| Mode0: Jump to RAM Address 0040h (useless when RAM is empty)
+Mode1: Semifunctional Selftest (useless)
+Mode2: Upload 200h bytes to RAM & jump to 0040h (allows fast/custom dumping)
+Mode3: Download ROM as ASCII hexdump (nice, but very slow)
+
+The upload/download functions are using following additional pins:
+
+| Pin50 PortF.0 ----> TX output (11bytes: 0Dh,0Ah," AAAA DD ")
+Pin51 PortF.1 RTS output or so (not needed)
+Pin1 PortF.3 ----> DTR output or so (not needed)
+Ground ------------ GND for RX/TX

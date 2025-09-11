@@ -1,0 +1,35 @@
+PSXSPX SPECIFICATIONS - 018H 4 COMPRESSOR 2 (USUALLY "CDFL"=CDROM/FLAC)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 018h 4 Compressor 2 (usually "cdfl"=cdrom/flac)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1060 characters
+Lines: 27
+================================================================================
+
+018h 4 Compressor 2 (usually "cdfl"=cdrom/flac)
+01Ch 4 Compressor 3 (usually 0=none)
+020h 8 Total size of all uncompressed hunks (N*4C80h-HunkPadding)
+028h 8 Offset to Map (3D797h)
+030h 8 Offset to first Metadata chunk (7Ch)
+038h 4 Number of bytes per hunk (512k maximum) (990h*8) (4C80h)
+03Ch 4 Number of bytes per sector (990h) (30h+60h)
+040h 14h SHA1 on raw data
+054h 14h SHA1 on raw+meta
+068h 14h SHA1 on raw+meta of parent (0=No parent)
+... .. Metadata Chunk(s)
+... .. Padding to BytesPerHunk-boundary ;\when uncompressed
+... .. Uncompressed Sectors (aka hunks) ;/
+... .. Compressed Sectors (aka hunks) ;-when compressed
+... .. Map
+________________________________ CHD Metadata ________________________________
+
+V3/V4/V5 Metadata
+
+Overall Metadata chunk format:
+
+| 000h 4 Chunk ID (aka Blob Tag) (eg. "CHT2" for each CDROM track)
+004h 1 Flags (00h=V3, 01h=V4/V5) ;maybe some kind of flag/type/version?
+005h 3 Chunk Data Size (24bit)
+008h 8 Offset to next Chunk (or 0=Last chunk)
+010h .. Chunk Data (eg. "TRACK:1 TYPE:MODE2_RAW ... POSTGAP:0",00h for CHT2)

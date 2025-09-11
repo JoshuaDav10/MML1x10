@@ -1,0 +1,45 @@
+PSXSPX SPECIFICATIONS - ALLOWING TO PATCH ENTRIES IN THAT LISTS (HOWEVER, THE BIOS DOES OFTEN JUMP
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: allowing to patch entries in that lists (however, the BIOS does often jump
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1899 characters
+Lines: 37
+================================================================================
+
+allowing to patch entries in that lists (however, the BIOS does often jump
+directly to the function addresses, rather than indirectly via the list, so
+patching may have little effect in such cases). Note: There's no function to
+retrieve the address of the A(NNh) jump list, however, that list is
+usually/always at 00000200h.
+
+A(31h) - qsort(base, nel, width, callback)
+
+Sorts an array, using a super-slow implementation of the "quick sort"
+algorithm. base is the address of the array, nel is the number of elements in
+the array, width is the size in bytes of each element, callback(p1,p2) is a
+function that receives pointers to two elements which need to be compared;
+callback should return return zero if the elements are identical, or a
+positive/negative number to indicate which element is bigger.
+
+The qsort function rearranges the contents of the array, ie. depending on the
+callback result, it may swap the contents of the two elements, for some bizarre
+reason it doesn't swap them directly, but rather stores one of the elements
+temporarily on the heap (that means, qsort works only if the heap was
+initialized with InitHeap, and only if "width" bytes are free). There's no
+return value.
+
+A(35h) - lsearch(key, base, nel, width, callback)
+
+A(36h) - bsearch(key, base, nel, width, callback)
+
+Searches an element in an array (key is the pointer to the searched element,
+the other parameters are same as for "qsort"). "lsearch" performs a slow linear
+search in an unsorted array, by simply comparing one array element after each
+other. "bsearch" assumes that the array contains sorted elements (eg. via
+qsort), which is allowing to skip some elements, and to jump back and forth in
+the array, until it has found the desired element (or the location where it'd
+be, if it'd be in the array). Both functions return the address of the element
+(or 0 if it wasn't found).
+
+C(19h) - ioabort(txt1,txt2)

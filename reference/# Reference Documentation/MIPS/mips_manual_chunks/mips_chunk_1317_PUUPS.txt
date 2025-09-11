@@ -1,0 +1,31 @@
+MIPS INSTRUCTION SET REFERENCE - PUU.PS
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: PUU.PS
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1278 characters
+Lines: 22
+================================================================================
+
+PUU.PS
+
+
+
+
+   Pair Upper Upper                                                                                                       PUU.PS
+
+         31                   26 25            21 20             16 15              11 10              6   5                  0
+                 COP1                  fmt                                                                         PUU
+                                                          ft                 fs                fd
+                010001                10110                                                                      101111
+                   6                    5                  5                 5                  5                   6
+
+              Format:    PUU.PS fd, fs, ft                                                                         MIPS64
+                                                                                                           MIPS32 Release 2
+
+              Purpose:
+              To merge a pair of paired single values with realignment
+
+              Description: fd ← upper(fs) || upper(ft)
+              A new paired-single value is formed by catenating the upper single of fs (bits 63..32) and the upper single of ft (bits
+              63..32).

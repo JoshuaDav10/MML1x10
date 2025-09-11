@@ -1,0 +1,965 @@
+PSYQ DOCUMENTATION - TECHNOTE/sceenews.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/TECHNOTE/sceenews.pdf
+Converted: Wed Sep 10 02:47:29 PM CDT 2025
+================================================================================
+
+                                                                                                 http://www.scee.sony.co.uk
+
+
+
+
+                                      T h e P l a y S t a t i o n D e v e l o p e r ’s N e w s l e t t e r        Issue 4: September 1996
+                                ™
+
+
+
+
+      New Tools Exclusive                                                                                        to installation and running (and
+                                                                                                                 in particular any problems asso-
+                                                                                                                 ciated with this) is in a file on the
+    DTL-H2500 Development Kit                                                                                    BBS, called ‘newkit.zip’. Of
+                                                                                                                 course, you won’t need to use it.
+
+
+
+L
+     ike   the   old   DTL-H2000      consumer PlayStation (with no                                              See also: Postcard from Japan (
+     Development Kit, the new         need to run snpatch.cpe). Whilst                                           page 11) for information on the
+     DTL-H2500 runs on PCs.           the main board requires a full                                             tools coming out of R&D in Tokyo.
+   Essentially a lower cost ver-      PCI slot, the 'mini' board simply                                                    STOP PRESS
+sion of the DTL-H2000, it con-        needs a space in the back of                                                       (28th August 1996)
+sists of one main PCI board and       your PC. The system includes a       The DTL-H2500: Bet you can’t wait     Known Bugs of DTLH2500
+a 'mini' board - the latter hosting   new function key driven console      to get that silicon in your machine   Incompatibility with:
+                                                                                                                 Ami BIOS Intel Endeavour ver-
+two sockets for Development Kit       shell.                                DOS with a Windows ‘95 debug-
+                                                                                                                 sion 1005CB0
+Controllers.                             Its accompanying software          ger in development.
+                                                                                                                 Suggested remedy:
+   Being PCI based, it is designed    comes on one disk which con-            Developer Support have had         Install an earlier version (ver-
+to be more compatible with            tains a DOS driver and utilities.     three early versions up and run-     sion 1002CB0 is know to work
+existing PCs and the standard         The DTL-H2500 runs under              ning for a few months. A guide       correctly).
+
+
+Home Development System: The Black PlayStation
+                                      games for the PlayStation.           Net Yarozei project is covered in
+                                                   HOW?                    SCEI's web site in Japan -
+                                        People registered with Sony for    http://www.scei.co.jp.
+                                      the project receive some software             WHO IS IT FOR?
+                                      to load onto their PC and an           The project is aimed at anyone
+                                      exclusive black PlayStation.         who is interested in dabbling in
+                                      Using the software, they can         PlayStation games making. There
+                                      write games programs to down-        are lots of people who would like
+                                      load and run on their black          to play around with the
+                                      PlayStation.                         PlayStation to see what they can
+                                          INTERNET SUPPORT
+                                                                                                             ▼
+
+
+
+
+                                                                                      Continued on page 2
+                                         Support will be based around
+                                      the Internet, with mailing lists
+                                      and a web site providing infor-
+
+
+
+T
+      he black PlayStation 'Net       mation from Sony, inter-develop-
+      Yarozei' project, unveiled      er contact and an opportunity for
+      at E3 last May and at the       everyone involved in the project
+Developer Conference in April,        to show their own demos.
+will be coming to Europe soon.           The project is up and running
+  The black PlayStation is a          in Japan where each project
+'home' development system, cost-      member has their own home page
+ing a few hundred pounds which        on the Net Yarozei web site. This
+will enable anyone to make demo       site is password protected but the
+
+                                      TIPS FOR DEVELOPERS                  SPOTLIGHT ON                          FAVOURITE SUPPORT
+Contents                              Destination: Japan             8     Probe                6/7              QUESTIONS                        10
+                                      HINTS FOR COMPUTER                   What’s Hot & What’s                   Q&A (WWWWWH)                     11
+FEATURES                              ARTISTS                        9     Not                    6
+                                                                                                                 POSTCARD FROM
+NEW TOOLS                 1           REGULARS                             WE ASK THE QUESTIONS   7               Tokyo                           11
+HOME PLAYSTATION        1/2           PRM (NOT)                       2    HOW DID YOU GET INTO                  MY DREAM…
+                                      SUPPORT PEOPLE                2/5    GAMES                  8              Unreality or Nothing             12
+CD Loading Times         3
+                                      PSST - NEWS & VIEWS          8/11    10 GREAT EXCUSES       9              NOTICE BOARD                     12
+SPEED UP YOUR C (PART 3) 4
+                                      MOST WANTED                     5    SOUND BITES           10              CONTACTS                         12
+HOW TO GET SUPPORT        5
+         PRM                                                                                                             Goodbye
+       No More
+   Left hanging in mid-adventure,
+Polygon Reduction Man is no
+more. As Rolf Mohr, the creator
+of PRM left SCEE, so his charac-
+ter ceased to go on...forever sus-
+pended in the grip ray of the evil
+Sentinel.
+                                     Polygon Reduction Man: All his polygons reduced - permanently
+▼
+
+
+
+
+    Continued from page 1                   NO MORE DEV KIT?                            BE FIRST ON THE
+do but find that, as they do not         The black PlayStation does not                 MAILING LIST
+work for games companies, the         have the capacity of a PlayStation         Be first for info on the project
+financial commitment of a full        development kit, proper; it has          by      mailing      SCEE        at:
+PlayStation Development Kit has       limited tools, there is no access to     ps_yarozei@interactive.sony.com        Jason Perkins, (former) SCEE Account
+so far prohibited them from get-      the CD or PC file system - code            Similarly, mail SCEE at this         Manager, hard at work
+ting involved. This project should    must run in 2Mb, and you have to         adress with any ideas on what you         Mr Perkins, sometime Account
+provide a vehicle for these people    download code forma serial port          would like to see as part of the       Manager to European PlayStation
+(students, programmers, gamers)       on a PC, making ithe whole preo-         project and especially the web site.   developers, has now left SCEE
+to     experiment     with     the    cess fairly slow. Thus the black           The Net Yarozers could be the        for pastures new. We are assured
+PlayStation and gain first hand       PlayStation can’t really be used         games developers of tomorrow.          that his departure coinciding with
+experience of the hardware.           for serious development.                 Watch your backs.                      pictures of him with a young col-
+                                                                                                                      league (shown below) turning up
+        Developer Support Runners                                                                                     at SCEE offices is pure chance. He
+                                                                                                                      did in fact leave so he could
+             (ORDER IN LENGTH OF SERVICE):
+  1-    Sarah ‘Benne´’ Bennett                                                                                        ‘spend more time with his wife
+        Production Co-ordinator for Tools Ordering                                                                    and family/explore his creativi-
+        Thorough-bred filly but can be highly strung.                                                                 ty/concentrate on his solo
+  2 - David ‘Hasselhof hair-a-like’ Coombes                                                                           career/due to artistic differ-
+        Technical Support                                                                                             ences’*.
+        Expected to be exported to SCEA at any moment.                                                                   Mr Perkins explains the photos
+  3 - Laura ‘Slapper’ Smith                                                                                           thus:“We simply shared a bed so
+        Technical Author                                                                                              that we could save on Sony
+        Should be out to grass. Destined for the glue factory, for sure.                                              expenses”. Already replaced by
+  4 - Paul ‘Pullman’ Holman                                                                                           Alistair Bodin, and almost forgot-
+        Developer Support Manager                                                                                     by most, he will be sadly missed
+        Looks like a stayer.                                                                                          by Sony’s accountants.
+  5 - Vince ‘The Don’ Diesi                                                                                              *Please circle your preferred
+        Technical Support                                                                                             catch-all excuse .......he has used
+        Italian Stallion, bred on cucumbers.                                                                          them all.
+  6/7 - Colin Hughes + Michael Braithwaite
+        Tools & Libraries Engineers
+        ‘Hughesie’ now a father and currently racing in Japan.           Mal Duffin, Technical Support ginger
+                                                                         style
+        ‘Braithers’, understated majesty.
+  8 - Tim ‘The Timp’ Flett
+        Production Co-ordination Assistant for Tools Ordering
+        Unkempt mane, in need of trim.
+  9 - Dave ‘Virus’ Viropen
+        Technical Support
+        Prone to injury, Irish stable.                                                                                Right half of the picture:
+  10 - (NEARLY NEW) - Jason ‘Maestro’ Page (See picture, right.)                                                      Mr Perkins enjoys an innocent morn-
+        Musician & Sound Engineer                                                                                     ing cup of coffee
+        Fairly new to SCEE but been round the course a few times,
+        well known breed of Essex stock.
+  11 - (NEW) - Mal ‘Ginge’ Duffin (See picture, above right.)
+        Technical Support
+        Red coat, another from Irish stable, good in the wet.
+  12 - (BRAND NEW) - Lewis ‘Bodie’ Evans
+        Technical Support
+        Of Welsh stock, good on all terrain, clever money is on him.
+  13 - (JUST ARRIVED) - Richard ‘Hack’ Milner
+        Producer, Special Projects                                                                                    Left half of the picture:
+        Always crosses the finish line, one to watch out for.            Jason Page, Musician & Sound                 His young colleague, ‘Jim’, 22, sleeps
+                                                                             Engineer                                 on, cost-effectively
+ CD Loading Times & How To Improve Them
+  ‘Please Wait While Loading’ - a much reviled request,
+  leading to frustration and irritation in the gameplayer.
+
+
+G
+         iven this, it is important to      three seeks before the file can be
+         consider CD loading times          read. (See fig1.)
+         when making a game.                   One way in which to get around
+Here I describe the four basic ways         these two “extra” seeks (and hence
+in which the CD loading times can           save time) is to hard-code all the file
+be improved. These are to: min-             locations. This can be done by first
+imise seeks, organise data, read            processing the .CCS file, output by
+asynchronously and avoid speed              the CD-GEN software, to create a
+changes.                                    header file listing all these positions
+        MINIMISE SEEKS                      and then re-compiling your code
+   When reading a file from CD it’s         with this header file. (See figure 2 -    FIG 3: Careful and logical organisation of data can save many seeks in a game
+
+first necessary to seek to that file        a very basic version of this utility is     ...
+                                                                                        CdReadyCallback(cbdataready);
+(i.e. to move the head of the CD            now available on the BBS in the PSX
+                                                                                        CdControl(CdlReadN, (unsigned char *)&fp.pos, 0);
+drive under the required sector of          TOOLS           area      -     called      ...
+data on the CD). As this is a               CCS2POS.ZIP.) A similar technique           while (((padd = PadRead(1))&PADk) == 0) {
+                                                                                               balls();
+mechanical process, it can take a           can be applied to .MAP files which
+                                                                                               FntPrint("Intr count = %d\n", hit_intr);
+relatively long time. Although a            are output from BuildCD.                           for (i = 0; i < RNGSIZE; i++) {
+necessary action, there are seeks                DATA ORGANISATION                                    for (j = 0; j < 3; j++) FntPrint("%08x", sector[i][j]);
+                                                                                                      FntPrint("\n");
+which occur “behind the scenes”                Carefully organised files is actual-
+                                                                                               }
+which can be eliminated and hence           ly another method of minimising                    FntFlush(-1);
+speed up the loading process.               seeks and hence speeding up data                   opadd = padd;
+                                                                                        }
+Elimination can be done with the            streaming. Seeks of approximately           static void cbdataready(int intr, u_char *result) {
+library routine CdSearchFile()              +/- 100 sectors require only the rota-             if (intr == CdlDataReady) {
+which is used to obtain file details        tion of the CD and no linear motion                       CdGetSector(sector[rid], 2048/4);
+                                                                                                      rid = ((rid+1)&RNGMASK);
+                                                     of the CD head. In order for                     hit_intr++;
+                 By                                  this to be utilised, data                 }
+                                                     should be organised into           }
+                                            Ben
+
+
+
+
+                                                                                        OR
+such as absolute sector address and                  contiguous blocks. It may          ERROR:
+file size.                                           be nice, neat and tidy to                 while( CdControl(CdlSetloc, (u_char *)&fp.pos, 0) == 0 );
+   Due to memory restrictions and                    have all your textures in a               if( CdRead(nsector, sectbuf[I], CdlModeSpeed) == 0 )
+                                                                                                      goto ERROR:
+time limitations, CdSearchFile()                     TIMS directory and all your
+caches the file details of only one                                                            /* Since CdRead() runs in the background, the program can do
+directory. Hence the process of                Fawcett                                  * another task in the foreground. The current reading status can
+                                                                                        * be modified in CdReadSync().
+finding the location of a file is as fol-                                               */
+lows :                                      models in a TMD directory and all                  while ((cnt = CdReadSync(1, 0)) > 0)
+   1. Seek to the directory table of        your data files in a DAT directory,                {
+                                                                                                            :
+contents (one of the first sectors on       but this can cause delays in the load-             /* Foreground routines */
+the CD) and read this sector. This          ing of related data. (This can be                         :
+                                                                                               }
+gives the absolute sector address of        seen in figure 3.)
+the table of contents for each direc-            ASYNCHRONOUS READ
+                                                                                      FIG 4: Two methods to get an asynchronous read
+tory on the CD.                                Of the many ways to implement
+   2. Seek to the required directory’s      asynchronous reads, I have includ-        (See figure 4.)                             gle speed and data streaming should
+table of contents and cache the file        ed two: the first using the low-level            AVOID SPEED CHANGES                  be implemented in double speed.
+details of that directory. This will        library routines, the second the             The final method of improving            One solution would be to play XA-
+give the absolute address and file          higher level CdRead(). In the lat-        the performance of data streaming           ADPCM at double speed in replace-
+details of all files in the directory.      ter example, I have also included         is to avoid speed changes of any            ment for the CD-DA. Although the
+   3. Although not part of                  how to handle a read error. A sim-        kind. Spin-up and spin-down takes           quality is inferior, 37.8Khz Stereo
+CdSearchFile() a seek is still              ilar technique can be applied to the      a lot of time, making it inadvisable        XA-ADPCM is very close.
+required to move the head to the            first example, although more thor-        to have a lot of CD-DA playing with         Furthermore, it is sacrilege to stop
+start of the required file.                 ough error handling can be                intermittent CD access/data loading.        the CD spinning completely and
+   So, there is a possible overhead of      achieved in the callback routine.         This is because CD-DA plays at sin-         then spin up to double speed. So
+                                                                                                                                  never use CdlStop - use CdlPause
+                                                           Use CDGEN to do a layout (works without CDW-900E)
+                               First Seek To Read TOC
+                                                           Put MAIN.EXE last in track 1 (so size can vary)
+                                                                                                                                  instead which will keep the CD
+                                                           Save as .CCS file                                                      spinning.
+                                 Successive Seeks for
+                                 Each Subdirectory         Write/use a utility to create POS.H with position info from CCS file       USE OF COMPRESSION
+                                                           Absolute file location appears on the line following each sourcefile             TECHNIQUES
+                                                           path
+                                  Final Seek to File                                                                                 Finally, have another look at the
+                                                           Compile with POS.H
+                                                           Burn CD / Build emulation image
+                                                                                                                                  data that you are reading from the
+                                                                                                                                  disk and when you can read it in.
+                                                                                                                                  One powerful technique is to
+                                                                                                                                                                   ▼
+
+
+
+
+                                                                                                                                           Continued on page 10
+FIG1: Three seeks to find a file                          FIG 2: Utility to hardcode file locations
+Speed Up Your C in 15 Mins
+  By Allan J Murphy
+                         Not content with hammering the D-Cache in the first
+                      episode, it gets another sorting here. Is this some kind of
+                          obsession? Tartan Revenge? Too much Braveheart?
+                                                                                                            Episode 3
+                                                                                                              The D-cache - REVISTED
+
+                      A
+                                 h yes, the humble    away... but nah, that would be...           There’s only one problem - the                        and should probably be done right
+                                 D cache, I haven’t   hold on! Those top scientists and        values to which you initialise the D                     at the start of the program. To save
+                                 finished with you    light engineers at SN Systems have       cache variables do not get trans-                        a lot of problems, and because I
+                      yet.....                        come up trumps again with the fol-       ferred to the D cache itself auto-                       have a heart of gold, here is a piece
+        So maybe you use a lot of                     lowing world class piece of compil-      matically. You have to manually                          of dodgy old assembler to copy the
+        stack space. Maybe you                        er magic:                                copy the data from the executable                        data to the cache, and also the
+        don’t like the idea of crash-                 int slugSpeed __attribute__ ((sec-       in main RAM to the D-cache. This                         command line to turn it into an
+                                                      tion(“cachedata”))) = 0;
+        ing your program because                                                               doesn’t take long (after all, you can                    object file. I don’t know, I’m cut-
+        the stack falls off the bot-                     But what does it all mean? All        only have 1Kbytes of data, max)                          ting my own throat. (See Figure 3.)
+        tom of the scratch pad. Or                    this means is that the integer           ;+--------+----------+----------+----------+---------+--------+------+
+        maybe you have some stuff                     slugSpeed goes in a special section      ; (C) Sony Computer Entertainment. All Rights Reserved.
+        you’d rather keep on there                    (what again? another one?) called        ;
+                                                                                               ; Name:        CACHE.S
+        that you access all the time                  cachedata. You must initialise the
+                                                                                               ; Author: Allan J Murphy
+- like the slug statistics in your                    variable or the compiler ignores the     ; Date:        21/11/95
+game, 3D SlugFest ’96 (The                            section specification. There is one      ;
+Interactive Movie). But hey, I just                   further step to make the variable go     ; Description:
+                                                                                               ; Simple function to copy data from inside cache section in an executable
+make a pointer to the D cache like                    in the right place - open up your
+                                                                                               ; to the data cache where it belongs; this is for when you declare a
+so:                                                   link file (What do you mean you          ; cache variable with the __attribute__ compiler directive from C; if you
+int *slugSpeed = (int *)0x1f800000;                   don’t use link files? Come along         ; initialise it then the value never gets put in the right place.
+/* Hey, pretty neat eh ? */                                                                    ; Call this before anything else to shift your data to the right place.
+                                                      now.) and go to the bit where it
+*slugSpeed += maxSlugAcceleration;                                                             ; Its got nops in it, it isn't the quickest; who cares for <= 1K ?
+/* etc etc */                                         says this.... (see Figure 1), and edit   ;+--------+----------+----------+----------+----------+----------+---------+
+                                                      it so it says this...(see Figure 2).     dcache group                                ; Assume this is your d-cache data group
+    Nah nah nah, gawd bless you.                         This means the linker makes a                opt            c+                    ; Case sensitivity on
+                                                                                                      xdef InitCacheVariables                ; Xdef the function
+Although this is quite quick, it isn’t                new group for the section cacheda-
+                                                                                                            section           .text          ; Put it in the text section
+the quickest, because the pointer                     ta, and its address is fixed at          ;+--------+----------+----------+----------+----------+----------+---------+
+dereference is slow, and the pointer                  0x1f800000 - surprisingly, this is       InitCacheVariables:
+is in normal D-RAM, and you have                      the D cache. What does this get               la      t0,grouporg(dcache)          ; Load the start of the group in RAM
+                                                                                                    la      t1,groupend(dcache)         ; Load the end of the group
+to load the pointer into a register as                you? Quite a lot, because now you
+                                                                                                    la      t2,group(dcache)             ; Load the destination address
+a 32 bit address, and there’s a pile                  no longer have the dereference of a           beq t0, t1, End                     ; If the group is empty, quit.
+of cycles wasted there when you                       pointer to get at the D cache, the            nop                                 ; Ohmygoodgawd a nop.
+
+                                                      variable slugSpeed takes only 1          Loop:
+really just want to get right on with
+                                                                                                    lw t3, 0(t0)                        ; Load a word from the group
+it. To be honest, it would be good if                 cycle to read or write. This is miles         nop                                 ; Another one, who wrote this crap ?
+you could just declare things                         quicker than derefencing a spooky             sw t3, 0(t2)                        ; Store it at its rightful place
+straight on the D cache straight                      old DRAM pointer.                             addiu t0, t0, 4                     ; Skip to next word
+                                                                                                    addiu t2, t2, 4                     ; Skip to next cache location
+ text group                                                                                         bne t0, t1, Loop                    ; If we have not copied everything...
+ bss group bss                                                                                      nop                                 ; Branch to top of loop (another nop ! No !)
+ < various section definitions, eg section .rdata, text etc etc >                              End:                                     ; Finished
+ < your libraries and object files at the end>                                                      jr          ra
+FIG 1: The link file before                                                                         nop
+                                                                                               ;+--------+----------+----------+----------+----------+----------+---------+
+ text group
+                                                                                               ; end
+ dcache group obj(0x1f800000)                   ; add this line
+                                                                                               ;+--------+----------+----------+----------+----------+----------+---------+
+ bss group bss
+                                                                                                   NOTE: To compile this code with asmpsx and make an object file, add to your makefile:
+ < various section definitions, eg section .rdata, text etc etc >
+                                                                                                      cache.obj: cache.s
+ section cachedata, dcache                      ; add this line too
+                                                                                                      asmpsx /l cache,cache
+ < your libraries and object files at the end>
+                                                                                                   And add the object file cache.obj to your link file as per normal.
+
+FIG 2: The link file after                                                                     FIG 3: Assembler to copy data to the cache
+
+                                                          James North-Herne proves                An informant at Millennium
+ Psst!(1)                                                that he’s 'Game for A Laugh '
+                                                                                               writes: “Whoever sorted out the
+   Accused of being Jeremy                                                                     bundles of games for the 10
+Beadle, James North-Herne                                                                      'lucky' winners on the last day of
+(Gremlin Interactive) immediate-                                                               the Developer Conference this
+ly counters the accusation by                                                                  year deserves a pay rise. The look                          SCEE staff test out the proposed
+showing that he has long, rather                                                               on Alan McCarthy's face when he                          Real Virtuality PlayStation periph-
+than short fingers on his hand.                                                                opened his parcel to find a                              eral. Made entirely from sponge
+Thus he proves in one swift                                                                    PlayStation version of 'Defcon 5'                        and retailing at only 99 pence per
+action that he is not the 'You've                                                              was worth the conference fee                             unit, it uses real life to simulate vir-
+Been Framed' front man. Well, at                                                               alone. He'd just spent 3 months                          tuality. Thus, for a fraction of the
+least that's what we thought he                                                                doing a particularly tricky Saturn                       cost VR technology, an RV user can
+was doing.                                                                                     version. Oh, how we laughed!”                            still look like a complete plonker.
+                      Most Wanted                                                     Developer Support CV
+ NAME:             Isidro Gilabert (Software Manager) & The
+                   Development Team
+                                                                                                                   PLACE OF BIRTH:
+ COMPANY: Bit Managers, Barcelona - SPAIN
+                                                                                                                   Aylesbury: ‘Home of the Duck’
+On the PlayStation we would like to see games like:
+SUPER MARIO 64, ZELDA, FRONT MISSION. Not for any visual                                                           ADDRESS:
+or audio effect in these games but really because they are huge games                                              South West London
+that are not over quickly.
+                                                                                                                   EDUCATION:
+Our  favourite  game      is,    undoubtedly,    RIDGE RACER                                                       UK, France
+REVOLUTION!!! It is the best racing game in the world!!!
+                                                                                                                   EMPLOYMENT HISTORY:
+                                                                                                                   Music industry
+
+                                                                                                                   FAVOURITE FILM:
+                                                                               NAME:                               Any martial arts films - with a
+                                                                               Sarah E Bennett                     story line
+
+                                                                               JOB TITLE:                          WHAT’S YOUR POISON?
+                                                                               Production Co-ordinator             Hooch, Hooch and more
+                                                                                                                   Hooch
+                                                                               WHAT DO YOU ACTUALLY
+                                                                               DO?                                 WHERE DID YOU LAST
+                                                                               Supply development tools,           GO ON HOLIDAY?
+                                                                               Agony Aunt to developers.           Venice, Italy
+
+                                                                               AGE:                                ANY HOBBIES?
+                                                                               Twenty something                    Eating, Films, Travel
+
+
+                                       mean "they're all applicable"?)       end is ugly, you should see ours!     effect is broken in my program'. If
+    ‘Help Me’                          and you've got 24 hours left to       But the point of the thing is                   it is a tools problem, it is
+                                       meet that deadline and get that       that any query you place                              just a little bit helpful
+
+
+
+I
+  was here at Developer Support        bonus. So you reach for the           can be read by the                                       to know the ver-
+  mission central at 7 o' clock last   phone. STOP!                          entire development                                         sion numbers of
+  Friday (pathetic aren't I?) and      1. HAVE YOU READ THE RELEVANT         community, so the                                           the tools con-
+the phone began to ring, so I             MANUALS OR ACROBAT                 entire community                                            cerned, the same
+picked it up and tried to help            DOCUMENTS?                         can give you advice                                         goes for libraries.
+the developer concerned. Now             It is far quicker for you to read   and help. If you see                                       If it's a problem
+back in the old days, say about        the docs than for you to phone        a query that you                                         with a function I
+a year ago, we used to tell            me, I read the manual and then I      think you can answer,                                  will need to know the
+developers that we didn't have         call you back and tell you which      help the guy. Maybe one                          EXACT function name
+phones or email! You had to            page to read. What about the
+                                                                                         David Coombes: answering a support query
+use either the BBS or fax.             developers conferences notes?           (Cut out and stick on your telephone to remind you who you are
+   That doesn't mean to say that I     Both the American and European                            talking to next time you call)
+don't like e-mail or the phone. It's   notes are available electronically.
+cool, I enjoy talking to you lot on    There are masses of technical doc-    day he'll help you back! Everyone     and what you're trying to do with
+the phone, but I guess that, like      uments available on the BBS.          benefits.                             it. Please don't be vague because if
+any normal person, I get a bit shir-   2. HAVE YOU LOOKED IN THE                CONTACTING SUPPORT                 I can't pinpoint the cause of the
+ty if the phone rings every half an       SAMPLE CODE?                          So you've not found a solution     problem, I can't help you… I'll
+hour. It stops me working on             Well have you? Some of it's         to your problem and you need to       just make soothing noises and say
+existing support problems and get-     pretty good these days.               contact Dev Support. You could:       platitudes.
+ting any work done. So the aim of      3. HAVE YOU CHECKED THE BBS ?         phone, fax or email (BBS or              Similarly, please don't phone up
+this article is to help you get the       It is quite likely someone else    Internet). Which one you choose       and quote lines of C code down
+best out of Support whilst ensur-      has had this problem before.          depends on the nature of the          the phone either. What looks like
+ing that we in Support don't all go    Check the BBS or at least the         query.                                nice sensible code on the screen in
+insane.                                archive of it we provide on the          Try to present the problem in a    front of you, sounds like this to
+  IT'S JUST A TYPICAL DAY              Developer CD. Currently there is      clear manner, using the most appro-   me; "Padinit bracket zero close
+IN DEVELOPER LAND………                   a large number of developers onto     priate medium. Remember that too      bracket semicolon, setdefdrawenv
+  Your game's nearly done and          their second and third PlayStation    much information is better than not   bracket ampersand draw comma
+you've hit a seemingly un-breach-      titles. They didn't get where they    enough information. (there is no      zero comma three hundred and
+able impasse because the Sony          are today without making mis-         such thing as a stupid question -     twenty comma two hundred and
+supplied library/tool doesn't seem     takes, finding bugs and asking        only a stupid questioner).            forty close bracket semi colon
+to work/ has a bug/doesn't exist       questions.                               You are going to need to tell me
+                                                                                                                                                        ▼
+
+
+
+
+                                                                                                                              Continued on page 10
+(delete as applicable, what-da-ya-        The BBS. Evil. If you think your   more than 'the elephant trunk
+
+
+    Or: How To Get The Best From Developer Support
+    Spotlight On...                                  Probe: A Company Re-examined
+ Once described as ‘the Stock, Aitkin and Waterman of games’,
+  Probe is now sees itself as a serious games developer, pro-
+ ducing games which are more Pulp, Oasis and Blur, rather than
+             Jason, Kylie and The Reynolds Girls.
+
+
+T
+      raditionally Probe have not     reputation for doing bad licenses        17 MB of data zipped, for exam-         time to draw each digit.
+      been that visible in the        based on bad TV programs (one            ple. So, while historically 90% of         Although claiming to like
+      eyes of the games buying        based on Basildon Bond the Russ          development was out of house,           PlayStation as a development
+public. A developer for hire to       Abbott TV character being a case         out of the 120 now working for          platform, they do have two big
+any publisher, they were known        in point). Further, they were seen       Probe only 10 are outside contrac-      whines: the class A bug that is
+within the industry for three         to use a formulaic approach to           tors, many of whom work in-             ‘MEMORY CARD’ (capital let-
+things: doing licenses, getting a     making games - Judge Dredd               house.                                  ters are wrong - it should be
+product out on time (to the actu-     with the same looking game                 Probe have been around since          ‘Memory Card’) and the number
+al days specified) and Fergus                                                  1984 when they were 6 people.           of dex boards in a dev kit - which
+McGovern, the company’s owner.                                                 They are now part of Acclaim for        means that they have to buy huge
+   In games history, Probe’s great-   “WORK HARD,                              whom they will be exclusively           PCs (see Probe’s bid for the largest
+est moment so far has been the                                                 working in the future although          PC in PS development, pictured
+multi-platform Mortal Kombat          engine as Stargate, for example.                                                 below left).
+(the critically acclaimed MK2 in      Times change, however, and so do                                                    Probe are now into motion cap-
+particular). However, when they       approaches.                                  PLAY HARD,                          ture and quality sound in games
+first started the company got a          Joe Bonar, now Development                                                    big time. While Alien Trilogy used
+                                      Director at Probe, takes the Stock       they are currently finishing off        some expert motion capture from
+                                      Aitkin and Waterman accusation           Die Hard for Fox (see article in
+                                      on the chin, “Yes, it is a fair criti-   issue 3). The company are also
+                                      cism of Probe in the past but now        currently working on Bubble                   AIM HIGH”
+                                      we have more time and resources,         Bubble and more Hexen, among
+                                      more interesting products and            other titles. In total there are 12     the States, Die Hard was a more
+                                      ideas.”                                  teams for the 12 products current-      home-made affair, captured in a
+                                         Indeed, Probe are restructuring       ly in development.                      church hall in Croydon - although
+                                      the way in which they produce               In the main PlayStation is the       none the worse for it. This expe-
+                                      titles, development becoming             lead development platform but           rience in motion capture lead
+                                      more team based. Joe: “Previously        with source code ported to other        Probe to set up their own motion
+                                      we were task based - with an Art         platforms via conversion libraries,     capture studio. They are also in
+                                      Department and Programming               there is a lot of code re-use. In the   the process of setting up a sound
+                                      Department and some outside              future however, Probe want to           studio with two full time staff
+                                      contractors to get the work done         perform parallel development on         Andy Brook and Stephen Root
+                                      but now development is grouped           all    platforms.      They      find   (see photo). The latter has worked
+                                      according to the product that each       PlayStation to be technically bet-      with Barbra Streisand, Neil
+                                      person is working on”. This, then        ter than current PC technology          Palmer and Halo James and was
+                                      is a move away from factory style        and the Saturn. In Die Hard on          involved in the theme tune for the
+The biggest PC in the world?
+Probe claim that this is the only     to craftsman style production.           the PlayStation, the nine digit         Olympics. Stephen demonstrates
+PC man-enough to hold the two         Probe found that out-of house            score is made of Polygons as there      the music on Die Hard with
+dex boards of the dev kit, the        contractors cost too much in             is not enough V-RAM. This does          enthusiasm….the Starsky and
+one board of the CD emulator
+                                      terms of time and effort in data         not port to Saturn as on this plat-     Hutch style for the chase scenes in
+and its extra hard disk - the mug
+is one metre tall apparantly
+                                      transferral - Mortal Kombat 2 is         form it takes a comparatively long      the snow and the slow ambient
+
+
+
+       Saying “Oh yes, Sentinel was good in its time but have you played it now?”
+                  Going down the arcade and playing an old arcade game
+                                      Time Crisis
+            at ’s            Standard Console Configuration
+        Wh ot                   3D hardware as standard
+           H                 Open Development Community
+                                       Soul Edge
+                                                                                                                       We Ask
+                                                                                                                         The
+                                                                                                                      Questions
+                                                                                                                     NAME: Steve Metcalfe
+                                                                                                                     COMPANY: Bullfrog Productions
+                                                                                                                     JOB TITLE: Conversions
+                                                                                                                     Programmer, soon to be console
+                                                                                                                     R&D
+                                                                                                                     FAVOURITE GAME:
+                                                                                                                     Recent: Master of Orion
+                                                                                                                     (MicroProse), Nostalgia:Chariot
+                                                                                                                     Race (on VIC20)
+                                                                                                                     MOST ADMIRED PERSON
+                                                                                                                     IN THE INDUSTRY:
+                                                                                                                     Fin McGechie
+ Development Director:                                                                                               HOW CAN YOU BE BOUGHT:
+ ’s pepperoni and extra                                                                                              Money (cheers, Fin)
+  ut hold the anchovies”
+                                                                                                                     HOW WOULD YOU COMPARE
+   music for the tense                                                                                               DEVELOPING ON THE
+ cenes.                                                                                                              PLAYSTATION TO OTHER
+  hings don’t change,                                                                                                DEVELOPMENT PLAT-
+while no longer the sole                                                                                             FORMS?
+ Probe and now a Vice-                                                               Carl, perennial paragon of      Quite easy, although the debug-
+    of Acclaim, Mr                                                                   sartorial elegance sporting     ger’s not very good, as usual.
+                                                                                     ‘The Croydon Look’: teaming
+   still has a high profile                                                                                          Much simpler than the SNES where
+                                                                                     a pink tee-shirt with red
+  industry recently mak-                                                             shorts and finishing the
+                                                                                                                     I had to recode everything from C
+o Edge as one of the                                                                 ensemble off with yellow        to Assembler, preferable to the
+  Power Players’ (March                                                              socks (shoes optional, as you   Amiga, but top of the list is the
+Work Hard, Play Hard,                                                                can see)                        flexible Commodore 64.
+ ”, he says “ this would             Stephen Root, Musician: “Let me just                                            FAVOURITE CHAT UP LINE:
+ ompany motto”. The                  connect this amp up and configure my                                            Just the chance to meet women
+                                     Mac and move this cable here...it was-
+  Probe, however, claim                                                                                              would be a fine thing.
+                                     n’t like this when I worked with Barbra
+ other one: “Fergus did              Streisand, you know”                                                            WHAT BOOK ARE YOU
+ ??”                                                                                                                 READNG? A Brief History of Time
+                                                                                                                     HOW MUCH HOUSE WORK
+                                                                                                                     DO YOU DO A WEEK?
+                                                                                                                     I hate housework. I operate a once
+                                                                                                                     a month slash and burn policy.
+                                                                                                                     WHAT FOOTWEAR DO
+                                                                                                                     YOU HAVE ON?
+                                                                                                                     Boots! Hoorah. The all weather, all
+                                                                                                                     occasion footwear.
+                                                                                                                     IF YOU WORKED IN ANOTH-
+                                                                                                                     ER INDUSTRY WHAT WOULD
+                                                                                                                     YOU CHOOSE TO DO?
+                                                                                                                     I’d like to work with animals, not
+                                                                                                                     old people, just animals.
+                                                                                                                     WHAT CAR DO YOU DRIVE?
+                                                                                                                     I’ve just bought a Suzuki Vitara.
+ esters, it’s just games, games, games....oh for some real work - a bit   Fergus McGovern, VP of Acclaim: demon-
+p or some hod carrying                                                    strating his new ‘hands off’ management
+                                                                                                                     It’s great. 16 valves of automatic
+                                                                          approach                                   fuel injected loveliness....gush
+                                                                                                                     gush... sad.
+
+                        Retro-gaming
+e its compilations CDs on Ronco with authentic dipswitch settings
+                 Virtua Cop 2 (in Arcades)
+with standard or 1/2 MB of RAM and/or a bulk storage device
+ ion of 3D accelerator cards which cost more than a PlayStation t’s
+                                                                a
+                        ‘Dream team’                       Wh ot
+                Sonic The Fighters/VF Kizu                     N
+   Survival Tips for PlayStation Programmers
+                                                                                                                          Koon
+S
+        o    you're      given      a   is Kanji, but sometimes English
+        game to port to the             words need to be displayed in a
+                                                                                           By           Bob
+                                                                                                                                       (USA
+        PlayStation and, as             block of Kanji (names and
+well as Europe and North                untranslatable words, for exam-
+                                                                                                             Media
+America, it turns out you               ple). These western characters         Vortex                                                  16x16       pixel
+must do a Japanese version              are really quite spindly and so                         self in a lower      characters, that means that you
+too. Now, because those                 look odd against the Kanji char-       point size (probably 12x12 is the     need to make sure there is enough
+helpful lot at Sony provided            acters.                                smallest you can get them and still   screen real estate for it. Common
+us with Kanji on the stan-                 From my experience, the             have them readable) but that          sense right?
+dard ROM, this should be                Japanese publishers like all of        would take up way too much               However, if your game is heav-
+easy, right?                                                                   main memory so I wouldn't             ily text intensive (as ours at
+  Well, only possibly. If you're               PART 3 -                        advise that.                          MicroProse was) and, depending
+lucky, you will have a shed load                                                                                      on how it was written, you might
+of mind-numbingly tedious work
+ahead of you. If you're really
+                                        their text to be solid blocks of
+                                        characters (every character is
+                                                                                 DESTINATION                          have to adjust every string of text
+
+lucky, you will get the opportuni-
+ty to modify the original version's
+design to accommodate the speci-
+                                        16x16 so there's no jagged edges
+                                        on the right), so the issue of west-
+                                        ern character spacing doesn't
+                                                                                  • You could be really cheeky
+                                                                               and get away with using the char-
+                                                                               acters specifically for children:
+                                                                                                                      JAPAN
+fication of the Kanji ROM.              come up. However, if your game         Hiragana or Katakana characters       by hand (as our game required,
+   Before we get into it, let me dis-   has strings of text consisting of      (which can go as small as 8x8 and     through no fault of our own, you
+pel a myth. Yes, Japanese gamers        western characters you really          are also in the ROM). However,        understand.) The moral of the
+CAN read text from left to right        should space them more appro-          you must resist the temptation to     story (for any suited/manager-
+and no, you won't have to redraw        priately. (Refer figure 1 to see       take this easy route as these char-   types reading this) is: for the sake
+all your screens so the text goes       what I mean.) To help speed            acters are for children and so        of your programmer's sanity,
+from top to bottom. See…...it's         things along for you, I have pro-      should only be used for children's    make sure you design your game's
+really quite easy!                      vided a sample program available       games - your Japanese publisher       screen layouts to be at least
+  SPINDLE-TASTIC FONTS                  on the BBS (Bob_3.zip) that uses a     is not likely to let you get away     16x16 for areas containing text.
+       The Sony ROM provides            spacing table for western charac-      with their inappropriate use.                PRACTICALITIES
+all of the Kanji characters (up to      ters.                                     • You could make your game            Other than the normal prob-
+Shift-JIS level 1), western charac-        If your game is 320x240             high-res, but you must run in a       lems of doing a foreign transla-
+ters (including European with a         (remember Japan is NTSC) those         frame if you do that. Quite a high    tion of a title, such as making sure
+special patch) and even has the         16x16 pixel characters look posi-      penalty for aesthetics don't you      things fit on screen, the process of
+standard controller symbols.            tively huge.                           think?                                actually getting Kanji text in to
+Each of the characters in the                 WHAT ARE YOUR                       However, short of doing this       your title is fairly straightfor-
+ROM are 16x16 pixels. This                         OPTIONS?                    there's not much you can do I'm       ward. It's probably safest to use
+looks fine if all the text in a block     • You could redraw them your-        afraid. Not much help I know...       t                  h               e
+                                                                               Sorry about that.                     -kanji option for the compiler
+                                                                                    PROGRAMMERS AND                  (just in case you need it.)
+This looks a bit strange.                                                               THEIR SANITY                    When the text is given to you to
+                                                                                 Getting back to that potential      implement, it's very possible that
+This looks a bit better.                                                       mind-numbing work I talked            there will be a backslash (\) char-
+                                                                               about earlier.                        acter imbedded somewhere.
+                                                                                 Since the Kanji ROM provides
+                                                                                                                                                      ▼
+FIG 1: Which style do you prefer?                                                                                              Continued on page 10
+
+
+
+
+So How Did You Get Into Games?
+NAME:                        Ian Elsley
+NATIONALITY:                 Scottish
+COMPANY:                     Millennium Interactive
+JOB TITLE:                   Senior Programmer
+“I joined Millennium this year. My first job in the games industry.
+I had wanted to be a musician (I play violin, viola and various mediaeval instruments) but when
+I went to University I initially studied Mechanical Engineering swapping along the way to
+Computer Science. After my third year I took a year out in the USA where I taught, among other
+things, IT. From graduation on, and despite swearing at 18 that I would never sit in front of a
+computer for a living, I have worked on academic and commercial research in; computer vision,
+object orientated computing and 3D modelling of the human face for surgical reconstruction (the latter at UCL and Maastricht).
+I was attracted to games not because I am a gamer but by the technical challenges made possible by faster hardware. As for gameplay, my chosen
+genre is strategy: Sim City and Civilisation.”
+       Computer                              Artist's                               Hints                    and              Tips
+‘You have Run Out of Virtual Memory’- Anyone who has had this message mid-render will know
+  the frustration it brings. Here I give a few tips on how to get the most out of memory when
+                   working with certain 3D software packages and SGI computers.
+
+
+W
+           ithin            Alias’s   the RAM for active processes.        and RAM you continually have,                  ALTERNATIVELY
+           PowerAnimator there          Swapping is usually worth the      type the following command in a           One thing to keep in mind is
+           are certain functions      inconvenience since it allows your   shell window of your Alias              that increasing your swap space is
+that are memory intensive: a clas-    machine to run more processes        account:                                not the best long term solution.
+sic example being rendering.          that could otherwise fit into its    #/usr/aw/alias/bin/getid                Of course, it will allow you to
+   There are extremely complex        RAM. This means that, although       <return>                                run an application that exceeds
+calculations involved in rendering                                                                                 your RAM but it does so at the
+a given model or scene that can
+quickly use all of the available
+                                                MAXIMISING MEMORY                                                  expense of CPU performance. If
+                                                                                                                   you find that your machine is
+memory (RAM) on your worksta-                  BY ALESSANDRO TENTO                                                 constantly swapping when using
+tion. In this situation the Alias                                                                                  Alias (you can hear that hard disk
+package starts dealing with IRIX      using swap slows your rendering        Second: check hard disk space.        going mad), it may be time to ask
+to use and share swap space.          time, it does allows you to render     You also need to make sure that       your boss to fork out some cash
+   3D software companies recom-       more complex models or files.        you have enough space on your           and add more RAM.
+mend at least 64 Mb of RAM with          RUN OUT OF VIRTUAL                hard disk, since all swap space is        You can quote to him/her the
+swap space to 150 Mb or higher.                 MEMORY?                    taken from the disk. Type the fol-      following lesson (based on one of
+   However experience shows that        The Alias PA rendering module      lowing command to check disk            the 10 computing Golden Rules).
+the hardware memory in an             sees virtual memory which is basi-   space.                                    The more computing that your
+Artist's machine (usually 64 or 128   cally RAM and swap combined.         #df -k     <return>                     machine can do in main memory,
+Mb) is not enough to cope with the    Thus, if your render aborts with        Third: increase swap.                the faster your application runs:
+demand put on it. Each job the        the message ‘out of virtual memo-       Next, if you have sufficient disk    the faster your application runs,
+machine is requested to do absorbs    ry’, it means that the render has    space, bring up the System Manager      the faster you can work: the
+chunks of this memory. Just turn-     used all physical RAM and swap       tool, select the Administration Tools   faster you can work, the faster
+ing on your SGI will use about        space. To get around this problem    and access the Swap Management          you get the project done: the
+5Mb and the Alias package will        you can increase the swap space.     Tool. Simply type in the amount of      faster you get the project done,
+use another 15 Mb (approximate-         First: check how much virtual      swap you want then exit and the         the more money the company
+ly). As you start working, models     memory you have.                     system will create additional swap      makes.
+and textures take up further space      To determine how much swap         file to your hard disk.                   Now who can argue with that?
+in memory. As you can see, this
+can quickly add up to the amount
+of RAM that your machine has                          10 GREAT EXCUSES FOR:
+physically installed.
+SO WHAT IS SWAP SPACE?                                WHY LIBSPU HAS HELD UP YOUR PROJECT
+   Swapping is the UNIX memory
+                                       1) "Well the sample loop points weren't on a 28 sample boundary, and it wasn't a month with 'y'
+management technique used on
+                                           in it, so nothing worked for ages"
+systems that require a complex
+process (such as rendering) which      2) "You just can't tell when a sample is finished playing, so I have this table of times in CPU clocks,
+require more memory than there             and you just..."
+actually is in the installed main
+                                       3) "There only is one interrupt from sound RAM - it’s on a read and a write, how was I to know ?"
+memory.
+   Traditionally, to keep things       4) "I had to write a VAB parser specially - yes I know there's one in libsnd but...."
+from coming to a halt, a system is
+                                       5) "I had to reverse engineer the SPU ADPCM format using the original SNES manuals, it'll come in
+used called virtual memory which
+                                           handy later, honest"
+can provide an address space to a
+UNIX application. It uses a user       6) "Apparently there's a digital input somewhere, I've been working on an external speech recogni-
+definable reserved position on the         tion box to bundle with the game, should be quite cheap, but I just can't work out how to plug
+hard disk (called the swap space)          it in, something to do with the parallel port I think, give me a couple of weeks"
+where the memory management
+                                       7) "I think the Memory Card stuff interferes with the sound and so if you have a multi tap in the
+system can offload processes that
+                                           left port, and no pad in the right, and 1 card in either slot during the first attempt at reading a
+are divided into pages (1 page =
+                                           save game and while you're starting a sample not on a 331 byte boundary then the playback
+4096 bytes).
+                                           rate is out by 0.00013 samples per hour"
+   These pages are then moved
+between RAM and the swap space.        8) "So after 4 weeks I realised that the left headphone wasn't working, then...."
+The system manager is continually      9) "Once I got the loop points right the cross fade was wrong and so it made a clicking noise, so I
+looking to see which pages have            turn the volume up and down really quickly, it sort of works OK but the music sounds a bit weird"
+been idle for some time and shifts
+them out into swap space where         10) "So I'm streaming SPU ADPCM from CD......what ? of course I can't use DA, there's nothing
+
+they sit until reactivated, keeping        clever about that for God's sake"
+                                                                                   never been that convinced of the       consider is: will Joe Public turn
+
+
+                       Sound
+                                                                                   end result anyway, and the con-        the game volume down and play a
+                                                                                   versation….. "Yeah, well it sort of    music CD instead and, if so, why?
+                                                                                   sounds like the noise is over my       If a thumping techno track works
+                                                                                   right shoulder, but I'm not too        really well in a game, why bother
+
+
+                       Bites
+                                                                                   sure" rings far too many bells for     trying to make it an interactive
+                                                                                   my liking. Could it be that 3D         orchestral masterpiece?
+                                                                                                                             The bottom line is to do what
+                                                                                                                          seems right, rather than to do
+                                                                                      Formula,
+                                                                             All New
+S
+       o you want to talk about              good enough because                                                          what happens to be in fashion at
+                                                                                           e
+                                                                                 Harry Fre
+       music and sound effects               they really could all be in                                                  the time. Use what equipment you
+       then? And you really                  3D. OK, I agree that 3D                                                      have for its best qualities, and
+can't wait to hear what I                    sounds can add to a                                    sound is just a       enjoy what you do!
+believe we music types should                game’s atmosphere if implement-       gimmick that requires twice the           Too many games seem to have
+be aiming for, can you?! Good,               ed correctly, but the question        amount of sample space? You            attempted to try something differ-
+then here we go:                             must be asked: who will actually      decide.                                ent (like interactive music) with
+   I get the feeling that over the           benefit from the effect they pro-        My second point is interactive      results that can at best be
+last 12 months, people have been             duce?                                 music - good or bad? Once again,       described as ‘above average’.
+blinded by science.                             How many people have a per-        there are certainly games which           My advice is to try anything,
+   No longer is it fashionable to            fect audio set up, with stereo        would benefit from it, but unless      but if it doesn't seem to work too
+simply have good tunes and a                 speakers on each side of their        it's used correctly, it can easily     well, change it! The "That’ll do"
+selection of powerful and fitting            monitor and a chair positioned at     detract from the gameplay, rather      attitude should really be "That
+sound effects. Now we are told               the correct distance and height       than add to it. The question musi-     won't do. Let's try something
+that our stereo samples just aren't          from them? To be honest, I have       cians and game designers should        else". JASON PAGE
+
+              SURVIVAL TIPS FOR PLAYSTATION                                          WELL, THERE YOU HAVE                      CD LOADING TIMES
+                       PROGRAMMERS                                                                  IT
+
+
+
+
+                                                                                                                           ▼
+                                                                                                                             Continued from page 3
+▼
+
+
+
+
+  Continued from page 8                                                               So the key to doing a Japanese
+Before you compile the new text,             ware) for example, so you proba-      version of your title is common        speed up loading times is simply to
+you must scan the text for back-             bly won't have to worry about         sense. I can't stress enough how       compress the data itself, decom-
+slashes and add another one.                 that.)                                important it is to design your         pressing on the fly when it is being
+(Incidentally, it goes without say-             If you can, get a Japanese         game with the Japanese territory       loaded (see Using Compression on
+ing if you don't make the back-              native in your office to translate    in mind. If there's a remote           the Playstation by Colin Hughes
+slashes doubled it will totally              the text.                             chance there'll need to be a           in issue 3). Another technique is to
+muck up the rest of the line.) If               Don't rely on an off-site trans-   Japanese version, design for it.       try and load data ‘under camou-
+you do have to make changes to               lator to provide you with new         You'll make your programmer            flage’. That is when the player is
+the text, remember to give it back           text. They will more than likely      irate, otherwise. And, as we all       absorbed with something else on
+to the translator, otherwise you'll          botch it up because they don't        know, an angry programmer is an        screen. Examples of this method
+be modifying the same string over            know the context of the phrase        ugly sight and something you           include loading game data whilst
+and over again. (Doubling back-              they're translating when it's used    don't want to witness.                 the obligatory ELSPA warning
+slashes doubled doesn't mess up              in your game. It might cost a bit        Next time, we'll discuss the        screen is displayed or, as in Ridge
+the importing process in a Kanji             more, but the time saved more         memory cards and why they're           Racer, whilst a distracting game of
+text editor, Mifes (which is share-          than pays for itself.                 such a pain in the slot.               Galaxians is available.
+
+
+              HELP ME                           Make sure you understand the        AFTER YOUR PROBLEM IS                 day, got married and had three
+                                            problem, write it down and draw                    SOLVED                     children while I have been locked
+ ▼
+
+
+
+
+    Continued from page 5
+                                            some pictures if necessary. (You          If you solve the problem before     in a Sony basement trying to
+  equals SPU malloc brack-                  can always fax this to me). Then,      dev support get back to you,           solve the problem.
+et…….bla bla bla….. bracket,                if I can't help you, I can always      please tell us. If we've not replied               FINALLY
+padinit, ……bla bla bla…….."                 colour them in and send them           it's either because we don't know         Don't get me wrong, I'm not
+   If you need to show me some              back.                                  the answer yet and/or we're            trying to discourage you from
+code, upload it into your file area            Please don't get your producer      working on it. There is nothing        asking any questions. I'd be out of
+on the BBS. If you can make                 to call, he probably doesn't really    worse, I find, than phoning up         a job if nobody called! Just stop,
+something I can compile (includ-            understand the problem, and as a       with a solution only to find the       think and, most importantly, pre-
+ing a makefile and a link file),            result you won't get the informa-      developer fixed it himself, ages       pare before you pick up the
+even better.                                tion you need.                         ago and has since gone on holi-        phone.
+
+
+ Our "All Time Favourite Support Questions of All Time"
+QUESTION #4: IF I PUT THE FRAME RATE HIGH ON MY STREAMING, THE QUALITY IS REALLY BAD. BUT IF I PUT MORE DATA IN EACH
+FRAME, I CAN’T GET A GOOD FRAME RATE. WHAT AM I DOING WRONG ?
+The answer to this is that you are using the MDEC.
+An explanation for Producers is included below. (Hint: You will need to turn the page upside down.)
+                                                 He is doing nothing wrong, this problem is inherent in MDEC compression (which is in the PlayStation).
+<[:-)Producer Friendly: helping to integrate producers into the community.
+      What,                    Why,                  Who,                  When,                Where,                      How?
+Q:   My game consists of several executables which will be chained         Q: I want to display a moving icon whilst accessing the CD. How
+     together using LoadExec() or run consecutively by a simple                 do I do this?
+     loader program. How can I prevent the display from momentari-
+     ly going out of sync when I call ResetGraph(0) at the start of        A: Attach a function to the PlayStation's vertical refresh interrupt
+     each executable?                                                           using the VSyncCallback() function. In this function, do some-
+                                                                                thing like this:
+A: When your loader runs for the first time, or in your first exe-
+     cutable, call ResetGraph(0) for a complete GPU reset. From then
+     on all programs can use ResetGraph(3) during initialisation.                void load_spinner()
+     Using setGraph(3) in this way only works using Libs 3.5.                    {
+     ResetGraph(3) initialises the GPU without causing the display to            static int i=0;
+     go out of sync. It also has the benefit of preserving the contents          i++;
+     of V-RAM and the display environment. This is extremely useful
+     as each program can display some graphics while the next pro-               update_spinning_icon(&cdb->wait_sprite,i); /*update tex-
+     gram is loaded. Once the new program gains control it can then              ture coords e.g.
+     fade out the previous program’s graphics. Vince Diesi                       anim frame*/
+
+                                                                                 DrawPrim(&cdb->wait_sprite);
+Q: How do I find out how much space is free on a Memory Card?                    cdb = (cdb==db)? db+1: db;
+                                                                                 PutDrawEnv(&cdb->draw);
+A: Use the firstfile and nextfile functions to fill an array of the              PutDispEnv(&cdb->disp);
+     DIRENTRY type. An example of this is given in memcard.zip                   draw_backdrop( (unsigned long*)&backtimbuff[0]);           /     *
+     on the SCEE BBS. Then DIRENTRY type not only holds the                      draw the
+     filename but the size of the file in bytes. Note that you should            background */
+     round this value up to take into account of the slot size used by           }
+     the memory card filing system (8K). It is then simple to subtract
+     the sizes of all the files on the card from the capacity of a card          VSyncCallback(load_spinner);           /* to install the spin-
+     (15*8K). David Coombes                                                      ning icon */
+                                                                                 VSyncCallback(0);            /*      to   remove   the   spinning
+                                                                                 icon */
+Q: I am using Win95 and call dexbios in my exec.bat. I find that
+     that when I access the PC filing system I get a lot of errors and I     Note:
+     cannot lose files. This means I get a lot of sharing violation          Don’t just use a spinning CD or an egg timer, be original! How
+     problems. What is going on?                                             about a goldfish swimming around?
+A: Under Win95 when running dexbios, run dexbios in the current              This technique can also be used when accessing Memory Cards and
+     DOS window, not in the autoexec.bat. This will ensure that the
+     interrupts used by dexbios are allocated correctly.                     at other times where a static screen is often displayed. Of course
+     David Coombes                                                           the aim of all programmers should be to ensure that there are no
+                                                                             loading delays anyway :) David Coombes
+
+
+             Postcard From...                                                                                    Psst!(2)
+   They say that Tokyo was once
+                                                                            TOKYO                                 SCEA (Sony in the US) were
+modelled on the streets of London                                                                               chuffed to show off the text search
+- if so SCEI must surely be on the                                                                              option in the new (SCEA and
+Japanese equivalent of Park Lane.                                                                               SCEE jointly produced) Developer
+   The question is - do the men                                                                                 CD (ver 1.7 - August ’96). One
+and women of R&D ever have                                                                                      day they had one too many root
+time to appreciate the view of the                                                                              beers and, being a crazy bunch of
+Imperial Palace and park.                                                                                       Californians, decided to do a
+   In common with many of their                                                                                 search for words of dubious char-
+countrymen, R&D work well                                                                                       acter. They were both shocked and
+into the night on all matters                                                                                   appaled to note the amount of foul
+                                      R&D in Tokyo
+PlayStation related - and my brief                                                                              language in it, deciding that the
+visit is an opportunity to report     Board (DTL-H800) which will be         The DTL-H1500 will be avail-       next one should be censored. And
+back on the fruits of their recent    available towards the end of this    able with the standard PC based      where did the bad language come
+labours.                              year. (Incidentally, you may see     development tools (compiler,         from?       Yes, the European
+   The high point has been the        minor changes in the product         debugger &c.), but will also         Developers on the SCEE BBS!
+first glimpse of the enhanced         codes for items such as the debug    include simple tools to download       Here is a list of the top five
+DMPSX (see DMPSX.ZIP on the           stations - in general these are      data and programs from an SGI.       favourite swear words of Europe’s
+BBS) which now supports assem-        related to CE adherence.) One        More news on the availability and    PlayStation Developers (listed by
+bler access to the GTE - and even     thing to note - newer debug sta-     features of the DTL-H1500 as         occurence on the Developer CD):
+allows you to fill in the essential   tions will now be multi-voltage to   they become available.                 F***        - 21 occurrences
+timing delays (NOPs) with your        avoid one frequent reason for          We’ll be bringing you more           B****r - 13 occurrences
+                                                                                                                  B****y - 12 occurrences
+own      non-GTE      instructions    ‘blow-ups’.                          news from R&D soon - our very          B****x - 8 occurrences
+(described in GTEDOCS.ZIP).              I ‘ve also had a glimpse of a     own Colin Hughes is based out in       B****cks - 3 occurrences
+   On the hardware front, as well     new tool - the DTL-H1500,            Tokyo until the end of September,      You will notice that the SCEA
+as development kits moving to         designed to make the standard        and will be sifting out useful       BBS does not make an appear-
+PCI [see article on page 1], so is    debug station accessible as a sin-   information on your behalf.          ance on the CD. Coincidence or
+the MAC based Sound Artist            gle threaded TCP/IP server.          PAUL HOLMAN                          just not hard enough?
+My Dream... UNREALITY OR NOTHING
+
+I
+    magine that instead of calling                                      like a sunbathing kipper, so why is     other human players or at least
+    ‘Pizza My Mind’ every time you                                      it that so many video games still       computer controlled characters
+    wanted a three cheese dose of                                       follow this premise in the name of      that take risks and make mistakes
+cholesterol death....                                                   gameplay?                               just as my friends do in the name of
+   You had to battle Zordan the                                            For me, videogames are about         glory or getting that elusive power-
+Wizard for some mystical self-rais-                                     escaping from reality and taking        up of destruction before I do.
+ing dough, then explore a sprawl-                                       part in scenarios I could never            I’m tired of playing one-player
+ing dungeon searching for the                                           dream of in the real world, not         video games and it’s got to the
+three Cheese Chests. The search                                         about solving mundane problems          stage where I play them through
+complete, it’s time to head back to                                     or going on dull journeys - I’ve got    to the end just to see if there’s any
+the restaurant within a strict time                                     the Jubilee line for that. Give me a    good ideas lurking deep inside
+limit in order to stop the Oven of                                      rocket launcher to frag some foul       rather than gaining any satisfac-
+Plenty conking out. And just when                                       critters, let me tear down the          tion or pleasure from actually
+you thought it was time to indulge                                      motorway in a turbo-charged             completing them. If we want to                 for me multi-player games are
+in a celebratory fat feast you                                          super car without a care for the        make video games bathe in the                  where we should be focusing our
+realise that you forgot the                                             speed limit or make me president        kind of mass market adulation                  main attention. After all, having
+Tomatoes of Legend and have to                                          so I can tax you pathetic citizens      that would make Take That gasp                 fun with another human beats
+go through the whole escapade                                           to your knees.                          and not the continued preserve of              playing with yourself every time.
+again… Aargh! To me this stinks                                            Best of all let me do this against   no-mate bedroom dwellers, then                 RIK SKEWS
+
+                                                                           The Analyser is designed for         developers in continental Europe.              haven’t received one yet.
+Notice Board                                                            final performance tweaks for               We will be recommending at                          KEEP UP-TO-DATE
+                       ON THE MOVE                                      games that are already making use       least a 28,800 bps modem for                      SCEE uses a database of lis-
+  Some developers may have got a                                        of features such as inline GTE, D-      speed (OK that’s if you don’t have             cenced developers maintained by
+card through the post telling them                                      cache et al. Let us know if you’re      an ISDN line already, all you net-             Business Affairs. The designee
+that, as of 15th July 1996 SCEE                                         interested, and we can provide a        head smarty pantsers) and a                    and address held there is the one
+has moved to 25 Golden Square,                                          copy of the manual, and pencil in       Frames        enabled      browser             used to contact you. Should your
+London W1R 6LU. While this is                                           a booking for a day’s use at our        (Netscape 2.0 or MS Explorer 3.0               address or designee change, please
+not a lie, it is not entirely true.                                     offices. We’ll be able to offer         or later) so get downloading the               let Alison Cooper or Tania know.
+  The departments that were for-                                        access to the unit from mid-            latest free beta versions now.                 Tel: 0171 533 1285, Fax: 0171
+merly at 13 Great Marlborough                                           September.                                 Anyone who may have prob-                   533 1390
+Street:      Human         Resources,                                      (You’ll need to have your title      lems with this move should con-                        NEW ON THE BBS
+Finance,           Communications,                                      on gold disc, with your source and      tact Developer Support as soon as                 Of the many, many new docu-
+Business Development, Product                                           build environment on an external        possible.                                      ments on the BBS since the last
+Management and Operations have                                          SCSI device for best analysis).             NEW ORDER FORMS &                          issue, here are the highlights:
+moved to that address, leaving                                           BBS MOVES TO WEB SITE                                  PRICES                         gtedocs.zip: GTE low level docu-
+Developer Support, Approvals                                               The BBS is expected to move to         You should have received new                 mentation version 1.0
+and Account Managers at the                                             a Web site sometime later this          hardware and software Order                    libs35.zip: version 3.5 of the
+Waverley House address (below) -                                        year.                                   Forms,labelled ‘July 96’, detail               PlayStation libraries
+with Internal Development on a                                             It will give inter-developer dis-    new prices . These are the only                libref35.zip: 3.5 library documen-
+seperate floor.                                                         cussion and file download and           Order Forms currently accepted.                tation
+           USE SCEE’S PROGRAM                                           upload functions as does the exist-           NEW DEVELOPER CD                         psxdiv.zip: polygon sub-division
+                              ANALYZER                                  ing BBS but hopefully with a more          The latest Developer CD (ver-               code by Del at Core design
+  We’re pleased to announce the                                         intuitive interface than the cosmet-    sion 1.7) should have arrived on               qadoc.zip: technical requirements
+availability of a prototype Program                                     ically challenged Wildcat that we       your desks by now, bringing with               for all SCE (Europe, Japan,USA)-
+Analyser. Any PlayStation devel-                                        have come to know and love (not).       it with software, documentation,               near final version
+oper can come to Developer                                                 In addition, this should cut         the BBS and joy to your heart.                 codetl32.zip: 32 bit version of the
+Support and make use of it.                                             down the telephone bills for all        Contact Developer Support if you               compiler
+
+
+
+                                                                        MADE BY & WITH:                         CONTACTS:                                      tive.sony.com
+                                                                        EDITOR:                                 NEWSLETTER:                                    Hot Line: 0171 447 1680
+ T h e P l a y S t a t i o n D e v e l o p e r ’s N e w s l e t t e r
+
+                                                                        Laura Smith                             E-Mail: ps_developer @ interac-                GENERAL:
+CONTRIBUTIONS:                                                          ORIGINAL DESIGNER:                      tive.sony.com                                                    Snail Mail:
+If the title hasn’t given it away                                       Peter Peck                              Telephone: 0171 447 1648                                         SCEE,
+already, this is the developers’                                        ECO FRIENDLY:                           TOOLS ORDERING:                                                  Waverley House,
+newsletter. Please field any arti-                                      Printed on totally chlorine free        E-Mail: prod_coord @ interac-                                    7-12 Noel Street,
+cles/gripes/questions to the con-                                                       paper    which     is   tive.sony.com                                            tm      London,
+                                                                                                                                                                 COMPUTER
+tact address/numbers below.                                                             produced        from    Telephone: 0171 447 1649/50                                 W1V 4HH
+                                                                                                                                                                 ENTERTAINMENT
+                                                                                                                                                                EUROPE
+Many thanks to all the contributors                                                     sustainably man-        TECH SUPPORT:                                  Reception: 0171 447 1600
+for this issue.                                                                         aged forests.           E-Mail: dev_support @ interac-                 Fax: 0171 390 4324
+
+                                This newsletter is for information purposes only. Its contents do not constitute any change to contractual arrangements between SCEE and individual Developers.
+

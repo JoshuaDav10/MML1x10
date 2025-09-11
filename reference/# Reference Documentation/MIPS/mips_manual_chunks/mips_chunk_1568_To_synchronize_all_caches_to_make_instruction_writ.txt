@@ -1,0 +1,27 @@
+MIPS INSTRUCTION SET REFERENCE - TO SYNCHRONIZE ALL CACHES TO MAKE INSTRUCTION WRITES EFFECTIVE.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: To synchronize all caches to make instruction writes effective.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1919 characters
+Lines: 18
+================================================================================
+
+To synchronize all caches to make instruction writes effective.
+
+             Description:
+             This instruction is used after a new instruction stream is written to make the new instructions effective relative to an
+             instruction fetch, when used in conjunction with the SYNC and JALR.HB, JR.HB, or ERET instructions, as
+             described below. Unlike the CACHE instruction, the SYNCI instruction is available in all operating modes in an
+             implementation of Release 2 of the architecture.
+             The 16-bit offset is sign-extended and added to the contents of the base register to form an effective address. The
+             effective address is used to address the cache line in all caches which may need to be synchronized with the write of
+             the new instructions. The operation occurs only on the cache line which may contain the effective address. One
+             SYNCI instruction is required for every cache line that was written. See the Programming Notes below.
+             A TLB Refill and TLB Invalid (both with cause code equal TLBL) exception can occur as a byproduct of this instruc-
+             tion. This instruction never causes TLB Modified exceptions nor TLB Refill exceptions with a cause code of TLBS.
+             A Cache Error exception may occur as a byproduct of this instruction. For example, if a writeback operation detects a
+             cache or bus error during the processing of the operation, that error is reported via a Cache Error exception. Similarly,
+             a Bus Error Exception may occur if a bus operation invoked by this instruction is terminated in an error.
+             An Address Error Exception (with cause code equal AdEL) may occur if the effective address references a portion of
+             the kernel address space which would normally result in such an exception. It is implementation dependent whether

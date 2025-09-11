@@ -1,0 +1,51 @@
+PSXSPX SPECIFICATIONS - TRYING TO USE SEEKL ON AUDIO CDS PASSES OKAY ON THE FIRST RESPONSE, BUT (AFTER
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Trying to use SeekL on Audio CDs passes okay on the first response, but (after
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1947 characters
+Lines: 43
+================================================================================
+
+Trying to use SeekL on Audio CDs passes okay on the first response, but (after
+two seconds or so) the second response will return an error (stat+4,04h), and
+stop the drive motor... that error doesn't appear ALWAYS though... works in
+some situations... such like when previously reading data sectors or so...?
+
+SeekP - Command 16h --> INT3(stat) --> INT2(stat)
+
+Seek to Setloc's location in audio mode (using the Subchannel Q position data,
+which works on both Audio on Data disks).
+
+After the seek, the disk stays on the seeked location forever (namely: when
+seeking sector N, it does stay at around N-9..N-1 in single speed mode, or at
+around N-2..N in double speed mode).
+
+Note: Some older docs claim that SeekP would recurse only "MM:SS" of the
+"MM:SS:FF" position from Setloc - that is wrong, it does seek to MM:SS:FF
+(verified on a PSone).
+
+After the seek, status is stat.bit7=0 (ie. audio playback off), until sending a
+new Play command (without parameters) to start playback at the seeked location.
+
+SetSession - Command 12h,session --> INT3(stat) --> INT2(stat)
+
+Seeks to session (ie. moves the drive head to the session, with stat bit6 set
+during the seek phase).
+
+When issued during active-play, the command returns error code 80h.
+
+When issued during play-spin-up, play is aborted.
+
+| ___Errors___
+session = 00h causes error code 10h. ;INT5(03h,10h), no 2nd/3rd response
+___On a non-multisession-disk___
+session = 01h passes okay. ;INT3(stat), and once INT2(stat)
+session = 02h or higher cause seek error ;INT3(stat), and twice INT5(06h,40h)
+___On a multisession-disk with N sessions___
+session = 01h..N+1 passes okay ;where N+1 moves to the END of LAST session
+session = N+2 or higher cause seek error ;2nd response = INT5(06h,20h)
+
+after seek error --> disk stops spinning at 2nd response, then restarts
+spinning for 1 second or so, then stops spinning forever... and following
+gettn/gettd/getid/getlocl/getlocp fail with error 80h...

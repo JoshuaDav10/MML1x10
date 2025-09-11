@@ -1,0 +1,35 @@
+PSYQ DOCUMENTATION - Conference materials and presentations
+================================================================================
+Category: 08_Conferences
+Description: Conference materials and presentations
+Files: 28
+
+FILES IN THIS CATEGORY:
+  Analog.txt (7.3 KB)
+  Ds_servc.txt (15.3 KB)
+  Guncont.txt (1.2 KB)
+  NeGcon.txt (3.4 KB)
+  epda1.txt (3.2 KB)
+  epda2.txt (5.9 KB)
+  joystk.txt (0.4 KB)
+  lcable.txt (11.1 KB)
+  mdecnote.txt (14.8 KB)
+  mfanlog.txt (9.3 KB)
+  mflibds.txt (22.7 KB)
+  mfmovi.txt (22.8 KB)
+  mfprfanl.txt (70.0 KB)
+  mtrc13.txt (99.0 KB)
+  perfpapr.txt (11.0 KB)
+  rvsart.txt (12.2 KB)
+  scea_bbs.txt (3334.4 KB)
+  scee_bbs.txt (1338.9 KB)
+  scee_dev.txt (126.0 KB)
+  sceenews.txt (102.4 KB)
+  scej_bbs.txt (237.1 KB)
+  shft_jis.txt (2.2 KB)
+  snide.txt (3.3 KB)
+  swsart.txt (3.0 KB)
+  tgpasqa.txt (5.8 KB)
+  upgtedv.txt (11.3 KB)
+  upgtelt.txt (10.6 KB)
+  webmsg.txt (411.4 KB)

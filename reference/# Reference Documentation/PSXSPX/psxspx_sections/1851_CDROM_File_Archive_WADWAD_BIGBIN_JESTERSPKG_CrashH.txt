@@ -1,0 +1,149 @@
+PSXSPX SPECIFICATIONS - CDROM FILE ARCHIVE WAD.WAD, BIG.BIN, JESTERS.PKG (CRASH/HERC/PANDEMONIUM)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Archive WAD.WAD, BIG.BIN, JESTERS.PKG (Crash/Herc/Pandemonium)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 5765 characters
+Lines: 141
+================================================================================
+
+CDROM File Archive WAD.WAD, BIG.BIN, JESTERS.PKG (Crash/Herc/Pandemonium)
+
+Below are two slightly different formats. WAD.WAD has unused entries
+00h-filled. The PKG format has them FFh-filled, and does additionally support
+Folders, and does have a trailing ASCII string. There's also a difference on
+whether or not to apply alignment to empty 0-byte files.
+
+However, the formats can appear almost identical (unused entries, 0-byte files,
+and folders are optional, without them, the only difference would be the
+presence of the ASCII string; which does exist only in 800h-byte aligned PKG's
+though).
+
+WAD.WAD (Crash/Crash)
+
+Used by Crash Bandicoot 3 (DRAGON\WAD.WAD, plus nested WADs inside of WAD.WAD)
+
+Used by Crash Team Racing (SPYR02\WAD.WAD, plus nested WADs inside of WAD.WAD)
+
+Used by Madden NFL'98 (MagDemo02: TIBURON\.DAT except PORTRAIT,SPRITES,XA.DAT)
+
+Used by N2O (MagDemo09, N2O\PSXMAP.TRM and N2O\PSXSND.SND)
+
+Used by Speed Racer (MagDemo10: SPDRACER\ALL1.BIN, with 0-byte, unpadded eof)
+
+Used by Gran Turismo 2 (MagDemo27: GT2\GT2.OVL = 128Kbyte WAD.WAD with GZIP's)
+
+Used by Jonah Lomu Rugby (LOMUDEMO\SFX\*.VBS, ENGLISH\*.VBS)
+
+Used by Judge Dredd (*.CAP and *.MAD)
+
+Used by Spyro 2 Ripto's Rage (SPYRO2\WAD.WAD, and nested WAD's therein)
+
+Used by Spyro 3 Year of the Dragon (SPYRO3\WAD.WAD, and nested WAD's therein)
+
+Used by Men: Mutant Academy (MagDemo33: PSXDATA\WAD.WAD\*, childs in PWF)
+
+| 000h N*8 File List
+... .. Zeropadding to 4-byte or 800h-byte boundary (or garbage padding)
+... .. File Data...
+
+The File List can contain Files, and Unused entries:
+
+| 000h 4 Offset in bytes (4- or 800h-byte aligned, increasing) ;\both zero
+004h 4 Size in bytes (always multiples of 800h bytes) ;/when Unused
+
+The Offset in first entry implies size of the File List (the list has no
+end-marker other than the following zeropadding; which doesn't always exist,
+ie. not in 4-byte aligned files, and not in case of garbage padding).
+
+The last entry has Offset+Size+Align = Total WAD filesize (except, Speed Racer
+doesn't have alignment padding after the last file).
+
+The WAD.WAD format doesn't have folder entries, however, it is often used with
+nested WADs inside of the main WAD, which is about same as folders.
+
+The alignment can be 4-byte or 800h-byte: N2O uses 4-byte for the main WADs.
+Madden NFL '98 uses 800h-byte for main WAD and 4-byte for child WADs (file
+08h,0Ah,0Ch in TIBURON\MODEL01.DAT and file 76h in PIX01.DAT). Crash Bandicoor
+3 and Crash Team Racing use 800h-byte for both main & child WADs (although
+with garbage padding instead of zeropadding in child WAD headers).
+
+Unused entries have Offset=0, Size=0.
+
+Empty 0-byte files (should) have Size=0 and Offset=PrevOffs+PrevSize+Align
+(except, Speed Racer has Offset=PrevOffs+PrevSize, ie. without Align for 0-byte
+files).
+
+X-Men: Mutant Academy (MagDemo33,50: PSXDATA\WAD.WAD)
+
+This does resemble standard WAD.WAD, but with leading 800h-byte extra stuff.
+
+| 000h 4 ID ("PWF ") ;\
+004h 4 Total Filesize (707800h) ;
+008h 4 Unknown (1) ; extra stuff
+00Ch 4 Number of files (N) ;
+010h 7F0h Zerofilled ;/
+800h N*8 File List ;\
+... .. Zerofilled (padding to 800h-byte boundary) ; standard WAD.WAD
+... .. File Data area ;/
+File List entries:
+000h 4 File Offset in bytes (increasing, 800h-byte aligned)
+004h 4 File Size in bytes
+
+The archive contains child archives in DOT1 format, and in standard WAD.WAD
+format (without PWF header).
+
+PKG (Herc/Pandemonium/UnholyWar)
+
+Used by Pandemonium II (JESTERS.PKG, with Files+Folders+Unused entries)
+
+Used by Herc's Adventure (BIG.BIN, with Files+Unused entries, without Folders)
+
+Used by Unholy War (MagDemo12:CERBSAMP.PKG, with 0-byte files and nested PKG's)
+
+Used by 102 Dalmatians (MagDemo40: PTTR\PSXDEMO.PKG)
+
+| 000h N*8 File List
+... .. ASCII string (junk, but somewhat needed as nonzero end marker)
+... .. Zeropadding to 800h-byte boundary; not in 4-byte aligned nested PKG
+... .. File Data...
+
+The File List can contain Files, Folders, and Unused entries. The overall
+format of the list entries is:
+
+| 000h 4 Offset in bytes (increasing, or 0=First child) ;\both FFFFFFFFh
+004h 4 Size in bytes (always nonzero) ;/when Unused
+
+Files and Folders do have exactly the same format, the only difference is that
+Folders will have Offset=00000000h in the NEXT list entry (in other words, the
+folder entry is followed by child entries, which start with Offset=0).
+
+Offsets for Root entries are 800h-byte aligned, relative to begin of PKG file.
+
+Offsets for Child entries are 4-byte aligned, relative to Parent Folder Offset.
+
+The last Child entry has Offset+Size+Align(4) = Parent Folder Size.
+
+The last Root entry has Offset+Size+Align(800h) = Total PKG filesize.
+
+The last Root entry is usually followed by the ASCII string (which looks like
+junk, but it is useful because it equals to NextOffset=Nonzero=NoChilds).
+
+| Example
+00003800h,00000666h ;root00h (file 666h bytes, padded=800h)
+00004000h,00000300h ;root01h\.. (folder 300h bytes, padded=800h)
+00000000h,000000FDh ;root01h\child00h (file FDh bytes, padded=100h) ;\300h
+FFFFFFFFh,FFFFFFFFh ;root01h\child01h (unused) ; byte
+00000100h,000001FDh ;root01h\child02h (file 1FDh bytes, padded=200h) ;/
+00004800h,00001234h ;root02h (file 1234h bytes, padded=1800h)
+00006000h,00001234h ;root03h (file 1234h bytes, padded=1800h)
+FFFFFFFFh,FFFFFFFFh ;root04h (unused)
+00007800h,00001234h ;root05h (file 1234h bytes, padded=1800h)
+etc.
+
+Notes: Unused entries can occur in both root and child folders (except, of
+course, not as first or last entry in child folders). Folders seem to occur
+only in root folder (although the format would allow nested folders).
+
+Alternately, instead of Folders, one can use nested PKG's (the nested ones are
+using 4-byte align, without ASCII string and zeropadding in header).

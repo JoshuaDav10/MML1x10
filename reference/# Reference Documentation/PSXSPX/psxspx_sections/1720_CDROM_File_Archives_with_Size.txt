@@ -1,0 +1,43 @@
+PSXSPX SPECIFICATIONS - CDROM FILE ARCHIVES WITH SIZE
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Archives with Size
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1058 characters
+Lines: 35
+================================================================================
+
+CDROM File Archives with Size
+
+Disney-Pixar's Monsters, Inc. (MagDemo54: MINC\*.BZE)
+
+| 000h 4 Zero (0)
+004h 4 Type/ID (27100h=160000, 2BF20h=180000, 30D40h=200000 decimal)
+008h 4 Number of files
+00Ch N*0Ch File List
+... .. Zeropadding to 7FCh
+7FCh 4 Checksum (32bit sum of SIGN-EXPANDED bytes at [000h..7FBh])
+... .. File Data
+
+File List entries:
+
+| 000h 4 File Type/ID or so (roughly increasing, eg. 1,3,6,5,7,8,9,A,B)
+004h 4 Filesize in bytes
+008h 4 Filesize rounded up to multiple of 800h bytes
+
+Bugs Bunny: Lost in Time (MagDemo25: BBLIT\*.BZZ) (without extra entry)
+
+The Grinch (MagDemo40: GRINCH\*.BZZ) (with extra entry)
+
+Resembles .BZE, but without the Type entry in Header.
+
+| 000h 4 Fixed 1 (maybe version, or compression flag)
+004h (4) Unknown (000xxxx0h) ;
+
+File List entries:
+
+| 000h 4 File Type/ID or so (roughly increasing, eg. 1,2,3,6,5,7,8,9,A)
+004h 4 Filesize in bytes (rounded to N*4 even if compressed data is less)
+008h 4 Filesize rounded up to multiple of 800h bytes
+
+Files are compressed, starting with 0Bh, same as in Jersey Devil...

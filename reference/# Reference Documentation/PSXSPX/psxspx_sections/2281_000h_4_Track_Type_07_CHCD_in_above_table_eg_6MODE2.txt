@@ -1,0 +1,50 @@
+PSXSPX SPECIFICATIONS - 000H 4 TRACK TYPE (0..7, CHCD=# IN ABOVE TABLE) (EG. 6=MODE2_RAW)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 000h 4 Track Type (0..7, CHCD=# in above table) (eg. 6=MODE2_RAW)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1626 characters
+Lines: 41
+================================================================================
+
+000h 4 Track Type (0..7, CHCD=# in above table) (eg. 6=MODE2_RAW)
+004h 4 Subchannel Type (0=RW, 1=RW_RAW, 2=None)
+008h 4 Sector Size (800h, 914h, 920h or 930h)
+00Ch 4 Subchannel Size (0 or 60h)
+010h 4 Number of Frames (aka number of sectors)
+014h 4 Padding Frames (0..3) (to make Total Frames a multiple of 4)
+
+| __________________________________ CHD Maps __________________________________
+
+The Maps contain info (offset, size, compression method, etc.) for the separate
+compression blocks.
+
+V1/V2 map format (64bit entries with 44bit+20bit):
+
+| 44bit Offset to compressed data
+20bit Size of compressed data (or uncompressed data when size=hunksize)
+
+Unknown if offset is in upper or lower 44bit.
+
+V3/V4 map entries (per hunk):
+
+| 000h 8 Offset to compressed data (64bit big-endian)
+008h 4 CRC32 on uncompressed data (32bit big-endian)
+00Ch 3 Size of compressed data (24bit mixed-endian: Mid, Low, High)
+00Fh 1 Flags, indicating compression info (=whut? maybe below V34 stuff?)
+
+V34_MAP_ENTRY_FLAG_TYPE_MASK = 0x0f; // what type of hunk
+
+V34_MAP_ENTRY_FLAG_NO_CRC = 0x10; // no CRC is present (which CRC?)
+
+V3-V4 entry types
+
+| V34_MAP_ENTRY_TYPE_INVALID = 0 invalid type
+V34_MAP_ENTRY_TYPE_COMPRESSED = 1 standard compression
+V34_MAP_ENTRY_TYPE_UNCOMPRESSED = 2 uncompressed data
+V34_MAP_ENTRY_TYPE_MINI = 3 mini: use offset as raw data
+V34_MAP_ENTRY_TYPE_SELF_HUNK = 4 same as another hunk in this file
+V34_MAP_ENTRY_TYPE_PARENT_HUNK = 5 same as a hunk in the parent file
+V34_MAP_ENTRY_TYPE_2ND_COMPRESSED = 6 compressed with secondary algorithm
+
+Note: Secondary algorithm is NEVER used (it seems to have been intended for

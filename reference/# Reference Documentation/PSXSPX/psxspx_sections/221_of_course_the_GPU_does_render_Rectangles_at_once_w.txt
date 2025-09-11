@@ -1,0 +1,98 @@
+PSXSPX SPECIFICATIONS - OF COURSE, THE GPU DOES RENDER RECTANGLES AT ONCE (WITHOUT SPLITTING THEM INTO
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: of course, the GPU does render Rectangles at once (without splitting them into
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 3410 characters
+Lines: 90
+================================================================================
+
+of course, the GPU does render Rectangles at once (without splitting them into
+triangles).
+
+GP0(60h) - Monochrome Rectangle (variable size) (opaque)
+
+GP0(62h) - Monochrome Rectangle (variable size) (semi-transparent)
+
+GP0(68h) - Monochrome Rectangle (1x1) (Dot) (opaque)
+
+GP0(6Ah) - Monochrome Rectangle (1x1) (Dot) (semi-transparent)
+
+GP0(70h) - Monochrome Rectangle (8x8) (opaque)
+
+GP0(72h) - Monochrome Rectangle (8x8) (semi-transparent)
+
+GP0(78h) - Monochrome Rectangle (16x16) (opaque)
+
+GP0(7Ah) - Monochrome Rectangle (16x16) (semi-transparent)
+
+| 1st Color+Command (CcBbGgRrh)
+2nd Vertex (YyyyXxxxh)
+(3rd) Width+Height (YsizXsizh) (variable size only) (max 1023x511)
+
+GP0(64h) - Textured Rectangle, variable size, opaque, texture-blending
+
+GP0(65h) - Textured Rectangle, variable size, opaque, raw-texture
+
+GP0(66h) - Textured Rectangle, variable size, semi-transp, texture-blending
+
+GP0(67h) - Textured Rectangle, variable size, semi-transp, raw-texture
+
+GP0(6Ch) - Textured Rectangle, 1x1 (nonsense), opaque, texture-blending
+
+GP0(6Dh) - Textured Rectangle, 1x1 (nonsense), opaque, raw-texture
+
+GP0(6Eh) - Textured Rectangle, 1x1 (nonsense), semi-transp, texture-blending
+
+GP0(6Fh) - Textured Rectangle, 1x1 (nonsense), semi-transp, raw-texture
+
+GP0(74h) - Textured Rectangle, 8x8, opaque, texture-blending
+
+GP0(75h) - Textured Rectangle, 8x8, opaque, raw-texture
+
+GP0(76h) - Textured Rectangle, 8x8, semi-transparent, texture-blending
+
+GP0(77h) - Textured Rectangle, 8x8, semi-transparent, raw-texture
+
+GP0(7Ch) - Textured Rectangle, 16x16, opaque, texture-blending
+
+GP0(7Dh) - Textured Rectangle, 16x16, opaque, raw-texture
+
+GP0(7Eh) - Textured Rectangle, 16x16, semi-transparent, texture-blending
+
+GP0(7Fh) - Textured Rectangle, 16x16, semi-transparent, raw-texture
+
+| 1st Color+Command (CcBbGgRrh) (color is ignored for raw-textures)
+2nd Vertex (YyyyXxxxh) (upper-left edge of the rectangle)
+3rd Texcoord+Palette (ClutYyXxh) (for 4bpp Textures Xxh must be even!)
+(4th) Width+Height (YsizXsizh) (variable size only) (max 1023x511)
+
+Unlike for Textured-Polygons, the "Texpage" must be set up separately for
+Rectangles, via GP0(E1h). Width and Height can be up to 1023x511, however, the
+maximum size of the texture window is 256x256 (so the source data will be
+repeated when trying to use sizes larger than 256x256).
+
+Texture Origin and X/Y-Flip
+
+Vertex & Texcoord specify the upper-left edge of the rectangle. And,
+normally, screen coords and texture coords are both incremented during
+rendering the rectangle pixels.
+
+Optionally, X/Y-Flip bits can be set in Texpage.Bit12/13, these bits cause the
+texture coordinates to be decremented (instead of incremented). The X/Y-Flip
+bits do affect only Rectangles (not Polygons, nor VRAM Transfers).
+
+Caution: Reportedly, the X/Y-Flip feature isn't supported on old PSX consoles
+(unknown which ones exactly, maybe such with PU-7 mainboards, and unknown how
+to detect flipping support; except of course by reading VRAM).
+
+Note
+
+There are also two VRAM Transfer commands which work similar to GP0(60h) and
+GP0(65h). Eventually, that commands might be even faster... although not sure
+if they do use the Texture Cache?
+
+The difference is that VRAM Transfers do not clip to the Drawig Area boundary,
+do not support fully-transparent nor semi-transparent texture pixels, and do
+not convert color depths (eg. without 4bit texture to 16bit framebuffer
+conversion).

@@ -1,0 +1,19 @@
+MIPS INSTRUCTION SET REFERENCE - ENTRYHI, ENTRYLO0, AND ENTRYLO1 REGISTERS, IN THAT:
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: EntryHi, EntryLo0, and EntryLo1 registers, in that:
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1019 characters
+Lines: 10
+================================================================================
+
+EntryHi, EntryLo0, and EntryLo1 registers, in that:
+                • The value written to the VPN2 field of the TLB entry may have those bits set to zero corresponding to the one
+                  bits in the Mask field of the PageMask register (the least significant bit of VPN2 corresponds to the least
+                  significant bit of the Mask field). It is implementation dependent whether these bits are preserved or zeroed
+                  during a TLB write.
+                • The value written to the PFN0 and PFN1 fields of the TLB entry may have those bits set to zero corresponding to
+                  the one bits in the Mask field of PageMask register (the least significant bit of PFN corresponds to the least
+                  significant bit of the Mask field). It is implementation dependent whether these bits are preserved or zeroed
+                  during a TLB write.
+                • The single G bit in the TLB entry is set from the logical AND of the G bits in the EntryLo0 and EntryLo1

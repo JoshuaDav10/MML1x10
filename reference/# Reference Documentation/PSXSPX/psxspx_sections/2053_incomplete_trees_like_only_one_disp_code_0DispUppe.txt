@@ -1,0 +1,34 @@
+PSXSPX SPECIFICATIONS - INCOMPLETE TREES (LIKE ONLY ONE DISP CODE, "0"=DISPUPPER7BIT=00H, WITHOUT
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: incomplete trees (like only one disp code, "0"=DispUpper7bit=00h, without
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1310 characters
+Lines: 26
+================================================================================
+
+incomplete trees (like only one disp code, "0"=DispUpper7bit=00h, without
+defining any further huffman codes like "1" or "1xxx").
+This isn't much of a problem (except, one may need to remove incomplete tree
+error checking in the "lzh_explode_tree" function).
+
+End of Last Block
+
+| End of Last Block is usually determined by forwarding the LZSSHUF output
+directly to the RLE8182 decompressor (which does then check if uncompressed
+size is reached) (marked "RleOnTheFly" in above sample code).
+Alternately, one could decompress in separate steps (LZSSHUF to tempbuf, and
+then tempbuf to RLE8182), but that requires to deal with padding bits.
+- padding seems to be 16..31 bits (?) alike at end of blocksize
+- padding bits are (always?) zeroes, which act as flag=0=compressed
+- compressed data occupies at least flg(1),len(1),disp(1),displsbs(6)=9bits
+That can lead to decoding a few extra codes (with lengths up to 3Fh each),
+so the tempbuf must have trailing space for writing that garbage padding.
+And, those padding bits tend to translate to disp=0000h (aka disp=2000h),
+which can cause reads from the whole sliding window, so tempbuf requires
+2000h leading bytes to avoid page faults (not just the 3 initialized bytes).
+
+See also:
+
+https://github.com/dgilman/macutils/blob/master/macunpack/cpt.c
+- source code

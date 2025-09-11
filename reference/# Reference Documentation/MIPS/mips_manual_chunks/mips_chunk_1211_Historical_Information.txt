@@ -1,0 +1,41 @@
+MIPS INSTRUCTION SET REFERENCE - HISTORICAL INFORMATION:
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Historical Information:
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1820 characters
+Lines: 32
+================================================================================
+
+Historical Information:
+            In MIPS I-III, if either of the two preceding instructions is MFHI, the result of that MFHI is UNPREDICTABLE.
+            Reads of the HI or LO special register must be separated from any subsequent instructions that write to them by two
+            or more instructions. In MIPS IV and later, including MIPS32 and MIPS64, this restriction does not exist.
+
+
+
+
+206                                                            MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                               Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+MUL
+
+
+
+
+       Multiply Word to GPR                                                                                               MUL
+
+      31                   26 25             21 20             16 15                11 10             6   5                 0
+            SPECIAL2                                                                          0                  MUL
+                                     rs                 rt                 rd
+             011100                                                                         00000               000010
+                  6                  5                  5                  5                  5                    6
+
+           Format:      MUL rd, rs, rt                                                                                 MIPS32
+
+           Purpose:
+           To multiply two words and write the result to a GPR.
+
+           Description: rd ← rs × rt
+           The 32-bit word value in GPR rs is multiplied by the 32-bit value in GPR rt, treating both operands as signed values,
+           to produce a 64-bit result. The least significant 32 bits of the product are written to GPR rd. The contents of HI and

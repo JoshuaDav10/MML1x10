@@ -1,0 +1,176 @@
+PSYQ DOCUMENTATION - TRAINING/Summer97/fsdbovl.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/TRAINING/Summer97/fsdbovl.pdf
+Converted: Wed Sep 10 02:47:41 PM CDT 2025
+================================================================================
+
+Debugging Overlays
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Debugging Overlays
+Overview
+
+   Makefile switches
+   Overlay files
+   Problem areas
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Debugging Overlays
+Makefile Switches
+
+   Use /v with the psylink call
+         Allows recognition of overlays by
+         debugger
+   Use -g with the ccpsx call
+          Generates debug info for the symbol file
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Debugging Overlays
+Overlay files
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Debugging Overlays
+What are they?
+
+   Pure binary code
+   Assembled at a fixed address
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Debugging Overlays
+Putting them in memory
+
+   Normally read from CD
+          Not very feasible to debug
+   Two methods for debugging purposes
+          CD emulator
+          PC fileserver functions
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Debugging Overlays
+Using the emulator
+
+   Run executable image file and use
+   printf’s
+   DBUGPSX, use emulator as source for
+   overlay files
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Debugging Overlays
+PC fileserver functions
+
+   PCopen()
+          Used to get a file handle
+   PClseek()
+          Used to acquire the length of overlay file
+   PCread()
+          Used to read in a file from the host PC
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Debugging Overlays
+Problem Areas
+
+   Reading the file incorrectly
+   Addressing errors
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Debugging Overlays
+Reading the file incorrectly
+
+   Overlays need not be an integral
+   number of sectors in length
+   High level functions CdRead(),
+   CdReadFile() read entire sectors into
+   memory, zeroing out any bytes not
+   present in source file
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Debugging Overlays
+Reading the file incorrectly
+
+heap                                                                      heap
+
+
+
+                           Overlay area is 6.1K                                     …and part of the
+overlay                    but CdRead loads in                            overlay   heap gets zeroed
+                           8K...                                                    out
+
+
+main                                                                      main
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Debugging Overlays
+Solutions...
+
+   Good--use low level functions, only
+   read in what is needed
+          Best utilization of memory
+   Not so good--arrange any group, heap,
+   etc that follows the overlay so that it is
+   out of harm’s way
+          This can waste up to 2K of RAM
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Debugging Overlays
+Addressing errors
+
+   Code is associated with a specific
+   address
+   Even if overlay code is unchanged,
+   changes in the parent will lead to
+   address changes in overlays
+   New main + old overlay = crash
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Debugging Overlays
+Addressing errors
+Before                                        After
+                                                                                  Overlay is loaded here...
+                                              heap
+heap
+
+
+                                              actual                             expected
+overlay                                       overlay                            overlay
+
+
+
+
+main                                          main                                but it’s addressed here
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Debugging Overlays
+Solutions...
+
+   Try to think of main program and
+   overlays as one unit--where one goes,
+   they all go
+          Especially when burning discs!
+   When using dbugpsx with the main
+   program and the emulator to read in
+   overlays, remember to update your
+   emulation image after each build
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Debugging Overlays
+

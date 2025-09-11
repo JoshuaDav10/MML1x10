@@ -1,0 +1,39 @@
+MIPS INSTRUCTION SET REFERENCE - SEE “PROGRAMMING NOTES” FOR THE DIV INSTRUCTION.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: See “Programming Notes” for the DIV instruction.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1497 characters
+Lines: 30
+================================================================================
+
+See “Programming Notes” for the DIV instruction.
+
+            Historical Perspective:
+            In MIPS 1 through MIPS III, if either of the two instructions preceding the divide is an MFHI or MFLO, the result of
+            the MFHI or MFLO is UNPREDICTABLE. Reads of the HI or LO special register must be separated from subse-
+            quent instructions that write to them by two or more instructions. This restriction was removed in MIPS IV and
+            MIPS32 and all subsequent levels of the architecture.
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                                125
+
+                               Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+EHB
+
+
+
+
+  Execution Hazard Barrier                                                                                             EHB
+
+
+      31                   26 25            21 20             16 15              11 10             6   5                  0
+            SPECIAL                  0                 0                  0                 3                  SLL
+             000000                00000             00000              00000             00011               000000
+                  6                  5                 5                  5                 5                   6
+
+           Format:    EHB                                                                               MIPS32 Release 2
+
+           Purpose:

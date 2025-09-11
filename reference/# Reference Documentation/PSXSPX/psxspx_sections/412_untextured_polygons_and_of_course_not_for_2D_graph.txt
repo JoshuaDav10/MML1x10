@@ -1,0 +1,40 @@
+PSXSPX SPECIFICATIONS - UNTEXTURED POLYGONS, AND OF COURSE NOT FOR 2D GRAPHICS, SO YOU MAY EXCLUDE
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: untextured polygons, and of course not for 2D graphics, so you may exclude
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 1240 characters
+Lines: 32
+================================================================================
+
+untextured polygons, and of course not for 2D graphics, so you may exclude
+those from size reduction).
+
+24bit RGB to 15bit RGB Dithering (enabled in Texpage attribute)
+
+For dithering, VRAM is broken to 4x4 pixel blocks, depending on the location in
+that 4x4 pixel region, the corresponding dither offset is added to the 8bit
+R/G/B values, the result is saturated to +00h..+FFh, and then divided by 8,
+resulting in the final 5bit R/G/B values.
+
+| -4 +0 -3 +1 ;\dither offsets for first two scanlines
++2 -2 +3 -1 ;/
+-3 +1 -4 +0 ;\dither offsets for next two scanlines
++3 -1 +2 -2 ;/(same as above, but shifted two pixels horizontally)
+
+POLYGONs (triangles/quads) are dithered ONLY if they do use gouraud shading or
+texture blending.
+
+LINEs are dithered (no matter if they are mono or do use gouraud shading).
+
+RECTs are NOT dithered (no matter if they do use texture blending).
+
+Shading information
+
+"Texture RGB values control the brightness of the individual colors ($00-$7f).
+A value of $80 in a color will take the former value as data." (What...?
+probably means the "double brightness" effect... or does it want to tell that
+ALL colors of 80h..FFh have only single brightness.. rather than reaching
+double brightness at FFh...?)
+
+Shading

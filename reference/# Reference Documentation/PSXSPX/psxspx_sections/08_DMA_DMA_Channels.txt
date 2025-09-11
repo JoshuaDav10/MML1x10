@@ -1,0 +1,9 @@
+PSXSPX SPECIFICATIONS - DMA CHANNELS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: DMA Channels
+Chunked: Wed Sep 10 03:31:04 PM CDT 2025
+Size: 13 characters
+================================================================================
+
+DMA Channels

@@ -1,0 +1,31 @@
+MIPS INSTRUCTION SET REFERENCE - DESCRIPTION: PC ← RS, CLEAR EXECUTION AND INSTRUCTION HAZARDS
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Description: PC ← rs, clear execution and instruction hazards
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 2271 characters
+Lines: 22
+================================================================================
+
+Description: PC ← rs, clear execution and instruction hazards
+             Jump to the effective target address in GPR rs. Execute the instruction following the jump, in the branch delay slot,
+             before jumping.
+             JR.HB implements a software barrier that resolves all execution and instruction hazards created by Coprocessor 0
+             state changes (for Release 2 implementations, refer to the SYNCI instruction for additional information on resolving
+             instruction hazards created by writing the instruction stream). The effects of this barrier are seen starting with the
+             instruction fetch and decode of the instruction at the PC to which the JR.HB instruction jumps. An equivalent barrier
+             is also implemented by the ERET instruction, but that instruction is only available if access to Coprocessor 0 is
+             enabled, whereas JR.HB is legal in all operating modes.
+             This instruction clears both execution and instruction hazards. Refer to the EHB instruction description for the
+             method of clearing execution hazards alone.
+             JR.HB uses bit 10 of the instruction (the upper bit of the hint field) to denote the hazard barrier operation.
+             For processors that implement the MIPS16 ASE, set the ISA Mode bit to the value in GPR rs bit 0. Bit 0 of the target
+             address is always zero so that no Address Exceptions occur when bit 0 of the source register is one.
+
+             Restrictions:
+             The effective target address in GPR rs must be naturally-aligned. For processors that do not implement the MIPS16
+             ASE, if either of the two least-significant bits are not zero, an Address Error exception occurs when the branch target
+             is subsequently fetched as an instruction. For processors that do implement the MIPS16 ASE, if bit 0 is zero and bit 1
+             is one, an Address Error exception occurs when the jump target is subsequently fetched as an instruction.
+             After modifying an instruction stream mapping or writing to the instruction stream, execution of those instructions
+             has UNPREDICTABLE behavior until the hazard has been cleared with JALR.HB, JR.HB, ERET, or DERET. Fur-

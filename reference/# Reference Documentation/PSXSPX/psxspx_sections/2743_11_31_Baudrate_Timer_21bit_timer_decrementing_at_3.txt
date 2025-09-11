@@ -1,0 +1,31 @@
+PSXSPX SPECIFICATIONS - 11-31 BAUDRATE TIMER (21BIT TIMER, DECREMENTING AT 33MHZ)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 11-31 Baudrate Timer (21bit timer, decrementing at 33MHz)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1018 characters
+Lines: 22
+================================================================================
+
+11-31 Baudrate Timer (21bit timer, decrementing at 33MHz)
+
+1F801048h JOY_MODE (R/W) (usually 000Dh, ie. 8bit, no parity, MUL1)
+
+| 0-1 Baudrate Reload Factor (1=MUL1, 2=MUL16, 3=MUL64) (or 0=MUL1, too)
+2-3 Character Length (0=5bits, 1=6bits, 2=7bits, 3=8bits)
+4 Parity Enable (0=No, 1=Enable)
+5 Parity Type (0=Even, 1=Odd) (seems to be vice-versa...?)
+6-7 Unknown (always zero)
+8 CLK Output Polarity (0=Normal:High=Idle, 1=Inverse:Low=Idle)
+9-15 Unknown (always zero)
+
+1F80104Ah JOY_CTRL (R/W) (usually 1003h,3003h,0000h)
+
+| 0 TX Enable (TXEN) (0=Disable, 1=Enable)
+1 /JOYn Output (0=High, 1=Low/Select) (/JOYn as defined in Bit13)
+2 RX Enable (RXEN) (0=Normal, when /JOYn=Low, 1=Force Enable Once)
+3 Unknown? (read/write-able) (for SIO, this would be TX Output Level)
+4 Acknowledge (0=No change, 1=Reset JOY_STAT.Bits 3,9) (W)
+5 Unknown? (read/write-able) (for SIO, this would be RTS Output Level)
+6 Reset (0=No change, 1=Reset most JOY_registers to zero) (W)
+7 Not used (always zero) (unlike SIO, no matter of FACTOR)

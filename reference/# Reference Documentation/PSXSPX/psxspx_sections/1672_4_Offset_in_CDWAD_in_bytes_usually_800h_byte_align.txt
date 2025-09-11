@@ -1,0 +1,38 @@
+PSXSPX SPECIFICATIONS - ... 4 OFFSET IN CD.WAD (IN BYTES, USUALLY 800H-BYTE ALIGNED)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: ... 4 Offset in CD.WAD (in bytes, usually 800h-byte aligned)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1218 characters
+Lines: 30
+================================================================================
+
+... 4 Offset in CD.WAD (in bytes, usually 800h-byte aligned)
+... 4 Filesize (in bytes)
+
+PADBUG: Apocalypse does append 1..800h bytes alignment padding (instead of
+1..7FFh or 0 bytes).
+
+Dance UK (DATA.PAK)
+
+| 000h 4 Number of Files (N) (1ADh)
+004h 4 Unknown (7) (maybe HeaderSize/800h, same as first Offset/800h ?)
+008h 4 Unknown (1430h = 14h+N*0Ch, same as first Name pointer)
+00Ch 4 Unknown (1430h = 14h+N*0Ch, same as first Name pointer)
+010h 4 Unknown (1430h = 14h+N*0Ch, same as first Name pointer)
+014h N*4 Name List (pointers to name strings, 1430h and up) 6B4h bytes
+... N*4 Size List (filesize in bytes) 6B4h bytes
+... N*4 Offset List (Offset/800h) 6B4h bytes
+... N*var Name Strings (ASCII strings, "folder\filename.ext",00h)
+... .. Zerofilled (padding to 800h-byte boundary)
+... .. File Data area
+
+Kula Quest / Kula World / Roll Away (*.PAK)
+
+| 000h 4 Number of Files (N)
+004h N*8 File List (2x32bit entries: Offset, Size) (unaligned, can be odd)
+... N*4 File Name Offsets
+... N*var File Name Strings ("FILE NN",0Ah,00h)
+... .. Garbage-padding to 4-byte boundary
+... (4) Optional extra garbage? ("MON " in ATLANTFI.PAK, MARSFI.PAK, etc.)
+... .. File Data area (ZLIB compressed, starting with big-endian 789Ch)

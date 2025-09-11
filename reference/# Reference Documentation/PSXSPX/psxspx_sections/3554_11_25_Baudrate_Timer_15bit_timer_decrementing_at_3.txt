@@ -1,0 +1,34 @@
+PSXSPX SPECIFICATIONS - 11-25 BAUDRATE TIMER (15BIT TIMER, DECREMENTING AT 33MHZ)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 11-25 Baudrate Timer (15bit timer, decrementing at 33MHz)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1099 characters
+Lines: 25
+================================================================================
+
+11-25 Baudrate Timer (15bit timer, decrementing at 33MHz)
+26-31 Unknown (usually zero, sometimes all bits set)
+
+Note: Bit0 gets cleared after sending the Startbit, Bit2 gets cleared after
+sending all bits up to including the Stopbit.
+
+1F801058h SIO_MODE (R/W) (eg. 004Eh --> 8N1 with Factor=MUL16)
+
+| 0-1 Baudrate Reload Factor (1=MUL1, 2=MUL16, 3=MUL64) (or 0=STOP)
+2-3 Character Length (0=5bits, 1=6bits, 2=7bits, 3=8bits)
+4 Parity Enable (0=No, 1=Enable)
+5 Parity Type (0=Even, 1=Odd) (seems to be vice-versa...?)
+6-7 Stop bit length (0=Reserved/1bit, 1=1bit, 2=1.5bits, 3=2bits)
+8-15 Not used (always zero)
+
+1F80105Ah SIO_CTRL (R/W)
+
+| 0 TX Enable (TXEN) (0=Disable, 1=Enable, when CTS=On)
+1 DTR Output Level (0=Off, 1=On)
+2 RX Enable (RXEN) (0=Disable, 1=Enable) ;Disable also clears RXFIFO
+3 TX Output Level (0=Normal, 1=Inverted, during Inactivity & Stop bits)
+4 Acknowledge (0=No change, 1=Reset SIO_STAT.Bits 3,4,5,9) (W)
+5 RTS Output Level (0=Off, 1=On)
+6 Reset (0=No change, 1=Reset most SIO_registers to zero) (W)
+7 Unknown? (read/write-able when FACTOR non-zero) (otherwise always zero)

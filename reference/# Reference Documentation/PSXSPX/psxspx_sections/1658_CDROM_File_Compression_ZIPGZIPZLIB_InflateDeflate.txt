@@ -1,0 +1,38 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION ZIP/GZIP/ZLIB (INFLATE/DEFLATE)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression ZIP/GZIP/ZLIB (Inflate/Deflate)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1056 characters
+Lines: 30
+================================================================================
+
+CDROM File Compression ZIP/GZIP/ZLIB (Inflate/Deflate)
+
+Instead of "tinf_uncompress", use the function below:
+
+| bmx_tinf_style_uncompress(dst,src)
+tinf_init() ;init constants (needed to be done only once)
+@@lop:
+if tinf_getbit()=0 then goto @@done ;end flag, 1bit
+if tinf_getbit()=0 then ;blocktype, 1bit
+tinf_align_src_to_byte_boundary()
+len=LittleEndian16bit[src], src=src+2 ;get len (without inverse len)
+for i=0 to len-1, [dst]=[src], dst=dst+1, src=src+1, next i ;uncompressed
+else
+tinf_decode_dynamic_trees(), tinf_inflate_compressed_block() ;compressed
+gpto @@lop
+@@done:
+ret
+
+Note: Apart from the MHPB\FE.WAD archive, many MHPB\*.BIN files seem to be also
+compressed (unknown if that's the same compression method; and, if so, they
+would lack decompressed size info).
+
+| _______________________________ Entrysize=28h ________________________________
+
+Demo Menu, PlayStation Magazine Demo Disc 03-54, MENU.FF
+
+Used on most PlayStation Magazine Demo Discs (Disc 03-54, except Disc 01-02)
+
+Used on PlayStation Underground 3.1 (and maybe other issues)

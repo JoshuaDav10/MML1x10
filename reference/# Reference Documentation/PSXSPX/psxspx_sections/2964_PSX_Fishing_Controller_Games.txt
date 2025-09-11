@@ -1,0 +1,35 @@
+PSXSPX SPECIFICATIONS - PSX FISHING CONTROLLER GAMES
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: PSX Fishing Controller Games
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1570 characters
+Lines: 26
+================================================================================
+
+PSX Fishing Controller Games
+
+| Action Bass (Syscom Entertainment) (1999) (SLPH-00100)
+Bass Landing (ASCII/agetec) (1999) (SLPH-00100, SLUH-00063)
+Bass Rise, Fishing Freaks (Bandai) (1999) (BANC-0001)
+Bass Rise Plus, Fishing Freaks (Bandai) (2000) (BANC-0001, SLPH-00100)
+Breath of Fire IV (Capcom) (SLUH-00063)
+Championship Bass (EA Sports) (2000) (SLUH-00063)
+Fish On! Bass (Pony Canyon) (1999) (BANC-0001, SLPH-00100)
+Fisherman's Bait 2/Exiting Bass2 - Big Ol'Bass(Konami)(SLPH-00100,SLUH-00063)
+Fishing Club: (series with 3 titles) (have "headset-logo" on back?)
+Lake Masters II (1999) (Dazz/Nexus) (SLPH-00100)
+Lake Masters Pro (1999) (Dazz/Nexus) (BANC-0001, SLPH-00100)
+Let's Go Bassfishing!: Bass Tsuri ni Ikou! (Banpresto) (1999) (SLPH-00100)
+Matsukata Hiroki no World Fishing (BPS The Choice) (1999) (SLPH-00100)
+Murakoshi Seikai-Bakuchou Nihon Rettou (Victor) (SLPH-00100)
+Murakoshi Masami-Bakuchou Nippon Rettou:TsuriConEdition (1999) (SLPH-00100)
+Pakuchikou Seabass Fishing (JP, 03/25/99) (Victor) (SLPH-00100)
+Perfect Fishing: Bass Fishing (2000) (Seta) (yellow/green logo)
+Perfect Fishing: Rock Fishing (2000) (Seta) (yellow/green logo)
+Oyaji no Jikan: Nechan, Tsuri Iku De! (2000) (Visit) (BANC-0001, SLPH-00100)
+Reel Fishing II / Fish Eyes II (2000)(Natsume/Victor)(SLPH-00100, SLUH-00063)
+Simple 1500 Series Vol. 29: The Tsuri (2000) (yellow/green logo)
+Suizokukan Project: Fish Hunter e no Michi (1999)(Teichiku)(SLPH-00100)
+Super Bass Fishing (1999) (King) (BANC-0001, SLPH-00100, yellow/green logo)
+Super Black Bass X2 (2000) (Starfish) (SLPH-00100)

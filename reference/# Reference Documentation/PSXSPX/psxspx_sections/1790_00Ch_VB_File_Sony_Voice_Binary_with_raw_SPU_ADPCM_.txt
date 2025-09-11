@@ -1,0 +1,43 @@
+PSXSPX SPECIFICATIONS - 00CH .. VB FILE (SONY VOICE BINARY, WITH RAW SPU-ADPCM SAMPLES)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 00Ch .. VB File (Sony Voice Binary, with raw SPU-ADPCM samples)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1279 characters
+Lines: 35
+================================================================================
+
+00Ch .. VB File (Sony Voice Binary, with raw SPU-ADPCM samples)
+VRAM Chunks:
+000h 4 Chunk ID ("VRAM")
+004h 4 Chunk Size (of whole chunk from Chunk ID and up)
+008h 4 Compression Flag (1=Compressed)
+00Ch 2 VRAM.X
+00Eh 2 VRAM.Y
+010h 2 Width in halfwords
+012h 2 Height
+014h 4 Decompressed Size (Width*Height*2) ;\Texture Bitmaps 8bpp
+018h .. Compressed Data ; (or Palettes, in last VRAM
+... .. Zeropadding to 4-byte boundary ;/chunk)
+STGE Chunks:
+000h 4 Chunk ID ("STGE")
+004h 4 Chunk Size (of whole chunk from Chunk ID and up)
+008h 4 Compression Flag (0=Uncompressed)
+00Ch .. Unknown (stage data?)
+ANIM Chunks:
+000h 4 Chunk ID ("ANIM")
+004h 4 Chunk Size (of whole chunk from Chunk ID and up)
+008h 4 Compression Flag (0=Uncompressed)
+00Ch .. Unknown (animation sequence info?)
+FRAM Chunks:
+000h 4 Chunk ID ("FRAM")
+004h 4 Chunk Size (of whole chunk from Chunk ID and up)
+008h 4 Compression Flag (0=When Chunksize=14h, 1=When Chunksize>14h)
+00Ch 1 Width in bytes
+00Dh 1 Height
+00Eh 6 Unknown, looks like three signed 16bit values (maybe X,Y,Z)?
+014h (4) Decompressed Size (Width*Height*1) ;\Animation Frame Bitmap 8bpp
+018h (..) Compressed Data ; (only if Chunksize>14h)
+... (..) Zeropadding to 4-byte boundary ;/
+
+VRAM and FRAM chunks with [08h]=1 (and Chunksize>14h) are compressed:

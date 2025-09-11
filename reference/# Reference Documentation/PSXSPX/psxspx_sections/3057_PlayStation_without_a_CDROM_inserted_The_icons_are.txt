@@ -1,0 +1,37 @@
+PSXSPX SPECIFICATIONS - PLAYSTATION WITHOUT A CDROM INSERTED). THE ICONS ARE DRAWN VIA GP0(2CH)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: PlayStation without a CDROM inserted). The icons are drawn via GP0(2Ch)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1136 characters
+Lines: 28
+================================================================================
+
+PlayStation without a CDROM inserted). The icons are drawn via GP0(2Ch)
+command, ie. as Textured four-point polygon, opaque, with texture-blending,
+whereas the 24bit blending color is 808080h (so it's quite the same as raw
+texture without blending). As semi-transparency is disabled, Palette/CLUT
+values can be 0000h=FullyTransparent, or 8000h=SolidBlack (the icons are
+usually shown on a black background, so it doesn't make much of a difference).
+
+Data Frame(s) (Block 1..15, Frame N..63; N=excluding any Title/Icon Frames)
+
+| 00h-7Fh Data
+
+Note: Files that occupy more than one block are having only ONE Title area, and
+only one Icon area (in the first sector(s) of their first block), the
+additional blocks are using sectors 0..63 for plain data.
+
+Shift-JIS Character Set (16bit) (used in Title Frames)
+
+Can contain japanese or english text, english characters are encoded like so:
+
+| 81h,40h --> SPC
+81h,43h..97h --> punctuation marks
+82h,4Fh..58h --> "0..9"
+82h,60h..79h --> "A..Z"
+82h,81h..9Ah --> "a..z"
+
+Titles shorter than 32 characters are padded with 00h-bytes.
+
+Note: The titles are in 16bit format (even if they consist of

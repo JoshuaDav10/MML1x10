@@ -1,0 +1,26 @@
+PSXSPX SPECIFICATIONS - IC304 52PIN SUB-CPU (MC68HC05G6) 52PIN PACKAGE ;LATE-PU-8 AND UP
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: IC304 52pin SUB-CPU (MC68HC05G6) 52pin package ;LATE-PU-8 and up
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1001 characters
+Lines: 18
+================================================================================
+
+IC304 52pin SUB-CPU (MC68HC05G6) 52pin package ;LATE-PU-8 and up
+IC305 - 100pin SONY CXD1199BQ (Decoder/FIFO) ;PU-7
+IC305 - 100pin SONY CXD1815Q (Decoder/FIFO) ;PU-8, PU-18
+IC309 - 100pin SONY CXD2516Q (Signal Processor) ;PU-7 (100pin!)
+IC309 - 80pin SONY CXD2510Q (Signal Processor) ;PU-8 and DTL-H2510
+IC702 - 48pin SONY CXA1782BR (Servo Amplifier) ;PU-7, PU-8
+IC101 - 100pin SONY CXD2515Q (=CXD2510Q+CXA1782BR) ;DTL-H2010
+IC701 - 100pin SONY CXD2545Q (=CXD2510Q+CXA1782BR) ;PU-18
+IC720 - 144pin SONY CXD1817R (=CXD2545Q+CXD1815Q) ;PU-20
+IC102 - 28pin - "BA6297AFP" ;seen on DTL-H2010 drives
+IC704 - 28pin - "BA6398FP" ;seen on PU-7
+IC722 - 28pin - "BA6397FP" ;seen on late PU-8
+IC722 - 28pin - "BA5947FP" ;seen on PM-41 and various boards
+IC722 - 28pin - "Panasonic AN8732SB" ;seen on PM-41 board
+ICxxx - 20pin SONY CXA1571N (RF Amplifier) (on DTL-H2010 drives)
+IC703 - 20pin SONY CXA1791N (RF Amplifier) (on PU-18 boards)
+IC723 - 20pin SONY CXA2575N-T4 (RF Matrix Amplifier) (on PU-22 .. PM-41(2))

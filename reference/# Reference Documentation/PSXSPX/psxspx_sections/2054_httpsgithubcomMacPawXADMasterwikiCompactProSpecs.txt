@@ -1,0 +1,92 @@
+PSXSPX SPECIFICATIONS - HTTPS://GITHUB.COM/MACPAW/XADMASTER/WIKI/COMPACTPROSPECS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: https://github.com/MacPaw/XADMaster/wiki/CompactProSpecs
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 3724 characters
+Lines: 83
+================================================================================
+
+https://github.com/MacPaw/XADMaster/wiki/CompactProSpecs
+- confused anti-specs
+
+Self-Extracting Archives (SEA)
+
+The abbreviation SEA (and extension .sea) is used for several self-extracting
+MAC archives. The Resource fork contains an executable (as indicated by
+Type="APPL") which contains the decompressor, and the Data fork contains the
+archive.
+
+| MAC File Type,Creator IDs = "APPL","aust" (StuffIt).
+MAC File Type,Creator IDs = "APPL","EXTR" (CompactPro).
+MAC File Type,Creator IDs = "APPL","DSEA" (DiskDoubler).
+
+There are some oddities for .sea files found in internet:
+
+| StuffIt .sea files: These are often raw StuffIt archives (apparently
+somebody had removed the MacBinary header and the resource fork with
+the decompressor).
+CompactPro .sea files: These are often stored as MacBinary without 80h-byte
+padding appended to the Data and Resource forks.
+That applies to "Santa.sea" but other such files have OTHER corruptions,
+which may include wrong Size and/or garbage in reserved MacBinary fields?
+
+Note: Not to be confused with ARC archives from System Enhancement Associates
+(SEA).
+
+Mac OS Data forks
+
+The Data fork contains the "normal data" part of the file (eg. anything like
+.TXT .DOC .GIF .JPG .WAV .ZIP .LZH .SIT .PIT .CPT etc).
+
+Mac OS Resource forks
+
+The Resource fork can contain executable code resources (similar to .EXE files;
+with File Type="APPL"), and various other resources (fonts, icons, text strings
+for dialog boxes, etc). Those resources are stored in a filesystem-style
+archive and can be accessed with IDs and/or name strings.
+
+| Resource fork Header:
+000h 4 Offset to Resource Data section (from start of file) (100h)
+004h 4 Offset to Resource Map section (from start of file) (100h+DataSiz)
+008h 4 Size of Resource Data section (can be 0=None)
+00Ch 4 Size of Resource Map section
+010h F0h Unknown (can contain filename/type.. MAYBE just garbage padding?)
+100h .. Resource Data section, contains Data Record(s)
+... .. Resource Map section
+Data Record(s) in Resource Data section (usually at offset 100h and up):
+000h 4 Size of Data for this record
+004h .. Data for this record
+Resource Map section:
+000h 4 Offset to Resource Data section (from start of file) ;\
+004h 4 Offset to Resource Map section (from start of file) ; same as in
+008h 4 Size of Resource Data section ; header
+00Ch 4 Size of Resource Map section ;/
+010h 4 Zero (internally used by Resource Manager, nextResourceMap)
+014h 2 Zero (internally used by Resource Manager, fileRef)
+016h 2 Map Attributes
+0-4 Zero (reserved)
+5 Zero (internally used by Resource Manager, changed)
+6 Zero (internally used by Resource Manager, need compression)
+7 Resource map is read-only
+8-15 Zero (reserved)
+018h 2 Offset to Type List (from start of resource map) (usually 1Ch ?)
+01Ah 2 Offset to Name List (from start of resource map)
+... .. Type List
+... .. Resource List (with one or more entry for each entry in Type List)
+... .. Name List (each name consists of 8bit NameLength, plus name string)
+Type List follows the header and contains an array of resource type records.
+000h 2 Number of Type Records, minus one (FFFFh=None, 0000h=One, etc.)
+002h N*8 Type Records
+Type Record format:
+000h 4 Resource Type (four-character constant)
+004h 2 Number of Resource List entries, minus one (0000h=One, etc.)
+006h 2 Offset to first Resource List entry (from start of Type List)
+Resource List entries:
+000h 2 Resource ID (C000h..FFFFh=Special/Owned)
+002h 2 Offset to Resource Name (from start of Name List) (FFFFh=None)
+004h 1 Attributes
+0 Resource data is compressed (0=No, 1=Compressed)
+1 Zero (internally used by Resource Manager, changed)
+2 Load Resource as soon as file is opened (0=No, 1=Preload)
+3 Resource is read-only (0=No, 1=Protected)

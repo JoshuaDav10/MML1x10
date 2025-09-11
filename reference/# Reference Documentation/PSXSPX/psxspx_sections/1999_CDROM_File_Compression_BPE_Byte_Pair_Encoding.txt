@@ -1,0 +1,78 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION BPE (BYTE PAIR ENCODING)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression BPE (Byte Pair Encoding)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2533 characters
+Lines: 70
+================================================================================
+
+CDROM File Compression BPE (Byte Pair Encoding)
+
+Byte Pair Encoding (BPE) does replace the most common byte-pairs with bytes
+that don't occur in the data. That does work best if there are unused bytes
+(eg. ASCII text, or 8bpp bitmaps with less than 256 colors).
+
+Bust A Groove (MagDemo18: BUSTGR_A\*.BPE)
+
+Bust-A-Groove 2 (MagDemo37: BUSTAGR2\BUST2.BIN\*)
+
+| 000h 4 ID "BPE_"
+004h 4 Total Filesize of compressed file including header (big-endian)
+... .. Compression block(s)
+Each compression block contains:
+000h .. Dictionary info
+... 2 Size of compressed data (big-endian)
+... .. Compressed data
+
+The decompression function in Bust A Groove (MagDemo18) is at 80023860h, the
+heap is in 1Kbyte Scratchpad RAM at 1F800208h, so heap size should be max 1F8h
+bytes (assuming that the remaining Scratchpad isn't used for something else).
+The fileheader lacks info about the decompressed size.
+
+Legend of Dragoon (MagDemo34: LOD\OVL\*.OV_ and LOD\SECT\*.BIN\*)
+
+| 000h 4 Decompressed size (little-endian)
+004h 4 ID "BPE",1Ah
+008h .. Compression block(s)
+... .. End code (00000000h) (aka last block with Blocksize=0)
+Each compression block contains:
+000h 4 Size of decompressed block (little-endian) (or 0=End code)
+004h .. Dictionary info
+... .. Compressed data
+... .. Padding to 4-byte boundary
+
+Max nesting appears to be 2Ch, the decompression function allocates a 30h-byte
+heap on stack, and fetches source data in 32bit units (occupying 4 heap bytes),
+the decompressor does then remove 1 byte from heap, and adds 2 bytes in case of
+nested codes.
+
+BPE Decompression for Bust-A-Groove and Legend of Dragoon
+
+| if [src+0]="BPE_" then type=GROOVE ;\
+if [src+4]="BPE",1Ah then type=DRAGOON ;
+if type=GROOVE then src_end = src+BigEndian32bit[src+4] ; hdr
+if type=DRAGOON then dst_end = dst+LittleEndian32bit[src+0] ;
+src=src+8 ;/
+@@block_lop:
+if type=DRAGOON then ;\blk
+dst_blk_end = dst+LittleEndian32bit[src]+4, src=src+4 ; len
+if dst=dst_blk_end then goto @@decompress_done ;/
+for i=00h to FFh, dict1[i]=i, next i ;\
+i=00h ;
+@@dict_lop: ; dict
+num=[src], src=src+1 ;
+if num>7Fh then i=i+(num-7Fh), num=0, if i=100h then goto @@dict_done ;
+for j=0 to num ;
+a=[src], src=src+1 ;
+if a<>i then b=[src], src=src+1, dict1[i]=a, dict2[i]=a ;
+i=i+1 ;
+if idst_end then error
+ret
+
+Electronic Arts
+
+Electronic Arts games support several compression methods, including a BPE
+variant. That BPE variant is a bit unusual: It does have only one compression
+block (with a single dictionary for the whole file), and uses escape codes for
+rarely used bytes.

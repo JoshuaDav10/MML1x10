@@ -1,0 +1,35 @@
+PSXSPX SPECIFICATIONS - 700H 50H LIST FOR .STR FILE(S) ;RAW CDROM SECTOR NUMBERS FROM 00:02:00
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 700h 50h List for .STR file(s) ;raw CDROM sector numbers from 00:02:00
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1063 characters
+Lines: 27
+================================================================================
+
+700h 50h List for .STR file(s) ;raw CDROM sector numbers from 00:02:00
+750h B0h Zerofilled
+
+List entries, for all three lists (32bit values):
+
+| 0-19 File Offset/800h (20bit)
+20-31 File Size/800h (12bit)
+
+The sector numbers in DAT and BNS are basically counted from begin of the .DAT
+file (which has 7000h sectors in retail version, and the .BNS file does follow
+right thereafter on the next sector) (the demo version (MagDemo22: KIDZ\*) has
+only 105Ah sectors in .DAT, and the BNS entries at offset 600h start with 105Ah
+accordingly).
+
+There are 29 STR files in DEMO\*.STR and STR\*.STR, and 20 of them (?) are
+referenced in HED ? There are also several .ALL files in above folders.
+
+Note: Most of the STR files in Ape Escape contain polygon animation streams
+rather than BS compressed bitmaps. Ape Escape is (c)1999 by Sony.
+
+| .HED is 2048 bytes
+.DAT is 58720256 bytes = 3800000h bytes ;div800h would be 7000h
+.BNS is 884736 bytes = D8000h bytes ;div800h would be 1B0h
+.STR's: 7D3Bh+150 = 7DD1h = sector for STR\LAB.STR
+
+Some files contain RLE compressed TIMs:

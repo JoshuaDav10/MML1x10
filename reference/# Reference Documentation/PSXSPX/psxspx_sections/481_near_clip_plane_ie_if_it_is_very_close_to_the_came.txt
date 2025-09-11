@@ -1,0 +1,39 @@
+PSXSPX SPECIFICATIONS - "NEAR CLIP PLANE", IE. IF IT IS VERY CLOSE TO THE CAMERA (SZ3GTE DIVISION INACCURACY
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: "near clip plane", ie. if it is very close to the camera (SZ3GTE Division Inaccuracy
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 1447 characters
+Lines: 30
+================================================================================
+
+"near clip plane", ie. if it is very close to the camera (SZ3GTE Division Inaccuracy
+
+For "far plane clipping", one can use the SZ3 saturation flag (MaxZ=FFFFh), or
+the IR3 saturation flag (MaxZ=7FFFh) (eg. used by Wipeout 2097), or one can
+compare the SZ3 value with any desired MaxZ value by software.
+
+Note: The command does saturate IR1,IR2,IR3 to -8000h..+7FFFh (regardless of lm
+bit). When using RTP with sf=0, then the IR3 saturation flag (FLAG.22) gets set
+if "MAC3 SAR 12" exceeds -8000h..+7FFFh (although IR3 is saturated
+when "MAC3" exceeds -8000h..+7FFFh).
+
+| IR1,IR2,IR3 are saturated according to lm, but without setting FLAG.22 on IR3
+FLAG.22 is set when SZ3 exceeds -8000h..+7FFFh
+FLAG.18 is set when SZ3 exceeds 0000h..+FFFFh (and SZ3 is staturate as so).
+For RTPT, the DQA,DQB,IR0 calculation is done ONLY for 3rd vertex (V2)
+FLAG.12 is thus set only on last vertex (ie for RTPT: on V2)
+
+COP2 1400006h - 8 Cycles - NCLIP - Normal clipping
+
+| MAC0 = SX0*SY1 + SX1*SY2 + SX2*SY0 - SX0*SY2 - SX1*SY0 - SX2*SY1 ;slow
+
+Or, more efficient, with same result:
+
+| MAC0 = SX0*(SY1-SY2) + SX1*(SY2-SY0) + SX2*(SY0-SY1) ;fast
+
+Error FLAG bit31,16,15 can get set if the final result exceeds 32bit range.
+
+The sign of the result indicates whether the polygon coordinates are arranged
+clockwise or anticlockwise (ie. whether the front side or backside is visible).
+If the result is zero, then it's neither one (ie. the vertices are all arranged

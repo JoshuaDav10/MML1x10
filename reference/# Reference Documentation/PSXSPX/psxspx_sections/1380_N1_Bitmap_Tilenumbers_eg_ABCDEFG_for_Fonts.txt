@@ -1,0 +1,40 @@
+PSXSPX SPECIFICATIONS - ... N*1 BITMAP TILENUMBERS (EG. "ABCDEFG..." FOR FONTS);
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: ... N*1 Bitmap Tilenumbers (eg. "ABCDEFG..." for Fonts);
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1313 characters
+Lines: 32
+================================================================================
+
+... N*1 Bitmap Tilenumbers (eg. "ABCDEFG..." for Fonts);
+... N*1 Bitmap Proportional Font widths? (0xh or FFh) ;
+... N*BMP Bitmap(s) for all characters ;/
+... (20h) Palette Data (20h bytes for 4bpp) ;-only if Font/4bpp
+
+All bitmap scanlines are padded to 2-byte boundary, eg. needed for:
+
+| INGAME1\BOWL2.PTH\SPRITES.PTH\ST.SPR 30x10x4bpp: 15 --> 16 bytes/line
+INGAME1\BOWL2.PTH\SPRITES.PTH\STOPW.SPR 75x40x4bpp: 37.5 --> 38 bytes/line
+
+The BC files are usually compressed (either in PCK file, or in the compressed
+DAT portion of a PTH+DAT archive).
+
+Cool Boarders 2 (MagDemo02: CB2\DATA*\*.FBD)
+
+| 000h 2 ID ("FB") ;\File Header
+002h 2 Always 1 (version? 4bpp? num entries?) ;/
+004h 2 Palette VRAM Dest X (eg. 300h) ;\
+006h 2 Palette VRAM Dest Y (eg. 1CCh,1EDh,1FFh) ; Palette Header
+008h 2 Palette Width in halfwords (eg. 100h) ; (all zero when unused)
+00Ah 2 Palette Height (eg. 1 or 0Dh) ;/
+00Ch 2 Bitmap VRAM Dest X (eg. 140h or 200h) ;\
+00Eh 2 Bitmap VRAM Dest Y (eg. 0 or 100h) ; Bitmap Header
+010h 2 Bitmap Width in halfwords ;
+012h 2 Bitmap Height ;/
+... .. Palette Data (if any) ;-Palette Data
+... .. Bitmap Data ;-Bitmap Data
+
+The bitmap data seems to be 4bpp and/or 8bpp, but it's hard to know the correct
+palette (some files have more than 16 or 256 palette colors, or don't have any
+palette at all).

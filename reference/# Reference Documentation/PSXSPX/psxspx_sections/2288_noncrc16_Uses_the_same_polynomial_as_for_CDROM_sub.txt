@@ -1,0 +1,51 @@
+PSXSPX SPECIFICATIONS - NONCRC16: USES THE SAME POLYNOMIAL AS FOR CDROM SUBCHANNELS, BUT WITH INITIAL
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: noncrc16: Uses the same polynomial as for CDROM subchannels, but with initial
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1468 characters
+Lines: 43
+================================================================================
+
+noncrc16: Uses the same polynomial as for CDROM subchannels, but with initial
+value FFFFh (instead 0) and with final value left un-inverted (instead of
+inverting it).
+
+nonlzh_explode_tree: Uses the same concept as for LZH/ARJ huffman trees (it's
+storing only the number of bits per each codes, and the codes are then
+automatically assigned). But CHD is doing that backwards: It's starting with
+the biggest codes (instead of smallest codes). For example, if you have three
+codes with size 1, 2, 2. The traditional standard assignment would be 0, 10,
+11. But CHD is instead assigning them as 00, 01, 1.
+
+| ______________________________ CHD Compression _______________________________
+
+Compression V1-V4 format 0 (uncompressed)
+
+Compression V5 0,0,0,0 (uncompressed)
+
+| 000h .. Uncompressed data
+
+Uncompressed format can be selected in CHD Map entries (per hunk), and in CHD
+file header (per whole file).
+
+Compression V1-V4 format 1 (zlib) (Generic Deflate)
+
+Compression V1-V4 format 2 (zlib+) (Generic Deflate)
+
+Compression V5 "zlib" (Generic Deflate)
+
+| 000h .. Deflate-compressed data
+
+Compression V5 "lzma" (Generic LZMA)
+
+| 000h .. LZMA-compressed data (with lc=3, lp=0, pb=2) (without EOS end code)
+
+Compression V5 "flac" (Generic FLAC)
+
+| 000h 1 Output format for 16bit samples ("L"=Little-endian, "B"=Big-endian)
+001h .. FLAC-compressed data frame(s)
+
+Compression V5 "huff" (Generic Huffman)
+
+| 000h .. Huffman-compressed data (small tree, large tree, plus data)

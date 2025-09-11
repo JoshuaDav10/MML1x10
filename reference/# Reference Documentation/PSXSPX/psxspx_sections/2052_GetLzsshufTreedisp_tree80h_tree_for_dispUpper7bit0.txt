@@ -1,0 +1,47 @@
+PSXSPX SPECIFICATIONS - GETLZSSHUFTREE(DISP_TREE,80H) ;TREE FOR DISPUPPER7BIT=00H..7FH
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: GetLzsshufTree(disp_tree,80h) ;tree for dispUpper7bit=00h..7Fh
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1649 characters
+Lines: 38
+================================================================================
+
+GetLzsshufTree(disp_tree,80h) ;tree for dispUpper7bit=00h..7Fh
+block_org=src, blocksize=0 ;block origin (after above trees)
+@@decompress_lop:
+if src>=src_end then goto @@all_done ;=out_end then goto @@all_done ;=1FFF0h AND type=CompactPro then goto @@block_done
+if blocksize>=0FFF0h AND type=Disc Double then goto @@block_done
+if GetBits(1)=1 then
+[dst]=GetHuffCode(data_tree), dst=dst+1, blocksize=blocksize+2
+else
+len=GetHuffCode(len_tree)+0, blocksize=blocksize+3
+disp=GetHuffCode(disp_tree)*40h+GetBits(6), if disp=0000h then disp=2000h
+for i=1 to len, [dst]=[dst-disp], dst=dst+1, next i
+if RleOnTheFly then forward above byte(s) to RLE (which advances "out" ptr)
+goto @@decompress_lop
+@@block_done:
+;the decoder does prefetch data in 16bit units, and it does always have
+;16..31 bits prefetched, these bits are discarded at block end...
+src=src+2+((src-block_org) AND 1) ;discard 16..31 bits (till 16bit-boundary)
+goto @@block_lop ;start next block, with new trees
+@@all_done:
+ret
+
+GetLzsshufTree(tree,max):
+
+| num=GetBits(8)*2, if num>max then goto error ;number of symbols (00h and up)
+for i=0 to num-1, codesizes[i]=GetBits(4) ;sizes (1..15 bits, or 0=unused)
+lzh_explode_tree(tree,codesizes,num) ;alike LHA trees
+ret
+
+Minor Corner cases:
+
+| Disp=0 acts as Disp=2000h (don't care when using ringbuf[index AND 1FFFh])
+Len=0..1 could be definied in the len_tree (but are usually size=0bit=unused)
+Unknown if disp_tree & len_tree can be empty (when using data_tree only)?
+RLE ending with 81h,padding should only output 81h (see RLE8182 description)
+
+Incomplete Trees
+
+| A few .cpt files (eg. ABC's-1.09.cpt.hqx\..\Colin's ABC's\Message.h) have

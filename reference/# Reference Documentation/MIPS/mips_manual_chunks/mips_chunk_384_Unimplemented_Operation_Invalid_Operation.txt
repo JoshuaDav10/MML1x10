@@ -1,0 +1,38 @@
+MIPS INSTRUCTION SET REFERENCE - UNIMPLEMENTED OPERATION, INVALID OPERATION
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Unimplemented Operation, Invalid Operation
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1458 characters
+Lines: 29
+================================================================================
+
+Unimplemented Operation, Invalid Operation
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                                 33
+
+                                  Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+ADD
+
+
+
+
+  Add Word                                                                                                               ADD
+
+      31                   26 25             21 20             16 15             11 10               6   5                 0
+            SPECIAL                                                                            0                ADD
+                                     rs                 rt                rd
+             000000                                                                          00000              100000
+                  6                  5                  5                 5                   5                   6
+
+           Format:    ADD rd, rs, rt                                                                                  MIPS32
+
+           Purpose:
+           To add 32-bit integers. If an overflow occurs, then trap.
+
+           Description: rd ← rs + rt
+           The 32-bit word value in GPR rt is added to the 32-bit value in GPR rs to produce a 32-bit result.
+             • If the addition results in 32-bit 2’s complement arithmetic overflow, the destination register is not modified and

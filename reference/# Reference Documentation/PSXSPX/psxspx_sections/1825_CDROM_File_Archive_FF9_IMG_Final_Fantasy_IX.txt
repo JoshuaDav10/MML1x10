@@ -1,0 +1,65 @@
+PSXSPX SPECIFICATIONS - CDROM FILE ARCHIVE FF9 IMG (FINAL FANTASY IX)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Archive FF9 IMG (Final Fantasy IX)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1790 characters
+Lines: 57
+================================================================================
+
+CDROM File Archive FF9 IMG (Final Fantasy IX)
+
+Final Fantasy IX (FF9.IMG, 320Mbyte) Overall format
+
+| 000h Root Directory
+800h 1st Child Folder
+... 2nd Child Folder
+... 3rd Child Folder
+... ...
+8000h ? Last folder, with Type3, contains 1FFh x increasing 16bit numbers
+... Data for files in 1st Child Folder
+... Data for files in 2nd Child Folder
+... Data for files in 3rd Child Folder
+...
+
+IMG Root Directory
+
+| 000h 4 ID "FF9 "
+004h 4 Unknown (06h on Disc 1 of 4) (maybe version, or disc id?)
+008h 4 Number of Folder List entries (0Fh)
+00Ch 4 Unknown (01h on Disc 1 of 4) (maybe version, or disc id?)
+(or Offset/800h to first file list?)
+010h N*10h Folder List
+... .. Padding to 800h-byte boundary ("FF9 FF9 FF9 FF9 ")
+
+Folder List entries:
+
+| 000h 4 FolderType (2=Normal, 3=Special, 4=Last entry)
+004h 4 Number of entries in File List (0..1FFh ?)
+008h 4 Offset/800h to Child Folder with File List
+00Ch 4 Offset/800h to File Data (same as 1st offs in File List) (0=Last)
+
+IMG Child Folders (FolderType=2)
+
+| 000h N*8 File List entries (N=Number of files, from Root directory)
+N*8 8 File List END entry (ID=FFFFh, Attr=FFFFh, Offs=EndOfLastFile)
+... .. Zeropadding to 800h-byte boundary
+
+File List entries:
+
+| 000h 2 File ID (increasing, often decimal 0,10,100, or FFFFh=Last)
+002h 2 Attr (unknown purpose, eg. 0,2,3,4,8,21h,28h,2Fh,44h,114h,FFFFh)
+004h 4 Offset/800h to File Data (increasing, implies end of prev entry)
+
+IMG Child Folders (FolderType=3)
+
+| 000h N*2 File Offsets/800h, from File Data Offset in Root (or FFFFh=None)
+N*2 2 End Offset for last file
+
+The filesize can be computed as (NextOffs-CurrOffs)*800h, however, one must
+skip unused entries (FFFFh) to find NextOffs.
+
+Nested Child Archives
+
+Most of the files in FF9.IMG are DB archives, there are also some DOT1
+archives.

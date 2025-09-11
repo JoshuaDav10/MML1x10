@@ -1,0 +1,91 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION OCTAL ODDITIES (TAR, CPIO, RPM)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression Octal Oddities (TAR, CPIO, RPM)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 3128 characters
+Lines: 83
+================================================================================
+
+CDROM File Compression Octal Oddities (TAR, CPIO, RPM)
+
+Below are file formats with unix/linux-style octal numbers (unknown if they are
+serious about using that formats, or if they do consider them as decently
+amusing, or whatever).
+
+Compression
+
+TAR and CPIO are uncompressed archives, however, they are usually enclosed in a
+compressed Gzip file (or some other compression format like nCompress, Bzip2).
+
+TAR format (1979)
+
+| 0000h .. TAR Chunk(s)
+... 400h TAR End Marker (400h bytes zerofilled)
+... .. Zerofilled (whatever further padding)
+
+TAR Chunk format:
+
+| 000h 100 text Filename ("path/filename.ext",00h)
+064h 8 octal Mode Flags
+06Ch 8 octal User ID
+074h 8 octal Group ID
+07Ch 12 octal Filesize
+088h 12 octal File modification time (seconds since 01 Jan 1970)
+094h 8 octal Header Checksum (sum of byte[0..1F3h], with [94h..9Bh]=20h)
+09Ch 1 text Type (00h or "0" for normal files)
+09Dh 100 text Whatever link name
+101h 8 text Tar ID (6x00h or "ustar",00h,"00" or "ustar ",00h)
+109h 32 text User Name (owner)
+129h 32 text Group Name
+149h 8 octal Device major ;\device number (when Type="4")
+151h 8 octal Device minor ;/
+159h 155 ? Whatever prefix ;-when ID="ustar",00h,"00" or 6x00h
+159h 131 ? Whatever prefix ;\
+1DCh 12 octal File access time ; when ID="ustar ",00h
+1E8h 12 octal File status-change time ;/
+1F4h 12 - Zeropadding to 200h-byte boundary
+200h .. - File data (Filesize bytes)
+... .. - Zeropadding to 200h-byte boundary
+
+TAR numeric values are weirdly stored as octal ASCII strings, often decorated
+with leading or trailing spaces. For example, 8-byte octal value 123o (53h) can
+look as so (with "." meaning 00h end-byte):
+
+| "0000123." 
+
+See also: https://www.gnu.org/software/tar/manual/html_node/Standard.html
+
+CPIO Format (1977) (and MAC .PAX files)
+
+| 0000h .. CPIO Chunk(s) (with actual files)
+... 57h CPIO Chunk (with filename "TRAILER!!!",00h)
+... .. Zeropadding to 200h-byte boundary (not always present)
+
+The chunks are simple, but they do exist in five weirdly different variants:
+
+| Align 2, Binary, little-endian (but partial "big-endian" for 2x16bit pairs)
+Align 2, Binary, big-endian
+Align 1, Ascii, octal strings
+Align 4, Ascii, hexadecimal lowercase strings, checksum=0)
+Align 4, Ascii, hexadecimal lowercase strings, checksum=sum of bytes in file)
+
+Binary, little-or-big-endian:
+
+| 000h 2 binary 16bit ID (71C7h) ;-little-or big endian
+002h 2 binary 16bit dev ;\
+004h 2 binary 16bit ino ; same
+006h 2 binary 16bit mode ; endianness
+008h 2 binary 16bit uid ; as in ID
+00Ah 2 binary 16bit gid ;
+00Ch 2 binary 16bit nlink ; (but be aware
+00Eh 2 binary 16bit rdev ; of the fixed
+010h 2 binary 16bit File modification time, upper 16bit ;\ ; upper/lower
+012h 2 binary 16bit File modification time, lower 16bit ;/ ; 16bit order
+014h 2 binary 16bit Filename size (including ending 00h) ; for time and
+016h 2 binary 16bit Filesize, upper 16bit ;\ ; filesize)
+018h 2 binary 16bit Filesize, lower 16bit ;/ ;/
+01Ah .. text Filename, terminated by 00h ("path/filename",00h)
+... .. binary Zeropadding to 2-byte boundary
+... .. binary File data (Filesize bytes)
+... .. binary Zeropadding to 2-byte boundary

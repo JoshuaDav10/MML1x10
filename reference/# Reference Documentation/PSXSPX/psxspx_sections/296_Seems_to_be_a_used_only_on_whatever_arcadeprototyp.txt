@@ -1,0 +1,48 @@
+PSXSPX SPECIFICATIONS - SEEMS TO BE A USED ONLY ON WHATEVER ARCADE/PROTOTYPE GPUS. NEW GPUS ARE USING
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Seems to be a used only on whatever arcade/prototype GPUs. New GPUs are using
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 1556 characters
+Lines: 40
+================================================================================
+
+Seems to be a used only on whatever arcade/prototype GPUs. New GPUs are using
+GP1(09h) instead of GP1(20h).
+
+GP1(0Bh) - Unknown/Internal?
+
+| 0-10 Unknown (GPU crashes after a while when set to 274h..7FFh)
+11-23 Unknown (seems to have no effect)
+
+The register doesn't seem to be used by any games.
+
+GP1(0Ah,0Ch..0Fh,21h..3Fh) - N/A
+
+Not used?
+
+GP1(40h..FFh) - N/A (Mirrors)
+
+Mirrors of GP1(00h..3Fh).
+
+Mis-Centered PAL Games (wrong GP1(06h)/GP1(07h) settings)
+
+NTSC games are typically well centered (using X1=260h, and Y1/Y2=88h+/-N).
+
+PAL games should be centered as X1=260h, and Y1/Y2=A3h+/-N) - these values
+would be looking well on a Philips Philetta TV Set, and do also match up with
+other common picture positions (eg. as used by Nintendo's SNES console).
+
+However, most PAL games are using completely different "random" centering
+values (maybe caused by different developers trying to match the centering to
+the different TV Sets) (although it looks more as if the PAL developers just
+went amok: Many PAL games are even using different centerings for their Intro,
+Movie, and actual Game sequences).
+
+In result, most PAL games are looking like crap when playing them on a real
+PSX. For PSX emulators it may be recommended to ignore the GP1(06h)/GP1(07h)
+centering, and instead, apply auto-centering to PAL games.
+
+For PAL game developers, it may be recommended to add a screen centering option
+(as found in Tomb Raider 3, for example). Unknown if this is really required...
+or if X1=260h, and Y1/Y2=A3h+/-N would work fine on most or all PAL TV Sets?

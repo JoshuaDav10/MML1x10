@@ -1,0 +1,271 @@
+PSXSPX SPECIFICATIONS - ;:---SOUND ENGINE---
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: ;:---Sound Engine---
+Chunked: Wed Sep 10 03:34:25 PM CDT 2025
+Size: 9106 characters
+Lines: 262
+================================================================================
+
+;:---Sound Engine---
+
+Normal block functions can be used in this mode to Move, Copy, or Delete whole
+'chapter(s)'. Cursor keys can be used to move the cursor to a specific chapter.
+Pushing Enter or Escape terminates condensed mode.
+
+Column Block Mode
+
+Column mode is activated by "Ctrl+K,N" key combination. In this mode, the block
+selection appears as a rectangular area, allowing to deal with tables &
+columns in text files by using copy/delete, indent/unindent block functions.
+
+Typing "Ctrl+K,N" again will return to normal block mode (in which any lines
+between begin/end of the block will be selected at full length).
+
+Blank Space
+
+Unlike most other editors, XED allows to move the cursor to any screen
+location, including at horizontal positions after the end of the current line.
+Entering space characters at such locations advances the cursor position, but
+does not actually store space characters in the file.
+
+When typing text, spaces are automatically inserted between line-end and cursor
+position. Respectively, ending spaces are automatically deleted (eg. assume
+that the line contains "Hello !", deleting "!" will also remove the space
+character, internally).
+
+That is of course all happening behind your back, you won't have to care about
+it - but you can be sure that there'll be no hidden spaces filling up disk
+space.
+
+Tabulation Marks / TAB-Key
+
+The TAB Key advances the cursor to the next higher tabulation location (usually
+in steps of eight columns, counted from leftmost screen border), and the
+appropriate number of spaces is inserted into the file if necessary.
+
+In overwrite mode (de-/activated by INS Key), the TAB Key simply advances the
+cursor without actually inserting spaces (and without overwriting existing text
+by spaces).
+
+Tabulation Marks / CHR(9)
+
+When enabled in setup (default), TAB marks are automatically expanded into
+appropriate number of spaces (ie. towards next "8-column" position) when
+loading a file.
+
+The file is normally saved by using raw SPC characters, without any TABs.
+Optionally, it can be saved by using "best-fill" SPCs and TABs (disabled by
+default), that feature may conflict with third party tools (assemblers,
+compilers, etc). In order to reduce the risk of such problems, best-fill is
+suppressed in quoted lines (by using ' or " or <> quotation marks, eg. db
+'Hello !').
+
+Line Wrapping
+
+Line wrapping is enabled/disabled by "F5+W" key combination. Wrapping is
+automatically enabled when loading a file with extension ".XED".
+
+In the file, wrapped lines are using CR characters as soft linebreaks,
+paragraphs are terminated by normal CR,LF characters.
+
+Note: It'd be recommended to convert .XED files into 'standard' formats such
+like .TXT or .HTM before releasing them, but preferably NOT into disliked
+bloated file formats such like .PDF or .DOC.
+
+Word Processing
+
+Aside from the above line-wrapping support, no other 'word processing' features
+are included, the program provides normal 'type writer' functions, not more,
+not less. In particular, any overload such like bold or colored text, big and
+small fonts, bitmaps and different fonts are disliked.
+
+XED Hotkeys
+
+XED recognizes both CP/M Wordstar hotkeys (also used by Borland PC compilers),
+and Norton editor hotkeys (NU.EXE). The "Ctrl+X,Y" style hotkeys are wordstar
+based, particulary including good block functions. The F4,X and Alt/Ctrl+X type
+hotkeys are norton based, particulary very useful for forwards/backwards
+searching.
+
+Standard Cursor Keys
+
+| Up Move line up
+Down Move line down
+Left Move character left
+Right Move character right
+Pgup Scroll page up / to top of screen
+Pgdn Scroll page down / to bottom of screen
+Ctrl+Home Go to start of file
+Ctrl+End Go to end of file
+Ctrl+Pgup Go to start of previous chapter
+Ctrl+Pgdn Go to start if next chapter
+Home Go to start of line
+End Go to end of line
+Ctrl+Left Move word left
+Ctrl+Right Move word right
+Ins Toggle Insert/Overwrite mode
+Del Delete char below cursor
+Backspace Delete char left of cursor
+Tab Move to next tabulation mark
+Enter New line/paragraph end
+Esc Quit (or Alt+X, F3+Q, Ctrl+K+D, Ctrl+K+Q, Ctrl+K+X)
+
+Note: Pgup/Pgdn are moving the cursor to top/bottom of screen, page scrolling
+takes place only if the cursor was already at that location.
+
+Editor Keys
+
+| Ctrl+Y Delete line (or Alt+K)
+Alt+L Delete to line end (or Ctrl+Q,Y)
+Alt+V Caseflip to line end
+Ctrl+V Caseflip from line beginning
+
+Norton Search/Replace Functions
+
+| Alt+F Norton - search/replace, forwards
+Ctrl+F Norton - search/replace, backwards
+Alt+C Norton - continue search/replace, forwards (or Ctrl+Down)
+Ctrl+C Norton - continue search/replace, backwards (or Ctrl+Up)
+
+Search: Type "Alt/Ctrl+F, String, Enter".
+
+Search+replace: "Type Alt/Ctrl+F, String1, Alt+F, String2, Enter".
+
+Non-case sensitive: Terminate by Escape instead of Enter.
+
+Wordstar Search/Replace Functions
+
+| Ctrl+Q,F Wordstar - search
+Ctrl+Q,A Wordstar - replace
+Ctrl+L Wordstar - continue search/replace
+
+Search options: B=Backwards, G=Global, N=No query,
+
+U=non-casesensitive, W=whole words only, n=n times.
+
+Disk Commands
+
+| F3,E Save+exit
+F3,S Save (or Ctrl+K,S)
+F3,N Edit new file
+F3,A Append a file
+
+See also: Block commands (read/write block).
+
+Block Selection
+
+| Shift+Cursor Select block begin..end
+Ctrl+K,B Set block begin (or F4,S)
+Ctrl+K,K Set block end (or F4,S)
+Ctrl+K,H Remove/hide block markers (or F4,R)
+F4,L Mark line including ending CRLF (or Ctrl+K,L)
+F4,E Mark line excluding ending CRLF
+Ctrl+K,T Mark word
+Ctrl+K,N Toggle normal/column blocktype
+
+Clipboard Commands
+
+| Shift+Ins Paste from Clipboard
+Shift+Del Cut to Clipboard
+Ctrl+Ins Copy to Clipboard
+Ctrl+Del Delete Block
+
+Block Commands
+
+| Ctrl+K,C Copy block (or F4,C)
+Ctrl+K,V Move block (or F4,M)
+Ctrl+K,Y Delete block (or F4,D)
+Ctrl+K,P Print block (or F7,B)
+Ctrl+Q,B Find block begin (or F4,F)
+Ctrl+Q,K Find block end (or F4,F)
+Ctrl+K,R Read block from disk towards cursor location
+Ctrl+K,W Write block to disk
+Ctrl+K,U Unindent block (delete one space at begin of each line)
+Ctrl+K,I Indent block (insert one space at begin of each line)
+F5,F Format block (with actual x-wrap size) (or ;Ctrl+B)
+F8,A Add values within column-block
+
+Setup Commands
+
+| F11 Setup menu (or F8,S)
+F5,S Save editor configuration
+F5,L Set line len for word wrap (or Ctrl+O,R)
+F5,W Wordwrap on/off (or Ctrl+O,W) (*)
+F5,I Auto indent on/off (or Ctrl+O,I)
+F5,T Set tab display spacing
+
+(*) Wrapped lines will be terminated by CR, paragraphs by CRLF.
+
+Other
+
+| F1 Help
+F2 Status (displays info about file & currently selected block)
+F8,M Make best fill tabs
+F8,T Translate all tabs to spaces
+SrcLock Freeze cursor when typing text ("useful" for backwards writing)
+Ctrl+O,C Center current line
+Ctrl+K,# Set marker (#=0..9)
+Ctrl+Q,# Move to marker (#=0..9)
+Ctrl+Q,P Move to previous pos
+F6,C Condensed display mode on/off (*)
+Ctrl+G Go to line nnnn (or F6,G) (or commandline switch /l:nnnn)
+
+(*) only lines starting with ':' or ';:' will be displayed. cursor and block
+commands can be used (e.g. to copy a text-sequence by just marking it's
+headline)
+
+Hex-Edit Keys (Binary Files)
+
+This mode is activated by /b commandline switch, allowing to view and modify
+binary files. Aside from normal cursor keys, the following hotkeys are used:
+
+| Tab Toggle between HEX and ASC mode (or Shift+Left/Right)
+Ctrl+Arrow Step left/right one full byte (instead one single HEX digit)
+Ctrl+G Goto hex-address
+Ctrl+K,S Save file (as usually)
+
+Printer Commands
+
+| F7,P Print file
+F7,B Print block (or Ctrl+K,P)
+F7,E Eject page
+F7,S Set page size
+
+More printer options can be found in setup. Printing was working well (at least
+with my own printer) in older XED versions, but it is probably badly bugged (at
+least untested) for years now.
+
+XED Assembler/Debugger Interface
+
+Nocash Debuggers
+
+The XED editor provides simple but very useful interaction with the various
+nocash debuggers/emulators (no$gba, no$gmb, no$cpc, no$msx, no$c64, no$2k6,
+no$zx, no$nes, no$sns, no$x51).
+
+The editor can be launched from inside of the debugger (by Alt+E hotkey, by
+retaining the recently edited line number when re-launching the editor).
+
+And, when editing assembler source code files, F9-key can used to launch the
+assembler from inside of XED. That is, the file is saved to disk, the A22i
+assembler is started (built-in in all debuggers), and, in case of successful
+assembly, the program is loaded & started in the emulator. Otherwise, the
+assembler displays a list of errors, and the editor is moved directly to the
+source code line number in which the first error has occured.
+
+16bit DOS debuggers
+
+The XED editor is included built-in in all nocash windows debuggers, and in the
+no$gba 32bit DOS version only.
+
+For use with other nocash 16bit DOS debuggers the XED editor must be downloaded
+separately at http://problemkaputt.de/xed.htm,
+and must be installed in a directory which is included in your PATH statement.
+
+XED Commandline based standalone version
+
+Standalone 16bit DOS version
+
+This version is written in turbo pascal, nevertheless fast enough to work on
+computer with less than 10MHz. It uses 16bit 8086 code, and works with all

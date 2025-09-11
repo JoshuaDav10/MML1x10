@@ -1,0 +1,26 @@
+PSXSPX SPECIFICATIONS - SONY'S OWN HARDWARE (FOR PSONE)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Sony's own hardware (for PSone)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1028 characters
+Lines: 17
+================================================================================
+
+Sony's own hardware (for PSone)
+
+| SCPH-100 PSone (miniaturized PlayStation) (2000) (Japan)
+SCPH-101 PSone (miniaturized PlayStation) (200x) (North America)
+SCPH-102 PSone (miniaturized PlayStation) (200x) (Europe)
+SCPH-103 PSone (miniaturized PlayStation) (200x) (Asia)
+SCPH-102A PSone Europe (UK/AU, with A/V cable) ;\revision of "SCPH-102"
+SCPH-102B PSone Europe (UK, with RFU adaptor) ; with PM-41(2) board ?
+SCPH-102C PSone Europe (Continent, with A/V cable) ;/
+SCPH-110 Dual Analog Pad (for PSone) (Dualshock) (2000)
+SCPH-111 Multitap for PSone (seems to be quite rare, except in brazil)
+SCPH-112 AC adapter for PSone (In: 110-220VAC, Out: 7.5VDC, 2.0A, Japan)
+SCPH-113 AC adapter for PSone (In: 120VAC/60Hz, Out: 7.5VDC, 2.0A, USA)
+SCPH-114 AC adapter for PSone (In: 220-240VAC, Out: 7.5VDC, 2.0A, Europe)
+SCPH-115 AC adapter for PSone (In: 220-240VAC, Out: 7.5VDC, 2.0A, UK)
+SCPH-116 AC adapter for PSone (In: 220-240VAC, Out: 7.5VDC, 2.0A, Australia)
+SCPH-117 AC adapter for PSone (In: 110VAC, Out: 7.5VDC, 2.0A, Asia?)

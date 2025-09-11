@@ -1,0 +1,35 @@
+PSXSPX SPECIFICATIONS - CAUTION: THE BIOS ALLOCATES ONLY 28 BYTES ON STACK FOR THE COPY OF THE
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CAUTION: The BIOS allocates ONLY 28 bytes on stack for the copy of the
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1476 characters
+Lines: 27
+================================================================================
+
+CAUTION: The BIOS allocates ONLY 28 bytes on stack for the copy of the
+filename, that region is followed by 4 unused bytes, so the maximum length
+would be 32 bytes (31 characters plus EOL) (eg.
+"device:\pathname\filename.ext;1",00h).
+
+Part2: Enables IRQs via ExitCriticalSection, memorizes the stack base/offset
+values from the previously loaded executable (which should have been the boot
+executable, unless LoadAndExecute should have been used in nested fashion),
+does then use LoadExeFile to load the desired file, replaces the stack
+base/offset values in its headerbuf by the LoadAndExecute parameter values, and
+does then execute it via DoExecute(headerbuf,1,0).
+
+Part3: If the exefile returns, or if it couldn't be loaded, then the boot file
+is (unsuccessfully) attempted to be reloaded: Enables IRQs via
+ExitCriticalSection, loads the boot file via LoadExeFile, replaces the stack
+base/offset values in its headerbuf by the values memorized in Part2 (which
+be the boot executable's values from SYSTEM.CNF, unless the
+nesting stuff occurred), and does then execute the boot file via
+DoExecute(headerbuf,1,0).
+
+Part4: If the boot file returns, or if it couldn't be loaded, then the function
+looks up in a "JMP $" endless loop (normally, returning from the boot exe
+causes SystemErrorBootOrDiskFailure("B",38Ch), however, after using
+LoadAndExecute, this functionality is replaced by the "JMP $" lockup.
+
+BUG: Uses the unstable FlushCache function (see there for details).

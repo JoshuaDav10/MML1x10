@@ -1,0 +1,78 @@
+PSXSPX SPECIFICATIONS - ... .. DATA (IN BS V2 FORMAT) (MDEC SIZE/4, BS ID 3800H, ETC.)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: ... .. Data (in BS v2 format) (MDEC Size/4, BS ID 3800h, etc.)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 2161 characters
+Lines: 69
+================================================================================
+
+... .. Data (in BS v2 format) (MDEC Size/4, BS ID 3800h, etc.)
+
+Note: STILLS.BIN exists in newer BMX demo in MagDemo48 only (not in MagDemo39).
+
+Ridge Racer (TEX*.TMS)
+
+Ridge Racer Revolution (BIG*.TMS)
+
+Ridge Racer Type 4 (MagDemo19+21: R4DEMO\R4.BIN\*\*)
+
+| 000h 4 ID (100h)
+004h .. Chunk(s)
+... 4 Zero (Chunk Size=0=End)
+... .. Optional zeropadding to 800h-byte boundary (in R4.BIN\*)
+
+Chunk Format:
+
+| 000h 4 Chunk Size (SIZ)
+004h SIZ Chunk Data (TIM file) (note: includes 0x0pix TIMs with palette)
+
+Jet Moto 2 (MagDemo03: JETMOTO2\*.TMS)
+
+Twisted Metal 2 (MagDemo50: TM2\*.TMS)
+
+Contains a fileheader and .TIM files in several chunks:
+
+| 000h 8 ID "TXSPC",0,0,0 (aka CPSXT backwards)
+008h 4 Timestamp? (32A5C8xxh)
+00Ch 4 Number of Chunks (N) (can be 0=None, eg. TM2\SCREEN\ARROWS.TMS)
+010h N*4 Unknown
+... N*var Chunks
+Chunk format:
+000h 4 Chunk Size-4 (SIZ)
+004h SIZ Chunk Data (TIM file)
+
+Princess Maker - Yumemiru Yousei (BDY\*.BD and PM.*)
+
+The BDY\*.BD files do simply contain several chunks:
+
+| 000h .. Chunk(s)
+
+The PM.* files do contain several "folders" with fixed size:
+
+| 000h .. Chunk(s) for 1st folder ;\Foldersizes are:
+... .. Zeropadding to Foldersize-boundary ; 20000h (PM.DT0 and PM.PCC)
+... .. Chunk(s) for 2nd folder ; 28000h (PM.MAP)
+... .. Zeropadding to Foldersize-boundary ; 42000h (PM.SD0)
+... .. etc. ;/
+
+Chunk Format:
+
+| 000h 4 Chunk ID (800000xxh)
+004h 4 Chunk Size (size of Data part, excluding ID+Size)
+008h .. Data
+
+The Data for different Chunk IDs does usually have a small header (often with
+w,h,x,y entries, aka width/height, vram.x/y) followed by the actual data body:
+
+| 80000004h x(2),y(2),width(2),height(2) Bitmap 8bpp ;PM.PCC,MAP
+80000005h w(2),h(2),zero(4) Array32bit(w,h) ;PM.MAP
+80000006h x(2),width(2) Bitmap Palette ;PM.*
+80000007h x(2),y(2),w(1),h(1),zero(2) Array8bit(w,h) ;PM.MAP
+80000010h width(2),height(2),x(2),y(2) Bitmap 16bpp ;*.BD
+80000012h zero(0) ? ;*.BD
+80000014h x(2),y(2),width(2),height(2) Bitmap 4bpp ;PM.DT0
+80000016h x(2),y(2),w(1),h(1),n(1),3Fh(1) BitmapArray4bpp(n*2) ;PM.DT0
+80000018h ... ? ;PM.PCC
+8000001Ah zero(8) ? ;PM.PCC
+8000001Ch x(2),y(2),width(2),height(2) Bitmap 1bpp flags? ;*.BD

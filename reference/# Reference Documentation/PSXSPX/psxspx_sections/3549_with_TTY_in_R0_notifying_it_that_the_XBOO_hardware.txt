@@ -1,0 +1,74 @@
+PSXSPX SPECIFICATIONS - WITH "TTY+" IN R0 (NOTIFYING IT THAT THE XBOO HARDWARE IS PRESENT, AND THAT IT
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: with "TTY+" in R0 (notifying it that the XBOO hardware is present, and that it
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2228 characters
+Lines: 65
+================================================================================
+
+with "TTY+" in R0 (notifying it that the XBOO hardware is present, and that it
+needs to install special transmission handlers):
+
+| ;------------------
+.data?
+org 200h
+...
+tty_bufsiz equ 128 ;max=128=fastest (can be smaller if you are short of RAM)
+func3_info: ;\ ;\
+func3_buf_base dd 0 ;fixed="func3_buf" ; ; func3_info+00h
+func3_buf_len dd 0 ;range=0..128 ;/ ; func3_info+04h
+func3_stack dd 0 ; func3_info+08h
+func3_buffer: defs tty_bufsiz ;/ func3_info+0Ch
+ptr_to_comflags dd 0
+...
+.code
+...
+;------------------
+tty_wrchr: ;in: r0=char
+dd 0e6000010h ;=undef opcode ;-Write chr(r0) to TTY
+bx lr
+;------------------
+init_tty: ;in: r0=param (from entrypoint)
+ldr r1,=2B595454h ;"TTY+" ;\check if xboo-cable present
+cmp r1,r0 ; (r0=incoming param from
+beq @@tty_by_xboo_cable ;/executable's entrypoint)
+;- - -
+mov r1,0 ;\dummy und_handler
+ldr r2,=0e1b0f00eh ;=movs r15,r14 ; (just return from exception,
+str r2,[r1,04h] ;und_handler ;/for normal cable-less mode)
+b @@finish
+;---
+@@tty_by_xboo_cable:
+swi 17h ;GetPtrToFunc3addr() ;\
+ldr r1,=(tty_func3_handler AND 0ffffh) ; init FUNC3 aka TTY handler
+strh r1,[r0] ;/
+ldr r1,=func3_info ;\
+mov r0,0 ;\ ; mark TTY as len=empty
+str r0,[r1,4] ;func3_buf_len ;/ ; and
+add r0,r1,0ch ;=func3_buffer ;\ ; init func3 base
+str r0,[r1,0] ;func3_buf_base ;/ ;/
+mov r1,0 ;\
+ldr r2,=0e59ff018h ;=ldr r15,[pc,NN] ;
+str r2,[r1,04h] ;und_handler ; special xboo und_handler
+add r2,=tty_xboo_und_handler ;
+str r2,[r1,24h] ;und_vector ;/
+@@finish:
+swi 06h ;GetPtrToComFlags() ;\
+ldr r1,=ptr_to_comflags ; get ptr to ComFlags
+str r0,[r1] ;/
+bx lr
+;------------------
+tty_xboo_und_handler: ;in: r0=char
+ldr r13,=func3_info ;aka sp_und ;-base address (in sp_und)
+str r12,[r13,8] ;func3_stack ;-push r12
+@@wait_if_buffer_full: ;\
+ldr r12,=ptr_to_comflags ; ;\exit if execute file request
+ldr r12,[r12] ;ptr to ComFlags ; ; ComFlg.Bit11 ("bu_cmd_59h"),
+ldr r12,[r12] ;read ComFlags ; ; ie. allow that flag to be
+tst r12,1 shl 11 ;test bit11 ; ; processed by main program,
+bne @@exit ; ;/without hanging here
+ldrb r12,[r13,4] ;func3_buf_len ; wait if buffer full
+cmp r12,tty_bufsiz ; (until drained by FIQ)
+beq @@wait_if_buffer_full ;/
+mov r12,1bh+0c0h ;mode=und, FIQ/IRQ=off ;\disable FIQ (no COMMUNICATION

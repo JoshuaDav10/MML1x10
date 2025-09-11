@@ -1,0 +1,33 @@
+PSXSPX SPECIFICATIONS - IT IS NON-BCD, IE. POINT 1..99 ARE SPECIFIED AS 0X01..0X63, WHILST, POINT
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: it is non-BCD, ie. Point 1..99 are specified as 0x01..0x63, whilst, Point
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1364 characters
+Lines: 25
+================================================================================
+
+it is non-BCD, ie. Point 1..99 are specified as 0x01..0x63, whilst, Point
+A0h..FFh are specified as such (ie. as 0xA0..0xFF).
+
+Versions
+
+Version=1 doesn't seem to exist (or it is very rare). Version=2 is quite rare,
+and it seems to lack the [TRACK N] entries (meaning that there is no MODE and
+INDEX information, except that the INDEX 1 location can be assumed to be same
+as PLBA). Version=3 is most common, this version includes [TRACK N] entries,
+but often only with INDEX=1 (and up, if more indices), but without INDEX 0 (on
+Track 1 it's probably missing due to pregap, on further Tracks it's missing
+without reason) (so, only ways to reproduce INDEX=0 would be to guess it being
+located 2 seconds before INDEX=1, or, to use the information from the separate
+.SUB file, if that file is present; note: presence of index 0 is absolutely
+required for some games like PSX Tomb Raider 2).
+
+Entry & Points & Sessions
+
+The [Entry N] fields are usually containing Point A0h,A1h,A2h, followed by
+Point 1..N (for N tracks). For multiple sessions: The session is terminated by
+Point B0h,C0h. The next session does then contain Point A0h,A1h,A2h, and Point
+N+1..X (for further tracks). The INDEX values in the [TRACK N] entries are
+originated at the begin of the corresponding session, whilst PLBA values in
+[Entry N] entries are always originated at the begin of the disk.

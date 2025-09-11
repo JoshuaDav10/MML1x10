@@ -1,0 +1,41 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION GT20 AND PREGT20
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression GT20 and PreGT20
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1094 characters
+Lines: 33
+================================================================================
+
+CDROM File Compression GT20 and PreGT20
+
+Note: Unused entries can occur anywhere, eg. Bloody Roar 2 CMN\SEL01.DAT does
+have both first and LAST entry marked as unused (FFFFFFFFh). Also, there may be
+a lot of unused entries, eg. Bloady Roar 1 CMN\TITLE00.DAT uses only 5 of 41h
+entries).
+
+Klonoa (MagDemo08: KLONOA\FILE.IDX\*)
+
+| 000h 4 ID "OA05"
+004h N*4 Offset List (usually/always 5 used entries, plus zeropadding)
+030h .. File Data area (usually/always starting at offset 30h)
+
+C - The Contra Adventure (DATA\SND\*.SGG)
+
+| 000h 4 ID "SEGG"
+004h 4 Offset to .VH file
+008h 4 Offset to .VB file
+00Ch 4 Number of .SEQ files (N) (usually 6Eh, or 08h in MENU.SGG)
+010h N*4 Offsets to .SEQ files (increasing, unaligned)
+... .. SEQ files
+... .. Padding to 4-byte boundary
+... .. VH file
+... .. VB file
+
+Ninja (MagDemo13: NINJA\VRW\*.VRW)
+
+| 000h 8 ID "VRAM-WAD" (here as archive ID, although same as compress ID)
+004h N*4 File List (offsets to Data) ;NumFiles=(FirstOffset-8)/4
+... .. Data (compressed .PAK files, which do ALSO have ID="VRAM-WAD")
+
+The compressed .PAK files are using a LZ5-variant:

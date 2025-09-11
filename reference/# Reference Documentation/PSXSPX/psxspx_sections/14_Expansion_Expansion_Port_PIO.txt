@@ -1,0 +1,19 @@
+PSXSPX SPECIFICATIONS - EXPANSION PORT (PIO)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Expansion Port (PIO)
+Chunked: Wed Sep 10 03:31:04 PM CDT 2025
+Size: 176 characters
+================================================================================
+
+Expansion Port (PIO)
+
+EXP1 Expansion ROM Header
+
+EXP2 Dual Serial Port (for TTY Debug Terminal)
+
+EXP2 DTL-H2000 I/O Ports
+
+EXP2 Post Registers
+
+EXP2 Nocash Emulation Expansion

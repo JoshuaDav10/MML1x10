@@ -1,0 +1,64 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION EA METHODS (LZSS REFPACK)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression EA Methods (LZSS RefPack)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1759 characters
+Lines: 56
+================================================================================
+
+CDROM File Compression EA Methods (LZSS RefPack)
+
+RefPack
+
+| 000h 2 Method (10FBh, or 11FBh,90FBh,91FBh) (big-endian)
+... (3/4) Compressed size (24bit or 32bit) (optional)
+... 3/4 Uncompressed size (24bit or 32bit) (big-endoan)
+... .. Compressed data
+
+The compression is some kind of LZSS/LZH variant (similar to Z-Axis .ZAL
+files). The compressed data consists of a big-endian bit-stream (or
+byte-stream, as all codes are multiples of 8bits). The Compression codes are:
+
+| 0ddzzzrrdddddddd rawlen=r(2), lzlen=z(3)+3, disp=d(10)+1
+10zzzzzzrrdddddddddddddd rawlen=r(2), lzlen=z(6)+4, disp=d(14+1
+110dzzrrddddddddddddddddzzzzzzzz rawlen=r(2), lzlen=z(10)+5, disp=d(17)+1
+111rrrrr rawlen=r(5)*4+4, lzlen=0
+111111rr rawlen=r(2), lzlen=0, endflag=1
+
+refpack_decompress:
+
+| method=BigEndian16bit[src], src=src+2
+if (method AND 100h)>0 then src=src+3+method/8000h ;compressed size, if any
+if (method AND 8000h]=0 then dst_size=BigEndian24bit[src], src=src+3
+if (method AND 8000h)>0 then dst_size=BigEndian32bit[src], src=src+4
+endflag=0
+@@decompress_lop:
+if ([src] AND 80h)=0 then
+rawlen=[src] AND 03h
+lzlen=([src] AND 1Fh)/4+3
+disp=([src] AND 60h)*8+[src+1]+1
+src=src+2
+elseif ([src] AND 40h)=0 then
+rawlen=[src+1]/40h
+lzlen=[src] AND 3Fh+4
+disp=([src+1] AND 3Fh)*100h+[src+2]+1
+src=src+3
+elseif ([src] AND 20h)=0 then
+rawlen=[src] AND 03h
+lzlen=([src] AND 0Ch)*40h+[src+3]+5
+disp=([src] AND 10h)*1000h+[src+1]*100h+[src+2]+1
+src=src+4
+elseif ([src] AND FCh)=FCh then
+rawlen=[src] AND 03h
+lzlen=0
+src=src+1, endflag=1
+else
+rawlen=([src] AND 1Fh)*4+4
+lzlen=0
+src=src+1
+for i=1 to rawlen, [dst]=[src], src=src+1, dst=dst+1, next i
+for i=1 to lzlen, [dst]=[dst-disp], dst=dst+1, next i
+if endflag=0 then goto @@decompress_lop
+if (dst-dst_base)<>dst_size then error
+ret

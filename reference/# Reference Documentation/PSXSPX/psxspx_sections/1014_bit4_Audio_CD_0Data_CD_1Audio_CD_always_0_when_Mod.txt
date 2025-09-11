@@ -1,0 +1,28 @@
+PSXSPX SPECIFICATIONS - BIT4: AUDIO CD (0=DATA CD, 1=AUDIO CD) (ALWAYS 0 WHEN MODCHIP INSTALLED)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: bit4: Audio CD (0=Data CD, 1=Audio CD) (always 0 when Modchip installed)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1093 characters
+Lines: 20
+================================================================================
+
+bit4: Audio CD (0=Data CD, 1=Audio CD) (always 0 when Modchip installed)
+3rd byte: Disk type (from TOC Point=A0h) (eg. 00h=Audio or Mode1, 20h=Mode2)
+4th byte: Usually 00h (or 8bit ATIP from Point=C0h, if session info exists)
+that 8bit ATIP value is taken form the middle 8bit of the 24bit ATIP value
+5th-8th byte: SCEx region (eg. ASCII "SCEE" = Europe) (0,0,0,0 = Unlicensed)
+
+The fourth letter of the "SCEx" string contains region information: "SCEI"
+(Japan/NTSC), "SCEA" (America/NTSC), "SCEE" (Europe/PAL). The "SCEx" string is
+displayed in the intro, and the PSX refuses to boot if it doesn't match up for
+the local region.
+
+With a modchip installed, the same response is sent for Mode1 and Audio disks
+(except for Audio disks with very short TOCs (eg. singles) because SCEX reading
+is aborted immediately after reading all TOC entries on Audio disks); whether
+it is Audio or Mode1 can be checked by examining Subchannel Q ADR/Control.Bit6
+(eg. via command 19h,60h,50h,00h).
+
+Yaroze does return "SCEA" for SCEA discs, but, for SCEI,SCEE,SCEW discs it does
+return four ASCII spaces (20h).

@@ -1,0 +1,113 @@
+PSXSPX SPECIFICATIONS - B(06H) RESTART_TIMER(T)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: B(06h) restart_timer(t)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 3421 characters
+Lines: 104
+================================================================================
+
+B(06h) restart_timer(t)
+B(07h) DeliverEvent(class, spec)
+B(08h) OpenEvent(class,spec,mode,func)
+B(09h) CloseEvent(event)
+B(0Ah) WaitEvent(event)
+B(0Bh) TestEvent(event)
+B(0Ch) EnableEvent(event)
+B(0Dh) DisableEvent(event)
+B(0Eh) OpenThread(reg_PC,reg_SP_FP,reg_GP)
+B(0Fh) CloseThread(handle)
+B(10h) ChangeThread(handle)
+B(11h) jump_to_00000000h
+B(12h) InitPad(buf1,siz1,buf2,siz2)
+B(13h) StartPad()
+B(14h) StopPad()
+B(15h) OutdatedPadInitAndStart(type,button_dest,unused,unused)
+B(16h) OutdatedPadGetButtons()
+B(17h) ReturnFromException()
+B(18h) SetDefaultExitFromException()
+B(19h) SetCustomExitFromException(addr)
+B(1Ah) SystemError ;PS2: return 0
+B(1Bh) SystemError ;PS2: return 0
+B(1Ch) SystemError ;PS2: return 0
+B(1Dh) SystemError ;PS2: return 0
+B(1Eh) SystemError ;PS2: return 0
+B(1Fh) SystemError ;PS2: return 0
+B(20h) UnDeliverEvent(class,spec)
+B(21h) SystemError ;PS2: return 0
+B(22h) SystemError ;PS2: return 0
+B(23h) SystemError ;PS2: return 0
+B(24h) jump_to_00000000h
+B(25h) jump_to_00000000h
+B(26h) jump_to_00000000h
+B(27h) jump_to_00000000h
+B(28h) jump_to_00000000h
+B(29h) jump_to_00000000h
+B(2Ah) SystemError ;PS2: return 0
+B(2Bh) SystemError ;PS2: return 0
+B(2Ch) jump_to_00000000h
+B(2Dh) jump_to_00000000h
+B(2Eh) jump_to_00000000h
+B(2Fh) jump_to_00000000h
+B(30h) jump_to_00000000h
+B(31h) jump_to_00000000h
+B(32h) or A(00h) FileOpen(filename,accessmode)
+B(33h) or A(01h) FileSeek(fd,offset,seektype)
+B(34h) or A(02h) FileRead(fd,dst,length)
+B(35h) or A(03h) FileWrite(fd,src,length)
+B(36h) or A(04h) FileClose(fd)
+B(37h) or A(05h) FileIoctl(fd,cmd,arg)
+B(38h) or A(06h) exit(exitcode)
+B(39h) or A(07h) FileGetDeviceFlag(fd)
+B(3Ah) or A(08h) FileGetc(fd)
+B(3Bh) or A(09h) FilePutc(char,fd)
+B(3Ch) or A(3Bh) std_in_getchar()
+B(3Dh) or A(3Ch) std_out_putchar(char)
+B(3Eh) or A(3Dh) std_in_gets(dst)
+B(3Fh) or A(3Eh) std_out_puts(src)
+B(40h) chdir(name)
+B(41h) FormatDevice(devicename)
+B(42h) firstfile(filename,direntry)
+B(43h) nextfile(direntry)
+B(44h) FileRename(old_filename,new_filename)
+B(45h) FileDelete(filename)
+B(46h) FileUndelete(filename)
+B(47h) AddDevice(device_info) ;subfunction for AddXxxDevice functions
+B(48h) RemoveDevice(device_name_lowercase)
+B(49h) PrintInstalledDevices()
+
+Below functions B(4Ah..5Dh) not supported on pre-retail DTL-H2000 devboard:
+
+| B(4Ah) InitCard(pad_enable) ;uses/destroys k0/k1 !!!
+B(4Bh) StartCard()
+B(4Ch) StopCard()
+B(4Dh) _card_info_subfunc(port) ;subfunction for "_card_info"
+B(4Eh) write_card_sector(port,sector,src)
+B(4Fh) read_card_sector(port,sector,dst)
+B(50h) allow_new_card()
+B(51h) Krom2RawAdd(shiftjis_code)
+B(52h) SystemError ;PS2: return 0
+B(53h) Krom2Offset(shiftjis_code)
+B(54h) GetLastError()
+B(55h) GetLastFileError(fd)
+B(56h) GetC0Table
+B(57h) GetB0Table
+B(58h) get_bu_callback_port()
+B(59h) testdevice(devicename)
+B(5Ah) SystemError ;PS2: return 0
+B(5Bh) ChangeClearPad(int)
+B(5Ch) get_card_status(slot)
+B(5Dh) wait_card_status(slot)
+B(5Eh..FFh) N/A ;jump_to_00000000h ;CEX-1000: B(5Eh..F6h) only
+B(100h....) N/A ;garbage ;CEX-1000: B(F7h.....) and up
+
+C-Functions (Call 00C0h with function number in R9 Register)
+
+| C(00h) EnqueueTimerAndVblankIrqs(priority) ;used with prio=1
+C(01h) EnqueueSyscallHandler(priority) ;used with prio=0
+C(02h) SysEnqIntRP(priority,struc)
+C(03h) SysDeqIntRP(priority,struc)
+C(04h) get_free_EvCB_slot()
+C(05h) get_free_TCB_slot()
+C(06h) ExceptionHandler()
+C(07h) InstallExceptionHandlers() ;destroys/uses k0/k1

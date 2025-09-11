@@ -1,0 +1,45 @@
+PSXSPX SPECIFICATIONS - 01H 1 NEXT_DISC ;00H TO STOP PBC OR NNH TO SWITCH TO DISC NO NN (BCD!?)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 01h 1 Next_disc ;00h to stop PBC or NNh to switch to disc no NN (BCD!?)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1376 characters
+Lines: 36
+================================================================================
+
+01h 1 Next_disc ;00h to stop PBC or NNh to switch to disc no NN (BCD!?)
+02h 2 Item (0 or 1000..2979, should be still image, eg. Change Disc pic)
+04h 4 Reserved (0)
+N/A - This descriptor doesn't have a ListID (unlike as other descriptors)
+PsdCommandListDescriptor (5+2*N bytes)
+00h 1 Type (20h=CommandList)
+01h 2 Command_count
+03h 2 ListID for this Descriptor (1..7FFFh)
+05h 2*N command[EMPTY_ARRAY_SIZE] ;uh, WHAT is a command?
+PsdAlignmentPadding (after each list entry)
+00h 0..7 Padding to next 8-byte PsdOffset boundary (00h-filled)
+
+Delay values in "1s/10s" units (for PlayList[0Ch,0Dh]):
+
+| 1..60 --> wait "N" seconds
+61..254 --> wait "(N-60)*10+60" seconds
+255 --> wait infinite
+
+Item numbers (0..599 or 1000..2979) can be:
+
+| 0..1 - Play nothing
+2..99 - Play Track 2..99 (TOC tracks, for AVSEQnn.DAT and AUDIOnn.DAT?)
+100..599 - Play Entry 1..500 from table in ENTRIES file up to end of track
+600..999 - Reserved
+1000..2979 - Play SPI Segment Play Item 1..1980 (ITEMnnnn.DAT file)
+2980..65535 - Reserved
+
+PsdOffset values can be:
+
+| 0..N Offset within PSD.VCD file, in 8-byte units
+FFFDh PSD_OFS_MULTI_DEF_NO_NUM ;\uh, what is that?
+FFFEh PSD_OFS_MULTI_DEF ;/
+FFFFh PSD_OFS_DISABLED ;-no function assigned to the button
+
+For whatever reason, some PsdOffsets are specified as ListID (lid), these
+ListID values must be translated to actual PsdOffset via the ListID Offset

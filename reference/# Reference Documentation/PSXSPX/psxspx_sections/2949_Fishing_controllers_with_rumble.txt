@@ -1,0 +1,33 @@
+PSXSPX SPECIFICATIONS - FISHING CONTROLLERS WITH RUMBLE ;/
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Fishing controllers with rumble ;/
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1018 characters
+Lines: 24
+================================================================================
+
+Fishing controllers with rumble ;/
+SCPH-1180 Analog Pad without rumble ;\unknow if there're config commands
+SCPH-1110 Analog Stick without rumble ;/for analog mode (probably not)
+
+| _________________________________ Old Method _________________________________
+
+Old Method, one motor, no config commands (SCPH-1150, SCPH-1200, SCPH-110)
+
+The SCPH-1150 doesn't support any special config commands, instead, rumble is
+solely done via the normal joypad read command:
+
+| Send 01h 42h 00h xx yy (00h 00h 00h 00h)
+Reply HiZ id 5Ah buttons ( analog-inputs )
+
+The rumble motor is simply controlled by three bits in the xx/yy bytes:
+
+| xx --> must be 40h..7Fh (ie. bit7=0, bit6=1) ;\switches motor on
+yy --> must be 01h,03h,...,FDh,FFh (ie. bit0=1) ;/
+
+The motor control is digital on/off (no analog slow/fast), recommended values
+would be yyxx=0140h=on, and yyxx=0000h=off.
+
+LED state is don't care (rumble works with led OFF, RED, and GREEN). In absence
+of config commands, the LED can be controlled only manually (via Analog

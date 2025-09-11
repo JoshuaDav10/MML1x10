@@ -1,0 +1,72 @@
+PSXSPX SPECIFICATIONS - 5 AUTOMATICALLY SET BY HARDWARE UPON ANY-JUMP BREAK (R/W)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 5 Automatically set by hardware upon any-jump break (R/W)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2765 characters
+Lines: 64
+================================================================================
+
+5 Automatically set by hardware upon any-jump break (R/W)
+6-11 Not used (always zero)
+12-13 Jump Redirection (0=Disable, 1..3=Enable) (see note) (R/W)
+14-15 Unknown? (R/W)
+16-22 Not used (always zero)
+23 Super-Master Enable 1 for bit24-29
+24 Execution breakpoint (0=Disabled, 1=Enabled) (see BPC, BPCM)
+25 Data access breakpoint (0=Disabled, 1=Enabled) (see BDA, BDAM)
+26 Break on Data-Read (0=No, 1=Break/when Bit25=1)
+27 Break on Data-Write (0=No, 1=Break/when Bit25=1)
+28 Break on any-jump (0=No, 1=Break on branch/jump/call/etc.)
+29 Master Enable for bit28 (..and/or exec-break at address>=80000000h?)
+30 Master Enable for bit24-27
+31 Super-Master Enable 2 for bit24-29
+
+When a breakpoint address match occurs the PSX jumps to 80000040h (ie. unlike
+normal exceptions, not to 80000080h). The Excode value in the CAUSE register is
+set to 09h (same as BREAK opcode), and EPC contains the return address, as
+usually. One of the first things to be done in the exception handler is to
+disable breakpoints (eg. if the any-jump break is enabled, then it must be
+disabled BEFORE jumping from 80000040h to the actual exception handler).
+
+cop0r7.bit12-13 - Jump Redirection Note
+
+If one or both of these bits are nonzero, then the PSX seems to check for the
+following opcode sequence,
+
+| mov rx,[mem] ;load rx from memory
+... ;one or more opcodes that do not change rx
+jmp/call rx ;jump or call to rx
+
+if it does sense that sequence, then it sets PC=[00000000h], but does not store
+any useful information in any cop0 registers, namely it does not store the
+return address in EPC, so it's impossible to determine which opcode has caused
+the exception. For the jump target address, there are 31 registers, so one
+could only guess which of them contains the target value; for "POP PC" code
+it'd be usually R31, but for "JMP [vector]" code it may be any register. So far
+the feature seems to be more or less unusable...?
+
+cop0r5 - BDA - Breakpoint on Data Access Address (R/W)
+
+cop0r9 - BDAM - Breakpoint on Data Access Mask (R/W)
+
+Break condition is "((addr XOR BDA) AND BDAM)=0".
+
+cop0r3 - BPC - Breakpoint on Execute Address (R/W)
+
+cop0r11 - BPCM - Breakpoint on Execute Mask (R/W)
+
+Break condition is "((PC XOR BPC) AND BPCM)=0".
+
+Note (BREAK Opcode)
+
+Additionally, the BREAK opcode can be used to create further breakpoints by
+patching the executable code. The BREAK opcode uses the same Excode value (09h)
+in CAUSE register. However, the BREAK opcode jumps to the normal exception
+handler at 80000080h (not 80000040h).
+
+Note (LibCrypt)
+
+The debug registers are mis-used by "Legacy of Kain: Soul Reaver" (and maybe
+also other games) for storing libcrypt copy-protection related values (ie. just
+as a "hidden" location for storing data, not for actual debugging purposes).

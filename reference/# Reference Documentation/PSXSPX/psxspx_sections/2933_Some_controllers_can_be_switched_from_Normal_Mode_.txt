@@ -1,0 +1,50 @@
+PSXSPX SPECIFICATIONS - SOME CONTROLLERS CAN BE SWITCHED FROM NORMAL MODE TO CONFIG MODE. THE CONFIG
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Some controllers can be switched from Normal Mode to Config Mode. The Config
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1692 characters
+Lines: 42
+================================================================================
+
+Some controllers can be switched from Normal Mode to Config Mode. The Config
+Mode was invented for activating the 2nd rumble motor in SCPH-1200 analog
+joypads. Additionally, the Config commands can switch between analog/digital
+inputs (without needing to manually press the Analog button), activate more
+analog inputs (on Dualshock2), and read some type/status bytes.
+
+Normal Mode
+
+| 42h "B" Read Buttons (and analog inputs when in analog mode)
+43h "C" Enter/Exit Configuration Mode (stay normal, or enter)
+
+Transfer length in Normal Mode is 5 bytes (Digital mode), or 9 bytes (Analog
+mode), or up to 21 bytes (Dualshock2).
+
+Configuration Mode
+
+| 40h "@" Unused, or Dualshock2: Get/Set ButtonAttr?
+41h "A" Unused, or Dualshock2: Get Reply Capabilities
+42h "B" Read Buttons AND analog inputs (even when in digital mode)
+43h "C" Enter/Exit Configuration Mode (stay config, or exit)
+44h "D" Set LED State (analog mode on/off)
+45h "E" Get LED State (and Type/constants)
+46h "F" Get Variable Response A (depending on incoming bit)
+47h "G" Get whatever values (response HiZ F3h 5Ah 00h 00h 02h 00h 01h 00h)
+48h "H" Unknown (response HiZ F3h 5Ah 00h 00h 00h 00h 01h 00h)
+49h "I" Unused
+4Ah "J" Unused
+4Bh "K" Unused
+4Ch "L" Get Variable Response B (depending on incoming bit)
+4Dh "M" Get/Set RumbleProtocol
+4Eh "N" Unused
+4Fh "O" Unused, or Dualshock2: Set ReplyProtocol
+
+Transfer length in Config Mode is always 9 bytes.
+
+| ____________________________ Normal Mode Commands ____________________________
+
+Normal Mode - Command 42h "B" - Read Buttons (and analog inputs when enabled)
+
+| Send 01h 42h 00h xx yy (00h 00h 00h 00h) (...)
+Reply HiZ id 5Ah buttons ( analog-inputs ) (dualshock2 buttons...)

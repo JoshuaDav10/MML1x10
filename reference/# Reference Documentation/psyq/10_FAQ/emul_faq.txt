@@ -1,0 +1,141 @@
+PSYQ DOCUMENTATION - FAQ/emul_faq.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/FAQ/emul_faq.pdf
+Converted: Wed Sep 10 02:47:39 PM CDT 2025
+================================================================================
+
+                                     emul_faq.txt
+
+
+
+
+EMULATOR INSTALLATION FAQ
+======================================
+NOTE: There is no version of SNPATCHW.CPE or PATCHW.CPE that works with the
+emulator. Use SNPATCH.CPE that is attached to this message.
+
+This is my troubleshooting guide to installing your emulator.
+It is in psuedo-spaghetti code.
+
+        InstallDevBoards(); // extern
+        Remove your IRQ and DMA jumpers for now. Do not lose them.
+        Check to make sure that the SCSI ID jumpers are set at the
+        factory default of 7. Do not change it.
+
+        // Pick a base address
+10      Select a base address with the base address jumper.
+        Lovingly cram emulator board into an open slot in your PC.
+        Firmly attach white-ish cable between dev boards and emulator.
+        Attach emulator Hard drive to emulator board and turn it on.
+        Edit autoexec.bat to contain CDBIOS /a###, where ### is the base
+        address you selected.
+                Ex:
+                        CDBIOS /a388
+                will use base address 388 - which should match jumper on card.
+        if (Computer does not boot || CDBIOS does not recognize emulator board) goto
+           10 and select a new base address.
+        If (you try all base addresses and cannot get it to boot or find emu with CDBI
+OS) try any/all of the following
+        {
+                Press all the chips into their sockets harder.
+                Be sure you are using CDBIOS version 1.02 or later.
+                Maybe your computer is overheating. Check it out.
+        }
+        if (none of the above works) your emulator, dev boards, or computer may
+           be malfunctioning. Call BBS for help. Return(-1).
+
+        // communicate with the emulator drive through the PC bus
+        Set the SCSI ID on your harddrive to 3, 4, or 5. The manual says you can
+        choose others. Don't.
+        Run CDDISK -n #, where # is the SCSI ID you have set on your harddrive
+        (above).
+                 Ex:
+                         CDDISK -n 4
+                 will activate and format the drive with SCSI ID 4 for use.
+        If (CDDISK does not run happily)
+        {
+                 Be sure your emulator hard drive is turned on and the cables
+                 are connected.
+                 If so, goto 10 and select a new base address.
+                 If that does not work, call BBS.
+        }
+
+        // install boot file
+        While in CDDISK (above section), install the boot file.
+        Use CDBOOT16.BIN or CDBOOT17.BIN (attached), DO NOT try any others yet.
+
+        // build an emulation image
+        Detach BASIC.CTI and PSX.EXE from this memo for use in the next step.
+        Run BUILDCD -s#:1 BASIC.CTI, where # is the SCSI address of the emulator
+        hard drive (1 is the first partition).
+                Ex:
+                        BUILDCD -s4:1 BASIC.CTI
+
+
+
+
+                                        Page 1
+                                     emul_faq.txt
+
+
+
+
+                will build an image to partition 1 of SCSI ID 4 hard drive.
+        Ignore warning 66 if it happens.
+        If an error occurs, be sure CDBIOS is installed and your emulator
+        hard drive is turned on with cables attached.
+
+        // run the image - communicating through the white-ish cable to the
+        DTL-H2000 boards
+
+20      RESETPS 1               // verion 1.03 (attached) or later, NOT 1.02.
+                                // If you use 1.02, you are a loser! It may fail
+                                // big time.
+        RUN SNPATCH     // NOT the version from the CD, NO version of
+                        // SNPATCHW.CPE works with the emulator
+
+        This will say "done" if it works, or "cannot connect to target"
+        if it fails. If it "cannot connect to to target" goto 20
+        If it says "cannot open source file" you need to fix your path
+        to find the file.
+
+        RUN SELEMU
+
+        This will say "done" if it works, or "cannot connect to target"
+        if it fails.
+        If it "cannot connect to to target" goto 20
+        If it says "cannot open source file" you need to fix your
+        path to find the file.
+
+        RUN CDEXEC
+
+        This will say "done" if it works, or "cannot connect to target"
+        if it fails.
+
+        If it "cannot connect to to target" goto 20
+        If it says "cannot open source file" you need to fix your
+        path to find the file.
+
+        If your emulator still will not work:
+        0) reboot
+        1) try different emulator boards to see if your board is bad.
+        2) try different sets of dev boards to see if your dev boards are screwed up.
+        3) try different hard drives to see if your hard drive is bad
+        4) try different brand of computer to see if your computer is incompatible
+        5) leave a message in the CD newsgroup of the BBS detailing your
+           traumatic emulation experience. Be specific.
+
+BONUS STUFF:
+Now you can advance to the following:
+
+1) install interrupt jumper, make ammendment to CDBIOS line
+2) install CDBOOT18.BIN
+3) install CDBOOT2#.BIN, this will pave the way for step 4
+4) install CDMON (a TSR that spews info back at you from the emulator).
+5) install DMA jumper, make ammendment to CDBIOS line
+
+
+
+
+                                        Page 2
+

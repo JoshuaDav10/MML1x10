@@ -1,0 +1,32 @@
+PSXSPX SPECIFICATIONS - VCD\PSD.VCD OR SVCD\PSD.SVD (00:04:34 AND UP) (MAX 256 SECTORS)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: VCD\PSD.VCD or SVCD\PSD.SVD (00:04:34 and up) (max 256 sectors)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1265 characters
+Lines: 23
+================================================================================
+
+VCD\PSD.VCD or SVCD\PSD.SVD (00:04:34 and up) (max 256 sectors)
+
+The Descriptors in this file can be considered as being "program code". The
+program is usually stuck on "executing" the current descriptor (eg. playing a
+movie, or showing a selection menu) without automatically increasing the
+program counter. Actual program flow occurs only if the user presses a button
+(or upon selection timeouts), causing the program to "goto" to a new PsdOffset.
+And, something does probably happen upon end-of-track/item... maybe that does
+automatically trigger the Next button handler?
+
+| PsdPlayListDescriptor (14+2*N bytes):
+00h 1 Type (10h=PlayList)
+01h 1 Number of Items (noi) ;for Start-of-Movie and Numeric-Input?
+02h 2 ListID for this Descriptor (1..7FFFh)
+04h 2 PsdOffset for Prev button (FFFFh=Disable)
+06h 2 PsdOffset for Next button (FFFFh=Disable)
+08h 2 PsdOffset for Return/back button (FFFFh=Disable)
+0Ah 2 Play time in 1/15s (=max 72.8 minutes) (or 0000h=full item)
+0Ch 1 Delay time in "1s/10s" units after ; PsdSelectionListDescriptor (20+2*N bytes, or 36+6*N bytes):
+00h 1 Type (18h=SELECTION_LIST, or 1Ah=EXT_SELECTION_LIST)
+01h 1 Flags (bit0=SelectionArea, bit1=CommandList, bit2-7=Reserved)
+02h 1 nos PsdEndListDescriptor (8 bytes)
+00h 1 Type (1Fh=EndList)

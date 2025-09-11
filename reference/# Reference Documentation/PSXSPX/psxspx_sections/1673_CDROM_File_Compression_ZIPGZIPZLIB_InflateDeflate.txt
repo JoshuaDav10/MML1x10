@@ -1,0 +1,92 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION ZIP/GZIP/ZLIB (INFLATE/DEFLATE)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression ZIP/GZIP/ZLIB (Inflate/Deflate)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 3853 characters
+Lines: 83
+================================================================================
+
+CDROM File Compression ZIP/GZIP/ZLIB (Inflate/Deflate)
+
+Largo Winch - Commando SAR (NTEXTURE\*.GRP and LEVELS\*.DCF\*.CAT and *.GRP)
+
+| 000h 4 ID (12h,34h,56h,78h) (aka 12345678h in big endian)
+004h 4 Header Size (offset to File Data area)
+008h 4 Number of Entries (can be 0=None, eg. LEVELS\LARGO07.DCF\Z16.CAT)
+00Ch N*var Name List (Filenames in form "FILENAME.EXT",00h)
+... .. Zeropadding to 4-byte boundary
+... N*4 Size List (Filesizes in bytes)
+... .. File Data area
+
+Jackie Chan Stuntmaster (RTARGET\GAME.GCF and LEV*.LCF)
+
+| 000h 4 Number of files (N) (3..EBh) (big-endian)
+004h N*Var File List (list size is implied in first file offset)
+... .. Zeropadding to 800h-byte boundary
+... .. File Data area
+File List entries:
+000h 4 File Type (ascii, .LLN .TXI .TPG .RCI .RCP .WDB .PCI .PCP .BLK)
+004h 4 File Size (can be odd) (big-endian)
+008h 4 File Offset (increasing, 800h-byte aligned) (big-endian)
+00Ch 4 Extra Size (0 or 4 or 8) (big-endian)
+010h .. Extra Data (if any) (32bit number, or "TEXTURES")
+
+Syphon Filter 1 (MagDemo18: SYPHON\*.HOG, SYPHON\SUBWAY.FOG\*.HOG,SLF.RFF)
+
+Syphon Filter 2 (MagDemo30: SYPHON\*.HOG, SYPHON\TRAIN.FOG\*.HOG,SLF.RFF)
+
+| 000h 4 Timestamp? (36xxxxxxh=v1?, 38xxxxxxh=v2?, other=SLF.RFF)
+004h 4 Number of Files (N)
+008h 4 Base for Offset List (always 14h)
+00Ch 4 Base for String Table (v1=N*4+14h, or v2=N*4+18h)
+010h 4 Base for File Data (end of String Table plus align 4/800h/920h)
+014h N*4 Offsets to File(s) (increasing, first=0, relative to above [010h])
+... (4) v2 only: End Offset for Last File (HOG filesize minus [010h])
+... .. String Table (filename list in form of "FILENAME.EXT",00h)
+... .. Zeropadding to 4-byte or 800h-byte boundary
+... .. File Data area
+
+There are two versions: Syphon Filter 1 (v1) and Syphon Filter 2 (v2):
+
+| v1 has [0Ch]=N*4+14h (without end-of-last-file entry; use end=total_size)
+v2 has [0Ch]=N*4+18h (and does have end-of-last-file entry)
+v1 has STR files in ISO filesystem (not in HOG archives)
+v2 has STR files in MOVIES.HOG (with [10h]=920h and [14h and up]=sectors)
+
+Normally, the following is common for v1/v2:
+
+| v1/v2 has [10h]=data base, aligned to 4 or 800h
+v1/v2 has [14h and up] in BYTE-offsets, relative to base=[10h]
+v1/v2 uses HOG format in .HOG files also in SLF.RFF
+v1/v2 has further .RFF files (but that aren't in HOG format)
+
+There are several inconsistent special cases for some v2 files:
+
+| v2 MOVIE.HOG has [10h]=920h (which is meant to mean base="after 1st sector")
+v2 MOVIE.HOG has [14h and up] in SECTOR-units, with base="after 1st sector"
+v2 SLF.RFF does contain two HOG archives badged together (plus final padding)
+v2 has some empty 0-byte .HOG files (at least so in demo version)
+
+Danger: The special value 920h means that headersize is one 800h-byte sector
+(whereas 920h is dangerously close to REAL headersize, eg. v1 PCHAN.HOG has
+headersize=908h which means one 800h-byte sector plus 108h bytes) (the 920h
+thing should occur only in v2 though, since v1 has STR files stored in ISO
+filesystem instead of in HOG archives).
+
+Electronic Arts 32bit BIGF archives
+
+| 000h 4 ID "BIGF" (normal case, all big-endian, 4-byte aligned) ;\
+ID "BIGH" (with [04h]=little-endian instead big-endian) ;
+ID "BIG4" (with 40h-byte alignment padding instead 4-byte) ;
+004h 4 Sum of Header+Filesizes (excluding Padding's!) (big-endian) ; Header
+008h 4 Number of entries (N) ;11h (big-endian) ;
+00Ch 4 Size of Header (including File List) ;11Fh (big-endian) ;
+010h .. File List ;/
+... .. Padding to 1/4/8-byte boundary (optional, before each file) ;\Data ... .. File Data ;/
+
+File List entries (with variable length names, entries aren't 4-byte aligned):
+
+| 000h 4 Offset in bytes (increasing, often 4/8-byte aligned) (big-endian)
+004h 4 Size in bytes (can be odd, but often rounded to 4-byte) (big-endian)
+008h .. Filename (ASCII, terminated by 00h) ;variable length

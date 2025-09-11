@@ -1,0 +1,55 @@
+PSXSPX SPECIFICATIONS - PSX WIPEOUT 2097, CDROM:\WIPEOUT2\SOUND\SAMPLES.WAD:\*.VAG (VERSION=02H)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: PSX Wipeout 2097, cdrom:\WIPEOUT2\SOUND\SAMPLES.WAD:\*.vag (version=02h)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1871 characters
+Lines: 46
+================================================================================
+
+PSX Wipeout 2097, cdrom:\WIPEOUT2\SOUND\SAMPLES.WAD:\*.vag (version=02h)
+
+PSX Perfect Assassin, DATA.JFS:\AUDIO\*.VAG and DATA.JFS:\SND\*.VAG
+
+| 000h 4 File ID (usually "VAGp")
+004h 4 Version (usually 02h, or 20h) (big-endian)
+008h 4 Reserved (0) (except when ID="VAGi") (big-endian)
+00Ch 4 Channel Size (data size... per channel?) (big-endian)
+010h 4 Sample Rate (in Hertz) (eg. 5622h=22050Hz) (big-endian)
+014h 0Ch Reserved (0) (except when version=2)
+020h 10h Name (ASCII, zeropadded)
+... (..) Optional ID string (eg. "STEREO" in upper/lowercase)
+... (..) Optional Padding to Data start
+... .. ADPCM Data for channel(s) (usually at offset 030h)
+
+VAG files are used on PSX, PSP, PS2, PS3, PS4. The overall 1-channel mono
+format is same for consoles. But there are numerous different variants for
+interleaved 2-channel stereo data.
+
+VAG Filename Extensions
+
+| .vag default (eg. many PSX games)
+.vig 2-channel with interleave=10h (eg. PS2 MX vs ATV Untamed)
+.vas 2-channel with interleave=10h (eg. PS2 Kingdom Hearts II)
+.swag 2-channel with interleave=filesize/2 (eg. PSP Frantix)
+.l and .r 2-channel in l/r files (eg. PS2 Gradius V, PS2 Crash Nitro Kart)
+.str whatever (eg. P?? Ben10 Galactic Racing)
+.abc whatever (eg. PSP F1 2009 (v6), according to wiki.xentax.com)
+
+VAG File IDs (header[000h])
+
+| "VAGp" default (eg. many PSX games)
+"VAG1" 1-channel (eg. PS2 Metal Gear Solid 3)
+"VAG2" 2-channel (eg. PS2 Metal Gear Solid 3)
+"VAGi" 2-channel interleaved (eg. ?)
+"pGAV" little endian with extended header (eg. PS2 Jak 3, PS2 Jak X)
+"AAAp" extra header, followed by "VAGp" header (eg. PS2 The Red Star)
+
+VAG Versions (header[004h])
+
+| 00000000h v1.8 PC
+00000002h v1.3 Mac (eg. PSX Wipeout 2097, in SAMPLES.WAD)
+00000003h v1.6+ Mac
+00000020h v2.0 PC (most common, eg. PSX Perfect Assassin)
+00000004h ? (later games, uh when/which?)
+00000006h ? (vagconf, uh when/which?)

@@ -1,0 +1,278 @@
+PSXSPX SPECIFICATIONS - CDROM FILE VIDEO 3D GRAPHICS TMD/PMD/TOD/HMD/RSD (SONY)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Video 3D Graphics TMD/PMD/TOD/HMD/RSD (Sony)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 8709 characters
+Lines: 269
+================================================================================
+
+CDROM File Video 3D Graphics TMD/PMD/TOD/HMD/RSD (Sony)
+
+| ____________________________________ TMD _____________________________________
+
+TMD - Modeling Data for OS Library
+
+| 000h 4 ID (00000041h)
+004h 4 Flags (bit0=FIXP, bit1-31=Reserved/zero)
+008h 4 Number of Objects (N) ;"integral value" uh?
+00Ch N*1Ch Object List (1Ch-byte per entry)
+... .. Data (Vertices, Normals, Primitives)
+
+Object List entries:
+
+| 000h 4 Start address of a Vertex ;\Address values depend on the
+004h 4 Number of Vertices ; file header's FIXP flag:
+008h 4 Start address of a Normal ; FIXP=0 Addr from begin of Object
+00Ch 4 Number of Normals ; FIXP=0 Addr from begin of TMD File
+010h 4 Start address of a Primitive ;
+014h 4 Number of Primitives ;/
+018h 4 Scale (signed shift value, Pos=SHL, Neg=SHR) (not used by LIBGS)
+
+Vertex entries (8-byte):
+
+| 000h 2 Vertex X (signed 16bit)
+002h 2 Vertex Y (signed 16bit)
+004h 2 Vertex Z (signed 16bit)
+006h 2 Unused
+
+Normal entries (8-byte) (if any, needed only for computing light directions):
+
+| 000h 2 Normal X (fixed point 1.3.12)
+002h 2 Normal Y (fixed point 1.3.12)
+004h 2 Normal Z (fixed point 1.3.12)
+006h 2 Unused
+
+Primitive entries (variable length):
+
+| 000h 1 Output Size/4 of the GPU command (after GTE conversion)
+001h 1 Input Size/4 of the Packet Data in the TMD file
+002h 1 Flag
+0 Light source calculation (0=On, 1=Off)
+1 Clip Back (0=Clip, 1=Don't clip) (for Polygons only)
+2 Shading (0=Flat, 1=Gouraud)
+(Valid only for the polygon not textured,
+subjected to light source calculation)
+3-7 Reserved (0)
+003h 1 Mode (20h..7Fh) (same as GP0(20h..7Fh) command value in packet)
+004h .. Packet Data
+
+Packet Data (for Polygons)
+
+| 000h 4 GPU Command+Color for that packet (CcBbGgRrh), see GP0(20h..3Fh)
+... (4) Texcoord1+Palette (ClutYyXxh) ;\
+... (4) Texcoord2+Texpage (PageYyXxh) ; only if Mode.bit2=1
+... (4) Texcoord3 (0000YyXxh) ;
+... (4) Texcoord4 (0000YyXxh) ;-quad only ;/
+... (4) Color2 (00BbGgRrh) ;\
+... (4) Color3 (00BbGgRrh) ; only if Flag.bit2=1
+... (4) Color4 (00BbGgRrh) ;-quad only ;/
+... (2) Normal1 (index in Normal list?) ;always, unless Flag.bit0=1
+... 2 Vertex1 (index in Vertex list?)
+... (2) Normal2 (index in Normal list?) ;-only if Mode.bit4=1
+... 2 Vertex2 (index in Vertex list?)
+... (2) Normal3 (index in Normal list?) ;-only if Mode.bit4=1
+... 2 Vertex3 (index in Vertex list?)
+... (2) Normal4 (index in Normal list?) ;\quad only ;-only if Mode.bit4=1
+... 2 Vertex4 (index in Vertex list?) ;/
+... (2) Unused zeropadding (to 4-byte boundary)
+
+Packet Data (for Lines)
+
+| 000h 4 GPU Command+Color for that packet (CcBbGgRrh), see GP0(40h,50h)
+... (4) Color2 (00BbGgRrh) ;-only if Mode.bit4=1
+... 2 Vertex1 (index in Vertex list?)
+... 2 Vertex2 (index in Vertex list?)
+
+Packet Data (for Rectangle/Sprites)
+
+| 000h 4 GPU Command+Color for that packet (CcBbGgRrh), see GP0(60h..7Fh)
+... .. Unknown, reportedy "with 3-D coordinates and the drawing
+content is the same as a normal sprite."
+
+Note: Objects should usually contain Primitives and Vertices (and optionally
+Normals), however, N2O\SHIP.TMD does contain some dummy Objects with Number of
+Vertices/Normals/Primitives all set to zero.
+
+Used by Playstation Logo (in sector 5..11 on all PSX discs, 3278h bytes)
+
+Used by ...???model???... (MagDemo54: MODEL\*.BIN\*.TMD)
+
+Used by Alice in Cyberland (ALICE.PAC\xxx_TM*.FA\*.TMD)
+
+Used by Armored Core (MagDemo02: AC10DEMP\MS\MENU_TMD.T\*)
+
+Used by Bloody Roar 1 (MagDemo06: CMN\EFFECT.DAT\0005h)
+
+Used by Deception III Dark Delusion (MagDemo33: DECEPT3\K3_DAT.BIN\056A,0725\*)
+
+Used by Gundam Battle Assault 2 (DATA\*.PAC\*)
+
+Used by Hear It Now (Playstation Developer's Demo) (*.TMD and FISH.DAT).
+
+Used by Jersey Devil (MagDemo10: JD\*.BZZ\*)
+
+Used by Klonoa (MagDemo08: KLONOA\FILE.IDX\*)
+
+Used by Legend of Dragoon (MagDemo34: LOD\DRAGN0.BIN\16xxh)
+
+Used by Macross VF-X 2 (MagDemo23: VFX2\DATA01\*.TMD)
+
+Used by Madden NFL '98 (MagDemo02: TIBURON\MODEL01.DAT\*)
+
+Used by No One Can Stop Mr. Domino (MagDemo18: DATA\*, .TMD and DOT1\TMD)
+
+Used by O.D.T. (MagDemo17: ODT\*.LNK\*)
+
+Used by Parappa (MagDemo01: PARAPPA\COMPO01.INT\3\*.TMD)
+
+Used by Resident Evil 1 (PSX\ITEM_M1\*.DOR\0001)
+
+Used by Starblade Alpha (FLT\SB2.DAT\* and TEX\SB2.DAT\*)
+
+Used by Tiny Tank (MagDemo23: TINYTANK\TMD*.DSK\*.TMD)
+
+Used by WCW/nWo Thunder (MagDemo19: THUNDER\RING\*.TMD)
+
+Used by Witch of Salzburg (the MODELS\*.MDL\*.TMD)
+
+Used by Scooby Doo and the Cyber Chase (MagDemo54: MODEL\*\*)
+
+| ____________________________________ PMD _____________________________________
+
+PMD - High-Speed Modeling Data
+
+This is about same as TMD, with less features, intended to work fasrer.
+
+| 000h 4 ID (00000042h)
+004h 4 Offset to Primitives
+008h 4 Offset to Shared Vertices (or 0=None)
+00Ch 4 Number of Objects
+010h .. Objects (4+N*4 bytes each, with offsets to Primitives)
+... .. Primitives
+... .. Shared Vertices (8-bytes each, if any)
+
+Vertex entries (8-byte):
+
+| 000h 2 Vertex X (signed 16bit)
+002h 2 Vertex Y (signed 16bit)
+004h 2 Vertex Z (signed 16bit)
+006h 2 Unused
+
+Objects:
+
+| 000h 4 Number of Primitives
+004h N*4 Offsets to Primitives ... maybe relative to hdr[004h] ?
+
+Primitives:
+
+| 000h 2 Number of Packets
+002h 2 Type flags
+0 Polygon (0=Triangle, 1=Quadrilateral)
+1 Shading (0=Flat, 1=Gouraud) ;uh, with ONE color?
+2 Texture (0=Texture-On, 1=Texture-Off) ;uh, withoutTexCoord?
+3 Shared (0=Independent vertex, 1=Shared vertex)
+4 Light source calculation (0=Off, 1=On) ;uh, withoutNormal?
+5 Clip (0=Back clip, 1=No back clip)
+6-15 Reserved for system
+004h ... Packet(s)
+
+Packet entries, when Type.bit3=0 (independent vertex):
+
+| 000h 4 GPU Command+Color for that packet (CcBbGgRrh), see GP0(20h..7Fh)
+004h 8 Vertex1 (Xxxxh,Yyyyh,Zzzzh,0000h)
+00Ch 8 Vertex2 (Xxxxh,Yyyyh,Zzzzh,0000h)
+014h 8 Vertex3 (Xxxxh,Yyyyh,Zzzzh,0000h)
+01Ch (8) Vertex4 (Xxxxh,Yyyyh,Zzzzh,0000h) ;
+
+Packet entries, when Type.bit3=1 (shared vertex):
+
+| 000h 4 GPU Command+Color for that packet (CcBbGgRrh), see GP0(20h..7Fh)
+004h 4 Offset to Shared Vertex1 ;offsets are
+008h 4 Offset to Shared Vertex2 ;"from the start of a row"
+00Ch 4 Offset to Shared Vertex3 ;aka from "Packet+04h" ?
+010h (4) Offset to Shared Vertex4 ;
+
+Unknown if/how Texture/Light is implemented... without TexCoords/Normals?
+
+Unknown if/how Gouraud is implemented... with ONE color and without Normals?
+
+Used only by a few games:
+
+| Cool Boarders 2 (MagDemo02: CB2\DATA3\*.PMD)
+Cardinal Syn (MagDemo03,09: SYN\*\*.WAD\*.PMD) (4-byte hdr plus PMD file)
+Sesame Streets Sports (MagDemo52: SSS\LV*\*MRG\*) (4-byte hdr plus PMD file)
+
+Unknown if/which other games are using the PMD format.
+
+| ____________________________________ TOD _____________________________________
+
+TOD - Animation Data
+
+| 000h 1 ID (50h)
+001h 1 Version (0)
+002h 2 Resolution (time per frame in 60Hz units, can be 0) (60Hz on PAL?)
+004h 4 Number of Frames
+008h .. Frame1
+... .. Frame2
+... .. Frame3
+... .. etc.
+
+Frames:
+
+| 000h 2 Frame Size in words (ie. size/4)
+002h 2 Number of Packets (can be 0=None, ie. do nothing this frame)
+004h 4 Frame Number (increasing 0,1,2,3,..)
+008h ... Packet(s)
+
+Packet:
+
+| 000h 2 Object ID
+002h 1 Type/Flag (bit0-3=Type, bit4-7=Flags)
+003h 1 Packet Size ("in words (4 bytes)")
+004h ... Packet Data
+
+XXX... in Sony's doc.
+
+Used by Witch of Salzburg (ANIM\ANM0\ANM0.TOD) (oddly with [02h]=0000h)
+
+Used by Parappa (MagDemo01: PARAPPA\COMPO01.INT\3\*.TOD)
+
+Used by Macross VF-X 2 (MagDemo23: VFX2\DATA01\*.TOD and *.TOX)
+
+Used by Alice in Cyberland (ALICE.PAC\xxx_T*.FA\*.TOD)
+
+Unknown if/which other games are using the TOD format.
+
+| ____________________________________ HMD _____________________________________
+
+HMD - Hierarchical 3D Model, Animation and Other Data
+
+| 000h 4 ID (00000050h) ;same as in TOD, which CAN ALSO have MSBs=zero(!)
+004h 4 MAP FLAG (0 or 1, set when mapped via GsMapUnit() function)
+008h 4 Primitive Header Section pointer (whut?)
+00Ch 4 Number of Blocks
+010h 4*N Pointers to Blocks
+... Primitive Header section (required)
+... Coordinate section (optional)
+... Primitive section (required)
+
+This format is very complicated, see Sony's "File Formats" document for
+details.
+
+.HMD used by Brunswick Bowling (MagDemo13: THQBOWL\*).
+
+.HMD used by Soul of the Samurai (MagDemo22: RASETSU\0\OPT01T.BIN\0\0\*)
+
+.HMD used by Bloody Roar 2 (MagDemo22: LON\LON*.DAT\*, ST5\ST*.DAT\02h..03h)
+
+.HMD used by Ultimate Fighting Championship (MagDemo38: UFC\CU00.RBB\6Bh..EFh)
+
+Unknown if/which games other are using the HMD format.
+
+| ____________________________________ RSD _____________________________________
+
+RSD Files (RSD,PLY,MAT,GRP,MSH,PVT,COD,MOT,OGP)
+
+RSD files consist of a set of several files (RSD,PLY,MAT,etc). The files
+contain the "polygon source code" in ASCII text format, generated from Sony's

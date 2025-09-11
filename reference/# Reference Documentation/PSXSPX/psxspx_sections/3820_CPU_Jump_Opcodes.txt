@@ -1,0 +1,45 @@
+PSXSPX SPECIFICATIONS - CPU JUMP OPCODES
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CPU Jump Opcodes
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1492 characters
+Lines: 37
+================================================================================
+
+CPU Jump Opcodes
+
+jumps and branches
+
+Note that the instruction following the branch will always be executed.
+
+| jmp dest j dest pc=(pc and F0000000h)+(imm26bit*4)
+call dest jal dest pc=(pc and F0000000h)+(imm26bit*4),ra=$+8
+jmp rs jr rs pc=rs
+call rs,ret=rd jalr (rd,)rs(,rd) pc=rs, rd=$+8 ;see caution
+je rs,rt,dest beq rs,rt,dest if rs=rt then pc=$+4+(-8000h..+7FFFh)*4
+jne rs,rt,dest bne rs,rt,dest if rs<>rt then pc=$+4+(-8000h..+7FFFh)*4
+js rs,dest bltz rs,dest if rs=0 then pc=$+4+(-8000h..+7FFFh)*4
+jgtz rs,dest bgtz rs,dest if rs>0 then pc=$+4+(-8000h..+7FFFh)*4
+jlez rs,dest blez rs,dest if rs=0 then pc=$+4+(..)*4
+
+Note: The two conditional call opcodes do ALWAYS set ra=$+8 (even when
+condition=false).
+
+JALR cautions
+
+Caution: The JALR source code syntax varies (IDT79R3041 specs say "jalr rs,rd",
+but MIPS32 specs say "jalr rd,rs"). Moreover, JALR may not use the same
+register for both operands (eg. "jalr r31,r31") (doing so would destroy the
+target address; which is normally no problem, but it can be a problem if an IRQ
+occurs between the JALR opcode and the following branch delay opcode; in that
+case BD gets set, and EPC points "back" to the JALR opcode, so JALR is executed
+twice, with destroyed target address in second execution).
+
+exception opcodes
+
+Unlike for jump/branch opcodes, exception opcodes are immediately executed (ie.
+without executing the following opcode).
+
+| syscall imm20 generates a system call exception
+break imm20 generates a breakpoint exception

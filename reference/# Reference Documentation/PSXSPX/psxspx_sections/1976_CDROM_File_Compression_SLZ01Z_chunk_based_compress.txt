@@ -1,0 +1,57 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION SLZ/01Z (CHUNK-BASED COMPRESSED ARCHIVE)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression SLZ/01Z (chunk-based compressed archive)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1487 characters
+Lines: 49
+================================================================================
+
+CDROM File Compression SLZ/01Z (chunk-based compressed archive)
+
+SLZ/01Z files are Chunk-based archives with one or more compressed chunk(s).
+
+Used by Hot Shots Golf 2 (retail: DATA\F0000.BIN\*, MagDemo31/42:
+HSG2\MINGOL2.BIN\*)
+
+SLZ/01Z chunk headers
+
+The archive consists of Chunk(s) in following format:
+
+| 000h 3 ID (either "01Z" or "SLZ", both are used)
+003h 1 Method (00h=Uncompressed, 01h=LZSS, 02h=LZSS+FILL)
+004h 4 Compressed size (SIZ) (same as decompressed when Method=0)
+008h 4 Decompressed size
+00Ch 4 Distance to next chunk, if any (SIZ+10h+Align4, or 0=None)
+010h SIZ Compressed data
+
+SLZ/01Z decompression function:
+
+| method=byre[src+3]
+len=word[src+8]
+src=src+10h
+if method=0 then
+for i=1 to len, [dst]=[src], dst=dst+1, src=src+1, next i
+goto @@decompress_done
+dst_end = dst+len
+@@collect_more:
+flagbits=[src]+100h, src=src+1 ;8bit flags
+@@decompress_lop:
+if method=2 AND dst=dst_end then goto @@decompress_done
+flagbits=flagbits SHR 1
+if zero then goto @@collect_more
+if carry=1 then
+[dst]=[src], dst=dst+1, src=src+1
+else
+disp=([src]+[src+1]*100h) AND 0FFFh, len=([src+1]/10h)+3, src=src+2
+if method=1 AND disp=0 then goto @@decompress_done
+if method=2 AND len=12h then ;special fill mode...
+len=disp/100h+3, val=disp AND FFh ;len=3..12h
+if len=3 then len=val+13h, val=[src], src=src+1 ;len=13h..112h
+for i=1 to len, [dst]=val, dst=dst+1, next i ;len=4..112h
+else
+for i=1 to len, [dst]=[dst-disp], dst=dst+1, next i
+endif
+goto @@decompress_lop
+@@decompress_done:
+ret

@@ -1,0 +1,42 @@
+MIPS INSTRUCTION SET REFERENCE - EXCEPTIONS:
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Exceptions:
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1206 characters
+Lines: 34
+================================================================================
+
+Exceptions:
+           None
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                          313
+
+                              Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+XORI
+
+
+
+
+  Exclusive OR Immediate                                                                                             XORI
+
+
+       31                   26 25           21 20            16 15                                                    0
+               XORI
+                                     rs                rt                              immediate
+              001110
+                   6                 5                 5                                   16
+
+            Format:    XORI rt, rs, immediate                                                                  MIPS32
+            Purpose:
+            To do a bitwise logical Exclusive OR with a constant
+
+            Description: rt ← rs XOR immediate
+            Combine the contents of GPR rs and the 16-bit zero-extended immediate in a bitwise logical Exclusive OR operation
+            and place the result into GPR rt.
+
+            Restrictions:
+            None

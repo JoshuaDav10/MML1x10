@@ -1,0 +1,33 @@
+MIPS INSTRUCTION SET REFERENCE - VERTED, AND BE SIGN-EXTENDED INTO TWO WORD VALUES IN FOUR INSTRUCTIONS. FOR EXAMPLE:
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: verted, and be sign-extended into two word values in four instructions. For example:
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1082 characters
+Lines: 24
+================================================================================
+
+verted, and be sign-extended into two word values in four instructions. For example:
+
+                lw        t0, 0(a1)                 /* Read two contiguous halfwords */
+                wsbh      t0, t0                    /* Convert endiannes of the halfwords */
+                seh       t1, t0                    /* t1 = lower halfword sign-extended to word */
+                sra       t0, t0, 16                /* t0 = upper halfword sign-extended to word */
+            Zero-extended words can be created by changing the SEH and SRA instructions to ANDI and SRL instructions,
+            respectively.
+
+
+
+
+312                                                           MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                               Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+XOR
+
+
+
+
+  Exclusive OR                                                                                                    XOR
+
+
+      31                   26 25           21 20           16 15            11 10             6   5                0

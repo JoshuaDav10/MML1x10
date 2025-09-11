@@ -1,0 +1,51 @@
+PSXSPX SPECIFICATIONS - TYPE=00000400H CUBEMAP.SOUNDS ;/
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Type=00000400h Cubemap.sounds ;/
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1885 characters
+Lines: 43
+================================================================================
+
+Type=00000400h Cubemap.sounds ;/
+
+There are some general purpose files with other types at end of .DAT file:
+
+| Type=00000000h Archive with TIMs (Size=AB74h) (" RSC3.1V")
+Type=00000004h Unknown (Size=16164h) (00000064h)
+Type=00000008h Related to DRACULA1.STR (Size=1000h) (" RTS1.1V")
+Type=00001000h Unknown (Size=2000h) ("BXFS1.1V")
+Type=00008000h Unknown (Size=71Dh) (" CM1.1V")
+Type=00020000h Unknown (Size=3B9h) (" GSM0.1V")
+Type=02000000h Unknown (Size=0h) (empty)
+Type=00000100h Related to DRACULA1.XA (Size=1000h) ("RAAX1.1V")
+Type=00000010h Unknown (Size=450h) (" HYP0.1V")
+Type=00100000h Unknown (Size=4014h) (" xFS1.1V") (x=A1h)
+Type=00000080h Unknown (Size=258F4h) (00000010h)
+Type=00000200h TIM (gui charset) (Size=6E9Eh) (TIM)
+Type=00010000h TIM (gui buttons) (Size=10220h) (TIM)
+Type=00040000h Unknown (Size=2C4h) (" TES0.1V")
+Type=00002000h TIM (gui book pages) (Size=1040h) (TIM)
+Type=00000800h Cubemap ;\as Type 01h, (Size=4092Ch) (" RIV3.1V")
+Type=00004000h Cubemap ;/but [10h,14h]=0 (Size=4092Ch) (" RIV3.1V", too)
+
+Type 01h - Cubemap:
+
+| 000h 8 Name, ASCII, padded with leading spaces (eg. " RIV3.1V")
+008h 4 Something (0, 1 or 2) (unknown, this isn't number of list entries)
+00Ch 4 Zero
+010h 4 Offset to Ext data (ACh) ;\ext data
+014h 4 Size of Ext data (eg. 0 or 84h) ;/
+018h 6*4 Offsets to Side 0-5 ;\cubemap sides
+030h 6*4 Sizes of Side 0-5 (0, 10220h, or 10820h) ;/
+048h 44h Zerofilled
+08Ch 20h Name, ASCII (eg. "DEBUT0.VR", zeropadded)
+0ACh .. Ext Data (if any)
+... .. Cubemap TIM sides (if any)
+Note: The cubemap TIMs have 100h or 400h colors (in the latter case: 100h colors for each quarter of the 8bpp bitmap).
+Note: The TIMs can be arranged as 3D-cubemap with six sides, or as hires
+2D-bitmap (composed of four TIMs, and 2 empty TIMs with size=0).
+
+Type 40h - Empty Cubemap:
+
+| Same as Type 01h, but size is always 0ACh (and all seven Size entries are 0)

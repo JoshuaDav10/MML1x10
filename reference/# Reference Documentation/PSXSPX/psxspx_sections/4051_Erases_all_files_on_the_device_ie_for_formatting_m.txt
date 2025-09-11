@@ -1,0 +1,36 @@
+PSXSPX SPECIFICATIONS - ERASES ALL FILES ON THE DEVICE (IE. FOR FORMATTING MEMORY CARDS).
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Erases all files on the device (ie. for formatting memory cards).
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1072 characters
+Lines: 27
+================================================================================
+
+Erases all files on the device (ie. for formatting memory cards).
+
+Returns 1=okay, or 0=failed.
+
+B(54h) - GetLastError()
+
+Indicates the reason of the most recent file function error (FileOpen,
+FileSeek, FileRead, FileWrite, FileClose, GetLastFileError, FileIoctl, chdir,
+testdevice, FileDelete, FileUndelete, FormatDevice, FileRename). Use
+GetLastError() ONLY if an error has occured (the error code isn't reset to zero
+by functions that are passing okay). firstfile/nextfile do NOT affect
+GetLastError(). See below list of File Error Numbers for more info.
+
+B(55h) - GetLastFileError(fd)
+
+Basically same as B(54h), but allowing to specify a file handle for which error
+information is to be received; accordingly it doesn't work for functions that
+do use 'hidden' internal file handles (eg. FileDelete, or unsuccessful
+FileOpen). Returns FCB[18h], or FFFFFFFFh if the handle is invalid/unused.
+
+A(05h) or B(37h) FileIoctl(fd,cmd,arg)
+
+Used only for TTY.
+
+A(07h) or B(39h) FileGetDeviceFlag(fd)
+
+Returns bit1 of the file's DCB flags. That bit is set only for Duart/TTY, and

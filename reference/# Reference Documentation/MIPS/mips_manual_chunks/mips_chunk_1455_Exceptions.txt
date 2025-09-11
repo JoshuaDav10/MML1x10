@@ -1,0 +1,42 @@
+MIPS INSTRUCTION SET REFERENCE - EXCEPTIONS:
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Exceptions:
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1627 characters
+Lines: 33
+================================================================================
+
+Exceptions:
+            None
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                              257
+
+                               Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+SLTIU
+
+
+
+
+   Set on Less Than Immediate Unsigned                                                                                      SLTIU
+
+        31                   26 25             21 20             16 15                                                        0
+                SLTIU
+                                       rs                 rt                                  immediate
+               001011
+                    6                  5                  5                                      16
+
+             Format:    SLTIU rt, rs, immediate                                                                         MIPS32
+
+             Purpose:
+             To record the result of an unsigned less-than comparison with a constant
+
+             Description: rt ← (rs < immediate)
+             Compare the contents of GPR rs and the sign-extended 16-bit immediate as unsigned integers and record the Boolean
+             result of the comparison in GPR rt. If GPR rs is less than immediate, the result is 1 (true); otherwise, it is 0 (false).
+             Because the 16-bit immediate is sign-extended before comparison, the instruction can represent the smallest or largest
+             unsigned numbers. The representable values are at the minimum [0, 32767] or maximum [max_unsigned-32767,
+             max_unsigned] end of the unsigned range.

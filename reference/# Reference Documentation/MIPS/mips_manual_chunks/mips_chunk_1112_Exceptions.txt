@@ -1,0 +1,45 @@
+MIPS INSTRUCTION SET REFERENCE - EXCEPTIONS:
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Exceptions:
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1978 characters
+Lines: 36
+================================================================================
+
+Exceptions:
+            None
+
+            Programming Notes:
+            The non-zero value tested here is the condition true result from the SLT, SLTI, SLTU, and SLTIU comparison instruc-
+            tions.
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                                 187
+
+                               Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+MOVN.fmt
+
+
+
+
+   Floating Point Move Conditional on Not Zero                                                                              MOVN.fmt
+
+           31                   26 25             21 20             16 15              11 10               6   5                 0
+                   COP1                                                                                              MOVN
+                                         fmt                 rt                 fs                 fd
+                  010001                                                                                             010011
+                     6                    5                  5                  5                  5                    6
+
+                Format:    MOVN.S fd, fs, rt                                                                           MIPS32
+                           MOVN.D fd, fs, rt                                                                           MIPS32
+                           MOVN.PS fd, fs, rt                                                                          MIPS64
+                                                                                                               MIPS32 Release 2
+
+                Purpose:
+                To test a GPR then conditionally move an FP value
+
+                Description: if rt ≠ 0 then fd ← fs
+                If the value in GPR rt is not equal to zero, then the value in FPR fs is placed in FPR fd. The source and destination are

@@ -1,0 +1,116 @@
+PSXSPX SPECIFICATIONS - ABOVE SUGGESTS THAT THE CDROM BUFFER CAN HOLD MAX 2 SECTORS (THE OLDEST AND
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Above suggests that the CDROM buffer can hold max 2 sectors (the oldest and
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 3575 characters
+Lines: 108
+================================================================================
+
+Above suggests that the CDROM buffer can hold max 2 sectors (the oldest and
+current one). However, using a longer delay:
+
+| Setloc(0:2:0)+Read
+Process INT1 --> receives sector header for 0:2:0
+delay(2)
+Process INT1 --> receives sector header for 0:2:9 (oldest/overwritten)
+Process INT1 --> receives sector header for 0:2:11 (newest sector)
+Process INT1 --> receives sector header for 0:2:12 (next sector)
+
+Above indicates that sector buffer can hold 8 sectors (as the sector 1 slot is
+overwritten by sector 9). And, another test with even longer delay:
+
+| Setloc(0:2:0)+Read
+Process INT1 --> receives sector header for 0:2:0
+delay(3)
+Process INT1 --> receives sector header for 0:2:17 (currently received)
+Process INT1 --> receives sector header for 0:2:16 (newest full sector)
+Process INT1 --> receives sector header for 0:2:17 (next sector)
+Process INT1 --> receives sector header for 0:2:18 (next sector)
+
+Above is a special case where sector 17 appears twice; the first one is the
+sector 1 slot (which was overwritten by sector 9, and apparently then half
+overwritten by sector 17).
+
+Sector Buffer VS GetlocL Response Tests
+
+| Setloc(0:2:0)+Read
+Process INT1 --> receives sector header for 0:2:0
+GetlocL
+Process INT3 --> receives getloc info for 0:2:0
+Process INT1 --> receives sector header for 0:2:1
+Process INT1 --> receives sector header for 0:2:2
+Process INT1 --> receives sector header for 0:2:3
+
+Another test, with Delay BEFORE Getloc:
+
+| Setloc(0:2:0)+Read
+Process INT1 --> receives sector header for 0:2:0
+Delay(1)
+GetlocL
+Process INT1 --> receives sector header for 0:2:1
+Process INT3 --> receives getloc info for 0:2:6
+Process INT1 --> receives sector header for 0:2:6
+Process INT1 --> receives sector header for 0:2:7
+
+Another test, with Delay AFTER Getloc:
+
+| Setloc(0:2:0)+Read
+Process INT1 --> receives sector header for 0:2:0
+GetlocL
+Delay(1)
+Process INT3 --> receives getloc info for 0:2:0
+Process INT1 --> receives sector header for 0:2:5
+Process INT1 --> receives sector header for 0:2:6
+Process INT1 --> receives sector header for 0:2:7
+
+Another test, with Delay BEFORE and AFTER Getloc:
+
+| Setloc(0:2:0)+Read
+Process INT1 --> receives sector header for 0:2:0
+Delay(1)
+GetlocL
+Delay(1)
+Process INT1 --> receives sector header for 0:2:9
+Process INT1 --> receives sector header for 0:2:11
+Process INT3 --> receives getloc info for 0:2:12
+Process INT1 --> receives sector header for 0:2:12
+Process INT1 --> receives sector header for 0:2:13
+
+Sector Buffer VS Pause Response Tests
+
+| Setloc(0:2:0)+Read
+Process INT1 --> receives sector header for 0:2:0
+Pause
+Process INT3 --> receives stat=22h (first pause response)
+Process INT2 --> receives stat=02h (second pause response)
+
+Another test, with Delay BEFORE Pause:
+
+| Setloc(0:2:0)+Read
+Process INT1 --> receives sector header for 0:2:0
+Delay(1)
+Pause
+Process INT1 --> receives sector header for 0:2:1 (oldest)
+Process INT3 --> receives stat=22h (first pause response)
+Process INT2 --> receives stat=02h (second pause response)
+
+Another test, with Delay AFTER Pause:
+
+| Setloc(0:2:0)+Read
+Process INT1 --> receives sector header for 0:2:0
+Pause
+Delay(1)
+Process INT3 --> receives stat=22h (first pause response)
+Process INT2 --> receives stat=02h (second pause response)
+
+Another test, with Delay BEFORE and AFTER Pause:
+
+| Setloc(0:2:0)+Read
+Process INT1 --> receives sector header for 0:2:0
+Delay(1)
+Pause
+Delay(1)
+Process INT1 --> receives sector header for 0:2:9 (oldest/overwritten)
+Process INT3 --> receives stat=22h (first pause response)
+Process INT2 --> receives stat=02h (second pause response)

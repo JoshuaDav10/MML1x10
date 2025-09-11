@@ -1,0 +1,38 @@
+PSXSPX SPECIFICATIONS - ... .. FILE DATA AREA (.VB AKA SPU-ADPCM)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: ... .. File Data area (.VB aka SPU-ADPCM)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1064 characters
+Lines: 30
+================================================================================
+
+... .. File Data area (.VB aka SPU-ADPCM)
+File List entries:
+000h 4 Offset from begin of Data area, increasing
+004h 4 Filesize in bytes
+008h 4 Unknown (0 or 1)
+00Ch 4 Unknown (AC44h, 0FA0h, 2EE0h, 2710h, 2B11h, 3E80h, 1F40h, etc.)
+Note: Above AC44h might 44100Hz, or just file number 44100 decimal?
+
+Thrasher: Skate and Destroy (MagDemo27: SKATE\ASSETS\*.ZAL) (Z-Axis)
+
+Dave Mirra Freestyle BMX (MagDemo36: BMX\ASSETS\*.ZAL) (Z-Axis)
+
+Dave Mirra Freestyle BMX (MagDemo46: BMX\ASSETS\*.ZAL) (Z-Axis)
+
+| 000h 4 ID (always 2A81511Ch)
+004h 0Ch Zerofilled
+010h 1 Unknown (1)
+011h 1 Compression Flag for all files (00h=Uncompressed, 80h=Compressed)
+012h 2 Number of files (bit0-13?=N, bit14=Unknown, can be set)
+014h N*0Ch File List, 12 bytes/entry ;
+
+File List entries (0Ch or 10h bytes per entry, depending on compression):
+
+| 000h 4 File ID (usually 0=first, increasing) (or 0001h,7531h,7532h,...)
+004h 4 Offset-10h in bytes (increasing, 4h-byte aligned)
+008h 4 Filesize, uncompressed (can be odd)
+00Ch (4) Filesize, compressed (can be odd) ;
+
+For decompression, see:

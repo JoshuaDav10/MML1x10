@@ -1,0 +1,30 @@
+MIPS INSTRUCTION SET REFERENCE - PLU.PS
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: PLU.PS
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1273 characters
+Lines: 21
+================================================================================
+
+PLU.PS
+
+
+
+
+   Pair Lower Upper                                                                                                       PLU.PS
+
+         31                   26 25            21 20             16 15             11 10              6   5                  0
+                 COP1                  fmt                                                                        PLU
+                                                          ft                fs                 fd
+                010001                10110                                                                      101101
+                   6                    5                 5                 5                  5                   6
+
+              Format:    PLU.PS fd, fs, ft                                                                         MIPS64
+                                                                                                           MIPS32 Release 2
+
+              Purpose:
+              To merge a pair of paired single values with realignment
+              Description: fd ← lower(fs) || upper(ft)
+              A new paired-single value is formed by catenating the lower single of fs (bits 31..0) and the upper single of ft (bits
+              63..32).

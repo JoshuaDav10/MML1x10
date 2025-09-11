@@ -1,0 +1,85 @@
+PSXSPX SPECIFICATIONS - CONTROLLER, BUT IT DOESN'T OFFER A FUNCTION VECTOR FOR SETTING UP THE DATA
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: controller, but it doesn't offer a function vector for setting up the data
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2407 characters
+Lines: 76
+================================================================================
+
+controller, but it doesn't offer a function vector for setting up the data
+source address, and, even if that would be supported, it clips the data bytes
+to 00h or 01h. The patch below retrieves the required SetPadOutput function
+address (in which only the src1/src2 addresses are relevant, the blah1/blah2
+values aren't used), and suppresses clipping (ie. allows to send any bytes in
+range 00h..FFh).
+
+Used in Resident Evil 2 at 80091914h:
+
+| 240A00B0 mov r10,0B0h ;\
+0140F809 call r10 ; B(57h) GetB0Table
+24090057 +mov r9,57h ;/
+8C42016C mov r2,[r2+5Bh*4] ;B(5Bh)
+3C0Axxxx mov r10,xxxx0000h
+3C09xxxx mov r9,xxxx0000h
+3C01xxxx mov r1,xxxx0000h
+204307A0 addt r3,r2,7A0h ;B(5Bh)+7A0h
+254Axxxx add r10,xxxxh ;=@@new_data
+2529xxxx add r9,xxxxh ;=@@new_data_end
+AC23xxxx mov [r1-xxxxh],r3 ;
+
+Alternately, more inefficient (with NOPs), used in Lemmings at 80036618h:
+
+| 24090057 mov r9,57h ;\
+240A00B0 mov r10,0B0h ; B(57h) GetB0Table
+0140F809 call r10 ;
+00000000 +nop ;/
+3C0Axxxx mov r10,xxxx0000h
+254Axxxx add r10,xxxxh ;=@@new_data
+3C09xxxx movp r9,xxxx0000h
+2529xxxx add r9,xxxxh ;=@@new_data_end
+8C42016C mov r2,[r2+5Bh*4] ;B(5Bh)
+00000000 nop
+204307A0 addt r3,r2,7A0h ;B(5Bh)+7A0h
+3C01xxxx mov r1,xxxx0000h
+AC23xxxx mov [r1+xxxxh],r3 ;
+
+patch_no_pad_card_auto_ack:
+
+This patch suppresses automatic IRQ0 (vblank) acknowleding in the Pad/Card IRQ
+handler, that, even if auto-ack is enabled. Obviously, one could as well
+disable auto-ack via B(5Bh) ChangeClearPad(int), so this patch is total
+nonsense. Used in Resident Evil 2 at 800919ACh:
+
+| 240A00B0 mov r10,0B0h ;\
+0140F809 call r10 ; B(57h) GetB0Table
+24090057 +mov r9,57h ;/
+8C42016C mov r2,[r2+5Bh*4] ;=B(5Bh)
+240A0009 mov r10,9h ;len ;\
+2043062C addt r3,r2,62Ch ;=B(5Bh)+62Ch ;
+@@fill_lop: ;
+254AFFFF sub r10,1h ;
+AC600000 mov [r3],0 ;
+1540FFFD jnz r10,@@fill_lop ;
+24630004 +add r3,4h ;/
+
+Alternately, same as above, but more inefficient, used in Sporting Clays at
+8001B53Ch:
+
+| 24090057 mov r9,57h ;\
+240A00B0 mov r10,0B0h ; B(57h) GetB0Table
+0140F809 call r10 ;
+00000000 +nop ;/
+240A0009 mov r10,9h ;len
+8C42016C mov r2,[r2+5Bh*4]
+00000000 nop
+2043062C addt r3,r2,62Ch
+@@fill_lop: ;\
+AC600000 mov [r3],0 ;
+24630004 add r3,4h ;
+254AFFFF sub r10,1h ;
+1540FFFC jnz r10,@@fill_lop ;
+00000000 +nop ;/
+
+Either way, no matter if using the patch or if using ChangeClearPad(int),
+having auto-ack disabled allows to install a custom vblank IRQ0 handler, which

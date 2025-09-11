@@ -1,0 +1,68 @@
+PSXSPX SPECIFICATIONS - TO DETECT THE VERSION: COUNT THE LENGTH OF THE "ASCII CHARS + 00H BYTE + CDH
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: To detect the version: Count the length of the "ASCII chars + 00h byte + CDh
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1821 characters
+Lines: 60
+================================================================================
+
+To detect the version: Count the length of the "ASCII chars + 00h byte + CDh
+padding bytes" at offset 10h.
+
+Note: The FOG archive in Syphon Filter 2 demo version does contain some empty
+dummy files (with intact filename, but with offset=0 and size=0).
+
+| _______________________________ Entrysize=20h ________________________________
+
+Colony Wars (MagDemo02: CWARS\GAME.RSC)
+
+Colony Wars Venegance (MagDemo14: CWV\GAME.RSC, 8Mbyte)
+
+| 000h 4 Number of Files
+004h N*20h File List
+... 10h File List End: Name (zerofilled)
+... 4 File List End: Offset (total filesize, aka end of last file)
+... 0Ch File List End: Padding (zerofilled)
+... .. File Data area
+
+File List entries:
+
+| 000h 10h Filename ("FILENAME.EXT", terminated by 00h, padded with garbage)
+010h 4 File Offset in bytes (increasing, 4-byte aligned)
+014h 0Ch Padding (garbage) (usually 800F68A0h,800F68A0h,800F68A0h)
+
+Note: Colony Wars Red Sun does also have a GAME.RSC file (but in different
+format, with folder structure).
+
+WarGames (MagDemo14: WARGAMES\*.DAT)
+
+| 000h 4 Number of Files (1C3h)
+004h N*20h File List
+... .. Zeropadding to 800h-byte boundary
+... .. File Data area
+
+File List entries:
+
+| 000h 10h Filename ("FILENAME.EXT", zeropadded, sorted alphabetically)
+010h 4 File Offset/800h (unsorted, not increasing)
+014h 4 File Size in bytes
+018h 4 File Size/800h
+01Ch 4 Zero
+
+Running Wild (MagDemo15: RUNWILD\*.BIN)
+
+| 000h N*20h File List
+... 4 File List End Offset/800h (end of last file)
+... 4 File List End Size (zero)
+... 18h File List End Name (zerofilled)
+... .. Padding to 800h-byte boundary (each 20h-byte: 01h, and 1Fh zeroes)
+... .. File Data
+
+File List entries:
+
+| 000h 4 Offset/800h (increasing)
+004h 4 Filesize in bytes
+008h 18h Filename ("FILENAME.EXT" or ":NAME" or ":NAME:NAME", zeropadded)
+
+Files with extension .z or .Z are compressed:

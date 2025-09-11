@@ -1,0 +1,31 @@
+PSXSPX SPECIFICATIONS - CPU SPECIFICATIONS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CPU Specifications
+Chunked: Wed Sep 10 03:31:04 PM CDT 2025
+Size: 248 characters
+================================================================================
+
+CPU Specifications
+
+CPU Registers
+
+CPU Opcode Encoding
+
+CPU Load/Store Opcodes
+
+CPU ALU Opcodes
+
+CPU Jump Opcodes
+
+CPU Coprocessor Opcodes
+
+CPU Pseudo Opcodes
+
+COP0 - Register Summary
+
+COP0 - Exception Handling
+
+COP0 - Misc
+
+COP0 - Debug Registers

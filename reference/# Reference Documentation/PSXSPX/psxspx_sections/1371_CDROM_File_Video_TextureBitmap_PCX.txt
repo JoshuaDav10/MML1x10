@@ -1,0 +1,170 @@
+PSXSPX SPECIFICATIONS - CDROM FILE VIDEO TEXTURE/BITMAP (PCX)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Video Texture/Bitmap (PCX)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 5319 characters
+Lines: 162
+================================================================================
+
+CDROM File Video Texture/Bitmap (PCX)
+
+PSI bitmap - Power Spike (MagDemo43: POWER\GAME.IDX\*.BIZ\*.PSI)
+
+| 000h 10h Name 1 ("FILENAME.BMP", zeropadded)
+010h 10h Name 2 ("FILENAME.PSI", zeropadded)
+020h 4 Bits per pixel (usually 4, 8, or 16)
+024h 2 Bitmap VRAM Dest.X ?
+026h 2 Bitmap VRAM Dest.Y ?
+028h 2 Bitmap Width in pixels
+02Ah 2 Bitmap Height in pixels
+02Ch 2 Palette VRAM Dest.X ? ;\zero for 16bpp
+02Eh 2 Palette VRAM Dest.Y ? ;/
+030h 2 Bitmap Width in Halfwords (PixelWidth*bpp/16)
+032h 2 Palette Size in Halfwords (0, 10h, 100h for 16bpp,4npp,8bpp)
+034h 4 Maybe Bitmap present flag (always 1)
+038h 4 Maybe Palette present flag (0=16bpp, 1=4bpp/8bpp)
+03Ch .. Bitmap pixels
+... .. Palette (if any, for 4bpp: 16x16bit, for 8bpp: 256x16bit)
+
+JumpStart Wildlife Safari Field Trip (MagDemo52: DEMO\DATA.DAT\*.DAT+*.PSX)
+
+This game does use two different (but nearly identical) bitmap formats (with
+either palette or bitmap data stored first).
+
+| 000h 4 Total Filesize (Width*Height+20Ch)
+004h 2 Bitmap Width
+006h 2 Bitmap Height
+008h 4 Unknown, always 1 (maybe 1=8bpp?)
+In .DAT files (512x192 or 256x64 pix), palette first:
+00Ch 200h Palette data
+20Ch .. Bitmap data
+In .PSX files (64x64 pix), bitmap first:
+00Ch .. Bitmap data
+... 200h Palette data
+
+To detect the "palette first" format, check for these conditions(s):
+
+| Filename extension is ".DAT"
+Bitmap Width<>Height (non-square)
+[00Ch..20Bh] has AllMSBs>=80h, and SomeLSBs
+
+Note: The bitmaps are vertically mirrored (starting with bottom-most scanline).
+
+WxH Bitmap (Width*Height)
+
+Used by Alone in the Dark The New Nightmare (FAT.BIN\BOOK,DOC,INTRO,MENU\*)
+
+Used by Rayman (RAY\JUN,MON,MUS\*) (but seems to contain map data, not pixels)
+
+| 000h 2 Width (W) ;\usually 320x240 (or 512x240 or 80x13)
+002h 2 Height (H) ;/
+004h .. Bitmap 16bpp (W*H*2 bytes)
+
+RAWP Bitmap
+
+Used by Championship Motocross (MagDemo25: SMX\RESHAD.BIN\*) ("RAWP")
+
+| 000h 4 ID "RAWP" (this variant has BIG-ENDIAN width/height!)
+004h 2 Width (usually 280h=640pix or 140h=320pix) (big-endian!!!)
+006h 2 Height (usually 1E0h=480pix or F0h=240pix) (big-endian!!!)
+008h .. Bitmap data, 16bpp (width*height*2 bytes)
+
+XYWH Bitmap/Palette (X,Y,Width*Height) (.BIT and .CLT)
+
+Used by CART World Series (MagDemo04: CART\*.BIT and *.BIN\*)
+
+Used by NFL Gameday '98 (MagDemo04: GAMEDAY\BUILD\GRBA.FIL\*)
+
+Used by NFL Gameday '99 (MagDemo17: GAMEDAY\*.BIT and *.FIL\*)
+
+Used by NFL Gameday 2000 (MagDemo27: GAMEDAY\*.BIT)
+
+Used by NCAA Gamebreaker '98 (MagDemo05: GBREAKER\*.BIT and UFLA.BIN\*)
+
+Used by NCAA Gamebreaker 2000 (MagDemo27: GBREAKER\*.BIT and *.FIL\*)
+
+Used by Twisted Metal 4 (MagDemo30: TM4DATA\*.MR,*.IMG\*.bit,*.clt)
+
+| 000h 2 VRAM.X (X) (0..3FFh)
+002h 2 VRAM.X (Y) (0..1FFh)
+004h 2 Width in halfwords (W) (1..400h)
+006h 2 Height (H) (1..200h)
+008h .. Bitmap or Palette data (W*H*2 bytes)
+
+Doom (PSXDOOM\ABIN\PSXDOOM.WAD\*\*)
+
+| 000h 2 Hotspot X (signed) (usually 0)
+002h 2 Hotspot Y (signed) (usually 0)
+004h 2 Width in bytes
+006h 2 Height
+008h .. Bitmap 8bpp (Width*Height bytes)
+
+Most files have Hotspot X=0,Y=0, WAD\LOADING has X=FF80h,Y=FF8Ah, and WAD\S\*
+has X=0..Width, Y=0..Height+1Ah (eg. S\BKEY*, S\BFG*, S\PISFA0 have large Y).
+
+The files do not contain any palette info... maybe 2800h-byte PLAYPAL does
+contain the palette(s)?
+
+Lemmings & Oh No! More Lemmings (FILES\GFX\*.BOB, FILES\SMLMAPS\*.BOB)
+
+| 000h 2 Width
+002h 2 Height
+004h 100h*3 Palette 24bit RGB888
+304h .. Bitmap 8bpp (Width*Height bytes)
+.. (1700h) Unknown (only in SMLMAPS\*.BOB, not in GFX\*.BOB)
+
+Apart from .BOB, the FILES\GFX folder also has vandalized .BMP (with ID
+"BM",00h,00h) and corrupted .TIM (with VRAM.Y=200h).
+
+Perfect Assassin (DATA.JFS\DATA\*.BM)
+
+| 000h 4 Format 1 (0=8bpp, 1=16bpp)
+004h 4 Format 2 (1=8bpp, 2=16bpp)
+008h 4 Width in pixels
+00Ch 4 Height in pixels
+010h .. Bitmap Data
+... (300h) Palette 18bit RGB666 (R,G,B range 00h..3Fh) (only if format 8bpp)
+
+One (DIRFILE.BIN\*.VCF)
+
+| 000h 4 Unknown (always 1)
+004h 4 Unknown (always 8)
+008h 4 Unknown (always 2) (maybe 2=16bpp?)
+00Ch 4 Width in pixels (3Ah, 140h, or 280h)
+010h 4 Height (3Ah, or F0h)
+014h .. Bitmap 16bpp (Width*Height*2 bytes)
+
+One (DIRFILE.BIN\*.VCK and DIRFILE.BIN\w*\sect*.bin\TEXTURE 001)
+
+| 000h 2 Number if Files (N)
+002h 2 Number of VRAM.Slots (less or equal than Number of Files)
+004h 4 ID "BLK0"
+008h N*10h File List
+... .. 1st File Bitmap
+... .. 1st File Palette (20h/200h/0 bytes for 4bpp/8bpp/16bpp)
+... .. 2nd File Bitmap
+... .. 2nd File Palette (only if PaletteID=FileNo=1)
+... .. 3rd File Bitmap
+... .. 3rd File Palette (only if PaletteID=FileNo=2)
+... .. etc.
+
+File List entries:
+
+| 000h 2 VRAM.X in halfwords (0..1Fh, +bit15=Blank) ;\within current
+002h 2 VRAM.Y (0..3Fh) ;/VRAM.Slot
+004h 2 Width in pixels (max 80h/40h/20h for 4bpp/8bpp/16bpp)
+006h 2 Height (max 40h)
+008h 2 VRAM.Slot (0,1,2,3,...,NumSlots-1)
+00Ah 2 Unknown (0,1,2,4 in *.vck, 4 in sect*.bin)
+00Ch 2 Color Depth (0=4bpp, 1=8bpp, 2=16bpp)
+00Eh 2 Palette ID (0..FileNo-1=Old, FileNo=New, FFFFh=None/16bpp)
+NumFiles-1, or ID of already used palette)
+
+Note: VRAM.Slots are 20h*40h halfwords.
+
+Bitmaps can either have newly defined palettes (when PaletteID=FileNo), or
+re-use previously defined "old" palettes (when PaletteIDBMR Bitmaps
+
+These are 16bpp bitmaps, stored either in uncompressed .BMR files, or in
+compressed .RLE files:

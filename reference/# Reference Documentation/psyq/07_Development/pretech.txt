@@ -1,0 +1,56 @@
+PSYQ DOCUMENTATION - TECHNOTE/pretech.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/TECHNOTE/pretech.pdf
+Converted: Wed Sep 10 02:47:29 PM CDT 2025
+================================================================================
+
+                         SCEA Third Party Quality Assurance
+                          Pre-Technical Approval Checklist
+
+
+  Title <File Missing>                           Disc Ver           Version Date
+
+  Publisher                                      Product code
+
+  Account Exec                                   Date Performed
+
+ Master ID Check
+
+The following can be verified using the Mcheck software available on the Developer's website.
+  [ ] Disc Name field contains SCEA assigned product code. (i.e. SLUS-12345)
+  [ ] Producer Name field contains a company name, NOT the actual Producer's name.
+  [ ] Copyright field contains the company name of the legal copyright holder.
+  [ ] Creation date is accurate.
+  [ ] Licensing Area contains a CAPITAL "A" for North America.
+
+ Memory Card Check
+
+The following items can be verified using the Memory Card Manager available on the Developer's website.
+  [ ] The Save file File List is named using the SCEA assigned product code. (i.e BASLUS-12345)
+  [ ] The Save file Document Name uses Shift-JIS format.
+  [ ] Upon detecting an unformatted Memory Card the game informs the user and offers the option of
+       formatting the Memory Card. The default choice is to NOT format the card.
+       (i.e. "NO"/"EXIT"/"CANCEL"/ "DO NOT FORMAT"/etc.)
+
+ Symbol List Check
+
+  [ ] A symbol list file has been provided.
+
+ Copyright/Licensing/Piracy Protection
+
+  [ ] The executable file is named using the SCEA assigned product code. (i.e SLUS_123.45;1)
+  [ ] The executable file lists "North America" as the territory for distribution. This can be done by using
+       the /CA switch when using CPE2X.
+  [ ] The system.cnf file lists the correct boot path for the executable file.
+
+ General
+   [ ] The disc is for use with NTSC PlayStation and Television systems.
+   [ ] The Correct License file has been used. (Licensea.dat for North America)
+ NOTE: Discs prepared for distribution outside North America will not be accepted.
+       All above items must be checked or the title may be rejected for Pre-Technical Approval.
+
+
+
+
+ Third Party Representative                                                            Date
+

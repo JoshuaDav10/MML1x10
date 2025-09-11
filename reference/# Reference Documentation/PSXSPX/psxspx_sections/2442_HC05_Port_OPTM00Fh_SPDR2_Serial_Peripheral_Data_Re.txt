@@ -1,0 +1,37 @@
+PSXSPX SPECIFICATIONS - HC05 PORT OPTM=0:0FH - SPDR2 - SERIAL PERIPHERAL DATA REGISTER 2 (R/W)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: HC05 Port OPTM=0:0Fh - SPDR2 - Serial Peripheral Data Register 2 (R/W)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1223 characters
+Lines: 29
+================================================================================
+
+HC05 Port OPTM=0:0Fh - SPDR2 - Serial Peripheral Data Register 2 (R/W)
+
+This is a second SPI channel, works same as first SPI channel, but using the
+lower 3bits of Port G (instead of Port C) for the SPI signals.
+
+HC05 Port OPTM=0:06h - PORTG - Port G Data Register (R/W)
+
+HC05 Port OPTM=0:07h - PORTH - Port H Data Register (R/W)
+
+HC05 Port 3Ch - PORTJ - Port J Data Register (R/W)
+
+| PG.0 PG0 Port G Bit0 Input/Output /SDI2 (0=Low, 1=High) (R/W)
+PG.1 PG1 Port G Bit1 Input/Output /SDO2 (0=Low, 1=High) (R/W)
+PG.2 PG2 Port G Bit2 Input/Output /SCK2 (0=Low, 1=High) (R/W)
+PG.3 PG3 Port G Bit3 Input/Output /TCMP (0=Low, 1=High) (R/W)
+PG.4 PG4 Port G Bit4 Input/Output /PWM0 (0=Low, 1=High) (R/W)
+PG.5 PG5 Port G Bit5 Input/Output /PWM1 (0=Low, 1=High) (R/W)
+PG.6 PG6 Port G Bit6 Input/Output /PWM2 (0=Low, 1=High) (R/W)
+PG.7 PG7 Port G Bit7 Input/Output /PWM3 (0=Low, 1=High) (R/W)
+PH.0-7 PHn Port H Bit0..7 Input/Output (0=Low, 1=High) (R/W)
+PJ.0-3 PJn Port J Bit0..3 Output (0=Low, 1=High) (R/W)
+PJ.4-7 - Not used (0)
+
+HC05 Port OPTM=1:06h - DDRG - Port G Data Direction Register (R/W)
+
+HC05 Port OPTM=1:07h - DDRH - Port H Data Direction Register (R/W)
+
+| 0-7 DDRXn Port X Data Direction Bit0..7 (0=Input, 1=Output) (R/W)

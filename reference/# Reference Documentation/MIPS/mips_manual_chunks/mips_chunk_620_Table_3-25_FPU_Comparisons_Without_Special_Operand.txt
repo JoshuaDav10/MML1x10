@@ -1,0 +1,59 @@
+MIPS INSTRUCTION SET REFERENCE - TABLE 3-25 FPU COMPARISONS WITHOUT SPECIAL OPERAND EXCEPTIONS
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Table 3-25 FPU Comparisons Without Special Operand Exceptions
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 4203 characters
+Lines: 53
+================================================================================
+
+Table 3-25 FPU Comparisons Without Special Operand Exceptions
+
+                                                                                                 Comparison CC
+     Instruction                          Comparison Predicate                                      Result               Instruction
+                                                                                 Relation                      Inv Op    Condition
+                                                                                  Values                        Excp.      Field
+                                                                                                    If            if
+      Cond                     Name of Predicate and                                            Predicate      QNaN
+     Mnemonic        Logically Negated Predicate (Abbreviation)              > < = ?             Is True          ?       3     2..0
+                     False [this predicate is always False]                  F     F   F    F
+     F                                                                                              F                            0
+                     True (T)                                                T     T   T    T
+
+                     Unordered                                               F     F   F    T       T
+     UN                                                                                                                          1
+                     Ordered (OR)                                            T     T   T    F       F
+
+                     Equal                                                   F     F   T    F       T
+     EQ                                                                                                                          2
+                     Not Equal (NEQ)                                         T     T   F    T       F
+
+                     Unordered or Equal                                      F     F   T    T       T
+     UEQ                                                                                                                         3
+                     Ordered or Greater Than or Less Than (OGL)              T     T   F    F       F
+                                                                                                                    No    0
+                     Ordered or Less Than                                    F     T   F    F       T
+     OLT                                                                                                                         4
+                     Unordered or Greater Than or Equal (UGE)                T     F   T    T       F
+
+                     Unordered or Less Than                                  F     T   F    T       T
+     ULT                                                                                                                         5
+                     Ordered or Greater Than or Equal (OGE)                  T     F   T    F       F
+
+                     Ordered or Less Than or Equal                           F     T   T    F       T
+     OLE                                                                                                                         6
+                     Unordered or Greater Than (UGT)                         T     F   F    T       F
+
+                     Unordered or Less Than or Equal                         F     T   T    T       T
+     ULE                                                                                                                         7
+                     Ordered or Greater Than (OGT)                           T     F   F    F       F
+
+                             Key: ? = unordered, > = greater than, < = less than, = is equal, T = True, F = False
+
+
+
+
+86                                                                 MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                                Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+Floating Point Compare (cont.)                                                                                        C.cond.fmt

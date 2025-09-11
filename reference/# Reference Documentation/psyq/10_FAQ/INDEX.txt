@@ -1,0 +1,8 @@
+PSYQ DOCUMENTATION - Frequently asked questions and troubleshooting
+================================================================================
+Category: 10_FAQ
+Description: Frequently asked questions and troubleshooting
+Files: 1
+
+FILES IN THIS CATEGORY:
+  emul_faq.txt (5.6 KB)

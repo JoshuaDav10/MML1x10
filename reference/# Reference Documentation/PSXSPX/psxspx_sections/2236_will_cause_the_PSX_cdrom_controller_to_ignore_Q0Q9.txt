@@ -1,0 +1,48 @@
+PSXSPX SPECIFICATIONS - WILL CAUSE THE PSX CDROM CONTROLLER TO IGNORE Q0..Q9 (AND TO KEEP RETURNING
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: will cause the PSX cdrom controller to ignore Q0..Q9 (and to keep returning
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1946 characters
+Lines: 40
+================================================================================
+
+will cause the PSX cdrom controller to ignore Q0..Q9 (and to keep returning
+position data from most recent sector with intact checksum).
+
+Ironically, the SBI format cannot store the required Q10..Q11 checksum. The
+trick for using SBI files with libcrypted PSX discs is to ignore the useless
+Q0..Q9 data, and to assume that all sectors in the SBI file have wrong Q10..Q11
+checksums.
+
+M3S (Subchannel Q Data for Minute 3) (ePSXe)
+
+M3S files are containing Subchannel Q data for all sectors on Minute=03 (the
+region where PSX libcrypt data is located) (there is no support for storing the
+(unused) libcrypt backup copy on Minute=09). The .M3S filesize is 72000 bytes
+(60 seconds * 75 sectors * 16 bytes). The 16 bytes per sector are:
+
+| Q0..Q9 Subchannel Q data (normally position data)
+Q10..Q11 Subchannel Q checksum
+Q12..Q15 Dummy/garbage/padding (usually 00000000h or FFFFFFFFh)
+
+Unfortunately, there are at least 3 variants of the format:
+
+| 1. With CRC (Q0..Q11 intact) (and Q12..Q15 randomly 00000000h or FFFFFFFFh)
+2. Without CRC (only Q0..Q9 intact, but Q10..Q15 zerofilled)
+3. Without anything (only Q0 intact, but Q1..Q15 zerofilled)
+
+The third variant is definetly corrupt (and one should ignore such zerofilled
+entries). The second variant is corrupt, too (but one might attempt to repair
+them by guessing the missing checksum: if it contains normal position values
+assume correct crc, if it contains uncommon values assume a libcrypted sector
+with bad crc).
+
+The M3S format is intended for libcrypted PSX games, but, people seem to have
+also recorded (corrupted) M3S files for unprotected PSX games (in so far, more
+than often, the M3S files might cause problems, instead of solving them).
+
+Note: The odd 16-byte format with 4-byte padding does somehow resemble the "P
+and Q Sub-Channel" format 'defined' in MMC-drafts; if the .M3S format was based
+on the MMC stuff: then the 16th byte might contain a Subchannel P "pause" flag
+in bit7.

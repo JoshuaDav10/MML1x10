@@ -1,0 +1,44 @@
+PSXSPX SPECIFICATIONS - ... 4+4+.. XSPS CHUNK ;SPU-ADPCM SOUND (IF ANY, NOT IN ALL .WAD'S)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: ... 4+4+.. XSPS Chunk ;SPU-ADPCM Sound (if any, not in all .WAD's)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1835 characters
+Lines: 36
+================================================================================
+
+... 4+4+.. XSPS Chunk ;SPU-ADPCM Sound (if any, not in all .WAD's)
+... 4+4+.. XSPD Chunk ;...whatever Data...?
+... 4+4 DNE Chunk ;End marker (in Harry Potter: with data!)
+
+XSPT Chunk (Textures):
+
+| 000h 4 Chunk Name "XSPT" (aka TPSX backwards)
+004h 4 Chunk Size (excluding 8-byte Name+Size)
+008h 4 Chunk Flags (02h or 06h or 0Eh) ;02h in Croc 2
+00Ch (20h) Name (eg. "Default new map", zeropadded) ;\if Flags bit2=1
+... (804h) Unknown ... SAME as in XSPD chunk !!! ;/
+... 4 Number of List 1 entries (N1) (xxh..xxxh) ;\
+... 4 Number of Texture Pages (1..4) ; List 1 and NumPages
+... N1*0Ch List 1 Whatever (6B 2F xx 00..) ;/
+... 4 Number of List 2 entries (N2) (0..xxh) ;\
+... 4 Unknown (2 or 7) ; List 2
+... N2*04h List 2 Whatever (halfwords?) (if N2>0) ;/
+... (5*C00h) Whatever, 5*C00h, Palette+Stuff? ;-if Flags bit3=1
+... .. RLE16 compressed Texture Pages ;-Texture bitmap
+RLE16 Texture notes:
+Compressed data consists of signed little-endian 16bit LEN+DATA pairs:
+LEN=0000h --> invalid/unused
+LEN=0001h..7FFFh --> copy LEN halfwords from src
+LEN=8000h..FFFFh --> load ONE halfword as fillvalue, fill -LEN halfwords
+Compressed size is everything up to end of XSPT chunk
+Decompressed size is 20000h*NumTexturePages (=20000h,40000h,60000h or 80000h)
+That is: Width=256 halfwords, height 256*NumTexturePages lines. There seems
+to be only one RLE16 compression block for all Texture Pages, rather than one
+RLE16 block for each Page.
+BUG #1: Decompressed data in Aladding/Emperor does often contain only
+1FFFEh,3FFFEh,5FFFEh,7FFFEh bytes (the decompressed data has correct size
+when appending ONE halfword with random/zero value).
+BUG #2: Compressed data in Croc 2 ends with a RLE16 length value (-LEN), but
+lacks the corresponding RLE16 filldata (the decompressed data is 7FFFEh when
+filling those LEN halfwords with random/zero values).

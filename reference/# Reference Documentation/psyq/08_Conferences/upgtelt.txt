@@ -1,0 +1,241 @@
+PSYQ DOCUMENTATION - TRAINING/Summer97/upgtelt.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/TRAINING/Summer97/upgtelt.pdf
+Converted: Wed Sep 10 02:47:41 PM CDT 2025
+================================================================================
+
+Lighting using GTE
+
+
+
+
+ CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Lighting using GTE
+GTE illumination model
+                                                        _
+                             _                          N
+                             L
+                                                      θ
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Lighting using GTE
+Light source calculations...
+      Light 2                                                                          Light 1
+                                                          Normal
+
+
+
+
+                                                       Base Color
+
+
+
+                                                                                 Ambient
+                                                                                  light
+        Light 3
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Lighting using GTE
+GTE Light Source Calculation
+
+         Normal                             Normal                           Light        Light
+       line vector                        line vector                        source    source color
+       for surface                          (world)                           effect      effect
+
+
+
+
+                                                                                            Color
+                                                                                       effect of world
+
+
+
+
+                                                                                          Display
+                                                                                           Color
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Lighting using GTE
+GTE light source calculations...
+                                           Object Level
+
+
+    L11        L12        L13                        L1X          L1Y        L1Z   LW11   LW12 LW13
+
+    L21        L22       L23                         L2X         L2Y         L2Z   LW21   LW22 LW23
+
+    L31        L32       L33                        L3X          L3Y        L3Z    LW31   LW32 LW33
+
+       Local Lights                                      Light vectors              Transformation
+                                                                                       Matrix R1
+                                                                                    Local -to- World
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Lighting using GTE
+GTE light source calculations...
+                                           Polygon Level
+
+               L1                                      L11          L12          L13       NX
+               L2                                      L21          L22          L23       NY
+               L3                                      L31          L32          L33       NZ
+
+
+                                                       Local Lights                       Local
+                                                                                       Normal Vector
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Lighting using GTE
+    GTE light source calculations...
+                                               Polygon Level
+
+  RLT                           LR1          LR2        LR3                      L1        L1n       RBK
+
+  GLT
+            =                   LG1          LG2        LG3                      L2
+                                                                                      or
+                                                                                           L2n
+                                                                                                 + GBK
+  BLT                           LB1          LB2        LB3                      L3        L3n     BBK
+
+
+   Local                          Light                                    Light                  Ambient
+Light color                    Color Matrix                             Source Effect            Light color
+
+
+
+
+    CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Lighting using GTE
+GTE light source calculations
+                                           Polygon Level
+
+        R0                                               R x RLT                      RFC
+        G0              =           (1-p) Gx GLT                                 +p   GFC
+        B0
+                                                         B x BLT                      BFC
+
+
+        Screen                                    Polygon                              Far
+        Color                                      Color                              Color
+
+
+                                       p=DQA*h/SZn +DQB
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Lighting using GTE
+How to apply all this info..
+
+    setting up the light vector matrix
+    correctly
+    please refer to the sample odeng.c
+    light.c object.c rtp1.h
+    runtime implementation of material
+    attenuation
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Lighting using GTE
+    Existing GTE command set…
+              lighting calculations
+
+Normal Color                       F14,15                        L1 = L11*NXn+L12*NYn+L13*NZn;
++ Depth Cue                        (x3)                          L2 = L21*NXn+L22*NYn+L23*NZn;
+                                   NCDS                          L3 = L31*NXn+L32*NYn+L33*NZn;
+                                   (NCDT)                        RLT = RBK+LR1*L1+LR2*L2+LR3*L3;
+                                                                 GLT = GBK+LG1*L1+LG2*L2+LG3*L3;
+                                                                 BLT = BBK+LB1*L1+LB2*L2+LB3*L3;
+                                                                 R0 = R*RLT+IR0*(RFC - R*RLT);
+                                                                 G0 = G*GLT+IR0*(GFC-G*GLT);
+                                                                 B0 = B*BLT+IR0*(BFC-B*BLT);
+
+
+
+
+    CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Lighting using GTE
+   Existing GTE command set…
+              lighting calculations cont..
+
+Normal ColorCol F16,17                                           L1 = L11*NXn+L12*NYn+L13*NZn;
+                (x3)                                             L2 = L21*NXn+L22*NYn+L23*NZn;
+(no depth cue)                                                   L3 = L31*NXn+L32*NYn+L33*NZn;
+                                    NCCS
+                                    (NCCT)                       RLT = RBK+LR1*L1+LR2*L2+LR3*L3;
+                                                                 GLT = GBK+LG1*L1+LG2*L2+LG3*L3;
+                                                                 BLT = BBK+LB1*L1+LB2*L2+LB3*L3;
+                                                                 R0 = R*RLT
+                                                                 G0 = G*GLT;;
+                                                                 B0 = B*BLT;;
+
+
+
+
+   CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Lighting using GTE
+    Existing GTE command set...
+                    lighting calculations cont..
+
+Material Screen Color                  F18               RLT = RBK+LR1*L1^n+LR2*L2^n+LR3*L3^n;
++ Depth Cueuing                        CDP               GLT = GBK+LG1*L1^n+LG2*L2^n+LG3*L3^n;
+(textured poly screen                                    BLT = BBK+LB1*L1^n+LB2*L2^n+LB3*L3^n;
+color)                                                   R0 = R*RLT+IR0*(RFC - R*RLT);
+                                                         G0 = G*GLT+IR0*(GFC-G*GLT);
+                                                         B0 = B*BLT+IR0*(BFC-B*BLT);
+
+
+
+
+     CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Lighting using GTE
+ Existing GTE command set…
+                lighting calculations cont...
+
+Screen Color Material F19                          RLT = RBK+LR1*L1^n+LR2*L2^n+LR3*L3^n;
+without Depth Cue     CC                           GLT = GBK+LG1*L1^n+LG2*L2^n+LG3*L3^n;
+                                                   BLT = BBK+LB1*L1^n+LB2*L2^n+LB3*L3^n;
+                                                   R0 = R*RLT;
+                                                   G0 = G*GLT;
+                                                   B0 = B*BLT;
+
+
+
+
+ CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Lighting using GTE
+  Existing GTE command set…
+          lighting subset utils
+Light Source                        F4                              L1 = L11*NXn+L12*NYn+L13*NZn;
+Effect                              MVMVA                           L2 = L21*NXn+L22*NYn+L23*NZn;
+                                                                    L3 = L31*NXn+L32*NYn+L33*NZn;
+
+
+Light Source                        F5                              RLT = RBK+LR1*L1+LR2*L2+LR3*L3;
+Color Effect                        MVMVA                           GLT = GBK+LG1*L1+LG2*L2+LG3*L3;
+(without material)                                                  BLT = BBK+LB1*L1+LB2*L2+LB3*L3;
+
+
+                                                                    R0 = R*IR1+IR0*(RFC - R*IR1);
+Screen Color                        F6                              G0 = G*IR2+IR0*(GFC-G*IR2);
+with Depth Cue                      DCPL                            B0 = B*IR3+IR0*(BFC-B*IR3);
+
+  CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Lighting using GTE
+Existing GTE command set…
+         lighting subset utils
+
+           Screen Color                                   F7,8                   R0 = R+IR0*(RFC-R);
+           with Depth Cue                                 (x3)                   G0 = G+IR0*(GFC-G);
+                                                          DPCS                   B0 = B+IR0*(BFC-B);
+                                                          (DPCT)
+
+
+           Screen Color with                               F9                    R0 = IR1+IR0*(RFC-IR1);
+           Interpolation                                   INTPL                 G0 = IR2+IR0*(GFC-IR2);
+                                                                                 B0 = IR3+IR0*(BFC-IR3);
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / Lighting using GTE
+

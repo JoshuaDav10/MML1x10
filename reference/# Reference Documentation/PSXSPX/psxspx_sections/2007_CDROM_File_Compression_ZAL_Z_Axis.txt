@@ -1,0 +1,53 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION ZAL (Z-AXIS)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression ZAL (Z-Axis)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1482 characters
+Lines: 45
+================================================================================
+
+CDROM File Compression ZAL (Z-Axis)
+
+Thrasher: Skate and Destroy (MagDemo27: SKATE\ASSETS\*.ZAL) (Z-Axis)
+
+Dave Mirra Freestyle BMX (MagDemo36: BMX\ASSETS\*.ZAL) (Z-Axis)
+
+Dave Mirra Freestyle BMX (MagDemo46: BMX\ASSETS\*.ZAL) (Z-Axis)
+
+ZAL compression is used in ZAL archives. The archive header contains compressed
+and decompressed size for each file (and a compression flag indicating whether
+the archive is compressed at all).
+
+ZAL Decompression
+
+| if src_len=0 then goto @@decompress_done ;empty (without end code)
+lzlen=0, rawlen=0
+if [src]=10h..FFh then ;\special handling
+rawlen=[src]-11h, src=src+1 ; for code=10h..FFh
+if rawlen0, and depending on OLD lzlen...
+rawlen=code AND 03h
+disp=code/4+[src]*4, src=src+1
+if lzlen=0 then disp=disp+801h, lzlen=3, else then disp=disp+1h, lzlen=2
+if code=10h..1Fh then
+lzlen=(code AND 07h)+2
+if lzlen=2 then
+while [src]=00h, lzlen=lzlen+FFh, src=src+1
+lzlen=lzlen+[src]+07h, src=src+1
+rawlen=[src] AND 03h, disp=[src]/4+[src+1]*40h+(code/8 AND 1)*4000h+4000h
+src=src+2
+if disp=4000h AND code=11h then goto @@decompress_done ;end code
+if disp=4000h AND code<>11h then goto @@decompress_error
+if code=20h..3Fh then
+lzlen=code-20h+2
+if lzlen=2 then
+while [src]=00h, lzlen=lzlen+FFh, src=src+1
+lzlen=lzlen+[src]+1Fh, src=src+1
+rawlen=[src] AND 03h, disp=[src]/4+[src+1]*40h+1, src=src+2
+if code=40h..FFh then
+rawlen=code AND 03h
+lzlen=(code/20h)+1
+disp=((code/4) AND 07h)+([src]*8)+1, src=src+1
+goto @@decompress_lop
+@@decompress_done:
+ret

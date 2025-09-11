@@ -1,0 +1,33 @@
+MIPS INSTRUCTION SET REFERENCE - GPR 24                      E     F      G   H
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: GPR 24                      E     F      G   H
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1016 characters
+Lines: 25
+================================================================================
+
+GPR 24                      E     F      G   H
+
+
+
+
+                                    0       1   E   F    4        5   6    ... After executing SWL $24,2($0)
+
+
+                                    0       1   E   F   G         H   6    ... Then after SWR $24,5($0)
+
+
+
+
+           The bytes stored from the source register to memory depend on both the offset of the effective address within an
+           aligned word—that is, the low 2 bits of the address (vAddr1..0)—and the current byte-ordering mode of the processor
+           (big- or little-endian). The following figure shows the bytes stored for every combination of offset and byte ordering.
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                                   273
+
+                             Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+Store Word Left (cont.)                                                                                                         SWL

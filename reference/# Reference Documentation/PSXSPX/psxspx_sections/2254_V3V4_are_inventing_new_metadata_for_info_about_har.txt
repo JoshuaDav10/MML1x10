@@ -1,0 +1,32 @@
+PSXSPX SPECIFICATIONS - V3/V4 ARE INVENTING NEW "METADATA" FOR INFO ABOUT HARDDISKS OR CDROMS.
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: V3/V4 are inventing new "metadata" for info about harddisks or cdroms.
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1049 characters
+Lines: 24
+================================================================================
+
+V3/V4 are inventing new "metadata" for info about harddisks or cdroms.
+
+| 000h 08h ID "MComprHD" (MAME Compressed Hunks of Data)
+008h 4 Header size (78h=V3, 6Ch=V4)
+00Ch 4 Header version (03h=V3, 04h=V4)
+010h 4 Flags (bit0=DriveHasParent, bit1=AllowWrites)
+014h 4 Compression type (0=None, 1=ZLIB, 2=ZLIB_PLUS) (V4: 3=AV)
+018h 4 Total number of hunks represented (N) (92h)
+01Ch 08h Total size of all uncompressed hunks (N*2640h) (15D080h)
+024h 08h Offset to the first blob of metadata
+02Ch 10h V3: MD5 checksum on raw data ;\
+03Ch 10h V3: MD5 checksum on parent file ;
+04Ch 4 V3: Number of bytes per hunk (2640h=990h*4) ; V3
+050h 14h V3: SHA1 checksum on raw data ;
+064h 14h V3: SHA1 checksum on parent file ;/
+02Ch 4 V4: Number of bytes per hunk (2640h=990h*4) ;\
+030h 14h V4: SHA1 checksum on raw+meta ; V4
+044h 14h V4: SHA1 checksum on raw+meta of parent ;
+058h 14h V4: SHA1 checksum on raw data ;/
+... N*10h Map entries (for each hunk)
+... 10h Map end marker ("EndOfListCookie",00h)
+... .. Metadata Chunk(s)
+... .. Compressed Sectors (aka hunks)

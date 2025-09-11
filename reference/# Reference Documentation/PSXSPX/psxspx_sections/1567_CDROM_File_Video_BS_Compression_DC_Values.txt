@@ -1,0 +1,73 @@
+PSXSPX SPECIFICATIONS - CDROM FILE VIDEO BS COMPRESSION DC VALUES
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Video BS Compression DC Values
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 2473 characters
+Lines: 65
+================================================================================
+
+CDROM File Video BS Compression DC Values
+
+DC v0
+
+| nnnnnnnnnn DC Value (signed 10bit, -200h..+1FFh)
+
+This is similar as v1/v2, except there is no End code for End of Frame, and the
+.BS header contains two separate quant values (for Cr/Cb and Y1-Y4).
+
+| If output_size=NumberOfMdecCodes*2 then EndOfFrame
+If BlockIsCrCb then QuantDC=DC+QuantC*400h else QuantDC=DC+QuantY*400h
+
+DC v1/v2/ea
+
+| nnnnnnnnnn DC Value (signed 10bit, -200h..+1FEh)
+0111111111 End of Frame (+1FFh, that, in place of Cr)
+
+This is similar as v0, except there is only one Quant value for all blocks, and
+the header lacks info about the exact decompressed size, instead, compression
+end is indicated by a newly added end code:
+
+| If DC=+1FFh then EndOfFrame
+QuantDC=DC+Quant*400h
+
+DC v3
+
+Similar as v1/v2, but DC values (and End code) are now Huffman compressed
+offsets relative to old DC, with different Huffman codes for Cr/Cb and Y1-Y4:
+
+| For Cr/Cb For Y1..Y4 Offset (added to old DC of Y/Cr/Cb block)
+00 100 +(00h) ;\
+01s 00s -(01h)*4 ,+(01h)*4 ;
+10sn 01sn -(03h..02h)*4,+(02h..03h)*4 ; required
+110snn 101snn -(07h..04h)*4,+(04h..07h)*4 ; codes
+1110snnn 110snnn -(0Fh..08h)*4,+(08h..0Fh)*4 ; for 10bit
+11110snnnn 1110snnnn -(1Fh..10h)*4,+(10h..1Fh)*4 ; range
+111110snnnnn 11110snnnnn -(3Fh..20h)*4,+(20h..3Fh)*4 ;
+1111110snnnnnn 111110snnnnnn -(7Fh..40h)*4,+(40h..7Fh)*4 ;/
+11111110snnnnnnn 1111110snnnnnnn -(FFh..80h)*4,+(80h..FFh)*4 ;-11bit (!)
+- 11111110 Unused ;\
+111111110 111111110 Unused ; unused
+1111111110 1111111110 Unused ;/
+1111111111 1111111111 End of Frame ;-end code
+Note: the "snnn" bits are indexing the values in right column,
+with s=0 for negative values, and s=1 for positive values.
+
+The decoding works as so (with oldDcXxx=0 for first macroblock):
+
+| If bits=1111111111 then EndOfFrame
+If BlockIsCr then DC=DecodeHuffman(HuffmanCodesCbCr)+oldDcCr, oldDcCr=DC
+If BlockIsCb then DC=DecodeHuffman(HuffmanCodesCbCr)+oldDcCb, oldDcCb=DC
+If BlockIsY1234 then DC=DecodeHuffman(HuffmanCodesY1234)+oldDcY, oldDcY=DC
+If older_version AND DC>=0 then QuantDC=Quant*400h or (DC) ;\requires
+If older_version AND DC
+
+Note: The offsets do cover signed 11bit range -3FCh..+3FCh. Older v3 decoders
+did require 11bit offsets (eg. add +3FCh to change DC from -200h to +1FCh).
+Newer v3 decoders can wrap within 10bit (eg. add -4 to wrap DC from -200h to
++1FCh).
+
+DC iki
+
+The DC values (including Quant values for each block) are separately stored as
+GT-ZIP compressed data in the IKI .BS header.

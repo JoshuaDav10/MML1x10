@@ -1,0 +1,51 @@
+PSXSPX SPECIFICATIONS - CDROM FILE ARCHIVE FADJ0500 (KLONOA)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Archive FAdj0500 (Klonoa)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1387 characters
+Lines: 43
+================================================================================
+
+CDROM File Archive FAdj0500 (Klonoa)
+
+Klonoa (MagDemo08: KLONOA\FILE.IDX+FILE.BIN)
+
+| FILE.IDX
+000h 8 ID "FAdj0500"
+008h 38h RAM addresses (80xxxxxxh, 0Ch words)
+038h 4 Zero
+03Ch 4 RAM address (80xxxxxxh)
+040h N*10h File List (including Folder start/end markers)
+FILE.BIN
+000h .. File Data area (split into filesizes from FILE.IDX)
+
+File List entries:
+
+| Type 0 (Folder End):
+000h 4 Type (0=Folder End)
+000h 4 Zero
+008h 4 RAM address (always 801EAF8Ch)
+00Ch 4 Zero
+Type 1.a (Folder Start):
+000h 4 Type (1=Folder Start)
+000h 4 Folder Offset/800h (offset of FIRST file in this Folder)
+008h 4 RAM address (always 801EAF8Ch)
+00Ch 4 Folder Size/800h (size of ALL files in this Folder)
+Type 1.b (Force Offset, can occur between Files within a Folder):
+000h 4 Type (1=Same as Folder Start)
+000h 4 Folder Offset/800h (offset of NEXT file in this Folder)
+008h 4 RAM address (always 801EAF8Ch)
+00Ch 4 Folder Size/800h (zero for Force Offset)
+Type 2 (File entries, within Folder Start/End):
+000h 4 Type (2=File)
+004h 4 Filesize in bytes (4-byte aligned?)
+008h 4 RAM address 1 (80xxxxxxh, or zero)
+00Ch 4 RAM address 2 (80xxxxxxh)
+
+File Offsets are usually 4-byte aligned (at offset+filesize from previous
+entry). Except, the first file after Folder Start (and Force Offset) is
+800h-byte aligned.
+
+The archive contains DOT1 archives, OA05 archives, Ulz compression, and TIM,
+TMD, VAB, SEQ, VB files.

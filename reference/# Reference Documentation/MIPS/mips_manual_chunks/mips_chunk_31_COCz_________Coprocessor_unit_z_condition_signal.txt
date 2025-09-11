@@ -1,0 +1,25 @@
+MIPS INSTRUCTION SET REFERENCE - COC[Z]         COPROCESSOR UNIT Z CONDITION SIGNAL
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: COC[z]         Coprocessor unit z condition signal
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1030 characters
+Lines: 16
+================================================================================
+
+COC[z]         Coprocessor unit z condition signal
+
+       Xlat[x]        Translation of the MIPS16e GPR number x into the corresponding 32-bit GPR number
+
+                      Endian mode as configured at chip reset (0 →Little-Endian, 1 → Big-Endian). Specifies the endianness of the
+    BigEndianMem      memory interface (see LoadMemory and StoreMemory pseudocode function descriptions), and the endianness
+                      of Kernel and Supervisor mode execution.
+
+                      The endianness for load and store instructions (0 → Little-Endian, 1 → Big-Endian). In User mode, this
+    BigEndianCPU      endianness may be switched by setting the RE bit in the Status register. Thus, BigEndianCPU may be computed
+                      as (BigEndianMem XOR ReverseEndian).
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                                                     3
+
+                         Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.

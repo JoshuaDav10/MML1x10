@@ -1,0 +1,78 @@
+PSXSPX SPECIFICATIONS - TYPE 400H - SOUND VAG'S:
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Type 400h - Sound VAG's:
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2569 characters
+Lines: 70
+================================================================================
+
+Type 400h - Sound VAG's:
+
+| 000h 8 Name, ASCII, padded with leading spaces (eg. " XFS0.1V")
+008h 4 Zero
+00Ch 4 Number of Files (N) (max 10h)
+010h N*10h File List (100h bytes, zeropadded when less than 10h files)
+110h .. File Data (VAG files)
+File List entries:
+000h 4 Unknown (55F0h, 255F0h or 20000h)
+004h 4 File ID (01010000h, increasing, or other when above=2xxxxh)
+008h 4 Offset in bytes ;\.VAG files
+00Ch 4 Filesize in bytes ;/
+
+Type 20h - Cubemap overlays, polygons, effects or so?:
+
+| 000h 8 Name, ASCII, padded with leading dot (eg. ".MNA4.1V")
+008h 4 Zero
+00Ch 4 Random
+010h 4 Unknown 01h
+014h 4 Total Number of 40h-byte blocks (01h..[018h]) (H)
+018h 4 Total Number of 120h-byte blocks (eg. 1Fh,31h) (N)
+01Ch 4 Total Number of 1Ch-byte blocks (eg. 1Eh, 50h, F7h) (M)
+020h 4 Unknown 0 or 1 (in file 4EAh)
+024h 4 Unknown 01h
+028h 6*4 Offsets to Side 0-5 (at end of file and up) (or 0) ;\cubemap
+040h 6*4 Sizes of Side 0-5 (10220h, or 10820h) (or 0) ;/sides
+058h H*40h 40h-byte blocks
+... N*120h 120h-byte blocks (related to offsets in 40h-byte blocks)
+... M*1Ch 1Ch-byte blocks (related to offsets in 120h-byte blocks)
+... .. Unknown data (related to offsets in 1Ch-byte blocks)
+... .. Ext data (related to Ext offsets in 40h-byte blocks)
+FILE DOES END HERE!
+(below is allocated in above header, but not actually stored in the file)
+(maybe allocated as rendering buffer?)
+... - Cubemap TIM sides
+The 40h-byte blocks are:
+000h 20h Name (eg. "FLAMMES", zeropadded)
+020h 4 Unknown 01h or 00h
+024h 4 Offset to 120h-byte blocks (usually 98h, or higher)
+028h 4 Unknown 00h
+02Ch 4 Number of 120h-byte blocks (01h..[018h])
+030h 4 Unknown 01h
+034h 4 Ext Offset ;\usually all zero
+038h 4 Ext Size (3C000h) ; (except, nonzero in file 4EAh)
+03Ch 4 Ext Random (checksum?) ;/
+The 120h-byte blocks are:
+000h 18h*4 List with Offsets to 1Ch-byte blocks (usually 4 entries nonzero)
+060h 18h*4 List with Zeroes
+0C0h 18h*4 List with Numbers of 1Ch-byte blocks (usually max 4 entries)
+The 1Ch-byte blocks are:
+000h 4 Unknown 04h
+004h 4 Width 20h or 10h
+008h 4 Height 20h or 10h or 30h
+00Ch 4 Unknown 60h or 10h
+010h 4 Unknown 00h or 30h
+014h 4 Offset to Unknown Data
+018h 4 Size of Unknown Data (Width*Height*1)
+
+Type 00h - TIMs:
+
+| 000h 8 Name (" RSC3.1V")
+008h 8 Zerofilled
+010h 4 Number of used entries (1Fh) (max 80h)
+014h 80h*4 Offset List (offsets to files) (A14h and up)
+214h 80h*4 Zero List (zerofilled)
+414h 80h*4 Size List (filesizes)
+614h 80h*4 Width List (0Ch,18h,34h,2Ch) (in pixels)
+814h 80h*4 Height List (0Ch,24h,34h,2Ch)
+A14h .. Data (TIM files, with mouse pointers)

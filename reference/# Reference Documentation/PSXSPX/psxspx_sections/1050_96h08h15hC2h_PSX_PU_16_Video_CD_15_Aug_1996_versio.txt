@@ -1,0 +1,39 @@
+PSXSPX SPECIFICATIONS - 96H,08H,15H,C2H ;PSX (PU-16, VIDEO CD) 15 AUG 1996, VERSION VC2 (VCD)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 96h,08h,15h,C2h ;PSX (PU-16, Video CD) 15 Aug 1996, version vC2 (VCD)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1329 characters
+Lines: 30
+================================================================================
+
+96h,08h,15h,C2h ;PSX (PU-16, Video CD) 15 Aug 1996, version vC2 (VCD)
+96h,08h,18h,C1h ;PSX (LATE-PU-8,yaroze) 18 Aug 1996, version vC1 (yaroze)
+96h,09h,12h,C2h ;PSX (PU-18) (japan) 12 Sep 1996, version vC2 (a.jap)
+97h,01h,10h,C2h ;PSX (PU-18) (us/eur) 10 Jan 1997, version vC2 (a)
+97h,08h,14h,C2h ;PSX (PU-20) 14 Aug 1997, version vC2 (b)
+98h,06h,10h,C3h ;PSX (PU-22) 10 Jun 1998, version vC3 (a)
+99h,02h,01h,C3h ;PSX/PSone (PU-23, PM-41) 01 Feb 1999, version vC3 (b)
+A1h,03h,06h,C3h ;PSone/late (PM-41(2)) 06 Jun 2001, version vC3 (c)
+(unknown) ;PS2, xx xxx xxxx, late PS2 models...?
+
+19h,21h --> INT3(flags)
+
+Returns the current status of the POS0 and DOOR switches.
+
+| Bit0 = HeadIsAtPos0 (0=No, 1=Pos0)
+Bit1 = DoorIsOpen (0=No, 1=Open)
+Bit2 = EjectButtonOrOutSwOrSo? (DTL-H2000 only) (always 0 on retail)
+Bit3-7 = AlwaysZero
+
+19h,22h --> INT3("for Europe")
+
+| Caution: Supported only in BIOS version vC1 and up. Not supported in vC0.
+
+Indicates the region that console is to be used in:
+
+| INT5(11h,10h) --> NTSC, Japan (vC0) --> requires "SCEI" discs
+INT3("for Europe") --> PAL, Europe --> requires "SCEE" discs
+INT3("for U/C") --> NTSC, North America --> requires "SCEA" discs
+INT3("for Japan") --> NTSC, Japan / NTSC, Asia --> requires "SCEI" discs
+INT3("for NETNA") --> Region-free yaroze version--> requires "SCEx" discs

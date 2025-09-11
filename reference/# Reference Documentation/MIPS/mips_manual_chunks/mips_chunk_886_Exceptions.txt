@@ -1,0 +1,49 @@
+MIPS INSTRUCTION SET REFERENCE - EXCEPTIONS:
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Exceptions:
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1870 characters
+Lines: 41
+================================================================================
+
+Exceptions:
+             None
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                                     145
+
+                                Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+Jump Register, cont.                                                                                              JR
+
+
+       Programming Notes:
+       Software should use the value 31 for the rs field of the instruction word on return from a JAL, JALR, or BGEZAL,
+       and should use a value other than 31 for remaining uses of JR.
+
+
+
+
+146                                                    MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                        Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+JR.HB
+
+
+
+
+   Jump Register with Hazard Barrier                                                                                          JR.HB
+
+        31                   26 25             21 20                                 11 10 9            6    5                 0
+              SPECIAL                                               0                                                JR
+                                                                                         1 Any other legal
+                                       rs
+               000000                                         00 0000 0000                   hint value            001000
+                  6                    5                            10                   1         4                  6
+
+             Format:     JR.HB rs                                                                            MIPS32 Release 2
+
+             Purpose:
+             To execute a branch to an instruction address in a register and clear all execution and instruction hazards.

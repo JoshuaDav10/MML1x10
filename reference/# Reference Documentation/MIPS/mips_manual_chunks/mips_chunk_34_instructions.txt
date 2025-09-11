@@ -1,0 +1,24 @@
+MIPS INSTRUCTION SET REFERENCE - INSTRUCTIONS.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: instructions.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1732 characters
+Lines: 15
+================================================================================
+
+instructions.
+
+                           This occurs as a prefix to Operation description lines and functions as a label. It indicates the instruction time
+                           during which the pseudocode appears to “execute.” Unless otherwise indicated, all effects of the current
+                           instruction appear to occur during the instruction time of the current instruction. No label is equivalent to a time
+                           label of I. Sometimes effects of an instruction appear to occur either earlier or later — that is, during the
+                           instruction time of another instruction. When this happens, the instruction operation is written in sections labeled
+                           with the instruction time, relative to the current instruction I, in which the effect of that pseudocode appears to
+             I:,           occur. For example, an instruction may have a result that is not available until after the next instruction. Such an
+           I+n:,           instruction has the portion of the instruction operation description that writes the result register in a section
+            I-n:           labeled I+1.
+                           The effect of pseudocode statements for the current instruction labelled I+1 appears to occur “at the same time”
+                           as the effect of pseudocode statements labeled I for the following instruction. Within one pseudocode sequence,
+                           the effects of the statements take place in order. However, between sequences of statements for different
+                           instructions that occur “at the same time,” there is no defined order. Programs must not depend on a particular

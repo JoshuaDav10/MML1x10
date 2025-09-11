@@ -1,0 +1,54 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION LZS (GUNDAM BATTLE ASSAULT 2)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression LZS (Gundam Battle Assault 2)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1467 characters
+Lines: 46
+================================================================================
+
+CDROM File Compression LZS (Gundam Battle Assault 2)
+
+Gundam Battle Assault 2 (DATA\*.PAC\*, with ID="lzs")
+
+| 000h 4 ID ("lzs",00h)
+004h 4 Zerofilled
+008h 4 Fixed (must be 1) (method/version?)
+00Ch 14h Zerofilled
+020h 2 Fixed (must be 3) (method/version?)
+022h 2 Offset to Compressed Data minus 20h (usually 38h-20h)
+024h 4 Decompressed Size
+028h 2 Flagsize (must be 08h, 10h, or 20h) (usually 20h=32bit)
+02Ah 2 Lensize (must be 02h..07h) (usually 05h=5bit)
+02Ch 4 Compressed Size (total filesize, including "lzs" header)
+030h 8 Name? (always "000000",00h,00h)
+038h .. Compressed data (usually at offset 38h)
+
+decompress_gundam_lzs:
+
+| dst_end = dst+littleendian32bit[src+24h]
+flg_bits = littleendian16bit[src+28h] ;8,16,32
+len_bits = littleendian16bit[src+2Ah] ;2..7
+len_mask = (1 shl len_bits)-1 ;03h..7Fh
+src=src+littleendian16bit[src+22h]+20h
+collected_bits=0
+@@collect_more:
+for i=0 to flg_bits/8-1 ;read 8bit/16bit/32bit little-endian
+collected_bits=collected_bits+([src] SHL (i*8)), src=src+1
+num_collected=flg_bits
+@@decompress_lop:
+if dst=dst_end then goto @@decompress_done
+if num_collected=0 then goto @@collect_more
+num_collected=num_collected-1
+flagbits=flagbits SHR 1
+if carry=1 then
+[dst]=[src], dst=dst+1, src=src+1
+else
+temp=bigendian16bit[src], src=src+2
+len=(temp AND len_mask)+3
+disp=(temp SHR len_bits), if disp=0 then goto @@decompress_error
+for i=1 to len, [dst]=[dst-disp], dst=dst+1, next i
+endif
+goto @@decompress_lop
+@@decompress_done:
+ret

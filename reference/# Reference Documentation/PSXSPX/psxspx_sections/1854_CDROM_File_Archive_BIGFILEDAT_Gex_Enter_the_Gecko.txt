@@ -1,0 +1,59 @@
+PSXSPX SPECIFICATIONS - CDROM FILE ARCHIVE BIGFILE.DAT (GEX - ENTER THE GECKO)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Archive BIGFILE.DAT (Gex - Enter the Gecko)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1453 characters
+Lines: 50
+================================================================================
+
+CDROM File Archive BIGFILE.DAT (Gex - Enter the Gecko)
+
+Gex - Enter the Gecko - BIGFILE.DAT
+
+Used by Gex 2: Enter the Gecko (BIGFILE.DAT)
+
+Used by Gex 3: Deep Cover Gecko (MagDemo20: G3\BIGFILE.DAT) -- UNSORTED
+
+Used by Akuji (MagDemo18: AKUJI\BIGFILE.DAT)
+
+Used by Walt Disney World Racing Tour (MagDemo35: GK\BIGFILE.DAT) -- UNSORTED
+
+| 000h 4 Number of Files (C0h)
+004h N*18h File entries
+... .. Zeropadding to 800h byte boundary
+... .. File Data
+
+File Entries:
+
+| 000h 4 Random
+004h 4 Filesize in bytes (uncompressed size)
+008h 4 Filesize in bytes (compressed size, or 0=uncompressed)
+00Ch 4 Fileoffset (800h-byte aligned) (increasing, unless UNSORTED)
+010h 4 Random
+014h 4 Random (or ascii in 1st file)
+
+LZ Decompression:
+
+| @@collect_more:
+flagbits=[src]+[src+1]*100h+10000h, src=src+2 ;16bit flags, unaligned
+@@decompress_lop:
+if dst>=dst.end then goto @@decompress_done
+flagbits=flagbits SHR 1
+if zero then goto @@collect_more
+if carry=0 then
+[dst]=[src], dst=dst+1, src=src+1
+else
+len=([src] AND 0Fh)+1), disp=([src] AND 0F0h)*10h+[src+1], src=src+2
+if len=1 or disp=0 then goto invalid ;weirdly, these are left unused
+for i=1 to len, [dst]=[dst-disp], dst=dst+1, next i
+endif
+goto @@decompress_lop
+@@decompress_done:
+ret
+
+Filetypes in the archive include...
+
+| standard TIM (eg. file 01h,02h)
+malformed TIM (eg. file 0Fh,14h) (with [8]=2*cx*cy+4 instead 2*cx*cy+0Ch)
+crippled VAB (eg. file 0Eh,13h) (with hdr=filesize-4 plus raw ADPCM samples)

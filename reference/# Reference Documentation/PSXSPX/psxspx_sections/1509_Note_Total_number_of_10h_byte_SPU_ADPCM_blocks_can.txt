@@ -1,0 +1,79 @@
+PSXSPX SPECIFICATIONS - NOTE: TOTAL NUMBER OF 10H-BYTE SPU-ADPCM BLOCKS CAN BE ODD (SO THE AUDIO SEEMS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Note: Total number of 10h-byte SPU-ADPCM blocks can be odd (so the audio seems
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 2832 characters
+Lines: 70
+================================================================================
+
+Note: Total number of 10h-byte SPU-ADPCM blocks can be odd (so the audio seems
+to be mono).
+
+Apart from the .MOV files, there's also one standard .STR file for the Knnami
+Intro (with normal STR headers and BS v2 data).
+
+Best Sports Games Ever (DD\*.VLC and MOVIES\*.VLC) (Powerline Demo Disc menu)
+
+This format is used for still images with only frame, and for looping short
+animation sequences in the Demo Disc Menu. There's no audio.
+
+| Header Chunk:
+000h 4 Fixed ID (74h,55h,89h,08h aka 08895574h)
+004h 2 Bitmap Width (140h)
+006h 2 Bitmap Height (100h)
+008h 2 Video Frame Size/4 (17A0h or 13B0h)
+00Ah 2 Number of Video Frames (01h or 32h)
+00Ch 4 Frame End ID (eg. 62DCCACEh) (random?, but stays same within movie)
+Video Frame Chunk(s):
+... .. Data (in BS v1/v2/v3 format) ;\size = hdr[008h]*4
+... .. FFh-filled (padding to Frame Size) ;/
+... 4 Frame End ID (eg. 62DCCACEh) ;-same value as in hdr[00Ch]
+
+For random access, best is seeking "fpos=N*(Framesize+4)+10h", alternately one
+could search "fpos=LocationAfterFrameEndID".
+
+Sentient (FILMS\*.FXA)
+
+This is having neither per-sector STR headers nor Chunk headers, instead it's
+having raw data with fixed size of 10 sectors per frame.
+
+File Header (sector 0, 800h bytes):
+
+| 000h 4 File ID (01h,"XSP") (aka PSX backwards)
+004h 2 Unknown (0001h)
+006h 2 Unknown (0040h) (this is used for something...)
+008h 2 Bitmap Width (0140h)
+00Ah 2 Bitmap Height (00F0h)
+00Ch 4 Total number of video frames
+010h 4 Number of video sectors per frame (always 8)
+014h 4 Total number of video sectors, excluding audio/dummy (=NumFrames*8)
+018h 1 Zero
+019h 1 Sector List size (28h) (ie. each 4 frames) ;\or zerofilled when
+01Ah 28h Sector Types (2=Video, 1=Audio, 0=Dummy) ;/not present
+042h .. Zerofilled
+7xxh .. Unknown, maybe just garbage ...?
+... .. Zerofilled
+
+The frame rate is 15fps with 10 sectors per frame (8xVideo and either 2xAudio
+or 1xAudio+1xDummy). The Video/Audio/Dummy sector arrangement does repeat each
+40 sectors (aka each 4 frames):
+
+| vVvvvvv--vvVvvv--vvvvVv--vvvvvv-Vvvvvvv- Video
+-------A-------A-------A-------A-------A Audio
+--------D-------D-------D--------------- Dummy
+V = 1st sector of video frame
+v = 2nd..8th sector of video frame (or fileheader in case of sector 0)
+A = Audio (each 8th sector, ie. sector 07h,0Fh,17h,1Fh,etc.)
+D = Dummy (occurs after some (not all) audio sectors)
+Some files have that sector arrangement stored in header[019h..041h], but
+other files have that header entries zerofilled (despite of using the same
+arrangement).
+
+Video frames are 8 sectors (4000h-byte), first and last 8 bytes are swapped:
+
+| 0000h 8 Last 8 bytes of BS v1 bitstream ;\or garbage padding
+0008h 3FF0h First 3FF0h of BS v1 bitstream ;/
+3FF8h 8 Footer (64bit, with squeezed BS header and other info)
+The footer bits are:
+0-4 5bit Quant (00h..1Fh) (only 5bit, not 6bit)

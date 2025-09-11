@@ -1,0 +1,41 @@
+PSXSPX SPECIFICATIONS - BY SUB-CPU'S REAL-TIME ADPCM (OR BY BOTH)?
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: by Sub-CPU's Real-time ADPCM (or by both)?
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1115 characters
+Lines: 33
+================================================================================
+
+by Sub-CPU's Real-time ADPCM (or by both)?
+
+Note: Bit5,7 are semi-undocumented in the datasheet (mentioned in the ADPCI
+description, but missing in overall register summary).
+
+1Bh - RTCI - Real-time ADPCM Coding Information (W)
+
+| 0 S/M ADPCM Stereo/Mono (0=Mono, 1=Stereo)
+1 "L" Reserved (should be 0)
+2 FS ADPCM Sampling Frequency (0=37.8kHz, 1=18.9kHz)
+3 "L" Reserved (should be 0)
+4 BITLNGTH ADPCM Sample Bit Length (0=Normal/4bit, 1=8bit)
+5 "L" Reserved (should be 0)
+6 EMPHASIS ADPCM Emphasis (0=Normal/Off, 1=On)
+7 "L" Reserved (should be 0)
+
+06h,09h,10h,14h..1Fh - Reserved (R)
+
+| 0-7 Reserved (undefined)
+
+Of these, 09h and 10h are officially unused/reserved. And addresses 06h and
+14h..1Fh aren't officially mentioned to exist at all.
+
+Trying to read these registers on a PSone returns Data=C0h for 06h, 09h, 10h,
+15h-16h, 18h-1Fh, and Data=FFh for 14h, and Data=DEh for 17h.
+
+08h,13h-15h,18h,1Ah,1Ch-1Fh - Reserved (W)
+
+| 0-7 Reserved (should be 00h) (or don't write at all)
+
+Of these, 09h,13h-15h,18h,1Ah are officially unused/reserved. And addresses
+1Ch-1Fh aren't officially mentioned to exist at all.

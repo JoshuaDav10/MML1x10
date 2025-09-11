@@ -1,0 +1,41 @@
+MIPS INSTRUCTION SET REFERENCE - INSTRUCTION IS UNPREDICTABLE.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: instruction is UNPREDICTABLE.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 3390 characters
+Lines: 32
+================================================================================
+
+instruction is UNPREDICTABLE.
+                  If one of the values is an SNaN, or cond3 is set and at least one of the values is a QNaN, an Invalid Operation condi-
+                  tion is raised and the Invalid Operation flag is set in the FCSR. If the Invalid Operation Enable bit is set in the FCSR,
+                  no result is written and an Invalid Operation exception is taken immediately. Otherwise, the Boolean result is written
+                  into condition code CC.
+                  There are four mutually exclusive ordering relations for comparing floating point values; one relation is always true
+                  and the others are false. The familiar relations are greater than, less than, and equal. In addition, the IEEE floating
+                  point standard defines the relation unordered, which is true when at least one operand value is NaN; NaN compares
+                  unordered with everything, including itself. Comparisons ignore the sign of zero, so +0 equals -0.
+                  The comparison condition is a logical predicate, or equation, of the ordering relations such as less than or equal,
+                  equal, not less than, or unordered or equal. Compare distinguishes among the 16 comparison predicates. The Bool-
+                  ean result of the instruction is obtained by substituting the Boolean value of each ordering relation for the two FP val-
+                  ues in the equation. If the equal relation is true, for example, then all four example predicates above yield a true
+                  result. If the unordered relation is true then only the final predicate, unordered or equal, yields a true result.
+                  Logical negation of a compare result allows eight distinct comparisons to test for the 16 predicates as shown in . Each
+                  mnemonic tests for both a predicate and its logical negation. For each mnemonic, compare tests the truth of the first
+                  predicate. When the first predicate is true, the result is true as shown in the “If Predicate Is True” column, and the sec-
+                  ond predicate must be false, and vice versa. (Note that the False predicate is never true and False/True do not follow
+                  the normal pattern.)
+                  The truth of the second predicate is the logical negation of the instruction result. After a compare instruction, test for
+                  the truth of the first predicate can be made with the Branch on FP True (BC1T) instruction and the truth of the second
+                  can be made with Branch on FP False (BC1F).
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                                                      85
+
+                                     Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+Floating Point Compare (cont.)                                                                                           C.cond.fmt
+
+           Table 3-25 shows another set of eight compare operations, distinguished by a cond3 value of 1 and testing the same 16
+           conditions. For these additional comparisons, if at least one of the operands is a NaN, including Quiet NaN, then an
+           Invalid Operation condition is raised. If the Invalid Operation condition is enabled in the FCSR, an Invalid Operation

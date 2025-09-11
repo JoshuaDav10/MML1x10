@@ -1,0 +1,43 @@
+PSXSPX SPECIFICATIONS - REGISTERS 0,1,2,4,10 CONTROL VIRTUAL MEMORY ON SOME MIPS PROCESSORS (BUT
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Registers 0,1,2,4,10 control virtual memory on some MIPS processors (but
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1246 characters
+Lines: 34
+================================================================================
+
+Registers 0,1,2,4,10 control virtual memory on some MIPS processors (but
+there's none such in the PSX), and Registers 32..63 (aka "control registers")
+aren't used in any MIPS processors. Trying to read any of these registers
+causes a Reserved Instruction Exception (excode=0Ah).
+
+cop0cmd=10h - RFE
+
+Return from exception.
+
+cop0cmd=01h,02h,06h,08h - TLBR,TLBWI,TLBWR,TLBP
+
+The PSX supports only one cop0cmd (cop0cmd=10h aka RFE). Trying to execute the
+TLBxx opcodes causes a Reserved Instruction Exception (excode=0Ah).
+
+cop0cmd=00h,03h..05h,07h,09h..0Fh,11h..1Fh - Unused
+
+These are unused commands (unknown if they have any function). They can be
+executed without triggering exceptions (unlike RFE, that works even in User
+Mode with COP0 disabled).
+
+cop0cmd=20h..1FFFFFFh - mirrors of cop0cmd=00h..1Fh
+
+Mirrors, the upper 16bit of the 25bit command number are ignored.
+
+jf/jt cop0flg,dest - conditional cop0 jumps
+
+mov [mem],cop0reg / mov cop0reg,[mem] - coprocessor cop0 load/store
+
+These opcodes are not implemented on PSX. However, there are some glitches when
+trying to execute them:
+
+When SR.bit28=1, doesn't trigger any exception, but doesn't do anything useful:
+
+| jump condition seems to be always false (jf jumps always, jt jumps never)

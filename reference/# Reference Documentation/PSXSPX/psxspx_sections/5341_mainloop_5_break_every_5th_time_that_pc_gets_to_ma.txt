@@ -1,0 +1,48 @@
+PSXSPX SPECIFICATIONS - MAINLOOP, ..5 --> BREAK EVERY 5TH TIME THAT PC GETS TO MAINLOOP (TIMER)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: mainloop, ..5 --> break every 5th time that pc gets to mainloop (timer)
+Chunked: Wed Sep 10 03:34:25 PM CDT 2025
+Size: 1469 characters
+Lines: 39
+================================================================================
+
+mainloop, ..5 --> break every 5th time that pc gets to mainloop (timer)
+
+The conditions are verified BEFORE the instruction is executed.
+
+| Operators: Operands: Timer Identifier:
+== = & n [nn] r ..
+!= <> = !& nn [rr] rr
+
+Operators == and != are pseudonyms for = and <>
+
+Global Conditional Breakpoints
+
+[XXX this isn't yet fully implemented in no$psx]
+
+Global breaks are working exactly as above local breaks, except that the
+condition is verfied after executed opcode. In the Ctrl+B window,
+enter a condition (without specifying a address). Examples:
+
+| r1 = 0 --> break whenever register r1 becomes zero
+[4000006]>20 --> break whenever VCOUNT becomes greater than 20h
+
+The emulator stops only when a condition changes from false to true, ie. it
+does not permanently break after each opcode if the condition stays true for a
+while.
+
+The Break Window
+
+The lower left window of the debug screen is shared for Data and Breakpoints,
+use TAB-key in this window to switch between Data and Break windows. The Break
+window lists all defined breakpoints, DEL-key can be used to delete a selected
+breakpoint. When pressing ENTER on a local breakpoint, the code window will be
+moved to the break address, this works also for bookmarks (that are
+non-functional 'dummy' breaks, defined by Alt+B key in code window).
+
+No$psx Debugger - General Debug Features
+
+Cursor Left/Right - Follow and Undo Follow
+
+Cursor Right in the code window moves the code window to the jump-target of the

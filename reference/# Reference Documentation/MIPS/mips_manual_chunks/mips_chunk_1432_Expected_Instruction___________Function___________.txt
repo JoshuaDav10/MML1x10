@@ -1,0 +1,43 @@
+MIPS INSTRUCTION SET REFERENCE - EXPECTED INSTRUCTION           FUNCTION            EQUIVALENT INSTRUCTION
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Expected Instruction           Function            Equivalent Instruction
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1733 characters
+Lines: 34
+================================================================================
+
+Expected Instruction           Function            Equivalent Instruction
+                                   ZEB rx,ry           Zero-Extend Byte          ANDI rx,ry,0xFF
+                                   ZEH rx,ry         Zero-Extend Halfword       ANDI rx,ry,0xFFFF
+
+
+
+
+250                                                            MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                              Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+SEH
+
+
+
+
+  Sign-Extend Halfword                                                                                                 SEH
+
+      31                   26 25            21 20             16 15             11 10                 6   5              0
+            SPECIAL3                 0                                                    SEH                 BSHFL
+                                                       rt                rd
+             011111                00000                                                 11000                100000
+                6                   5                  5                 5                  5                   6
+
+           Format:    seh rd, rt                                                                          MIPS32 Release 2
+
+           Purpose:
+           To sign-extend the least significant halfword of GPR rt and store the value into GPR rd.
+
+           Description: rd ← SignExtend(rt15..0)
+           The least significant halfword from GPR rt is sign-extended and stored in GPR rd.
+
+           Restrictions:
+           In implementations prior to Release 2 of the architecture, this instruction resulted in a Reserved Instruction Excep-
+           tion.

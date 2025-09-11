@@ -1,0 +1,68 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION FLAC AUDIO
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression FLAC audio
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1808 characters
+Lines: 60
+================================================================================
+
+CDROM File Compression FLAC audio
+
+FLAC is a lossless audio compression format.
+
+FLAC file format
+
+| 000h 4 FLAC ID ("fLaC")
+004h .. Metadata block with STREAMINFO
+... .. Metadata block(s) with further info (optional)
+... .. FLAC Frame(s)
+
+The whole file can be read as big-endian bitstream (although bitstream reading
+is mainly required for the Frame bodies) (the Frame header/footer and Metadata
+blocks are byte-aligned and can be read as byte-stream).
+
+Metadata Block format:
+
+| 1bit Last Metadata block flag (1=Last, 0=More blocks follow)
+7bit Block Type (see below)
+24bit Size of following metadata in bytes (N)
+N*8bit Metadata (depending on Type)
+
+Metadata Block Types:
+
+| 00h = STREAMINFO
+01h = PADDING
+02h = APPLICATION
+03h = SEEKTABLE
+04h = VORBIS_COMMENT
+05h = CUESHEET
+06h = PICTURE
+.. = Reserved
+7Fh = Invalid (to avoid confusion with a frame sync code)
+
+FLAC METADATA_BLOCK_STREAMINFO
+
+| 16bit Minimum Block size in samples (10h..FFFFh) ;\min=max implies
+16bit Maximum Block size in samples (10h..FFFFh) ;/fixed blocksize
+24bit Minimum Frame size in bytes (or 0=Unknown)
+24bit Maximum Frame size in bytes (or 0=Unknown)
+20bit Sample rate in Hertz (01h..9FFF6h = 1..655350 Hz)
+3bit Number of channels-1 (00h..07h = 1..8 channels)
+5bit Bits per sample-1 (03h..1Fh = 4..32 bits) (max 24bit implemented)
+36bit Total number of samples per channel (or 0=Unknown)
+128bit MD5 on unencoded audio data (...in which format? endian/interleave?)
+
+More info
+
+The FLAC file format is documented here:
+
+| https://xiph.org/flac/format.html
+
+Above requires new browser with strng https, alternately try the link below:
+
+| http://web.archive.org/web/20201208111432/https://xiph.org/flac/format.html
+
+Source code for a compact FLAC decoder can be found here:
+
+| https://www.nayuki.io/page/simple-flac-implementation

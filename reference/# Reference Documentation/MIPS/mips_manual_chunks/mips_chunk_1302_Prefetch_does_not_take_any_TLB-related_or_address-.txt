@@ -1,0 +1,23 @@
+MIPS INSTRUCTION SET REFERENCE - PREFETCH DOES NOT TAKE ANY TLB-RELATED OR ADDRESS-RELATED EXCEPTIONS UNDER ANY CIRCUMSTANCES.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Prefetch does not take any TLB-related or address-related exceptions under any circumstances.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1246 characters
+Lines: 14
+================================================================================
+
+Prefetch does not take any TLB-related or address-related exceptions under any circumstances.
+
+        Programming Notes:
+        Prefetch cannot prefetch data from a mapped location unless the translation for that location is present in the TLB.
+        Locations in memory pages that have not been accessed recently may not have translations in the TLB, so prefetch
+        may not be effective for such locations.
+        Prefetch does not cause addressing exceptions. It does not cause an exception to prefetch using an address pointer
+        value before the validity of a pointer is determined.
+        It is implementation dependent whether a Bus Error or Cache Error exception is reported if such an error is detected
+        as a byproduct of the action taken by the PREF instruction. Typically, this only occurs in systems which have
+        high-reliability requirements.
+        Prefetch operations have no effect on cache lines that were previously locked with the CACHE instruction.
+        Hint field encodings whose function is described as “streamed” or “retained” convey usage intent from software to
+        hardware. Software should not assume that hardware will always prefetch data in an optimal way. If data is to be truly

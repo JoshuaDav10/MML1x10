@@ -1,0 +1,112 @@
+PSXSPX SPECIFICATIONS - CDROM FILE VIDEO TEXTURE/BITMAP (PCX)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Video Texture/Bitmap (PCX)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 4227 characters
+Lines: 104
+================================================================================
+
+CDROM File Video Texture/Bitmap (PCX)
+
+PC Paintbrush .PCX files (ZSoft)
+
+Default extension is .PCX (some tools did use .PCX for the "main" image, and
+.PCC for smaller snippets that were clipped/cropped/copied from from a large
+image).
+
+| 000h 1 File ID (always 0Ah=PCX/ZSoft)
+001h 1 Version (0,2,3,4,5)
+002h 1 Compression (always 01h=RLE) (or inofficial: 00h=Uncompressed)
+003h 1 Bits per Pixel (per Plane) (1, 2, 4, or 8)
+004h 2 Window X1 ;\
+006h 2 Window Y1 ; Width = X2+1-X1
+008h 2 Window X2 ; Height = Y2+1-Y1
+00Ah 2 Window Y2 ;/
+00Ch 2 Horizontal Resolution in DPI ;\often square, but can be also zero,
+00Eh 2 Vertical Resolution in DPI ;/or screen size, or other values
+010h 30h EGA/VGA Palette (16 colors, 3-byte per color = R,G,B) (or garbage)
+010h 1 CGA: Bit7-4=Background Color (supposedly IRGB1111 ?)
+013h 1 CGA: Bit7:0=Color,1=Mono,Bit6:0=Yellow,1=White,Bit5:0=Dim,1=Bright
+014h 1 Paintbrush IV: New CGA Color1 Green ;\weird new way to encode CGA
+015h 1 Paintbrush IV: New CGA Color1 Red ;/palette in these two bytes
+040h 1 Reserved (00h) (but is 96h in animals.pcx)
+041h 1 Number of color planes (1=Palette, 3=RGB, or 4=RGBI)
+042h 2 Bytes per Line (per plane) (must be N*2) (=(Width*Bits+15)/16*2)
+044h 2 PaletteInfo? (0000h/xxxxh=Normal, 0001h=Color/BW, 0002h=Grayscale)
+046h 2 Horizontal screen size in pixels ;\New fields, found only
+048h 2 Vertical screen size in pixels ;/in Paintbrush IV/IV Plus
+04Ah 36h Reserved (zerofilled) (or garbage in older files, custom in MGS)
+080h .. Bitmap data (RLE compressed)
+... 1 VGA Palette ID (0Ch=256 colors) ;\when 8bpp
+.. 300h VGA Palette (256 colors, 3-byte per color = R,G,B) ;/
+
+Decoding PCX files is quite a hardcore exercise due to a vast amount of
+versions, revisions, corner cases, incomplete & bugged specifications, and
+inofficial third-party glitches.
+
+PCX Versions
+
+| 00h = Version 2.5 whatever ancient stuff
+02h = Version 2.8 with custom 16-color palette
+03h = Version 2.8 without palette (uses fixed CGA/EGA palette)
+04h = Version ?.? without palette (uses fixed CGA/EGA palette)
+05h = Version 3.0 with custom 16-color or 256-color palette or truecolor
+
+NOTE: Version[01h]=05h with PaletteInfo[44h]=0001h..0002h is Paintbrush IV?
+
+Known PCX Color Depths
+
+| planes=1, bits=1 P1 ;1bit, HGC 2 color (iview and paint shop pro 2)
+planes=1, bits=2 P2 ;2bit, CGA 4 color (with old/new palette info)
+planes=3, bits=1 RGB111 ;3bit, EGA 8 color (official samples) ;\version
+planes=4, bits=1 IRGB1111 ;4bit, EGA 16 color (paint shop pro 2) ;/03h..04h
+planes=1, bits=4 P4 ;4bit, BMP 16 color (iview)
+planes=1, bits=8 P8 ;8bit, VGA 256 color palette
+planes=1, bits=8 I8 ;8bit, VGA 256 level grayscale (gmarbles.pcx)
+planes=3, bits=8 BGR888 ;24bit, truecolor (this is official 24bit format)
+;planes=1, bits=24 BGR888 ? ;24bit, reportedly exists? poor compression
+;planes=4, bits=4 ABGR4444 ;16bit, wikipedia-myth? unlikely to exist
+;planes=4, bits=8 ABGR8888 ;32bit, truecolor+alpha (used in abydos.dcx\*)
+
+Width and Height
+
+These are normally calculated as so:
+
+| Width = X2+1-X1 ;width for normal files
+Height = Y2+1-Y1 ;height for normal files
+
+However, a few PCX files do accidentally want them to be calculated as so:
+
+| Width = X2-X1 ;width for bugged files
+Height = Y2-Y1 ;height for bugged files
+
+Files with bugged width can be (sometimes) detected as so:
+
+| (Width*Bits+15)/16*2) > BytesPerLine
+
+Files with bugged height can be detected during decompression:
+
+| BeginOfLastScanline >= Filesize (or Filesize-301h for files with palette)
+
+Bugged sample files are SAMPLE.DCX, marbles.pcx and gmarbles.pcx. RLE
+decompression may crash when not taking care of such files.
+
+Color Planes and Palettes
+
+The official ZSoft PCX specs are - wrongly - describing planes as:
+
+| plane0 = red ;\
+plane1 = green ; this is WRONG, NONSENSE, does NOT exist
+plane2 = blue ;
+plane3 = intensity ;/
+
+The 8-color and 16-color EGA images are actually using plane0,1,2,(3) as
+bit0,1,2,(3) of the EGA color number; which implies plane0=blue (ie. red/blue
+are opposite of the ZSoft document).
+
+The truecolor and truecolor+alpha formats have plane0..2=red,green,blue (as
+described by ZSoft), but they don't have any intensity plane (a few files are
+using plane3=alpha).
+
+Mono 2-Color Palette

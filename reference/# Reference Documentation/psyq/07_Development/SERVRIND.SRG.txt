@@ -1,0 +1,7 @@
+PSYQ DOCUMENTATION - CONF/SCEE/98July/SERVRIND.SRG.html
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/CONF/SCEE/98July/SERVRIND.SRG.html
+Converted: Wed Sep 10 02:47:42 PM CDT 2025
+================================================================================
+
+REGEDIT4 # ======================================================================= # Cornolio Viewer Registration File # Owner: PaulWa # FileName: servrind.srg # Install: #====================================================================== # VersionIndependentProgID stuff #====================================================================== # ********* ENTRIES FOR PowerPoint 8 Pres SERVER *********** #====================================================================== [HKEY_CLASSES_ROOT\.ppt] @="PowerPoint.Show.8" [HKEY_CLASSES_ROOT\PowerPoint.Show] @="Microsoft PowerPoint Viewer" [HKEY_CLASSES_ROOT\PowerPoint.Show\CLSID] @="{64818D10-4F9B-11CF-86EA-00AA00B929E8}" [HKEY_CLASSES_ROOT\PowerPoint.Show\CurVer] @="PowerPoint.Show.8"

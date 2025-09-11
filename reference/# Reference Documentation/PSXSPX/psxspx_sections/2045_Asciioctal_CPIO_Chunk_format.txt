@@ -1,0 +1,123 @@
+PSXSPX SPECIFICATIONS - ASCII/OCTAL CPIO CHUNK FORMAT:
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Ascii/octal CPIO Chunk format:
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 4356 characters
+Lines: 115
+================================================================================
+
+Ascii/octal CPIO Chunk format:
+
+| 000h 6 octal 18bit ID "070707" (=71C7h)
+006h 6 octal 18bit dev ;\unique file id
+00Ch 6 octal 18bit ino ;/within archive
+012h 6 octal 18bit Mode (file attributes)
+018h 6 octal 18bit User ID of owner
+01Eh 6 octal 18bit Group ID
+024h 6 octal 18bit nlink (related to duplicated dev/ino?)
+02Ah 6 octal 18bit rdev (system-defined info on char/blk devices)
+030h 11 octal 33bit File modification time
+03Bh 6 octal 18bit Filename size (including ending 00h)
+041h 11 octal 33bit Filesize
+04Ch .. text Filename, terminated by 00h ("path/filename",00h)
+... .. binary File data (Filesize bytes)
+
+Ascii/hex CPIO Chunk format:
+
+| 000h 6 hex 24bit ID "070701"=Without Checksum, or "070702"=With Checksum
+006h 8 hex 32bit ino (does that 32bit value include 16bit "dev"?)
+00Eh 8 hex 32bit mode
+016h 8 hex 32bit uid
+01Eh 8 hex 32bit gid
+026h 8 hex 32bit nlink
+02Eh 8 hex 32bit mtime
+036h 8 hex 32bit Filesize
+03Eh 8 hex 32bit devmajor
+046h 8 hex 32bit devminor
+04Eh 8 hex 32bit rdevmajor
+056h 8 hex 32bit rdevminor
+05Eh 8 hex 32bit Filename size (including ending 00h)
+066h 8 hex 32bit Checksum, sum of all bytes in file, zero when ID=070701
+06Eh .. text Filename, terminated by 00h ("path/filename",00h)
+... .. binary Zeropadding to 4-byte boundary
+... .. binary File data (Filesize bytes)
+... .. binary Zeropadding to 4-byte boundary
+
+CPIO numeric values are weird octal ASCII strings (eg. 6-byte "000123"), but,
+unlike TAR, without extra oddities like spaces or end-bytes.
+
+https://www.systutorials.com/docs/linux/man/5-cpio/
+
+RPM Format (1997) (BIG-ENDIAN)
+
+RPM files contain Linux installation packages. The RPM does basically contain a
+CPIO archive bundled with additional header/records with installation
+information.
+
+| 000h 60h File Header (officially called "Lead" instead of "Header")
+060h .. Signature Record (contains "Header Record" in "Signature format")
+... .. Padding (to 8-byte boundary)
+... .. Info Record (called "Header" and also uses "Signature format")
+... .. Archive file (usually a GZIP compressed CPIO) (called "Payload")
+
+File Header (aka Lead) (60h bytes):
+
+| 000h 4 File ID (EDh,ABh,EEh,DBh) (aka octal string "\355\253\356\333")
+004h 1 Major version (3)
+005h 1 Minor version (0)
+006h 2 Type (0=Binary Package, 1=Source Package)
+008h 2 Architecture ID (defined in ISO/IEC 23360)
+00Ah 66 Package name, terminated by 00h
+04Ch 2 Operating System ID (1)
+04Eh 2 Signature Type (5)
+050h 16 Reserved space (officially undefined, usually zerofilled)
+
+Signature/Info Records (10h+N*10h+SIZ bytes):
+
+| 000h 4 Record ID (8Eh,ADh,E8h,01h) (aka octal string "\216\255\350\001")
+004h 4 Reserved (zerofilled) (aka octal string "\000\000\000\000")
+008h 4 Number of Item List entries (N)
+00Ch 4 Size of Item Data (SIZ)
+010h N*10h Item List (4x32bit each: Tag, Type, Offset, Size)
+... SIZ Item Data (referenced via Offset/Size entries in above list)
+
+Item Type values:
+
+| 00h=NULL Not Implemented
+01h=CHAR Unknown, maybe unsigned 8bit (unaligned)
+02h=INT8 Unknown, maybe signed 8bit (unaligned)
+03h=INT16 Unknown, maybe signed 16bit (align2)
+04h=INT32 Unknown, maybe signed 323bit (align4)
+05h=INT64 Reserved, maybe signed 643bit (maybe align8)
+06h=STRING Variable, NUL terminated string (unaligned)
+07h=BIN Unknown, reportedly 1-byte size??? (unaligned)
+08h=STRING_ARRAY Variable, Sequence of NUL terminated strings (unaligned)
+09h=I18NSTRING Variable, Sequence of NUL terminated strings (unaligned)
+
+Item Tag values:
+
+| There are dozens of required & optional tag values defined.
+
+RPM source code packages are often bundled with a .spec file (inside of the
+CPIO archive), that .spec file contains source code in text format for creating
+the RPM header/records.
+
+File Extensions
+
+| Basic extensions:
+.cpio (CPIO)
+.pax (CPIO for MAC)
+.rpm (RPM installation package for RPM package manager)
+.spec (RPM source file for creating RPM header/records)
+.tar (TAR, tape archive)
+Double extensions (and short forms like tgz):
+.tgz short for .tar.gz (gzip)
+.tbz short for .tar.bz2 (bzip2)
+.txz short for .tar.xz (XZ)
+.tlz short for .tar.lz (Lzip) or .tar.lzma (LZMA_Alone)
+.tzst short for .tar.zst (zstandard)
+.tsz short for .tar.sz (Sunzip)
+.taz short for .tar.Z (nCompress or possibly some other compressed format)
+.tz short for .tar.Z (nCompress or possibly some other compressed format)
+.spm short for .src.rpm (RPM source code package)

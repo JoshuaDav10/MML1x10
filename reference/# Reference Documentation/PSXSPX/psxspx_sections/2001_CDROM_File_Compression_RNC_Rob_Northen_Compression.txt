@@ -1,0 +1,84 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION RNC (ROB NORTHEN COMPRESSION)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression RNC (Rob Northen Compression)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 3045 characters
+Lines: 76
+================================================================================
+
+CDROM File Compression RNC (Rob Northen Compression)
+
+Rob Northen compression
+
+Rob Northen compression (RNC) is a LZ/Huffman compression format used by
+various games for PC, Amiga, PSX, Mega Drive, Game Boy, SNES and Atari Lynx.
+
+Most RNC compressed files come in a standard 12h-byte header:
+
+| 000h 3 Signature ("RNC") (short for Rob Northen Computing compression)
+003h 1 Compression Method (01h or 02h)
+004h 4 Size of Uncompressed Data ;big-endian
+008h 4 Size of Compressed Data (SIZ) ;big-endian
+00Ch 2 CRC16 on Uncompressed Data (with initial value 0000h) ;big-endian
+00Eh 2 CRC16 on Compressed Data (with initial value 0000h) ;big-endian
+010h 1 Leeway (difference between compressed and uncompressed data in
+largest pack chunk, if larger than decompressed data)
+011h 1 Number of pack chunks
+012h SIZ Compressed Data
+... (..) Zeropadding to 800h-byte boundary-4 ;\as so in PSX Heart of Darkness
+... (4) Unknown ;/
+
+The compressed data consists of interleaved bit- and byte-streams, the first 2
+bits of the bit stream are ignored.
+
+RNC Method 1 - with custom Huffman trees
+
+The bit-stream is read in 16bit units (the 1st bit being in bit0 of 1st byte).
+
+| Each pack chunk contains the following:
+* 3 Huffman trees (one for literal data sizes, one for distance values,
+and one for length values) in the bit stream. These consist of:
+o A 5 bit value for the amount of leaf nodes in the tree
+o 4 bit values for each node representing their bit depth.
+* One 16 bit value in the bitstream for the amount of subchunks in the
+pack chunk.
+* The subchunk data, which contains for each subchunk:
+o A Huffman code value from the first tree in the bit stream for the
+amount of literals in the byte stream.
+o Literals from the byte stream.
+o A Huffman code from the bit stream that represents the distance - 1
+of a distance/length pair.
+o A Huffman code from the bit stream that represents the length - 2
+of a distance/length pair.
+
+Unknown how that works exactly (see source code for details), unknown if method
+1 was used on PSX.
+
+RNC Method 2 - with hardcoded Huffman trees
+
+The bit-stream is read in 8bit units (the 1st bit being in bit7).
+
+| 0 + Byte(DATA[1]) Copy 1 Byte from Source
+1000 + Dist + Byte(X) Copy 4 Bytes from Dest-(Dist+X+1)
+10010 + Dist + Byte(X) Copy 6 Bytes from Dest-(Dist+X+1)
+10011 + Dist + Byte(X) Copy 7 Bytes from Dest-(Dist+X+1)
+1010 + Dist + Byte(X) Copy 5 Bytes from Dest-(Dist+X+1)
+10110 + Dist + Byte(X) Copy 8 Bytes from Dest-(Dist+X+1)
+10111 + nnnn + Byte(DATA[12..72]) Copy nnnn*4+12 Bytes from Source
+110 + Byte(X) Copy 2 Bytes from Dest-(X+1)
+1110 + Dist + Byte(X) Copy 3 bytes from Dest-(Dist+X+1)
+1111 + Byte(0) + 0 + zeropadding End of last pack chunk
+1111 + Byte(0) + 1 End of non-last pack chunk
+1111 + Byte(L) + Dist + Byte(X) Copy L+8 Bytes from Dest-(Dist+X+1) ;L>00h
+
+Dist values:
+
+| 0 = 0000h 1000 = 0200h
+110 = 0100h 1001 = 0300h
+111000 = 0C00h 101000 = 0800h
+111001 = 0D00h 101001 = 0900h
+11101 = 0600h 10101 = 0400h
+111100 = 0E00h 101100 = 0A00h
+111101 = 0F00h 101101 = 0B00h
+11111 = 0700h 10111 = 0500h

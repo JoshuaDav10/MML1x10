@@ -1,0 +1,48 @@
+MIPS INSTRUCTION SET REFERENCE - IMPROVEMENT BY SCHEDULING THE DIVIDE SO THAT OTHER INSTRUCTIONS CAN EXECUTE IN PARALLEL.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: improvement by scheduling the divide so that other instructions can execute in parallel.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 2296 characters
+Lines: 39
+================================================================================
+
+improvement by scheduling the divide so that other instructions can execute in parallel.
+
+        Historical Perspective:
+        In MIPS 1 through MIPS III, if either of the two instructions preceding the divide is an MFHI or MFLO, the result of
+        the MFHI or MFLO is UNPREDICTABLE. Reads of the HI or LO special register must be separated from subse-
+        quent instructions that write to them by two or more instructions. This restriction was removed in MIPS IV and
+        MIPS32 and all subsequent levels of the architecture.
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                                 123
+
+                           Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+DIV.fmt
+
+
+
+
+   Floating Point Divide                                                                                                    DIV.fmt
+
+          31                   26 25            21 20              16 15             11 10               6   5                  0
+                  COP1                                                                                               DIV
+                                        fmt                 ft                fs                 fd
+                 010001                                                                                            000011
+                    6                    5                  5                  5                 5                    6
+
+               Format:    DIV.S fd, fs, ft                                                                                MIPS32
+                          DIV.D fd, fs, ft                                                                                MIPS32
+
+               Purpose:
+               To divide FP values
+
+               Description: fd ← fs / ft
+               The value in FPR fs is divided by the value in FPR ft. The result is calculated to infinite precision, rounded according
+               to the current rounding mode in FCSR, and placed into FPR fd. The operands and result are values in format fmt.
+
+               Restrictions:
+               The fields fs, ft, and fd must specify FPRs valid for operands of type fmt; if they are not valid, the result is UNPRED-

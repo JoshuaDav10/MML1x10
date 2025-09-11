@@ -1,0 +1,56 @@
+PSXSPX SPECIFICATIONS - CLASSIC EGA HARDWARE DID ONLY USE THE UPPER 2BIT OF THE 8BIT VALUES (THAT, ONLY
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Classic EGA hardware did only use the upper 2bit of the 8bit values (that, only
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1868 characters
+Lines: 47
+================================================================================
+
+Classic EGA hardware did only use the upper 2bit of the 8bit values (that, only
+when having a special EGA monitor with support for more than 16 colors).
+
+256-Color VGA Palettes (version=05h)
+
+These have 1 plane with 8 bits. And a 256-color RGB palette with 3x8bit per
+R,G,B appended at end of file.
+
+The appended 256-color palette should normally exist only in 256-color images,
+some PCX tools are reportedly always appending the extra palette to all
+version=05h files (even for 2-color files).
+
+256-Level Grayscale Images (version=05h and [44h]=0002h)
+
+The most obvious and reliable way is to use a palette with grayscale RGB
+values. However, Paintbrush IV is explicetly implementing (or ignoring?) an
+obscure grayscale format with following settings:
+
+| [01h]=version=05h, and [44h]=0002h=grayscale
+
+That settings are used in a file called gmarbles.pcx (which does contain a
+256-color RGB palette with gray RGB values, ie. one can simply ignore the
+special settings, and display it as normal 256-color image).
+
+Default 16-color CGA/EGA Palettes
+
+| Color Name IRGB1111 RGB222 RGB888 Windows
+00h dark black 0000 000 000000 000000
+01h dark blue 0001 002 0000AA 000080
+02h dark green 0010 020 00AA00 008000
+03h dark cyan 0011 022 00AAAA 008080
+04h dark red 0100 200 AA0000 800000
+05h dark magenta 0101 202 AA00AA 800080
+06h dark yellow (brown) 0110 210!! AA5500!! 808000
+07h dark white (light gray) 0111 222 AAAAAA C0C0C0!!
+08h bright black (dark gray) 1000 111 555555 808080!!
+09h bright blue 1001 113 5555FF 0000FF
+0Ah bright green 1010 131 55FF55 00FF00
+0Bh bright cyan 1011 133 55FFFF 00FFFF
+0Ch bright red 1100 311 FF5555 FF0000
+0Dh bright magenta 1101 313 FF55FF FF00FF
+0Eh bright yellow 1110 331 FFFF55 FFFF00
+0Fh bright white 1111 333 FFFFFF FFFFFF
+
+Some notes on number of colors:
+
+| CGA supports 16 colors in text mode (but only max 4 colors in graphics mode).

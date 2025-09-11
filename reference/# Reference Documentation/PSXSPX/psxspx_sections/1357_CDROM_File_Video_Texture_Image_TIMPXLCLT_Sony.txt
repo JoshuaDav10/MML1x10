@@ -1,0 +1,44 @@
+PSXSPX SPECIFICATIONS - CDROM FILE VIDEO TEXTURE IMAGE TIM/PXL/CLT (SONY)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Video Texture Image TIM/PXL/CLT (Sony)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1382 characters
+Lines: 35
+================================================================================
+
+CDROM File Video Texture Image TIM/PXL/CLT (Sony)
+
+TIM/PXL/CLT are standard formats from Sony's devkit. TIM is used by many PSX
+games.
+
+| .TIM contains Pixel data, and (optional) CLUT data ;-all in one file
+.PXL contains Pixel data only ;\in two separate files
+.CLT contains CLUT data only (if any) ;/
+
+TIM Format
+
+| 000h 1 File ID (always 10h=TIM)
+001h 1 Version (always 00h)
+002h 2 Reserved (always 0000h) (or 1 or 2 for Compressed TIM, see below)
+004h 4 Flags (bit0-2=Type; see below, bit3=HasCLUT, bit4-31=Reserved/zero)
+... .. Data Section for CLUT (Palette), only exists if Flags.bit3=1, HasCLUT
+... .. Data Section for Pixels (Bitmap/Texture)
+
+The Type in Flags.bit0-2 can be 0=4bpp, 1=8bpp, 2=16bpp, 3=24bpp, 4=Mixed.
+
+NFL Blitz 2000 (MagDemo26: B2000\DATA\ARTD_G.BIN) does additionally use Type
+5=8bit.
+
+The Type value value is only a hint on how to view the Pixel data (the data is
+copied to VRAM regardless of the type; 4=Mixed is meant to indicate that the
+data contains different types, eg. both 4bpp & 8bpp textures).
+
+Type 3=24bpp is quite rare, but does exist (eg. Colony Wars (MagDemo02:
+CWARS\GAME.RSC\DEMO.TIM).
+
+The format of the CLUT and Pixel Data Section(s) is:
+
+| 000h 4 Size of Data Section (Xsiz*2*Ysiz+0Ch) ;maybe rounded to 4-byte?
+004h 4 Destination Coord (YyyyXxxxh) ;Xpos counted in halfwords
+008h 4 Width+Height (YsizXsizh) ;Xsiz counted in halfwords

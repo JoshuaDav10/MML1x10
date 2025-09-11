@@ -1,0 +1,230 @@
+PSYQ DOCUMENTATION - TECHNOTE/Ds_servc.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/TECHNOTE/Ds_servc.pdf
+Converted: Wed Sep 10 02:47:29 PM CDT 2025
+================================================================================
+
+        SCEE Developer Support
+                  Overview of services provided
+
+
+
+                 Sony Computer Entertainment Europe
+                             Developer Support Group
+                            Version: 3.1 - 24 June 1997
+
+
+
+
+                                 Confidential Information of Sony
+
+This document contains confidential and restricted information and is covered by the terms of your Non-
+Disclosure Agreement.
+
+All information contained herein is subject to change without notice. Sony Computer Entertainment Europe
+accepts no responsibility for any inadvertent errors, omissions or misprints contained in this document.
+
+This Guide is for information purposes only. Its contents do not constitute any change to contractual
+arrangements between SCEE and individual Developers or to SCEE's Specifications & Procedures manual.
+     SCEE Developer Support                                                         Confidential
+
+1.        Developer Support
+     Developer Support provide an extensive range of services to the hundreds of Licensed
+     PlayStation™ Developers throughout the SCEE region, as well as liaising with Developers in other
+     territories who wish to be published within the SCEE market.
+     Our commitment encompasses the full lifecycle of games creation - from advice and guidance to
+     prospective developers to last minute "Hot-line" support for titles being submitted for release.
+
+1.1. Who Can Receive Support?
+     All of the services provided by SCEE Developer support are available to licensed developers (i.e.
+     LDA signatories) who have licensed a PlayStation™ “ development kit” either directly from SCEE,
+     or via a third party (after notifying SCEE).
+     (In addition, we can also provide support to Playstation™ developers from other territories, with
+     the proviso that they are also local signatories of an SCEE LDA, in addition to an additional
+     “ support” agreement.)
+
+1.2. What Services Are Available?
+     Developer Support is steadily working to increase the level of services available to Playstation™
+     Developers:
+     Key services include:
+        24-hour Web site & FAX access, allowing Licensed Developers access to the latest tools and
+         documentation, in addition to specialist advice. Web site accounts are available for each
+         developer site - the initial account being created upon the licensing for the first “ development
+         kit” .
+        Specialist Documentation and sample code written in-house.
+        Annual “ PlayStation™ Developer Conferences” (although this may be replaced by a
+         RoadShow for ’97).
+        Liaison with PlayStation™ R&D (in Japan) and other suppliers, to provide a single point of
+         contact for all issues related to development.
+        A product co-ordination group, to manage SCEE developer Hardware and Software stock
+         levels, creating an efficient and secure ordering service, and providing speedy replacement of
+         damaged or faulty systems to ensure that development can continue.
+        Quarterly Newsletters. (Started September ’95).
+        E-mail access: dev_support@interactive.sony.com. (Started November ’95).
+        Regular “ FAX-shots” of important new information. (Started November ’95).
+        Creation of monthly “ cover-mounted” Demo Discs for the “ Official PlayStation™” Magazines
+         to help developers advertise new titles throughout Europe. (Started December ’95). Contact
+         SCEE’s Richard Milner for details.
+                                                                                                     rd
+        Creation of a new “ Tools & Technologies” team, tasked with creating new tools for the 3
+         party developer community. (Started January ’96).
+        Dedicated "Hot-line" for newly licensed developers, and for titles nearing completion (+44
+         (0)171 447 1680). (Started January ’96).
+        Distribution of new libraries, sample code etc. on CD-ROM (Since February ’96).
+        Distribution of locally developed Alias/Wavefront plugins (Since February ’96).
+        Dedicated Third Party Lab, providing developers access to a new “ Program Analyser” to fine
+         tune their titles at Sony’s offices.
+        A “ Web Site” targeted at new potential PlayStation™ developers (available Q1CY97)
+     SCEE Developer Support                                                        Confidential
+
+2.        The Development Environment
+2.1. Development System (Programmer Tools)
+2.1.1. PC Hardware
+     The majority of PlayStation™ development is centred around a standard PC. The recommended
+     minimum is a 488/66 with 16Mb RAM, CD-ROM Drive and a half a gigabyte of local disk space
+     (with a great deal more disk space, either local or accessible via a network, depending on the
+     complexity of your game).
+     We recommend that you choose a PC with a high quality motherboard and chip-set, to prevent
+     obscure hardware problems from blighting your development schedule. The table lists PCs which
+     we have tested:Error! Not a valid link.The PC should have room for at least one ISA and one full
+     length PCI board. You also require a television or colour monitor (ideally cable of displaying both
+     PAL and NTSC) with RCA/Phono or SCART inputs.
+     Our hardware tools are all both “ CE” approved - and thus can be used throughout the EC.
+     Please check with us if your country has additional electrical certification requirements.
+     At the moment our software tools are predominantly DOS/Windows based, but we are moving
+     towards Windows ‘95 support.
+
+2.1.2. The PlayStation™ Development Environment
+     The basis of the development environment is the PlayStation™ Development Board Set (DTL-
+     H2500). This is a full length PCI card that uses two slots at the rear of the PC to accommodate
+     the controller, TV Monitor and link cable I/O sockets.
+     The DTL-H2500 acts exactly like a standard consumer PlayStation (either PAL or NTSC), but in
+     addition provides the 8Mb main memory, high speed debugging capabilities and additional
+     features such as the ability to read/write to files on the PC that are essential for core
+     development.
+     In addition to the DTL-H2500, you will need to include in your order a Controller Box (DTL-
+     H2080) adapter, and purchase from your local PlayStation stockist standard consumer
+     Controllers, Memory cards etc.
+     In addition, you will probably wish to accurately emulate the PlayStation CD drive with a CD-ROM
+     Emulator Board (DTL-H2020). This is an ISA Card which requires the purchase of an additional
+     dedicated SCSI AV hard disk. (Any good, recent disk should be acceptable - e.g., Micropolis and
+     Fireball drives).
+     In the latter stages of development (if not before), you also need to start writing PlayStation
+     format CD-ROMS. You’ll need a CD Write Once Drive (Sony CDW-900E or CDU-9211S - the
+     former can be daisy chained together to allow multiple parallel writes). The burner is connected to
+     your PC via a SCSI interface an Adaptec AH-154x range of ISA SCSI card, and requires CD
+     Write Once Generator (DTL-S2035) software (which must run under Windows 3.11).
+     Test PlayStation™ CD-ROM “ Gold” discs with either a PlayStation™ CD-ROM Drive (DTL-
+     H2510) - an internal full-drive sized unit for your PC that works with the DTL-H2500 - and/or one
+     or more Debugging Stations. There are three types Debugging Stations: Japanese NTSC (DTL-
+     H1100), US NTSC (DTL-H1101) or UK PAL (DTL-H1102), which are identical to commercially
+     available machines but allow gold discs to be run.
+     You can use standard write-once Gold discs for development, but SCEE supply a range of Write
+     Once Mastering Discs for creating high quality masters that must be used for submission to QA
+     and Approvals.
+     (We recommend that you order these Mastering Discs at least a week in advance of your
+     submission date - and order twice what you anticipate to allow for last minute changes.)
+  SCEE Developer Support                                                         Confidential
+
+  For development of games that support connected PlayStation’s playing together, you can also
+  buy either a standard Link Cable (SCP-H1040) to connect Debugging Stations together (from
+  your local PlayStation stockist), or a Link Cable for DTL-H2500 (DTL-H2060) that will allow two
+  Development Board Sets to be linked.
+
+2.1.3. Software
+  The Development Board Set comes with the complete range of development software and
+  libraries required. Use the CD-ROM distributed with your development system as the basis for
+  your development, but review the WEB SITE to download any updates to the libraries and tools -
+  in particular H2500.ZIP for up to date support for the DTL-H2500.
+
+2.1.4. Documentation
+  SCEE provide a full set of documentation in PDF (Adobe Acrobat) format with the DTL-H2500
+  and additional manuals for the CD Emulator (hard copy), CD-ROM Generator (hard copy), Sound
+  Artist Tool and Graphic Artist Tool (hard copy). As with all things appertaining to PlayStation™
+  development, we recommend that you examine the Web site for new versions.
+  Documentation tends to change frequently, which is why we prefer the electronic versions -
+  however hard copies can be printed out at your site using the Acrobat Reader software provided
+  with the manuals.
+
+2.2. Sound and Graphic Artist Tools
+  In addition to the Development System, SCEE provides a range of tools that assist you in
+  creating the sound and graphic effects that match the power of the PlayStation.
+  The Graphic Artist Tool (DTL-K2) consists of a range of PC based and software hardware
+  (running on a PC to the same specification as the DTL-H2000), that is designed to run
+  independently of the Development System. One of the most useful programs is the Materials
+  Editor. This application uses the Graphics Artist board to view an RSD 3D object and apply .TIM
+  textures to selected polygons of the object.
+  The Sound Artist Tool (DTL-K3) provides hardware and software tools to independently perform
+  sound data conversions from popular formats such as SMF and AIFF to the SEQ PlayStation™
+  format and to emulate the sound capabilities of the PlayStation™. At the time of writing these
+  tools are only supported for the Apple Macintosh (Recommended: a 68040/PowerPC with 16Mb
+  memory and 100Mb hard disk with 1 Nubus slot) and an NTSC Television. A PCI version is
+  expected by the end of ’96.
+  Unlike the Development System, described above, you do not have to use Sony proprietary
+  Sound and Graphic Artist Tools to develop PlayStation™ games, you can use any tool that you
+  prefer. (There are some DOS sound utilities available from the Web site for those who don’t use
+  PlayStation™ Sound Artist Tools).
+  Later in ‘97 the DTL-H1500 will be introduced, allowing artists to develop directly with a debug
+  station from their workstations via the network.
+
+2.3. Hardware Problems
+  All hardware tools provided by SCEE are covered by a warranty agreement to ensure that if they
+  develop a hardware problem, you can continue development.
+  Simply fill in the appropriate Fault Report to help us pinpoint the problem (available on the Web
+  site as FAULTREP.ZIP), and FAX it through to our Production Co-ordination team.
+  Once they have verified your fault, they will contact you by telephone and request that the faulty
+  unit to be sent by courier (which should be returned with all its corresponding parts) and
+  exchange it for a loaned unit. Please ensure that the any reference to Sony on the packaging is
+  removed (to reduce theft)
+     SCEE Developer Support                                                          Confidential
+
+3.        Assistance Throughout the Lifecycle of a Title
+3.1. New Developers
+     New developers are provided with an individual account on the Developer Support Web site, and
+     sent a Welcome Pack, newsletters, and information on their account, and important technical
+     information to help get them started.
+
+3.2. Assistance during Development
+     The Developer Support Web site is SCEE’s primary means of communicating technical
+     information to Developers. News postings range from the latest library releases to information on
+     changes in PlayStation game console technology. SCEE recommends logging in at least once a
+     week.
+     Licensees are encouraged to post questions via private email to our "Developer Support"
+     address. Questions and comments can also be posted publicly in several different newsgroup
+     areas, organised by various topics relating to PlayStation™ game console technology.
+     In addition to the Web site, developers may also E-mail Developer Support
+     (dev_support@interactive.sony.com) or send us faxes (+44 (0)171 390 4324).
+     Finally, a “ hot-line” telephone support is available for new developers and those in the run up to
+     product submission.
+     Support includes aid with “ difficult” areas of development, by example code, and by reviewing
+     elements of the developers own code to confirm library problems. I’m afraid we cannot provide
+     detailed help on subjects such as the setting up the 3D environment of your game for which
+     there are many reference books.
+
+3.3. Assistance during Product Submission
+     SCEE Developer Support makes available the Quality Assurance standards developed for all of
+     the PlayStation territories, and helps arbitrate on behalf of Developers to help resolve issues with
+     both bugs and problems with the final steps of final product creation.
+     Developer Support also works with SCEE Account Managers to help smooth the submission
+     process in territories other than SCEE, by liaising with internal testing and approvals
+     departments.
+
+3.4. Assistance during Title Rollout
+     An important part of the sales of any product is related to effective marketing of new games.
+     Developer Support includes a “ Demo Disc” team, that can work with Developers to create
+     “ demo” versions of completed games, and make them available to Official PlayStation™
+     Magazines in the form of cover-mounted discs produced by the “ Demo Disc” team on a monthly
+     basis.
+     The availability of playable “ sample” programs of games available directly to consumers is new to
+     the games console market, and has led directly to increased sales for titles advertised in this
+     fashion.
+     Please review the demo discs standards on the CD, and contact SCEE’s Richard Milner for more
+     details on this subject.
+     SCEE Developer Support                                                        Confidential
+
+4.        New Software Tools
+     Software tools are distributed to users either during full upgrades (via floppy disc or CD-ROM) or
+     incrementally via the Web site.
+     CD-ROM based upgrades of tools, utilities, sample code and documentation are provided on a
+     quarterly basis, synchronised with the availability of new PlayStation™ libraries.
+

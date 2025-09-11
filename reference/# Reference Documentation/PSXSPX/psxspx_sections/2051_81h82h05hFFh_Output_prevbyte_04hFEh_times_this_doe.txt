@@ -1,0 +1,36 @@
+PSXSPX SPECIFICATIONS - 81H,82H,05H..FFH OUTPUT PREVBYTE 04H..FEH TIMES (THIS DOES SAVE MEMORY)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 81h,82h,05h..FFh Output prevbyte 04h..FEh times (this does save memory)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1253 characters
+Lines: 27
+================================================================================
+
+81h,82h,05h..FFh Output prevbyte 04h..FEh times (this does save memory)
+81h,xxh Output 81h, and then process xxh
+81h,padding Output 81h, at end of file (with padding<>82h)
+xxh Output xxh (unless it is 81h)
+Note: prevbyte is the previous output byte (ie. that stored at [dst-1]).
+If the uncompressed file ends with 81h, then the compressed file MUST contain
+a dummy padding byte (the RLE decoder in macutils sets a prefix flag upon 81h,
+but doesn't output it to dst until receiving the padding byte, which could be
+81h, or any value other than 82h).
+
+LZSSHUF Compression:
+
+| This uses LZSS-style flag bits (to distinguish between data and len/disp),
+combined with three Huffman trees (for data, len, disp values). The sliding
+window is 2000h bytes (8Kbytes). The format appears to be a simplified variant
+or LHA compression (but gets complicated by inventing weird corner cases).
+
+DecompressLzsshuf:
+
+| if uncompressed_size=0 then goto @@all_done ;-empty (eg. for unused forks)
+[dst+0000h..1FFCh]=uninitialized ;\
+[dst+1FFDh..1FFFh]=00h,00h,00h ; prefill sliding window
+dst+dst+2000h ;/
+@@block_lop:
+InitBitstreamMsbFirst(src)
+GetLzsshufTree(data_tree,100h) ;tree for data=00h..FFh
+GetLzsshufTree(len_tree,40h) ;tree for len=00h..3Fh (0,1 usually unused)

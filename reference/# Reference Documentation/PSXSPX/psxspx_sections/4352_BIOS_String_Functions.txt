@@ -1,0 +1,67 @@
+PSXSPX SPECIFICATIONS - BIOS STRING FUNCTIONS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: BIOS String Functions
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2250 characters
+Lines: 58
+================================================================================
+
+BIOS String Functions
+
+A(15h) - strcat(dst, src)
+
+Appends src to the end of dst. Searches the ending 00h byte in dst, and copies
+src to that address, up to including the ending 00h byte in src. Returns the
+incoming dst value. Refuses to do anything if src or dst is 00000000h (and
+returns 0 in that case).
+
+A(16h) - strncat(dst, src, maxlen)
+
+Same as "strcat", but clipped to "MaxSrc=(min(0,maxlen)+1)" characters, ie. the
+total length is max "length(dst)+min(0,maxlen)+1". If src is longer or equal to
+"MaxSrc", then only the first "MaxSrc" chars are copied (with the last byte
+being replaced by 00h). If src is shorter, then everything up to the ending 00h
+byte gets copied, but without additional padding (unlike as in "strncpy").
+
+A(17h) - strcmp(str1, str2)
+
+Compares the strings up to including ending 00h byte. Returns 0 if they are
+identical, or otherwise [str1+N]-[str2+N], where N is the location of the first
+mismatch, the two bytes are sign-expanded to 32bits before doing the
+subtraction. The function rejects str1/str2 values of 00000000h (and returns
+0=both are zero, -1=only str1 is zero, and +1=only str2 is zero).
+
+A(18h) - strncmp(str1, str2, maxlen)
+
+Same as "strcmp" but stops after comparing "maxlen" characters (and returns 0
+if they did match). If the strings are shorter, then comparision stops at the
+ending 00h byte (exactly as for strcmp).
+
+A(19h) - strcpy(dst, src)
+
+Copies data from src to dst, up to including the ending 00h byte. Refuses to
+copy anything if src or dst is 00000000h. Returns the incoming dst address (or
+0 if copy was refused).
+
+A(1Ah) - strncpy(dst, src, maxlen)
+
+Same as "strcpy", but clipped to "maxlen" characters. If src is longer or equal
+to maxlen, then only the first "maxlen" chars are copied (but without appending
+an ending 00h byte to dst). If src is shorter, then the remaining bytes in dst
+are padded with 00h bytes.
+
+A(1Bh) - strlen(src)
+
+Returns the length of the string up to excluding the ending 00h byte (or 0 when
+src is 00000000h).
+
+A(1Ch) - index(src, char)
+
+A(1Dh) - rindex(src, char)
+
+A(1Eh) - strchr(src, char) ;exactly the same as "index"
+
+A(1Fh) - strrchr(src, char) ;exactly the same as "rindex"
+
+Scans for the first (index) or last (rindex) occurence of char in the string.

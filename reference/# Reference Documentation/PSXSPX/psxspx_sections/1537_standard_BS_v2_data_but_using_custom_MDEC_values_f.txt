@@ -1,0 +1,51 @@
+PSXSPX SPECIFICATIONS - STANDARD BS V2 DATA, BUT USING CUSTOM MDEC VALUES FROM VLC0 CHUNK.
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: standard BS v2 data, but using custom MDEC values from VLC0 chunk.
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1615 characters
+Lines: 43
+================================================================================
+
+standard BS v2 data, but using custom MDEC values from VLC0 chunk.
+
+BS fraquant
+
+| X-Files (Fox Interactive/Hyperbole Studios, 1999)
+Eagle One: Harrier Attack (Infogrames/Glass Ghost, 2000)
+Blue's Clues: Blue's Big Musical (Mattel/Viacom/TerraGlyph, 2000)
+
+This replaces the 6bit quant value by a 16bit fixed-point quant value (done by
+manipulating the Quant Table instead of using QuantDC, apart from that extra
+feature it's internally using normal BS v1/v2/v3 decoding).
+
+BS iki
+
+| iki: Gran Turismo 1 (STREAM.DAT) ;\with uncommon STR header
+iki: Gran Turismo 2 (STREAM.DAT) ;/
+iki: Hot Shots Golf 2 / Everybody's Golf 2 (MagDemo31: HSG2\MINGOL2X.BIN)
+iki: Legend of Legaia (MagDemo20: LEGAIA\MOV\MV2.STR)
+iki: Legend of Dragoon (STR\*.IKI)
+iki: Omega Boost (MOVIE\*.IKI)
+iki: Um Jammer Lammy (MagDemo24: UJL\*.IKI) (retail: *\*.IKI and CM\*.IK2)
+iki: plus a dozen of japanese-only titles
+
+This might have been used between v2 and v3, iki is using uncommon BS headers
+and LZ compressed Quant/DC values (whilst v3 is using Huffman compressed DC
+values).
+
+Encrypted iki
+
+| Panekit - Infinitive Crafting Toy Case (first 13Mbyte in PANEKIT.STR)
+
+Same as normal iki, with some SWAP/ADD/XOR-encrytion in first 20h-bytes.
+
+Encrypted v2/v3
+
+| v3.xor used by Star Wars Masters of Teras Kasi (MagDemo03: MASTERS\*.STR)
+v2.xor supported (but not actually used) by Star Wars Masters (MagDemo03)
+v3.swap used by Star Wars Rebel Assault II (*.STR, *.SED, Stills)
+v2.swap used by Star Wars Rebel Assault II (*.STR)
+v3.swap used by BallBlazer Champions (*.STR)
+
+Same as normal v2/v3 with simple XOR-encryption or SWAP-encryption.

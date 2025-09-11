@@ -1,0 +1,39 @@
+PSXSPX SPECIFICATIONS - SLPH-00100 ASCII 'HANGING' FISHING CONTROLLER, CONTROLLER FOR FISHING GAMES
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: SLPH-00100 ASCII 'Hanging' Fishing Controller, controller for fishing games
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1262 characters
+Lines: 30
+================================================================================
+
+SLPH-00100 ASCII 'Hanging' Fishing Controller, controller for fishing games
+SLPH-00101 Optec Cockpit big shock
+SLPH-00102 ASCII Grip V (set for mars story)
+SLPH-00103 Hori Pad V2 (clear)
+SLPH-00104 Hori Pad V2 (clear blue)
+SLPH-00105 Hori Pad V2 (clear pink)
+SLPH-00106 Hori Pad V2 (black)
+SLPH-00107 Hori Compact Joystick (camouflage)
+SLPH-00108 Hori Rumble Digital Pad (clear blue)
+SLPH-00109 Hori Monoaural AV Cable
+SLPH-00110 ASCII Pad V2 (marble)
+SLPH-00111 ASCII Pad V2 (camouflage)
+SLPH-00112 ASCII Pad V3
+SLPH-00113 ASCII Pad V3 with cable reel
+SLPH-00114 ASCII Pad V3 with V2 (pearl white) bundle
+SLPH-00115 ASCII Pad V3 with V2 (pearl pink) bundle
+SLPH-00116 ASCII Pad V3 with V2 (pearl blue) bundle
+SLPH-00117 ASCII Pad V3 (blue) with V2 (pearl green) bundle
+SLPH-00118 Hori Pad V3
+SLPH-00119 Hori Pad V3 (white)
+SLPH-00120 Hori Analog Rumble Pad (clear pink)
+SLPH-00121 Hori Analog Rumble Pad (clear)
+SLPH-00122 Hori Analog Rumble Pad (clear blue)
+SLPH-00123 Hori Analog Rumble Pad (clear red)
+SLPH-00124 Hori Analog Rumble Pad (clear black)
+SLPH-00125 Hori Analog Rumble Pad (clear yellow)
+SLPH-00126 Namco Jogcon, digital pad, steering dial (SLEH-0020/SLUH-00059)
+SLPH-00127 ?
+SLPH-00128 ASCII stick ZERO3
+SLPH-00129 ASCII Pad V2 (wood grain pitch)

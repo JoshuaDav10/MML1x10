@@ -1,0 +1,26 @@
+MIPS INSTRUCTION SET REFERENCE - EXCEPTIONS:
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Exceptions:
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1101 characters
+Lines: 17
+================================================================================
+
+Exceptions:
+             None
+
+             Programming Notes:
+             SSNOP is intended for use primarily to allow the programmer control over CP0 hazards by converting instructions
+             into cycles in a superscalar processor. For example, to insert at least two cycles between an MTC0 and an ERET, one
+             would use the following sequence:
+
+                 mtc0       x,y
+                 ssnop
+                 ssnop
+                 eret
+             Based on the normal issues rules of the processor, the MTC0 issues in cycle T. Because the SSNOP instructions must
+             issue alone, they may issue no earlier than cycle T+1 and cycle T+2, respectively. Finally, the ERET issues no earlier
+             than cycle T+3. Note that although the instruction after an SSNOP may issue no earlier than the cycle after the
+             SSNOP is issued, that instruction may issue later. This is because other implementation-dependent issue rules may
+             apply that prevent an issue in the next cycle. Processors should not introduce any unnecessary delay in issuing

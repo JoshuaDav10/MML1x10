@@ -1,0 +1,51 @@
+MIPS INSTRUCTION SET REFERENCE - ORY ACCESS TYPE OCCUR IN THE INSTRUCTION STREAM; THIS IS KNOWN AS PROGRAM ORDER.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: ory access type occur in the instruction stream; this is known as program order.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 3633 characters
+Lines: 42
+================================================================================
+
+ory access type occur in the instruction stream; this is known as program order.
+      A parallel program has multiple instruction streams that can execute simultaneously on different processors. In mul-
+      tiprocessor (MP) systems, the order in which the effects of loads and stores are observed by other processors—the
+      global order of the loads and store—determines the actions necessary to reliably share data in parallel programs.
+      When all processors observe the effects of loads and stores in program order, the system is strongly ordered. On such
+      systems, parallel programs can reliably share data without explicit actions in the programs. For such a system, SYNC
+      has the same effect as a NOP. Executing SYNC on such a system is not necessary, but neither is it an error.
+      If a multiprocessor system is not strongly ordered, the effects of load and store instructions executed by one processor
+      may be observed out of program order by other processors. On such systems, parallel programs must take explicit
+      actions to reliably share data. At critical points in the program, the effects of loads and stores from an instruction
+      stream must occur in the same order for all processors. SYNC separates the loads and stores executed on the proces-
+      sor into two groups, and the effect of all loads and stores in one group is seen by all processors before the effect of
+      any load or store in the subsequent group. In effect, SYNC causes the system to be strongly ordered for the executing
+      processor at the instant that the SYNC is executed.
+      Many MIPS-based multiprocessor systems are strongly ordered or have a mode in which they operate as strongly
+      ordered for at least one memory access type. The MIPS architecture also permits implementation of MP systems that
+      are not strongly ordered; SYNC enables the reliable use of shared memory on such systems. A parallel program that
+      does not use SYNC generally does not operate on a system that is not strongly ordered. However, a program that does
+      use SYNC works on both types of systems. (System-specific documentation describes the actions needed to reliably
+      share data in parallel programs for that system.)
+      The behavior of a load or store using one memory access type is UNPREDICTABLE if a load or store was previ-
+      ously made to the same physical location using a different memory access type. The presence of a SYNC between the
+      references does not alter this behavior.
+
+
+
+
+280                                                       MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                        Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+Synchronize Shared Memory (cont.)                                                                                     SYNC
+
+        SYNC affects the order in which the effects of load and store instructions appear to all processors; it does not gener-
+        ally affect the physical memory-system ordering or synchronization issues that arise in system programming. The
+        effect of SYNC on implementation-specific aspects of the cached memory system, such as writeback buffers, is not
+        defined. The effect of SYNC on reads or writes to memory caused by privileged implementation-specific instruc-
+        tions, such as CACHE, also is not defined.
+
+            # Processor A (writer)
+            # Conditions at entry:
+            # The value 0 has been stored in FLAG and that value is observable by B
+            SW     R1, DATA        # change shared DATA value

@@ -1,0 +1,56 @@
+PSXSPX SPECIFICATIONS - DICTIONARY SIZE (DON'T CARE WHEN DECOMPRESSING THE WHOLE FILE TO MEMORY)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Dictionary size (don't care when decompressing the whole file to memory)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1886 characters
+Lines: 48
+================================================================================
+
+Dictionary size (don't care when decompressing the whole file to memory)
+Presence/Absence of EOS end code
+
+.lzma files (LZMA_Alone format from LZMA SDK)
+
+| 000h 1 Parameters (((pb*5)+lp)*9)+lc (usually 5Dh) ;\
+001h 4 Dictionary Size in bytes (usually 10000h) ; Header
+005h 8 Decompressed Size in bytes (or -1=Unknown) ;/
+00Dh 1 LZMA ignored 1st byte of bitstream (00h) ;\LZMA
+00Eh .. LZMA bitstream (with optional EOS end code) ;/
+
+The files are often starting with 5Dh,00h,00h. However, there's no real File
+ID, and there's no CRC, the format is rather unsuitable for file sharing.
+
+The end of the bitstream is indicated by EOS end code, or by Decompressed Size
+entry (or both).
+
+.lz files (LZIP)
+
+LZIP files can contain one or more "LZIP Members" plus optional extra data:
+
+| 000h .. LZIP Member(s)
+... .. Optional extra data (if any) (eg. zeropadding or some SHA checksum)
+
+Whereas, a normal .lz file contains only one "Member", without extra data.
+
+Each of the "LZIP Member(s)" is having following format:
+
+| 000h 5 ID and version ("LZIP",01h) ;\LZIP Header
+005h 1 Dictionary size (5bit+3bit code, see below) ;/
+006h .. LZMA bitstream (with lc=3, lp=0, pb=2) (with EOS end code)
+... 4 CRC32 on uncompressed data ;\
+... 8 Size of uncompressed data ; LZIP Footer
+... 8 Size of compressed data (including header+footer) ;/
+
+The dictionary size should be 1000h..20000000h bytes, computed as so:
+
+| temp = 1 SHL (hdr[005h] AND 1Fh)
+dict_size = temp - (temp/10h)*(hdr[005h]/20h)
+
+The LZIP format doesn't really allow to determine the uncompressed size before
+decompression (one must either decompress the whole file to detect the size, or
+one could try to find the Footer at end of file; which requires weird
+heuristics because the LZIP manual is explicitely stating that it's valid to
+append extra data after the Footer).
+
+| http://www.nongnu.org/lzip/manual/lzip_manual.html#File-format

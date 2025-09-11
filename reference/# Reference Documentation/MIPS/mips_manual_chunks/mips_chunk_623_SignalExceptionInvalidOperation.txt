@@ -1,0 +1,31 @@
+MIPS INSTRUCTION SET REFERENCE - SIGNALEXCEPTION(INVALIDOPERATION)
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: SignalException(InvalidOperation)
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1117 characters
+Lines: 24
+================================================================================
+
+SignalException(InvalidOperation)
+             endif
+          else
+             less ← ValueFPR(fs, fmt) <fmt ValueFPR(ft, fmt)
+             equal ← ValueFPR(fs, fmt) =fmt ValueFPR(ft, fmt)
+             unordered ← false
+          endif
+          condition ← (cond2 and less) or (cond1 and equal)
+                 or (cond0 and unordered)
+          SetFPConditionCode(cc, condition)
+      For c.cond.PS, the pseudo code above is repeated for both halves of the operand registers, treating each half as an
+      independent single-precision values. Exceptions on the two halves are logically ORed and reported together. The
+      results of the lower half comparison are written to condition code CC; the results of the upper half comparison are
+      written to condition code CC+1.
+
+
+
+
+88                                                       MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                        Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+Floating Point Compare (cont.)                                                                              C.cond.fmt

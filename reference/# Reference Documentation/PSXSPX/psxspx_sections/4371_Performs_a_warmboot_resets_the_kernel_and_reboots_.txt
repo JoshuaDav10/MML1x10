@@ -1,0 +1,29 @@
+PSXSPX SPECIFICATIONS - PERFORMS A WARMBOOT (RESETS THE KERNEL AND REBOOTS FROM CDROM). UNLIKE THE
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Performs a warmboot (resets the kernel and reboots from CDROM). Unlike the
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1015 characters
+Lines: 21
+================================================================================
+
+Performs a warmboot (resets the kernel and reboots from CDROM). Unlike the
+normal coldboot procedure, it doesn't display the "" and "PS" intro
+screens (and doesn't verify the "PS" logo in the ISO System Area), and, doesn't
+enter the bootmenu (even if the disk drive is empty, or if it contains an Audio
+disk). And, it doesn't reload the SYSTEM.CNF file, so the function works only
+if the same disk is still inserted (or another disk with identical SYSTEM.CNF,
+such like Disk 2 of the same game).
+
+A(B5h..BFh) B(11h,24h..29h,2Ch..31h,5Eh..FFh) C(1Eh..7Fh) - N/A - Jump 0
+
+These functions jump to address 00000000h. For whatever reason, that address
+does usually contain a copy of the exception handler (ie. same as at address
+80000080h). However, since there's no return address stored in EPC register,
+the functions will likely crash when returning from the exception handler.
+
+A(57h..5Ah, 73h..77h, B0h..B1h, B3h) - N/A - Returns 0
+
+C(0Eh..11h,14h) - N/A - Returns 0
+
+No function. Simply returns with r2=00000000h.

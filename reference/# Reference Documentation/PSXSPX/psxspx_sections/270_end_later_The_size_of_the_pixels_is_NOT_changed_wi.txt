@@ -1,0 +1,34 @@
+PSXSPX SPECIFICATIONS - END LATER. THE SIZE OF THE PIXELS IS NOT CHANGED WITH THESE SETTINGS, THE GPU
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: end later. The size of the pixels is NOT changed with these settings, the GPU
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 1139 characters
+Lines: 25
+================================================================================
+
+end later. The size of the pixels is NOT changed with these settings, the GPU
+simply sends more data to the screen. Some monitors/TVs have a smaller display
+area and the extended size might not be visible on those sets. "(Mine is
+capable of about 330 pixels horizontal, and 272 vertical in 320*240 mode)"
+
+GP1(05h) - Start of Display area (in VRAM)
+
+| 0-9 X (0-1023) (halfword address in VRAM) (relative to begin of VRAM)
+10-18 Y (0-511) (scanline number in VRAM) (relative to begin of VRAM)
+19-23 Not used (zero)
+
+Upper/left Display source address in VRAM. The size and target position on
+screen is set via Display Range registers; target=X1,Y2;
+size=(X2-X1/cycles_per_pix), (Y2-Y1).
+
+GP1(06h) - Horizontal Display range (on Screen)
+
+| 0-11 X1 (260h+0) ;12bit ;\counted in 53.222400MHz units,
+12-23 X2 (260h+320*8) ;12bit ;/relative to HSYNC
+
+Specifies the horizontal range within which the display area is displayed. For
+resolutions other than 320 pixels it may be necessary to fine adjust the value
+to obtain an exact match (eg. X2=X1+pixels*cycles_per_pix).
+
+The number of displayed pixels per line is "(((X2-X1)/cycles_per_pix)+2) AND

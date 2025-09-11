@@ -1,0 +1,101 @@
+PSXSPX SPECIFICATIONS - CDROM XA SUBHEADER, FILE, CHANNEL, INTERLEAVE
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM XA Subheader, File, Channel, Interleave
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 3976 characters
+Lines: 92
+================================================================================
+
+CDROM XA Subheader, File, Channel, Interleave
+
+Xenogears (2 discs, 1998)
+
+| Sector 17h (Hidden.ID)
+000h 0Eh ID ("DS01_XENOGEARS"=Disc 1, or "DS02_XENOGEARS"=Disc 2)
+00Eh 7F2h Zerofilled
+Sector 18h..27h
+000h N*7 File List entries
+Sector 28h (Hidden.Unknown)
+Seems to contain a list of 16bit indices 0000h..1037h,FFFFh in File List
+(that, as raw list indices, regardless of the directory structure)
+000h Unknown 0016 0018 FFFF FFFF 01A8 FFFF FFFF FFFF ;\
+010h Unknown FFFF FFFF FFFF FFFF 0A35 0A3A 0D35 0AD3 ; as so on Disc 2
+020h Unknown 0A22 0A2E 0A2F FFFF FFFF FFFF FFFF FFFF ; (values<>FFFFh
+030h Unknown 0014 0001 0013 FFFF 0075 FFFF FFFF FFFF ; on Disc 1
+040h Unknown 0C10 0C14 0C15 0C19 0F52 FFFF FFFF FFFF ; are 5 less, eg.
+050h Unknown 0F4C 0B6E 0C4D 1037 0C09 0BAD FFFF FFFF ; 0011,0013,FFFF..)
+060h Unknown 002E 0034 FFFF FFFF FFFF FFFF FFFF FFFF ;
+070h Unknown FFFF FFFF FFFF FFFF ;/
+078h 2 Disc Number (0001h=Disc 1, 0002h=Disc 2)
+07Ah 786h Zerofilled
+Sector 29h 1st file
+
+File List entries:
+
+| 000h 3 24bit Offset (increasing sector number, or 0=special)
+003h 4 32bit Size (filesize in bytes, or negative or 0=special)
+
+The Offset/Size can have following meanings:
+
+| offset=curr, size=+N file at sector=curr, size N bytes
+offset=curr, size=-N begin of sub-directory, with N files
+offset=curr, size=0 empty file, size 0 bytes
+offset=0, size=0 unused file entry
+offset=FFFFFFh, size=0 end of root-directory
+
+Notes: The Hidden.Directory size seems to be hardcoded to 10h sectors
+(alternately, one could treat the sector of the 1st file entry as end of
+Hidden.Directory plus Hidden.Unknown).
+
+Root entry 0004h and 0005h are aliases for ISO files SYSTEM.CNF and boot EXE.
+There seem to be no nested sub-directories (but there are several DOT1 child
+archives, in root- and sub-directories, eg. 00DCh\0000h\*).
+
+Chrono Cross (2 discs, 1999,2000)
+
+Threads of Fate (aka Dewprism) (1 disc, 1999,2000)
+
+| Sector 17h (Hidden.ID)
+000h 2 Disc Number (0001h=Disc 1, 0002h=Disc 2)
+002h 2 Number of Discs? (0002h) (always 2, even if only 1 disc)
+004h 2+2 Sector and Size for Hidden.ID (Sector=0017h, Size=002Ch)
+008h 2+2 Sector and Size for Hidden.Directory (Sector=0018h, Size=60E0h)
+00Ch 2+2 Sector and Size for Hidden.Unknown (Sector=0025h, Size=0022h)
+010h 10h Zerofilled
+020h 0Ch Title ID ("CHRONOCROSS",00h) ;Chrono Cross (retail)
+09h Title ID ("DEWPRISM",00h) ;Threads of Fate (retail)
+10h Title ID ("DEWPRISM_TAIKEN",00h) ;Threads of Fate (demo)
+0xxh 7xxh Zerofilled (unused, since Hidden.ID has only Size=2Ch/29h/30h)
+Sector 18h..24h (Hidden.Directory)
+000h N*4 File List entries
+... .. Zeropadding (till Size=60E0h, aka 6200 entries)
+... 720h Zeropadding (till end of 800h-byte sector)
+Sector 25h (Hidden.Unknown)
+Seems to contain a list of 16bit indices 0000h..1791h,FFFFh in File List
+(though many of the listed indices are unused file list entries)
+000h 2 Disc Number (0001h=Disc 1, 0002h=Disc 2)
+002h 10h Unknown 0000 1791 1777 1775 00ED 09DF FFFF 0002 ;\same on
+012h 10h Unknown 0025 0943 10E3 FFFF FFFF 0C77 0FD9 0FA3 ;/Disc 1+2
+022h .. Zerofilled (unused, since Hidden.ID has only Size=0022h)
+Sector 26h 1st file (same as boot EXE in ISO)
+
+File List entries:
+
+| 0-22 Sector number
+23 Flag (0=Normal, 1=Unused entry)
+24-31 Number of unused bytes in last sector, div8 (0..FFh = 0..7F8h bytes)
+
+The directory is just a huge list of root files (without any folder structure;
+many of the root files do contain DOT1 child archives though).
+
+Root entry 0000h and 0001h are aliases for ISO files boot EXE and SYSTEM.CNF.
+
+Filesizes can be computed as follows (that works for all entries including last
+used entry; which is followed by some unused entries with bit23=1):
+
+| filesize = ([addr+4]-[addr] AND 7FFFFFh)*800h - ([addr+3] AND FFh)*8
+
+Unused entries with bit23=1 have Sector pointing to end of previous file
+(needed for filesize calculation). There are some zeropadded entries at end of
+list (with whole 32bit zero). There are hundreds of dummy txt files (24-byte

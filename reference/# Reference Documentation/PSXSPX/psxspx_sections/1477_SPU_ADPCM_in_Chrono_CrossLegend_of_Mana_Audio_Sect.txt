@@ -1,0 +1,40 @@
+PSXSPX SPECIFICATIONS - SPU-ADPCM IN CHRONO CROSS/LEGEND OF MANA AUDIO SECTOR
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: SPU-ADPCM in Chrono Cross/Legend of Mana Audio Sector
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1146 characters
+Lines: 31
+================================================================================
+
+SPU-ADPCM in Chrono Cross/Legend of Mana Audio Sector
+
+Chrono Cross Disc 1 (HiddenDirectory\1793h..17A6h)
+
+Chrono Cross Disc 2 (HiddenDirectory\1793h..179Dh)
+
+Legend of Mana (MOVIE\*.STR, except some movies without audio)
+
+| 000h 2 STR ID (0160h)
+002h 2 STR Type (0000h, 0001h, 0100h, or 0101h)
+0000h=Legend of Mana, Audio normal sectors
+0001h=Legend of Mana, Audio sectors near end of movie
+0000h=Chrono Cross Disc 1, Audio.left?
+0001h=Chrono Cross Disc 1, Audio.right?
+0100h=Chrono Cross Disc 2, Audio.left?
+0101h=Chrono Cross Disc 2, Audio.right?
+004h 2 Sector number in Frame (0=Audio.left?, 1=Audio.right?)
+006h 2 Number of Audio sectors in this frame (always 2)
+008h 4 Frame number (1=First)
+00Ch 4 Unused (Chrono: FFh-filled or Mana: 00000FC0h=2x7E0h=Framesize?)
+010h 10h Unused (Chrono: FFh-filled or Mana: 00h-filled)
+020h 60h Unused (FFh-filled)
+080h 4 ID "AKAO"
+084h 4 Frame number (0=First)
+088h 8 Unused (zerofilled)
+090h 4 Remaining Time (step 690h) (can get stuck at 0340h or 0B20h at end)
+094h 4 Zero
+098h 4 Unknown (11h)
+09Ch 4 Pitch (1000h=44100Hz)
+0A0h 4 Number of bytes of audio data (always 690h)
+0A4h 2Ch Unused (zerofilled)

@@ -1,0 +1,35 @@
+PSXSPX SPECIFICATIONS - IC201 - GPU-RAM (1MBYTE) (OR 2MBYTE, OF WHICH, ONLY 1MBYTE IS USED THOUGH)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: IC201 - GPU-RAM (1MByte) (or 2MByte, of which, only 1MByte is used though)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1464 characters
+Lines: 27
+================================================================================
+
+IC201 - GPU-RAM (1MByte) (or 2MByte, of which, only 1MByte is used though)
+
+Samsung KM4132G271BQ-10 (128K x 32bit x 2 Banks, Synchronous Graphic RAM) 1MB
+
+Samsung K4G163222A-PC70 (256K x 32bit x 2 Banks, Synchronous Graphic RAM) 2MB
+
+| 1-DQ3 13-DQ19 25-/WE 37-N.C 49-A6 61-DQ9 73-VDDQ 85-VSS 97-DQ0
+2-VDDQ 14-VDDQ 26-/CAS 38-N.C 50-A7 62-VSSQ 74-DQ24 86-N.C 98-DQ1
+3-DQ4 15-VDD 27-/RAS 39-N.C 51-A8 63-DQ10 75-DQ25 87-N.C 99-VSSQ
+4-DQ5 16-VSS 28-/CS 40-N.C 52-N.C 64-DQ11 76-VSSQ 88-N.C 100-DQ2
+5-VSSQ 17-DQ20 29-A9(BA) 41-N.C 53-DSF 65-VDD 77-DQ26 89-N.C
+6-DQ6 18-DQ21 30-NC(GND) 42-N.C 54-CKE 66-VSS 78-DQ27 90-N.C
+7-DQ7 19-VSSQ 31-A0 43-N.C 55-CLK 67-VDDQ 79-VDDQ 91-N.C
+8-VDDQ 20-DQ22 32-A1 44-N.C 56-DQM1 68-DQ12 80-DQ28 92-N.C
+9-DQ16 21-DQ23 33-A2 45-N.C 57-DQM3 69-DQ13 81-DQ29 93-N.C
+10-DQ17 22-VDDQ 34-A3 46-VSS 58-NC 70-VSSQ 82-VSSQ 94-N.C
+11-VSSQ 23-DQM0 35-VDD 47-A4 59-VDDQ 71-DQ14 83-DQ30 95-N.C
+12-DQ18 24-DQM2 36-N.C 48-A5 60-DQ8 72-DQ15 84-DQ31 96-VDD
+
+Newer boards often have 2MB VRAM installed (of which only 1MB is used,
+apparently the 2MB chips became cheaper than the 1MB chips). At the chip side,
+the only difference is that Pin30 became an additional address line (that,
+called A8, and, accordingly, the old A8,A9 pins were renamed to A9,A10). At the
+mainboard side, the connection is exactly the same for both 1MB and 2MB chips;
+Pin30 is grounded on both PU-23 boards (which typically have 1MB) and PM-41
+boards (which typically have 2MB).

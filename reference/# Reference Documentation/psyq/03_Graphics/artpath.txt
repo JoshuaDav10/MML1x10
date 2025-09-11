@@ -1,0 +1,383 @@
+PSYQ DOCUMENTATION - CONF/SCEA/artpath.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/CONF/SCEA/artpath.pdf
+Converted: Wed Sep 10 02:47:39 PM CDT 2025
+================================================================================
+
+           Art Tools
+
+                 Introduction
+                   – Goals
+                               Create art for “Next Generation” games.
+                               Combine Gouraud, flat, and preshaded
+                              textured polygons to create an immersive 3D
+                              world.
+                              Choose from the pathways available and
+                              implement them efficiently.
+
+
+
+Michael Koziniak March 1996                                                 TM
+           Overview
+
+                 File Formats
+                 Tools Overview
+                 Modeling
+                 Texturing
+                 Displaying Your Artwork
+                 Animation
+                 Full Motion Video
+Michael Koziniak March 1996                TM
+           File Formats
+
+                 RSD - Text description of model data
+                 and surface attributes
+                 TIM - Data for textures
+                 TMD - Binary RSD
+                 PMD - Preshaded model data
+                 TOD - Animation data
+                 VDF, NDF - MIMe animation data
+                 BGD - Background map data
+Michael Koziniak March 1996                             TM
+           File Formats
+            How the tools and data formats work
+            together
+    Authoring                   Programming                             Model Data       TMD2PMD
+                      Modeler           DXF (Model Data)
+                                                                          TMD              PMD
+
+
+
+                                          DXF2RSD
+                                                              RSDLINK   MIMe
+                                                                        MIMefilter
+                                                                             filter
+
+
+
+                                       RSD (Model Data)                 VDF, NDF
+
+                                                                        Animation Data
+
+                                Material                                   TOD
+                                MaterialEditor
+                                         Editor   Animation
+                                                  AnimationTool
+                                                            Tool
+
+Michael Koziniak March 1996                                                                        TM
+           Tools Overview
+
+                 Different Types of Tools
+                   – Materials Editor
+                   – MIMe Utilities
+                   – Sprite Editor
+                   – 2D Utilities
+                   – 3D Utilities
+                   – Movie Converter/Movie Packer
+                   – Plugins
+Michael Koziniak March 1996                         TM
+           Tools Overview
+
+                 Material Editor v1.71ae
+                 MIMe Wave Editor v1.0e
+                 Movie Converter v1.98e
+                 Movie Packer v1.4e
+                 Animator v1.1.5
+                 Sprite Editor 1.7e
+
+
+Michael Koziniak March 1996                TM
+           Tools Overview
+
+                 TIM Utility v1.36e
+                   – Incorporates all these DOS utilities
+                              BMP2TIM v2.2
+                              PICT2TIM v3.1
+                              RGB2TIM v2.0
+                              TIM2BMP v1.1
+                              TIMPOS v1.0
+                              TIMVIEW v1.2
+                               – Use with Graphic Artist Card
+
+Michael Koziniak March 1996                                     TM
+           Tools Overview
+
+                 3D Utilities
+                   – DXF2RSD v2.7      – TMD2PMD v1.14
+                     DXF2RSDW v1.10e   – TMDINFO v1.1
+                   – MKTOD v1.3        – TMDSORT v1.1
+                   – RSD2DXF v1.00     – ANIMATIO v1.1.5
+                   – RSDCAT v1.02
+                   – RSDFORM v1.8
+                   – RSDLINK v3.65
+
+
+Michael Koziniak March 1996                                TM
+           Tools Overview
+
+                 DOS Utilities
+                   – Useful when doing batch processing
+                              use .mak files to do batch processing
+                              # Sample.mak
+                              #
+                              files.all: file1.tim file2.tim
+                                           Echo Go To Work.
+                              file1.tim: file1.bmp
+                                           bmp2tim -org 640 0 -plt 0 480 -b file1.bmp
+
+                              file2.tim: file2.bmp
+                                         bmp2tim -org 768 0 -plt 0 481 -b file2.bmp
+
+
+Michael Koziniak March 1996                                                             TM
+           Tools Overview
+
+                 3DStudio Plugin
+                   – TOD v4.0f
+                              Converts 3D Studio models to PlayStation file
+                              format
+                              Writes hierarchy information
+                              Can’t export textures directly
+
+
+
+
+Michael Koziniak March 1996                                                   TM
+           Tools Overview
+
+                 Photoshop
+                   – timexpe.8be v1.2e
+                              imports and exports textures
+                   – timfmte.8bi v1.2e
+                              displays onto Artist Board
+
+
+
+
+Michael Koziniak March 1996                                  TM
+           Tools Overview
+
+                 3rd Party Plugins
+
+                   – Animetix (soon)
+                   – Alias | Wavefront
+                              GameExport v1.0(soon)
+                   – Nichimen Graphics
+
+
+
+Michael Koziniak March 1996                           TM
+           Tools Overview
+
+                 Caligari trueSpace v1.0
+                   – Advantages
+                              Reads and writes RSD format directly.
+                              Converts data formats to PlayStation format
+                   – Considerations
+                              Uses quadrangles
+                              Different user interface
+                               – Difficult to weld vertices
+
+
+Michael Koziniak March 1996                                                 TM
+           Modeling
+
+                 Good Models
+                   – Low polygon count
+                              Optimizes performance
+                               – use transparent textures
+                              Still needs to look good
+                              Avoid certain polygon patterns
+                               – Fence is an example.
+
+                 Bad Models
+                   – long skinny textures
+Michael Koziniak March 1996                                    TM
+           Modeling
+
+                 Footnotes
+                   – MIP mapping
+                              swapping textures for optimal display and
+                              performance
+                   – Model mapping
+                              swapping models for different distances
+                               – sub-dividing polygons may be a better solution
+
+
+
+
+Michael Koziniak March 1996                                                       TM
+           Texturing
+
+                 Mapping textures
+                   – Material Editor
+                 Try to fit in the 2K texture cache
+                   – 32x32 16 bit
+                   – 64x32 8 bit
+                   – 64x64 4 bit
+
+
+
+Michael Koziniak March 1996                           TM
+           Texturing
+
+                 Material Editor
+                   – Pasting textures onto model
+                              grouping polygons
+                               – allows precise texture placement
+                   – Change model specifications
+                              change flat to Gouraud
+                              change color of polygons with color table
+                              set transparency
+                              modify vertices
+Michael Koziniak March 1996                                               TM
+           Displaying your Artwork
+
+                 Z-Sorting
+                 2D/3D Graphic Libraries
+
+
+
+
+Michael Koziniak March 1996                TM
+           Displaying your Artwork
+
+                 The Z-sort problem
+                   – popping of polygons is visually distracting
+                   – make similar colors about the joints of a
+                     polygon to lessen the effect
+                   – adjust the otz from average z to near z
+                   – increase resolution of Z-sorting
+                   – must subdivide long polygons
+
+
+Michael Koziniak March 1996                                        TM
+           Displaying your Artwork
+
+                 2D/3D Graphics Libraries
+
+                              ZIMEN       - Sample Code( Reduces Seams)
+
+
+
+
+                                                                                        LIBCARD
+                                                                                        LIBCOMB
+                              LIBGS              LIBSND               LIBCD
+                                                                                       LIBMATH
+                                                                                       LIBC/LIBC2
+                      LIBGPU     LIBGTE    LIBAPI   LIBSPU    LIBPRESS        LIBETC
+
+
+            Graphic Libraries
+            Other Libraries
+
+
+
+
+Michael Koziniak March 1996                                                                         TM
+           Animation
+
+                 Overview
+                   – TOD animation
+                   – MIMe animation
+                              give models ability to flex and bend
+                   – Sony’s Animator
+
+
+
+
+Michael Koziniak March 1996                                          TM
+           Animation
+
+                 MIMe animation
+                   – Principals of Vertex and Normal based
+                     MIMe
+                              deformed model - basic model = difference vector
+                              changes in composite ratio of difference vectors are
+                              “waveforms”
+                              basic model + Sigma (difference x waveform) = MIMe
+                              animation
+
+
+
+
+Michael Koziniak March 1996                                                          TM
+           Animation
+
+                 MIMe animation
+                   – Only vertices (and normal vectors) are
+                     needed
+                   – The texture is needed only for the base
+                     model
+                   – Difference data formats (VDF, NDF)
+                   – Optimization of difference data (mimesort)
+
+
+Michael Koziniak March 1996                                       TM
+           Animation
+
+                 MIMe animation continued
+                   – Considerations
+                              Vertices can not be increased or decreased
+                              The ordering of vertices can not be changed
+                              use triangles
+
+
+
+
+Michael Koziniak March 1996                                                 TM
+           Animation
+
+                 MIMe Wave Editor
+                   – Making waves (Convolution Editing)
+                              How to use the wave editor
+                              Wave editor is a software tool to animate your
+                              models
+                              Waves define interpolation between models
+
+
+
+
+Michael Koziniak March 1996                                                    TM
+           Full Motion Video
+
+                 Movie Converter
+                   – Uses DCT compression
+                   – Original Movie Formats
+                              D1, Beta, Beta SP, S-Video, NTSC / PAL /
+                              SECAM.
+                 Movie Packer
+                   – Interleaves your movies
+
+
+Michael Koziniak March 1996                                              TM
+           Full Motion Video
+
+                 Movie Converter
+                   – Writing scripts
+                              Sample Script
+                   – Adjusting the quantization
+                              Changes look of the movie
+                              Can be done frame by frame
+                   – Mapping FMV to polygons
+
+
+Michael Koziniak March 1996                                TM
+           Full Motion Video
+
+                 Movie Packer Overview
+                   – Interleaving
+                              Combining different data types in a stream of
+                              data in an organized manner
+                              Method to display multiple movies
+                              simultaneously
+                              Method to load data in background
+                               – a checksum would have to be used as a safeguard
+
+
+
+Michael Koziniak March 1996                                                        TM
+TM
+

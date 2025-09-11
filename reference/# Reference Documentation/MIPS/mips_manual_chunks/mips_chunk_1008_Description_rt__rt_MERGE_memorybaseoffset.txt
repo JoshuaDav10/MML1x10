@@ -1,0 +1,31 @@
+MIPS INSTRUCTION SET REFERENCE - DESCRIPTION: RT ← RT MERGE MEMORY[BASE+OFFSET]
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Description: rt ← rt MERGE memory[base+offset]
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1641 characters
+Lines: 22
+================================================================================
+
+Description: rt ← rt MERGE memory[base+offset]
+           The 16-bit signed offset is added to the contents of GPR base to form an effective address (EffAddr). EffAddr is the
+           address of the least-significant of 4 consecutive bytes forming a word (W) in memory starting at an arbitrary byte
+           boundary.
+           A part of W, the least-significant 1 to 4 bytes, is in the aligned word containing EffAddr. This part of W is loaded into
+           the least-significant (right) part of the word in GPR rt. The remaining most-significant part of the word in GPR rt is
+           unchanged.
+           Executing both LWR and LWL, in either order, delivers a sign-extended word value in the destination register.
+           The figure below illustrates this operation using big-endian byte ordering for 32-bit and 64-bit registers. The 4 con-
+           secutive bytes in 2..5 form an unaligned word starting at location 2. A part of W, 2 bytes, is in the aligned word con-
+           taining the least-significant byte at 5. First, LWR loads these 2 bytes into the right part of the destination register.
+           Next, the complementary LWL loads the remainder of the unaligned word.
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                                   167
+
+                              Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+Load Word Right (cont.)                                                                                                LWR
+
+                                Figure 3-7 Unaligned Word Load Using LWL and LWR

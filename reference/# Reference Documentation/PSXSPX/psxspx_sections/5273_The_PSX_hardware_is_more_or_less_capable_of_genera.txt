@@ -1,0 +1,35 @@
+PSXSPX SPECIFICATIONS - THE PSX HARDWARE IS MORE OR LESS CAPABLE OF GENERATING BOTH PAL AND NTSC
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: The PSX hardware is more or less capable of generating both PAL and NTSC
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1086 characters
+Lines: 26
+================================================================================
+
+The PSX hardware is more or less capable of generating both PAL and NTSC
+signals. However, it's having the bad habbit to do this automatically depending
+on the game's frame rate. And worse, it's doing it regardless of whether the
+board is having matching oscillators installed (eg. a PAL board in 60Hz mode
+will produce NTSC encoding with faulty NTSC color clock).
+
+| color encoding PAL NTSC
+color clock 4.43361875MHz 3.579545MHz
+frame rate 50Hz 60Hz
+
+RGB Cables
+
+RGB cables don't rely on composite PAL/NTSC color encoding, and thus don't need
+any color mods (except, see the caution on GNDed pins for missing
+53.20MHz/53.69MHz oscillators below).
+
+Newer Consoles (PU-22, PU-23, PM-41, PM-41(2))
+
+These consoles have 17.734MHz (PAL) or 14.318MHz (NTSC) oscillators with
+constant dividers, so the color clock will be always constant, and one does
+only need to change the color encoding:
+
+| /PAL (IC502.CXA2106R.pin13) ---/cut/--- /PAL (GPU.pin157)
+/PAL (IC502.CXA2106R.pin13) ----------- GND (PAL) or VCC (NTSC)
+
+This forces the console to be always producing the desired composite color

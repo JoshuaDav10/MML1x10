@@ -1,0 +1,86 @@
+PSXSPX SPECIFICATIONS - THE PACK HEADER IS FOUND AT THE BEGIN OF THE STREAM (ON VCDS, IT'S ALSO FOUND
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: The Pack Header is found at the begin of the stream (on VCDs, it's also found
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 3024 characters
+Lines: 77
+================================================================================
+
+The Pack Header is found at the begin of the stream (on VCDs, it's also found
+at the begin of each sector). The SCR values might help on identifying the
+current playback position, and, with the bitrate value, this could be also used
+to compute the distance to another position (though there are other ways to
+determine the position/bitrate, so the Pack is kinda useless).
+
+| 32bit PACK_START_CODE (000001BAh) ;-4byte
+2bit Fixed (00b for MPEG-1) (would be 01b for MPEG-2) ;\
+2bit Fixed (10b) ;
+3bit System Clock Reference, bit32-30 ;\ ;
+1bit Marker (1) ; System Clock Reference (SCR) ;
+15bit System Clock Reference, bit29-15 ; (intended Time, ; 5byte
+1bit Marker (1) ; in 90kHz clock cycles) ;
+15bit System Clock Reference, bit14-0 ;/ ;
+1bit Marker (1) ;/
+1bit Marker (1) ;\
+22bit Multiplex Rate (total bitrate of the stream, in 400bit/s units) ; 3byte
+1bit Marker (1) ;/
+
+MPEG-1 Multiplex System Header (12+N*3 bytes)(optionally)(at start of stream)
+
+The System Header is usally found after the first Pack at the begin of the
+stream.
+
+| 32bit SYSTEM_HEADER_START_CODE (000001BBh) ;\6byte
+16bit Header Length minus 6 (in bytes) (0006h+N*3) ;/
+1bit Marker (1) ;\
+22bit Rate bound (max multiplex rate of all packs in the stream, ; 3byte
+1bit Marker (1) in 400bit/s units) ;/
+6bit Audio Bound (max number of audio streams in this ISO stream) ;\
+1bit Fixed Flag (1=Fixed bitrate) ; 1byte
+1bit CSPS Flag (1=Constrained) ;/
+1bit System Audio Lock Flag XXX ;\
+1bit System Video Lock Flag XXX ; 1byte
+1bit Marker (1) ;
+5bit Video Bound (max number of video streams in this ISO stream) ;/
+8bit Reserved (FFh) ;-1byte
+
+Followed by N*3 bytes for the streams (each with first bit=set):
+
+| 8bit Stream ID (C0h..DFh=Audio, E0h..EFh=Video) ;\
+2bit Fixed (11b) ; 3byte
+1bit STD buffer scale (0=Mul128/audio, 1=Mul1024/video) ;
+13bit STD buffer size (largest required buffer over all packets) ;/
+
+Terminated by a value with first bit=cleared (eg. next 000001xxh value).
+
+MPEG-1 Multiplex Video/Audio/Special Packets (7..24 bytes, plus data)
+
+These packets are encapsulating the lower-level Video/Audio streams.
+
+| 32bit START (000001xxh BDh-BFh=Special, C0h-DFh=Audio, E0h-EFh=Video);\6byte
+16bit Packet Length minus 6 (in bytes) (1..18, plus data) ;/
+
+If (and while) next two bits are 11b (0..16 padding bytes):
+
+| (2bit) Fixed (11b, indicates presence of stuffing) ;\optional 0..16byte
+(6bit) Fixed (111111b) ;/
+
+If next two bits are 01b (buffer size info):
+
+| (2bit) Fixed (01b, indicates presence of buffer size) ;\
+(1bit) STD Buffer Scale (0=Mul128/audio, 1=Mul1024/video) ; optional 2byte
+(13bit) STD Buffer Size (for decoding, in above scale units) ;/
+
+Always:
+
+| 2bit Fixed (00b, indicates no further stuffing/buffer info);\
+1bit PTS Flag (Presentation Time Stamp) ; 0.5 bytes
+1bit DTS Flag (Decoding Time Stamp) ;/
+
+If PTS Flag set:
+
+| (3bit) Presentation Time Stamp, bit32-30 ;\
+(1bit) Marker (1) ; optional 4.5 bytes
+(15bit) Presentation Time Stamp, bit29-15 ; (time when to output the
+(1bit) Marker (1) ; the packet to audio/video

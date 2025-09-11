@@ -1,0 +1,23 @@
+MIPS INSTRUCTION SET REFERENCE - 1. FORMAT TYPE L IS LEGAL ONLY IF 64-BIT FLOATING POINT OPERATIONS ARE ENABLED.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: 1. Format type L is legal only if 64-bit floating point operations are enabled.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1056 characters
+Lines: 14
+================================================================================
+
+1. Format type L is legal only if 64-bit floating point operations are enabled.
+
+
+
+                                Table A-17 MIPS64 COP1 Encoding of Function Field When rs=PS1
+     function      bits 2..0
+                      0           1          2           3           4          5           6          7
+     bits 5..3       000         001        010         011        100         101         110        111
+     0 000         ADD ∇        SUB ∇     MUL ∇          *           *        ABS ∇      MOV ∇       NEG ∇
+     1 001            *           *          *           *           *          *           *          *
+     2 010            *      MOVCF δ∇     MOVZ ∇      MOVN ∇         *          *           *          *
+     3 011        ADDR ε∇         *      MULR ε∇         *      RECIP2 ε∇   RECIP1 ε∇  RSQRT1 ε∇   RSQRT2 ε∇
+     4 100       CVT.S.PU ∇       *          *           *     CVT.PW.PS ε∇     *           *          *
+     5 101       CVT.S.PL ∇       *          *           *       PLL.PS ∇    PLU.PS ∇   PUL.PS ∇    PUU.PS ∇

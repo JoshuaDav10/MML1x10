@@ -1,0 +1,38 @@
+PSXSPX SPECIFICATIONS - CDROM ISO VOLUME DESCRIPTORS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM ISO Volume Descriptors
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1195 characters
+Lines: 29
+================================================================================
+
+CDROM ISO Volume Descriptors
+
+System Area (prior to Volume Descriptors)
+
+The first 16 sectors on the first track are the system area, for a Playstation
+disk, it contains the following:
+
+| Sector 0..3 - Zerofilled (Mode2/Form1, 4x800h bytes, plus ECC/EDC)
+Sector 4 - Licence String
+Sector 5..11 - Playstation Logo (3278h bytes) (remaining bytes FFh-filled)
+Sector 12..15 - Zerofilled (Mode2/Form2, 4x914h bytes, plus EDC)
+
+Of which, the Licence String in sector 4 is,
+
+| 000h 32 Line 1 (" Licensed by ")
+020h 32+6 Line 2 (EU) ("Sony Computer Entertainment Euro"," pe ") ;\either
+020h 32+1 Line 2 (JP) ("Sony Computer Entertainment Inc.",0Ah) ; one of
+020h 32+6 Line 2 (US) ("Sony Computer Entertainment Amer"," ica ") ;/these
+041h 1983 Empty (JP) (filled by repeating pattern 62x30h,1x0Ah, 1x30h)
+046h 1978 Empty (EU/US) (filled by 00h-bytes)
+
+The Playstation Logo in sectors 5..11 contains data like so,
+
+| 0000h .. 41h,00h,00h,00h,00h,00h,00h,00h,01h,00h,00h,00h,1Ch,23h,00h,00h
+0010h .. 51h,01h,00h,00h,A4h,2Dh,00h,00h,99h,00h,00h,00h,1Ch,00h,00h,00h
+0020h .. ...
+3278h 588h FF-filled (remaining bytes on sector 11)
+
+the Logo contains a .TMD header, polygons, vertices and normals for the "PS"

@@ -1,0 +1,38 @@
+PSXSPX SPECIFICATIONS - HUFFMAN CODES FOR AC VALUES BS V0 (SERIAL EXPERIMENTS LAIN)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Huffman codes for AC values BS v0 (Serial Experiments Lain)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1276 characters
+Lines: 30
+================================================================================
+
+Huffman codes for AC values BS v0 (Serial Experiments Lain)
+
+| 10 FE00h ;End of Block, EOB
+11s 0001h
+011s 0002h
+010xs 0401h,0003h
+0011xs 0801h,0005h
+00101s 0004h
+00100xxxs 000Ah,000Bh,0403h,1801h,000Ch,000Dh,1C01h,000Eh
+0001xxs 0006h,0C01h,0402h,0007h
+00001xxs 0008h,1001h,0009h,1401h
+000001xxxxxx0xxxxxxx 0000h..FC00h+(+001h..+07Fh AND 3FFh) ;\
+000001xxxxxx000000001xxxxxxx 0000h..FC00h+(+080h..+0FFh AND 3FFh) ; Escape
+000001xxxxxx000000000xxxxxxx Unused ; codes
+000001xxxxxx1xxxxxxx 0000h..FC00h+(-080h..-001h AND 3FFh) ;
+000001xxxxxx100000000xxxxxxx 0000h..FC00h+(-100h..-081h AND 3FFh) ;
+000001xxxxxx100000001xxxxxxx Unused ;/
+0000001xxxs 000Fh,0802h,2001h,0404h,0010h,0011h,2401h,0012h
+00000001xxxxs 0013h,0405h,0014h,2801h,0015h,0C02h,3001h,0017h,
+0016h,2C01h,0018h,001Ch,0019h,0406h,0803h,001Bh
+000000001xxxxs 001Ah,3401h,001Dh,0407h,1002h,001Fh,001Eh,3801h,
+0020h,0021h,0408h,0023h,0022h,1402h,0024h,0025h
+0000000001xxxxs 0804h,0409h,0418h,0026h,3C01h,0027h,0C03h,1C03h,
+0028h,0029h,002Ah,002Bh,040Ah,002Ch,1802h,002Dh
+00000000001xxxxs 002Fh,002Eh,4001h,0805h,0030h,040Bh,0031h,0033h,
+0032h,1C02h,0034h,1003h,0035h,4401h,040Ch,0037h
+000000000001xxxxs 0036h,0038h,0039h,5401h,003Ah,0C04h,040Dh,5C01h,
+2002h,003Bh,0806h,4C01h,003Ch,2402h,6001h,4801h
+000000000000 Unused

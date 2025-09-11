@@ -1,0 +1,68 @@
+PSXSPX SPECIFICATIONS - SPU ADPCM SAMPLES
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: SPU ADPCM Samples
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1946 characters
+Lines: 60
+================================================================================
+
+SPU ADPCM Samples
+
+The data does usually start at offset 0030h (except, some files have extra
+header data or padding at that location).
+
+The first 10h-byte ADPCM block is usually all zero (used to initialize the
+SPU).
+
+2-channel (stereo) files are usually interleaved in some way.
+
+VAG Endiannes
+
+The file header entries are almost always big-endian (even so when used on
+little endian consoles). There are a few exceptions:
+
+ID="VAG1" has little endian [008h]=Interleave (remaining header is big-endian).
+
+ID="pVAG" has (some?) header entries in little endian.
+
+Version=40000000h has most or all header entries in little endian (perhaps
+including the version being meant to be 00000040h).
+
+VAG Channels
+
+VAGs can be 1-channel (mono) or 2-channel (stereo). There is no standarized way
+to detect the number of channels (it can be implied in the Filename Extension,
+Header ID, in Reserved Header entries, in the Name string at [020h..02Fh], in
+optional stuff at [030h], or in a separate VAG Header in the middle of the
+file).
+
+VAG Interleave
+
+| None default (for 1-channel mono) (and separate .l .r stereo files)
+800h when ID="VAG2"
+[008h] when ID="VAGi" (little-endian 32bit header[008h])
+1000h when ID="pGAV" and [020h]="Ster" and this or that
+2000h when ID="pGAV" and [020h]="Ster" and that or this
+10h when filename extension=".vig"
+10h when Version=0002001h or Version=00030000h (and channels=2)
+filesize/2 when filename extension=".swag"
+6000h when [6000h]="VAGp" (eg. PSX The Simpsons Wrestling)
+1000h when [1000h]="VAGp" (eg. PS2 Sikigami no Shiro)
+...
+
+AAAp Header
+
+| 000h 4 ID "AAAp"
+004h 2 Interleave
+006h 2 Number of Channels (can be 1 or 2?)
+008h 30h*N VAGp header(s) for each channel, with Version=00000020h
+... .. ADPCM Data (interleaved when multiple channels)
+
+See also
+
+http://github.com/vgmstream/vgmstream/blob/master/src/meta/vag.c
+;very detailed
+
+http://wiki.xentax.com/index.php/VAG_Audio
+;rather incomplete and perhaps wrong

@@ -1,0 +1,36 @@
+PSXSPX SPECIFICATIONS - DECODE_MONOCHROME_MACROBLOCK ;MDEC(1) COMMAND (AT 4BPP OR 8BPP DEPTH)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: decode_monochrome_macroblock ;MDEC(1) command (at 4bpp or 8bpp depth)
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 1146 characters
+Lines: 27
+================================================================================
+
+decode_monochrome_macroblock ;MDEC(1) command (at 4bpp or 8bpp depth)
+
+| rl_decode_block(Yblk,src,iq_y), y_to_mono ;Y
+
+rl_decode_block(blk,src,qt)
+
+| for i=0 to 63, blk[i]=0, next i ;initially zerofill all entries (for skip)
+@@skip:
+n=[src], src=src+2, k=0 ;get first entry, init dest addr k=0
+if n=FE00h then @@skip ;ignore padding (FE00h as first halfword)
+q_scale=(n SHR 10) AND 3Fh ;contains scale value (not "skip" value)
+val=signed10bit(n AND 3FFh)*qt[k] ;calc first value (without q_scale/8) (?)
+@@lop:
+if q_scale=0 then val=signed10bit(n AND 3FFh)*2 ;special mode without qt[k]
+val=minmax(val,-400h,+3FFh) ;saturate to signed 11bit range
+val=val*scalezag[i] ;0 then blk[zagzig[k]]=val ;store entry (normal case)
+if q_scale=0 then blk[k]=val ;store entry (special, no zigzag)
+n=[src], src=src+2 ;get next entry (or FE00h end code)
+k=k+((n SHR 10) AND 3Fh)+1 ;skip zerofilled entries
+val=(signed10bit(n AND 3FFh)*qt[k]*q_scale+4)/8 ;calc value for next entry
+if k63)
+idct_core(blk)
+return (with "src" address advanced)
+
+fast_idct_core(blk) ;fast "idct_core" version
+
+Fast code with only 80 multiplications, works only if the scaletable from

@@ -1,0 +1,38 @@
+MIPS INSTRUCTION SET REFERENCE - INEXACT, UNIMPLEMENTED OPERATION, INVALID OPERATION, OVERFLOW, UNDERFLOW
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Inexact, Unimplemented Operation, Invalid Operation, Overflow, Underflow
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1492 characters
+Lines: 29
+================================================================================
+
+Inexact, Unimplemented Operation, Invalid Operation, Overflow, Underflow
+
+
+
+
+208                                                                MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                                  Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+MULT
+
+
+
+
+  Multiply Word                                                                                                              MULT
+
+       31                   26 25             21 20              16 15                                 6   5                  0
+             SPECIAL                                                                  0                           MULT
+                                      rs                  rt
+              000000                                                            00 0000 0000                      011000
+                   6                  5                   5                           10                             6
+
+            Format:     MULT rs, rt                                                                                      MIPS32
+
+            Purpose:
+            To multiply 32-bit signed integers
+
+            Description: (HI, LO) ← rs × rt
+            The 32-bit word value in GPR rt is multiplied by the 32-bit value in GPR rs, treating both operands as signed values,
+            to produce a 64-bit result. The low-order 32-bit word of the result is placed into special register LO, and the

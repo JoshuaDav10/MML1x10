@@ -1,0 +1,36 @@
+MIPS INSTRUCTION SET REFERENCE - ADDU PERFORMS THE SAME ARITHMETIC OPERATION BUT DOES NOT TRAP ON OVERFLOW.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: ADDU performs the same arithmetic operation but does not trap on overflow.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1562 characters
+Lines: 27
+================================================================================
+
+ADDU performs the same arithmetic operation but does not trap on overflow.
+
+
+
+
+34                                                             MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                              Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+ADD.fmt
+
+
+
+
+   Floating Point Add                                                                                                       ADD.fmt
+
+          31                   26 25            21 20              16 15             11 10               6   5                  0
+                  COP1                                                                                              ADD
+                                        fmt                 ft                fs                 fd
+                 010001                                                                                            000000
+                    6                    5                  5                  5                 5                    6
+
+               Format:    ADD.S fd, fs, ft                                                                           MIPS32
+                          ADD.D fd, fs, ft                                                                           MIPS32
+                          ADD.PS fd, fs, ft                                                                          MIPS64
+                                                                                                             MIPS32 Release 2
+
+               Purpose:

@@ -1,0 +1,66 @@
+PSXSPX SPECIFICATIONS - CDROM FILE ARCHIVE WAD (DOOM)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Archive WAD (Doom)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 2083 characters
+Lines: 58
+================================================================================
+
+CDROM File Archive WAD (Doom)
+
+Doom, PSXDOOM\ABIN\*.WAD and PSXDOOM\MAPDIR*\*.WAD)
+
+The .WAD format is used by Doom (for DOS, Jaguar, PSX, etc), various homebrew
+Doom hacks, and some other developers have adopted the format and used .WAD in
+other game engines.
+
+| 000h 4 ID "IWAD" (or "PWAD" for homebrew patches, or "PACK" in A.D. Cop)
+004h 4 Number of File List entries (N) (including final ENDOFWAD entry)
+008h 4 Offset to Directory Area (filesize-N*10h)
+00Ch .. File Data area
+... N*10h File List
+
+File List entries:
+
+| 000h 4 Offset to file data (increasing by compressed size, 4-byte aligned)
+004h 4 Filesize in bytes (uncompressed size) (zero in ENDOFWAD file)
+008h 8 Filename (uppercase ASCII, zeropadded if less than 8 chars)
+
+Folders
+
+The directory can contain names like F_START, F_END, P1_START, P1_END with
+filesize=0 to mark begin/end of something; that stuff can be considered as
+subdirectories with 1- or 2-character names.
+
+Notes: There are also regular files with underscores which are unrelated to
+folders (eg. F_SKY01). There are also 0-byte dummy files (eg. MAP17 in first
+entry MAP17.WAD). And there's a 0-byte dummy file with name ENDOFWAD in last
+file list entry (at least, it's present versions with compression support).
+
+LZSS Decompression
+
+Compression is indicated by Filename[0].bit7=1. The compressed size is
+NextFileOffset-FileOffset (that requires increasing offsets in File List,
+including valid offsets for 0-byte files like F_START, F_END, ENDOFWAD).
+
+| @@collect_more:
+flagbits=[src]+100h, src=src+1 ;8bit flags
+@@decompress_lop:
+flagbits=flagbits SHR 1
+if zero then goto @@collect_more
+if carry=0 then
+[dst]=[src], dst=dst+1, src=src+1
+else
+disp=([src]*10h)+([src+1]/10h)+1, len=([src+1] AND 0Fh)+1, src=src+2
+if len=1 then goto @@decompress_done
+for i=1 to len, [dst]=[dst-disp], dst=dst+1, next i
+endif
+goto @@decompress_lop
+@@decompress_done:
+ret
+
+The game engine may insist on some files to be compressed or uncompressed (so
+compression may be required even if the uncompressed data would be smaller).
+
+More info: http://doomwiki.org/wiki/WAD

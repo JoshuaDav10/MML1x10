@@ -1,0 +1,81 @@
+PSXSPX SPECIFICATIONS - 3 Y TO UX.12 CPU ANALOG INPUT
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 3 Y to Ux.12 CPU analog input
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1132 characters
+Lines: 73
+================================================================================
+
+3 Y to Ux.12 CPU analog input
+4 X7 from VR5.2 analog joystick RX
+5 X5 from VR4.2 analog joystick RY
+6 /EN GND enable
+7 VEE GND ground'
+8 GND GND ground
+9 S2 from Ux. sel2
+10 S1 from Ux. sel1
+11 S0 from Ux. sel0
+12 X3 from CN2.12 button /\
+13 X0 from CN2.10 button O
+14 X1 from CN2.8 button X
+15 X2 from CN2.6 button []
+16 VCC VCC supply
+
+U5 (reset detection?)
+
+| 1 via 220ohm/R27 to Ux.34, and via R25 to Ux.36
+2 VCC
+3 via 1.3Kohm/R24 to U5.1
+4 NC?
+
+Q1
+
+| x from U1.7 (op-amp)
+x supply AVCC 7.5V (CN3.9 purple)
+x to motor M1.1 (with large weight)
+
+Q5
+
+| x via 1Kohm/R20 from Ux.17
+x to motor M2.2 (with small weight)
+x supply AGND 7.5V (CN3.8 gray)
+
+Q6
+
+| x from Ux.6
+x to to CN2.7 (button []) and CN2.9 (button X)
+x GND
+
+Q7
+
+| 1 GND
+2 GND
+3 from Ux.40
+4 to CN1.6 (button DPAD.RT)
+5 from Ux.41
+6 to CN1.4 (button DPAD.LT)
+
+Q8
+
+| 1 GND
+2 GND
+3 from Ux.37
+4 to CN2.15 (button R1) and CN2.16 (button R2)
+5 from Ux.38
+6 to CN2.11 (button O) and CN2.13 (button /\)
+
+Q9
+
+| x from Ux.39
+x to CN1.1 (button L2) and CN1.2 (button L1)
+x GND
+
+Q10
+
+| 1 GND
+2 GND
+3 from Ux.40
+4 to CN1.7 (button DPAD.UP)
+5 from Ux.41
+6 to CN1.9 (button DPAD.DN)

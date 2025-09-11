@@ -1,0 +1,23 @@
+MIPS INSTRUCTION SET REFERENCE - THE MIPS32™ INSTRUCTION SET
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: The MIPS32™ Instruction Set
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1047 characters
+Lines: 15
+================================================================================
+
+The MIPS32™ Instruction Set
+
+
+3.1 Compliance and Subsetting
+
+      To be compliant with the MIPS32 Architecture, designs must implement a set of required features, as described in this
+      document set. To allow flexibility in implementations, the MIPS32 Architecture does provide subsetting rules. An
+      implementation that follows these rules is compliant with the MIPS32 Architecture as long as it adheres strictly to the
+      rules, and fully implements the remaining instructions.Supersetting of the MIPS32 Architecture is only allowed by
+      adding functions to the SPECIAL2 major opcode, by adding control for co-processors via the COP2, LWC2, SWC2,
+      LDC2, and/or SDC2, and/or COP3 opcodes, or via the addition of approved Application Specific Extensions. Note,
+      however, that a decision to use the COP3 opcode in an implementation of the MIPS32 Architecture precludes a
+      compatible upgrade to the MIPS64 Architecture because the COP3 opcode is used as part of the floating point ISA in
+      the MIPS64 Architecture.

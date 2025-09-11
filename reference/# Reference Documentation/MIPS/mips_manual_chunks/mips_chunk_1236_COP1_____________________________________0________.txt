@@ -1,0 +1,25 @@
+MIPS INSTRUCTION SET REFERENCE - COP1                                     0                                                      NEG
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: COP1                                     0                                                      NEG
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1286 characters
+Lines: 16
+================================================================================
+
+COP1                                     0                                                      NEG
+                                       fmt                                   fs                fd
+                 010001                                  00000                                                   000111
+                    6                   5                  5                 5                 5                    6
+
+               Format:    NEG.S fd, fs                                                                             MIPS32
+                          NEG.D fd, fs                                                                             MIPS32
+                          NEG.PS fd, fs                                                                            MIPS64
+                                                                                                           MIPS32 Release 2
+
+               Purpose:
+               To negate an FP value
+
+               Description: fd ← −fs
+               The value in FPR fs is negated and placed into FPR fd. The value is negated by changing the sign bit value. The oper-
+               and and result are values in format fmt. NEG.PS negates the upper and lower halves of FPR fs independently, and

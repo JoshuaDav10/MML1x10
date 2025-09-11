@@ -1,0 +1,45 @@
+PSXSPX SPECIFICATIONS - CDROM DISK IMAGES MDS/MDF (ALCOHOL 120%)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM Disk Images MDS/MDF (Alcohol 120%)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1301 characters
+Lines: 36
+================================================================================
+
+CDROM Disk Images MDS/MDF (Alcohol 120%)
+
+File.MDF - Contains sector data (optionally with sub-channel data)
+
+Contains the sector data, recorded at 800h..930h bytes per sector, optionally
+followed by 60h bytes subchannel data (appended at the end of each sector). The
+stuff seems to be start on 00:02:00 (ie. the first 150 sectors are missing; at
+least it is like so when "Session Start Sector" is -150).
+
+The subchannel data (if present) consists of 8 subchannels, stored in 96 bytes
+(each byte containing one bit per subchannel).
+
+| Bit7..0 = Subchannel P..W (in that order, eg. Bit6=Subchannel Q)
+
+The 96 bits (per subchannel) can be translated to bytes, as so:
+
+| 1st..8th bit = Bit7..Bit0 of 1st byte (in that order, ie. MSB/Bit7 first)
+9st..16th bit = Bit7..Bit0 of 2nd byte ("")
+17th.. = etc.
+
+File.MDS - Contains disc/lead-in info (in binary format)
+
+An MDS file's structure consists of the following stuff ...
+
+| Header (58h bytes)
+Session block(s) (usually one 18h byte entry)
+Data blocks (N*50h bytes)
+Index blocks (usually N*8 bytes)
+Filename blocks(s) (usually one 10h byte entry)
+Filename string(s) (usually one 6 byte string)
+Read error(s) (usually none such)
+
+Header (58h bytes)
+
+| 00h 16 File ID ("MEDIA DESCRIPTOR")
+10h 2 Unknown (01h,03h or 01h,04h or 01h,05h) (Fileformat version?)

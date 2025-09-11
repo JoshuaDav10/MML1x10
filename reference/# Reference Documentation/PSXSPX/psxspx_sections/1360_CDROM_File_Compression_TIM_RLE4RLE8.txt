@@ -1,0 +1,81 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION TIM-RLE4/RLE8
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression TIM-RLE4/RLE8
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 2729 characters
+Lines: 73
+================================================================================
+
+CDROM File Compression TIM-RLE4/RLE8
+
+Other than that, TIMs can be compressed via generic compression functions (like
+LZSS, GZIP), or via bitmap dedicated compression formats (like BS, JPG, GIF).
+
+| ______________________________ Malformed Files _______________________________
+
+Malformed TIMs in BIGFILE.DAT
+
+| Used by Legacy of Kain: Soul Reaver (eg. BIGFILE.DAT\folder04h\file13h)
+Used by Gex - Enter the Gecko (eg. BIGFILE.DAT\file0Fh\LZcompressed)
+
+Malformed TIMs contain texture data preceeded by a dummy 14h-byte TIM header
+with following constant values:
+
+| 10 00 00 00 02 00 00 00 04 00 08 00 00 02 00 00 00 02 00 02 ;
+
+The malformed entries include:
+
+| [04h]=Type should indicated the color depth, but it's always 02h=16bpp.
+[08h]=Width*2*Height+0Ch should be 8000Ch, but malformed is 80004h.
+Total filesize should be 80014h, but Gecko files are often MUCH smaller.
+
+Also, destination yloc should be 0..1FFh, but PSX "Lemmings & Oh No! More
+Lemmings" (FILES\GFX\*.TIM) has yloc=200h (that game also has vandalized .BMP
+headers with 2-byte alignment padding after ID "BM", whilst pretending that
+those extra bytes aren't there in data offset and total size entries).
+
+Oversized TIMs
+
+| Used by Pong (MagDemo24: LES02020\*\*.TIM)
+
+Has 200x200h pix, but section size (and filesize) are +2 bigger than that:
+
+| 10 00 00 00 02 00 00 00 0E 00 08 00 C0 01 00 00 00 02 00 02 ;Pong *.TIM
+10 00 00 00 02 00 00 00 0E 00 07 00 00 02 00 00 C0 01 00 02 ;Pong WORLD.TIM
+10 00 00 00 02 00 00 00 0E 80 03 00 00 02 00 01 C0 01 00 01 ;Pong ZONE*.TIM
+
+Miscomputed Section Size
+
+NBA Basketball 2000 (MagDemo28: FOXBB\TIM\*.TIM) has TIMs with section size
+"0Ch+Xsiz*Ysiz" instead of "0Ch+Xsiz*2*Ysiz".
+
+NonTIMs in Bloody Roar 1 and 2
+
+| Bloody Roar 1 (CMN\INIT.DAT\000Eh)
+Bloody Roar 2 (CMN\SE00.DAT, CMD\SEL00.DAT\0030h and CMN\VS\VS.DAT\0000h)
+
+This looks somehow TIM-inspired, but has ID=13h.
+
+| 13 00 00 00 02 00 00 00 0C 20 00 00 00 00 F8 01 00 01 10 00 ;Bloody Roar 1
+13 00 00 00 02 00 00 00 0C 20 00 00 00 00 00 00 00 01 10 00 ;Bloody Roar 2
+
+Other uncommon/malformed TIM variants
+
+And, Heart of Darkness has a TIM with Size entry set to Xsiz*2*Ysiz+0Eh
+(instead of +0Ch) (that malformed TIM is found inside of the RNC compressed
+IMAGES\US.TIM file).
+
+Also, NFL Gameday '99 (MagDemo17: GAMEDAY\PHOTOS.FIL) contains a TIM cropped to
+800h-byte size (containing only the upper quarter of the photo).
+
+Also, not directly malformed, but uncommon: Final Fantasy IX contains 14h-byte
+0x0 pixel TIMs (eg. FF9.IMG\dir04\file0046\1B-0000\04-0001).
+
+Klonoa (MagDemo08: KLONOA\FILE.IDX\3\2\0..1) has 0x0pix TIM (plus palette).
+
+Malformed CLTs
+
+| Used by Secret of Mana, WM\WEFF\*.CLT
+
+ID is 10h=TIM, Flags=10101009h (should be ID=12h, Flags=02h).

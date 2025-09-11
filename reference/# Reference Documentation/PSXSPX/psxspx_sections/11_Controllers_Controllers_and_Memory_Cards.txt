@@ -1,0 +1,59 @@
+PSXSPX SPECIFICATIONS - CONTROLLERS AND MEMORY CARDS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Controllers and Memory Cards
+Chunked: Wed Sep 10 03:31:04 PM CDT 2025
+Size: 908 characters
+================================================================================
+
+Controllers and Memory Cards
+
+Controller and Memory Card I/O Ports
+
+Controller and Memory Card Misc
+
+Controller and Memory Card Signals
+
+Controller and Memory Card Multitap Adaptor
+
+Controllers - Communication Sequence
+
+Controllers - Standard Digital/Analog Controllers
+
+Controllers - Mouse
+
+Controllers - Racing Controllers
+
+Controllers - Lightguns
+
+Controllers - Lightguns - Namco (GunCon)
+
+Controllers - Lightguns - Konami Justifier/Hyperblaster (IRQ10)
+
+Controllers - Lightguns - PSX Lightgun Games
+
+Controllers - Configuration Commands
+
+Controllers - Vibration/Rumble Control
+
+Controllers - Analog Buttons (Dualshock2)
+
+Controllers - Dance Mats
+
+Controllers - Fishing Controllers
+
+Controllers - I-Mode Adaptor (Mobile Internet)
+
+Controllers - Keyboards
+
+Controllers - Additional Inputs
+
+Controllers - Misc
+
+Memory Card Read/Write Commands
+
+Memory Card Data Format
+
+Memory Card Images
+
+Memory Card Notes

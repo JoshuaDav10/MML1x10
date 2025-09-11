@@ -1,0 +1,39 @@
+PSXSPX SPECIFICATIONS - SOUND LIST ENTRIES (AS IN FESOUND.WAD):
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Sound List entries (as in FESOUND.WAD):
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1017 characters
+Lines: 31
+================================================================================
+
+Sound List entries (as in FESOUND.WAD):
+000h 4 Sample Rate in Hertz (AC44h=44100Hz, 5622h=22050Hz, 3E80h=16000Hz)
+004h 2 Sample Rate Pitch (1000h=44100Hz, 0800h=22050Hz, 05CEh=16000Hz)
+006h 2 Unknown (7Fh)
+008h 4 Unknown (1) (1) (8)
+00Ch 4 Unknown (42008Fh) (1FC0001Fh) (40008Fh)
+010h 4 Filesize (xxx0h) (xxx0h)
+
+XSPD Chunk:
+
+| 000h 4 Chunk Name "XSPD" (aka DPSX backwards)
+004h 4 Chunk Size (excluding 8-byte Name+Size)
+008h 4 Flags-and/or-other stuff ? (eg. 00000094h or 0A801094h)
+00Ch 804h Unknown ... SAME as in XSPT chunk !!!
+810h .. Unknown ...
+
+DNE Chunk (End marker):
+
+| 000h 4 Chunk Name " DNE" (aka END backwards)
+004h 4 Chunk Size (0) (except, in Harry Potter: nonzero)
+... .. Data (usually none such) (except, in Harry Potter: with data!)
+
+Additional DEM files (always 1774h bytes) (if any, not all .WAD's have .DEM's):
+
+| 000h 4 Number of entries (N) (always 2EEh, aka 750 decimal)
+004h N*8 Whatever entries... maybe data for demonstration mode?
+
+See also:
+
+http://wiki.xentax.com/index.php/Argonaut_WAD

@@ -1,0 +1,21 @@
+MIPS INSTRUCTION SET REFERENCE - DESCRIPTION: MEMORY[BASE+OFFSET] ← RT
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Description: memory[base+offset] ← rt
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1153 characters
+Lines: 13
+================================================================================
+
+Description: memory[base+offset] ← rt
+           The 16-bit signed offset is added to the contents of GPR base to form an effective address (EffAddr). EffAddr is the
+           address of the most-significant of 4 consecutive bytes forming a word (W) in memory starting at an arbitrary byte
+           boundary.
+           A part of W, the most-significant 1 to 4 bytes, is in the aligned word containing EffAddr. The same number of the
+           most-significant (left) bytes from the word in GPR rt are stored into these bytes of W.
+           The following figure illustrates this operation using big-endian byte ordering for 32-bit and 64-bit registers. The 4
+           consecutive bytes in 2..5 form an unaligned word starting at location 2. A part of W, 2 bytes, is located in the aligned
+           word containing the most-significant byte at 2. First, SWL stores the most-significant 2 bytes of the low word from
+           the source register into these 2 bytes in memory. Next, the complementary SWR stores the remainder of the unaligned
+           word.
+                                    Figure 3-9 Unaligned Word Store Using SWL and SWR

@@ -1,0 +1,42 @@
+PSXSPX SPECIFICATIONS - STORES SOME (NOT ALL) CPU REGISTERS IN THE SPECIFIED BUFFER (30H BYTES):
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Stores some (not all) CPU registers in the specified buffer (30h bytes):
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1387 characters
+Lines: 34
+================================================================================
+
+Stores some (not all) CPU registers in the specified buffer (30h bytes):
+
+| 00h 4 r31 (ra) (aka caller's pc)
+04h 4 r29 (sp)
+08h 4 r30 (fp)
+0Ch 4x8 r16..r23
+2Ch 4 r28 (gp)
+
+That type of buffer can be used with "ioabort", "RestoreState", and also
+"SetCustomExitFromException(addr)".
+
+The "SaveState" function (initially) returns 0, however, it may return again -
+to the same return address - with another return value (which should be usually
+non-zero, to indicate that the state has been restored (eg. ioabort passes 1 as
+return value).
+
+A(14h) - RestoreState(buf, param)
+
+Restores the R16-R23,GP,SP,FP,RA registers from a previously recorded SaveState
+buffer, and "returns" to that new RA address (rather than to the caller of the
+RestoreState function), the "param" value is passed as "return value" to the
+code at RA, ie. usually to the caller of the original SaveState call) (since
+SaveState returns 0, "param" should be usually 1, or another non-zero value to
+inidicate that RestoreState has occurred). See SaveState for further details.
+
+A(53h) - set_ioabort_handler(src) ;PS2 only ;PSX: SystemError
+
+Normally the ioabort handler is changed only internally during booting, with
+this new function, games can install their own ioabort handler. src is pointer
+to a 30h-byte "savestate" structure, which will be copied to the actual ioabort
+structure.
+
+A(06h) or B(38h) - exit(exitcode)

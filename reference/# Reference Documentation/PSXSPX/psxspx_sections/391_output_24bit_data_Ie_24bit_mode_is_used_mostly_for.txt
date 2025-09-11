@@ -1,0 +1,35 @@
+PSXSPX SPECIFICATIONS - OUTPUT 24BIT DATA. IE. 24BIT MODE IS USED MOSTLY FOR MDEC VIDEOS (AND SOME 2D
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: output 24bit data. Ie. 24bit mode is used mostly for MDEC videos (and some 2D
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 1215 characters
+Lines: 26
+================================================================================
+
+output 24bit data. Ie. 24bit mode is used mostly for MDEC videos (and some 2D
+games like Heart of Darkness).
+
+Texture Bitmaps
+
+A texture is an image put on a polygon or sprite. The data of a texture can be
+stored in 3 different modes:
+
+| 16bit Texture (Direct Color) ;(One 256x256 page = 128Kbytes)
+0-4 Red (0..31) ;\Color 0000h = Fully-Transparent
+5-9 Green (0..31) ; Color 0001h..7FFFh = Non-Transparent
+10-14 Blue (0..31) ; Color 8000h..FFFFh = Semi-Transparent (*)
+15 Semi Transparency Flag ;/(*) or Non-Transparent for opaque commands
+8bit Texture (256 Color Palette) ;(One 256x256 page = 64Kbytes)
+0-7 Palette index for 1st pixel (left)
+8-15 Palette index for 2nd pixel (right)
+4bit Texture (16 Color Palette) ;(One 256x256 page = 32Kbytes)
+0-3 Palette index for 1st pixel (left)
+4-7 Palette index for 2nd pixel (middle/left)
+8-11 Palette index for 3rd pixel (middle/right)
+12-15 Palette index for 4th pixel (right)
+
+A Texture Page is a 256x256 texel region in VRAM (the Polygon rendering
+commands are using Texcoords with 8bit X,Y coordinates, so polygons cannot use
+textures bigger than 256x256) (the Rectangle rendering commands with
+width/height parameters could theoretically use larger textures, but the

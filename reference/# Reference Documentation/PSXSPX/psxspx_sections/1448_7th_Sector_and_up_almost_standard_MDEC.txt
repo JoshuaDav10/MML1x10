@@ -1,0 +1,72 @@
+PSXSPX SPECIFICATIONS - 7TH SECTOR AND UP (ALMOST STANDARD MDEC):
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 7th Sector and up (almost standard MDEC):
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 2587 characters
+Lines: 64
+================================================================================
+
+7th Sector and up (almost standard MDEC):
+
+| Caution: The STR header values aren't constant throughout the frame:
+Entry entry [01Ch] is incremented per sector (or wraps to 0 in new section).
+01Ch 4 Increasing sector number (within current movie section or so)
+
+Last 96h Sectors:
+
+| 002h 2 STR Type (0078h=Ending Dummy)
+004h 2 Sector number within current Frame (always 0)
+006h 2 Number of Sectors in this Frame (always 1)
+008h 4 Frame number (increasing, in last 96h sectors)
+00Ch 4 Frame Size (always 20h)
+010h 2 Bitmap Width (always 40h)
+012h 2 Bitmap Height (always 40h)
+014h 7ECh Zerofilled
+
+Final Fantasy VII (FF7) (MOVIE\*.MOV and MOVIE\*.STR)
+
+These movies have Extra stuff in the data section. The STR header is quite
+normal (apart from reflecting the Extra stuff):
+
+| 00Ch 4 Frame Size in bytes (including 28h-byte extra stuff)
+014h 8 Copy of Extra data [0..7] :-instead of BS header[0..7]
+020h 7E0h Data (ExtraData + BsData)
+
+The data part looks as so:
+
+| 000h 28h Extra data (unknown purpose, reportedly "Camera data" ... whut?)
+028h .. BS Data (in BS v1 format)
+
+Final Fantasy IX (FF9) (*.STR and *.MBG)
+
+There are several customized STR header entries:
+
+| 002h 2 STR Type (0004h=FF9/Video) ;instead of 8001h
+004h 2 Sector number within current Frame (02h..num-1) (2..9 for video)
+006h 2 Total number of Audio+Video sectors in this frame (always 0Ah)
+00Ch 4 Frame Size/4 (of BS data, excluding MBG extra) ;instead of Size/1
+014h 8 Copy of BS[0..7] from 8th video sector ;instead 1st sector
+01Ch 2 Usually 0000h (or 0004h in some MBG sectors) ;inszead of 0000h
+01Eh 2 Usually 0000h (or 3xxxh in some MBG sectors) ;inszead of 0000h
+020h 8F4h Data (in BS v2 format, plus MBG extra data, if any)
+
+Caution: The STR header values aren't constant throughout the frame:
+
+| Namely, entry [1Ch..1Fh]=nonzero occurs only on the sector that does contain
+the end of BS data (=and begin of MBG extra data), and of course [04h] does
+also increase per sector.
+
+Sector ordering has BS data snippets arranged backwards, for example, if BS
+data does occupy 2.5 sectors:
+
+| [04h]=00h-01h 1st-2nd audio sector, SPU-ADPCM (see Audio streaming chapter)
+[04h]=02h-06h 1st-5th video sector, unused, [020h..913h] is FFh-filled
+[04h]=07h 6th video sector, contains end of BS data and MBG extra, if any
+[04h]=08h 7th video sector, contains middle of BS data
+[04h]=09h 8th video sector, contains begin of BS data
+
+Sector type/size, very unusually with FORM2 sectors:
+
+| Audio sectors are MODE2/FORM1 (800h bytes, with error correction)
+Video sectors are MODE2/FORM2 (914h bytes, without error correction)

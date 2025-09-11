@@ -1,0 +1,37 @@
+PSXSPX SPECIFICATIONS - GAMEDELCHEATCODE TX(5744H,INDEX8)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: GameDelCheatCode Tx(5744h,Index8)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1558 characters
+Lines: 29
+================================================================================
+
+GameDelCheatCode Tx(5744h,Index8)
+GetMem Tx(5747h,Addr32,Len32), Rx(Data[Len]), TxRxChksum
+Lock/Freeze Tx(574Ch)
+OldMenuBuGetDirectory Tx(574Dh), RxTurbo
+MenuTestDB25Handshake Tx(574Eh), ...
+MenuOptimalGetMem Tx(574Fh,Addr32,Len32), RxFaster(Data[Len]), TxRxChksum
+OldMenuGetWhatever Tx(5750h), RxDataFFEEh ;-whatever
+Release/Unfreeze Tx(5752h)
+SetMem Tx(5753h,Addr32,Len32,Data[Len]), TxRxChksum
+TurboGetMem Tx(5754h,Addr32,Len32), RxFast(Data[Len]), TxRxChksum
+MenuSetMemAndBurnFirm Tx(5755h,Addr32,Len32,Data[Len]), TxRxChksum ;burnFlash
+GetStateGameOrMenu Tx(5757h), Rx(47h=Game, or 58h=Menu)
+SetMemAndExecute Tx(5758h,Addr32,Len32,Data[Len]), TxRxChksum ;call Addr
+NewMenu... Tx(5763h,Val32) ;similar to 571Bh ;-whatever
+GetByteByAddr24 Tx(5767h,Addr24), Rx(Data8)
+NewMenuBuggedExecJump Tx(577Ah,ORra32,ORgp32,ORsp32,pc32) ;formerly 5710h
+NewMenuFlashAndReboot Tx(57C7h,Dest32,Len32,DataXorD3h[Len])
+
+Function names starting with "Game/Menu" and/or "New/Mid/Old" are working only
+in Game/Menu mode, or only in New/Old xplorer firmware versions (new commands
+exist in v4.52, old commands exist in v1.091, mid commands exist in v2.005, but
+neither in v1.091 nor v4.52, unknown when those new/mid/old commands have been
+added/removed exactly, in which specific versions).
+
+The only useful command is SetMemAndExecute, which works in ALL versions, and
+which can be used to do whatever one wants to do (unfortunately, most of the
+official & inoffical tools are relying on other weird commands, which are
+working only with specific xplorer firmware versions).

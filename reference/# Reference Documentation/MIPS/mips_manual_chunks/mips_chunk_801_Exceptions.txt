@@ -1,0 +1,31 @@
+MIPS INSTRUCTION SET REFERENCE - EXCEPTIONS:
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Exceptions:
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1458 characters
+Lines: 22
+================================================================================
+
+Exceptions:
+              None
+
+
+
+
+122                                                            MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                                 Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+Divide Word (cont.)                                                                                                        DIV
+
+
+        Programming Notes:
+        No arithmetic exception occurs under any circumstances. If divide-by-zero or overflow conditions are detected and
+        some action taken, then the divide instruction is typically followed by additional instructions to check for a zero divi-
+        sor and/or for overflow. If the divide is asynchronous then the zero-divisor check can execute in parallel with the
+        divide. The action taken on either divide-by-zero or overflow is either a convention within the program itself, or more
+        typically within the system software; one possibility is to take a BREAK exception with a code field value to signal
+        the problem to the system software.
+        As an example, the C programming language in a UNIX® environment expects division by zero to either terminate
+        the program or execute a program-specified signal handler. C does not expect overflow to cause any exceptional con-
+        dition. If the C compiler uses a divide instruction, it also emits code to test for a zero divisor and execute a BREAK

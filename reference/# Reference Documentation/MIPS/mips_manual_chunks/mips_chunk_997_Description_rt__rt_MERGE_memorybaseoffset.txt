@@ -1,0 +1,22 @@
+MIPS INSTRUCTION SET REFERENCE - DESCRIPTION: RT ← RT MERGE MEMORY[BASE+OFFSET]
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Description: rt ← rt MERGE memory[base+offset]
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1232 characters
+Lines: 13
+================================================================================
+
+Description: rt ← rt MERGE memory[base+offset]
+           The 16-bit signed offset is added to the contents of GPR base to form an effective address (EffAddr). EffAddr is the
+           address of the most-significant of 4 consecutive bytes forming a word (W) in memory starting at an arbitrary byte
+           boundary.
+           The most-significant 1 to 4 bytes of W is in the aligned word containing the EffAddr. This part of W is loaded into the
+           most-significant (left) part of the word in GPR rt. The remaining least-significant part of the word in GPR rt is
+           unchanged.
+           The figure below illustrates this operation using big-endian byte ordering for 32-bit and 64-bit registers. The 4 con-
+           secutive bytes in 2..5 form an unaligned word starting at location 2. A part of W, 2 bytes, is in the aligned word con-
+           taining the most-significant byte at 2. First, LWL loads these 2 bytes into the left part of the destination register word
+           and leaves the right part of the destination word unchanged. Next, the complementary LWR loads the remainder of
+           the unaligned word
+                                     Figure 3-5 Unaligned Word Load Using LWL and LWR

@@ -1,0 +1,66 @@
+PSXSPX SPECIFICATIONS - GTE REGISTERS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: GTE Registers
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 2047 characters
+Lines: 57
+================================================================================
+
+GTE Registers
+
+Note in some functions format is different from the one that's given here.
+
+Matrix Registers
+
+| Rotation matrix (RT) Light matrix (LLM) Light Color matrix (LCM)
+cop2r32.lsbs=RT11 cop2r40.lsbs=L11 cop2r48.lsbs=LR1
+cop2r32.msbs=RT12 cop2r40.msbs=L12 cop2r48.msbs=LR2
+cop2r33.lsbs=RT13 cop2r41.lsbs=L13 cop2r49.lsbs=LR3
+cop2r33.msbs=RT21 cop2r41.msbs=L21 cop2r49.msbs=LG1
+cop2r34.lsbs=RT22 cop2r42.lsbs=L22 cop2r50.lsbs=LG2
+cop2r34.msbs=RT23 cop2r42.msbs=L23 cop2r50.msbs=LG3
+cop2r35.lsbs=RT31 cop2r43.lsbs=L31 cop2r51.lsbs=LB1
+cop2r35.msbs=RT32 cop2r43.msbs=L32 cop2r51.msbs=LB2
+cop2r36 =RT33 cop2r44 =L33 cop2r52 =LB3
+
+Each element is 16bit (1bit sign, 3bit integer, 12bit fraction). Reading the
+last elements (RT33,L33,LB3) returns the 16bit value sign-expanded to 32bit.
+
+Translation Vector (TR) (Input, R/W?)
+
+| cop2r37 (cnt5) - TRX - Translation vector X (R/W?)
+cop2r38 (cnt6) - TRY - Translation vector Y (R/W?)
+cop2r39 (cnt7) - TRZ - Translation vector Z (R/W?)
+
+Each element is 32bit (1bit sign, 31bit integer).
+
+Used only for MVMVA, RTPS, RTPT commands.
+
+Background Color (BK) (Input?, R/W?)
+
+| cop2r45 (cnt13) - RBK - Background color red component
+cop2r46 (cnt14) - GBK - Background color green component
+cop2r47 (cnt15) - BBK - Background color blue component
+
+Each element is 32bit (1bit sign, 19bit integer, 12bit fraction).
+
+Far Color (FC) (Input?) (R/W?)
+
+| cop2r53 (cnt21) - RFC - Far color red component
+cop2r54 (cnt22) - GFC - Far color green component
+cop2r55 (cnt23) - BFC - Far color blue component
+
+Each element is 32bit (1bit sign, 27bit integer, 4bit fraction).
+
+Screen Offset and Distance (Input, R/W?)
+
+| cop2r56 (cnt24) - OFX - Screen offset X
+cop2r57 (cnt25) - OFY - Screen offset Y
+cop2r58 (cnt26) - H - Projection plane distance
+cop2r59 (cnt27) - DQA - Depth queing parameter A.(coeff.)
+cop2r60 (cnt28) - DQB - Depth queing parameter B.(offset.)
+
+The X and Y values are each 32bit (1bit sign, 15bit integer, 16bit fraction).
+
+The H value is 16bit unsigned (0bit sign, 16bit integer, 0bit fraction). BUG:

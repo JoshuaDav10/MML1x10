@@ -1,0 +1,45 @@
+PSXSPX SPECIFICATIONS - WHEN RECORDING A CD WITH MORE THAN 2 INDICES PER TRACK).
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: when recording a CD with more than 2 indices per track).
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1212 characters
+Lines: 37
+================================================================================
+
+when recording a CD with more than 2 indices per track).
+
+The MDS file does usually contain Index blocks for Data Blocks (ie.
+including unused dummy Index Blocks for Data Blocks with Point>=A0h).
+
+Filename Blocks (10h bytes)
+
+| 00h 4 Offset to Filename (from begin of .MDS file)
+04h 1 Filename format (0=8bit, 1=16bit characters)
+05h 11 Zero
+
+Normally all tracks are sharing the same filename block (although theoretically
+the tracks could use separate filename blocks; with different filenames).
+
+Filename Strings (usually 6 bytes)
+
+| 00h 6 Filename, terminated by zero (usually "*.mdf",00h)
+
+Contains the filename of the of the sector data (usually "*.mdf", indicating to
+use the same name as for the .mds file, but with .mdf extension).
+
+Read errors aka DPM data blocks (present if errors occured during recording)
+
+| 00h 4 Unknown (1)
+04h 4 Offset to following stuff
+08h 4 Unknown (2)
+0Ch 4 Unknown (7)
+10h 4 Unknown (1)
+14h 4 Number of read errors (E)
+18h E*4 LBA's for sectors with read errors (0 and up)
+
+Instead of (or additionally to) read errors, there may be also hundreds of
+Kbytes of unknown stuff appended (text strings in 8bit or 16bit format, binary
+numbers, and huge zerofilled blocks).
+
+Missing

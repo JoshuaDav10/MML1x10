@@ -1,0 +1,70 @@
+PSXSPX SPECIFICATIONS - 4-5 FILTER (0..3) (ONLY FOUR FILTERS, UNLIKE SPU-ADPCM WHICH HAS FIVE)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 4-5 Filter (0..3) (only four filters, unlike SPU-ADPCM which has five)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 2351 characters
+Lines: 62
+================================================================================
+
+4-5 Filter (0..3) (only four filters, unlike SPU-ADPCM which has five)
+6-7 Unused (should be 0)
+
+Note: The 4bit (or 8bit) samples are expanded to 16bit by left-shifting them by
+12 (or 8), that 16bit value is then right-shifted by the selected 'shift'
+amount. For 8bit ADPCM shift should be 0..8 (values 9..12 will cut-off the
+LSB(s) of the 8bit value, this works, but isn't useful). For both 4bit and 8bit
+ADPCM, reserved shift values 13..15 will act same as shift=9).
+
+XA-ADPCM Data Words (32bit, little endian)
+
+| 0-3 Nibble for 1st Block/Mono, or 1st Block/Left (-8h..+7h)
+4-7 Nibble for 2nd Block/Mono, or 1st Block/Right (-8h..+7h)
+8-11 Nibble for 3rd Block/Mono, or 2nd Block/Left (-8h..+7h)
+12-15 Nibble for 4th Block/Mono, or 2nd Block/Right (-8h..+7h)
+16-19 Nibble for 5th Block/Mono, or 3rd Block/Left (-8h..+7h)
+20-23 Nibble for 6th Block/Mono, or 3rd Block/Right (-8h..+7h)
+24-27 Nibble for 7th Block/Mono, or 4th Block/Left (-8h..+7h)
+28-31 Nibble for 8th Block/Mono, or 4th Block/Right (-8h..+7h)
+
+or, for 8bit ADPCM format:
+
+| 0-7 Byte for 1st Block/Mono, or 1st Block/Left (-80h..+7Fh)
+8-15 Byte for 2nd Block/Mono, or 1st Block/Right (-80h..+7Fh)
+16-23 Byte for 3rd Block/Mono, or 2nd Block/Left (-80h..+7Fh)
+24-31 Byte for 4th Block/Mono, or 2nd Block/Right (-80h..+7Fh)
+
+decode_sector(src)
+
+| src=src+12+4+8 ;skip sync,header,subheader
+for i=0 to 11h
+for blk=0 to 3
+IF stereo ;left-samples (LO-nibbles), plus right-samples (HI-nibbles)
+decode_28_nibbles(src,blk,0,dst_left,old_left,older_left)
+decode_28_nibbles(src,blk,1,dst_right,old_right,older_right)
+ELSE ;first 28 samples (LO-nibbles), plus next 28 samples (HI-nibbles)
+decode_28_nibbles(src,blk,0,dst_mono,old_mono,older_mono)
+decode_28_nibbles(src,blk,1,dst_mono,old_mono,older_mono)
+ENDIF
+next blk
+src=src+128
+next i
+src=src+14h+4 ;skip padding,edc
+
+decode_28_nibbles(src,blk,nibble,dst,old,older)
+
+| shift = 12 - (src[4+blk*2+nibble] AND 0Fh)
+filter = (src[4+blk*2+nibble] AND 30h) SHR 4
+f0 = pos_xa_adpcm_table[filter]
+f1 = neg_xa_adpcm_table[filter]
+for j=0 to 27
+t = signed4bit((src[16+blk+j*4] SHR (nibble*4)) AND 0Fh)
+s = (t SHL shift) + ((old*f0 + older*f1+32)/64);
+s = MinMax(s,-8000h,+7FFFh)
+halfword[dst]=s, dst=dst+2, older=old, old=s
+next j
+
+Pos/neg Tables
+
+| pos_xa_adpcm_table[0..4] = (0, +60, +115, +98, +122)
+neg_xa_adpcm_table[0..4] = (0, 0, -52, -55, -60)

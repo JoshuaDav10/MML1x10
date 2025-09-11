@@ -1,0 +1,76 @@
+PSXSPX SPECIFICATIONS - CN3 9PIN CABLE TO CONTROLLER CONNECTOR
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CN3 9pin Cable to controller connector
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1933 characters
+Lines: 68
+================================================================================
+
+CN3 9pin Cable to controller connector
+M1 2pin Left Motor with large weight (wire1=red, wire2=black)
+M2 2pin Right Motor with small weight (wire1=white, wire2=black)
+R1..R28 resistors (plus additional resistors printed on the foil)
+C1..C14 capacitors
+
+Analog Buttons
+
+The foil contains printed resistors (large 19K ohm pull-down resistors, and
+small 7.6K ohm pull-up resistors). The pull-downs can get shorted by pressing a
+conductive piece of rubber against it:
+
+| ____________
+| ____________
+'. .' | ____________
+'--____--' '. .' | 
+
+There are some oddities: The microprocessor has only two ADC inputs (the PCB
+contains analog multiplexors to map the currently selected signals to the ADC
+inputs). And, the pull-downs are GNDed via transistors instead of being
+directly wired to GND (that is used to share DPAD inputs, and may also reduce
+power consumption during inactivity).
+
+| .############. .############.###. .############.###. 
+
+There is only one MUX and one pull-up shared for DPAD LT/RT (and same for
+DPAD.UP/DN). Shared access is done by activating only one of the pull-down
+transistors (that should work reliably even if it were mechanically possible to
+push LT/RT simultaneously).
+
+CN1 (foil, left half)
+
+| 1 button L2
+2 button L1
+3 button L1 and resistor U3.5
+4 button DPAD.LT
+5 button DPAD.LT, DPAD.RT and resistor? U3.4
+6 button DPAD.RT
+7 button DPAD.UP
+8 button DPAD.UP, DPAD.DN and resistor? U3.13
+9 button DPAD.DN
+10 VCC (to resistors)
+11 NC on foil
+12 button L2 and resistor U3.12
+13 button SELECT
+14 GND (for SELECT, ANALOG, START)
+15 button ANALOG
+16 NC on foil
+
+CN2 (foil, right half)
+
+| 1 button START
+2 button R2 and resistor U3.14
+3 NC on foil
+4 VCC (to resistors)
+5 NC on foil
+6 button [] and resistor U4.15
+7 button []
+8 button X and resistor U4.14
+9 button X
+10 button O and resistor U4.13
+11 button O
+12 button /\ and resistor U4.12
+13 button /\
+14 button R1 and resistor U3.15
+15 button R1
+16 button R2

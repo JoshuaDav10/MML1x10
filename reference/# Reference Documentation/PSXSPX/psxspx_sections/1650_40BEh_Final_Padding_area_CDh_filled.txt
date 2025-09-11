@@ -1,0 +1,174 @@
+PSXSPX SPECIFICATIONS - ... 40BEH FINAL PADDING AREA (CDH-FILLED)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: ... 40BEh Final Padding area (CDh-filled)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 5192 characters
+Lines: 166
+================================================================================
+
+... 40BEh Final Padding area (CDh-filled)
+
+File List entries:
+
+| 000h 10h Filename ("FILENAME.EXT", terminated by 00h, padded with CDh)
+010h 4 File Offset/800h (increasing)
+014h 4 File Size/800h
+
+This is almost same as the newer v2 format in Syphon Filter 2 (see there for
+details).
+
+Centipede (MagDemo23: ARTFILES\*.ART)
+
+| 000h 0Fh ID ("Art", zeropadded) ;\
+00Fh 1 Type or so ("?") ; sorts of File List entry
+010h 4 Number of entries plus 1 (N+1) ; for root folder
+014h 4 Total Size in bytes (can be odd) ;/
+018h N*18h File List
+... ... File Data area
+File List entries:
+000h 0Fh Filename ("FILENAME", zeropadded)
+00Fh 1 Type/extension or so ("X" or "D")
+010h 4 File Offset (unaligned, increasing)
+014h 4 File Size in bytes (can be odd)
+
+Note: C0L7.ART includes zerofilled 18h-bytes as last File List entry, BONU.ART
+doesn't have any such zerofilled entry.
+
+Unknown if this can have child folders (maybe in similar form as the root
+folder entry).
+
+Sheep Raider (MagDemo52: SDWDEMO\*.SDW)
+
+Sheep Raider (MagDemo54: SDWDEMO\*.SDW)
+
+| 000h 4 Unknown (301h)
+004h 4 Zero (0)
+008h 4 Number of files (N)
+00Ch N*18h File List
+... .. Zeropadding to 800h-byte boundary
+... .. File Data area
+File List entries:
+000h 4 Offset (800h-byte aligned, increasing)
+004h 4 Filesize in bytes
+008h 1 Unknown (01h)
+009h 0Fh Filename ("FILENAME.EXT",00h, plus garbage padding)
+
+The SDW archive contains malformed 200h*1A4h pixel TIMs.
+
+| Texsize is 6900Eh, but should be 6900Ch = 200h*1A4h*2+0Ch
+Filesize is 6A000h, but should be 69014h = 200h*1A4h*2+14h
+
+Wing Commander III (*.LIB)
+
+| 000h 2 Number of Files (C9h)
+002h N*18h File List
+... (..) Padding to 800h-byte boundary (if any, eg. in MOVIES.LIB)
+... .. File data area (800h-byte aligned, or unaligned)
+File List entries:
+000h 4 Filesize in bytes
+004h 4 Offset (increasing, 800h-byte aligned, or unaligned)
+008h 10h Filename ("filename.ext", zeropadded)
+
+Largo Winch - Commando SAR (LEVELS\*.DCF)
+
+| 000h 4 ID "DCAT"
+004h 4 Number of Entries
+008h N*18h File List
+... .. Zerofilled (padding to 800h-byte boundary)
+... .. File Data area
+File List entries:
+000h 10h Filename ("FILENAME.EXT", terminated by 00h, plus garbage padding)
+010h 4 Filesize in bytes
+014h 4 Offset (increasing, 800h-byte aligned)
+
+Policenauts (NAUTS\*.DPK)
+
+| 000h 4 ID "FRID"
+004h 4 Always E0000000h
+008h 4 Always 800h (...maybe alignment)
+00Ch 4 Number of Entries (N)
+010h 4 Header Size (N*18h+20h, plus padding to 800h-byte boundary)
+014h 4 Always 18h (...maybe entry size)
+018h 8 Zerofilled
+020h N*18h File List
+... .. Zerofilled (padding to 800h-byte boundary)
+... .. File Data area
+File List entries:
+000h 0Ch Filename ("FILENAME.EXT", zeropadded if shorter)
+00Ch 4 Offset (increasing, 800h-byte aligned)
+010h 4 Filesize in bytes
+014h 4 Unknown (checksum? random?)
+
+Actua Ice Hockey 2 (Best Sports Games Ever (demo), AH2\GAMEDATA\*.MAD)
+
+| 000h N*18h File List
+... .. File Data area (directly after File List, without end-code)
+Note: There is no file-list end-marker (instead, the Offset in 1st File
+entry does imply the end of File List).
+File List entries:
+000h 10h Filename ("FILENAME.EXT", zeropadded)
+010h 4 Offset (increasing, 4-byte aligned, or unaligned for TXT files)
+014h 4 Filesize in bytes (or weird nonsense in SFX.MAD)
+
+There are several oddities in demo version (unknown if that's in retail, too):
+
+| SFX.MAD has nonsense Filesize entries (eg. 164h for a 15150h-byte file).
+FACES.MAD contains only one TIM file... but as 3Mbyte junk appended?
+RINKS.MAD and TEAMS.MAD start with 0Dh,0Ah,1Ah followed by 4Mbyte junk.
+MISCFILE.MAD contains several nested .mad files.
+MISCFILE.MAD\panfont.mad\*.txt --> starts with FF,FE --> that's 16bit Unicode?
+
+Muppet Monster Adventure (MagDemo37: MMA\GAMEDATA+WORLDS*\*.INF+WAD)
+
+| INF:
+000h N*18h File List
+WAD:
+000h .. File Data area
+
+File List entries:
+
+| 000h 4 File Offset/800h in .WAD file
+004h 4 File Size in bytes
+008h 10h Filename ("FILENAME.EXT", zeropadded)
+
+Army Men Air Attack 2 (MagDemo40: AMAA2\*.PCK)
+
+| 000h 4 Number of entries (N)
+004h N*18h File List
+... .. Zeropadding to 800h-byte boundary
+... .. File Data area
+File List entries:
+000h 10h Filename ("FILENAME.EXT", zeropadded)
+010h 4 Fileoffset (800h-byte aligned, increasing)
+014h 4 Filesize in bytes
+
+Mort the Chicken (MagDemo41: MORT\*.PPF and .TPF)
+
+| 000h 2 Type (31h=TPF with TIMs, 32=PPF with PMDs)
+002h 2 Number of entries (N) (can be 0=None, eg. STAGE*\MORT.PPF)
+004h 4 File List Size (N*18h)
+008h 4 Header Size (always 14h)
+00Ch 4 Data area Size (Filesize-14h-N*18h)
+010h 4 Data area Offset (14h+N*18h)
+014h N*18h File List
+... .. File Data area
+File List entries:
+000h 10h Filename ("FILENAME.EXT", zeropadded)
+010h 4 Filesize in bytes
+014h 4 Fileoffset (from begin of Data area, increasing)
+
+Hot Wheels Extreme Racing (MagDemo52: US_01293\VEHICLES\*.CAB)
+
+| 000h 4 ID "BACR" (aka RCAB backwards)
+004h 4 Number of entries (N)
+008h N*18h File List
+... .. File Data area
+File List entries:
+000h 10h Filename ("FILENAME.EXT", zeropadded)
+020h 4 Offset (from begin of Data area, increasing, 4-byte aligned)
+024h 4 Filesize in bytes (can be odd)
+
+| _______________________________ Entrysize=19h ________________________________
+
+WAD Format (Wipeout 2097)

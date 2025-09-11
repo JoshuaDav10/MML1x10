@@ -1,0 +1,66 @@
+PSXSPX SPECIFICATIONS - HTTPS://GITHUB.COM/INCBEE/UNARCHIVER/BLOB/MASTER/XADMASTER/XADSTUFFITXPARSER.M
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: https://github.com/incbee/Unarchiver/blob/master/XADMaster/XADStuffItXParser.m
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2390 characters
+Lines: 57
+================================================================================
+
+https://github.com/incbee/Unarchiver/blob/master/XADMaster/XADStuffItXParser.m
+
+Compact Pro aka Compactor (.cpt) (Macintosh) (1990s) (big-endian)
+
+MAC File Type,Creator IDs = "PACT","CPCT".
+
+Compact Pro (originally called Compactor) was a MAC archiver competing with
+StuffIt. There's also a DOS tool (ExtractorPC) for extracting .cpt files on PCs
+(albeit released in .EXE.sit.hqx format, making it unlikely that PC users could
+have used it).
+
+| Archive header:
+000h 1 File ID (always 01h)
+001h 1 Volume number (01h for single-volume, Other=Unknown)
+002h 2 Random Volume ID? (...must be same in all split volume files?)
+004h 4 Offset to Footer (from begin of file)
+008h .. Compressed files (resource+data fork pairs)
+... .. Footer (directory information)
+Footer format:
+000h 4 CRC32 XOR FFFFFFFFh on following bytes
+004h 2 Number of entries in root folder (including all child entries)
+006h 1 Comment length (usually 00h=None)
+007h N Comment
+007h+N .. File/Folder entries
+Folder entries, with [000h].bit=1:
+000h 1 Foldername length (N), plus bit7=Type (1=Folder)
+001h N Foldername ("FOLDERNAME")
+001h+N 2 Number of entries in this folder (including all child entries)
+File entries, with [000h].bit=0:
+000h 1 Filename length (N), plus bit7=Type (0=File)
+001h N Filename ("FILENAME.EXT")
+001h+N 1 Volume number (01h for single-volume, Other=Unknown)
+002h+N 4 Offset to compressed Resource (followed by compressed Data)
+006h+N 4 File type
+00Ah+N 4 File creator
+00Eh+N 4 Timestamp, creation (seconds since 1904)
+012h+N 4 Timestamp, modification (seconds since 1904)
+016h+N 2 Finder flags
+018h+N 4 CRC32 XOR FFFFFFFFh on uncompressed Resource + Data forks
+01Ch+N 2 Method/Flags (see below)
+01Eh+N 4 Filesize, uncompressed, Resource fork
+022h+N 4 Filesize, uncompressed, Data fork
+026h+N 4 Filesize, compressed, Resource fork
+02Ah+N 4 Filesize, compressed, Data fork
+Method/Flags:
+0 Encryption (0=None, 1=Encrypted, unknown how)
+1 Method for Resource fork (0=RLE8182, 1=RLE8182+LZSSHUF)
+2 Method for Data fork (0=RLE8182, 1=RLE8182+LZSSHUF)
+3-15 Unknown/unused (0)
+Note: RLE8182 and RLE8182+LZSSHUF are also used by Mac DiskDoubler.
+
+RLE8182 Compression:
+
+| This is same as RLE90, with two-byte escape code (81h,82h instead of 90h):
+81h,82h,00h Output 81h,82h
+81h,82h,01h..03h Output prevbyte 00h..02h times (this is not useful)
+81h,82h,04h Output prevbyte 03h times (useful if prev=81h, next=82h)

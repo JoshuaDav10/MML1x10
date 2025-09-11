@@ -1,0 +1,93 @@
+PSXSPX SPECIFICATIONS - STUCK /ACK SIGNAL: SEND A COMMAND (AT LEAST ONE 01H BYTE) TO BOTH CONTROLLER
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: stuck /ACK signal: Send a command (at least one 01h byte) to both controller
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1845 characters
+Lines: 84
+================================================================================
+
+stuck /ACK signal: Send a command (at least one 01h byte) to both controller
+slots.
+
+Sony Mouse Compatible Games
+
+| 3D Lemmings
+Alien Resurrection
+Area 51
+Ark of Time
+Atari Anniversary Edition
+Atlantis: The Lost Tales
+Breakout: Off the Wall Fun
+Broken Sword: The Shadow of the Templars
+Broken Sword II: The Smoking Mirror
+Clock Tower: The First Fear
+Clock Tower II: The Struggle Within
+Command & Conquer: Red Alert
+Command & Conquer: Red Alert - Retaliation
+Constructor (Europe)
+Die Hard Trilogy
+Die Hard Trilogy 2: Viva Las Vegas
+Discworld
+Discworld II: Missing Presumed...!?
+Discworld Noir
+Dune 2000
+Final Doom
+Galaxian 3
+Ghoul Panic
+Klaymen Klaymen: Neverhood no Nazon (Japan)
+Lemmings and Oh No! More Lemmings
+Monopoly
+Music 2000
+Myst
+Neorude (Japan)
+Perfect Assassin
+Policenauts (Japan)
+Puchi Carat
+Quake II
+Railroad Tycoon II
+Rescue Shot
+Risk
+Riven: The Sequel to Myst
+RPG Maker
+Sentinel Returns
+SimCity 2000
+Syndicate Wars
+Tempest 2000 (Tempest X3)
+Theme Aquarium (Japan)
+Transport Tycoon
+Warhammer: Dark Omen
+Warzone 2100
+X-COM: Enemy Unknown
+X-COM: Terror from the Deep
+Z
+
+Note: There are probably many more mouse compatible games.
+
+Plus: Dracula - The Resurrection
+
+Sony Mouse Component List
+
+PCB "TD-T41V/\, MITSUMI"
+
+Component Side:
+
+| 1x 3pin 4.00MHz "[M]4000A, 85 2"
+2x 2pin button (left/right)
+1x 8pin connector (to cable with shield and 7 wires)
+1x 3pin "811, T994I"
+2x 3pin photo transistor (black) ;\or so, no idea which one is
+2x 2pin photo diode (transparent) ;/sender and which is sensor
+1x 2pin electrolyt capacitor 16V, 10uF
+
+Solder/SMD Side:
+
+| 1x 32pin "(M), SC442116, FB G22K, JSAA815B"
+1x 14pin "BA10339F, 817 L67" (Quad Comparator)
+2x 3pin "LC" (amplifier for photo diodes)
+1x 3pin "24-" (looks like a dual-diode or so)
+plus many SMD resistors/capacitors
+
+Cable:
+
+| PSX.Controller.Pin1 JOYDAT ---- brown -- Mouse.Pin4

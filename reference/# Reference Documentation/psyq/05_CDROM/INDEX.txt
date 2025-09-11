@@ -1,0 +1,16 @@
+PSYQ DOCUMENTATION - CD-ROM system and file formats
+================================================================================
+Category: 05_CDROM
+Description: CD-ROM system and file formats
+Files: 9
+
+FILES IN THIS CATEGORY:
+  Cdemul.txt (205.0 KB)
+  Cdgen.txt (141.9 KB)
+  FileFormat47.txt (469.0 KB)
+  Filefrmt.txt (465.6 KB)
+  adv_cd.txt (17.0 KB)
+  cd4.txt (45.5 KB)
+  cd_ovw.txt (10.6 KB)
+  cdmaster.txt (9.1 KB)
+  cdrom.txt (31.7 KB)

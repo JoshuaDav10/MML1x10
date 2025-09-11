@@ -1,0 +1,36 @@
+PSXSPX SPECIFICATIONS - NEGATE THE AC LEVEL (IN LOWER 10BIT OF THE 16BIT MDEC VALUE) WHEN S=1.
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: negate the AC level (in lower 10bit of the 16bit MDEC value) when s=1.
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1129 characters
+Lines: 28
+================================================================================
+
+negate the AC level (in lower 10bit of the 16bit MDEC value) when s=1.
+
+Huffman codes for AC values BS v1/v2/v3/iki
+
+| 10 FE00h ;End of Block, EOB
+11s 0001h
+011s 0401h
+010xs 0002h,0801h
+0011xs 1001h,0C01h
+00101s 0003h
+00100xxxs 3401h,0006h,3001h,2C01h,0C02h,0403h,0005h,2801h
+0001xxs 1C01h,1801h,0402h,1401h
+00001xxs 0802h,2401h,0004h,2001h
+000001xxxxxxxxxxxxxxxx 0000h..FFFFh ;Escape code for raw 16bit values
+000001xxxxxx0000000000 0000h..FC00h ;Escape nonsense level=0 (used in v1)
+0000001xxxs 4001h,1402h,0007h,0803h,0404h,3C01h,3801h,1002h
+00000001xxxxs 000Bh,2002h,1003h,000Ah,0804h,1C02h,5401h,5001h,
+0009h,4C01h,4801h,0405h,0C03h,0008h,1802h,4401h
+000000001xxxxs 2802h,2402h,1403h,0C04h,0805h,0407h,0406h,000Fh,
+000Eh,000Dh,000Ch,6801h,6401h,6001h,5C01h,5801h
+0000000001xxxxs 001Fh,001Eh,001Dh,001Ch,001Bh,001Ah,0019h,0018h,
+0017h,0016h,0015h,0014h,0013h,0012h,0011h,0010h
+00000000001xxxxs 0028h,0027h,0026h,0025h,0024h,0023h,0022h,0021h,
+0020h,040Eh,040Dh,040Ch,040Bh,040Ah,0409h,0408h
+000000000001xxxxs 0412h,0411h,0410h,040Fh,1803h,4002h,3C02h,3802h,
+3402h,3002h,2C02h,7C01h,7801h,7401h,7001h,6C01h
+000000000000 Unused

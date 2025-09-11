@@ -1,0 +1,354 @@
+PSYQ DOCUMENTATION - CONF/SCEE/96April/cd_ovw.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/CONF/SCEE/96April/cd_ovw.pdf
+Converted: Wed Sep 10 02:47:40 PM CDT 2025
+================================================================================
+
+CD Overview - Part One
+
+        Ben Fawcett
+ Developer Support Engineer
+          S.C.E.E.            TM
+            Covered topics
+
+                         Functionality
+
+                         Speed Considerations
+
+                         CD Errors
+
+                         Multi-CD Games
+
+CD Overview : Part One
+                                                TM
+            Functionality
+                    Play Music
+                         XA-ADPCM
+                         CD-DA
+
+
+                    Streaming
+                         Movies - CD Overview : Part Two
+                         Data / World
+
+
+
+
+CD Overview : Part One
+                                                           TM
+            Play Music
+                ADPCM
+                    Compressed 8X to 32X
+                    Easy to do: See \PSX\SAMPLE\CD\TUTO\TUTO5.C
+                    Continued in Sound Seminar
+
+                DA / Red Book
+                    Lossless
+                    Easy to do: See \PSX\SAMPLE\CD\TUTO\TUTO4.C
+                    Continued in Sound Seminar
+
+
+CD Overview : Part One
+                                                                  TM
+            Speed Issues
+
+                Minimize seeks / Data organisation
+                Read asynchronously
+                Avoid speed changes
+
+
+
+
+CD Overview : Part One
+                                                     TM
+            CdSearchFile vs. Direct Seek
+             CdSearchFile() has a single directory buffer, which causes
+             it to seek multiple times to go to any file.
+                                                 First Seek to read TOC
+
+                                                 Successive seeks for each subdirectory
+
+
+                                                 Final seek to file
+
+
+
+
+CD Overview : Part One
+                                                                                          TM
+            Hard-code file locations - .CCS
+
+    Four easy steps :
+         Use CDGEN to do a layout (works without CDW-900E)
+             Put MAIN.EXE last in track 1 (so size can vary)
+             Save as .CCS file
+         Write/use a utility to create POS.H with position info from
+         CCS file
+             Absolute file location appears on the line following each sourcefile
+             path
+         Compile with POS.H
+         Burn CD / Build emulation image
+
+
+CD Overview : Part One
+                                                                                TM
+            Hard-code File Locations - .MAP
+
+          Can also use Buildcd to generate .MAP
+          file
+          Includes more information : size,
+          physical location, logical location
+          Paths can be difficult to find without
+          prior knowledge
+
+
+
+CD Overview : Part One
+                                                   TM
+            Data Organisation
+          +/- 100 sector seeks require rotation of
+          CD read head, but not linear motion, so
+          they are much faster than longer seeks
+
+          Optimize data layout to take advantage
+          of this
+
+          Set up data in contiginous blocks
+
+
+CD Overview : Part One
+                                                     TM
+            Set data up in contiguous
+            blocks
+                     MODEL.TMD, MODEL.TIM, MODEL.DAT
+                     to be read at same time
+                                                       MODEL.TIM
+                              MODEL.TMD
+
+
+
+
+                BAD
+
+
+
+
+                                          GOOD
+
+
+   MODEL.DAT                 MODEL.TIM
+
+                                               MODEL.DAT
+CD Overview : Part One
+                                                                   TM
+            Read asynchronously
+                  Main loop:
+                               ...
+                               ERROR:
+                                   while( CdControl(CdlSetloc, (u_char *)&fp.pos, 0) == 0 );
+                                   if( CdRead(nsector, sectbuf[I], CdlModeSpeed) == 0 )
+                                            goto ERROR:
+
+                                    /* Since CdRead() runs in the background, the program can do
+                                     * another task in the foreground. The current reading status can
+                                     * be modified in CdReadSync().
+                                     */
+
+                                    while ((cnt = CdReadSync(1, 0)) > 0)
+                                    {
+                                                               :
+                                                               :
+                                               /* Foreground routines */
+                                                               :
+                                                               :
+                                    }
+
+                                    if (cnt == -1) goto ERROR:
+
+
+
+
+CD Overview : Part One
+                                                                                                        TM
+            Avoid speed changes
+          Spin up and spin down takes a lot of
+          time
+               Avoid using CD-DA with a lot of intermittant CD
+               access
+               Use XA audio at double speed instead
+
+          Do not use CdlStop, use CdlPause
+          instead
+
+
+CD Overview : Part One
+                                                                 TM
+            CD Error issues
+
+                         Read errors
+
+                         Seek errors
+                           Retry
+                           Overshoot
+
+
+
+
+CD Overview : Part One
+                                       TM
+            Read Errors
+          CdControl() only returns successful
+          acceptance of CD command, not successful
+          completion of CD command
+
+          Bad Strategy:
+               if (CdControl(CdlReadN, pos, result) != 1) goto error;
+
+          Good strategy
+               Set up a watchdog timer in VSyncCallback for retry
+               Example: CdRead waits 8 seconds
+
+
+CD Overview : Part One
+                                                                        TM
+            Seek Errors
+                                    If the seek does not settle within
+       CD read head can overshoot   a limited time, the head returns
+       a few times before success   to the center and retries
+
+
+
+
+CD Overview : Part One
+                                                                         TM
+            Seek Errors (cont.)
+                                            A seek past the end of
+                                            data is fatal
+                            Seek
+                            overshoot
+                            Seek position
+
+
+
+
+                            No data
+
+                         End of data
+
+
+CD Overview : Part One
+                                                                     TM
+            Seek errors (cont.)
+                                            Solution: Put 3 minutes of
+                          Seek overshoot    dummy data at end of CD
+                          OK (in dummy      (may be real data that you
+                          data)             do not seek into, but only
+                                            read)
+                            Seek position
+
+
+                              3 minute dummy data
+
+                            No data
+
+                         End of user data
+
+
+CD Overview : Part One
+                                                                     TM
+            Multi CD games
+          When the CD cover is opened, the CD
+          subsystem is put into an indeterminate state
+
+          Two ways to tell when CD subsystem state is
+          restored :
+                Polling shell open flag then timing
+                Seeking until a non-error is returned
+
+
+
+
+CD Overview : Part One
+                                                         TM
+            CD Status Flags
+
+
+      /* Status Contents */
+      #define CdlStatPlay        0x80   /* playing CD-DA */
+      #define CdlStatSeek        0x40   /* seeking */
+      #define CdlStatRead        0x20   /* reading data sectors */
+      #define CdlStatShellOpen   0x10   /* once shell open */
+      #define CdlStatSeekError   0x04   /* seek error detected */
+      #define CdlStatStandby     0x02   /* spindle motor rotating */
+      #define CdlStatError       0x01   /* command error detected */
+
+
+
+
+CD Overview : Part One
+                                                                       TM
+            Polling Shell Open Flag
+
+      Psuedocode:
+      // Show “Put in Disk #2...” screen
+      while (!(status & CdlStatShellOpen)); // wait for lid to open
+      while (status & CdlStatShellOpen);       // wait for lid to close
+      // Wait for a few seconds
+      // Continue ...
+
+
+
+
+CD Overview : Part One
+                                                                          TM
+            Seeking until non-error
+            returned
+                         Use logical seek, because a physical seek will
+                           be successful for non-PlayStation CDs
+                         If DA CD is anticipated, use physical seek
+
+         Pseudocode:
+         // Show “Put in Disk #2...” screen
+         while (!(status & CdlStatShellOpen)); // wait for lid to open
+         while (CdControlB(CdlSeekL, pos, 0)) == error); // wait for success
+         // Continue ...
+
+
+
+
+CD Overview : Part One
+                                                                               TM
+            New functionality
+          New libraries will include functions
+          which aid in the detection of a second
+          CD
+
+          These include :
+               CdDiskReady()
+               CdGetDiskType()
+
+
+
+CD Overview : Part One
+                                                   TM
+            Summary
+          Reduce seeks / loading times
+               Optimise your data layout
+               Use hard-coded file locations
+
+          CD errors will occur
+                 Handle them appropriately
+
+          Tomorrow - CD Overview Part Two
+
+
+CD Overview : Part One
+                                               TM
+                         The End
+
+
+
+
+CD Overview : Part One
+                                   TM
+

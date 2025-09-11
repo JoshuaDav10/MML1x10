@@ -1,0 +1,27 @@
+MIPS INSTRUCTION SET REFERENCE - PREF NEVER GENERATES A MEMORY OPERATION FOR A LOCATION WITH AN UNCACHED MEMORY ACCESS TYPE.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: PREF never generates a memory operation for a location with an uncached memory access type.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1348 characters
+Lines: 20
+================================================================================
+
+PREF never generates a memory operation for a location with an uncached memory access type.
+            If PREF results in a memory operation, the memory access type used for the operation is determined by the memory
+            access type of the effective address, just as it would be if the memory operation had been caused by a load or store to
+            the effective address.
+            For a cached location, the expected and useful action for the processor is to prefetch a block of data that includes the
+            effective address. The size of the block and the level of the memory hierarchy it is fetched into are implementation
+            specific.
+            The hint field supplies information about the way the data is expected to be used. With the exception of PrepareFor-
+            Store, a hint value cannot cause an action to modify architecturally visible state. A processor may use a hint value to
+            improve the effectiveness of the prefetch action.
+
+
+
+
+222                                                             MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                              Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+Prefetch (cont.)                                                                                                             PREF

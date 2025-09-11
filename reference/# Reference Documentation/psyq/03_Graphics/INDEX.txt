@@ -1,0 +1,17 @@
+PSYQ DOCUMENTATION - GPU, GTE, and graphics programming
+================================================================================
+Category: 03_Graphics
+Description: GPU, GTE, and graphics programming
+Files: 10
+
+FILES IN THIS CATEGORY:
+  3dgraph.txt (267.2 KB)
+  Sprite.txt (225.7 KB)
+  adv_gpu.txt (19.3 KB)
+  adv_gte.txt (17.1 KB)
+  anim.txt (29.2 KB)
+  art5.txt (9.0 KB)
+  artpath.txt (13.5 KB)
+  gpu6.txt (5.8 KB)
+  graph.txt (43.1 KB)
+  gte7.txt (12.5 KB)

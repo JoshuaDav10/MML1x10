@@ -1,0 +1,34 @@
+MIPS INSTRUCTION SET REFERENCE - EXCEPTIONS:
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Exceptions:
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1008 characters
+Lines: 25
+================================================================================
+
+Exceptions:
+            Coprocessor Unusable, Reserved Instruction, TLB Refill, TLB Invalid, TLB Modified, Address Error, Watch
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                               271
+
+                               Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+SWC2
+
+
+
+
+  Store Word from Coprocessor 2                                                                                           SWC2
+
+       31                   26 25            21 20             16 15                                                        0
+               SWC2
+                                    base                rt                                    offset
+              111010
+                 6                    5                  5                                     16
+
+            Format:    SWC2 rt, offset(base)                                                                         MIPS32
+
+            Purpose:

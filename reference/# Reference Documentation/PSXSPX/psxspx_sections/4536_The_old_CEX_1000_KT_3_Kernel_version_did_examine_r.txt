@@ -1,0 +1,89 @@
+PSXSPX SPECIFICATIONS - THE OLD "CEX-1000 KT-3" KERNEL VERSION DID EXAMINE R2, BUT IT "FORGOT" TO
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: The old "CEX-1000 KT-3" Kernel version did examine r2, but it "forgot" to
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 3164 characters
+Lines: 80
+================================================================================
+
+The old "CEX-1000 KT-3" Kernel version did examine r2, but it "forgot" to
+previously load cop0r13 to r2, so it did randomly examine a garbage value. The
+patch inserts the missing opcode, used in elo2 at 80033740h, and in Pandemonium
+II at 8007F3FCh:
+
+| 240A00B0 mov r10,0B0h ;\ 00000000 nop
+0140F809 call r10 ; 00000000 nop
+24090056 +mov r9,56h ;/ 241A0100 mov k0,100h
+3C0Axxxx mov r10,xxxx0000h ;\ 8F5A0008 mov k0,[k0+8h]
+3C09xxxx mov r9,xxxx0000h ; 00000000 nop
+8C420018 mov r2,[r2+06h*4] ;=C(06h) ; 8F5A0000 mov k0,[k0]
+254Axxxx add r10,xxxxh ;=@@new_data ; 00000000 nop
+2529xxxx add r9,xxxxh ;=@@new_data_end ;/ 235A0008 addt k0,8h
+@@copy_lop: ;\ AF410004 mov [k0+4h],r1
+8D430000 mov r3,[r10] ; AF420008 mov [k0+8h],r2
+254A0004 add r10,4h ; AF43000C mov [k0+0Ch],r3
+24420004 add r2,4h ; AF5F007C mov [k0+7Ch],ra
+1549FFFC jne r10,r9,@@copy_lop ; 40026800 mov r2,cop0r13
+AC43FFFC +mov [r2-4h],r3 ;/ 00000000 nop
+
+Alternately, same as above, but using k0/k1 instead of r10/r9, used in Ridge
+Racer at 80047B14h:
+
+| 240A00B0 mov r10,0B0h ;\ 00000000 nop
+0140F809 call r10 ; 00000000 nop
+24090056 +mov r9,56h ;/ 241A0100 mov k0,100h
+3C1Axxxx mov k0,xxxx0000h ;\ 8F5A0008 mov k0,[k0+8h]
+3C1Bxxxx mov k1,xxxx0000h ; 00000000 nop
+8C420018 mov r2,[r2+06h*4] ;=C(06h) ; 8F5A0000 mov k0,[k0]
+275Axxxx add k0,xxxxh ;=@@new_data ; 00000000 nop
+277Bxxxx add k1,xxxxh ;=@@new_data_end ;/ 235A0008 addt k0,8h
+@@copy_lop: ;\ AF410004 mov [k0+4h],r1
+8F430000 mov r3,[k0] ; AF420008 mov [k0+8h],r2
+275A0004 add k0,4h ; AF43000C mov [k0+0Ch],r3
+24420004 add r2,4h ; AF5F007C mov [k0+7Ch],ra
+175BFFFC jne k0,k1,@@copy_lop ; 40026800 mov r2,cop0r13
+AC43FFFC +mov [r2-4h],r3 ;/ 00000000 nop
+
+Alternately, slightly different code used in metal_gear_solid at 80095CC0h, and
+in alone1 at 800A3ECCh:
+
+| 24090056 mov r9,56h ;\
+240A00B0 mov r10,0B0h ; B(56h) GetC0Table
+0140F809 call r10 ;
+00000000 +nop ;/
+8C420018 mov r2,[r2+06h*4] ;=00000C80h = exception_handler = C(06h)
+00000000 nop
+24420028 add r2,28h
+00407821 mov r15,r2
+3C0Axxxx lui r10,xxxxh ;\@@ori_data ;\
+254Axxxx add r10,xxxxh ;/ ;
+3C09xxxx lui r9,xxxxh ;\@@ori_data_end ; @@ori_data:
+2529xxxx add r9,xxxxh ;/ ; AF410004 mov [k0+4h],r1
+@@verify_lop: ; AF420008 mov [k0+8h],r2
+8D430000 mov r3,[r10] ; AF43000C mov [k0+0Ch],r3
+8C4B0000 mov r11,[r2] ; AF5F007C mov [k0+7Ch],ra
+254A0004 add r10,4h ; 40037000 mov r3,cop0r14
+146B000E jne r3,r11,@@verify_mismatch ; 00000000 nop
+24420004 +add r2,4h ;
+1549FFFA jne r10,r9,@@verify_lop ;
+00000000 +nop ;/
+01E01021 mov r2,r15
+3C0Axxxx lui r10,xxxxh ;\@@new_data ;\
+254Axxxx add r10,xxxxh ;/ ;
+3C09xxxx lui r9,xxxxh ;\@@new_data_end ; @@new_data:
+2529xxxx add r9,xxxxh ;/ ; AF410004 mov [k0+4h],r1
+@@copy_lop: ; AF420008 mov [k0+8h],r2
+8D430000 mov r3,[r10] ; 40026800 mov r2,cop0r13
+00000000 nop ; AF43000C mov [k0+0Ch],r3
+AC430000 mov [r2],r3 ; 40037000 mov r3,cop0r14
+254A0004 add r10,4h ; AF5F007C mov [k0+7Ch],ra
+1549FFFB jne r10,r9,@@copy_lop ;
+24420004 +add r2,4h ;/
+@@verify_mismatch:
+
+Alternately, a bugged/nonfunctional homebrew variant (used by Hitmen's
+"minimum" demo):
+
+| ;BUG1: 8bit "movb r6" should be 32bit "mov r6"
+;BUG2: @@copy_lop should transfer 6 words (not 7 words)

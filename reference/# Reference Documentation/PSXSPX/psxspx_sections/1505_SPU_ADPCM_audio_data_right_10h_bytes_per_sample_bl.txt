@@ -1,0 +1,58 @@
+PSXSPX SPECIFICATIONS - ... .. SPU-ADPCM AUDIO DATA, RIGHT ? (10H BYTES PER SAMPLE BLOCK)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: ... .. SPU-ADPCM audio data, right ? (10h bytes per sample block)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1766 characters
+Lines: 49
+================================================================================
+
+... .. SPU-ADPCM audio data, right ? (10h bytes per sample block)
+
+Audio seems to be 22050Hz stereo, however, chunks with size=D38h have odd
+amounts of sampleblocks, so it isn't as simple as having left/right in
+first/second half.
+
+Policenauts (Japan, 1996 Konami) (NAUTS\MOVIE\*.MOV)
+
+| STR Sector Header:
+No STR Sector header (first sector starts directly with "VMNK" chunk)
+First chunk (800h bytes):
+000h 4 ID "VMNK" (aka KNMV backwards, maybe for Konami Video/Movie)
+004h 4 Unknown (01h)
+008h 4 Unknown (01h)
+00Ch 4 Unknown (F0h)
+010h 4 Size of KLBS chunks? (40000h)
+014h 4 Bitmap X1 (aka left border)? (16pix, 10h)
+018h 4 Bitmap Y1 (aka upper border)? (16pix, 10h)
+01Ch 4 Bitmap Width (288pix, 120h)
+020h 4 Bitmap Height (144pix, 90h)
+024h 7E4h Zerofilled
+Further chunks (40000h bytes, each):
+000h 8 Zerofilled
+008h 4 Chunk ID "KLBS" (aka SBLK backwards, maybe for Stream Block)
+00Ch 4 Chunk Size (usually 40000h)
+010h 4 Number of Name List entries
+014h 4 Number of Name List entries (same as above)
+018h 8 Zerofilled
+020h N*30h Name List
+... .. Data (referenced from Name List)
+... .. Zeropadding (to end of 40000h-byte chunk)
+
+The Name List does resemble a file archive, however, the "filenames" are just
+Type IDs (eg. all picture frames do have the same name).
+
+| Name List entries:
+000h 8 Zerofilled
+008h 8 Data Type Name (eg. "SCIPPDTS")
+010h 4 Time when to play/display the frame (0 and up)
+014h 4 Time duration for that frame (usually 14h for Picture frames)
+018h 4 Data Offset in bytes (from begin of chunk)
+01Ch 4 Data Size in bytes
+020h 10h Zerofilled
+
+Data Formats for the different Data Types...
+
+| Type "SDNSHDTS" aka SNDS,STDH - SoundStdHeader (Size=800h, Duration=0)
+000h 4 Maybe Pitch? (800h) (big-endian)
+004h 4 Maybe Pitch? (800h) (big-endian)

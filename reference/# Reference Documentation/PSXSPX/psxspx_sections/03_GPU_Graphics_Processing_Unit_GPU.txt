@@ -1,0 +1,39 @@
+PSXSPX SPECIFICATIONS - GRAPHICS PROCESSING UNIT (GPU)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Graphics Processing Unit (GPU)
+Chunked: Wed Sep 10 03:31:04 PM CDT 2025
+Size: 400 characters
+================================================================================
+
+Graphics Processing Unit (GPU)
+
+GPU I/O Ports, DMA Channels, Commands, VRAM
+
+GPU Render Polygon Commands
+
+GPU Render Line Commands
+
+GPU Render Rectangle Commands
+
+GPU Rendering Attributes
+
+GPU Memory Transfer Commands
+
+GPU Other Commands
+
+GPU Display Control Commands (GP1)
+
+GPU Status Register
+
+GPU Versions
+
+GPU Depth Ordering
+
+GPU Video Memory (VRAM)
+
+GPU Texture Caching
+
+GPU Timings
+
+GPU (MISC)

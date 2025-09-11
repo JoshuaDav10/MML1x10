@@ -1,0 +1,25 @@
+MIPS INSTRUCTION SET REFERENCE - SPECIAL                          R                                                            SRL
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: SPECIAL                          R                                                            SRL
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1005 characters
+Lines: 17
+================================================================================
+
+SPECIAL                          R                                                            SRL
+                                    0000                 rt                rd               sa
+              000000                          1                                                           000010
+                 6                   4        1          5                 5                5                6
+
+            Format:    ROTR rd, rt, sa                                                               SmartMIPS Crypto
+                                                                                                      MIPS32 Release 2
+
+            Purpose:
+            To execute a logical right-rotate of a word by a fixed number of bits
+
+            Description: rd ← rt ↔(right) sa
+            The contents of the low-order 32-bit word of GPR rt are rotated right; the word result is placed in GPR rd. The
+            bit-rotate amount is specified by sa.
+
+            Restrictions:

@@ -1,0 +1,40 @@
+PSXSPX SPECIFICATIONS - (XORED BY FFH), HOWEVER, THE CDROM BIOS DOES ALWAYS USE BIT0=1, SO THE
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: (XORed by FFh), however, the CDROM BIOS does always use bit0=1, so the
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1213 characters
+Lines: 31
+================================================================================
+
+(XORed by FFh), however, the CDROM BIOS does always use bit0=1, so the
+inversion feature is never used.
+
+For the whole SCEx string, there must be at least one 00h byte inserted between
+each character (or some Char=Dummy mismatch, which results in Char=00h either),
+and there should be a few more 00h bytes preceeding the first character ("S").
+
+Note: Modchips didn't bother to reproduce that new SCEx transfers, instead they
+have simply bypassed it by injecting the 250 baud SCEx string to some analog
+lower level signal.
+
+CXD2938Q - CX(3Bxxxx) - Some Changed Bits
+
+Same as in older version, but initialized slightly differently: CXD2545Q used
+CX(3B2250) whilst CXD2938Q is using CX(3B7250).
+
+CXD2938Q - CX(3Cxxxx) - TzcCoutSelect with New/Changed Extra Bits
+
+The CXD2545Q used two 8bit commands, CX(3C) and CX(3D), for TzcOut selection,
+which are now replaced by a single 24bit command, CX(3Cxxxx), and which do
+include a new mode related to New SCEx.
+
+| CXD2545Q CXD2938Q
+CX(3C) CX(3C0080) TzcCoutSelectHPTZC;\ 
+
+CXD2938Q - CX(8xxxxx) - Disc Mode with New/Changed Extra Bits
+
+Command CX(8xx) has been 12bit wide on CXD2545Q, and is now expanded 24bit
+width (with some changed/unknown bits).
+
+| CXD2545Q CXD2938Q

@@ -1,0 +1,41 @@
+MIPS INSTRUCTION SET REFERENCE - RESERVED INSTRUCTION
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Reserved Instruction
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1501 characters
+Lines: 32
+================================================================================
+
+Reserved Instruction
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                                   311
+
+                                 Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+WSBH
+
+
+
+
+  Word Swap Bytes Within Halfwords                                                                                     WSBH
+
+       31                   26 25           21 20             16 15              11 10              6   5                 0
+             SPECIAL3                 0                                                   WSBH                BSHFL
+                                                        rt                rd
+              011111                00000                                                 00010               100000
+                 6                   5                  5                 5                 5                    6
+
+            Format:    wsbh rd, rt                                                                      MIPS32 Release 2
+
+            Purpose:
+            To swap the bytes within each halfword of GPR rt and store the value into GPR rd.
+
+            Description: rd ← SwapBytesWithinHalfwords(rt)
+            Within each halfword of GPR rt the bytes are swapped, and stored in GPR rd.
+
+            Restrictions:
+            In implementations prior to Release 2 of the architecture, this instruction resulted in a Reserved Instruction Excep-
+            tion.

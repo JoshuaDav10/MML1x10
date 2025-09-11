@@ -1,0 +1,44 @@
+MIPS INSTRUCTION SET REFERENCE - RESERVED INSTRUCTION
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Reserved Instruction
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 2366 characters
+Lines: 35
+================================================================================
+
+Reserved Instruction
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                                 235
+
+                                Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+ROUND.L.fmt
+
+
+
+
+   Floating Point Round to Long Fixed Point                                                                                ROUND.L.fmt
+
+              31                   26 25              21 20             16 15               11 10               6   5                  0
+                      COP1                                       0                                                       ROUND.L
+                                             fmt                                    fs                  fd
+                      010001                                   00000                                                       001000
+                         6                    5                  5                   5                  5                     6
+
+                   Format:     ROUND.L.S          fd, fs                                                                    MIPS64
+                                                                                                                    MIPS32 Release 2
+                               ROUND.L.D          fd, fs                                                                    MIPS64
+                                                                                                                    MIPS32 Release 2
+
+                   Purpose:
+                   To convert an FP value to 64-bit fixed point, rounding to nearest
+
+                   Description: fd ← convert_and_round(fs)
+                   The value in FPR fs, in format fmt, is converted to a value in 64-bit long fixed point format and rounded to near-
+                   est/even (rounding mode 0). The result is placed in FPR fd.
+                   When the source value is Infinity, NaN, or rounds to an integer outside the range -263 to 263-1, the result cannot be
+                   represented correctly and an IEEE Invalid Operation condition exists. In this case the Invalid Operation flag is set in
+                   the FCSR. If the Invalid Operation Enable bit is set in the FCSR, no result is written to fd and an Invalid Operation

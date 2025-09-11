@@ -1,0 +1,292 @@
+PSXSPX SPECIFICATIONS - LEADING SPU-ADPCM
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Leading SPU-ADPCM
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 10713 characters
+Lines: 283
+================================================================================
+
+Leading SPU-ADPCM
+
+| EA videos ;\
+Crusader ; chunks
+Policenauts ;/
+AKAO videos
+
+Metal Gear Solid (MGS\ZMOVIE.STR, 47Mbyte)
+
+This is an archive dedicated to STR movies (with number of frames instead of
+filesize entries). Metal Gear Solid does also have cut-scenes with polygon
+animations (but those are supposedly stored elsewhere?).
+
+| 000h 4 Number of entries (4)
+004h N*8 File List
+... .. Zerofilled
+
+File List entries:
+
+| 000h 2 Unknown... decreasing values?
+002h 2 Number of Frames (same as last frame number in STR header)
+004h 4 Offset/800h (to begin of STR movie, with subtiltes in 1st sector)
+
+Disc 1 has four movies: The first one has a bit more than 12.5 sectors/frame,
+the other three have a bit more than 10 sectors/frame (eg. detecting the
+archive format could be done checking for entries wirh 8..16 sectors/frame).
+
+Example, from Disc 1:
+
+| 04 00 00 00
+ED 97 9E 01 01 00 00 00 ;num sectors=1439h ;div19Eh=C.81h ;97EDh-6137h=36B6h
+37 61 86 01 3A 14 00 00 ;num sectors=0F41h ;div186h=A.03h ;6137h-38D0h=2867h
+D0 38 10 03 7B 23 00 00 ;num sectors=1EA1h ;div310h=A.00h ;38D0h-2302h=15CEh
+02 23 73 02 1C 42 00 00 ;num sectors=1881h ;div273h=A.01h ;2302h-0000h=2302h
+
+The files in the ZMOVIE.STR archive start with subtitles in 1st sector (this is
+usually/always only one single sector for the whole movie):
+
+| 000h 2 STR ID (0160h) ;\
+002h 2 STR Type (0001h=Subtitles) ;
+004h 2 Sector number within Subtitles (0) ; STR
+006h 2 Number of Sectors with Subtitles (1) ; header
+008h 4 Frame number (1) ;
+00Ch 4 Data size counted in 4-byte units (same as [02Ch]/4) ;
+010h 10h Zerofilled ;/
+020h 4 Unknown (2) ;\
+024h 4 Unknown (1AAh, 141h, or 204h) ; Data
+028h 4 Unknown (00100000h) ; part
+02Ch 4 Size of all Subtitle entries in bytes plus 10h ;
+030h .. Subtitle entries ;/
+... .. Zeropadding to 800h-byte boundary ;-padding
+
+Subtitle entries:
+
+| 000h 4 Offset from current subtitle to next subtitle (or 0=Last subtitle)
+004h 4 First Frame number when to display the subtitle?
+008h 4 Number of frames when to display the subtitle?
+00Ch 4 Zero
+010h .. Text string, terminated by 00h
+... .. Zeropadding to 4-byte boundary
+
+The text strings are ASCII, with special 2-byte codes (80h,7Bh=Linebreak,
+1Fh,20h=u-Umlaut, etc).
+
+| ________________________ Customized STR Video Headers ________________________
+
+Viewpoint (with slightly modified STR header)
+
+| 008h 4 Frame number (0=First) ;
+
+Capcom games
+
+Resident Evil 2 (ZMOVIE\*.STR, PL0\ZMOVIE\*.STR)
+
+Super Puzzle Fighter II Turbo (STR/CAPCOM15.STR)
+
+| 01Ch 4 Sector number of 1st sector of current frame ;
+
+Chrono Cross Disc 2 Video
+
+Chrono Cross Disc 1 does have normal STR headers, but Disc 2 has Type.bit8
+toggled:
+
+| 002h 2 STR Type (8101h=Disc 2) ;
+
+And, the Chrono Cross "final movie" does reportedly have "additional
+properties". Unknown, what that means, it does probably refer to the last movie
+on Chrono Cross Disc 2, which is quite huge (90Mbyte), and has lower resolution
+(160x112), and might have whatever "additional properties"?
+
+Need for Speed 3
+
+Need for Speed 3 Hot Pursuit (MOVIES\*.XA, contains videos, not raw XA-ADPCM)
+
+Jackie Chan Stuntmaster (FE\MOVIES\*.STR)
+
+With slightly modified STR headers:
+
+| 014h 4 Number of Frames (..excluding last some frames?) ;-instead BS[0..3]
+018h 4 Unlike the above modified entry, this is normal ;-copy of BS[4..7]
+
+ReBoot (MOVIES\*.WXA)
+
+This has leading XA-ADPCM, and customized STR header:
+
+| 014h 2 Type (0000h=Normal, 01FFh=Empty frames at end of video)
+016h 2 Number of Frames (excluding empty ones at end of video)
+018h 8 Zerofilled
+
+Gran Turismo 1 (230Mbyte STREAM.DAT) and Gran Turismo 2 (330Mbyte STREAM.DAT)
+
+These two games use BS iki format, and (unlike other iki videos) also special
+STR headers:
+
+| 002h 2 STR Type (5349h) ("IS") ;-special (instead 8001h)
+010h 2 Total number of frames in video ;-special (instead width)
+012h 2 Flags (bit15=1st, bit14=last) ;-special (instead height)
+014h 8 Zero ;-special (instead BS header copy)
+020h 7E0h Data (in BS iki format) ;-BS iki header (with width/height)
+
+Caution: The STR header values aren't constant throughout the frame:
+
+| Namely, flags in [012h] are toggled on first/last sector of each frame,
+and of course [04h] does also increase per sector.
+
+PGA Tour 96, 97, 98 (VIDEO\..\*.XA and ZZBUFFER\*.STR)
+
+Used by all movies in PGA Tour 96, 97 (and for the ZZBUFFER\BIGSPY.STR dummy
+padding movie in PGA Tour 98).
+
+The videos have normal BS v2 data, but the Frame Size entry is 8 smaller than
+usually. As workaround, always load [0Ch]+8 for all movies with standard STR
+headers (unless that would exceed [06h]*7E0h).
+
+| 00Ch 4 Frame Size-8 (ie. excluding 8-byte BS header) ;instead of Size-0
+
+The padding videos in ZZBUFFER folder have additional oddities in STR header:
+
+| ZZBUFFER\SPY256.STR [14h..1Fh]=normal copy of 8-byte BS v2 header and zero
+ZZBUFFER\SPYGLASS.STR [14h..1Fh]=zerofilled ;\BS v1
+ZZBUFFER\SPYTEST.STR [14h..1Fh]=00 00 10 00 00 00 00 09 00 00 07 EE ;/
+ZZBUFFER\BIGSPY.STR Used in PGA Tour 98 (instead of above three files)
+
+SPYTEST.STR has nonsense quant values exceeding the 0000h..003Fh range (first
+frame has quant=00B1h, and later frames go as high as quant=FFxxh, that kind of
+junk is probably unrelated to BS fraquant). The oddities for SPYTEST.STR do
+also occur in some frames in PGA Tour 98 BIGSPY.STR. Anyways, those ZZBUFFER
+files seem to be only unused padding files.
+
+Alice in Cyber Land (*.STR)
+
+Note: First sector contains XA-ADPCM audio (video starts in 2nd sector).
+
+| STR Sector Header:
+002h 2 STR Type (0000h=Alice in Cyber Land video) ;-special
+008h 4 Frame number (1=First) (bit15 set in last frame, or FFFFh)
+010h 10h Zerofilled (instead width/height and BS header copy) ;-special
+020h 7E0h Data (in BS v2 format)
+
+Frames are always 320x240.
+
+The frame number of the last used frame of a movie has the bit15 set. After
+that last frame, there are some empty frame(s) with frame number FFFFh.
+
+For some reason there are "extra audio sectors in between movies" (uh?).
+
+Many of the movies have a variable frame rate. All movies contain frames
+sequences that match one of the following frame rates: 7.5 fps, 10 fps, 15 fps,
+30 fps.
+
+Encrypted iki (Panekit - Infinitive Crafting Toy Case)
+
+| 014h 8 Copy of decrypted BS header (instead of encrypted BS header)
+
+Princess Maker: Yumemiru Yousei (PM3.STR)
+
+Parappa (Japanese Demo version only) (S0/GUIDE.STR)
+
+These files do have BS ID=3000h (except, the first and last some frames have
+nromal ID=3800h). The STR header is quite normal (apart from reflecting the odd
+BS ID):
+
+| 016h 2 Copy of BS ID, 3000h in most frames (instead of 3800h)
+020h 7E0h Data (in BS format, also with BS ID 3000h, instead of 3800h)
+
+Starblade Alpha and Galaxian 3
+
+These movies have Extra stuff in the data section. The STR header is quite
+normal (apart from reflecting the Extra stuff):
+
+| 00Ch 4 Frame Size in bytes (=size of ExtraHeader + BsData + ExtraData)
+014h 4 Copy of Extra Header ;instead of BS[0..3]
+018h 4 Copy of BS[0..3] ;instead of BS[4..7]
+020h 7E0h Data (ExtraHeader + BsData + ExtraData)
+
+The data part looks as so:
+
+| 000h 2 Size of BS Data area (S1) ;\Extra Header
+002h 2 Size of Extra Data area (S2) ;/
+004h S1 BS Data (in BS v3 format) ;-BS Data
+.. S2 Extra Data (unknown purpose) ;-Extra Data
+
+Note: Starblade Alpha does use that format for GAMEn.STR and NAME.STR in FLT
+and TEX folders (the other movies in that game are in normal STR format).
+
+Largo Winch: Commando SAR (FMV\NSPIN_W.RNG)
+
+This is a somewhat "normal" movie, without audio, and with the STR headers
+moved to the begin of the file:
+
+| 000h Nx20h STR Headers ;size = filesize/800h*20h
+... Nx7E0h Data ;size = filesize/800h*7E0h
+
+Note: The movie contains the rotating "W" logo, which is looped in Start
+screen.
+
+Player Manager (1996, Anco Software) (FILMS\1..3\*.STR)
+
+| 006h 2 Number of Sectors in this Frame-1 (8..9 = 9..10 sectors)
+00Ch 4 Frame Size in bytes (8..9*7E0h = 3F00h or 46E0h)
+010h 2 Bitmap Width (always F0h)
+012h 2 Bitmap Width (always 50h)
+014h 0Ch Zerofilled (instead copy of BS header or copy of Extra header)
+020h 7E0h Data (Extra Stuff, BS v2 data, plus Unused stuff)
+
+The data part occupies 9-10 sectors, consisting of:
+
+| 0000h Extra Stuff (7E0h bytes, whatever, often starts with 00,FF,00,FF,..)
+07E0h BS v2 data (3720h or 3F00h bytes, including FFh-padding)
+... Unused Sector (7E0h bytes, same as in previous frame or zerofilled)
+
+The compressor tries to match the picture quality to the number of sectors per
+frame, but it's accidentally leaving the last sector unused:
+
+| For 9 sectors: Only 1..7 are used, sector 8 is same as in previous frame
+For 10 sectors: Only 1..8 are used, sector 9 is zerofilled
+
+Apart from the odd format in FILMS\1..3\*.STR, the game does also have normal
+videos in FILMS\*.STR.
+
+Chiisana Kyojin Microman (DAT\STAGE*\*.MV)
+
+The .MV files have 5 sectors/frame: Either 5 video sectors without audio, or
+4-5 video sectors plus XA-ADPCM audio (in the latter case, audio is in each 8th
+sector (07h,0Fh,17h,1Fh,etc), hence having filesize rounded up to N*8 sectors):
+
+| Filesize = 800h*((NumberOfFrames*5)) ;5 sectors, no xa-adpcm
+Filesize = 800h*((NumberOfFrames*5+7) AND not 7) ;4-5 sectors, plus xa-adpcm
+
+Caution: The STR header values aren't constant throughout the frame:
+
+| Sector 0: [10h] = Number of Frames, [12h]=Junk
+Sector 1: [10h] = Junk, [12h]=0
+Sector 2: [10h] = Junk, [12h]=Junk
+Sector 3: [10h] = Junk, [12h]=Same as below (Bitmap Height)
+Below ONLY when having 5 sectors per frame:
+Sector 4: [10h] = Bitmap Width (140h) [12h]=Bitmap Height (D0h)
+That is, frames with 4 sectors do NOT have any Bitmap Width entry
+(the duplicated Height entry in sector 3 exists, so one could compute
+Width=NumMacroBlocks*100h/Height, or assume fixed Width=320, Height=208).
+
+The Junk values can be zero, or increase/decrease during the movie, some or all
+of them seem to be sign-expanded from 12bit (eg. increasing values can wrap
+from 07xxh to F8xxh).
+
+Apart from the odd DAT\STAGE*\*.MV files, the game does also have .STR files
+with normal STR headers and more sectors per frame (DAT\STAGE16,21,27\*.STR,
+DAT\OTHER\*.STR, DAT\OTHER\CM\*.STR, and MAT\DAT\*.STR).
+
+Black Silence padding
+
+Used by Bugriders: The Race of Kings (MOVIE\*XB.STR)
+
+Used by Rugrats Studio Tour (MagDemo32: RUGRATS\DATA\OPEN\*B.STR)
+
+| Each movie file is followed by dummy padding file. For example, in Bugriders:
+MOVIE\*XA.STR Movie clip (with correct size, 320x192)
+MOVIE\*XB.STR Black Silence padding (wrong size 640x192, should be 320x192)
+
+The names are sorted alphabetically and exist in pairs (eg. CHARMXA.STR and
+CHARMXB.STR), and the disc sectors are following the same sort order.
+
+The padding files contain only black pixels and silent XA-ADPCM sectors, with

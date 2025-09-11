@@ -1,0 +1,155 @@
+PSXSPX SPECIFICATIONS - 10BIT VBV (REQUIRED DECODING MEMORY SIZE, IN "16 KB" UNITS) ; +6BIT
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 10bit VBV (required decoding memory size, in "16 kB" units) ; +6bit
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 4266 characters
+Lines: 147
+================================================================================
+
+10bit VBV (required decoding memory size, in "16 kB" units) ; +6bit
+1bit Constrained Parameter Flag ;/
+1bit Load Intra Q Matrix (0=No, use Standard Matrix, 1=Yes, Custom)
+
+Next 64byte only when above bit was set:
+
+| (64byte) Intra Quantizer Matrix (64 x 8bit, unsigned) (in zigzag order)
+1bit Load Non-Intra Q Matrix (0=No, use Standard Matrix, 1=Yes, Custom)
+
+Next 64byte only when above bit was set:
+
+| (64byte) Non-Intra Quantizer Matrix (64 x 8bit, unsigned) (in zigzag order)
+
+Aspect Ratio values:
+
+| 0 - ;forbidden
+1 1.0 ;square pixels
+2 0.6735 ;0.6735
+3 0.7031 ;16:9, 625 line, PAL
+4 0.7615 ;0.7615
+5 0.8055 ;0.8055
+6 0.8437 ;16:9, 525 line, NTSC
+7 0.8935 ;0.8935
+8 0.9157 ;4:3, 625 line, PAL, CCIR601
+9 0.9815 ;0.9815
+10 1.0255 ;1.0255
+11 1.0695 ;1.0695
+12 1.0950 ;4:3, 525 line, NTSC, CCIR601
+13 1.1575 ;1.1575
+14 1.2015 ;1.2015
+15 - ;reserved
+
+Frame Rate values:
+
+| 0 - ;forbidden
+1 23.976 (24000/1001) ;NTSC encapsulated film rate
+2 24.0 ;Standard international cinema film rate
+3 25.0 ;PAL video frame rate (625/50)
+4 29.97 (30000/1001) ;NTSC video frame rate
+5 30.0 ;NTSC video frame rate drop-frame (525/60)
+6 50.0 ;PAL double frame rate/progressive
+7 59.94 (60000/1001) ;NTSC double frame rate
+8 60.0 ;NTSC double frame rate drop-frame
+9-15 - ;reserved
+
+MPEG-1 Video Group of Pictures (GOP) (8 bytes) XXX...
+
+| 32bit GROUP_START_CODE (000001B8h)
+1bit Drop Frame (1=drop this frame; for reducing 30 fps to 29.97 fps)
+5bit Time Code Hours (0..23)
+6bit Time Code Minutes (0..59)
+1bit Marker (1)
+6bit Time Code Seconds (0..59)
+6bit Time Code Picture (0..59)
+1bit Closed GOP
+1bit Broken Link
+
+MPEG-1 Video Picture Header XXX...
+
+| 32bit PICTURE_START_CODE (00000100h) ;\
+10bit Temporal Reference (display order, 0..3FFh) ; 61bit
+3bit Coding Type (0=Invalid, 1=I, 2=P, 3=B, 4=D, 5-7=Reserved);
+16bit VBV Delay (in 90kHz cycles, FFFFh=variable bitrate) ;/
+
+If Coding Type is 2 or 3 (P-Frame or B-Frame):
+
+| (1bit) full fel forward vector (0=half pix, 1=full pix) ;\optional 4bit
+(3bit) forward f code (0=invalid, 1..7=0..6bits) ;/
+
+If Coding Type is 3 (B-Frame):
+
+| (1bit) full backward vector ;\optional 4bit
+(3bit) backward f code ;/
+
+If (and while) next bit is set:
+
+| (1bit) Fixed (1, indicates presence of Extra Info) ;\opt. N*9bit
+(8bit) Extra Information ;/
+
+End of Extra:
+
+| 1bit Fixed (0, indicates no further Extra Info) ;-1bit
+0-7bit Padding to byte boundary (0) ;-0..7bit
+
+Coding Type values:
+
+| 0 Forbidden
+1 I - Intra Coded (full image)
+2 P - Predictive Coded (based on prev I or P frame)
+3 B - Bidirectionally Predictive Coded (based on prev+next I or P frame)
+4 D - DC Intra Coded (don't care, lowres thumbnail)
+5 Reserved
+6 Reserved
+7 Reserved
+
+Frame Order
+
+| DISPLAY ORDER:
+I B B B P B B B P B B B P B B B I B B B P B B B P B B B P B B B ...
+|_______|_______| |_______|_______|
+| |
+I-Frame P-frames I-Frame P-frames
+
+The B-fames require to know the next P- (or I-) frame in advance, for that
+reason, the frames are stored as "PBBB" (although being played as "BBBP"):
+
+| STORAGE ORDER:
+I P B B B P B B B P B B B I B B B P B B B P B B B P B B B ...
+|_______|_______| |_______|_______|
+| |
+I-Frame P-frames I-Frame P-frames
+
+MPEG-1 Video Slice
+
+Slices are containing the actual 16x16 pixel Macro Blocks. Usually a Slice
+contains one horizontal line - although, theoretically, it could be longer or
+shorter, ie. a slice could wrap to next line, or a line could be split into
+several slices (with the leading "MBA Increment" value greater than 1 to define
+the horizontal start offset).
+
+| 32bit PACK_START_CODE (000001xxh; xx=01h..AFh; vertical index) ;-4byte
+5bit Quantizer Scale (1..31) (may be later changed by blocks) ;-5bit
+
+If (and while) next bit is set:
+
+| (1bit) Fixed (1, indicates presence of Extra Info) ;\opt. N*9bit
+(8bit) Extra Information ;/
+
+End of Extra:
+
+| 1bit Fixed (0, indicates no further Extra Info) ;-1bit
+
+If (and while) next 23bit are nonzero (ie. until next 000001xxh):
+
+| ... Macroblock (within horizontal line) ;...
+
+Final padding:
+
+| 0-7bit Padding to byte boundary (0) ;-0..7bit
+
+MPEG-1 Video Group/Sequence Extension Data (reserved)
+
+MPEG-1 Video User Data (optional)
+
+| 32bit START_CODE (000001B2h=User Data, 000001B5h=Extension Data) ;-4byte
+... data (end is signaled by presence of next 000001xxh code) ;-data

@@ -1,0 +1,34 @@
+PSXSPX SPECIFICATIONS - CDRWIN STORES DISK IMAGES IN TWO SEPARATE FILES. THE .BIN FILE CONTAINS THE RAW
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDRWIN stores disk images in two separate files. The .BIN file contains the raw
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1209 characters
+Lines: 25
+================================================================================
+
+CDRWIN stores disk images in two separate files. The .BIN file contains the raw
+disk image, starting at sector 00:02:00, with 930h bytes per sector, but
+without any TOC or subchannel information. The .CUE file contains additional
+information about the separate track(s) on the disk, in ASCII format, for
+example:
+
+| FILE "PATH\FILENAME.BIN" BINARY
+TRACK 01 MODE2/2352
+INDEX 01 00:00:00 ;real address = 00:02:00 (+2 seconds)
+TRACK 02 AUDIO
+PREGAP 00:02:00 ;two missing seconds (NOT stored in .BIN)
+INDEX 01 08:09:29 ;real address = 08:13:29 (+2 seconds +pregap)
+TRACK 03 AUDIO
+INDEX 00 14:00:29 ;real address = 14:04:29 (+2 seconds +pregap)
+INDEX 01 14:02:29 ;real address = 14:06:29 (+2 seconds +pregap)
+TRACK 04 AUDIO
+INDEX 00 18:30:20 ;real address = 18:34:20 (+2 seconds +pregap)
+INDEX 01 18:32:20 ;real address = 18:36:20 (+2 seconds +pregap)
+
+The .BIN file does not contain ALL sectors, as said above, the first 2 seconds
+are not stored in the .BIN file. Moreover, there may be missing sectors
+somewhere in the middle of the file (indicated as PREGAP in the .CUE file;
+PREGAPs are usually found between Data and Audio Tracks).
+
+The MM:SS:FF values in the .CUE file are logical addresses in the .BIN file,

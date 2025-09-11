@@ -1,0 +1,39 @@
+MIPS INSTRUCTION SET REFERENCE - CHAPTER 2 GUIDE TO THE INSTRUCTION SET
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Chapter 2 Guide to the Instruction Set
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1370 characters
+Lines: 32
+================================================================================
+
+Chapter 2 Guide to the Instruction Set
+
+
+                  /* vAddr: virtual address */
+                  /* DATA: Indicates that access is for DATA */
+                  /* hint: hint that indicates the possible use of the data */
+
+             endfunction Prefetch
+                                         Figure 2-18 Prefetch Pseudocode Function
+
+       Table 2-1 lists the data access lengths and their labels for loads and stores.
+
+                                  Table 2-1 AccessLength Specifications for Loads/Stores
+
+                                      AccessLength Name          Value          Meaning
+                                     DOUBLEWORD                 7           8 bytes (64 bits)
+
+                                     SEPTIBYTE                  6           7 bytes (56 bits)
+
+                                     SEXTIBYTE                  5           6 bytes (48 bits)
+
+                                     QUINTIBYTE                 4           5 bytes (40 bits)
+
+                                     WORD                       3           4 bytes (32 bits)
+
+                                     TRIPLEBYTE                 2           3 bytes (24 bits)
+
+                                     HALFWORD                   1           2 bytes (16 bits)
+
+                                     BYTE                       0           1 byte (8 bits)

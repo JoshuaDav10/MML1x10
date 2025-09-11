@@ -1,0 +1,144 @@
+PSXSPX SPECIFICATIONS - CDROM FILE ARCHIVE NSD/NSF (CRASH BANDICOOT 1-3)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Archive NSD/NSF (Crash Bandicoot 1-3)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 4997 characters
+Lines: 135
+================================================================================
+
+CDROM File Archive NSD/NSF (Crash Bandicoot 1-3)
+
+NSD/NSF versions
+
+| v0 Crash Bandicoot Prototype (oldest known prototype from 08 Apr 1996)
+v1 Crash Bandicoot 1 (retail: S*\*.NSD and .NSF)
+v2 Crash Bandicoot 2 (MagDemo02: CRASH\S0\*.NSD and .NSF)
+v3 Crash Bandicoot 3 Warped (MagDemo26,50: (S0\*.NSD and .NSF)
+
+| ____________________________________ NSD _____________________________________
+
+Overall NSD Structure (v0 contains only the Lookup entries)
+
+| 0000h 100h*4 Lookup Table, using index=((Filename/8000h) AND FFh) ;\
+0400h 4 Number of Chunks in .NSF file ; Lookup
+0404h 4 Number of Files in Lookup File List (N) ;/
+0408h 4 Level Data Filename (eg. 4F26E8DFh="DATh.L") ;-LevelDat
+040Ch 4 Bitmap Number of Colors (100h) (P) (0=None) ;\
+0410h 4 Bitmap Width (200h or 1B0h) (X) (0=None) ; Bitmap
+0414h 4 Bitmap Height (0D8h or 090h) (Y) (0=None) ;/
+0418h 4 Compression: Offset/800h of first uncompressed chunk ;\
+041Ch 4 Compression: Number of compressed chunks (0..40h) ; Compress
+0420h 40h*4 Compression: Compressed Chunk List (0=unused entry) ;/
+... N*8 Lookup File List ;-Lookup
+... .. Level Data (size/format varies, see below) ;-LevelDat
+... P*2 Bitmap Palette (16bit values, 8000h..FFFFh) ;\Bitmap
+... X*Y Bitmap Pixels (0D8h*200h) ;/
+
+There are four .NSD versions, which can be distinguished via filesize:
+
+| v0 NSD Filesize=408h + N*8 ;-Lookup only
+v1 NSD Filesize=520h + N*8 + P*2+X*Y + 210h ;\
+v2 NSD Filesize=520h + N*8 + P*2+X*Y + 1DCh+S*18h ; with extra stuff
+v3 NSD Filesize=520h + N*8 + P*2+X*Y + 2DCh+S*18h ;/
+
+Note: v0 is mainly used by the Crash Bandicoot prototype, but the Crash
+Bandicoot 1 retail version does also have a few v0 files.
+
+NSD Lookup
+
+The lookup table allows to find files (by filenames) in the NSF files. It does
+merely contain the NSF chunk number, so one must load/decompress that chunk to
+find the file's exact size/location in that chunk.
+
+One can create a complete file list by scanning the whole NSF file without
+using the NDS lookup table.
+
+| Lookup File List entries (indexed via Lookup Table):
+00h 4 Chunk Number in .NSF file
+04h 4 Filename (five 6bit characters)
+
+Filenames:
+
+| 0 Type (always 1=Filename) (as opposed to 0=Memory Pointer)
+1-6 5th character ;-Extension ;\character set is:
+7-12 4th character ;\ ; 00h..09h="0..9"
+13-18 3rd character ; Name ; 0Ah..23h="a..z"
+19-24 2nd character ; ; 24h..3Dh="A..Z"
+25-30 1st character ;/ ;/3Eh..3Fh="_" and "!"
+31 Always zero?
+
+Special name: 6396347Fh="NONE.!"
+
+NSD Level Data
+
+Level Data exists in NSD v1-v3 (v0 does also have Level Data, but it's stored
+in NSF file "DAT*.L" instead of in the NSD file). There are two major versions:
+
+| Level Data in NSD v1 (or NSF v0 file DAT*.L):
+000h 4 01h ;\
+004h 4 Level Number (xxh) (same as xx in S00000xx.NSD/NSF) ;
+008h 4 3807C8FBh = "s0_h.Z" ? ; LevelDat
+00Ch 4 Zero ; v1
+010h 4 Zero ;
+014h L*4 Namelist (40h*4) ;
+... 4 5Ah ;
+... F8h Zerofilled ;/
+Level Data in NSD v2-v3:
+000h 4 Number of Spawn Points (S) ;\
+004h 4 Zero ;
+008h 4 Level Number (xxh) (same as xx in S00000xx.NSD/NSF) ; LevelDat
+00Ch 4 Number of Objects? (can be bigger than below list) ; v2/v3
+(eg. 1BDh or A5h or E4h) ;
+010h L*4 Namelist for Objects? (v2=40h*4, or v3=80h*4) ;
+... 4 Unknown, always 5Ah (maybe just list end marker?) ;
+... C8h Zerofilled ;
+... S*18h Spawn Points ;/
+
+NSD Bitmap
+
+This bitmap is displayed while loading the level.
+
+NSD Compression Info
+
+Compression is only used in v1 (v2-v3 do also have the compression entries at
+[418h..51Fh], but they are always zerofilled).
+
+| Compressed Chunk List entries at [420h..51Fh]:
+0-5 Compressed Chunk Size/800h (1..1Fh=800h..F800h bytes, 20h..3Fh=Bad?)
+6-31 Compressed Chunk Offset/800h
+
+Note: Crash Bandicoot 1 retail does also have a few uncompressed files (either
+v0 files without compression info, or v1 files with zerofilled compression
+info).
+
+| ____________________________________ NSF _____________________________________
+
+NSF files consist of 64Kbyte chunks (compressed chunks are smaller, but will be
+64Kbyte after decompression). Each chunk can contain one or more file(s). That
+implies that all files must be smaller than 64Kbyte (larger textures or ADPCM
+samples must be broken into multiple smaller files).
+
+All files (except Textures) are NSF Child Archives which contain one or more
+smaller files/items.
+
+NSF Chunk Types
+
+| N*8Kbyte-Compressed-chunks:
+000h 2 ID, always 1235h (instead of 1234h)
+002h 2 Zero
+004h 4 Decompressed Size (max 10000h) (usually 9xxxh..Fxxxh, often Fxxxh)
+008h 4 Skip Size (max 40h or so, when last LZSS_len was 40h)
+00Ch .. Compressed data
+... SK Unused (Skip size)
+... .. Final uncompressed bytes (10000h-compressed_size-skip_size)
+64Kbyte-Texture-chunks:
+000h 2 ID, always 1234h
+002h 2 Chunk Family (1=Texture)
+004h 4 Filename (five 6bit characters)
+008h 4 File Type (5=Texture)
+00Ch 4 Checksum (sum of bytes ar [0..FFFFh], with initial [0Ch]=00000000h)
+010h ... Zerofilled
+020h ... Texture data (raw VRAM data, FFE0h bytes?)
+64Kbyte-NonTexture-chunks:
+000h 2 ID, always 1234h

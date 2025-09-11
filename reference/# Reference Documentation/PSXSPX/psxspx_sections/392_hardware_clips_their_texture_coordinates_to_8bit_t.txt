@@ -1,0 +1,59 @@
+PSXSPX SPECIFICATIONS - HARDWARE CLIPS THEIR TEXTURE COORDINATES TO 8BIT, TOO).
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: hardware clips their texture coordinates to 8bit, too).
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 2043 characters
+Lines: 51
+================================================================================
+
+hardware clips their texture coordinates to 8bit, too).
+
+The GP0(E2h) Texture Window (aka Texture Repeat) command can be used to reduce
+the texture size to less than 256x256 texels.
+
+The Texture Pages can be located in the frame buffer on X multiples of 64
+halfwords and Y multiples of 256 lines.
+
+Texture Palettes - CLUT (Color Lookup Table)
+
+The clut is a the table where the colors are stored for the image data in the
+CLUT modes. The pixels of those images are used as indexes to this table. The
+clut is arranged in the frame buffer as a 256x1 image for the 8bit clut mode,
+and a 16x1 image for the 4bit clut mode.
+
+| 0-4 Red (0..31) ;\Color 0000h = Fully-Transparent
+5-9 Green (0..31) ; Color 0001h..7FFFh = Non-Transparent
+10-14 Blue (0..31) ; Color 8000h..FFFFh = Semi-Transparent (*)
+15 Semi Transparency Flag ;/(*) or Non-Transparent for opaque commands
+
+The clut data can be arranged in the frame buffer at X multiples of 16
+(X=0,16,32,48,etc) and anywhere in the Y range of 0-511.
+
+Texture Color Black Limitations
+
+On the PSX, texture color 0000h is fully-transparent, that means textures
+cannot contain Black pixels. However, in some cases, Color 8000h (Black with
+semi-transparent flag) can be used, depending on the rendering command:
+
+| opaque command, eg. GP0(24h) --> 8000h = Non-Transparent Black
+semi-transp command, eg. GP0(26h) --> 8000h = Semi-Transparent Black
+
+So, with semi-transparent rendering commands, it isn't possible to use
+Non-Transparent Black pixels in textures, the only workaround is to use colors
+like 0001h (dark red) or 0400h (dark blue). However, due to the PSX's rather
+steeply increasing intensity ramp, these colors are clearly visible to be
+brighter than black.
+
+RGB Intensity Notes
+
+The Playstations RGB values aren't linear to normal RGB values (as used on
+PCs). The min/max values are of course the same, but the medium values differ:
+
+| Intensity PC PSX
+Minimum 0 0
+Medium (circa) 16 8
+Maximum 31 31
+
+Ie. on the PSX, the intensity increases steeply from 0 to 15, and less steeply
+from 16 to 31.

@@ -1,0 +1,34 @@
+PSXSPX SPECIFICATIONS - 20H (TO DETECT THE CDROM CONTROLLER VERSION).
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 20h (to detect the CDROM Controller version).
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1368 characters
+Lines: 25
+================================================================================
+
+20h (to detect the CDROM Controller version).
+
+| sub params response ;Effect
+00h - INT3(stat) ;Force motor on, clockwise, even if door open
+01h - INT3(stat) ;Force motor on, anti-clockwise, super-fast
+02h - INT3(stat) ;Force motor on, anti-clockwise, super-fast
+03h - INT3(stat) ;Force motor off (ignored during spin-up)
+04h - INT3(stat) ;Start SCEx reading and reset counters
+05h - INT3(total,success);Stop SCEx reading and get counters
+06h * n INT3(old) ;\early ;Adjust balance in RAM, send CX(30+n XOR 7)
+07h * n INT3(old) ; PSX ;Adjust gain in RAM, send CX(38+n XOR 7)
+08h * n INT3(old) ;/only ;Adjust balance in RAM only
+06h..0Fh - INT5(11h,10h) ;N/A (11h,20h when NONZERO number of params)
+10h - INT3(stat) ;CX(..) ;Force motor on, anti-clockwise, super-fast
+11h - INT3(stat) ;CX(03) ;Move Lens Up (leave parking position)
+12h - INT3(stat) ;CX(02) ;Move Lens Down (enter parking position)
+13h - INT3(stat) ;CX(28) ;Move Lens Outwards
+14h - INT3(stat) ;CX(2C) ;Move Lens Inwards
+15h - INT3(stat) ;CX(22) ;If motor on: Move outwards,inwards,motor off
+16h - INT3(stat) ;CX(23) ;No effect?
+17h - INT3(stat) ;CX(E8) ;Force motor on, clockwise, super-fast
+18h - INT3(stat) ;CX(EA) ;Force motor on, anti-clockwise, super-fast
+19h - INT3(stat) ;CX(25) ;No effect?
+1Ah - INT3(stat) ;CX(21) ;No effect?
+1Bh..1Fh - INT5(11h,10h) ;N/A (11h,20h when NONZERO number of params)

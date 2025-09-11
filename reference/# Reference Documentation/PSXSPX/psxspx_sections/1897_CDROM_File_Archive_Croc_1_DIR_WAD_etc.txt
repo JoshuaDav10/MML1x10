@@ -1,0 +1,47 @@
+PSXSPX SPECIFICATIONS - CDROM FILE ARCHIVE CROC 1 (DIR, WAD, ETC.)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Archive Croc 1 (DIR, WAD, etc.)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1299 characters
+Lines: 38
+================================================================================
+
+CDROM File Archive Croc 1 (DIR, WAD, etc.)
+
+Croc 1 (MagDemo02: CROC\*) (plus more files in retail version)
+
+CROCFILE.DIR and CROCFILE.1:
+
+| CROCFILE.DIR:
+000h 4 Number of Entries (N)
+004h N*18h File List
+... 4 Checksum (sum of all of the above bytes)
+CROCFILE.1:
+000h .. File Data (referenced from .DIR)
+File List entries:
+000h 0Ch Filename ("FILENAME.EXT", zeropadded if shorter)
+00Ch 4 File Size in bytes (can be odd) (including 8 byte for size/chksum)
+010h 4 File Offset in .1 file (unaligned, can be odd, increasing)
+014h 4 Zero (0)
+
+CROCFILE.DIR\MP*.MAP (and MAP files inside of MAP*.WAD and MP090-100_*.WAD):
+
+| 000h 4 Size-8 of whole file (or Size-0 for those in MP*.WAD)
+004h 4 Flags? (usually 0Ch or 14h)
+008h 1 Filename length (including trailing 00h, if any)
+009h .. Filename ("P:\CROC\EDITOR\MAPS\..\*.MAP") (+00h in MAP05*.WAD)
+... .. Unknown
+... 1 Description length
+... .. Description (eg. "Default New Map")
+... .. Unknown
+... (4) Checksum of whole file (sum of all bytes) (not in MP*.WAD)
+
+CROCFILE.DIR\*.WAD:
+
+| MAP*.WAD:
+000h 4 Size-8 of whole file
+004h .. MAP file(s) (each with size/checksum, same format as MP*.MAP)
+... 4 Checksum of whole file (sum of all of the above bytes)
+CROC.WAD, CROCSLID.WAD, EXCLUDE.WAD, MP*.WAD, OPTIONS.WAD, SWIMCROC.WAD:
+000h 4 Size-8 of whole file

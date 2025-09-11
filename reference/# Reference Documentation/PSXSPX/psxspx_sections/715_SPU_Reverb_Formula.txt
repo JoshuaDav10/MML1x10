@@ -1,0 +1,39 @@
+PSXSPX SPECIFICATIONS - SPU REVERB FORMULA
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: SPU Reverb Formula
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1711 characters
+Lines: 31
+================================================================================
+
+SPU Reverb Formula
+
+Reverb Formula
+
+| ___Input from Mixer (Input volume multiplied with incoming data)_____________
+Lin = vLIN * LeftInput ;from any channels that have Reverb enabled
+Rin = vRIN * RightInput ;from any channels that have Reverb enabled
+____Same Side Reflection (left-to-left and right-to-right)___________________
+[mLSAME] = (Lin + [dLSAME]*vWALL - [mLSAME-2])*vIIR + [mLSAME-2] ;L-to-L
+[mRSAME] = (Rin + [dRSAME]*vWALL - [mRSAME-2])*vIIR + [mRSAME-2] ;R-to-R
+___Different Side Reflection (left-to-right and right-to-left)_______________
+[mLDIFF] = (Lin + [dRDIFF]*vWALL - [mLDIFF-2])*vIIR + [mLDIFF-2] ;R-to-L
+[mRDIFF] = (Rin + [dLDIFF]*vWALL - [mRDIFF-2])*vIIR + [mRDIFF-2] ;L-to-R
+___Early Echo (Comb Filter, with input from buffer)__________________________
+Lout=vCOMB1*[mLCOMB1]+vCOMB2*[mLCOMB2]+vCOMB3*[mLCOMB3]+vCOMB4*[mLCOMB4]
+Rout=vCOMB1*[mRCOMB1]+vCOMB2*[mRCOMB2]+vCOMB3*[mRCOMB3]+vCOMB4*[mRCOMB4]
+___Late Reverb APF1 (All Pass Filter 1, with input from COMB)________________
+Lout=Lout-vAPF1*[mLAPF1-dAPF1], [mLAPF1]=Lout, Lout=Lout*vAPF1+[mLAPF1-dAPF1]
+Rout=Rout-vAPF1*[mRAPF1-dAPF1], [mRAPF1]=Rout, Rout=Rout*vAPF1+[mRAPF1-dAPF1]
+___Late Reverb APF2 (All Pass Filter 2, with input from APF1)________________
+Lout=Lout-vAPF2*[mLAPF2-dAPF2], [mLAPF2]=Lout, Lout=Lout*vAPF2+[mLAPF2-dAPF2]
+Rout=Rout-vAPF2*[mRAPF2-dAPF2], [mRAPF2]=Rout, Rout=Rout*vAPF2+[mRAPF2-dAPF2]
+___Output to Mixer (Output volume multiplied with input from APF2)___________
+LeftOutput = Lout*vLOUT
+RightOutput = Rout*vROUT
+___Finally, before repeating the above steps_________________________________
+BufferAddress = MAX(mBASE, (BufferAddress+2) AND 7FFFEh)
+Wait one 22050Hz cycle, then repeat the above stuff
+
+Notes

@@ -1,0 +1,36 @@
+MIPS INSTRUCTION SET REFERENCE - APPENDIX A INSTRUCTION BIT ENCODINGS
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Appendix A Instruction Bit Encodings
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1501 characters
+Lines: 27
+================================================================================
+
+Appendix A Instruction Bit Encodings
+
+
+
+
+324                                                    MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                          Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+        Appendix B
+
+        Revision History
+
+
+      In the left hand page margins of this document you may find vertical change bars to note the location of significant
+      changes to this document since its last release. Significant changes are defined as those which you should take note of
+      as you use the MIPS IP. Changes to correct grammar, spelling errors or similar may or may not be noted with change
+      bars. Change bars will be removed for changes which are more than one revision old.
+
+      Please note: Limitations on the authoring tools make it difficult to place change bars on changes to figures. Change bars
+      on figure titles are used to denote a potential change in the figure itself.
+
+          Revision            Date                                            Description
+             0.90       November 1, 2000     Internal review copy of reorganized and updated architecture documentation.
+             0.91       November 15, 2000    External review copy of reorganized and updated architecture documentation.
+                                             Changes in this revision:
+                                             • Correct sign in description of MSUBU.
+             0.92       December 15, 2000

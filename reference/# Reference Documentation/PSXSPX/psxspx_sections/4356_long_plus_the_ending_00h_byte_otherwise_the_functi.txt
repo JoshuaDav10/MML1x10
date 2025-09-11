@@ -1,0 +1,31 @@
+PSXSPX SPECIFICATIONS - LONG, PLUS THE ENDING 00H BYTE, OTHERWISE THE FUNCTION DESTROYS OTHER BIOS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: long, plus the ending 00h byte, otherwise the function destroys other BIOS
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1271 characters
+Lines: 23
+================================================================================
+
+long, plus the ending 00h byte, otherwise the function destroys other BIOS
+variables), it does then search the first fragment, starting at the begin of
+the buffer. Further calls (with src=00000000h) are searching further fragments,
+starting at the buffer address from the previous call. The internal buffer is
+used only for strtok, so its contents (and the returned string fragments)
+remain intact until a new first call to strtok takes place.
+
+The separate fragments are processed by searching the first separator, starting
+at the current buffer address, the separator is then replaced by a 00h byte,
+and the old buffer address is returned to the caller. Moreover, the function
+tries to skip all continously following separators, until reaching a
+non-separator, and does memorize that address for the next call (due to that
+skipping further calls won't return empty fragments, the first call may do so
+though). That skipping seems to be bugged, if list contains two or more
+different characters, then additional separators aren't skipped.
+
+| ",,TEXT,,,END" with list="," returns "", "TEXT", "END"
+",,TEXT,,,END" with list=",." returns "", "", "TEXT", "", "", "END"
+
+Once when there are no more fragments, then 00000000h is returned.
+
+A(24h) - strstr(str, substr) - buggy

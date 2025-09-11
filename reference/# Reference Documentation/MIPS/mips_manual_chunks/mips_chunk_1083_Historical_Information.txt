@@ -1,0 +1,36 @@
+MIPS INSTRUCTION SET REFERENCE - HISTORICAL INFORMATION:
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Historical Information:
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1418 characters
+Lines: 27
+================================================================================
+
+Historical Information:
+            In the MIPS I, II, and III architectures, the two instructions which follow the MFHI must not moodify the HI register.
+            If this restriction is violated, the result of the MFHI is UNPREDICTABLE. This restriction was removed in MIPS
+            IV and MIPS32, and all subsequent levels of the architecture.
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                                  181
+
+                               Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+MFLO
+
+
+
+
+  Move From LO Register                                                                                                 MFLO
+
+       31                 26 25                                16 15             11 10              6   5                  0
+             SPECIAL                           0                                             0                 MFLO
+                                                                          rd
+              000000                     00 0000 0000                                      00000               010010
+                   6                          10                          5                  5                   6
+
+            Format:    MFLO       rd                                                                                 MIPS32
+
+            Purpose:

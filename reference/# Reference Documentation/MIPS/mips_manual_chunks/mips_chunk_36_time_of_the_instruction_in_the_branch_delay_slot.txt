@@ -1,0 +1,23 @@
+MIPS INSTRUCTION SET REFERENCE - TIME OF THE INSTRUCTION IN THE BRANCH DELAY SLOT.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: time of the instruction in the branch delay slot.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1187 characters
+Lines: 14
+================================================================================
+
+time of the instruction in the branch delay slot.
+
+                           The number of physical address bits implemented is represented by the symbol PABITS. As such, if 36 physical
+          PABITS           address bits were implemented, the size of the physical address space would be 2PABITS = 236 bytes.
+
+                           Indicates whether the FPU has 32-bit or 64-bit floating point registers (FPRs). In MIPS32, the FPU has 32 32-bit
+                           FPRs in which 64-bit data types are stored in even-odd pairs of FPRs. In MIPS64, the FPU has 32 64-bit FPRs
+                           in which 64-bit data types are stored in any FPR.
+
+
+    FP32RegistersMode      In MIPS32 implementations, FP32RegistersMode is always a 0. MIPS64 implementations have a compatibility
+                           mode in which the processor references the FPRs as if it were a MIPS32 implementation. In such a case
+                           FP32RegisterMode is computed from the FR bit in the Status register. If this bit is a 0, the processor operates
+                           as if it had 32 32-bit FPRs. If this bit is a 1, the processor operates with 32 64-bit FPRs.

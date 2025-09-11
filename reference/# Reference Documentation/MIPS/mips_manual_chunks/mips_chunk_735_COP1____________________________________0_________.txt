@@ -1,0 +1,34 @@
+MIPS INSTRUCTION SET REFERENCE - COP1                                    0                                                     CVT.D
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: COP1                                    0                                                     CVT.D
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1912 characters
+Lines: 26
+================================================================================
+
+COP1                                    0                                                     CVT.D
+                                         fmt                                  fs                fd
+                   010001                                 00000                                                   100001
+                      6                   5                 5                 5                  5                   6
+
+                 Format:    CVT.D.S fd, fs                                                                          MIPS32
+                            CVT.D.W fd, fs                                                                          MIPS32
+                            CVT.D.L fd, fs                                                                          MIPS64
+                                                                                                            MIPS32 Release 2
+
+                 Purpose:
+                 To convert an FP or fixed point value to double FP
+
+                 Description: fd ← convert_and_round(fs)
+                 The value in FPR fs, in format fmt, is converted to a value in double floating point format and rounded according to
+                 the current rounding mode in FCSR. The result is placed in FPR fd. If fmt is S or W, then the operation is always
+                 exact.
+
+                 Restrictions:
+                 The fields fs and fd must specify valid FPRs—fs for type fmt and fd for double floating point—if they are not valid,
+                 the result is UNPREDICTABLE.
+                 The operand must be a value in format fmt; if it is not, the result is UNPREDICTABLE and the value of the operand
+                 FPR becomes UNPREDICTABLE.
+                 For CVT.D.L, the result of this instruction is UNPREDICTABLE if the processor is executing in 16 FP registers
+                 mode.

@@ -1,0 +1,82 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION RNC (ROB NORTHEN COMPRESSION)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression RNC (Rob Northen Compression)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 2456 characters
+Lines: 74
+================================================================================
+
+CDROM File Compression RNC (Rob Northen Compression)
+
+Tiny Tank (MagDemo23: TINYTANK\*.DSK)
+
+| 000h 4 ID ("TDSK") ;\
+004h 4 Number of Files (1Bh) ; Directory
+008h N*20h File List ;/
+... 4 1st File Size (same as Size entry in File List) ;\File Data area
+... .. 1st File Data ; (each file os
+... 4 2nd File Size (same as Size entry in File List) ; preceeded by
+... .. 2nd File Data ; a size entry)
+... .. etc. ;/
+File List entries:
+000h 10h Filename ("FILENAME.EXT", zeropadded)
+010h 4 File Size in bytes
+014h 4 Unknown (35xxxxxxh..372xxxxxh)
+018h 4 Unknown (3724xxxxh) (Timestamp maybe?)
+01Ch 4 File Offset in bytes (increasing, 4-byte aligned)
+
+Note: The File Offset points to a 32bit value containing a copy of the
+Filesize, and the actual file starts at Offset+4.
+
+MAG 3 (MagDemo26: MAG3\MAG3.DAT, 7Mbyte)
+
+| 000h N*20h File List (B60h bytes)
+... .. Zeropadding to 800h-byte boundary
+... .. File Data area (files are AAh-padded to 800h-byte boundary)
+File List entries:
+000h 4 Filesize in bytes
+004h 2 File Offset/800h (16bit) (increasing)
+006h 1Ah Filename ("FILENAME.EXT" or "PATH\FILENAME.EXT", zeropadded)
+
+Play with the Teletubbies (MagDemo35: TTUBBIES\*.RES)
+
+| 000h 2 Zero (0000h)
+002h 2 Number of Files (N)
+004h 4 Data Base (N*20h+10h)
+008h 4 Unknown (20h) ;-maybe File List entry size?
+00Ch 2 Unknown (10h) ;\maybe filename length and/or header size?
+00Eh 2 Unknown (10h) ;/
+010h N*20h File List
+... .. File Data area
+
+File List entries:
+
+| 000h 4 Zero
+004h 4 File Offset (increasing, 4-byte aligned, relative to Data Base)
+008h 4 File Size in bytes (can be odd)
+00Ch 4 Zero
+010h 10h Filename ("FILENAME.EXT", zeropadded)
+
+Mat Hoffman's Pro BMX (old demo) (MagDemo39: BMX\FE.WAD+STR) (uncompressed)
+
+Mat Hoffman's Pro BMX (new demo) (MagDemo48: MHPB\FE.WAD+STR) (compressed)
+
+| WAD:
+000h N*20h File List
+STR:
+000h .. File Data (MagDemo39: 4.5Mbyte, MagDemo48: compressed/2.8Mbyte)
+File List entries:
+000h 14h Filename ("FILENAME.EXT", zeropadded)
+014h 4 Offset in bytes, 4-byte aligned, in STR file
+018h 4 Filesize, compressed (always rounded to multiple of 4 bytes)
+01Ch 4 Filesize, decompressed (zero when not compressed)
+
+The decompressor is using an Inflate variant with slightly customized block
+headers:
+
+| - end flag is processed immediately (instead of after the block)
+- blocktype is only 1bit wide (instead of 2bit)
+- stored blocks have plain 16bit len (without additional 16bit inverse len)
+
+Everything else is same as described here:

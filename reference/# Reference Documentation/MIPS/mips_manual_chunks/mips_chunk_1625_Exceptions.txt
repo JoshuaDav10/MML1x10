@@ -1,0 +1,44 @@
+MIPS INSTRUCTION SET REFERENCE - EXCEPTIONS:
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Exceptions:
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1696 characters
+Lines: 35
+================================================================================
+
+Exceptions:
+            Trap
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                              291
+
+                               Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+TLBP
+
+
+
+
+        Probe TLB for Matching Entry                                                                                     TLBP
+
+
+       31                   26 25 24                                                                  6   5                  0
+               COP0           CO                                    0                                            TLBP
+              010000           1                         000 0000 0000 0000 0000                                001000
+                 6             1                                    19                                             6
+
+            Format: TLBP                                                                                               MIPS32
+
+            Purpose:
+            To find a matching entry in the TLB.
+
+            Description:
+            The Index register is loaded with the address of the TLB entry whose contents match the contents of the EntryHi reg-
+            ister. If no TLB entry matches, the high-order bit of the Index register is set. In Release 1 of the Architecture, it is
+            implementation dependent whether multiple TLB matches are detected on a TLBP. However, implementations are
+            strongly encouraged to report multiple TLB matches only on a TLB write. In Release 2 of the Architecture, multiple
+            TLB matches may only be reported on a TLB write.
+
+            Restrictions:

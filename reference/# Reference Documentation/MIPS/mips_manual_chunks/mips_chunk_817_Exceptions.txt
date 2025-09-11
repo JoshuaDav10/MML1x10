@@ -1,0 +1,45 @@
+MIPS INSTRUCTION SET REFERENCE - EXCEPTIONS:
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Exceptions:
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 2227 characters
+Lines: 36
+================================================================================
+
+Exceptions:
+           None
+
+           Programming Notes:
+           In MIPS32 Release 2 implementations, this instruction resolves all execution hazards. On a superscalar processor,
+           EHB has alters the instruction issue behavior in a manner identical to SSNOP. For backward compatibility with
+           Release 1 implementations, the last of a sequence of SSNOPs can be replaced by an EHB. In Release 1 implementa-
+           tions, the EHB will be treated as an SSNOP, thereby preserving the semantics of the sequence. In Release 2 imple-
+           mentations, replacing the final SSNOP with an EHB should have no performance effect because a properly sized
+           sequence of SSNOPs will have already cleared the hazard. As EHB becomes the standard in MIPS implementations,
+           the previous SSNOPs can be removed, leaving only the EHB.
+
+
+
+
+126                                                           MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                              Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+EI
+
+
+
+
+     Enable Interrupts                                                                                                                EI
+
+        31                   26 25            21 20              16 15             11 10               6   5    4       3   2         0
+                COP0                 MFMC0                                  12                 0           sc   0                0
+                                                          rt
+               0100 00               01 011                               0110 0             000 00        1    00              000
+                  6                    5                  5                  5                 5           1        2           3
+
+             Format:     EI                                                                                MIPS32 Release 2
+                         EI rt                                                                             MIPS32 Release 2
+
+             Purpose:
+             To return the previous value of the Status register and enable interrupts. If EI is specified without an argument, GPR

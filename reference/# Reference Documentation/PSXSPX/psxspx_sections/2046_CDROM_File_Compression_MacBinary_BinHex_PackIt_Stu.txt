@@ -1,0 +1,87 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION MACBINARY, BINHEX, PACKIT, STUFFIT, COMPACT PRO
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression MacBinary, BinHex, PackIt, StuffIt, Compact Pro
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 3549 characters
+Lines: 78
+================================================================================
+
+CDROM File Compression MacBinary, BinHex, PackIt, StuffIt, Compact Pro
+
+Below are related to MAC filesystems (where the file body consists of separate
+Data and Resource forks), and file type/creator values (resembling filename
+extensions).
+
+MacBinary I,II,III format (v1,v2,v3)
+
+MacBinary contains a single uncompressed file, used for transferring MAC files
+via network, or storing MAC files on non-MAC filesystems.
+
+PackIt/StuffIt archives do often have leading MacBinary headers. MacBinary
+doesn't have any unique filename extension (.bin may be used, more often it's
+using the same extension as the enclosed file, eg. .sit if it contains a
+StuffIt archive).
+
+Also, archives without explicit MAC support may use MacBinary format within
+compressed files (eg. LZH archives created with LHA MAC version).
+
+| 000h 1 Old version number, must be kept at zero for compatibility
+001h 1 Length of filename (1..63) (though v3 says 1..31)
+002h 63 Filename (only "length" bytes are significant)
+041h 4 File type (normally expressed as four characters)
+045h 4 File creator (normally expressed as four characters)
+049h 1 Finder flags, bit8-15 (see [065h] for bit0-7)
+04Ah 1 Zero (must be 00h for compatibility)
+04Bh 2 File Vertical position within its window
+04Dh 2 File Horizontal position within its window
+04Fh 2 File Window or folder ID
+051h 1 Protected flag (bit0=Protected, whatever that is)
+052h 1 Zero (must be 00h for compatibility)
+053h 4 Filesize, Data Fork (0=None)
+057h 4 Filesize, Resource Fork (0=None)
+05Bh 4 File Timestamp, creation
+05Fh 4 File Timestamp, last modification
+063h 27 v1: Reserved (zerofilled)
+063h 2 v2/v3: Length of Get Info comment (if any, usually 0000h)
+065h 1 v2/v3: Finder Flags, bit0-7 (see [049h] for bit8-15)
+066h 6 v2: Reserved (zerofilled)
+066h 4 v3: ID ("mBIN"=MacBinary III)
+06Ah 1 v3: Script of file name (from fdScript field of an fxInfo record)
+06Bh 1 v3: Extended Finder flags (from fdXFlags field of fxInfo record)
+06Ch 8 v2/v3: Reserved (zerofilled)
+074h 4 v2/v3: Length of "total files" when "packed files are unpacked", uh?
+078h 2 v2/v3: Extended Header size (reserved for future, always 0000h)
+07Ah 1 v2/v3: MacBinary II uploader version (81h=v2, 82h=v3)
+07Bh 1 v2/v3: MacBinary II downloader minimum version (81h=v2)
+07Ch 2 v2/v3: CRC16-XMODEM on [000h..07Bh]
+07Eh 2 Reserved for computer type and OS ID (0000h)
+... .. Extended Header (if any, maybe stored here? when [078h]>0)
+... .. Padding to 80h-byte boundary
+... .. Data Fork (if any)
+... .. Padding to 80h-byte boundary
+... .. Resource Fork (if any)
+... .. Padding to 80h-byte boundary
+... .. Get Info comment (if any, usually none)
+
+CRC16-XMODEM: http://www.sunshine2k.de/coding/javascript/crc/crc_js.html
+
+BinHex 4.0 (.hqx) (ASCII, RLE90, big-endian)
+
+Decoding binhex files is done via following steps (in that order):
+
+| 1) ASCII to BINARY conversion (similar to BASE64)
+2) RLE90 decompression of whole file (header+data+resource+crc's)
+3) Processing the header+data+resource from the decompressed binary
+4) For Multipart files, repeat above steps for each part
+
+ASCII to BINARY:
+
+| The file may start with some text message, comments, description. Skip any
+such text lines until reaching a line that contains this 45-byte ID string:
+(This file must be converted with BinHex 4.0)
+That line should be followed by following characters (each char representing
+6bit binary value, MSB first, first char is bit7-2 of first byte):
+!"#$%&'()*+,- char(21h..2Dh) --> bin(00h..0Ch)
+0123456 char(30h..36h) --> bin(0Dh..13h)
+89 char(38h..39h) --> bin(14h..15h)

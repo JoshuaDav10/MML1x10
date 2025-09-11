@@ -1,0 +1,51 @@
+PSXSPX SPECIFICATIONS - OTHER CONTROLLER SLOT, AND DOES THEN EXECUTE THE BIZARRE_PAD_DELAY FUNCTION.
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: OTHER controller slot, and does then execute the bizarre_pad_delay function.
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1234 characters
+Lines: 43
+================================================================================
+
+OTHER controller slot, and does then execute the bizarre_pad_delay function.
+The patch below overwrites that behaviour by NOPs. Purpose of the original (and
+patched) behaviour is unknown.
+
+Used by Perfect Assassin at 800519D4h:
+
+| 240A00B0 mov r10,0B0h ;\
+0140F809 call r10 ; B(57h) GetB0Table
+24090057 +mov r9,57h ;/
+8C42016C mov r2,[r2+5Bh*4] ;=B(5Bh)
+3C01xxxx mov r1,xxxx0000h
+20430884 addt r3,r2,884h ;B(5Bh)+884h
+AC23xxxx mov [r1+xxxxh],r3 ;
+
+Alternately, same as above, but with inefficient nops, used by Sporting Clays
+at 8001B4B4h:
+
+| 24090057 mov r9,57h ;\
+240A00B0 mov r10,0B0h ; B(57h) GetB0Table
+0140F809 call r10 ;
+00000000 +nop ;/
+8C42016C mov r2,[r2+5Bh*4]
+2409000B mov r9,0Bh ;len
+20430884 addt r3,r2,884h
+3C01xxxx mov r1,xxxx0000h
+AC23xxxx mov [r1+xxxxh],r3 ;
+
+Alternately, same as above, but without getting PadEnable functions, used in
+Pandemonium II (at 80083C94h and at 8010B77Ch):
+
+| 240A00B0 mov r10,0B0h ;\
+0140F809 call r10 ; B(57h) GetB0Table
+24090057 +mov r9,57h ;/
+8C42016C mov r2,[r2+5Bh*4] ;=B(5Bh)
+2409000B mov r9,0Bh ;len ;\
+@@fill_lop: ;
+2529FFFF sub r9,1h ; erase error handling
+AC400594 mov [r2+594h],0 ;B(5Bh)+594h.. ;
+1520FFFD jnz r9,@@fill_lop ;
+24420004 +add r2,4h ;/
+
+patch_optional_pad_output:

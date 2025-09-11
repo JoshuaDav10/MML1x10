@@ -1,0 +1,57 @@
+PSXSPX SPECIFICATIONS - FROM INSIDE OF B(4AH) INITCARD(PAD_ENABLE), AND, WITHOUT PATCHES, THE BIOS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: from inside of B(4Ah) InitCard(pad_enable), and, without patches, the BIOS
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1692 characters
+Lines: 48
+================================================================================
+
+from inside of B(4Ah) InitCard(pad_enable), and, without patches, the BIOS
+doesn't allow to uninstall it thereafter).
+
+Used in Breath of Fire III (SLES-01304) at 8017E790, and also in Ace Combat 2
+(SLUS-00404) at 801D23F4:
+
+| 240A00B0 mov r10,0B0h ;\
+0140F809 call r10 ; B(56h) GetC0Table
+24090056 +mov r9,56h ;/
+3C0Axxxx mov r10,xxxx0000h
+3C09xxxx mov r9,xxxx0000h
+8C420018 mov r2,[r2+06h*4] ;=00000C80h = exception_handler = C(06h)
+254Axxxx add r10,xxxxh ;@@new_data
+2529xxxx add r9,xxxxh ;@@new_data_end
+@@copy_lop: ;\ @@new_data:
+8D430000 mov r3,[r10] ; 00000000 nop
+254A0004 add r10,4h ; 00000000 nop
+24420004 add r2,4h ; 00000000 nop
+1549FFFC jne r10,r9,@@copy_lop ; @@new_data_end:
+AC43006C +mov [r2+70h-4],r3 ;/
+
+Alternately, more inefficient, used in Blaster Master-Blasting Again
+(SLUS-01031) at 80063FF4h, and Raiden DX at 80029694h:
+
+| 24090056 mov r9,56h ;\
+240A00B0 mov r10,0B0h ; B(56h) GetC0Table
+0140F809 call r10 ;
+00000000 +nop ;/
+8C420018 mov r2,[r2+06h*4] ;=00000C80h = exception_handler = C(06h)
+3C0Axxxx mov r10,xxxx0000h ;\@@new_data
+254Axxxx add r10,xxxxh ;/
+3C09xxxx mov r9,xxxx0000h ;\@@new_data_end
+2529xxxx add r9,xxxxh ;/
+@@copy_lop: ;\
+8D430000 mov r3,[r10] ; @@new_data:
+00000000 nop ; 00000000 nop
+AC430070 mov [r2+70h],r3 ; 00000000 nop
+254A0004 add r10,4h ;src ; 00000000 nop
+1549FFFB jne r10,r9,@@copy_lop ; @@new_data_end:
+24420004 +add r2,4h ;dst ;/
+
+Note: the above code is same as "patch_install_lightgun_irq_handler", except
+that it writes to r2+70h, instead of r2+80h.
+
+patch_card_specific_delay:
+
+Same purpose as the "early_card_irq_patch" (but for the command/status bytes
+rather than for the data bytes). The patch looks buggy since it inserts the

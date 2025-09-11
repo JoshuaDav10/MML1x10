@@ -1,0 +1,44 @@
+PSXSPX SPECIFICATIONS - 00000000 0000 ;-DUMMY (DO NOTHING?) NEEDED BETWEEN SLIDES (CD VERSION ONLY)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 00000000 0000 ;-Dummy (do nothing?) needed between slides (CD version only)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1332 characters
+Lines: 36
+================================================================================
+
+00000000 0000 ;-Dummy (do nothing?) needed between slides (CD version only)
+
+Below probably v2.41, too (though other doc claims for ALL versions)
+
+| C1000000 nnnn ;-Delays activation of codes by nnnn (4000-5000 = 20-30 sec)
+C2ssssss nnnn ;\Copy ssss bytes from 80ssssss to 80tttttt
+80tttttt 0000 ;/
+
+Below from Caetla .341 release notes
+
+These are probably caetla-specific, not official Datel-codes. In fact, Caetla
+.341 itself might be an inofficial hacked version of Caetla .34 (?) so below
+might be totally inofficial stuff:
+
+| C3aaaaaa 0000 ;\Indirect 8bit Write [[aaaaaa]+bbbb]=dd
+9100bbbb 000000dd ;/
+C3aaaaaa 0001 ;\Indirect 16bit Write [[aaaaaa]+bbbb]=dddd (Tomb Raider 2)
+9100bbbb 0000dddd ;/
+C3aaaaaa 0002 ;\Indirect 32bit Write [[aaaaaa]+bbbb]=dddddddd
+9100bbbb dddddddd ;/
+FFFFFFFF 0001 ;-Optional prefix for GameShark 2.2 codes(force non-caetla)
+12aaaaaa dddddddd ;-32bit Increment [aaaaaa]=[aaaaaa]+dddddddd
+22aaaaaa dddddddd ;-32bit Decrement [aaaaaa]=[aaaaaa]-dddddddd
+
+Notes
+
+A maximum of 30 increment/decrement codes can be used at a time.
+
+A maximum of 60 conditionals can be used at a time (this includes Cx codes).
+
+Increment/decrement codes should (must?) be used with conditionals.
+
+Unknown if greater/less conditionals are signed or unsigned.
+
+Unclear if greater/less compare dddd by [aaaaaa], or vice-versa.

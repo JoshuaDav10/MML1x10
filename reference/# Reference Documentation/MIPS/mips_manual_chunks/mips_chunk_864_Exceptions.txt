@@ -1,0 +1,48 @@
+MIPS INSTRUCTION SET REFERENCE - EXCEPTIONS:
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Exceptions:
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 2120 characters
+Lines: 39
+================================================================================
+
+Exceptions:
+           None
+
+           Programming Notes:
+           Forming the branch target address by catenating PC and index bits rather than adding a signed offset to the PC is an
+           advantage if all program code addresses fit into a 256 MB region aligned on a 256 MB boundary. It allows a branch
+           from anywhere in the region to anywhere in the region, an action not allowed by a signed relative offset.
+           This definition creates the following boundary case: When the jump instruction is in the last word of a 256 MB
+           region, it can branch only to the following 256 MB region containing the branch delay slot.
+
+
+
+
+138                                                             MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                              Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+JAL
+
+
+
+
+      Jump and Link                                                                                                                  JAL
+
+         31                   26 25                                                                                              0
+                  JAL
+                                                                            instr_index
+                 000011
+                     6                                                          26
+
+              Format:     JAL target                                                                                      MIPS32
+
+              Purpose:
+              To execute a procedure call within the current 256 MB-aligned region
+
+              Description:
+              Place the return address link in GPR 31. The return link is the address of the second instruction following the branch,
+              at which location execution continues after a procedure call.
+              This is a PC-region branch (not PC-relative); the effective target address is in the “current” 256 MB-aligned region.
+              The low 28 bits of the target address is the instr_index field shifted left 2 bits. The remaining upper bits are the corre-

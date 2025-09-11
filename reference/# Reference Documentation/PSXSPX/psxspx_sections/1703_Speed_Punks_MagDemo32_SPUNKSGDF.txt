@@ -1,0 +1,55 @@
+PSXSPX SPECIFICATIONS - SPEED PUNKS (MAGDEMO32: SPUNKS\*.GDF)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Speed Punks (MagDemo32: SPUNKS\*.GDF)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1727 characters
+Lines: 46
+================================================================================
+
+Speed Punks (MagDemo32: SPUNKS\*.GDF)
+
+| 000h 4 ID "0FDG XSP" (aka PSX GDF0 backwards)
+008h 4 Header Size (N*10h+10h)
+00Ch 4 Number of files (N)
+010h N*10h File List
+... .. Zeropadding to 800h-byte boundary
+... .. File Data area
+File List entries:
+000h 4 ID/Type ("MARV", "MARS", "MARD", "PMET", "COLR", "MROF")
+004h 4 ID/Num (usually 1 SHL N, or all zero)
+008h 4 Offset (800h-byte aligned, increasing)
+00Ch 4 Size in bytes
+
+Legend of Dragoon (MagDemo34: LOD\SECT\*.BIN, and nested therein)
+
+| 000h 4 ID "MRG",1Ah
+004h 4 Number of Files (eg. 0, 1, 2, 193h, 2E7h, or 1DBBh)
+008h N*8 File List
+... .. Padding to 800h-byte boundary (8Ch-filled) (not in nested MRG's)
+... .. File Data area
+File List entries:
+000h 4 Offset/800h, or 4-byte aligned Offset/1 (increasing)
+004h 4 Size (can be odd, and can be zero)
+Size oddities:
+Empty files in demo version have Size=0 and Offset=0.
+Empty files in retail version have Size=0 and Offset=OffsetOfNextFile.
+MRG archives can start or end with Empty files.
+All files can be empty (eg. retail DRAGN0.BIN\1190h).
+NumFiles can be zero (eg. retail DRAGN0.BIN\1111h, demo DRAGN0.BIN\10E2h).
+Offset oddities:
+SECT\*.BIN have Offset/800h
+Nested MRGs have 4-byte aligned Offset/1
+The two variants can be detected as:
+if FirstOffset=(NumFiles*8+8) then NestedVariant
+if FirstOffset=(NumFiles*8+8+7FFh) AND NOT 7FFh then RootVariant
+Whereas, FirstOffset is the first NONZERO offset in file list (important
+for demo version, which has archives that start with ZERO offsets).
+
+RC Revenge (MagDemo37: RV2\BB\3.BBK and Retail: BB\*\*.BBK)
+
+This does basically contain four large files (and four info blocks with info on
+the content of those files).
+
+| 000h 4 Random/Checksum?
+004h 4 Faded ID (FADED007h)

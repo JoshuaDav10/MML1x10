@@ -1,0 +1,62 @@
+PSXSPX SPECIFICATIONS - 00AH 2 BCD YEAR (OR ZERO) (SPH=1999H, BPH=0)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 00Ah 2 BCD Year (or zero) (SPH=1999h, BPH=0)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2612 characters
+Lines: 54
+================================================================================
+
+00Ah 2 BCD Year (or zero) (SPH=1999h, BPH=0)
+00Ch 4 Unknown (SPH=0, BPH/US=16CFh or BPH/JP=1484h)
+010h 4 Number of entries (N)
+014h N*8 File List
+
+File List entries (64bit), when Bit31=1 (normal entries):
+
+| 0-18 19bit Size/N (BPH=Size/4, SPB=Size/800h)
+19-23 5bit Channel Number (BPH=0, SPH=0..1Fh)
+24-26 3bit Channel Interval (BPH=0, SPH=1 SHL N, eg. 3=Interval 1:8)
+27 1bit Video Flag (0=No, 1=Has Video sectors)
+28 1bit Audio Flag (0=No, 1=Has Audio sectors)
+29 1bit Always 1 (except special entries with Bit31=0, see below)
+30 1bit Unknown (US: Always 1, Japan: 0 or 1)
+31 1bit Always 1 (except special entries with Bit31=0, see below)
+32-63 32bit Offset/800h in ACE.BPB or ACE.SPB file (or 0 when bit31=0 ?)
+
+File List entries (64bit), when Bit31=0:
+
+| For unknown purpose, the normal entries with Bit31=1 are occassionally followed by one or more entries with Bit31=0.
+Unknown if those entries do affect the actual storage (like switching to
+different channel numbers, or jumping to non-continous sector numbers).
+That unknown stuff exists in Japanese version only, not in US version.
+0-18 19bit Unknown (maybe some snippet size value in whatever units?)
+19-23 5bit Always 0 (instead of Channel)
+24-27 4bit Same as in most recent entry with Bit31=1
+28-31 4bit Always 5 (instead of Flags)
+32-63 32bit Always 0 (instead of Offset)
+
+The files are interleaved depending on the Channel Interval setting (and with
+types data/audio/video depending on Flags).
+
+| File Bit24-31 Sector types... Interval Content
+BPH.US E0h DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 1:1 data
+SPH.US F8h SvvvvvvvSvvvvvvvSvvvvvvvSvvvvvvv 1:1 stereo+video
+SPH.US FBh S.......v.......S.......v....... 1:8 stereo+video
+SPH.US F3h S.......S.......S.......S....... 1:8 stereo
+SPH.US F4h S...............S............... 1:16 stereo
+SPH.US F5h M............................... 1:32 mono
+BPH.JAP E0h DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD 1:1 data
+SPH.JAP B8h,F8h SvvvvvvvSvvvvvvvSvvvvvvvSvvvvvvv 1:1 stereo+video
+SPH.JAP B9h Svvv....vvvv....Svvv....vvvv.... 1:2 (4:8) stereo+video
+SPH.JAP BAh,FAh Mv......vv......vv......vv...... 1:4 (2:8) mono+video
+SPH.JAP BBh,FBh S.......v.......S.......v....... 1:8 stereo+video
+SPH.JAP B3h,F3h S.......S.......S.......S....... 1:8 stereo
+SPH.JAP B5h,F5h M............................... 1:32 mono
+Whereas D=data, S=Stereo/Audio, M=Mono/Audio, v=Video, .=Other channels
+
+As shown above, interval 1:2 and 1:4 are grouped as 4:8 and 2:8 (ie. 4 or 2
+continous sectors per 8 sectors).
+
+The Subheader's Channel number is specified in the above directory entries,
+Subheader's File number is fixed (0 for BPB, and 1 for SPB).

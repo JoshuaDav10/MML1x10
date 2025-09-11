@@ -1,0 +1,45 @@
+PSXSPX SPECIFICATIONS - A SERIAL MOUSE SHOULD BE READ AT 1200 BAUDS, 7 DATA BITS, NO PARITY, 1 STOP BIT
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: A serial mouse should be read at 1200 bauds, 7 data bits, no parity, 1 stop bit
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1383 characters
+Lines: 37
+================================================================================
+
+A serial mouse should be read at 1200 bauds, 7 data bits, no parity, 1 stop bit
+(7N1) with DTR and RTS on. For best compatibility, the mouse should output 2
+stop bits (so it could be alternately also read as 7N2 or 8N1). When the mouse
+gets moved, or when a button gets pressed/released, the mouse sends 3 or 4
+characters:
+
+| __First Character____________________
+6 First Character Flag (1)
+5 Left Button (1=Pressed)
+4 Right Button (1=Pressed)
+2-3 Upper 2bit of Vertical Motion
+0-1 Upper 2bit of Horizontal Motion
+__Second Character___________________
+6 Non-first Character Flag (0)
+5-0 Lower 6bit of Horizontal Motion
+__Third Character____________________
+6 Non-first Character Flag (0)
+5-0 Lower 6bit of Vertical Motion
+__Fourth Character (if any)__________
+6 Non-first Character Flag (0)
+5 Middle Button (1=Pressed)
+4 Unused ???
+3-0 Wheel ???
+
+Additionally, the mouse outputs a detection character (when switching RTS (or
+DTR?) off and on:
+
+| "M" = Two-Button Mouse (aka "Microsoft" mouse)
+"3" = Three-Button Mouse (aka "Logitech" mouse)
+"Z" = Mouse-Wheel
+
+Normally, the detection response consist of a single character (usually "M"),
+though some mice have the "M" followed by 11 additional characters of garbage
+or version information (these extra characters have bit6=0, so after detection,
+one should ignore all characters until receiving the first data character with
+bit6=1).

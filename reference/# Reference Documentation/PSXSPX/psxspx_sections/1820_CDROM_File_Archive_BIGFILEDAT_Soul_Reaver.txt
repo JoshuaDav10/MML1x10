@@ -1,0 +1,52 @@
+PSXSPX SPECIFICATIONS - CDROM FILE ARCHIVE BIGFILE.DAT (SOUL REAVER)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Archive BIGFILE.DAT (Soul Reaver)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1449 characters
+Lines: 44
+================================================================================
+
+CDROM File Archive BIGFILE.DAT (Soul Reaver)
+
+Legacy of Kain: Soul Reaver - BIGFILE.DAT
+
+Legacy of Kain: Soul Reaver (MagDemo26: KAIN2\BIGFILE.DAT)
+
+| 000h 2 Number of Folders (175h in retail, 0Ah in demo)
+002h 2 Zero
+004h N*8 Folder List (8-byte per Folder)
+... .. Zeropadding (to 800h-byte boundary)
+... .. 1st Folder (with File List, and File Data for that folder)
+... .. 2nd Folder (with File List, and File Data for that folder)
+... .. 3rd Folder (with File List, and File Data for that folder)
+... .. etc.
+
+Folder List entries:
+
+| 000h 2 Unknown (somehow randomly increases from -8000h to +7E8Fh)
+002h 2 Number of Files in this Folder (eg. 97h)
+004h 4 Offset to Folder (usually 800h-aligned)
+
+Folder format:
+
+| 000h 2 Number of Files (same value as FolderistEntry[002h]) ;\encrypted
+002h 2 Zero ; by 16bit
+004h N*10h File List (10h-byte per Folder) ; XOR value
+... .. Zeropadding (to 800h-byte boundary) ;/
+... .. File Data for this folder ;-unencrypted
+
+File List entries:
+
+| 000h 4 Unknown (random? filename hash? encrypted name?)
+004h 4 File Size in bytes
+008h 4 File Offset (usually 800h-aligned)
+00Ch 4 Unknown (random? filename hash? encrypted name?)
+
+Encryption:
+
+The file header, the first some Folder headers (those in first quarter or so),
+and (all?) File Data is unencrypted (aka XORed with 0000h).
+
+The Folder headers at higher offsets are encrypted with a 16bit XOR value. That
+XOR value is derived from Subchannel Q via LibCrypt:

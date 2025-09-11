@@ -1,0 +1,49 @@
+MIPS INSTRUCTION SET REFERENCE - INVALID OPERATION, UNIMPLEMENTED OPERATION
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Invalid Operation, Unimplemented Operation
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 2420 characters
+Lines: 41
+================================================================================
+
+Invalid Operation, Unimplemented Operation
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                       113
+
+                         Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+CVT.S.fmt
+
+
+
+
+   Floating Point Convert to Single Floating Point                                                                           CVT.S.fmt
+
+            31                   26 25             21 20              16 15             11 10               6   5                 0
+                    COP1                                      0                                                       CVT.S
+                                          fmt                                    fs                 fd
+                   010001                                   00000                                                     100000
+                      6                    5                  5                  5                  5                    6
+
+                 Format:    CVT.S.D fd, fs                                                                              MIPS32
+                            CVT.S.W fd, fs                                                                              MIPS32
+                            CVT.S.L fd, fs                                                                              MIPS64
+                                                                                                                MIPS32 Release 2
+
+                 Purpose:
+                 To convert an FP or fixed point value to single FP
+
+                 Description: fd ← convert_and_round(fs)
+                 The value in FPR fs, in format fmt, is converted to a value in single floating point format and rounded according to the
+                 current rounding mode in FCSR. The result is placed in FPR fd.
+
+                 Restrictions:
+                 The fields fs and fd must specify valid FPRs—fs for type fmt and fd for single floating point. If they are not valid, the
+                 result is UNPREDICTABLE.
+                 The operand must be a value in format fmt; if it is not, the result is UNPREDICTABLE and the value of the operand
+                 FPR becomes UNPREDICTABLE.
+                 For CVT.S.L, the result of this instruction is UNPREDICTABLE if the processor is executing in 16 FP registers
+                 mode.

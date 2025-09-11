@@ -1,0 +1,38 @@
+MIPS INSTRUCTION SET REFERENCE - INEXACT, INVALID OPERATION, UNIMPLEMENTED OPERATION, DIVISION-BY-ZERO, OVERFLOW, UNDERFLOW
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Inexact, Invalid Operation, Unimplemented Operation, Division-by-zero, Overflow, Underflow
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1481 characters
+Lines: 29
+================================================================================
+
+Inexact, Invalid Operation, Unimplemented Operation, Division-by-zero, Overflow, Underflow
+
+
+
+
+124                                                                MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                                  Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+DIVU
+
+
+
+
+  Divide Unsigned Word                                                                                                 DIVU
+
+       31                   26 25            21 20            16 15                                6   5                 0
+             SPECIAL                                                               0                         DIVU
+                                      rs               rt
+              000000                                                         00 0000 0000                    011011
+                   6                  5                5                          10                            6
+
+            Format:     DIVU rs, rt                                                                                 MIPS32
+
+            Purpose:
+            To divide a 32-bit unsigned integers
+
+            Description: (HI, LO) ← rs / rt
+            The 32-bit word value in GPR rs is divided by the 32-bit value in GPR rt, treating both operands as unsigned values.
+            The 32-bit quotient is placed into special register LO and the 32-bit remainder is placed into special register HI.

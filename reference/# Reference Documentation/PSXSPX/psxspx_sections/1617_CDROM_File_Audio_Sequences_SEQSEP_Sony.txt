@@ -1,0 +1,58 @@
+PSXSPX SPECIFICATIONS - CDROM FILE AUDIO SEQUENCES SEQ/SEP (SONY)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Audio Sequences SEQ/SEP (Sony)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1640 characters
+Lines: 50
+================================================================================
+
+CDROM File Audio Sequences SEQ/SEP (Sony)
+
+SEQ - Single Sequence
+
+.SEQ contains MIDI-style sequences, the samples for the instruments can be
+stored in a separate .VAB file (or .VH and .VB files).
+
+Used by Perfect Assassin, DATA.JFS:\SND\*.SEQ (bundled with *.VH and *.VB)
+
+Used by Croc (MagDemo02: CROC\CROCFILE.DIR\AMBI*.BIN, MAP*.BIN, JRHYTHM.BIN)
+
+Used by many other games.
+
+| 000h 4 File ID "pQES"
+004h 4 Version (1) (big endian?)
+008h 2 Resolution per quarter note (01h,80h)
+00Ah 3 Tempo 24bit (8bit:16bit maybe?) (07h,27h,0Eh)
+00Dh 2 Rhythm (NN/NN) (04h,02h)
+00Fh ... Score data, uh? (with many MIDI KeyOn's: xx,9x,xx,xx)
+... 3 End of SEQ (2Fh=End of Track) (FFh,2Fh,00h)
+
+The "Score data" seems to be more or less same as in Standard Midi Format (.smf
+files), ie. containing timing values and MIDI commands/parameters.
+
+SEP - Multi-Track Sequences
+
+This is a simple "archive" with several SEQ-like sequences.
+
+| 000h 4 File ID "pQES" ;same ID as in .SEQ files (!)
+004h 2 Version (0) ;value 0, and only 16bit, unlike .SEQ files
+006h .. 1st Sequence
+... .. 2nd Sequence
+... .. etc.
+
+Sequences:
+
+| 000h 2 Sequence ID (0000h and up) (big endian) ;-ID number
+002h 2 Resolution per quarter note (01h,80h) ;\
+004h 3 Tempo 24bit (07h,27h,0Eh) ; as in SEQ files
+007h 2 Rhythm (NN/NN) (04h,02h) ;/
+009h 4 Data size (big endian, from 00Dh up to including End of SEQ(
+00Dh ... Score data, uh? (...) ;\as in SEQ files
+... 3 End of SEQ (2Fh=End of Track) (FFh,2Fh,00h) ;/
+
+Used by Hear It Now (Playstation Developer's Demo) (RCUBE\RCUBE.SEP)
+
+Used by Rayman (SND\BIGFIX.ALL\0002)
+
+Used by Monster Rancher (MagDemo06, MR_DEMO\DATA\MF_DATA.OBJ\025B)

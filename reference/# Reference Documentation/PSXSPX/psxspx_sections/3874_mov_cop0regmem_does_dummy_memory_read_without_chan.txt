@@ -1,0 +1,30 @@
+PSXSPX SPECIFICATIONS - MOV COP0REG,[MEM] - DOES DUMMY MEMORY READ WITHOUT CHANGING COP0REG?
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: mov cop0reg,[mem] - does dummy memory read without changing cop0reg?
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1001 characters
+Lines: 22
+================================================================================
+
+mov cop0reg,[mem] - does dummy memory read without changing cop0reg?
+
+When SR.bit28=0, triggers Coprocessor Unusable Exception (excode=0Bh), this
+does happen even in Kernal Mode (unlike other COP0 opcodes which do ignore
+SR.bit28=0 in Kernal Mode).
+
+cop0r16-r31 - Garbage
+
+Trying to read these registers returns garbage (but doesn't trigger any
+exception). When reading one of the garbage registers shortly after reading a
+valid cop0 register, the garbage value is usually the same as that of the valid
+register. When doing the read later on, the return value is usually 00000020h,
+or when reading much later it returns 00000040h, or even 00000100h. No idea
+what is causing that effect...?
+
+Note: The garbage registers can be accessed (without causing an exception) even
+in "User mode with cop0 disabled" (SR.Bit1=1 and SR.Bit28=0); accessing any
+other existing cop0 registers (or executing the rfe opcode) in that state is
+causing Coprocessor Unusable Exceptions (excode=0Bh).
+
+COP0 - Debug Registers

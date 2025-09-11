@@ -1,0 +1,35 @@
+MIPS INSTRUCTION SET REFERENCE - JR.HB AT                          /* JUMP TO NEXT INSTRUCTION, CLEARING */
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: jr.hb AT                          /* Jump to next instruction, clearing */
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1003 characters
+Lines: 26
+================================================================================
+
+jr.hb AT                          /* Jump to next instruction, clearing */
+                  nop                               /*   hazards */
+            10:
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                     149
+
+                          Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+LB
+
+
+
+
+     Load Byte                                                                                                                LB
+
+        31                   26 25           21 20             16 15                                                      0
+                 LB
+                                     base               rt                                  offset
+               100000
+                    6                 5                 5                                     16
+
+             Format:      LB rt, offset(base)                                                                      MIPS32
+
+             Purpose:

@@ -1,0 +1,70 @@
+PSXSPX SPECIFICATIONS - SPI-BUS, OR AS TIMER INPUT/OUTPUT).
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: SPI-bus, or as Timer input/output).
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2882 characters
+Lines: 62
+================================================================================
+
+SPI-bus, or as Timer input/output).
+
+| PA.0-7 PAn Port A Bit0..7 Input/Output (0=Low, 1=High) (R/W)
+PB.0-7 PBn Port B Bit0..7 Input /KWI0..7 (0=Low, 1=High) (R)
+PC.0 PC0 Port C Bit0 Input/Output /SDI1 (SPI)(0=Low, 1=High) (R/W)
+PC.1 PC1 Port C Bit1 Input/Output /SDO1 (SPI)(0=Low, 1=High) (R/W)
+PC.2 PC2 Port C Bit2 Input/Output /SCK1 (SPI)(0=Low, 1=High) (R/W)
+PC.3 PC3 Port C Bit3 Input/Output /TCAP (T1) (0=Low, 1=High) (R/W)
+PC.4 PC4 Port C Bit4 Input/Output /EVI (T2) (0=Low, 1=High) (R/W)
+PC.5 PC5 Port C Bit5 Input/Output /EVO (T2) (0=Low, 1=High) (R/W)
+PC.6 PC6 Port C Bit6 Input/Output /IRQ2 (0=Low, 1=High) (R/W)
+PC.7 PC7 Port C Bit7 Input/Output /IRQ1 (0=Low, 1=High) (R/W)
+PD.0-7 PDn Port D Bit0..7 Input/Output (0=Low, 1=High) (R/W)
+PE.0-7 PEn Port E Bit0..7 Input/Output (0=Low, 1=High) (R/W)
+PF.0-7 PFn Port F Bit0..7 Input/Undoc A/D-input (0=Low, 1=High) (R)(R/W)
+
+HC05 Port OPTM=1:00h - DDRA - Port A Data Direction Register (R/W)
+
+HC05 Port OPTM=1:02h - DDRC - Port C Data Direction Register (R/W)
+
+HC05 Port OPTM=1:03h - DDRD - Port D Data Direction Register (R/W)
+
+HC05 Port OPTM=1:04h - DDRE - Port E Data Direction Register (R/W)
+
+HC05 Port OPTM=1:05h - DDRF - Port F Data Direction Register (undoc)
+
+| DDRX.0-7 DDRXn Port X Data Direction Bit0..7 (0=Input, 1=Output) (R/W)
+
+Officially, there are no DDRB and DDRF registers (Port B and F are always
+Inputs). Although, actually, Motorola's Bootstrap RAM manipulate
+DDRF.
+
+HC05 Port OPTM=1:08h - RCR1 - Resistor Control Register 1 (R/W)
+
+HC05 Port OPTM=1:09h - RCR2 - Resistor Control Register 2 (R/W)
+
+| RCR1.0 RAL Port A.Bit0-3 Pullup Resistors (0=Off, 1=On)
+RCR1.1 RAH Port A.Bit4-7 Pullup Resistors (0=Off, 1=On)
+RCR1.2 RBL Port B.Bit0-3 Pullup Resistors (0=Off, 1=On)
+RCR1.3 RBH Port B.Bit4-7 Pullup Resistors (0=Off, 1=On)
+RCR1.4 RGL Port G.Bit0-3 Pullup Resistors (0=Off, 1=On) ;\
+RCR1.5 RGH Port G.Bit4-7 Pullup Resistors (0=Off, 1=On) ; on chips
+RCR1.6 RHL Port H.Bit0-3 Pullup Resistors (0=Off, 1=On) ; with Port G,H
+RCR1.7 RHH Port H.Bit4-7 Pullup Resistors (0=Off, 1=On) ;/
+RCR2.0-7 RCn Port C.Bit0-7 Pullup Resistors (0=Off, 1=On)
+
+HC05 Port OPTM=1:0Ah - WOM1 - Open Drain Output Control Register 1 (R/W)
+
+HC05 Port OPTM=1:0Bh - WOM2 - Open Drain Output Control Register 2 (R/W)
+
+| WOM1.0 AWOML Port A.Bit0-3 Open Drain Mode when DDR=1 (0=No, 1=Open Drain)
+WOM1.1 AWOMH Port A.Bit4-5 Open Drain Mode when DDR=1 (0=No, 1=Open Drain)
+WOM1.2 GWOML Port G.Bit0-3 Open Drain Mode when DDR=1 (0=No, 1=Open Drain)
+WOM1.3 GWOMH Port G.Bit4-5 Open Drain Mode when DDR=1 (0=No, 1=Open Drain)
+WOM1.4 HWOML Port H.Bit0-3 Open Drain Mode when DDR=1 (0=No, 1=Open Drain)
+WOM1.5 HWOMH Port H.Bit4-5 Open Drain Mode when DDR=1 (0=No, 1=Open Drain)
+WOM1.6-7 - Not used (0)
+WOM2.0-5 CWOMn Port C.Bit0..5 Open Drain Mode when DDR=1 (0=No, 1=Open Drain)
+WOM2.6-7 - Not used (always both bits set)
+
+==== Interrupts =====

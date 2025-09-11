@@ -1,0 +1,68 @@
+PSXSPX SPECIFICATIONS - 1 LAST TRACK (NON-BCD) (01H..63H)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 1 Last track (Non-BCD) (01h..63h)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2076 characters
+Lines: 59
+================================================================================
+
+1 Last track (Non-BCD) (01h..63h)
+
+below repeated for each track,
+
+| 12 ISRC in ASCII (eg. "USXYZ9912345") (or 00h-filled if none/unknown)
+2 Sector size (usually 800h, 920h, or 930h) (see Mode entry for more info)
+1 Mode:
+0=Mode1/800h ;raw mode1 data (excluding sync+header+edc+errorinfo)
+3=Mode2/920h ;almost full sector (exluding first 16 bytes; sync+header)
+6=Mode2/930h ;full sector (including first 16 bytes; sync+header)
+7=Audio/930h ;full sector (plain audio data)
+Mode values from wikipedia:
+00h for data Mode1/800h
+02h
+03h for Mode 2 Form 1 data eh? FORM1??? Mode2/920h
+05h for raw data Mode1?/930h
+06h for raw Mode 2/form 1 data Mode2/930h
+07h for audio Audio/930h
+0Fh for raw data with sub-channel Mode1?/930h+WHAT?
+10h for audio with sub-channel Audio/930h+WHAT?
+11h for raw Mode 2/form 1 data with sub-channel Mode2/WHAT?+WHAT?
+Note: Some newer files do actually use different sector sizes for each
+track (eg. 920h for the data track, and 930h for any following audio
+tracks), older files were using the same sector size for all tracks
+(eg. if the disk contained 930-byte Audio tracks, then Data tracks
+were stored at the same size, rather than at 800h or 920h bytes).
+3 Unknown (always 00h,00h,01h)
+4/8 Fileoffset 1 (Start of Track's Pregap) (with Index=00h)
+4/8 Fileoffset 2 (Start of actual Track) (with Index=01h and up)
+4/8 Fileoffset 3 (End of Track) (aka begin of next track's pregap)
+
+End of chain
+
+| 4 Chunk ID "END!"
+4 Chunk size (always zero)
+
+Track Information (contained only in Track at Once images)
+
+| 4 Chunk ID "TINF"/"ETNF"/"ETN2"
+4 Chunk size (bytes)
+
+below repeated for each track,
+
+| 4/4/8 Track fileoffset ;\32bit in TINF/ETNF chunks,
+4/4/8 Track length (bytes) ;/64bit in ETN2 chunks
+4 Mode (should be same as in DAO chunks, see there) (implies sector size)
+0/4/4 Start lba on disc ;\only in ETNF/ETN2 chunks,
+0/4/4 Unknown? ;/not in TINF chunks
+
+Unknown 1 (contained only in Track at Once images)
+
+| 4 Chunk ID "RELO"
+4 Chunk size (bytes)
+4 Zero
+
+Unknown 2 (contained only in Track at Once images)
+
+| 4 Chunk ID "TOCT"
+4 Chunk size (bytes)

@@ -1,0 +1,41 @@
+PSXSPX SPECIFICATIONS - CDROM INTERNAL COMMANDS CX(4X..EX) - CXD2510Q SIGNAL PROCESSOR
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM Internal Commands CX(4x..Ex) - CXD2510Q Signal Processor
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1039 characters
+Lines: 33
+================================================================================
+
+CDROM Internal Commands CX(4x..Ex) - CXD2510Q Signal Processor
+
+One small difference is that the CXD2545Q supports a new "M Track Move"
+function as part of the CX(4xxx) command. And, some "don't care" bits are now
+reserved (ie. some commands need to be padded with additional leading "0"
+bits).
+
+CXD2545Q - CX(1x) - Anti Shock/Brake/Tracking Gain/Filter
+
+| 23-20 4bit Command (01h)
+19 1bit Anti Shock (0=Off, 1=On)
+18 1bit Brake (0=Off, 1=On)
+17 1bit Tracking Gain (0=Normal, 1=Up)
+16 1bit Tracking Gain Filter (0=Select 1, 1=Select 2)
+15-0 16bit Unused (don't care)
+
+CXD2545Q - CX(30..33) - Sled Kick Level
+
+| 23-20 4bit Command (03h)
+19-18 2bit Subcommand (0)
+17-16 2bit Sled Kick Level (0=+/-1, 1=+/-2, 2=+/-3, 3=+/-4)
+15-0 16bit Unused (don't care)
+
+CXD2545Q - CX(34xxxx) - Write to Coefficient RAM
+
+| 23-16 8bit Command (34h)
+15 1bit Zero (0)
+14-8 7bit Address (00h..4Fh = Select Coefficient K00..K4F)
+7-0 8bit Data (00h..FFh = New value)
+PLUS 8bit Eight more bits on PSone (!)
+
+Allows to change the default preset coefficient values,

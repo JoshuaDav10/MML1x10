@@ -1,0 +1,33 @@
+MIPS INSTRUCTION SET REFERENCE - RESERVED INSTRUCTION
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Reserved Instruction
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1085 characters
+Lines: 24
+================================================================================
+
+Reserved Instruction
+
+
+
+
+180                                                              MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                                Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+MFHI
+
+
+
+
+  Move From HI Register                                                                                                  MFHI
+
+       31                   26 25                              16 15             11 10              6   5                  0
+             SPECIAL                           0                                             0                 MFHI
+                                                                          rd
+              000000                     00 0000 0000                                      00000               010000
+                   6                          10                          5                  5                   6
+
+            Format:    MFHI rd                                                                                       MIPS32
+
+            Purpose:

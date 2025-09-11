@@ -1,0 +1,377 @@
+PSXSPX SPECIFICATIONS - TIMERS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Timers
+Chunked: Wed Sep 10 03:31:04 PM CDT 2025
+Size: 7571 characters
+================================================================================
+
+Timers
+
+CDROM Drive
+
+CDROM Controller I/O Ports
+
+CDROM Controller Command Summary
+
+CDROM - Control Commands
+
+CDROM - Seek Commands
+
+CDROM - Read Commands
+
+CDROM - Status Commands
+
+CDROM - CD Audio Commands
+
+CDROM - Test Commands
+
+CDROM - Test Commands - Version, Switches, Region, Chipset, SCEx
+
+CDROM - Test Commands - Test Drive Mechanics
+
+CDROM - Test Commands - Prototype Debug Transmission
+
+CDROM - Test Commands - Read/Write Decoder RAM and I/O Ports
+
+CDROM - Test Commands - Read HC05 SUB-CPU RAM and I/O Ports
+
+CDROM - Secret Unlock Commands
+
+CDROM - Video CD Commands
+
+CDROM - Mainloop/Responses
+
+CDROM - Response Timings
+
+CDROM - Response/Data Queueing
+
+CDROM Disk Format
+
+CDROM Subchannels
+
+CDROM Sector Encoding
+
+CDROM Scrambling
+
+CDROM XA Subheader, File, Channel, Interleave
+
+CDROM XA Audio ADPCM Compression
+
+CDROM ISO Volume Descriptors
+
+CDROM ISO File and Directory Descriptors
+
+CDROM ISO Misc
+
+CDROM Extension Joliet
+
+CDROM File Formats
+
+CDROM File Official Sony File Formats
+
+CDROM File Playstation EXE and SYSTEM.CNF
+
+CDROM File PsyQ .CPE Files (Debug Executables)
+
+CDROM File PsyQ .SYM Files (Debug Information)
+
+CDROM File Video Texture Image TIM/PXL/CLT (Sony)
+
+CDROM File Video Texture/Bitmap (Other)
+
+CDROM File Video Texture/Bitmap (TGA)
+
+CDROM File Video Texture/Bitmap (PCX)
+
+CDROM File Video 2D Graphics CEL/BGD/TSQ/ANM/SDF (Sony)
+
+CDROM File Video 3D Graphics TMD/PMD/TOD/HMD/RSD (Sony)
+
+CDROM File Video STR Streaming and BS Picture Compression (Sony)
+
+CDROM File Video Streaming STR (Sony)
+
+CDROM File Video Streaming STR Variants
+
+CDROM File Video Streaming Framerate
+
+CDROM File Video Streaming Audio
+
+CDROM File Video Streaming Chunk-based formats
+
+CDROM File Video Streaming Mis-mastered files
+
+CDROM File Video BS Compression Versions
+
+CDROM File Video BS Compression Headers
+
+CDROM File Video BS Compression DC Values
+
+CDROM File Video BS Compression AC Values
+
+CDROM File Video BS Picture Files
+
+CDROM File Video Wacwac MDEC Streams
+
+CDROM File Video Polygon Streaming
+
+CDROM File Audio Single Samples VAG (Sony)
+
+CDROM File Audio Sample Sets VAB and VH/VB (Sony)
+
+CDROM File Audio Sequences SEQ/SEP (Sony)
+
+CDROM File Audio Other Formats
+
+CDROM File Audio Streaming XA-ADPCM
+
+CDROM File Audio CD-DA Tracks
+
+CDROM File Archives with Filename
+
+CDROM File Archives with Offset and Size
+
+CDROM File Archives with Offset
+
+CDROM File Archives with Size
+
+CDROM File Archives with Chunks
+
+CDROM File Archives with Folders
+
+CDROM File Archive HUG/IDX/BIZ (Power Spike)
+
+CDROM File Archive TOC/DAT/LAY
+
+CDROM File Archive WAD (Doom)
+
+CDROM File Archive WAD (Cardinal Syn/Fear Effect)
+
+CDROM File Archive DIR/DAT (One/Viewpoint)
+
+CDROM File Archive Darkworks Chunks (Alone in the Dark)
+
+CDROM File Archive Blue Chunks (Blue's Clues)
+
+CDROM File Archive HED/CDF (Parasite Eve 2)
+
+CDROM File Archive IND/WAD (MTV Music Generator)
+
+CDROM File Archive GAME.RSC (Colonly Wars Red Sun)
+
+CDROM File Archive BIGFILE.DAT (Soul Reaver)
+
+CDROM File Archive FF8 IMG (Final Fantasy VIII)
+
+CDROM File Archive FF9 IMG (Final Fantasy IX)
+
+CDROM File Archive GTFS (Gran Turismo 2)
+
+CDROM File Archive Nightmare Project: Yakata
+
+CDROM File Archive FAdj0500 (Klonoa)
+
+CDROM File Archives in Hidden Sectors
+
+CDROM File Archive HED/DAT/BNS/STR (Ape Escape)
+
+CDROM File Archive WAD.WAD, BIG.BIN, JESTERS.PKG (Crash/Herc/Pandemonium)
+
+CDROM File Archive BIGFILE.BIG (Gex)
+
+CDROM File Archive BIGFILE.DAT (Gex - Enter the Gecko)
+
+CDROM File Archive FF9 DB (Final Fantasy IX)
+
+CDROM File Archive Ace Combat 2 and 3
+
+CDROM File Archive NSD/NSF (Crash Bandicoot 1-3)
+
+CDROM File Archive STAGE.DIR and *.DAT (Metal Gear Solid)
+
+CDROM File Archive DRACULA.DAT (Dracula)
+
+CDROM File Archive Croc 1 (DIR, WAD, etc.)
+
+CDROM File Archive Croc 2 (DIR, WAD, etc.)
+
+CDROM File Archive Headerless Archives
+
+CDROM File Compression
+
+CDROM File Compression LZSS (Moto Racer 1 and 2)
+
+CDROM File Compression LZSS (Dino Crisis 1 and 2)
+
+CDROM File Compression LZSS (Serial Experiments Lain)
+
+CDROM File Compression ZOO/LZSS
+
+CDROM File Compression Ulz/ULZ (Namco)
+
+CDROM File Compression SLZ/01Z (chunk-based compressed archive)
+
+CDROM File Compression LZ5 and LZ5-variants
+
+CDROM File Compression PCK (Destruction Derby Raw)
+
+CDROM File Compression GT-ZIP (Gran Turismo 1 and 2)
+
+CDROM File Compression GT20 and PreGT20
+
+CDROM File Compression HornedLZ
+
+CDROM File Compression LZS (Gundam Battle Assault 2)
+
+CDROM File Compression BZZ
+
+CDROM File Compression RESOURCE (Star Wars Rebel Assault 2)
+
+CDROM File Compression TIM-RLE4/RLE8
+
+CDROM File Compression RLE_16
+
+CDROM File Compression PIM/PRS (Legend of Mana)
+
+CDROM File Compression BPE (Byte Pair Encoding)
+
+CDROM File Compression RNC (Rob Northen Compression)
+
+CDROM File Compression Darkworks
+
+CDROM File Compression Blues
+
+CDROM File Compression Z (Running Wild)
+
+CDROM File Compression ZAL (Z-Axis)
+
+CDROM File Compression EA Methods
+
+CDROM File Compression EA Methods (LZSS RefPack)
+
+CDROM File Compression EA Methods (Huffman)
+
+CDROM File Compression EA Methods (BPE)
+
+CDROM File Compression EA Methods (RLE)
+
+CDROM File Compression ZIP/GZIP/ZLIB (Inflate/Deflate)
+
+Inflate - Core Functions
+
+Inflate - Initialization & Tree Creation
+
+Inflate - Headers and Checksums
+
+CDROM File Compression LArc/LHarc/LHA (LZS/LZH)
+
+CDROM File Compression UPX
+
+CDROM File Compression LZMA
+
+CDROM File Compression XZ
+
+CDROM File Compression FLAC audio
+
+CDROM File Compression ARJ
+
+CDROM File Compression ARC
+
+CDROM File Compression RAR
+
+CDROM File Compression ZOO
+
+CDROM File Compression nCompress.Z
+
+CDROM File Compression Octal Oddities (TAR, CPIO, RPM)
+
+CDROM File Compression MacBinary, BinHex, PackIt, StuffIt, Compact Pro
+
+CDROM File XYZ and Dummy/Null Files
+
+CDROM Protection - SCEx Strings
+
+CDROM Protection - Bypassing it
+
+CDROM Protection - Modchips
+
+CDROM Protection - Chipless Modchips
+
+CDROM Protection - LibCrypt
+
+CDROM Disk Images CCD/IMG/SUB (CloneCD)
+
+CDROM Disk Images CDI (DiscJuggler)
+
+CDROM Disk Images CUE/BIN/CDT (Cdrwin)
+
+CDROM Disk Images MDS/MDF (Alcohol 120%)
+
+CDROM Disk Images NRG (Nero)
+
+CDROM Disk Image/Containers CDZ
+
+CDROM Disk Image/Containers ECM
+
+CDROM Subchannel Images
+
+CDROM Disk Images PBP (Sony)
+
+CDROM Disk Images CHD (MAME)
+
+CDROM Disk Images Other Formats
+
+CDROM Internal Info on PSX CDROM Controller
+
+CDROM Internal HC05 Instruction Set
+
+CDROM Internal HC05 On-Chip I/O Ports
+
+CDROM Internal HC05 On-Chip I/O Ports - Extras
+
+CDROM Internal HC05 I/O Port Usage in PSX
+
+CDROM Internal HC05 Motorola Selftest Mode
+
+CDROM Internal HC05 Motorola Selftest Mode (52pin chips)
+
+CDROM Internal HC05 Motorola Selftest Mode (80pin chips)
+
+CDROM Internal CXD1815Q Sub-CPU Configuration Registers
+
+CDROM Internal CXD1815Q Sub-CPU Sector Status Registers
+
+CDROM Internal CXD1815Q Sub-CPU Address Registers
+
+CDROM Internal CXD1815Q Sub-CPU Misc Registers
+
+CDROM Internal Commands CX(0x..3x) - CXA1782BR Servo Amplifier
+
+CDROM Internal Commands CX(4x..Ex) - CXD2510Q Signal Processor
+
+CDROM Internal Commands CX(0x..Ex) - CXD2545Q Servo/Signal Combo
+
+CDROM Internal Commands CX(0x..Ex) - CXD2938Q Servo/Signal/SPU Combo
+
+CDROM Internal Commands CX(xx) - Notes
+
+CDROM Internal Commands CX(xx) - Summary of Used CX(xx) Commands
+
+CDROM Internal Coefficients (for CXD2545Q)
+
+CDROM Video CDs (VCD)
+
+VCD ISO Basic Files (INFO, ENTRIES, AVSEQnn, ISO Filesystem)
+
+VCD ISO Playback Control PBC Files (PSD, LOT, ITEMnnnn)
+
+VCD ISO Search Files (SCANDATA, SEARCH, TRACKS, SPICONTX)
+
+VCD ISO Misc files (CAPTnn, AUDIOnn, KARINFO, PICTURES, CDI)
+
+VCD MPEG-1 Multiplex Stream
+
+VCD MPEG-1 Video Stream
+
+VCD MP2 Audio Stream

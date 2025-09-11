@@ -1,0 +1,39 @@
+MIPS INSTRUCTION SET REFERENCE - UNIMPLEMENTED OPERATION
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Unimplemented Operation
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1329 characters
+Lines: 31
+================================================================================
+
+Unimplemented Operation
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                      189
+
+                         Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+MOVT
+
+
+
+
+  Move Conditional on Floating Point True                                                                               MOVT
+
+       31                   26 25            21 20        18 17 16 15            11 10              6   5                  0
+             SPECIAL                                         0   tf                          0                MOVCI
+                                     rs              cc                    rd
+              000000                                         0   1                         00000               000001
+                 6                    5              3       1   1         5                 5                   6
+
+            Format:      MOVT rd, rs, cc                                                                             MIPS32
+
+            Purpose:
+            To test an FP condition code then conditionally move a GPR
+
+            Description: if cc = 1 then rd ← rs
+            If the floating point condition code specified by CC is one, then the contents of GPR rs are placed into GPR rd.
+
+            Restrictions:

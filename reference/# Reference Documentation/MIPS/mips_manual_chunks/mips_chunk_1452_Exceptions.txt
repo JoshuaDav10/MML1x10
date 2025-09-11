@@ -1,0 +1,39 @@
+MIPS INSTRUCTION SET REFERENCE - EXCEPTIONS:
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Exceptions:
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1264 characters
+Lines: 30
+================================================================================
+
+Exceptions:
+              None
+
+
+
+
+256                                                            MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                                 Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+SLTI
+
+
+
+
+   Set on Less Than Immediate                                                                                         SLTI
+
+       31                   26 25            21 20             16 15                                                   0
+                SLTI
+                                     rs                 rt                              immediate
+              001010
+                   6                  5                 5                                  16
+
+            Format:    SLTI rt, rs, immediate                                                                   MIPS32
+
+            Purpose:
+            To record the result of a less-than comparison with a constant
+
+            Description: rt ← (rs < immediate)
+            Compare the contents of GPR rs and the 16-bit signed immediate as signed integers and record the Boolean result of
+            the comparison in GPR rt. If GPR rs is less than immediate, the result is 1 (true); otherwise, it is 0 (false).

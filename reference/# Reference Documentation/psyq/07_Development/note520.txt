@@ -1,0 +1,39 @@
+PSYQ DOCUMENTATION - TECHNOTE/note520.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/TECHNOTE/note520.pdf
+Converted: Wed Sep 10 02:47:29 PM CDT 2025
+================================================================================
+
+PLAYSTATION TECHNICAL NOTE
+========================================================================
+
+
+Date:     December 18,1996
+Ref:      tech-support 520
+Author:   Keiso Shimakawa, SCEI R&D
+
+Subject: DR_ENV usage warning for Library releases prior to 3.7
+
+
+ABSTRACT
+--------
+The following provides a workaround for preventing drawing stalls when
+using DR_ENV.
+
+There is a slight possibility that the drawing stalls when using
+a primitive DR_ENV of DRAWENV.isbg = 1(Background Clear Flag=ON)
+when connected to OT. This problem is caused due to the critical
+timing upon clearing a drawing area.
+
+
+WORKAROUND
+----------
+
+Connect OT with DRAWENV.isbg = 0. When you need to clear a
+drawing area, connect (AddPrim) corresponding TILE primitive
+after DR_ENV.
+
+A fix for the problem is planned to be included in
+library, version 3.7. Until 3.7 becomes available,
+please use the measures above.
+

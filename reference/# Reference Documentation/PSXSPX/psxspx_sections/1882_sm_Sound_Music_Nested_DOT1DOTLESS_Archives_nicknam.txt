@@ -1,0 +1,106 @@
+PSXSPX SPECIFICATIONS - .SM SOUND MUSIC? NESTED DOT1+DOTLESS ARCHIVES ;NICKNAME=MT3
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: .sm Sound Music? Nested DOT1+DOTLESS Archives ;nickname=mt3
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 3543 characters
+Lines: 98
+================================================================================
+
+.sm Sound Music? Nested DOT1+DOTLESS Archives ;nickname=mt3
+.co Whatever "OARa" (eg. d16e\*, s00a\*, s02c\*) ;nickname=oar
+.cp PCX bitmap (eg. init\*) ;nickname=pcc
+.cr Whatever "sNRJ1F" (eg. roll\*) ;nickname=rar
+.cs Whatever (eg. d16e\*, s01a\*) ;nickname=sgt
+.sw Wave Archive (trailing) ;nickname=wvx
+.cz Whatever "KMDa" (eg. s11a, a11c, s14e, s15a) ;nickname=zmd
+.c,FFh End of Family="c" area ;nickname=dar?
+
+Files are starting on 800h-byte boundaries. Files with Family="c" are special,
+they contain an Offset entries instead of a Size entries, that Offsets are
+4-byte aligned (relative to the 800h-byte aligned offset of the first
+Family="c" entry), the list of Family="c" entries is terminated by an entry
+with Family="c" and Type=FFh (which contains the end-offset of the last
+c-Family entry, aka the size of all c-Family entries).
+
+Note: The above 3-letter nicknames are used on some webpages (unknown why,
+maybe they are derived from MGS filename extensions in the PC version).
+
+FACE.DAT (face animations for video calls):
+
+This contains several large blocks (supposedly one per stage, each block having
+its own file list). There is no directory to find the begin of the separate
+blocks, but one can slowly crawl through the file:
+
+| NextBlock = CurrBlock + 4 + Offset(lastfile)+Size(lastfile) + Align800h
+
+The content of each block is:
+
+| 000h 4 Number of Files in this block (eg. 19h or 1Ch)
+004h N*0Ch File List for this block
+... .. File Data for this block
+... .. Zeropadding to 800h-byte boundary (followed by next block, if any)
+File List entries:
+000h 2 File Type (0=Main/Eye/Mouth frames, 1=All frames are full size)
+002h 2 File ID (name checksum?)
+004h 4 Filesize in bytes
+008h 4 Offset in bytes, minus 4
+
+Type 0 Files in FACE.DAT:
+
+| This type use a single palette for all frames, and only the first frame is
+full 52x89pix, the other frames contain only the update sections (eg. eyes).
+000h 4 Offset to 200h-byte palette (usually 20h) ;\Main
+004h 4 Offset to Main Bitmap (52x89pix) (usually 220h) ;/
+008h 4 Offset to 4th Bitmap (usually xxxxh or 0=None) ;\Eyes
+00Ch 4 Offset to 5th Bitmap (usually xxxxh or 0=None) ;/
+010h 4 Zero
+014h 4 Offset to 2nd Bitmap (usually 143Ch or 0=None) ;\Mouth
+018h 4 Offset to 3rd Bitmap (usually xxxxh or 0=None) ;/
+01Ch 4 Zero
+020h 200h Palette (256 colors) ;\Main
+220h 1218h Main Bitmap ;/
+1438h 4 Zero
+143Ch .. 2nd Bitmap (if any) ;\Mouth
+... .. 3rd Bitmap (if any) ;/
+... .. 4th Bitmap (if any) ;\Eyes
+... .. 5th Bitmap (if any) ;/
+
+Type 1 Files in FACE.DAT:
+
+| This type use separate palettes for each frame, all frames are full 52x89pix.
+000h 4 Number of frames
+004h N*0Ch Frame List
+... 200h 1st Frame Palette
+... 1218h 1st Frame Bitmap (52x89pix)
+... 4 ?
+... 200h 2nd Frame Palette
+... 1218h 2nd Frame Bitmap (52x89pix)
+... 4 ?
+... .. 3rd Frame ...
+Frame List entries:
+000h 4 Offset to Palette
+004h 4 Offset to Bitmap (usually at Palette+200h)
+008h 4 Unknown (often 000x000xh)
+
+Bitmap Format (for both Type 0 and Type 1):
+
+| 000h 1 Offset X (always 00h in Main Bitmap)
+001h 1 Offset Y (always 00h in Main Bitmap)
+002h 1 Width (always 34h in Main Bitmap, or less in 2nd-5th bitmap)
+003h 1 Height (always 59h in Main Bitmap, or less in 2nd-5th bitmap)
+004h .. Bitmap Pixels at 8bpp (Width*Height bytes)
+
+DEMO.DAT, DEMO.SYM
+
+VOX.DAT, VOX.SYM
+
+The .DAT files contain several huge blocks, found on 800h-boundaries starting
+with:
+
+| 10 08 00 00 0x 00 00 00 ..
+
+The .SYM files (if present) contain Names and .DAT Offsets/800h for those huge
+blocks in text format:
+
+| "0xNNNNNNNN name",0Ah

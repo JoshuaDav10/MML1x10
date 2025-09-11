@@ -1,0 +1,50 @@
+PSXSPX SPECIFICATIONS - CDROM:\ABE2\CR.MOV ;EXTERNAL DATA (THE .MOV BEING A .STR VIDEO)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: cdrom:\ABE2\CR.MOV ;external data (the .MOV being a .STR video)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1317 characters
+Lines: 41
+================================================================================
+
+cdrom:\ABE2\CR.MOV ;external data (the .MOV being a .STR video)
+XXX: That's not tested/verified, and not implemented in no$psx file viewer.
+
+Monkey Hero (MagDemo17: MONKEY\BIGFILE.PSX and nested .PSX files)
+
+| 000h 4 Unknown (6)
+004h 4 Total Filesize (1403800h)
+008h 2 Unknown, Alignment? (800h)
+00Ah 2 Number of Files, excluding zerofilled File List entries (ACh)
+00Ch 4 Header Size (1800h)
+010h 4 Unknown, Entrysize? (18h)
+014h 4 Unknown, Entrysize? (18h)
+018h N*18h File List (can contain unused zerofilled entries here and there!)
+... .. File Data area
+
+File List entries:
+
+| 000h 10h Filename ("FILENAME.EXT", zeropadded)
+010h 4 File Offset in bytes (800h-byte aligned, unusorted/not increasing)
+014h 4 File Size in bytes
+
+NHL Faceoff '99 (MagDemo17: FO99\*.KGB and nested *.PRM *.TMP *.ZAM)
+
+NHL Faceoff 2000 (MagDemo28: FO2000\*.KGB, Z.CAT, and nested *.PRM and *.TMP)
+
+| 000h 4 ID "KGB",00h
+004h 4 Number of Files (N)
+008h (4) Number of Files negated (-N) ;
+
+File List entries:
+
+| 000h 10h Filename ("FILENAME.EXT", terminated by 00h, padded with CDh)
+010h 4 File Size in bytes
+014h 4 File Offset (800h-byte or 1/4-byte? aligned)
+
+Syphon Filter 1 (MagDemo18: SYPHON\SUBWAY.FOG) (4Mbyte, namelen=10h)
+
+| 000h 4 Unknown (80000001h)
+004h 4 Offset/800h to Final Padding area
+008h 8 Zerofilled
+010h N*18h File List

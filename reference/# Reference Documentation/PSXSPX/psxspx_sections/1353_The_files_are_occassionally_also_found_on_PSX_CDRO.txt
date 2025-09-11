@@ -1,0 +1,187 @@
+PSXSPX SPECIFICATIONS - THE FILES ARE OCCASSIONALLY ALSO FOUND ON PSX CDROMS:
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: The files are occassionally also found on PSX CDROMs:
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 5724 characters
+Lines: 178
+================================================================================
+
+The files are occassionally also found on PSX CDROMs:
+
+| Legacy of Kain PAL version (\DEGUG\NTSC\KAIN2.SYM+MAP+CPE)
+RC Revenge (\RELEASE.SYM)
+Twisted Metal: Small Brawl (MagDemo54: TMSB\TM.SYM)
+Jackie Chan Stuntmaster (GAME_REL.SYM+CPE)
+SnoCross Championship Racing (MagDemo37: SNOCROSS\SNOW.TOC\SNOW.MAP)
+Sled Storm (MagDemo24: DEBUG\MAIN.MAP)
+E.T. Interplanetary Mission (MagDemo54: MEGA\MEGA.CSH\* has SYM+CPE+MAP)
+
+Fileheader .SYM
+
+| 00h 4 File ID ("MND",01h)
+04h 4 Whatever (0,0,0,0) ;TOMB5: 0,02h,0,0
+08h .. Chunks (see below)
+
+| _______________________________ Symbol Chunks ________________________________
+
+Chunk 01h: Symbol (Immediate, eg. memsize, or membase)
+
+Chunk 02h: Symbol (Function Address for Internal & External Functions)
+
+Chunk 05h: Symbol (?)
+
+Chunk 06h: Symbol (?)
+
+| 00h 4 Address/Value
+04h 1 Chunk ID (01h/02h/05h/06h)
+05h 1 Symbol Length (LEN)
+06h LEN Symbol (eg. "VSync")
+
+| __________________________ Source Code Line Chunks ___________________________
+
+Chunk 80h: Source Code Line Numbers: Address for 1 Line
+
+| 00h 4 Address (for 1 line, starting at current line)
+04h 1 Chunk ID (80h)
+
+Chunk 82h: Source Code Line Numbers: Address for N Lines (8bit)
+
+| 00h 4 Address (for N lines, starting at current line)
+04h 1 Chunk ID (82h)
+05h 1 Number of Lines (00h=None, or 02h and up?)
+
+Chunk 84h: Source Code Line Numbers: Address for NN Lines (16bit)
+
+| 00h 4 Address (for N lines, starting at current line)
+04h 1 Chunk ID (84h)
+05h 2 Number of Lines (?)
+
+Chunk 86h: Source Code Line Numbers: Address for Line NNN (32bit?)
+
+| 00h 4 Address (for 1 line, starting at newly assigned current line)
+04h 1 Chunk ID (84h)
+05h 4 Absolute Line Number (rather than number of lines) (?)
+
+Chunk 88h: Source Code Line Numbers: Start with Filename
+
+| 00h 4 Address (start address)
+04h 1 Chunk ID (88h=Filename)
+05h 4 First Line Number (after comments/definitions) (32bit?)
+09h 1 Filename Length (LEN)
+0Ah LEN Filename (eg. "C:\path\main.c")
+
+Chunk 8Ah: Source Code Line Numbers: End of Source Code
+
+| 00h 4 Address (end address)
+04h 1 Chunk ID (8Ah)
+
+| __________________________ Internal Function Chunks __________________________
+
+Chunk 8Ch: Internal Function: Start with Filename
+
+| 00h 4 Address
+04h 1 Chunk ID (8Ch)
+05h 4 Whatever (1Eh,00h,20h,00h) ;or 1Eh,00h,18h,00h
+09h 4 Whatever (00h,00h,1Fh,00h)
+0Dh 4 Whatever (00h,00h,00h,C0h)
+11h 4 Whatever (FCh,FFh,FFh,FFh) ;mask? neg.offset?
+15h 4 Whatever (10h,00h,00h,00h) 
+
+Chunk 8Eh: Internal Function: End of Function (end of chunk 8Ch)
+
+| 00h 4 Address
+04h 1 Chunk ID (8Eh)
+05h 4 Line Number 
+
+Chunk 90h: Internal Function:Whatever90h... first instruction in main func?
+
+Chunk 92h: Internal Function:Whatever92h... last instruction in main func?
+
+Maybe line numbers? Or end of definitions for incoming parameters?
+
+| 00h 4 Address
+04h 1 Chunk ID (90h/92h)
+05h 4 Whatever (1Fh,00h,00h,00h) 
+
+| _____________________________ Class/Type Chunks ______________________________
+
+Chunk 94h: Type/Symbol (Simple Types?)
+
+| 00h 4 Offset (when used within a structure, or stack-N, or otherwise zero)
+04h 1 Chunk ID (94h)
+05h 2 Class (000Dh=Type.alias, 000Ah=Address, 0001h=Stack, 0002h=Addr)
+07h 2 Type (XX = 8bit,16bit,signed,etc.?)
+09h 4 Zero, or Size in Bytes (for "memblocks")
+0xh 1 Symbol Name Length (LEN)
+0xh LEN Symbol Name (eg. "size_t")
+
+Chunk 96h: Type/Symbol (Complex Structures/Arrays?)
+
+| 00h 4 Offset (when used within a structure, otherwise zero)
+04h 1 Chunk ID (96h)
+05h 2 Class (02h=Array,08h=RefToStruct,0Dh=DefineAlias,66h=StructEnd)
+07h 2 Type (0xh=Small, 3xh=WithArrayStuff?) (same/similar as in chunk 94h)
+09h 4 Struct Size in Bytes
+0Dh 2 Array Dimensions (DIM) (0=none) ;eg. [3][4] --> 0002h
+0Fh DIM*4 Array Entries per Dimension ;eg. [3][4] --> 00000003h,00000004h
+xxh 1 Internal Fake Name Length (LEN1) (0=none)
+xxh LEN1 Internal Fake Name (eg. ".1fake")
+xxh 1 Symbol Name Length (LEN2)
+xxh LEN2 Symbol Name (eg. "r")
+
+| ______________________________ Class/Type Values _____________________________
+
+Class definition (in chunk 94h) (and somewhat same/similar in chunk 96h)
+
+(looks same/similar as C_xxx class values in COFF files!)
+
+| 0001h = Local variable (with Offset = negative stack offset)
+0002h = Global variable or Function (with Offset = address)
+0008h = Item in Structure (with Offser = offset within struct)
+0009h = Incoming Function param (with Offset = index; 0,4,8,etc.)
+000Ah = Type address / struc start? (with Offset = zero)
+000Dh = Type alias (with Offset = zero)
+
+Type definition (in chunk 94h/96h)
+
+(maybe lower 4bit=type, and next 4bit=usage/variant?)
+
+(looks same/similar as T_xxx type values in COFF files!)
+
+| 0000h =
+0001h =
+0002h =
+0003h = (16bit signed?)
+0004h = int (32bit signed?)
+0005h =
+0006h =
+0007h =
+0008h = (address) (32bit unsigned?) (with Definition=000Ah)
+0009h =
+000Ah =
+000Bh =
+000Ch = u_char (8bit unsigned?)
+000Dh = u_short,ushort (16bit unsigned?)
+000Eh = u_int (32bit unsigned?)
+000Fh = u_long (64bit unsigned?) (or rather SAME as above?)
+0021h = function with 0 params, and/or return="nothing"?
+0024h = main function with 2 params, and/or return="int"?
+0052h = argv (string maybe?)
+0038h = GsOT (huh?)
+00F8h = GsOT_TAG (huh?)
+00FCh = PACKET (huh?)
+?? = float,bool,string,ptr,packet,(un-)signed8/16/32/64bit,etc
+?? = custom type/struct (using value 000xh plus "fake" name, or so?)
+
+| __________________________________ .MAP File _________________________________
+
+PsyQ .MAP File
+
+The .SYM file is usually bundled with a .MAP file, which is containing a
+summary of the symbolic info as ASCII text (but without info on line numbers or
+data types). For example:
+
+| Start Stop Length Obj Group Section name
+80010000 80012D5B 00002D5C 80010000 text .rdata
+80012D5C 800C8417 000B56BC 80012D5C text .text

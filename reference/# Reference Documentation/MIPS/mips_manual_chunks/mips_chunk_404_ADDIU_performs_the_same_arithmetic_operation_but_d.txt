@@ -1,0 +1,38 @@
+MIPS INSTRUCTION SET REFERENCE - ADDIU PERFORMS THE SAME ARITHMETIC OPERATION BUT DOES NOT TRAP ON OVERFLOW.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: ADDIU performs the same arithmetic operation but does not trap on overflow.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1214 characters
+Lines: 29
+================================================================================
+
+ADDIU performs the same arithmetic operation but does not trap on overflow.
+
+
+
+
+36                                                              MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                               Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+ADDIU
+
+
+
+
+  Add Immediate Unsigned Word                                                                                             ADDIU
+
+        31                   26 25            21 20              16 15                                                        0
+               ADDIU
+                                       rs                 rt                                 immediate
+               001001
+                    6                  5                  5                                      16
+
+             Format:    ADDIU rt, rs, immediate                                                                        MIPS32
+
+             Purpose:
+             To add a constant to a 32-bit integer
+
+             Description: rt ← rs + immediate
+             The 16-bit signed immediate is added to the 32-bit value in GPR rs and the 32-bit arithmetic result is placed into
+             GPR rt.

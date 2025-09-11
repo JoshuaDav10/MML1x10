@@ -1,0 +1,15 @@
+PSYQ DOCUMENTATION - Technical notes and specialized topics
+================================================================================
+Category: 09_Technical_Notes
+Description: Technical notes and specialized topics
+Files: 8
+
+FILES IN THIS CATEGORY:
+  Fmv_tips.txt (4.3 KB)
+  XATUT.txt (48.7 KB)
+  doc11.txt (6.7 KB)
+  gs.txt (13.1 KB)
+  gs8.txt (4.8 KB)
+  libpdfaq.txt (12.0 KB)
+  mdec.txt (21.4 KB)
+  sio9.txt (4.2 KB)

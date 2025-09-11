@@ -1,0 +1,35 @@
+PSXSPX SPECIFICATIONS - ... .. SEPD CHUNK(S) (CONTAINS .SEP) ; SOUND
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: ... .. SEPD Chunk(s) (contains .SEP) ; sound
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1057 characters
+Lines: 26
+================================================================================
+
+... .. SEPD Chunk(s) (contains .SEP) ; sound
+... .. VABB Chunk (contains .VB) ;/
+... (..) VRAM Chunk(s) (not in IN\FE2.TXD) ;-textures/palettes
+... (..) STGE Chunk (if any, not in IN\FE*.TXD) ;-stage data?
+... (..) ANIM Chunk (if any, not in IN\FE*.TXD) ;\animation
+... (..) FRAM Chunk(s) (if any, not in IN\FE*.TXD) ;/
+... (..) Further groups with ANIM+FRAM Chunks (if any) ;-more animation(s)
+AUDD Chunks:
+000h 4 Chunk ID ("AUDD")
+004h 4 Chunk Size (of whole chunk from Chunk ID and up)
+008h 4 Compression Flag (0=Uncompressed)
+00Ch 4 Zero
+010h .. VH File (Sony Voice Header, starting with ID "pBAV")
+SEPD Chunks:
+000h 4 Chunk ID ("SEPD")
+004h 4 Chunk Size (of whole chunk from Chunk ID and up)
+008h 4 Compression Flag (0=Uncompressed)
+00Ch 2 Zero
+00Eh 2 Number of sequences (in the SEP sequence archive)
+010h 4 Zero
+014h .. SEP File (Sony Sequence archive, starting with ID "pQES")
+... .. Zeropadding to 4-byte boundary
+VABB Chunks:
+000h 4 Chunk ID ("VABB")
+004h 4 Chunk Size (of whole chunk from Chunk ID and up)
+008h 4 Compression Flag (0=Uncompressed)

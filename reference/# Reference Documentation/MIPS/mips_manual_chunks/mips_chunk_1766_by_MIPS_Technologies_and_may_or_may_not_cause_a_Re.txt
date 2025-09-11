@@ -1,0 +1,27 @@
+MIPS INSTRUCTION SET REFERENCE - BY MIPS TECHNOLOGIES AND MAY OR MAY NOT CAUSE A RESERVED INSTRUCTION EXCEPTION.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: by MIPS Technologies and may or may not cause a Reserved Instruction exception.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1137 characters
+Lines: 18
+================================================================================
+
+by MIPS Technologies and may or may not cause a Reserved Instruction exception.
+
+
+
+                                            Table A-11 MIPS32 COP0 Encoding of rs Field
+             rs        bits 23..21
+                            0              1             2              3                 4              5            6                  7
+        bits 25..24       000             001           010            011               100            101          110                111
+         0     00        MFC0              β             *              *               MTC0             β            *                  *
+         1     01           *              *         RDPGPR ⊕       MFMC01 δ⊕             *              *         WRPGPR ⊕              *
+         2     10
+                                                                                 C0 δ
+         3     11
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                                                        319
+
+                               Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.

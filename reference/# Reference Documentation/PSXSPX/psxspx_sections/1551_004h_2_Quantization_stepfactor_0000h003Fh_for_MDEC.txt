@@ -1,0 +1,110 @@
+PSXSPX SPECIFICATIONS - 004H 2 QUANTIZATION STEP/FACTOR (0000H..003FH, FOR MDEC "DCT.BIT10-15")
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 004h 2 Quantization step/factor (0000h..003Fh, for MDEC "DCT.bit10-15")
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 4213 characters
+Lines: 101
+================================================================================
+
+004h 2 Quantization step/factor (0000h..003Fh, for MDEC "DCT.bit10-15")
+006h 2 Version (1, 2, or 3) (2 is most common)
+008h ... Huffman compressed data blocks (Cr,Cb,Y1,Y2,Y3,Y4, Cr,Cb,Y1,Y2..)
+
+Encrypted v2/v3
+
+Encryption is used in Star Wars games, there are two encryption schemes (XOR
+and SWAP).
+
+XOR-encrypt: Star Wars Masters of Teras Kasi (MagDemo03: MASTERS\*.STR):
+
+| 000h 2 MDEC Size/4 (rounded to 80h/4 bytes) (unencrypted) ;\same as normal
+002h 2 File ID (3800h) (unencrypted) ; BS v1/v2/v3
+004h 2 Quant (0..3Fh) (unencrypted) ;/
+006h 2 Version (in bit15, plus random in LSBs):
+00xxh..7FFFh for v2 (unknown if this could include values 0..3)
+8000h..FFFFh for v3 (bit14-0=random, varies in each frame)
+008h .. Encrypted bitstream
+(each halfword XORed by BE67h for v2, or XORed by E67Bh for v3)
+... (2) Zeropadding to 4-byte boundary (unencrypted)
+... .. Zeropadding to end of sector (unencrypted)
+The XOR values BE67h/E67Bh are hardcoded in the Star Wars Masters of Teras
+Kasi .EXE (same XOR values for both retail and demo version), unknown if any
+other games are also using that kind of encryption (and if yes, if they are
+using the same XOR values).
+
+SWAP-encrypt: BallBlazer Champions, Star Wars Rebel Assault II (*.STR, *.SED):
+
+| 000h 2 MDEC Size/4 (rounded to 80h/4 bytes) ;\same as normal
+002h 2 File ID (3800h) ; BS v1/v2/v3
+004h 2 Quant (0..3Fh) ;/
+006h 2 Version (random 16bit, 00xxh..FFFFh) ;-no meaningful version info
+008h 2 Bitstream 2nd halfword ;\to "decrypt" the file,
+00Ah 2 Bitstream 1st halfword ;/these must be swapped
+00Ch .. Bitstream 3rd halfword and up ;-in normal order
+
+Whilst XORing or SWAPping the halfwords is simple, the more difficult part is
+distinguishing between SWAP-v2/v3 and XOR-v2/v3 encryption. This can be done as
+so:
+
+| if header[06h]=0004h then strip any trailing 0 bits, and check EndOfFrame..
+if last 10bit = 0111111111 then assume SWAP.v2
+if last 10bit = 1111111111 then assume SWAP.v3
+otherwise assume XOR.v2/v3 (and use header[06h].bit15 to distinguish v2/v3)
+
+BS iki Header
+
+IKI videos have a custom .BS header, including some GT-ZIP compressed data:
+
+| 000h 2 MDEC Size/4 (rounded to 80h/4 bytes) ;\same as normal
+002h 2 File ID (3800h) ;/BS v1/v2/v3
+004h 2 Bitmap Width in pixels ;instead of Quant
+006h 2 Bitmap Height in pixels ;instead of Version
+008h 2 Size of GT-ZIP compressed data (plus 2-byte alignment padding)
+00Ah .. GT-ZIP compressed DC/Quant values (plus 2-byte alignment padding)
+... .. Huffman compressed AC data blocks (Cr,Cb,Y1,Y2,Y3,Y4, Cr,Cb,Y1,Y2..)
+
+The number of blocks is NumBlocks=(Width+15)/16*(height+15)/16*6. The size of
+the decompressed GT-ZIP data is NumBlocks*2.
+
+Encrypted iki
+
+The first 20h byte of the iki header & data are encrypted. Among others,
+the ID 3800h is inverted (=C7FFh). To decrypt them:
+
+| [buf+00h]=[buf+00h] XOR FFFFFFFFh
+[buf+04h] [buf+08h] ;exchange 2x32bit
+[buf+0Ch] [buf+0Eh] ;exchange 2x16bit
+[buf+10h]=[buf+10h]+FFFF6F7Bh
+[buf+14h]=[buf+14h]+69140000h
+[buf+18h]=[buf+18h]+FFFF7761h
+[buf+1Ch]=[buf+1Ch]+6B040000h
+
+Note: The .STR header's StHeadM/StHeadV fields contain a copy of the decrypted
+values. The PANEKIT.STR file is 170Mbyte tall, but only the first 13Mbyte
+contain movie data... the rest is unknown stuff... often with zeroes followed
+by 7B,44,F0,29,E0,28 unknown what for...?
+
+BS fraquant
+
+| X-Files, GRAPHICS\*.STR,*.BIN, LOGOS\*.STR,*.BS
+Eagle One: Harrier Attack (\*.STR, DATA*\*.STR) (leading zerofilled sectors)
+Blue's Clues: Blue's Big Musical (*.STR) (has one leading zerofilled sector)
+
+This has a normal BS v1/v2/v3 header, with special quant entry:
+
+| 004h 2 Quant (0001h..0003h, or fixed-point 8000h..9xxxh)
+
+The decoder is using the default_quant_table (02h,10h,10h,13h,..,53h)
+multiplied with a fixed point number:
+
+| quant=BsHeader[04h] ;get fractional quant value
+BsHeader[04h]=0001h ;force quant=1 (for use in BS v1/v2/v3 decoder)
+if quant
+
+BsHeader[04h] should be 0001h..0003h, or 8000h..862Bh (values outside that
+range would overflow the 8bit quant table entries). Values 0001h..0003h should
+should give same results as for normal BS decoding, so only values 8000h and up
+do need special decoding.
+
+Caution: Despite of the overflows, quant>862Bh is used (eg. X-Files

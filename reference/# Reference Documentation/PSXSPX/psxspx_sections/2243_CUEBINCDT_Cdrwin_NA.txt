@@ -1,0 +1,28 @@
+PSXSPX SPECIFICATIONS - CUE/BIN/CDT (CDRWIN) N/A
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CUE/BIN/CDT (Cdrwin) N/A
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1012 characters
+Lines: 20
+================================================================================
+
+CUE/BIN/CDT (Cdrwin) N/A
+ISO (single-track) N/A
+MDS/MDF (Alcohol 120%) P-W 60h-bytes Interleaved (in .MDF file)
+NRG (Nero) P-W 60h-bytes Interleaved (in .NRG file)
+
+Interleaved Subchannel format (eg. Alcohol .MDF files):
+
+| 00h-07h 80 C0 80 80 80 80 80 C0 ;P=FFh, Q=41h=ADR/Control, R..W=00h
+08h-0Fh 80 80 80 80 80 80 80 C0 ;P=FFh, Q=01h=Track, R..W=00h
+10h-17h 80 80 80 80 80 80 80 C0 ;P=FFh, Q=01h=Index, R..W=00h
+18h-1Fh 80 80 80 80 80 80 80 80 ;P=FFh, Q=00h=RelMinute, R..W=00h
+20h-27h 80 80 80 80 80 80 80 80 ;P=FFh, Q=00h=RelSecond, R..W=00h
+28h-2Fh 80 80 80 80 80 80 80 80 ;P=FFh, Q=00h=RelSector, R..W=00h
+30h-37h 80 80 80 80 80 80 80 80 ;P=FFh, Q=00h=Reserved, R..W=00h
+38h-3Fh 80 80 80 80 80 80 80 80 ;P=FFh, Q=00h=AbsMinute, R..W=00h
+40h-47h 80 80 80 80 80 80 C0 80 ;P=FFh, Q=02h=AbsSecond, R..W=00h
+48h-4Fh 80 80 80 80 80 80 80 80 ;P=FFh, Q=00h=AbsSector, R..W=00h
+50h-57h 80 80 C0 80 C0 80 80 80 ;P=FFh, Q=28h=ChecksumMsb, R..W=00h
+58h-5Fh 80 80 C0 C0 80 80 C0 80 ;P=FFh, Q=32h=ChecksumLsb, R..W=00h

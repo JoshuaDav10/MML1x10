@@ -1,0 +1,33 @@
+PSXSPX SPECIFICATIONS - SPU-ADPCM IN FINAL FANTASY IX (FF9) (*.STR AND *.MBG)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: SPU-ADPCM in Final Fantasy IX (FF9) (*.STR and *.MBG)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1012 characters
+Lines: 24
+================================================================================
+
+SPU-ADPCM in Final Fantasy IX (FF9) (*.STR and *.MBG)
+
+The FF9 audio sectors are normal MODE2/FORM1 sectors (unlike the FF9 video
+sectors, which are MODE2/FORM2).
+
+| 000h 2 STR ID (0160h)
+002h 2 STR Type (0008h=FF9/Audio)
+004h 2 Sector number in Frame (0=Audio.left, 1=Audio.right)
+006h 2 Total number of Audio+Video sectors in this frame (always 0Ah)
+008h 4 Frame number (1=First)
+00Ch 4 Zero
+010h 1 Audio flag? (00h=No Audio, 01h=Audio)
+011h 4Fh Zerofilled --- XXX or whatever (when above is 00h)
+060h 4 Number of Frames in this STR file
+064h 1Ch EEh-filled
+Below 780h bytes are all zerofilled when [10h]=00h (no audio)
+Below 780h bytes are reportedly all ABh-filled "in the last frame of a movie
+on Disc 4" (unknown which movie, and if that occurs in other movies, too)
+080h 4 ID "AKAO"
+084h 4 Frame number (0=First)
+088h 14h Unknown (20 bytes)
+09Ch 4 Pitch (116Ah=48000Hz) (or 1000h=44100Hz in final movie)
+0A0h 4 Number of bytes of audio data (0, 720h, 730h, or 690h=final movie)
+0A4h 2Ch Unknown (44 bytes)

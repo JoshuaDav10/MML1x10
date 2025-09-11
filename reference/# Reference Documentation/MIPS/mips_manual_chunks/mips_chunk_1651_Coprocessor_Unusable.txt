@@ -1,0 +1,41 @@
+MIPS INSTRUCTION SET REFERENCE - COPROCESSOR UNUSABLE
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Coprocessor Unusable
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1481 characters
+Lines: 32
+================================================================================
+
+Coprocessor Unusable
+      Machine Check
+
+
+
+
+298                                                MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                      Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+TLT
+
+
+
+
+      Trap if Less Than                                                                                                    TLT
+
+
+         31                   26 25           21 20             16 15                                6   5                 0
+               SPECIAL                                                                                          TLT
+                                       rs                 rt                       code
+                000000                                                                                         110010
+                     6                 5                  5                         10                            6
+
+              Format:    TLT rs, rt                                                                                   MIPS32
+
+              Purpose:
+              To compare GPRs and do a conditional trap
+
+              Description: if rs < rt then Trap
+              Compare the contents of GPR rs and GPR rt as signed integers; if GPR rs is less than GPR rt, then take a Trap excep-
+              tion.
+              The contents of the code field are ignored by hardware and may be used to encode information for system software.

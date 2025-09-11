@@ -1,0 +1,1912 @@
+PSYQ DOCUMENTATION - TRAINING/Summer97/mfprfanl.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/TRAINING/Summer97/mfprfanl.pdf
+Converted: Wed Sep 10 02:47:41 PM CDT 2025
+================================================================================
+
+         The DTL-H2700
+       Development System
+               and
+       Performance Analyzer
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Overview
+    Introducing the DTL-H2700
+          The Hardware
+          The DTL-H2700 as Development System
+          The DTL-H2700 as Performance Analyzer
+    Why Analyze?
+    Methods for Optimizing PlayStation Programs
+          Optimizing the CPU Process
+          Optimizing the GPU Process
+    Using the Performance Analyzer to Analyze
+    PlayStation Programs
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Introducing the DTL-H2700
+    Introducing The DTL-H2700
+          The Hardware
+          The DTL-H2700 as Development System
+          The DTL-H2700 as Performance Analyzer
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Introducing the DTL-H2700
+    The Hardware
+          3 Card Design
+          Plugs into a single ISA slot on an Intel-based PC
+                Requires space for 3 full-length cards
+                Does not use PCI bus
+                        Most computer systems do not have room for 3 full length PCI
+                        bus cards.
+                        Even if your system DID have room, would you want to use up 3
+                        PCI bus slots?
+          Takes power connector like a disk drive.
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Introducing the DTL-H2700
+    The Hardware
+          Uses DTL-H2510 CDROM mechanism
+                Unlike the DTL-H2010 “black box” external CDROM drive
+                used with the DTL-H2000 development system, the DTL-
+                H2510 uses the same mechanism as contained in PlayStation.
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Introducing the DTL-H2700
+    DTL-H2700 Development System
+          8 Megabytes DRAM
+          Compatible with DTL-H2000 drivers & tools
+                DEXBIOS, etc.
+          Can be used with CD Emulator
+          Uses Flash ROM BIOS
+                Does not require SNPATCH.CPE
+          No special programming requirements
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Introducing the DTL-H2700
+    DTL-H2700 Performance Analyzer
+          No special software drivers required
+                Standard DTL-H2000 drivers may be installed without conflict
+          Used in conjunction with, but separately from,
+          development system.
+                Other PlayStation programming tools may be used
+                concurrently (DBUGPSX, etc.)
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Introducing the DTL-H2700
+    Performance
+    Analyzer
+    Software &
+    Psy-Q
+    Debugger
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Introducing the DTL-H2700
+    DTL-H2700 Performance Analyzer
+          Monitors whatever software process is executing on
+          the rest of the DTL-2700 hardware.
+                Downloaded CPE files
+                EXE files from Bootable CDs running on DTL-H2510
+                EXE files from bootable image running on CD Emulator
+          When trigger condition detected, captures signals on
+          the PlayStation bus for a predetermined length of time
+                64mb of capture RAM
+                Up to roughly 7.4/60ths of a second
+                Captures on manual trigger switch, GUN interrupt, specific
+                RAM location accesses, or link cable signals
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Introducing the DTL-H2700
+    DTL-H2700 Performance Analyzer
+          Performance Analyzer application for Windows
+                16-bit Windows application runs under Windows 3.1 or
+                Windows 95
+                        Does not work with Windows NT
+                If no analysis is required, the Performance Analyzer software
+                is not required.
+                Displays graphical analysis of captured bus signals.
+                        Shows how much time is spent loading I-Cache, doing DMA
+                        operations, performing data reads & writes
+                        AND MUCH MORE!
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+    Methods for Optimizing
+    PlayStation Programs
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Why Analyze?
+    Determine why a program runs slowly.
+    Estimate how much performance improvement
+    can be achieved.
+    Determine available margin for program
+    additions.
+    Evaluate algorithms & graphics designs at early
+    stages
+    Monitor hangups
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+PlayStation System Architecture
+
+                           Main RAM
+                             2MB
+                                                           Main RAM BUS
+
+
+
+
+                                           I
+           Instruction Cache                                                MDEC
+                  4KB                                                                                         GPU
+
+                                           D
+           Scratch Pad RAM                                                                                          Video RAM
+                                                    CPU Core                 GTE
+                 1KB                                                                                                BUS
+
+
+               Four-stage
+               Write Buffer
+                                                                                                            Video RAM
+                                                              Sub BUS
+                                                                                                               1MB
+
+
+
+
+                       SIO                                                                       To the display monitor
+                                               CD               SPU              ROM
+                     Controller
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Optimizing the CPU Process
+    Reduce I-Cache misses
+    Reduce Read Accesses to main RAM
+    Reduce Write Buffer Flush Penalties
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Optimizing the CPU Process
+    Reduce I-Cache misses
+          Move functions which are executed together into the
+          same source code module
+          Use inline expansion of small functions or DMPSX
+          Change the address of the function causing the cache
+          miss
+                This is usually done at the final stages of development
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Optimizing the CPU Process
+    Reduce I-Cache misses
+          Check switch blocks and structure of loops
+                Inner loop size should be less than 4kb
+                When necessary and possible, use multiple consecutive loops
+                instead of a single loop.
+
+        /* This may be slow if */                                              /* This may be faster */
+        /* functions blow each */
+        /* other out of I-cache */                                             for( I = 0; I < 10; I++ )
+                                                                                      function_a();
+        for( I = 0; I < 10; I++ )
+        {                                                                      for( I = 0; I < 10; I++ )
+               function_a();                                                          function_b();
+               function_b();
+               function_c();                                                   for( I = 0; I < 10; I++ )
+        }                                                                             function_c();
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Optimizing the CPU Process
+    Reduce Read Accesses to main RAM
+          CPU stalls for 5 cycles on read access of RAM
+          Use the Scratchpad RAM area
+                Temporary work area
+                Permanent or temporary stack area
+          Eliminate unused arguments to LIBGTE functions by
+          using DMPSX instead.
+          Avoid multiple byte or short-word accesses to the
+          same long word address
+                8-bit, 16-bit, and 32-bit accesses all stall for 5 cycles.
+                Load the 32-bit long word and extract bytes & shorts from it.
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Optimizing the CPU Process
+    Reduce Write Buffer Flush Penalties
+          Avoid alternating accesses such as READ, WRITE,
+          READ, WRITE, …
+          Change the order of instructions so that multiple
+          WRITE operations are executed together without
+          intervening READ operations.
+          Put instructions that do not access memory after
+          instructions which WRITE to memory.
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Optimizing the GPU Process
+    Eliminate intervals without drawing
+    Reduce texture reads
+    Check CLUT switching
+    Reduce GPU preprocessing time
+    Eliminate unnecessary drawing
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+GPU Drawing Flowchart
+
+                                                                      Texture Cache
+                                                                           2KB
+                                             GPU
+                                             GPU
+        DMA transfer
+
+
+
+
+  Main RAM                             Preprocessing                       Drawing                          Video RAM
+
+
+ Pipeline processing time = Max(t(preprocessing), t(drawing) + t(texture cache fill))
+
+ Preprocessing time depends only on the polygon type. Drawing time is proportional to
+ drawing area. Texture cache fill time is proportional to texture cache miss ratio
+
+ In a real case, page-breaks of the video RAM and CLUT read penalties are added
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Eliminate Intervals Without Drawing
+    Eliminate NULL packets in ordering table
+          Check to see where background is registered
+                Are some OT entries always unused?
+          Use multiple ordering tables linked together
+                Use low-resolution main table and link in higher resolution
+                sub-tables
+                Use non-linear ordering tables
+                        For example, an ordering table with 100 entries might be set up
+                        so that:
+                             Last 10 entries represent 50% of depth values farthest from
+                             viewpoint
+                             First 90 entries represent 50% of depth values closest to
+                             viewpoint
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Eliminate Intervals Without Drawing
+    Check to see if start of drawing is delayed.
+          Is your program calling DrawOTag() as early as
+          possible?
+                If objects are somewhat pre-sorted, then:
+                        Process farthest ones first, then call DrawOTag() for that batch.
+                        Process remaining objects and call DrawOTag() again.
+                Use DrawSyncCallback() and VSyncCallback() to synchronize
+                drawing and buffer switching.
+                        Remember that some portions of your game, like AI, don’t have
+                        to be synchronized to VBLANK.
+                Use triple-buffering scheme if have available memory.
+                        1: Frame being displayed
+                        2: Frame drawn & ready to display at next VBLANK
+                        3: Frame being drawn
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Eliminate Intervals Without Drawing
+    Modify graphics design to reduce completely
+    transparent texture areas.
+          Transparent pixels take just as long to process.
+          Watch out for textures with holes in them.
+                Don’t draw the hole!
+                Redo polygons in 3D model to go around holes.
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Reduce Texture Reads
+    Use 4-bit textures instead of 8-bit or 16-bit
+          Effective cache size will be increased
+          More texture pixels will be loaded in one burst-read
+                Fastest access speed is obtained when the texture pixel data
+                can be read sequentially in the same order as the pixels being
+                drawn, even if the texture data doesn’t all fit in a single texture
+                window.
+    Allocate texture positions on cache size
+    boundaries
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Reduce Texture Reads
+    Use smaller textures for small polygons
+          Technique known as MIP-MAPPING
+    Avoid rotating textures if texture does not fit in
+    cache.
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Check CLUT Switching
+    What is CLUT switching?
+          When a texture uses a different Color Look Up Table
+          from the previous texture.
+    Controlling CLUT switching is not easy in a Z-
+    sort architecture
+    Using 4-bit textures can require more CLUTs
+          Using 8-bit textures to get 256 colors can sometimes
+          give a better result because CLUT switching is not
+          required.
+                A burst-read access is no longer efficient for scaled-down
+                textures even if 4-bit mode is used.
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Reduce GPU Preprocessing Time
+    Small polygons with scaled-down textures can
+    cause a preprocessing bottleneck.
+          Texture data cannot be read efficiently
+    Different Polygon types have different
+    preprocessing requirements
+
+
+
+
+                                                                                                             Preprocessing Time
+  Gouraud-shaded textured
+
+  Gouraud Shading non-textured                                                        Flat-shaded textured
+
+  Flat-shaded non-textured
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Eliminate Unnecessary Drawing
+    Back-face polygons
+          GPU preprocessing takes longer to draw from right to
+          left instead of left to right.
+          Texture reading must be done pixel by pixel.
+          Use two polygons & mirrored texture instead.
+                Place polygons back to back, one uses original texture, one
+                uses mirrored copy of original texture.
+                You can create mirrored texture on the fly at runtime.
+          Most back-face polygons should not be drawn
+                Hidden faces of objects overdrawn by other polygons anyway
+                Don’t draw polygons with surface normals having positive Z
+                components
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Eliminate Unnecessary Drawing
+    Zero-area polygons
+          GPU preprocessing takes longer.
+          Should be discarded before drawing begins.
+    Polygons outside the screen boundaries
+          Decreases GPU preprocessing performance
+          If CPU process faster than GPU process, apply CPU
+          clipping
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Eliminate Unnecessary Drawing
+    Polygons overlapping screen boundaries
+          Subdivide and apply CPU clipping
+
+
+Polygons
+overlapping top or
+left side of screen
+take as long to
+draw as non-
+clipped polygons                                                                                            Polygons which
+                                                                                                            overlap bottom or
+                                                                                                            right side of
+                                                                                                            screen require
+                                                                                                            only processing
+                                                                                                            for non-clipped
+                                                                                                            portions
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Avoid Doubly-Drawn Backgrounds
+    Typically the entire background is drawn, then
+    certain portions such as the sky or ground are
+    overdrawn by other polygons
+          Don’t draw portions of the background you KNOW
+          are going to be covered up later by foreground objects.
+          Don’t use ClearImage() if you’re going to draw the
+          whole screen anyway.
+
+                                                                                                            Sky
+
+
+                                                                                                 Background
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Summary of Optimization Methods
+    Determine if optimizing the GPU process or CPU
+    process, or both, will make the most difference
+    Determine if the desired improvement can be
+    achieved without changing the basic paradigm.
+          Check the number of polygons to be displayed
+          Estimate data access time & processing time.
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Summary of Optimization Methods
+    Tune the CPU process
+          Reduce data access penalties and I-cache misses
+          Make sure the R3000 write buffer is used effectively
+    Tune the GPU process
+          Check intervals where no drawing or data transfer
+          takes place.
+          Improve texture cache usage, maybe change texture
+          modes, Reduce GPU preprocessing time
+          Avoid unnecessary drawing of zero-area polygons,
+          unclipped polygons, doubly-drawn backgrounds...
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+ Using the Perfomance Analyzer
+to Analyze PlayStation Programs
+
+
+
+
+  CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+How to use the PA & Read the Results
+    Sample the data
+          Play the game until you get to the portion where
+          performance needs to be improved (i.e. where the
+          frame rate drops)
+          Trigger the data capture
+                Press the trigger button plugged into the DTL-H2700
+                Optionally have your program initiate the capture itself by
+                accessing a specific data location which means “trigger
+                performance analyzer NOW”
+    Interpret the data
+          View the graphic displays and information provided.
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Information Provided by the PA
+    Bus Usage Analysis Graphs
+          Main RAM bus
+          Sub bus
+          Video RAM bus
+          GPU packet processing
+          RAM Access Penalties
+                Duplicate reads, write buffer flush
+          GPU Polygon rendering penalties
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Information Provided by the PA
+    Waveforms
+          Shows bus signals such as VBLANK
+    Symbol Access
+          Shows which symbols are being accessed for I-cache
+          burst reads or data reads & writes
+    Data Dump
+    Video RAM contents viewer
+    Statistics
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Main RAM BUS Analysis
+    Shows histogram of an amount of time spent for
+    each transaction type on the main RAM bus.
+          The less RED, GREEN, and YELLOW in the display,
+          the more efficient a CPU process is.
+                Running on cache while accessing the scratch pad RAM
+                results in the CPU staying off the main RAM bus.
+                                               1/60 sec                                      1/60 sec
+
+
+
+
+                                                                                                            Clock cycles
+
+                                                                        Red marks indicate
+                                                                            V-Blanks
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Sub BUS Analysis
+    Shows histogram of an amount of time spent for
+    each transaction type on the Sub-bus.
+          Used to identify the access to an I/O device, and helps
+          to identify interrupt processes too.
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Video RAM BUS Analysis
+    Shows histogram of an amount of data
+    transferred in each transaction type on the video
+    RAM bus.
+          Used to tune a GPU process.
+          Higher patterns are, faster the data transfer is.
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+GPU Packet Analysis
+    Shows histogram of GPU packets which are DMA
+    transferred to the GPU.
+          Used to identify polygon types and detect null packets.
+          Corresponding patterns on the video RAM bus
+          analysis are delayed.
+          This does NOT show timing of the CPU creating the
+          packets and linking them into the ordering table.
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+RAM Access Penalties
+    Shows histogram of CPU stall cycles caused by
+    inefficient memory accesses.
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+GPU Polygon Rendering Penalties
+    Shows histogram of each polygon penalty
+          Zero-area polygons
+          Back-face polygons
+          Polygons outside screen area
+          Polygons overlapping screen boundaries (scissoring)
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+How to Interpret the Analysis
+    Various phenomena
+    are shown as
+    specific patterns
+          Identify problems
+          and their causes by
+          locating and
+          inspecting those
+          patterns.
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Start of a CPU Process
+    Spike-like dark
+    green pattern
+          DMA operation
+          performed by
+          ClearOTagR()
+          Drawing starts
+          on the video
+          RAM bus
+          analysis
+    Main CPU
+    process starts
+    after VBLANK
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+End of a CPU Process
+    The point where
+    VSync() is called
+          A stable
+          read/write
+          pattern
+          indicating a
+          polling loop,
+          such as done by
+          DrawSync() or
+          VSync() leading
+          up to VBLANK
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Start of a GPU Process
+    Drawing a
+    background
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+End of a GPU Process
+    The last drawing
+    done in a frame
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Instruction Cache Misses
+    Red area indicates
+    instruction burst
+    reads caused by
+    instruction cache
+    misses
+    The CPU stalls for
+    70%of the time
+    shown in red
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Instructions Running On-cache
+    Patterns without
+    red
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Processing Loops On-cache
+    A stable pattern
+    means a loop is
+    being processed.
+    Each iteration of
+    the loop can be
+    seen by enlarging
+    the display
+
+
+                                                                                                            One iteration
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+CPU Data Read and Write Cycles
+    Reading data from RAM by the CPU is colored
+    yellow.
+    Writing to RAM by the CPU is colored green.
+          The CPU does not stall if write buffer is not full.
+    Accessing the
+    scratchpad RAM
+    does not appear
+    on the main RAM
+    bus analysis.
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Packets Transferred to GPU
+    A pink pattern in the main RAM bus analysis
+    indicates a GPU packet DMA transfer.
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+NULL GPU Packets
+    A large pink lump
+    indicates that
+    successive NULL
+    packets are being
+    transferred
+    Blocks of successive
+    null packets are also
+    shown as a
+    continuous white
+    pattern in the video
+    RAM bus analysis
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Drawing a Background
+    The first drawing
+    pattern.
+    The height
+    (indic a ting
+    transfer rate) is
+    us ually
+    c o ns is tent.
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Efficient Drawing Pattern
+    A high gre e n
+    pattern
+    Good gre e n-to-red
+    ratio
+          Red indic a tes
+          texture c a c he
+          reads
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Inefficient Drawing Pattern
+    A low gre e n
+    pattern
+    Poor gre e n-to-red
+    ratio
+          Red indic a tes
+          texture c a c he
+          reads
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Drawing Semi-transparent Colors
+    Drawing of semi-
+    transparent pixe ls
+    requires a read-
+    modify-write c yc le ,
+    shown in blue .
+          S hown with te xture on
+          c a c he
+    The ove rall c o lored
+    are a indic a tes the
+    sum of all reads and
+    write a c c e s s e s .
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Relationship between GPU Packets
+Processing & Video RAM Bus Accesses
+    In the video RAM bus a nalys is , drawing
+    patterns appear after the corresponding GPU
+    pac ket shown in the GPU pac ket analys is
+    displa y.
+          De lay due to pipe line proc e s s ing in the GPU
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+GPU Processing -vs- CPU Processing
+
+
+                                    CPU Processing
+
+
+                                                                                Waiting in VSync function
+
+
+
+                                                                                  A red spike-like pattern
+                                                                                  caused by the GPU
+                                                                                  interruption to finish
+                                                                                  drawing.
+
+
+                                   Since the GPU packets are transferred by DMA,
+                                   the pattern of the polling loops is jagged..
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Accessing the CD
+                                 DMA t r a n s f e r                        f r o m t h e CD t o t h e m a i
+
+
+
+
+                           Re a d i n g f r o m t h e CD
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Accessing the MDEC
+
+
+
+
+                                                  DMA t r a n s f e r f r o m
+                                                  t h e MDEC t o m a i n RAM
+                                                  (u n c o mp r e s s e d
+                                                  d a t a )
+                                       DMA t r a n s f e r f r o m m a i n RAM t o MDEC
+                                       (c o mp r e s s e d d a t a )
+
+         No t e : An a c c e s s                              t o t h e MDEC i s n o t                      s h o wn i n
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Data Dump
+                                                          Means a long-word access                             Coordinates
+                            Instructions                                                                    in the video RAM
+
+   Function
+    names
+
+
+   Instruction
+   burst read
+
+
+    Address
+
+
+
+
+   Data value
+
+                                                                                                 Means texture
+                                                                                                    reads
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Statistics — Main RAM Bus
+    Get Statistics for the duration of a CPU
+    proc e s s
+    Estimate CPU s tall c yc le s
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Statistics — GPU Packets
+    Get statistics for the
+    dura tion of a GPU proc e s s .
+    Look for NULL pa c kets
+    Che c k the number of
+    polygons for e a c h type .
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+   Flow of Analysis
+           Sa m p l e d a t a .
+a t t h e s c e n e wi t h a b o t t l e n e c k .
+                                 Ch e c k t h e a m o u n t o f g l o b a l d a t a a c c e s s
+                                      a n d t h e n u mb e r o f p o l y g o n s d r a w n .
+    CPU o r GPU b o t t l e n e c k ?
+
+
+
+    De t e r m i n e t h e c a u s e                                     Do e s i t o v e r f l o w t h e Ye s
+                                                                           Pl a y St a t i o n p o w e r ?
+
+Es t i m a t e t o t a l a m o u n t o f
+  i mp r o v e me n t s b y t u n i n g                                                                 No
+
+
+
+                                 No I n s p e c t h e a v y r o u t i n e s
+   Ca n t h e t a r g e t s ap n
+                               e d
+                                 e dh e a v y p o r t i o n s i n dRer ca owni sn i g d e r b a s i c
+         b e a c h i e v e d ?                                    p r o g r a m a l g o r i t h ms
+                                                            Tr y b e t t e r o b j e c t c l i p p
+                                  Ye s
+                                 Mo d i f y t h e d a t a s t r u cmt e ut rh eo d s , c h a n g e
+                                    a n d a l g o r i t h m , c go rd ai pn hg i c s d e s i g n , e t
+       Tu n e t h e p r o g r a m s t y l e s , d r a w i n g m e t h o d ,
+                                                    e t c .
+
+    CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Optimization Strategy
+    As s ign a priority to e a c h me thod of
+    optimization, and apply only thos e whic h are
+    ne c e s s a ry.
+          S tart with the optimization whic h should provide
+          the most signific a nt improvement.
+                It is e nough to ge t the targe t speedup?
+    Put emphasis on portions where great
+    improvements are expected with less work.
+          A small loop with many iterations , whic h takes
+          long time to be proc e s s e d.
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Optimization Strategy
+    Che c k to s e e if the targe t speed is a c hie vable
+    a fte r performing e a c h improvement.
+          For e xample, the CPU c a n not run fa s ter than the
+          le ve l where no c a c he miss occurs, so figure out
+          potential improvement gained just by eliminating
+          c a c he miss.
+          If the CPU proc e s s take s s ignific a ntly longe r than
+          the GPU pro c e s s , then optimizing the GPU
+          proc e s s won’t have muc h effec t on your game’s
+          framerate. Or vic e versa.
+                                 Estimation of speedup is important!
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+How to Sample Program Execution
+    Push the trigger button connected to the
+    bac k of the DTL-H2700
+          Can also us e the Trigger func tion.
+    R e s e tting the S a mple Range
+          Onc e you’ve c a ptured data and determined whic h
+          range makes up a complete game frame, change
+          the s a mpling range in the Options dialog box
+          Download the data again without re -triggering by
+          us ing the Read Data Only menu option
+                Elimina tes unne c e s s a ry s a mple data.
+                The PA software will run fa s ter with le s s data to examine.
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Using Set Trigger Condition
+    S p e c ify trigger address, function name, data
+    va lue , and how many video frames BEFORE
+    trigger condition to sample.
+                                                                                                Setting the trigger address
+                                                                                                to a function such as
+                                                                                                DrawOTag enables sampling
+                                                                                                to synchronize with the start
+                                                                                                of a game frame.
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Capturing Where the Frame Rate Drops
+    S e t the trigger                                        /* frame length in H count
+    addre s s to a                                              (needs an adjustment) */
+
+    variable named                                           #define HCountThreshold   525
+                                                             volatile long ReqTrigger;
+    ReqTrigger
+                                                             main()
+          If ReqTrigger is                                   {
+
+          a c c e s s e d, PA will                               for(;;)
+                                                                 {
+                                                                                   /* main loop */
+
+          trigger c a pture of                                       /* compare H-counts since */
+                                                                     /* the last Vsync exited */
+          data
+                                                                             if( VSync(1) > HCountThreshold )
+    Many type s of                                                              ReqTrigger = 0;
+
+    phenomena c a n                                                          VSync(0);
+
+    b e c a ptured                                                   }
+                                                                             ...
+
+
+    under program                                            }
+
+
+    c o ntrol
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+          Examples of Analysis
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+How to Use Statistics
+    Get total s tatis tic a l amount for e a c h of CPU
+    and GPU proc e s s e s .
+    Estimate total amount of CPU s tall c yc le s .
+          How muc h improvement can be achieved at most
+          by e liminating c a c he miss, etc.
+          Che c k the number of GPU pac ke ts being
+          proc e s s e d.
+                Is it ove rloading the GPU?
+                Too many small polygons with large textures whic h take
+                long time in preproc e s s ing ?
+                Too many backface, offscreen, or partially-clipped
+                polygons which take long time in preproc e s s ing ?
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+How to Use Statistics
+    Get a statis tic a l amount in a partic ular range .
+          S tatis tic s a t partic ular iterations .
+                This will give how muc h improvement c a n be a c hie ved
+                e limina ting c a c he miss, etc.
+          S tatis tic s a t a portion where drawing is ineffic ient.
+                B e c a us e of the number of polygons?
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Finding Code Causing I-cache Misses
+    Che c k loop proc e s s ing pa tterns with red
+    are a s
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Finding Code Causing I-cache Misses
+    De termine e s timate of CPU s tall c yc le s c a us t
+    by I-c a c he burst reads
+
+
+
+
+                                                                                   Stall cycles
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Finding Code Causing I-cache Misses
+    Read the s ymbol file & show symbol accesses
+
+
+
+
+Two functions cause
+cache miss alternately.
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Finding Code Causing I-cache Misses
+    Cac he line = 2nd & 3rd least signific a nt he x
+    digits of ins truc tion addre s s
+
+
+                                             Same cache line
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Identifying Functions Running on
+Cache
+    Func tion names not shown in symbol list
+    Us e Search func tion to look bac kwards for I-
+    c a c he burs t re a d
+
+
+                                                                                                      Choose Inst Burst Read
+                                            Which function
+                                             is running?
+
+
+
+
+                                                                                                 Search backward
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Identifying Functions Running on
+Cache
+    Enc los e red
+    portion with
+    markers, and
+    e xtra c t func tion
+    names which
+    c a us e d I-c a c he
+    mis s .     Function names
+
+
+
+
+                                                                        Shown as red
+                                                                    (The same color as the
+                                                                    main RAM bus analysis)
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Efficient Analysis Using Search
+    Various s e a rc h me thods
+          Main RAM Bus
+                by transaction type , by
+                addre s s or s ymbol
+          S ub Bus
+                by transaction type , by
+                addre s s
+          Video RAM Bus
+                by transaction type , by
+                coordina tes
+          Others
+                by GPU pac ket type , by
+                wave form e vent, by
+                penaltie s
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Inspecting Read/Write Accesses
+    Us ing the markers,
+    e n c los e a portion of large
+    red or gre e n area, then
+    displa y the only a c c e s s e d                                          Frequent accesses
+    s ymbols .                                                                   to this symbol
+                                                                                    (or stack)
+    CPU s talls for 5 c yc le s in
+    e a c h data read ac c e s s to
+    the main RAM!
+          Us e c oding s tyle s s uc h
+          tha t re s ult in few read
+          accesses.
+          Tune s tac k ac c e s s e s .
+          Che c k for duplic a te
+          reads of global data.
+          Us e of joint-ve rte x mode l
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Inspecting Read/Write Accesses
+    Effic ient use of the
+    s c ratc h pad RAM
+          Us e DMP S X toge ther.                                              Frequent accesses
+          Alloc a te a stack space                                               to this symbol
+                                                                                    (or stack)
+          on the s c ratch pad
+          RAM.
+          Alloc a te heavily
+          a c c e s s e d work are a s
+          on the s c ratch pad
+          RAM.
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Duplicate Reads
+    Duplic a te reads are
+    shown as red stripe s
+          Indic a tes CPU s tall
+          time
+          Conc e ntrate on large
+          areas
+    Ac c e s s interval
+    thre s hold c a n be
+    specified in Options
+    dialog
+          S e t lowe r value s to
+          highlight problem
+          areas
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Duplicate Reads
+    Us ing the Search
+    c o mmand, s e a rc h
+    bac kwards for an
+    a c c e s s to s a me
+    addre s s
+
+
+
+                 Double click the red
+                  stripe and check
+                     the address
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Duplicate Reads
+
+
+
+
+                 Duplicate reads
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Write Buffer Flush Penalty
+    Write B uffer
+    Penaltie s a re
+    shown a s red
+    s tripe s
+          Indic a tes CPU
+          s tall time
+          Conc e ntrate on
+          large areas
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Write Buffer Flush Penalty
+    Partic ularly improve points
+    whe re read and write
+    a c c e s s e s a ppe a r alte rna tely.
+          Exc hange the order of the
+          read and write if pos s ible.
+          Move othe r non-memory-
+          a c c e s s ins truc tions to jus t
+          afte r the s tore ins truc tion.
+    Note : All flush penaltie s don’t
+    ne c e s s a rily me a n the CPU is
+    s talling.
+          In the main RAM bus a nalysis
+          if an ac c e s s takes place just
+          afte r the write buffer has
+          finished flushing, a penalty is
+          displayed.
+          The CPU might be e xe c uting
+          ne xt non-memory-a c c e s s
+          ins truc tions in betwe e n.
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Write Buffer Flush Penalty
+    The r e is a read
+    a c c e s s jus t
+    a fte r the write.
+    Exe c uting four
+    s u c c e s s ive
+    s tore
+    ins truc tions
+    r e s ults in most
+    e ffic ient
+    proc e s s ing
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Detecting NULL GPU Packets
+                                                                                      Null packets cause the
+                                                                                   CPU to stall because the main
+                                                                                    RAM bus is busy very often.
+
+
+
+
+      The GPU is idle
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Detecting NULL GPU Packets
+    Too many NULL
+    pac kets hurts
+    performanc e
+          S lows down the
+          CPU be c ause the
+          main RAM bus is                                                           Too many
+          bus y                                                                    null packets
+                                                                                    are seen.
+          Wastes the GPU’s
+          time
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Checking Ordering Table Resolution
+
+
+
+
+                                                                                                 Many null packets
+                                                                                                    are seen.
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Checking Ordering Table Resolution
+    Proc e s s ing is
+    s lowed if
+    orde ring table
+    resolution is too
+    high
+
+
+                                                      A lump of null packets
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Checking Background Drawing
+
+
+
+                                                                           Enclose the range
+                                                                          for the background
+                                                                           using the markers
+
+
+
+
+                                                                                 Few packets are shown
+                                                                                for drawing a background
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Checking Background Drawing
+    De tect doubly-drawn areas using the video
+    RAM viewer
+                                    Doubly drawn                                                     Texture
+
+
+
+
+                                 Drawing on the screen area
+
+
+
+
+                               Colors indicate access frequency
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Inefficient Drawing
+    Why are green
+    patterns low?
+          Most of the c a us e
+                Te xture c a c he miss
+                                                                                                       We’ll enlarge
+                Preproc e s s ing                                                                      this section
+                bottleneck
+                        S m a ll polygons
+          Other c a us e s
+                Ordering Table too large
+                Clipping
+                Transparent c o lors
+                Ve rtic a lly long polygons
+                        P a g e fault penaltie s o n
+                        the video RAM
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Inefficient Drawing
+
+
+
+                                                                                           Many texture cache misses
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Characteristics of the Texture Cache
+    2KB dire c t-mapped c a c he with 6 bits in each
+    tag
+          Cac he size in pixe ls, the number of c a c he line s
+                4-bit te xture : 6 4 x64 texels , 64x4 line s
+                8-bit te xture : 6 4 x32 texels , 64x4 line s
+                1 6 -bit te xture :       3 2 x32 texels , 32x8 line s
+    Line s ize : 64 bits
+          The number of texels (texture-pixels) loaded one at
+          a time horizontally in the burs t mode when texture
+          c a c he miss occurs
+                4-bit te xture :                                     1 6 te xe ls
+                8-bit te xture :                                     8 texels
+                1 6 -bit te xture :                          4 texels
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Characteristics of the Texture Cache
+    Te xture page size : 256 x 256 texels
+          The texture c a c he is flushed every time when a
+          new texture page is accessed.
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Comparing Texture Modes
+    Performing
+    1 6 fla t-
+    texture                                                                                      4-bit texture
+                                                                                                  (on cache)
+    mappings
+    with 6 4 x64
+    texture s ize .
+                                                                                                 8-bit texture
+
+
+
+
+                                                                                               16-bit texture
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Comparing Texture Modes
+    A very low
+    transfer                                                                             4-bit texture (on cache)
+
+    rate r e s ults
+    when
+    texture                                                                                                 8-bit texture
+    reads
+    oc c ur.
+
+                                                                                                            16-bit texture
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Techniques for Fast Texture Mapping
+    Divide the ordering table if pos s ible
+          Us e a diffe rent ordering table for polygons whic h
+          us e the s a me texture .
+                The ground and floor usually use repeated texture. The
+                orde ring table is e a s ily divided for suc h obje c ts , too.
+          Divide the ordering table based on texture pages.
+                The te xture c a c he is flushed eve ry time when a new
+                texture page is a c c e s s e d.
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Techniques for Fast Texture Mapping
+    If te xture is mapped reduc ing its s ize , 4-bit
+    texture mode also becomes slow.
+          Us e mip-mapping
+          If mapping with reducing texture size is inevitable,
+          us ing 8 or 16-bit te xture mode do not slow down
+          drawing speed a lot.
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Techniques for Fast Texture Mapping
+    Do not pla c e a large te xture data rotating at
+    9 0 de g r e e s if it do e s n’t fit in the texture c a c he
+    s ize .
+          Divide polygons into smaller ones.
+          Prepare polygons for e a c h rotation.
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Inspecting Texture Cache Miss Causes
+    On the video RAM bus a nalys is , us e the
+    markers to enc los e a portion to inspect.
+    Us e the video RAM viewer to inspect the
+    c a us e , then check the following.
+          Ratio of te xture data read to polygon pixe ls written
+                Reduc ing/expanding in texture mapping.
+                Enlarged te xture s drawn e ffic iently, but may look
+                pixe la ted
+                Reduc e d te xture s not drawn e ffic iently
+          Ratio of te xture data read to polygon pixe ls written
+          , and the a c c e s s frequency (shown as colors)
+                Cac he-hit ratio
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Inspecting Texture Cache Miss Causes
+    Us e the video RAM viewer to inspect the
+    c a us e , then check the following.
+          Ac c e s s e d texture loc a tions , Te xture pages
+                Fre q ue n c y of c a c he flushing
+          Roughne s s of horizontal line s in texture a rea
+                Reduc ing fac tor
+          The s hape of an ac c e s s e d te xture a rea pattern,
+          reading dire c tion
+                S hape of te xture data, rotated polygons
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Texture Cache Missing not a Problem
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Texture Cache Missing not a Problem
+    No interruption
+    in drawing
+    r e s ults in high
+    drawing speed
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Texture Cache Missing not a Problem
+    Viewing in the video RAM display
+          Effic ient drawing be c ause of expanded texture
+
+
+
+
+                                              Polygons drawn
+
+
+
+
+                                                   CLUT                                        Texture
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Frequent Texture Cache Misses
+
+
+                                                                                                            Examine details
+                                                                                                             of just a few
+                                                                                                               polygons
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Frequent Texture Cache Misses
+    Cac he misses
+    me a n many
+    interruptions in
+    drawing, re s ulting
+    in low drawing
+    speed
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Frequent Texture Cache Misses
+    Inspecting in the video RAM viewer
+          Ine ffic ient drawing due to reduc e d magnific a tion of te xture
+          data.
+          Read ac c e s s e s a ppe a ring as horizontal s tripe s
+                Vertic a lly the y are not continuous.
+
+
+
+                                                                                             Texture
+
+                                 Polygons drawn
+                                                                                                    Enlarged
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Mip-Mapping -vs- not Mip-Mapping
+     Even if 4-bit texture
+     mode is used to
+     inc rease effe c tive
+     texture c a c he s ize,
+     reduc ing a texture
+     when drawing a
+     polygon re s ults in
+     unus e d te xe ls being
+     loaded on the c a c he,
+     therefore the burs t
+     read is no longer
+     e ffe c tive .
+          For example, drawing a
+          2 0 x20 polygon that
+          us ePlayStation
+CONFIDENTIAL
+                s a 6Developer
+                          4 x64Seminar
+                                  texture
+                                       / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Mip-Mapping -vs- not Mip-Mapping
+    Mip-mapping c a n take advantage of the 4 -bit
+    texture mode avoiding s hrunk te xture
+    mapping.
+    This a lso solve s
+    an alia s ing
+    problem in
+                                        Reduced to 50%!
+    texture
+    mapping far-
+    away polygons .
+         Reduc e s
+         texture c rawl
+         and flic ker.
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Polygons with Transparent Areas
+
+
+
+                                                                                     No green pattern
+                                                                                  while drawing a polygon
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Polygons with Transparent Areas
+    A transparent c o lor takes the same a mount of
+    drawing time a s a non-transparent c o lor.
+    If
+    transparent
+    area is
+    large, divide
+    the polygon
+    to inc rease
+    the                     A polygon with
+                             a transparent
+    performanc                    color             Texture
+    e.
+          Don’t draw
+          the hole !
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Frequent CLUT Switching
+    Fre q uent CLUT
+    switc hing s lows
+    down drawing
+    speed.
+          Us e a s e parate
+          ordering table for
+          e a c h CLUT if
+          pos s ible.
+                                  8-bit CLUT
+                                 switching is
+                                 taking place
+                                  very often
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+GPU Preprocessing Bottlenecks
+    Small polygons
+    with reduc e d
+    texture s have long
+    pre -pro c e s s ing
+    time s whic h
+    de c rease
+    performanc e .
+          For example,                                                              Intervals are the same
+          POLY_GT4                                                                  regardless of drawing area
+                                                                                    (preprocessing time)
+          Inve s tigate
+          changing the
+                                                                                                            Triangle Gouraud
+          polygon type to flat-                                                                             texture mapping
+          shaded and/or non-
+          textured if Z is
+          large.
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Polygon Penalties
+     S e t the s c r e e n s ize a nd drawing
+     offs e t value s .
+            S e t them in the option dia log
+            box.
+            Inspect a point with many
+            polygon penaltie s , then identify
+            the polygon us ing the vide o
+            memory viewer.
+     If too many back-face polygon
+     penaltie s a re shown, toggle its                                                                     Scissoring
+     s e tting in the option dia log box.                                                                   penalty
+          S o me programs use both bac k
+          and front fa c e polygons
+          In the mesh data, the vertex
+          orde r and the fac e of the
+          polygon do not ma tc h, the refore
+          the penalty is not shown
+          correctly.
+CONFIDENTIAL  PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Polygon Penalties
+    If drawing speed is low because of polygon
+    penaltie s ,
+          Perform c lipping if there is a margin le ft in a CPU
+          proc e s s .
+          When scis s oring penaltie s c a nnot be ignored, use
+          small polygons, partic ularly around the s c reen
+          boundarie s .
+          Perform normal c lipping to dis c a rd zero-area
+          polygons a nd bac k-fa c e polygons.
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Example of Optimizing a Program
+    Te xture a ddre s s modulation
+          The texture address c a lc ulated from normal
+          ve c tor.
+          It mus t maintain 30 fps
+    An improvement from 12 x 12 rectangle mesh
+    to 1 5 x 15!
+          About 50 %
+          improvement in
+          divis ion ratio
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Example of Optimizing a Program
+    Us ing the 1 5 x15
+    me s h
+    DMP S X is a lready
+    employed.
+    Both CPU and                                                                   Many data accesses
+    GPU don’t finish                                                               (Identified as stack
+                                                                                   access)
+    in two VBLANK
+    periods .                                                                                               Overflowed
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Example of Optimizing a Program
+    In the detected
+    routine , the c ode
+    wa s modified so
+                                                                               CPU processing time shortened
+                                                                               due to fewer data accesses
+    tha t the s c ratc h
+    pad RAM would
+    b e us e d as a
+    s tac k.
+          CPU now                                                                                           GPU still overflows
+                                                                                                            a little bit
+          finishes in le s s
+          than two
+                                                                             Write buffer flush
+          VBLANK                                                             penalties reduced
+          periods .
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Example of Optimizing a Program
+    The orde ring
+    table was divided
+    into two table s s o                                                                             Performance of
+    tha t the hit ratio                                                                              texture cache was
+                                                                                                     improved, resulting in
+    of the texture                                                                                   fast drawing.
+    c a c he would
+    inc rease.
+          Both CPU and
+          GPU finish in less                                                           Now running at
+          than two VBLANK                                                              30 frames/sec!
+          periods !
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Known Problems
+    If the CPU is running on c a c he, it is hard to tell e xe c uting
+    loc a tions in a program.
+          Make a good gue s s from the patterns of data access symbols .
+    The s ymbol file does not contain stac k informa tion.
+          S e t the s tack range in the option dialog box.
+          Us e the -Xm option with c c ps x to generate a map file , s inc e the D S M
+          file output by dumps ym has no informa tion about the s tac k
+          s e g ment.
+          When an I-c a c he mis s o c c urs a t an address in whic h the le a s t four
+          s ignific a nt bits a re ‘C’, the main RAM bus analys is identifie s the
+          tra n s a c t ion a s a CPU data re a d c yc le .
+                 In such a case, even though an ins truc tion c a c he miss occurred, only
+                 one long-word is read from the main RAM. The refore the re is no way to
+                 dis tinguish this instruc tion burs t re a d c yc le from CPU’s data read
+                 c yc les.
+                 Care must be taken when searing for an ins truc tion burs t re a d
+                 trans a c tion in the s e a r c h c o mmand e s pe c ially when an address is
+CONFIDENTIAL
+                 s p e c ified.
+               PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Tracing Unusual Phenomena
+    The PA c a n analyze unusual phenomena suc h
+    a s hang-ups .
+          Tra c e the route to hang-up
+    Very c o mmon c a s e s
+          Forge tting initialization of library func tions
+                Wrong orde r of c a lling InitPad() and InitCard().
+                An uninitia lized drive r de s troys the c ode a rea in a
+                c a llbac k routine .
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Tracing Unusual Phenomena
+    Very c o mmon c a s e s
+          S tac k overflow in the s c ratc h pad RAM.
+                R e s ults in a bus e rror.
+          Infinite loops & waiting for c a llbac ks whic h ne ver
+          oc c ur.
+          Forge tting to c a ll ExitCritic a lS e c tion() after c a lling
+          EnterCritic a lS e c tion().
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Tracing Unusual Phenomena
+    Record accessed address and data
+     values when hang-up occurred.
+
+                                                                                           Restart the program.
+  Set trigger conditions to those values.
+  Then set NFV larger than two, and the
+    sampling range larger than NFV.                                                               Do sampling.
+
+
+
+
+                                                                            YES                Got a shot where
+                                                                                               the program just
+                                                                                                  hung up?
+                                                                                                            NO
+                            If earlier ones are needed,
+                              continue the procedure                                        Try another value as
+                           and trace the phenomenon.                                        the trigger condition
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Evaluating Algorithms
+    Evaluation of a core engine , and improving its
+    performanc e .
+    Evaluation when introduc ing new data
+    s truc ture a nd a lgorithms
+          For e xample, employing joint-vertex mesh data
+    Evaluation at an early stage of the design,
+    and its use at a graphic s de s ign s tage.
+    B a lanc ing the g raphic s de s ign and algorithm
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Summary
+    Visualization of proc e s s ing by us ing the
+    performanc e analyzer.
+    Ana lys is b y the programme r and its u s e a s a n
+    analys is tool
+    Effe c tive use of various kinds of commands to
+    identify the c ause of proc e s s ing bottle n e c k s
+          Various kinds of analyses
+          S tatis tic s
+          Video memory viewer
+          S ymbol a c c e s s
+          Trigger func tion, S e a rc h c o mmand
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Summary
+    Estimating improvements and determining
+    the tuning s tra tegy
+    Optimimzation
+    Us e for e va luation of a lgorithms , and its use
+    for graphic s de s ign
+    Adding more fe a ture s s uc h as improvements
+    in graphic s qualitie s when the CPU and GPU
+    have more bandwidth left.
+          Introduc ing mip-mapping
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+Summary
+    Us e a s a n experimental tool at an early stage
+    in a design pha s e
+    Us e ful data in dis c us s ion be twe e n
+    programmers and graphic s de s igne rs in a
+    group work
+    Us e a s a monitoring tool to e xamine unusual
+    phenomena
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+                                 The End
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Summer ‘97 / DTL-H2700 Dev System and Performance Analyzer
+

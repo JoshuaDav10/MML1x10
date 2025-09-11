@@ -1,0 +1,28 @@
+PSXSPX SPECIFICATIONS - REGISTERS WHILE THE MUL/DIV OPERATION IS BUSY WILL HALT THE CPU UNTIL THE
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: registers while the mul/div operation is busy will halt the CPU until the
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1069 characters
+Lines: 20
+================================================================================
+
+registers while the mul/div operation is busy will halt the CPU until the
+mul/div has completed. For multiply, the execution time depends on rs (ie.
+"small*large" can be much faster than "large*small").
+
+| __umul_execution_time_____________________________________________________
+Fast (6 cycles) rs = 00000000h..000007FFh
+Med (9 cycles) rs = 00000800h..000FFFFFh
+Slow (13 cycles) rs = 00100000h..FFFFFFFFh
+__smul_execution_time_____________________________________________________
+Fast (6 cycles) rs = 00000000h..000007FFh, or rs = FFFFF800h..FFFFFFFFh
+Med (9 cycles) rs = 00000800h..000FFFFFh, or rs = FFF00000h..FFFFF801h
+Slow (13 cycles) rs = 00100000h..7FFFFFFFh, or rs = 80000000h..FFF00001h
+__udiv/sdiv_execution_time________________________________________________
+Fixed (36 cycles) no matter of rs and rt values
+
+For example, when executing "umul 123h,12345678h" and "mov r1,lo", one can
+insert up to six (cached) ALU opcodes, or read one value from PSX Main RAM
+(which has 6 cycle access time) between the "umul" and "mov" opcodes without
+additional slowdown.

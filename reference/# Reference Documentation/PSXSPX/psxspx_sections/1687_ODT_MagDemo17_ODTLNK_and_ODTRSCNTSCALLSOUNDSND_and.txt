@@ -1,0 +1,45 @@
+PSXSPX SPECIFICATIONS - O.D.T. (MAGDEMO17: ODT\*.LNK AND ODT\RSC\NTSC\ALLSOUND.SND AND NESTED LNK'S)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: O.D.T. (MagDemo17: ODT\*.LNK and ODT\RSC\NTSC\ALLSOUND.SND and nested LNK's)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1273 characters
+Lines: 37
+================================================================================
+
+O.D.T. (MagDemo17: ODT\*.LNK and ODT\RSC\NTSC\ALLSOUND.SND and nested LNK's)
+
+Barbie Explorer (MagDemo50: BARBIEX\*.STR and nested therein)
+
+| 000h 4 Number of Files (N)
+004h N*8 File List
+... .. File Data area
+
+File List entries:
+
+| 000h 4 Offset in bytes (increasing, 1/4-byte? aligned)
+004h 4 File Size in bytes (usually N*4, TXT's in ODT are padded as so)
+
+Quirk: Instead of rounding only Offsets to N*4 byte boundary, all Sizes are
+rounded to N*4 bytes (eg. TXT files in ODT\RSC\NTSC\GFILES.LNK\01 with odd
+number of characters are are zeropadded to N*4 bytes).
+
+Note: The PADBUG archives in Final Fantasy VIII (FF8) are very similar (but
+have a different alignment quirk).
+
+Bust A Groove (MagDemo18: BUSTGR_A\*.DFS and BUSTGR_B\*.DFS) (DFS)
+
+Bust-A-Groove 2 (MagDemo37: BUSTAGR2\BUST2.BIN\*) (main=DF2 and child=DFS)
+
+Same as in O.D.T. with extra "DFS_" ID at start of file.
+
+| 000h 4 ID "DFS_" (with align 4) or "DF2_" (with align 800h)
+004h 4 Number of Files (N)
+008h N*8 File List
+... .. File Data area
+File List entries:
+000h 4 Fileoffset in bytes (4-byte or 800h-byte aligned, increasing)
+004h 4 Filesize in bytes (can be odd, eg. in BUSTGR_A\SELECT.BPE\*)
+
+The game does use uncompressed DFS archives (in .DFS files) and compressed DFS
+archives (in .BPE files):

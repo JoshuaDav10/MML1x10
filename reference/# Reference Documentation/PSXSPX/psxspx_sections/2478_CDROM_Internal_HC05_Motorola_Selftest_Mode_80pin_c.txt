@@ -1,0 +1,65 @@
+PSXSPX SPECIFICATIONS - CDROM INTERNAL HC05 MOTOROLA SELFTEST MODE (80PIN CHIPS)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM Internal HC05 Motorola Selftest Mode (80pin chips)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1731 characters
+Lines: 56
+================================================================================
+
+CDROM Internal HC05 Motorola Selftest Mode (80pin chips)
+
+80pin Sony 4246xx chips
+
+And for anyone else planning to try this, these are the connections:
+
+| Pin PortC
+46 PC7/IRQ1 (SCOR) disconnect from PCB, then wire the pin to Vtst (7.6V)
+45 PC6/IRQ2 (/XINT) wire to Vdd (3.5V) (you have to solder to the pin)
+
+In bootstrap mode, Port A is used as follows:
+
+| Pin PortA DDRA Usage
+23 PA0 in RXD
+24 PA1 out TXD
+25 PA2 in -
+26 PA3 in Testmode.bit0 (GND=0, 3.5V=1)
+27 PA4 in Testmode.bit1 (GND=0, 3.5V=1)
+28 PA5 in Testmode.bit2 (GND=0, 3.5V=1)
+29 PA6 out RTS (don't care)
+30 PA7 out -
+
+The selectable testmodes are:
+
+| PA5 PA4 PA3 Effect
+0 x x Jump to 0040h ;\
+1 0 0 Test (complex) ; not so useful
+1 0 1 Test (simple loop) ;/
+1 1 0 ROM Dump 4200h bytes (plain binary, non-ASCII)
+1 1 1 RAM Upload 100h bytes to 0040h..013Fh, then jump to 0040h
+
+RX/TX are plain binary (non-ASCII), baudrate is 9600 (when using 4.000MHz
+oscillator), transfer format is 8,N,2 (aka 8,N,1 with an extra pause bit).
+
+Wiring for Upload/Download on PSX consoles with 80-pin HC05 chips
+
+| .------------ pin46, PC7/IRQ1, SCOR, cut & wire to 7.5V
+|.----------- pin45, PC6/IRQ2, wire to 3.5V
+60 || 41
+.-----------------.
+61 | o | 40
+| Sony Computer | ,----- pin28, PA5, wire to 3.5V
+| Entertainment | _________/ ,--- pin27, PA4, wire to 3.5V
+| Inc. (C) E35D | ==========='---- pin26, PA3, mode select
+| 4246xx 185 | ----> pin24, PA1, TXD (for ROM dump)
+
+Good places to pick 3.5V and 7.5V from nice solder pads are:
+
+| CN602.Pin1 = 7.5V ;\on PSX boards (with 7pin CN602 connectors)
+CN602.Pin3 = 3.5V ;/
+
+Credits to TriMesh for finding the 80pin chip's bootstrap signals.
+
+Other 80pin chips
+
+DTL-H100x uses 80pin chip with onchip PROM (chip text "(M) MC68HC705L15",

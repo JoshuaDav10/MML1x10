@@ -1,0 +1,13 @@
+PSYQ DOCUMENTATION - Sound system and audio programming
+================================================================================
+Category: 04_Audio
+Description: Sound system and audio programming
+Files: 6
+
+FILES IN THIS CATEGORY:
+  Sound20.txt (105.6 KB)
+  rvsndpg.txt (27.1 KB)
+  snd3.txt (24.3 KB)
+  sound.txt (24.9 KB)
+  sounread.txt (33.7 KB)
+  xa_sound.txt (21.4 KB)

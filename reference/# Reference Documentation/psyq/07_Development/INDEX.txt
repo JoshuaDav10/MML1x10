@@ -1,0 +1,31 @@
+PSYQ DOCUMENTATION - Development tools and guidelines
+================================================================================
+Category: 07_Development
+Description: Development tools and guidelines
+Files: 24
+
+FILES IN THIS CATEGORY:
+  BASE.SRG.txt (5.2 KB)
+  Dtlh2000.txt (48.2 KB)
+  Dtlh2500.txt (100.4 KB)
+  INDEX.txt (7.4 KB)
+  Inlinref.txt (259.0 KB)
+  Libovr.txt (786.8 KB)
+  Libref.txt (1542.5 KB)
+  MC32.SCR.txt (13.9 KB)
+  MSPPT8VR.OLB.txt (4.5 KB)
+  Readme.txt (2.8 KB)
+  SERVRDEP.SRG.txt (12.6 KB)
+  SERVRIND.SRG.txt (1.1 KB)
+  SSHOW.SRG.txt (1.3 KB)
+  gte.txt (72.0 KB)
+  index.txt (0.9 KB)
+  note520.txt (1.2 KB)
+  note588.txt (2.2 KB)
+  ordtbl.txt (28.7 KB)
+  palguide.txt (29.2 KB)
+  pretech.txt (2.5 KB)
+  readme.txt (3.5 KB)
+  sdevtc.txt (352.9 KB)
+  sound.txt (22.0 KB)
+  tech205.txt (68.9 KB)

@@ -1,0 +1,45 @@
+PSXSPX SPECIFICATIONS - SPUCNT, AND TO ZEROFILL THE REVERB BUFFER (SO THAT NO GARBAGE VALUES ARE OUTPUT
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: SPUCNT, and to zerofill the Reverb Buffer (so that no garbage values are output
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1224 characters
+Lines: 36
+================================================================================
+
+SPUCNT, and to zerofill the Reverb Buffer (so that no garbage values are output
+when activating reverb). For whatever reason, one MUST also initialize Port
+1F801DACh (otherwise reverb stays off).
+
+Room (size=26C0h bytes)
+
+| 007Dh,005Bh,6D80h,54B8h,BED0h,0000h,0000h,BA80h
+5800h,5300h,04D6h,0333h,03F0h,0227h,0374h,01EFh
+0334h,01B5h,0000h,0000h,0000h,0000h,0000h,0000h
+0000h,0000h,01B4h,0136h,00B8h,005Ch,8000h,8000h
+
+Studio Small (size=1F40h bytes)
+
+| 0033h,0025h,70F0h,4FA8h,BCE0h,4410h,C0F0h,9C00h
+5280h,4EC0h,03E4h,031Bh,03A4h,02AFh,0372h,0266h
+031Ch,025Dh,025Ch,018Eh,022Fh,0135h,01D2h,00B7h
+018Fh,00B5h,00B4h,0080h,004Ch,0026h,8000h,8000h
+
+Studio Medium (size=4840h bytes)
+
+| 00B1h,007Fh,70F0h,4FA8h,BCE0h,4510h,BEF0h,B4C0h
+5280h,4EC0h,0904h,076Bh,0824h,065Fh,07A2h,0616h
+076Ch,05EDh,05ECh,042Eh,050Fh,0305h,0462h,02B7h
+042Fh,0265h,0264h,01B2h,0100h,0080h,8000h,8000h
+
+Studio Large (size=6FE0h bytes)
+
+| 00E3h,00A9h,6F60h,4FA8h,BCE0h,4510h,BEF0h,A680h
+5680h,52C0h,0DFBh,0B58h,0D09h,0A3Ch,0BD9h,0973h
+0B59h,08DAh,08D9h,05E9h,07ECh,04B0h,06EFh,03D2h
+05EAh,031Dh,031Ch,0238h,0154h,00AAh,8000h,8000h
+
+Hall (size=ADE0h bytes)
+
+| 01A5h,0139h,6000h,5000h,4C00h,B800h,BC00h,C000h
+6000h,5C00h,15BAh,11BBh,14C2h,10BDh,11BCh,0DC1h

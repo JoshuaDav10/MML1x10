@@ -1,0 +1,1450 @@
+PSYQ DOCUMENTATION - TECHNOTE/mtrc13.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/TECHNOTE/mtrc13.pdf
+Converted: Wed Sep 10 02:47:29 PM CDT 2025
+================================================================================
+
+Technical Requirements Checklist
+
+    for PlayStation® Software
+    Standard Software Development Rules for
+          SCEI/SCEA/SCEE territories
+
+
+
+
+                      Version 1.3
+
+
+
+
+                   Document Release Date
+
+         SCEI Territory:              July 1, 1998
+
+         SCEA/SCEE Territories:       June 1, 1998
+
+
+
+
+                 Effective Date for Publishers
+
+         SCEI Territory:              Must be used for
+                                      products released after
+                                      October 1, 1998.
+
+         SCEA/SCEE Territories:       Must be used for
+                                      submissions after
+                                      August 1, 1998.
+© 1996, 1997, 1998 Sony Computer Entertainment Inc.
+Document Version: 1.3, June 1998
+
+The Technical Requirements Checklist for PlayStation Software is supplied pursuant to and subject to the terms of the Sony Computer
+Entertainment PlayStation publisher and developer Agreements. The content of this book is Confidential Information of Sony Computer
+Entertainment.
+PlayStation and PlayStation logos are trademarks of Sony Computer Entertainment Inc. All other trademarks are property of their respective owners
+and/or their licensors.
+HYPER BLASTER® is a registered trademark of Konami Co., Ltd.
+Guncon™, G-Con 45™ are trademarks of NAMCO LTD.
+neGcon® is registered trademark of NAMCO LTD.
+The information in the Technical Requirements Checklist for PlayStation Software is subject to change without notice.
+                    Table of Contents
+                    ABOUT THESE REQUIREMENTS
+                           Changes Since Last Release                                                       iv
+                           When to Use these Requirements                                                   iv
+                           Completing the Checklist                                                         iv
+                           Master Disc Version Numbering System                                              v
+
+
+                    PUBLISHER AND SOFTWARE INFORMATION FORM                                                  1
+
+
+                    MASTERING CHECKLIST
+                           1.0 Basic Mastering Rules                                                         2
+                           2.0 CD-ROM Regulation                                                             3
+                           3.0 IDs for Master Disc Input on CD-ROM Generator                                 4
+                           4.0 Special Notes on Creating CD-ROM Discs                                        5
+                           5.0 Aging and Boot Tests                                                          6
+
+
+                    TEXT AND GRAPHICS CHECKLIST
+                           6.0 Sony Corporate Logo, PlayStation Logo and other corporate trademarks          7
+                           7.0 PlayStation Component Naming Conventions                                      8
+                           8.0 Text and Graphics Display                                                     9
+
+
+                    PERIPHERAL HANDLING CHECKLIST
+                           9.0 General                                                                     10
+                           10.0 Peripheral Handling                                                        10
+                           11.0 Specific Peripherals                                                       11
+                           12.0 Memory Card                                                                15
+
+
+                    PROGRAMMING CHECKLIST
+                           13.0 Handling CD-ROM Read Errors at any Time after Boot                         21
+                           14.0 Naming the Boot File                                                       21
+                           15.0 Compatibility with Revision-C Hardware (DTL-H1200 series)                  22
+                           16.0 Multi-disc Titles                                                          22
+                           17.0 Streaming Video                                                            23
+
+
+                    SCEA/SCEE CHECKLIST
+                           18.0 Territory Localization                                                     24
+                           19.0 Saved Data Icons                                                           25
+                           20.0 PAL Conversions                                                            25
+
+
+                    APPENDIX A                                                                             26
+                           PlayStation Component Naming Conventions - European Languages
+
+
+                    APPENDIX B                                                                             29
+                           PlayStation Component Naming Conventions - Asian Languages
+
+
+
+
+Version 1.3, June 1998            Technical Requirements Checklist for PlayStation Software           page iii
+About these Requirements
+
+
+Changes Since Last Release
+      In addition to the major changes listed below, a large number of items have been modified for clarity in this version of the document. Also,
+      please be aware that the inclusion of new items has caused extensive renumbering in some sections.
+
+      New Requirements:
+      5.4                      Conditions under which machine should boot and run correctly.
+      6.7                      Displaying other corporate logos.
+      6.8                      PlayStation logo sound played at start up.
+      8.1                      Placement of essential text in relation to edges of screen.
+      11.3.2                   neGcon calibration feature implementation.
+      11.5.2                   Pachinko controller calibration feature implementation.
+      11.10                    Analog Controller (DUAL SHOCK ) feature implementation.
+      12.2.4                   Save title name in the Memory Card screen and application.
+
+
+      New Recommendations
+      11.6.1, 11.6.2           Message display after link error.
+      13.3, 13.4               Message display while retrying
+      18.1-18.7                Territory Localization recommendations
+
+      Deleted Items:
+      1.3.1                    #7 and #8 were deleted.
+      12.3.4                   This item from ver 1.2 has been deleted.
+      12.8.7                   This item from ver 1.2 has been deleted.
+      12.8.8                   This item from ver 1.2 has been deleted.
+      12.8.10                  This item from ver 1.2 has been deleted.
+      12.8.11                  This item from ver 1.2 has been deleted.
+
+      Substantially Modified Items:
+      Cover                    Modified to add document release date and effective date information.
+      2.1.4                    Information on the pause time between tracks has been corrected.
+      3.3                      Description of "SIPS-xxxxx" has been changed.
+      10.8, 10.8.1             These items from ver 1.2 were moved to section 18.0 (SCEA/SCEE only) in ver 1.3.
+      20.3                     This item from ver 1.2 is now item 8.1 in ver 1.3.
+
+
+
+
+When to Use these Requirements
+      Please complete the attached Publisher Information Form and Technical Requirements Checklist for each title you are submitting to us.
+      Prior to completing the Form, please confirm that you have the latest version of this Requirements Checklist by contacting your
+      SCEI/SCEA/SCEE representative.
+
+
+Completing the Checklist
+      Most sections of the Checklist begin with questions to determine whether or not a given requirement applies to the master discs of the title
+      you are submitting to us.
+      If you mark a section as “Applicable” to your title, then you must meet all requirements stated in that section; otherwise you can skip to the
+      next section.
+      NOTE: If you do not comply with all of the stated technical requirements, this may delay the testing cycle and approval of your title.
+
+
+
+Version 1.3, June 1998                          Technical Requirements Checklist for PlayStation Software                                              page iv
+      Your submitted title should also meet all of the requirements presented to you within any documents supplied by your account executive, or
+      posted on the BBS, website, etc.
+
+
+Master Disc Version Numbering System
+      To ensure accurate tracking of all titles, SCEA and SCEE require the use of the Master Disc Version Numbering System outlined below for all
+      Master Disc submissions. SCEI does not require this.
+      The version number created using this system should be used whenever you refer to the version number of a product on all paperwork and
+      discs.
+      The Version Number for any Master Disc submission comprises two parts - M.N where M=the Major Version and N=the Minor Version. The
+      Version Number is assigned as follows:
+
+      Version                           Description
+      0.1, 0.2, 0.3, etc.,              pre-master discs
+      1.0                               first set of master discs
+      2.0, 3.0, 4.0 etc.                subsequent sets of re-mastered discs
+
+      Examples:
+      The first pre-master submission (such as for a standards check) would be Version 0.1.
+
+      The first master submission (for Approval to Manufacture black discs) would be Version 1.0.
+
+      A re-submission (such as for Approval to Manufacture black discs after failing QA, or for bug corrections) would be Version 1.1.
+
+      A re-master (for subsequent manufacturing of a title due to a running change in the software code or product recall) would be Version 2.0.
+
+
+
+
+Version 1.3, June 1998                         Technical Requirements Checklist for PlayStation Software                                           page v
+                                           Publisher and Software
+                                             Information Form
+
+      We, the publisher of this title, confirm that we have read and completed this Technical Requirements Checklist and that our
+      submission disc(s) completely meet these requirements.
+
+      Date of this submission:                  _________________________________________________
+
+      Name of Title:                            _________________________________________________
+
+      Product Code:                             _________________________________________________
+         (as described in section 3.3)
+
+
+      Master Disc Version:                      _________________________________________________
+         (as described on previous page)
+
+
+      Creation Date:                            _________________________________________________
+         (as described in section 3.4)
+
+
+      Name of Publisher:                        _________________________________________________
+
+      Name of person in charge
+      of this submission:                       _________________________________________________
+
+      Signature:                                ______________________________________________________
+
+      Title:                                    _________________________________________________
+
+      Phone:                                    ______________________________________________________
+
+      Fax:                                      _________________________________________________
+
+
+
+
+Version 1.3, June 1998                     Technical Requirements Checklist for PlayStation Software                                page 1
+Mastering Checklist
+
+
+1.0       Basic Mastering Rules
+1.1           Required: All submission discs contain exactly the same data.
+               To avoid confusion, we compare bit images of all submitted discs on receipt.
+               Please ensure that file creation dates for all submissions are identical. Note that in some mastering environments, such as the NEWS
+               environment, different creation dates can easily occur when using several CD-Writers.
+               In the case of duplicated discs, some information such as master disc IDs cannot be duplicated. Therefore, the masters to be verified
+               should be created directly from the hard disc using CD-ROM Generator.
+                          SCEI:
+                          Three verified masters required. Duplication is acceptable for the five remaining discs.
+                          SCEA:
+                          Four verified masters required. Duplication is NOT acceptable for any of the nine discs.
+                          SCEE:
+                          Three verified masters required. Duplication is NOT acceptable for any of the eight discs.
+
+
+1.2       Disc Duplication Method (SCEI only)
+          (Please mark A or B below)
+              A)    Not applicable. (All of the submitted discs are created directly from the hard disk using CD-ROM Generator software and the
+                     CDW 900E or 921S; skip to section 1.3).
+              B)    Applicable. (This submission includes both verified master discs and duplicated discs; complete this section).
+
+1.2.1                     Required: Discs are duplicated using Hoei Sangyo Corporation products (such as SR-4400.)
+                           Please make sure that disc duplication is carried out using Hoei Sangyo Corporation products (SR-4400, etc.) Contact
+                           your SCEI/SCEA/SCEE representative for details.
+
+
+1.3       Marking the label side of the Master Disc
+
+1.3.1                     Required: The following information is written using a soft-tip pen in the upper half of the gold side of the disc.
+                           Nothing is written on the signal side and no adhesive materials such as tape, labels, stickers, etc. are attached
+                           to either side of the CD-R.
+
+                                 1) “Title”                    Name of title
+                                 2) “Licensee Name”            Name of publisher
+                                 3) “Ref. No.”                 Product code
+                                 4) “Rec. Date”                Master disc creation date
+                                 5) “Ver. No.”                 Master disc version
+                                 6) Notice of verification (indicate that the disc has been verified, if applicable)
+
+                           Note that using a hard-tipped pen to write this information may cause the reflective layer of the CD-R to become
+                           scratched. Since this can make it impossible for the data on the disc to be read correctly, please use only a soft-tipped
+                           pen.
+                           Avoid attaching adhesive items to either the label side or the signal side of the CD-R as this may cause irregular turning
+                           and abnormal functioning.
+
+1.3.2                     Required: At least three discs (or four for SCEA submissions) are verified and annotated as such on each disc and
+                           are created using CD-ROM Generator.
+                           Please verify discs after creation (that is, check that the data written on the CD-Recordable disc is identical to the original
+                           data on the hard disk).
+                           Please verify at least three out of the eight discs (or, for SCEA, verify at least four of the nine discs). Make sure that the
+                           verified discs can be distinguished from the non-verified ones.
+
+
+
+Version 1.3, June 1998                          Technical Requirements Checklist for PlayStation Software                                              page 2
+1.3.3                     Required: Before creating the master discs and submitting them to SCEI/SCEA/SCEE, make sure that there are no
+                           scratches, dust, soiled areas (particularly fingerprints, etc.) or stains on either the label side or the signal side of the
+                           discs.
+                           Since CD-R discs are extremely delicate, handle them with care and make sure to check the above points before the master
+                           discs are created and submitted.
+
+
+1.4           Required: This submission uses Sony CD-R71PS recording media.
+
+
+1.5       Required: Discs have been created under one of the conditions below:
+             A) Discs are created by CDW-900E with single speed mode.
+             B) Discs are created by CDU-921S with double speed mode.
+
+               Notes on disc creation speed:
+                • When using the CDW-900E, single-speed mode creates discs with lower error rates.
+                • When using the CDU-921S, double-speed mode creates discs with lower error rates
+
+               Other disc creation notes:
+                • For CD-Writer, the use of a dedicated power outlet is recommended.
+                • Use a PC in a stand-alone environment (no network connection) to create Write-once discs.
+                • Please do not create Write-once discs while running any type of screen saver.
+                • Please use files on local hard disk(s) as the source files, not network files.
+
+
+2.0       CD-ROM Regulation
+2.1       General CD-ROM Regulation
+
+2.1.1         Required: All Program Data (excluding CD-DA data) must be contained on track one.
+               This is due to ISO-9660 standards.
+
+2.1.2         Required: Total data length (total time of all tracks combined, including CD-DA data) must be more than one minute.
+               This is due to Red Book standards.
+               IMPORTANT: Your software title must also conform to section four of the TRC which requires that the total data length be more than
+               three minutes.
+
+2.1.3         Required: The length of each track is greater than four seconds.
+               This is due to Red Book standards.
+               The pause time should not be included when calculating track length. It is recommended that the length of each track be more than
+               4.5 seconds.
+
+2.1.4         Required: Pause time between all tracks must be two or more seconds.
+               This follows Red Book standards and is the default setup for the CD-ROM Generator software.
+
+2.2       Noise on CD-DA tracks
+          (Please mark A or B below)
+
+              A)    Not applicable. (This title does not utilize CD-DA data or the CD-DA data has been checked and no unintended sounds, such as
+                     "clicks", "pops", or white noise are present; skip to section 3.0.)
+              B)    Applicable. (This title has been checked and it has been confirmed that the CD-DA data contains unintended sounds; complete this
+                     section.)
+2.2.1                 Required: Please submit a report informing us at which part (at "x" minutes "y" seconds) of which track the noise
+                          exists.
+                          It is highly recommended that no noise be put in the CD-DA data.
+                          Note that when converting sound files with the Macintosh RAW2DA tool, the input data must be in Sound Designer II
+                          format. If you use AIFF format, some noise might appear before and after the converted sound data.
+                          Also, when transferring data from Macintosh to PC, do not choose MacBinary format. Doing so sometimes changes the
+                          resource part into noise.
+
+
+
+Version 1.3, June 1998                         Technical Requirements Checklist for PlayStation Software                                        page 3
+3.0       IDs for Master Disc Input on CD-ROM Generator
+3.1           Required: In the Additional Information dialog box (accessed from the Volume Screen), enter the correct License file in the
+               “System Area File” field.
+               Please be certain that your license file (LICENSE?.DAT) is the latest version. Some early versions of LICENSEA.DAT and
+               LICENSEE.DAT that were available at product launch can no longer be used.
+                          SCEI:
+                          License data file: (LICENSEJ.DAT) for SCEI market.
+
+                          SCEA:
+                          License data file: (LICENSEA.DAT) for SCEA market.
+
+                          SCEE:
+                          License data file: (LICENSEE.DAT) for SCEE market.
+
+3.2           Required: In the Additional Information dialog box (accessed from the Volume Screen), check that PLAYSTATION (in all capital
+               letters) is entered correctly in all capital letters into the “System Identifier” and “Application” fields.
+
+               The items mentioned in 3.1 and 3.2 above can be checked by booting the program with the Debugging Station. If it is
+               booted successfully, the licensing screen (black with PlayStation logo) will appear after the white SCE logo.
+
+3.3           Required: In the Master Information dialog box (accessed from the Layout Screen), enter the Product Code assigned by
+               SCEI/SCEA/SCEE for this title into the “Disc Name” field.
+               The Product Codes for each territory are given below, where “xxxxx” = the numeric part of the Product Code as assigned to your title
+               by SCEI/SCEA/SCEE in the applicable territory:
+
+                          Product Code           Description
+                          SLPS-xxxxx             for 3rd party published software for SCEI territory
+                          SCPS-xxxxx             for SCEI published software for SCEI territory
+                          SIPS-xxxxx             for SCEI published software for SCEI territory
+                          SLUS-xxxxx             for licensed software for SCEA territory
+                          SCUS-xxxxx             for SCEA published software for SCEA territory
+                          SLES-xxxxx             for 3rd party published software for SCEE territory
+                          SCES-xxxxx             for SCEE published software for SCEE territory
+
+                          Note that special versions such as demo versions should have the individual product code.
+
+3.4           Required: In the Master Information dialog box (accessed from the Layout Mode screen), enter or modify the time and date
+               when the master disc was burned into the “Creation Date” field. Ensure that the Creation Date is the same on all paperwork
+               and written on the actual discs themselves.
+               The creation date must be the same as the master disc burn date. If discs are burnt over two or more days, the burn date must be
+               the same.
+
+3.5           Required: In the Master Information dialog box (accessed from the Layout Mode screen), enter the legal copyright holder in all
+               capital letters into the “Copyright Holder” field.
+
+
+3.6           Required: In the Master Information dialog box (accessed from the Layout Mode screen), enter the Publisher’s name into the
+               “Producer Name” field.
+
+
+3.7           Required: In the Master Information dialog box (accessed from the Layout Mode screen), License Area code is input correctly
+               (using upper case letters) into the “License Area” field.
+                          "J" for SCEI market
+                          "A" for SCEA market
+                          "E" for SCEE market
+
+                          Note that this information is not stored when the .CCS file is saved and must be re-entered every time the CD-ROM
+                          Generator (prior to version 1.3) is used.
+
+
+
+
+Version 1.3, June 1998                        Technical Requirements Checklist for PlayStation Software                                           page 4
+                             The information required in paragraphs 3.3 - 3.7 can be input in the window that appears when you click the button
+                             named “Master”, located in the bottom-right corner of the Layout Mode screen.
+
+3.8           Required: All CD-ROM Generator fields not specified in requirements 3.1 to 3.7 above (inclusive) are not required for the
+               generation of PlayStation masters, and must be left blank (unfilled).
+
+
+3.9           Required: The disc has been checked using ID-CHECKER (M-CHECK.exe).
+               ID-CHECKER (M-CHECK.exe) can verify whether 3.3 - 3.7 (above) have been correctly written onto the disc or not. This check can
+               be performed on a Windows PC connected to a CDW-900E or CDU-921S into which the disc to be checked has been inserted.
+
+               Please ensure that the latest version of the file is used.
+
+                             SCEI:
+                             Master Disc Check Program MCHECK.EXE ver 1.20 (supports CDW-900E and CDU-921S) and ver. 1.00 (supports only
+                             CDW-900E) are located at the SCE-NET Web Site: https://sce-net.scei.co.jp or at the BBS site.
+
+                             SCEA:
+                             To download M-CHECK.EXE for the CDW-900E only or to download M-CHECK.EXE for both the CDW-900E and CDU-921S,
+                             go to the Files section of the Developer Support Web Site at http:/www.scea.sony.com/dev.
+
+                             SCEE:
+                             M-CHECK is located in the “CD ROM Writer” file area as MCHECK.ZIP on the Developer Support Web Site at
+                             https://www-s.playstation.co.uk/
+
+
+4.0       Special Notes on Creating CD-ROM Discs
+4.1           Required: The title does not seek within the last three minutes of the written area of the disc.
+               This refers to the extreme outside edge of the written area of the disc, including CD-DA; not the extreme outside edge of the disc
+               itself. For example, if there are 10 minutes of data on the disc, the last three minutes are the 8, 9 and 10 minute areas.
+
+               Note that currently, seeking in the last three minutes of the written area of a PlayStation disc may be unsuccessful.
+
+               (Please mark A or B below)
+                        A) Not applicable. (Dummy data has been burned into the last three minutes of the written area of the disc; skip to section
+                            4.2).
+                        B) Applicable. (One of the alternative solutions listed below has been used; complete this section).
+                             (Please mark B1, B2 or B3 below)
+                                 B1)     The length of the last CD-DA data is greater than three minutes and there is no data seek within the last three
+                                          minutes of the CD-DA data.
+                                 B2)     The length of the last movie or other data on the disc is more than three minutes and is only read continuously
+                                          beginning-to-end (there is no seek within the last three minutes).
+                                 B3)     The total length of the last file located at the edge of the written data area and the dummy data located after
+                                          this file is more than 3 minutes and there is no seek within the last three minutes
+
+
+
+
+Version 1.3, June 1998                            Technical Requirements Checklist for PlayStation Software                                            page 5
+                          Figure 4.1: Solutions to "seek problem" in last three minutes of PlayStation data.
+
+                                                                                                    <------ Last Three minutes ------>
+                                                                                           SEEK NO GOOD
+
+                      A          Any Data                                                  Dummy data in last 3 minutes
+
+                     B1          CD-DA data of more than 3 minutes with                   no seek in last three minutes
+
+                     B2          Movies,etc. of more than 3 minutes with                  no seek in last three minutes
+
+                     B3          Any Data                                         Last     Data File                               Dummy Data
+
+4.2           Required: Files which are not used by the application are not included on the disc.
+               Example: Do not use data and files such as Windows wallpaper, screensavers, etc., which are designed for use on other platforms.
+
+
+5.0       Aging and Boot Tests
+               An "aging" test is a test to find out whether or not the title hangs or malfunctions when it is left running for eight hours in the following
+               conditions:
+
+5.1           Required: This title continues to function correctly after an aging test of eight hours has been performed with the title in Demo
+               Mode (title screen/opening demonstration screen).
+
+
+5.2           Required: This title continues to function correctly after an aging test of eight hours has been performed with the title in Pause
+               Mode (only for titles which implement pause mode).
+
+
+5.3           Required: This title continues to function correctly after aging tests of eight hours have been performed in all areas of this title
+               where a consumer could reasonably be expected to leave this title unattended for extended periods (e.g. menu screens, save
+               game screens, etc.)
+
+
+5.4           Required: This title boots and runs correctly after performing hard resets using the Power button, soft resets using the Reset
+               button, and when exiting the CD player and console Memory Card screens.
+
+
+5.5           Required: The boot tests and aging tests described in 5.1-5.4 are performed using the following debugging stations:
+                          SCEI:
+                          DTL-H1000 or DTL-H1100 (at least one required) and DTL-H1200 (required).
+
+                          SCEA:
+                          DTL-H1001 or DTL-H1101 (at least one required) and DTL-H1201 (required).
+
+                          SCEE:
+                          DTL-H1002 or DTL-H1102 (at least one required) and DTL-H1202 (required).
+
+
+
+
+Version 1.3, June 1998                          Technical Requirements Checklist for PlayStation Software                                                page 6
+Text and Graphics Checklist
+
+
+6.0       Sony Corporate Logo, PlayStation Logo and other corporate trademarks
+6.1           Required: The four-letter “SONY” logotype is not used within this title (software and packaging) except where this logo
+               appears on a digitized image of the PlayStation console or on a licensed peripheral by SCEI/SCEA/SCEE.
+
+
+6.2           Required: The PlayStation logo, or logotype and the SCE logo is not used within this title software except where this logo
+               appears on a digitized image of the PlayStation console or a licensed peripheral by SCEI/SCEA/SCEE.
+
+
+6.3           Required: In the application, the design of the PlayStation console and any PlayStation peripherals should not be used or
+               shown unless necessary, for example, to explain software operation.
+               Any deformation or characterization of the console or peripheral designs is strictly prohibited.
+
+
+6.4           Required: The PlayStation logo described in the exceptions to 6.1 and 6.2 above (seen in digitized images of the PlayStation
+               console and peripherals) is not defaced or blurred and the design/inscription on the face is correct.
+               If such problems exist with the PlayStation logo within the digitized image, please remove the logo from the image.
+
+
+6.5           Required: No effects or fade out processes are carried out on the PlayStation logo during the booting procedure. The screen
+               is cleared instantaneously when shifting to the section in the software which displays the image (when changing resolution,
+               etc.)
+
+
+6.6           Required: Other corporate logos or properties are not used in the title without permission of the property holders.
+
+
+6.7           Required: Other corporate logos, properties, or trademarks cannot be displayed on any image of the PlayStation console or
+               any licensed peripheral by SCEI/SCEA/SCEE.
+
+
+6.8           Required: The trailing note of the PlayStation logo sound played at start-up must terminate at the same time the logo is
+               cleared.
+
+
+
+
+Version 1.3, June 1998                      Technical Requirements Checklist for PlayStation Software                                     page 7
+7.0       PlayStation Component Naming Conventions
+7.1            Required: The following names are used in the title and its accompanying packaging when referring to the console or a
+                licensed peripheral of SCEI/SCEA/SCEE:
+
+
+                                              English                                    French                                German
+                              PlayStation                               PlayStation                           PlayStation
+ General PlayStation          console                                   console                               Konsole
+ component names              connector port section                    section des connecteurs               Anschlüß
+                              controller port                           port de mannete                       Controller-Anschlüß
+                              controller port 1                         porte de manette N°1                  Controller-Anschlüß 1
+                              controller port 2                         port de manette N°2                   Controller-Anschlüß 2
+                              Memory Card slot                          fente pour carte mémoire              Memory Card Steckplatz
+                              Memory Card slot 1                        fente pour carte mémoire N°1          Memory Card Steckplatz 1
+                              Memory Card slot 2                        fente pour carte mémoire N°2          Memory Card Steckplatz 2
+                              right audio output                        sortie audio droite                   Rechter Audioausgang
+                              left audio output                         sortie audio gauche                   Linker Audioausgang
+                              video output                              sortie vidéo                          Videoausgang
+                              PARALLEL I/O port                         port PARALLEL I/O                     PARALLEL I/O Anschluß
+                              SERIAL I/O port                           port SERIAL I/O                       SERIAL I/O Anschluß
+                              AV MULTI OUT connector                    connecteur AV MULTIOUT                AV MULTI OUT Anschluß
+                              S video output connector                  connecteur de sortie S-VIDEO          S-VIDEO-Anschluß
+                              RGB output connector                      connecteur de sortie RVB              RGB-Anschluß
+                              video output jack                         prise de sortie vidéo                 Videoeingangsstecker
+                              POWER button                              bouton POWER                          POWER-Taste
+                              POWER indicator                           indicateur de mise sous tension       Kontrolleuchte
+                              RESET button                              bouton RESET                          RESET-Taste
+                              OPEN button                               bouton OPEN                           OPEN-Taste
+                              disc cover                                couvercle du compartiment à disque    CD-Fach
+ Controller component         directional button                        touche directionnelle                 Richtungstaste
+ names                        SELECT button                             touche SELECT                         SELECT-Taste
+                              START button                              touche START                          START-Taste
+                              ∆ button                                  touche ∆                              ∆-Taste
+                                 button                                touche                                 -Taste
+                              O button                                  touche O                              O-Taste
+                              X button                                  touche X                              X-Taste
+                              L1 button                                 touche L1                             L1-Taste
+                              L2 button                                 touche L2                             L2-Taste
+                              L3 button                                 touche L3                             L3-Taste
+                              R1 button                                 touche R1                             R1-Taste
+                              R2 button                                 touche R2                             R2-Taste
+                              R3 button                                 touche R3                             R3-Taste
+                              right button                              touche droite                         Rechter-Taste
+                              left button                               touche gauche                         Linker-Taste
+                              right stick                               joystick droite                       Rechter Stick
+                              left stick                                joystick gauche                       Linker Stick
+                              analog mode switch                        Interrupteur mode analogique          Analog-Modus Schalter
+                              LED                                       voyant                                LED
+                              controller port*-A                        port de manette*-A                    Controller-Anschlüß*-A
+                              controller port*-B                        port de manette*-B                    Controller-Anschlüß*-B
+                              controller port*-C                        port de manette*-C                    Controller-Anschlüß*-C
+                              controller port*-D                        port de manette*-D                    Controller-Anschlüß*-D
+                              Memory Card slot*-A                       fente pour carte mémoire*-A           Memory Card Steckplatz*-A
+                              Memory Card slot*-B                       fente pour carte mémoire*-B           Memory Card Steckplatz*-B
+                              Memory Card slot*-C                       fente pour carte mémoire*-C           Memory Card Steckplatz*-C
+                              Memory Card slot*-D                       fente pour carte mémoire*-D           Memory Card Steckplatz*-D
+
+
+
+
+Version 1.3, June 1998                            Technical Requirements Checklist for PlayStation Software                               page 8
+ Peripheral names                Controller                               Manette                                      Controller
+                                 Memory Card                              Carte mémoire                                Memory Card
+                                 Mouse                                    Souris                                       Maus
+                                 Link Cable                               Câble de liaison                             Link Kabel
+                                 Multi Tap                                Connecteur multi-manettes                    Multi Tap
+                                 Analog Joystick                          Joystick Analogique                          Analog Joystick
+                                 Analog Controller (DUAL SHOCK)           Manette Analogique (DUAL SHOCK)              Analog Controller (DUAL SHOCK)
+                                 Analog Controller                        Manette Analogique                           Analog Controller
+                                 Euro-AV Cable                            Câble Euro-AV                                Euro-AV-Kabel
+                                 S Video Cable                            Câble S VIDEO                                S-VIDEO-Kabel
+                                 AV Cable                                 Câble AV                                     AV-Kabel
+                                 AV Adaptor                               Adaptateur AV                                AV-Adapter
+                                 RFU Adaptor                              Adaptateur RFU                               RF Adapter
+                                 AC Power Cord                            Cordon d’alimentation                        Netzkabel
+ Names of discs in multi-disc    DISC 1                                   DISQUE 1                                     CD 1
+ applications                    DISC 2                                   DISQUE 2                                     CD 2
+                                 DISC 3                                   DISQUE 3                                     CD 3
+                                 DISC 4                                   DISQUE 4                                     CD 4
+ Instruction manual              instruction manual                       mode d’emploi                                Bedienungsanleitung
+ Users Manual                    software manual                          manuel du logiciel                           Software-Handbuch
+
+
+                 Please refer to Appendix A for terms in other European languages and Appendix B for terms in Asian languages.
+
+                 For the part name of each peripheral, please refer to the explanation in the instruction manual for that peripheral.
+                 * When referring to a Multi Tap connected to Controller port 1, the names of each Controller port on the Multi Tap are 1-A, 1-B, 1-C and
+                 1-D. When referring to a Multi Tap connected to Controller port 2, the names of each Controller port on the Multi Tap are 2-A, 2-B, 2-C
+                 and 2-D.
+
+
+
+8.0        Text and Graphics Display
+8.1        Recommended: Text and essential display items are not placed close to display edges
+           Due to variations in television displays, critical application text and graphics might be cut-off on some displays.
+
+
+8.2        Language selection (Only for titles in SCEA/SCEE territories)
+           (Please mark A or B below)
+                A)    Not applicable. (This title does not include a language selection option; skip to section 9).
+                B)    Applicable. (This title includes a language selection option).
+8.2.1                   Required: All critical on-screen text (and spoken word, where applicable) is shown/output in the language selected
+                            by the user on the language selection screen.
+
+
+
+
+Version 1.3, June 1998                           Technical Requirements Checklist for PlayStation Software                                              page 9
+Peripheral Handling Checklist
+
+
+9.0       General
+9.1           Required: This title functions correctly when any licensed peripherals are added or removed at any time after boot.
+
+
+9.2       When supporting multiple licensed peripherals (such as both controller and mouse etc.)
+          (Please mark A or B below)
+              A)    Not applicable. (This title does not support multiple peripherals; skip to section 10).
+              B)    Applicable. (This title supports multiple peripherals; complete this section).
+9.2.1                 Required: Peripherals may be added or removed at anytime after boot without affecting the title.
+
+10.0 Peripheral Handling
+10.1          Required: This title continues to function correctly when three or more of the directional buttons on any licensed controller
+               are pressed simultaneously.
+               After using the control device for an excessively long time, the props to support the buttons can become worn away. In such cases
+               the controller may behave as if three or more directional buttons have been pressed simultaneously.
+
+10.2          Required: Even if unused buttons are pressed, this title continues to function correctly.
+
+
+10.3          Required: This title correctly recognizes any licensed controller even when it is inserted at any time after boot.
+
+
+10.4          Required: This title does not hang or otherwise malfunction when any licensed controller is connected or disconnected at any
+               time after boot.
+
+
+10.5          Required: This title continues to function correctly with any licensed controllers fully supported by the title.
+
+
+10.6          Required: The title functions correctly (i.e. does not hang or otherwise malfunction) even after mode change (i.e. digital to
+               analog or analog to digital) with multiple-mode controllers, such as the Analog Joystick.
+
+
+10.7          Required: A buffer of 34 bytes is reserved for any licensed controller.
+
+
+
+
+Version 1.3, June 1998                          Technical Requirements Checklist for PlayStation Software                                     page 10
+11.0 Specific Peripherals
+11.1      Multi Tap
+          (Please mark A or B below)
+              A)     Not applicable. (This title does not support the Multi Tap; skip to 11.2)
+              B)     Applicable. (This title supports the Multi Tap; complete this section)
+
+11.1.1                    Required: This title does not hang or otherwise malfunction even under the following circumstances:
+                           •     Extra controllers or Memory Cards that are not used in the title are connected to the Multi Tap.
+                           •     Controllers in use are unintentionally removed from the Multi Tap.
+
+
+11.1.2                    Required: This title continues to function correctly (i.e. does not adversely affect application logic or function)
+                           when a Memory Card or a Controller is connected or removed from the Multi Tap anytime after boot.
+                           For example, if users 1, 2, 3 & 4 are controlled by peripherals in Controller ports 1-A, 1-B, 1-C & 1-D, users 1, 3 & 4 must
+                           continue to function normally if the peripheral in Controller port 1-B is removed.
+                           Recommended: The user is offered the opportunity to reinsert the Controller(s) or reallocate the Controller(s) via a
+                           "settings display" and continue.
+
+11.1.3                    Required: This title continues to function correctly when the Multi Tap is connected or removed anytime after boot.
+
+
+11.1.4                    Required: Use either libtap.lib ver. 3.4 or later or libpad.lib for the Multi Tap library.
+                                 SCEI:
+                                 The newest versions of libtap.lib and libpad.lib are located at the SCE-NET Web Site https://sce-net.scei.co.jp/ or at the
+                                 BBS Site.
+                                 SCEA:
+                                 The latest version of the Multi Tap and Controller libraries (libtap.lib and libpad.lib) are contained in the Files
+                                 section of the Developer Support Web Site at http:/www.scea.sony.com/dev.
+
+                                 SCEE:
+                                 Available as “libtap.lib” and “libpad.lib” in the latest version of the PlayStation libraries in the “Developer Area” of the
+                                 SCEE Web Site at https://www-s.playstation.co.uk/ and on the latest Developer Support CD-ROM.
+
+11.1.5                 Required: This title adheres to the correct Multi Tap connection and usage methods and these are documented in the
+                          software manual.
+                          The Multi Tap must function correctly when connected to either Controller port 2 (with a control device in Controller port 1)
+                          or Controller port 1 alone. The explanation of the connection and usage must be shown in the software manual.
+
+                          There is a possibility that the console will not recognize a Multi Tap unless a Controller is connected to Controller port 1-A
+                          or 2-A on the Multi Tap during the connection. In order to avoid this problem, a “Caution Clause” must be in the software
+                          manual.
+
+                          For example:
+                          “When using the Multi Tap, at least one controller must be connected to Controller port 1-A or 2-A”.
+                          Recommended location of the Caution Clause:
+                          Include the Caution Clause on the page explaining Multi Tap usage or the page explaining Controller usage in the
+                          software manual.
+
+11.2      Analog Joystick
+          (Please mark A or B below)
+              A)     Not applicable. (This title does not use the Analog Joystick; skip to 11.3.)
+              B)     Applicable. (This title uses the Analog Joystick; complete this section.)
+
+11.2.1                 Required: Calibration Mode for center position correction of left/right sticks is present.
+                          Center position detection and correction of left/right sticks.
+
+
+
+
+Version 1.3, June 1998                           Technical Requirements Checklist for PlayStation Software                                               page 11
+                           Obtain the value of each stick with the sticks released from the user's hands (in neutral position). This value should be
+                           used as the center position value throughout the title.
+
+                           Recommended: set up of idle movement, set up of idle sensitivity, etc.
+
+                           Note: When using the Analog Joystick in analog input mode imitating digital, please provide Center position calibration or
+                           please set the value of 128 ± 32 as OFF and other values as ON.
+
+11.2.2                     Required: Calibration mode for movable range of left/right sticks is present.
+
+                            Movable range detection and correction of left/right sticks
+
+                            1) Obtain the value of each stick where the sticks are moved as far as possible to each direction.
+                            2) With these values and the values of the center position obtained as described in 11.2.1, obtain the absolute values of
+                               difference between the center position values and the minimum, maximum values in the movable range of each stick.
+                            3) Use the smaller values of the absolute values as the movable range, and the larger value should be corrected.
+
+11.3       neGcon®
+           (Please mark A or B below)
+               A)    Not applicable. (This title does not use the neGcon® controller; skip to 11.4.)
+               B)    Applicable. (This title uses the neGcon® controller; complete this section.)
+11.3.1                     Required: Calibration mode for center position correction of twist is present.
+                            Center position detection and correction of twist: obtain the value of twist with the neGcon® released from the user's
+                            hand (in the neutral position). This value should be used as the center position value throughout the title.
+
+                            Recommended: detection of maximum value of twist, set up of idle position range, set up of sensitivity, A, B, L button
+                            detection etc.)
+
+                                  SCEI:
+                                  For details please refer to “Technical Information” at SCE-NET Web Site https://sce-net.scei.co.jp/ or “neGcon
+                                  specifications” on the bulletin board at the BBS Site.
+
+                                  SCEA:
+                                  Refer to the Technical Note titled “neGcon” in the Files section of the Developer Support Web Site at
+                                  http:/www.scea.sony.com/dev. This Technical Note is also available in Acrobat format on the Technical Reference CD
+                                  release 1.9 and later in the Technical Notes directory.
+                                  SCEE:
+                                  controller.zip      In the “samples” section of the Developer area of the SCEE Web Site at
+                                                      https://www-s.playstation.co.uk/ and on the latest Developer Support CD-ROM.
+                                  devguide.zip        In the “technotes” section of the Developer area of the SCEE Web Site at
+                                                      https://www-s.playstation.co.uk/ and on the latest Developer Support CD-ROM.
+
+11.3.2                This title requires a maximum twist value of larger than +/- 45 degrees.
+                      (Please mark A or B below)
+                           A)    Not applicable. (Skip to 11.4.)
+                           B)    Applicable.
+11.3.2.1                           Required: Detection of the maximum value of twist is present.
+
+11.4       Volume Controller
+           (Please mark A or B below)
+               A)    Not applicable. (This title does not use the Volume Controller; skip to 11.5.)
+               B)    Applicable. (This title uses the Volume; complete this section.)
+11.4.1                     Required: Calibration mode for the detection of maximum value for turning in each left/right direction is present.
+                            Movable range detection and correction of the dial.
+                            Obtain the dial values with the dial turned as far as possible to the left and right. These values should be used as the
+                            maximum values for turning in each direction throughout the title.
+
+
+
+Version 1.3, June 1998                             Technical Requirements Checklist for PlayStation Software                                           page 12
+                           SCEI:
+                           For details please refer to “Technical Information” at the SCE-NET Web Site https://sce-net.scei.co.jp/ or “Volume
+                           controller specifications” on the bulletin board of the BBS Site.
+
+                           SCEA:
+                           Refer to the Technical Note titled “Volume Controller” in the Files section of the Developer Support Web Site at
+                           http:/www.scea.sony.com/dev. This Technical Note is also available in Acrobat format on the Technical Reference CD
+                           release 1.9 and later in the Technical Notes directory.
+
+                           SCEE:
+                           controller.zip    In the ”samples” section of the Developer area of the SCEE Web Site at
+                                             https://www-s.playstation.co.uk/ and on the latest Developer Support CD-ROM.
+                           devguide.zip      In the ”technotes” section of the Developer area of the SCEE Web Site at
+                                             https://www-s.playstation.co.uk/ and on the latest Developer Support CD-ROM.
+
+
+11.5      Pachinko Controller (e.g. SANKYO F.F, N.ASUKA)
+          (Please mark A or B below)
+              A)    Not applicable. (This title does not use the Pachinko Controller; skip to 11.6.)
+              B)    Applicable. (This title uses the Pachinko Controller; complete this section.)
+11.5.1                    Required: 0 position detection and correction of the handle.
+                           Obtain the handle value when the handle is released from the user’s hands (in the neutral position). This value should be
+                           used as the 0 position value throughout the title.
+11.5.2                    Required: Calibration mode for the maximum position detection of the handle is present.
+                           Maximum position detection and correction of the handle
+                           Obtain the handle value with the handle twisted as far as possible to the right. This value should be used as the
+                           maximum position value throughout the title.
+
+
+11.6      Link Cable
+          (Please mark A or B below)
+              A)    Not applicable. (This title does not use the Link Cable; skip to 11.7.)
+              B)    Applicable. (This title uses the Link Cable; complete this section.)
+11.6.1                    Required: This title does not hang or otherwise malfunction if the Link Cable is removed during data
+                           transmission.
+                           Recommended: After a link error, this title displays a message such as "Link Broken".
+
+11.6.2                    Required: This title does not hang or otherwise malfunction if one of two linked PlayStations is turned off
+                           during data transmission.
+                           Recommended: After a link error, this title displays a message such as "Link Broken".
+
+11.7      Mouse
+          (Please mark A or B below)
+              A)    Not applicable. (This title does not use the Mouse; skip to section 11.8.)
+              B)    Applicable. (This title uses the Mouse.)
+
+
+11.8      Non-synchronized Lightgun (e.g.HYPER BLASTER®)
+          (Please mark A or B below)
+              A)    Not applicable. (This title does not use a non-synchronized lightgun; skip to section 11.9)
+              B)    Applicable. (This title uses a non-synchronized lightgun; complete this section.)
+11.8.1                Required: Center position calibration mode is present.
+11.9      Synchronized Lightgun (e.g. Guncon™, G-Con45™)
+          (Please mark A or B below)
+              A)    Not applicable. (This title does not use a synchronized lightgun. Skip to section 11.10)
+              B)    Applicable. (This title uses a synchronized lightgun; complete this section)
+
+
+Version 1.3, June 1998                          Technical Requirements Checklist for PlayStation Software                                       page 13
+11.9.1                      Required: Center position calibration mode is present.
+
+
+11.10       Analog Controller (DUAL SHOCK)
+             (Please mark A or B below)
+                A)    Not applicable. (This title does not use the Analog Controller; skip to section 12.0)
+                B)    Applicable. (This title uses the left/right stick, L3/R3 button or vibration functions of the Analog Controller (DUAL SHOCK);
+                       complete this section)
+11.10.1                Calibration Mode
+                        Required: There is no calibration screen (function) for center position calibration and detection of maximum
+                            travel value.
+                            Since the Analog Controller (DUAL SHOCK) has a built-in auto-calibration function for center position calibration and
+                            maximum travel value detection, an application level calibration screen (function) for these two (center position
+                            calibration and maximum travel value detection) must not be implemented.
+                            The center position calibration mentioned above is to perform calibration using the value obtained when the Analog
+                            Controller (DUAL SHOCK) is inserted. Thus the set up of the center idle range can be done by an application.
+11.10.2                Vibration Function
+                       (Please mark either A or B below)
+                            A)    Not applicable. (This title does not use the vibration function; skip to section 11.10.3)
+                            B)    Applicable. (This title uses the vibration function; complete this section)
+11.10.2.1                                Required: The user is able to turn the vibration function on and off within the application.
+                                          Because the main Analog Controller unit itself is not able to turn the vibration function on and off, this function
+                                          should be added to the application.
+11.10.2.2                                Required: The vibration function does not vibrate continuously for long periods of time.
+                                          Please contact your SCEI/SCEA/SCEE representative for the appropriate vibration period.
+11.10.3                     Required: Analog Controller (DUAL SHOCK) initialization is performed following the directions in the
+                             documentation for the Analog Controller (DUAL SHOCK) compatible library (libpad.lib). The Memory Card must
+                             be initialized prior to initializing the Analog Controller (DUAL SHOCK).
+
+11.10.4                     Required: Whenever referring to the Analog Controller (DUAL SHOCK) in the title or in the instruction manual
+                             accompanying the title, the appropriate naming conventions should be used.
+
+
+
+
+Version 1.3, June 1998                             Technical Requirements Checklist for PlayStation Software                                             page 14
+12.0 Memory Card
+          (Please mark A or B below)
+              A)    Not applicable. (This title does not support Memory Cards; skip to section 13.)
+              B)    Applicable. (This title supports Memory Cards; complete this entire section.)
+
+
+12.1      File name of the Memory Card
+12.1.1                Required: The Memory Card file name 12 byte header is input correctly. The file name consists of the Key code (as
+                          shown below) plus the Product Code (assigned to your title by SCEI/SCEA/SCEE in the applicable territory).
+                         Following the key code + product code, there is an 8-byte Developer-definable area. Any characters can be used except "?"
+                         and "*". (“?” and “*” are recognized as wild cards, so avoid using them.)
+
+                          Key Code          Product Code             Description
+                          BI                SLPS-xxxxx               for 3rd party published applications for SCEI territory
+                          BI                SCPS-xxxxx               for SCEI published applications for SCEI territory
+                          BI                SIPS-xxxxx               for SCEI published applications for SCEI territory
+                          BA                SLUS-xxxxx               for 3rd party published applications for SCEA territory
+                          BA                SCUS-xxxxx               for SCEA published applications for SCEA territory
+                          BE                SLES-xxxxx               for 3rd party published applications for SCEE territory
+                          BE                SCES-xxxxx               for SCEE published applications for SCEE territory
+
+                          If one of the following cases applies to your product, please follow the related instructions:
+
+                          1)   Besides the regular product, special versions of the product exist (such as a demonstration disc) which allow play in
+                               an entry stage or highlighted stage etc.
+
+                                      Required: With these versions, use a special version Product Code which is different to the code for a
+                                       regular product.
+
+                          2)   Your title contains multiple discs.
+
+                                      Required: Use the Product Code corresponding to the first disc of the set.
+
+                          3)   You publish multiple variants of a single title (e.g. special editions); one contains only a disc, the others contain a
+                               disc and peripheral bundle.
+
+                                      Required: Choose one Product Code and use it for the Memory Card file name of all variants in order to
+                                       maintain compatibility.
+
+
+
+
+Version 1.3, June 1998                          Technical Requirements Checklist for PlayStation Software                                                page 15
+12.2      Displaying the console Memory Card screen (icon, title name, etc.)
+12.2.1                Required: The saved data icon is displayed as intended by the publisher.
+12.2.2                Required: The save title name is displayed as intended by the publisher.
+12.2.3                Required: The save title name is saved as intended by the publisher.
+12.2.4                Required: The save title name displayed in the console Memory Card screen is identifiable as the save title name
+                          displayed in the application.
+
+                     Items 12.2.5-12.2.7 below concern the title data to be saved to the Memory Card.
+
+12.2.5                Required: Saved data, icons and the save title name can be copied or deleted correctly.
+12.2.6                Required: The Pad field (28 byte) following the save title name in the file header is filled with null characters (0x00)
+                          only.
+                          The Memory Card can save a title name up to a maximum of 32 characters in length using Shift JIS code. If the save title
+                          name is less than 32 characters, use a null character (0x00) at the end or fill the vacant area with blanks (0x8140). Pad
+                          field (28 byte) following the name of the title should be filled with null characters (0x00).
+                          Only non-Kanji and Kanji Level 1 components of Shift-JIS code can be utilized for the save title name. ASCII code cannot
+                          be used because this can cause problems in the display of the application title name in some application Memory Card
+                          screens. A function to convert ASCII code to value Shift-JIS code is available (in the "Kanji" sub-directory of the Developer
+                          CD).
+
+12.2.7                Required: When multiple save title names with the same name are created, additional information such as “(1)” or
+                          ”No. 1”, should be added to the save title names in order to make them mutually distinguishable (this does not apply
+                          when the user is able to input the filename.)
+
+
+12.3      Size of the file to be saved to Memory Card (the number of blocks used)
+          (Please mark A or B below)
+              A)    The size of the file is fixed. (Skip to Section 12.4)
+              B)    The size of the file is variable.
+                     The maximum number of blocks needed by the application for save data should be confirmed in advance in order to avoid a
+                     shortage of free blocks.
+                     The number of Memory Card blocks needed to save data varies depending on how far the application has progressed. For
+                     example, when the user has reached the final stage (eg. stage 20) in a game which requires a maximum of five blocks to save
+                     at that point, but requires only two blocks to save at the opening of the game, ensure that the maximum number of blocks
+                     needed to save the game file data is reserved within the Memory Card in advance (the number of files can be increased
+                     freely.)
+                     Example: It is prohibited for 1 file 1 block saved data to use 2 blocks except when the conditions described in 12.3.1-12.3.5
+                     are met. Reserve a fixed 1 file 2 blocks in advance.
+
+12.3.1                    Required: The title lets the user know the necessary number of blocks required to save the title before saving or
+                           overwriting.
+
+12.3.2                    Required: The title has an application based Memory Card screen (In this case, the title also should follow the
+                           requirements stated in section 12.8.)
+
+12.3.3                    Required: When there is an insufficient number of free blocks, the title is able to delete other saved data on the
+                           application Memory Card screen.
+
+12.3.4                    Required: Even after entering Save mode, the Memory Card can be removed and/or reinserted. (except when saving
+                           has already started).
+
+12.3.5                    Required: Even after entering Save mode, the user can cancel at any time (except when saving has already started).
+
+
+12.4          Required: 12.5-12.7 below are checked separately within the application.
+
+
+
+
+Version 1.3, June 1998                           Technical Requirements Checklist for PlayStation Software                                         page 16
+12.5      The Memory Card can be formatted correctly
+12.5.1                Required: Only when the title enters save mode with an unformatted Memory Card should the application
+                          automatically proceed to the formatting procedure and execute the save after formatting.
+                          Prevent the user from unintentionally formatting the Memory Card. Do not allow the application to start formatting the
+                          Memory Card automatically.
+                          Do not display a “format” option button since this may cause users to inadvertently erase all the existing data.
+                          Recommended: To avoid unintentional data erasure, the option not to format is the default formatting option.
+
+12.5.2                Required: A prompt such as "Memory Card is unformatted. Do you want to format? Yes? or No?" is displayed.
+                          When "Yes" is chosen, formatting should start. When "No" is chosen, the process should return to the beginning of save mode.
+                          Connection noise, line noise or communication error might cause an already-formatted Memory Card to be regarded as
+                          unformatted. To allow the user to double check the Memory Card status, please display a prompt such as the one
+                          mentioned above.
+                          Do not use auto-formatting in your title.
+
+
+12.6      Procedure to be used when there are not enough free blocks
+12.6.1                Required: Even in cases where the number of free blocks is equal to the number of blocks required, it can be saved
+                          correctly.
+
+12.6.2                Required: Determination of a shortage of free blocks is made correctly.
+                          The determination whether there are sufficient free blocks in the Memory Card or not can be made by attempting to
+                          reserve the required numbers of blocks at that time. If the required number of blocks cannot be reserved, this is
+                          determined to be ”a shortage of free blocks”. Be sure to retry several times.
+                         Alternatively, as another method, the number of free blocks can be calculated from the data size of each file by using
+                         firstfile(), nextfile(). In this case, please check all of files.
+
+                          When determining the blocks available in a Memory Card, please count the number of free blocks, not the number of files.
+                          Since some titles require several blocks to save a file, the number of files already saved is not the same as the number of
+                          blocks already occupied in the Memory Card.
+
+12.6.3                Required: A message such as "Insufficient free blocks" is displayed.
+                          If there are an insufficient number of free blocks available on the selected Memory Card to save this title, the program
+                          must inform the user clearly and the user must be given the following options:
+
+                          1)   Display a message such as “Insufficient free blocks” and allow the user to return to the beginning of save mode.
+                          2)   When the opportunity to delete (or overwrite) any data is given, the application Memory Card screen (which gives the
+                               user the option to insert a different Memory Card, update the list of files displayed after swapping Memory Cards,
+                               cancel the save, or overwrite a file), must be displayed to prevent the user from inadvertently erasing any data which
+                               should not be erased. (See 12.8.)
+
+12.7      The procedure is correct when the Memory Card is NOT inserted into Memory Card slot:
+          (Please mark A or B below)
+              A)    A message such as “No Memory Card is inserted in Memory Card slot” is displayed every time the application attempts to access
+                     the Memory Card.
+                     Please display a message such as “Memory Card is not inserted into the Memory Card slot” and return to the beginning of
+                     save mode.
+              B)    When booting a title that automatically saves data to a Memory Card, a message such as “Memory Card is not inserted into the
+                     Memory Card slot” is always necessary.
+                     Each time an auto save title is booted, it is necessary both to check whether or not a Memory Card is inserted and to display
+                     the message. At any time after boot, it is not necessary to display the message. However, it is still necessary to check whether
+                     or not a Memory Card is inserted.
+                     The exception procedures for auto save titles are only in section 12.7. There is no difference between an auto save title and
+                     other titles in other sections.
+12.8      When creating an application Memory Card screen:
+          (Please mark A or B below)
+              A)    Not applicable. (There is no application Memory Card screen; skip to section 12.9)
+
+
+
+Version 1.3, June 1998                          Technical Requirements Checklist for PlayStation Software                                            page 17
+              B)    Applicable. (The save title name, icon and number of blocks used to save data from other titles are displayed; complete this
+                     section)
+                     It is possible to display the title name in all Shift-JIS codes and, for reasons of backwards compatibility only, all ASCII codes, or in
+                     a combination of both. It must also be possible to display titles for the Japanese market in Kanji Level 1.
+
+12.8.1                Required: The title does not have a "Delete All" function which can delete all the saved data in the Memory Card as
+                          an application Memory Card screen function.
+                          For the user, the “Delete All” function is equivalent to Memory Card formatting. In order to prevent the user from deleting
+                          all the saved data within the Memory Card with a “Delete All” function, do not provide such a function in the application.
+
+12.9      Loading
+12.9.1                Required: No write processing is performed when loading data from the Memory Card flow.
+                          Do not format the Memory Card if it is not initialized at loading and do not carry out maintenance on the Memory Card
+                          while loading.
+
+12.9.2                Required: Allow the Memory Card to be inserted/removed up until immediately before the load flow.
+12.9.3                Required: The Memory Card slot being used when both Memory Card slot 1 and 2 are supported can be changed
+                          prior to load during Memory Card insertion/removal or replacement.
+
+
+12.10     Problems with some Memory Cards
+          It has been confirmed that some Memory Cards which used libraries Ver.3.5 or older do not function correctly when access to the Memory
+          Card is attempted before the program is ready to control the controller.
+          (Please mark A or B)
+              A)    libcard.lib Ver.3.6 or later or libmcrd is utilized.
+                     In library Ver.3.6 or later, the problem was solved in the library.
+              B)    libcard.lib Ver.3.5 or older is utilized.
+                     Before accessing the Memory Card, make sure that the program is ready to control the controller.
+                     InitCARD() should be 1.
+
+                     Note that titles which support Multi Tap or gun controller must follow different specifications. Please refer to the following for
+                     details.
+
+                                 SCEI:
+                                 For details, refer to "Technical Information" at SCE-NET website https://sce-net.scei.co.jp/ or "Problems with some
+                                 cards" on the bulletin board at the BBS site.
+                                 SCEA:
+                                 Refer to the Technical Note titled “Regarding the trouble some memory card” in the Files section of the Developer
+                                 Support Web Site at http:/www.scea.sony.com/dev. This Technical Note is also available in Acrobat format on the
+                                 Technical Reference CD release 1.9 and later in the Technical Notes directory.
+                                 SCEE:
+                                 Refer to DEVGUIDE.ZIP in "PlayStation Documentation" file area of the SCEE Web Site at https://www-s.
+                                 playstation. co.uk/, and on the "Developer CD-ROM Version 1.0 or later, or the technical note "Regarding problems
+                                 with some memory cards" on the Technical Reference CD Release 1.9 and later in the Technical notes directory.
+
+12.11     Application Reset Function
+          An application reset function is a function in which the user uses a controller to forcibly switch to another process when the application is
+          running.
+          (Please mark A or B below)
+              A)    Not applicable. (Application reset function is not present, skip to section 12.12)
+              B)    Applicable. (Application reset function is present, complete this section)
+
+12.11.1                   Required: The application reset function is disabled when saving to the Memory Card.
+                           When an application reset function is present and is used during a save procedure, normal access to the Memory
+                           Card cannot be guaranteed.
+
+
+
+Version 1.3, June 1998                            Technical Requirements Checklist for PlayStation Software                                           page 18
+12.12       Other procedures
+
+12.12.1                  Required: Save, load, and overwrite of saved data can be performed correctly even after removing and
+                          reinserting a Memory Card or inserting a different Memory Card into a Memory Card slot.
+                          However, it is not necessary for the software to handle errors after saves, loads or overwrites have started.
+
+12.12.2                  Required: Save, load, and overwrite of saved data can be performed correctly even if the Memory Card is inserted
+                          after booting.
+                          Please do not design your title in such a way that it does not allow the Memory Card to be inserted after booting.
+
+12.12.3                  Required: Every time before saving or loading the application checks that the Memory Card is in the Memory Card
+                          slot and formatted and, if saving, that there are enough free blocks to perform a save.
+                          Note that if the user has already performed a save or load so that the application knows the Memory Card is present, the
+                          application does not have to perform these checks.
+                          However, if the user has removed a Memory Card or inserted a new Memory Card, the application must perform these
+                          checks again.
+
+12.12.4                  Required: When the title determines that loading, saving or formatting has failed or that the saved data has been
+                          damaged, it attempts several retries and, if it continues to fail, it then displays an appropriate message.
+
+12.12.5                  Required: Use clear messages to explain all aspects of Memory Card operation.
+                          For example, “There is no Memory Card in Memory Card slot 1” or “Memory Card in Memory Card slot 1 is not formatted”. Do
+                          not use mixed messages such as “Memory Card in Memory Card slot 1 is not formatted or there is not enough space on the
+                          Memory Card to save your game.”
+
+12.12.6              For titles that accept Memory Cards in both Memory Card slots or a single Memory Card in either one of the two Memory
+                     Card slots (also in case of Multi Tap titles):
+                     (Please mark A or B below)
+                         A)    Not applicable. (This title uses only Memory Card slot 1; skip to 12.12.7).
+                         B)    Applicable. (The user can choose one of two Memory Card slots to be used to save or load this title; complete this
+                                section.)
+12.12.6.1                            Required: The user is able to select the Memory Card slot to be used when saving and loading. The
+                                      application does not make a decision automatically.
+                                      Avoid situations in which data is automatically saved to the Memory Card in Memory Card slot 2 because the
+                                      Memory Card in Memory Card slot 1 is not formatted (it is either missing or cannot be used for some reason).
+                                      This is because it can become quite complicated to determine when data should be saved to the Memory
+                                      Card in Memory Card slot 2 rather than the Memory Card in Memory Card slot 1 and programming mistakes
+                                      can easily occur. Therefore, prepare the saving flow for one Memory Card only and allow the user to decide to
+                                      which Memory Card data should be saved.
+
+12.12.6.2                            Required: When displaying messages regarding Memory Card operation, clearly indicate which
+                                      Memory Card the message relates to.
+
+
+12.12.7              Initialization of the Controller is performed using libpad.lib functions:
+                     (Please mark A or B below)
+                         A)    Applicable. (This title uses libpad.lib functions; skip to 12.12.8)
+                         B)    Not applicable. (This title uses functions other than libpad.lib functions; complete this section)
+12.12.7.1                            Required: Initialization of the Controller is performed before initializing the Memory Card.
+                                      For details, please see:
+                                      SCEI:
+                                      For details, refer to "Technical Information" at SCE-NET website https://sce-net.scei.co.jp/ or "Controller/Memory
+                                      Card initialization procedure" on the bulletin board at the BBS site.
+
+
+
+
+Version 1.3, June 1998                            Technical Requirements Checklist for PlayStation Software                                      page 19
+                                     SCEA:
+                                     Refer to the Technical Note titled “Controller/Memory Card Initialization” in the Files section of the Developer
+                                     Support Web Site at http:/www.scea.sony.com/dev. This Technical Note is also available in Acrobat format on the
+                                     Technical Reference CD release 1.9 and later in the Technical Notes directory.
+                                     SCEE:
+                                     Refer to DEVGUIDE.ZIP in "PlayStation Documentation" file area of the SCEE Web Site at https://www-s.
+                                     playstation. co.uk/, and on the "Developer CD-ROM Version 1.0 or later, or the technical note “Controller/Memory
+                                     Card Initialization” on the Technical Reference CD Release 1.9 and later in the Technical notes directory.
+
+12.12.8           Recommended: Since it is possible to destroy data during saving if the PlayStation is reset, power is turned off, or the Memory
+                  Card is removed, display an appropriate message to warn the user about this.
+
+                  Important: If your title uses any flow other than that described in Section 12.0 Memory Card, please contact your account
+                  executive or the Sony Computer Entertainment test department for your territory.
+
+
+
+
+Version 1.3, June 1998                        Technical Requirements Checklist for PlayStation Software                                        page 20
+Programming Checklist
+
+
+13.0 Handling CD-ROM Read Errors at any Time after Boot
+13.1          Required: This title uses Runtime Library Version 3.4 or higher.
+                    SCEI:
+                    The newest version library can be downloaded at “Download” at the SCE-NET Web Site https://sce-net.scei.co.jp/ or from
+                    “Software library” at the BBS Site.
+
+                    SCEA:
+                    SCEA recommends use of Runtime Library version 3.4 or later. The latest libraries are available on the latest release of the
+                    Developer Support Programmer Tools CD. The libraries can also be downloaded from the Files section of the Developer Support
+                    Web Site at http:/www.scea.sony.com/dev.
+
+                    SCEE:
+                    SCEE recommends use of Runtime Library version 3.4 or later. The latest libraries are available on the latest release of the
+                    Developer Support Programmer Tools CD. The libraries can also be downloaded from the "Libraries" Files area of the Developer
+                    Support Web Site at https://www-s.playstation.co.uk/
+
+13.2          Required: Error flags are checked for every CD access call that is made.
+
+13.3          Required: The program is designed to repeatedly retry on a failed CD Seek.
+               Recommended: Displaying an appropriate message while retrying.
+
+13.4          Required: The program is designed to repeatedly retry on a failed CD Read.
+               Recommended: Displaying an appropriate message while retrying.
+
+13.5          Required: When changing CD rotation speed, the next CD command is issued after an interval of more than 3 V-Syncs.
+
+
+
+14.0 Naming the Boot File
+14.1          Required: The name of the boot file corresponds correctly to the product code assigned to the title by the appropriate
+               territory.
+               Please name your boot file based on the following rule. Put the SYSTEM.CNF;1 in the root directory, so that the file can transmit the
+               boot file name change to the OS. This is to prevent piracy.
+               If your title falls under one of the categories below, please follow the instructions indicated.
+
+               Case 1:    If you publish two SKUs where one contains only a disc and the other contains the disc and a peripheral bundle, please
+                          choose one of the assigned product codes and use that through the title as the boot file name.
+               Case 2:    If your title uses multiple discs, please make sure that each disc has a unique boot file name that corresponds to the
+                          product code allocated to each individual disc.
+               Boot File Naming Rule
+               Assuming the Product Code for a title is XXXX-AAAAA, put a full stop (period) between the 8th and 9th characters and an
+               underscore between the two sections in place of the hyphen. The final boot file name should be XXXX_AAA.AA;1
+
+
+
+
+Version 1.3, June 1998                        Technical Requirements Checklist for PlayStation Software                                         page 21
+                          Example:
+                          Product Code = SLES-12345
+                          Boot filename = SLES_123.45;1
+                          Contents of SYSTEM.CNF;1
+                          Assuming the boot file is XXXX_AAAAA,
+
+                          BOOT = cdrom:\XXXX_AAA.AA;1                                   Note: Be sure to use the complete file pathname
+                          TCB = 4
+                          EVENT = 10
+                          STACK = 801fff00
+
+
+
+
+15.0 Compatibility with Revision-C Hardware (DTL-H1200 series)
+15.1          Required:This title uses the correct Vsync() suitable for its frame rate or uses another suitable method and synchronizes with
+               V-blank to execute drawing of graphics.
+
+15.2      Recommended: This title does not use MoveImage() with a rectangular area with width less than 16-dots.
+          Usage of a rectangular area width less than 16-dots when using MoveImage() will adversely impact drawing performance.
+
+
+16.0 Multi-disc Titles
+16.1      General requirements for multi-disc titles
+          (Please mark A or B below)
+              A)    Not applicable. (This title is not multi-disc; skip to 17.0).
+              B)    Applicable. (This is a multi-disc title; complete this section).
+16.1.1                Required: Each disc of a multi-disc title is individually bootable on a PlayStation. If the discs are not stand-alone,
+                          they must display a message identifying the disc and asking the user to insert the first disc of the set.
+16.1.2                Required: If an incorrect disc, such as a non-PlayStation disc or a disc from another PlayStation game title, is
+                          inserted during disc swapping, a message stating either “Incorrect disc inserted” or “Incorrect disc detected; insert
+                          correct disc” should be displayed
+
+
+16.2      When exchanging discs on memory (i.e., when exchanging discs without pressing the RESET button).
+          (Please mark A or B below)
+              A)    Not applicable. (This title does not support exchange of discs on memory; skip to 17.0)
+              B)    Applicable. (This title allows exchange of discs on memory; complete this section)
+ 16.2.1               Required: This title observes the rules mentioned in the documents described below.
+                          SCEI:
+                          For details please refer to “Technical Information” at SCE-NET Web Site https://sce-net.scei.co.jp/ or “Requirements for
+                          Multiple CD titles” on the bulletin board at the BBS Site.
+                          SCEA:
+                          Refer to the Technical Note titled “Requirements on Multiple CD Titles” in the Files section of the Developer Support Web Site
+                          at http:/www.scea.sony.com/dev. This Technical Note is also available in Acrobat format on the Technical Reference CD
+                          release 1.9 and later in the Technical Notes directory.
+                          SCEE:
+                          Refer to the “Multiple CD Titles” section of the “Developers Guide”. The Developers Guide (devguide.zip) is available
+                          through the Developer Support Web Site at https://www-s.playstation.co.uk/. It is also available in Acrobat format on the
+                          Technical Reference CD release 1.8 and later in the Technical Notes directory.
+
+
+
+
+Version 1.3, June 1998                           Technical Requirements Checklist for PlayStation Software                                        page 22
+17.0 Streaming Video
+17.1      General requirements for streaming video
+          (Please mark A or B below)
+              A)    Not applicable. (This title does not use streaming video; skip to 18.0)
+              B)    Applicable. (This title does use streaming video; complete this section)
+17.1.1                   Required: The last frame is not accessed in streaming video.
+                          When using streaming video, please do not read up to the last frame, but stop several frames prior to the last one.
+                          Alternatively, please insert several dummy frames at the end to absorb the time gap.
+                          Note that if the last frame is the frame to be read and there is no dummy frame following it, a read error on the last frame
+                          might cause it to hang or otherwise malfunction.
+
+
+
+
+Version 1.3, June 1998                         Technical Requirements Checklist for PlayStation Software                                           page 23
+SCEA/SCEE Checklist
+
+
+18.0 Territory Localization
+18.1      Improving speed with which an application can start
+          Recommended: Include a “quick start” functionality that will allow a user to bypass the introductory credits or FMV sequences to start the
+          application with a default or preloaded set of options.
+          For example, if the user depresses L1+R1 during the start of the application, the title will bypass non-essential title screens to allow the user
+          to quickly start the application.
+          As an alternative to having a set of default options for the quickstart mode, the application could check for a relevant saved title on a Memory
+          card and auto-load. This would mean that the publisher’s logos would always be displayed the first time the application was booted.
+
+18.2      Localization issues
+          Recommended: Consider any localization requirements during the initial design of the title.
+          For example, consider placing all language-dependent files in a single directory to allow easy translation at a later stage.
+
+18.3      Single Item Selection Menus
+          Recommended: On screens where the selection of a single item takes the user to another screen/menu, pressing the X button should make
+          the choice and advance. All of the same menu/list rules that applied to the original screen should also apply to the new screen.
+
+18.4      Activation of Menu Items
+          Recommended: Selection (activation) of any option or menu item should be accomplished by pressing the X button. Once the user’s
+          selections are completed, the user should either 1) press START button to proceed, or 2) highlight an "exit" option and then press the X or
+          START button to proceed.
+
+18.5      Multiple Menus
+          Recommended: The Triangle button should be used to take the user back to the previous menu.
+          When the user presses the triangle button, the game must return the user to the previous screen without accepting any changes that may
+          have been made on the screen they are quitting from.
+
+18.6      Primary Button
+          Recommended: The X button should be the primary button throughout the title.
+
+18.7      Loading
+          Recommended: During the initial load or any subsequent loads, the user should not be presented with a blank screen lasting more than 5
+          seconds.
+          Whenever loading occurs which may interrupt play, some sort of display should be used. Any load that lasts longer than 5 seconds while on
+          screen should notify the user that a load is occurring.
+
+18.8      Connecting/disconnecting peripherals anytime after boot
+          Recommended: This title enters Pause mode if a controller or peripheral becomes connected or disconnected any time after boot.
+
+18.8.1               Recommended: This title enters Pause mode and does not hang or otherwise malfunction even during the circumstances below.
+                     Pressing the START button will unpause the game.
+                           •    Extra Controllers or Memory Cards that are not used in the title are connected to the Multi Tap.
+                           •    Controllers in use are unintentionally removed from the Multi Tap.
+
+18.8.2               Recommended: This title enters pause mode when a peripheral is connected or removed from the Multi Tap anytime after boot.
+
+
+
+
+Version 1.3, June 1998                         Technical Requirements Checklist for PlayStation Software                                            page 24
+19.0 Saved Data Icons (SCEE Only)
+19.1          Required: The number of frames of animation for a saved data icon must not exceed the number of blocks required to save
+               this title. In other words, one block = one frame of animation, two blocks = one or two frames of animation, three or more
+               blocks = one or two or three frames of animation. The maximum number of animation frames is three.
+
+
+
+20.0 PAL Conversions (SCEE Only)
+          For PAL conversions, consult the ”Guidelines for PlayStation PAL Titles” (PALGUIDE.DOC version 2.1 or above). These Guidelines
+          discuss all major issues which should be addressed when producing a PAL PlayStation product for SCEE territories.
+          PALGUIDE.DOC can be obtained from the following locations:
+
+               SCEI:
+               The “Guidelines for PlayStation PAL titles (palguide.lzh)” and the “Guidelines for PlayStation PAL titles V2.1J (palg_21j.lzh) can be found
+               under “Download” at SCE-NET Web Site https://sce-net.scei.co.jp/ or under “Software library” at the BBS Site.
+               SCEA:
+               PALGUIDE.DOC is available from the Files section of the Developer Support Web Site at http:/www.scea.sony.com/dev and on the
+               Developer Support CD release 1.8 and later.
+
+               SCEE:
+               PALGUIDE.DOC is available from the “PAL Issues” file area of the Developer Support Web Site at https://www-s.playstation.co.uk/
+               and on the Developer Support CD release 1.8 and later.
+               If you have any questions concerning PAL titles, you are strongly advised to raise them at the earliest opportunity with your Account
+               Manager.
+
+20.1      Recommended: Rendered sequences are running at the correct speed for PAL and look correct.
+
+20.2      Recommended: The display is full screen PAL (at least 256/512 pixels).
+
+20.3      Recommended: Game mechanics (including motion capture data where applicable) have been modified to ensure that a game converted from
+          NTSC format does not appear inferior on a PAL system.
+
+20.4          Required: There is no application switch in any PAL title that would let it be switched to NTSC operation (e.g. from 50fps to
+               60fps).
+
+
+
+
+Version 1.3, June 1998                        Technical Requirements Checklist for PlayStation Software                                          page 25
+Appendix A
+
+
+
+
+Version 1.3, June 1998   Technical Requirements Checklist for PlayStation Software   page 26
+Version 1.3, June 1998   Technical Requirements Checklist for PlayStation Software   page 27
+Version 1.3, June 1998   Technical Requirements Checklist for PlayStation Software   page 28
+Appendix B
+
+
+
+
+Version 1.3, June 1998   Technical Requirements Checklist for PlayStation Software   page 29
+

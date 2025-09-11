@@ -1,0 +1,42 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION LZSS (MOTO RACER 1 AND 2)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression LZSS (Moto Racer 1 and 2)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1161 characters
+Lines: 34
+================================================================================
+
+CDROM File Compression LZSS (Moto Racer 1 and 2)
+
+Moto Racer 1 ("LZSS" with len+2) (MagDemo03: MRDEMO\IMG\*.TIM)
+
+Moto Racer 2 ("LZSS" with len+3) (MagDemo16: MR2DEMO\IMG\*.TIM and .TPK)
+
+| 000h 4 ID "LZSS"
+004h 4 Decompressed Size
+008h .. Compressed Data
+
+This LZSS variant is unusually using 6bit len and 10bit disp. And, there are
+two versions: Moto Racer 1 uses len+2, and Moto Racer 1 uses len+3. There is no
+version information in the header, one workaround is to decompress the whole
+file with len+2, and, if the resulting size is too small, retry with len+3.
+Observe that the attempt with len+2 may cause page faults (eg. if the sum of
+len values is smaller than disp; so allocate some extra space at begin of
+compression buffer, or do error checks),
+
+| @@collect_more:
+flagbits=[src]+100h, src=src+1 ;8bit flags
+@@decompress_lop:
+flagbits=flagbits SHR 1
+if zero then goto @@collect_more
+if carry=1 then
+[dst]=[src], dst=dst+1, src=src+1
+else
+disp=([src]+[src+1]*100h) AND 3FFh, len=([src+1]/4)+2_or_3, src=src+2
+if disp=0 then goto @@decompress_done
+for i=1 to len, [dst]=[dst-disp], dst=dst+1, next i
+endif
+goto @@decompress_lop
+@@decompress_done:
+ret

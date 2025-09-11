@@ -1,0 +1,33 @@
+PSXSPX SPECIFICATIONS - CDROM FILE ARCHIVE HEADERLESS ARCHIVES
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Archive Headerless Archives
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1301 characters
+Lines: 25
+================================================================================
+
+CDROM File Archive Headerless Archives
+
+Headerless Archives
+
+Some games use files that contain several files badged together. For example,
+
+| PSX Resident Evil 2, COMMON\DATA\*.DIE contains TIM+VAB badged together
+PSX Resident Evil 2, COMMON\DATA\*.ITP contains 1000h-byte aligned TIMs
+Blaster Master, DATA\MENU\*\*.PRT contains three smaller TIMs badged together
+Blaster Master, DATA\MENU\*\*.BG contains three bigger TIMs badged together
+Misadventures of Tron Bonne, KATWA\*.BIN contains headerless archives (with TIMs and audio)
+Headerless BSS files contain several BS files with huge padding inbetween
+
+To some level one could detect & resolve such cases, eg. TIM contains
+information about the data block size(s), if the file is bigger, then there may
+be further file(s) appended.
+
+Some corner cases may be: Files with odd size may insert alignment padding
+before next file. Archives with 800h-byte filesize resolution will have
+zeropadding (or garbage) if the real size isn't a mutiple of 800h. Regardless
+of that two cases, archives may use zeropadding to 800h-byte or even
+10000h-byte boundaries (as workaround one could skip zeroes until reaching a
+well-aligned nonzero word or double word (assuming that most files start with
+nonzero values; though not always, eg. raw ADPCM or raw bitmaps).

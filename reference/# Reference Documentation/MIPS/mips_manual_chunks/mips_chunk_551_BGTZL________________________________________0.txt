@@ -1,0 +1,29 @@
+MIPS INSTRUCTION SET REFERENCE - BGTZL                                        0
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: BGTZL                                        0
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1399 characters
+Lines: 21
+================================================================================
+
+BGTZL                                        0
+                                        rs                                                         offset
+                010111                                    00000
+                   6                    5                   5                                        16
+
+             Format:     BGTZL rs, offset                                                                                   MIPS32
+
+             Purpose:
+             To test a GPR then do a PC-relative conditional branch; execute the delay slot only if the branch is taken.
+
+             Description: if rs > 0 then branch_likely
+             An 18-bit signed offset (the 16-bit offset field shifted left 2 bits) is added to the address of the instruction following
+             the branch (not the branch itself), in the branch delay slot, to form a PC-relative effective target address.
+             If the contents of GPR rs are greater than zero (sign bit is 0 but value not zero), branch to the effective target address
+             after the instruction in the delay slot is executed. If the branch is not taken, the instruction in the delay slot is not exe-
+             cuted.
+
+             Restrictions:
+             Processor operation is UNPREDICTABLE if a branch, jump, ERET, DERET, or WAIT instruction is placed in the
+             delay slot of a branch or jump.

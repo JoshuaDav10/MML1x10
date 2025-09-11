@@ -1,0 +1,44 @@
+PSXSPX SPECIFICATIONS - 8 DISK TYPE BYTE (00H=CD-DA OR CD-ROM, 10H=CD-I, 20H=CD-ROM-XA)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 8 Disk Type Byte (00h=CD-DA or CD-ROM, 10h=CD-I, 20h=CD-ROM-XA)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1067 characters
+Lines: 35
+================================================================================
+
+8 Disk Type Byte (00h=CD-DA or CD-ROM, 10h=CD-I, 20h=CD-ROM-XA)
+8 Reserved (00h)
+
+When Point=A1h (Last Track Number):
+
+| 8 Last Track number (BCD)
+16 Reserved (0000h)
+
+ADR=1 should exist in 3 consecutive lead-in sectors.
+
+Subchannel Q with ADR=1 in Data region -- Position
+
+| 8 Track number (01h..99h=Track 1..99)
+8 Index number (00h=Pause, 01h..99h=Index within Track)
+24 Track relative MSF address (decreasing during Pause)
+8 Reserved (00h)
+24 Absolute MSF address
+
+ADR=1 is required to exist in at least 9 out of 10 consecutive data sectors.
+
+Subchannel Q with ADR=1 during Lead-Out -- Position
+
+| 8 Track number (fixed, must be AAh=Lead-Out)
+8 Index number (fixed, must be 01h) (there's no Index=00h in Lead-Out)
+24 Track relative MSF address (increasing, 00:00:00 and up)
+8 Reserved (00h)
+24 Absolute MSF address
+
+ADR=1 should exist in 3 consecutive lead-out sectors (and may then be followed
+by ADR=5 on multisession disks).
+
+Subchannel Q with ADR=2 -- Catalogue number of the disc (UPC/EAN barcode)
+
+| 52 EAN-13 barcode number (13-digit BCD)
+12 Reserved (000h)

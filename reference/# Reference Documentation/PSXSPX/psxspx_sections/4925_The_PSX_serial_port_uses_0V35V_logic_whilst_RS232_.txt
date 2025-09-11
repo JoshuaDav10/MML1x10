@@ -1,0 +1,29 @@
+PSXSPX SPECIFICATIONS - THE PSX SERIAL PORT USES 0V/3.5V LOGIC, WHILST RS232 USES -5V/+5V...-15V/+15V
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: The PSX serial port uses 0V/3.5V logic, whilst RS232 uses -5V/+5V...-15V/+15V
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1023 characters
+Lines: 20
+================================================================================
+
+The PSX serial port uses 0V/3.5V logic, whilst RS232 uses -5V/+5V...-15V/+15V
+logic. An example circuit for converting the logic levels would be:
+
+| PSX.VCC--+||--PSX.GND PSX.GND----DSUB.5.GND----DSUB.SHIELD DSUB.1,9----NC
+______ ______
+,-----------||+-|1 16|-------PSX.VCC ,-----------||+-|1 16|-------PSX.VCC
+| PSX.GND---||+-|2 15|-------PSX.GND | PSX.GND---||+-|2 15|-------PSX.GND
+'---------------|3 14|----DSUB.3.TXD '---------------|3 14|--- N/A
+,---+||--|4 13|----DSUB.2.RXD ,---+||--|4 13|--- N/A
+'--------|5 12|-------PSX.RXD '--------|5 12|--- N/A
+PSX.GND--+||--|6 11|-------PSX.TXD PSX.GND--+||--|6 11|--- N/A
+DSUB.7.RTS----|7 10|--oo--PSX.CTS DSUB.6.DSR----|8 9|--|>o--PSX.DSR
+|______|______|
+
+Parts List: 1 or 2 MAX232 chips (voltage conversion), 0 or 1 7400 (NAND, used
+as inverter), 4 or 8 1uF/16V capacitors, 1x 10uF/16V capacitor, 1x 9pin male
+SubD plug.
+
+The four inverters are needed only for external adapters (which need to undo
+the transistor inversion on the PSX mainboard) (ie. the inverters are not

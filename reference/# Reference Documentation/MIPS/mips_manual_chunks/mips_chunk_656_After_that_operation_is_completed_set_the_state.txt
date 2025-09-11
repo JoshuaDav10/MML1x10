@@ -1,0 +1,26 @@
+MIPS INSTRUCTION SET REFERENCE - AFTER THAT OPERATION IS COMPLETED, SET THE STATE
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: After that operation is completed, set the state
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1225 characters
+Lines: 17
+================================================================================
+
+After that operation is completed, set the state
+     2#101                                           of the cache block to invalid. If the block is
+                                                     valid but not dirty, set the state of the block to
+                                                     invalid.
+                                                     For a write-through cache: If the cache block
+                                                     contains the specified address, set the state of
+                      Hit Writeback                  the cache block to invalid.
+              S, T    Invalidate / Hit    Address    This required encoding may be used by                  Optional
+                        Invalidate                   software to invalidate a range of addresses
+                                                     from the data cache by stepping through the
+                                                     address range by the line size of the cache.
+
+
+
+
+               D      Hit Writeback       Address    If the cache block contains the specified            Recommended
+                                                     address and it is valid and dirty, write the

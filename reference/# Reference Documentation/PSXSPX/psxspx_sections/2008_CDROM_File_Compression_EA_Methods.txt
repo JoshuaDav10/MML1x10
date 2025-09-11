@@ -1,0 +1,45 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION EA METHODS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression EA Methods
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1409 characters
+Lines: 37
+================================================================================
+
+CDROM File Compression EA Methods
+
+Electronic Arts Compression Headers
+
+The files start with a 16bit big-endian Method value, with following bits:
+
+| 0-7 ID (usually FBh) (or 31h for Method 4A31h with 16bit sizes)
+8 Extended Header (usually 0) (or 1 for headers with extra entries)
+9-14 Used to distinguish different methods
+15 Extended Size (usually 0 for 24bit sizes) (or 1 for 32bit sizes)
+
+The most common Method values are:
+
+| 10FBh = LZSS Compression (RefPack)
+90FBh = LZSS Compression (RefPack, with 32bit size) (not on PSX)
+30FBh = Huffman Compression
+32FBh = Huffman Compression with filter
+34FBh = Huffman Compression with dual filter
+46FBh = BPE Byte-Pair Encoding
+4AFBh = RLE Run-Length Encoding
+4A31h = RLE Run-Length Encoding, with 16bit size
+C0FBh = File Archive (not a compression method)
+
+Most or all PSX files have Bit8=0, but anyways, the decompressor does support
+skipping extra header entries in files with Bit8=1 (with all methods except
+RLE).
+
+Most or all PSX files have Bit15=0, games for newer consoles can reportedly
+have Method=90FBh (unknown if anything like B2FBh or CAFBh does also exist).
+
+Most or all PSX files have Bit0-7=FBh (supposedly short for Frank Barchard),
+the 16bit mode with Bit0-7=31h is supported for Method=4A31h only (the
+decompressor would also accept invalid methods like 1031h or 3431h, but doesn't
+actually support 16bit mode for those).
+
+Compression Formats

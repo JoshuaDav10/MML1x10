@@ -1,0 +1,81 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION ULZ/ULZ (NAMCO)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression Ulz/ULZ (Namco)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2393 characters
+Lines: 73
+================================================================================
+
+CDROM File Compression Ulz/ULZ (Namco)
+
+Ulz/ULZ uses fairly normal LZSS compression, unusually with variable Len/Disp
+ratio, three separate data streams (flg/lz/dta), and rather weird end check in
+version=0.
+
+Ulz Format (Ace Combat 3 Electrosphere, Namco)
+
+Ulz Format (Klonoa, MagDemo08: KLONOA\FILE.IDX\*)
+
+| 000h 4 ID ("Ulz",1Ah) (parts lowercase)
+004h 3 Decompressed Size in bytes
+007h 1 Version (0 or 2)
+008h 3 Offset to Uncompressed data 
+
+Most files use version=2 (eg. US:ACE.BPH\0006h\000Fh contains DOT1 with TIMs).
+
+Some files use version=0 (eg. US:ACE.BPH\0048h\*\* contains TIMs).
+
+ULZ Format (Time Crisis, Namco)
+
+| 000h 4 ID ("ULZ",1Ah) (all uppercase)
+004h 2 Zero
+006h 1 Version (0 or 2)
+007h 1 Number of Disp bits (DispBits=N, LenBits=16-N) (usually 0Ah..0Dh)
+008h 4 Offset to Uncompressed data
+00Ch 4 Offset to Compressed data
+010h 4 Decompressed Size in bytes
+014h .. Compression Flags (32bit entries)
+... .. Uncompressed data (8bit entries)
+... .. Zeropadding to 4-byte boundary
+... .. Compressed data (16bit entries)
+
+Most files use version=2 (eg. EUR: AD*\TIM*.FHT\*)
+
+Some files use version=0 (eg. EUR: AD4\TIM0_0.FHT\0018h, 0019h)
+
+Ulz/ULZ Decompression Function
+
+| if [src+00h]="Ulz",1Ah then
+version = Byte[src+07h]
+disp_bits = Byte[src+0Bh]
+dst_end = LittleEndian24bit[src+04h] + dst
+src_dta = LittleEndian24bit[src+08h] + src
+src_lz = LittleEndian32bit[src+0Ch] + src
+src_flg = src + 10h
+add_len = 3
+flg_1st = 31 ;process flag bit31 first
+if [src+00h]="ULZ",1Ah then
+version = Byte[src+06h]
+disp_bits = Byte[src+07h]
+src_dta = LittleEndian32bit[src+08h] + src
+src_lz = LittleEndian32bit[src+0Ch] + src
+dst_end = LittleEndian32bit[src+10h] + dst
+src_flg = src + 14h
+add_len = 2
+flg_1st = 0 ;process flag bit0 first
+collected = 80000000h ;initially empty, plus stop bit
+@@decompress_lop:
+if version=2 AND dst=dst_end then goto @@decompress_done
+flag = collected AND 80000000h
+collected=collected*2
+if collected=0
+collected = LittleEndian32bit[src_flg], src_flg=src_flg+4
+if flg_1st=0 then ReverseBitOrder(collected) ;or make custom/faster code
+flag = collected AND 80000000h
+if version=0 AND collected=0 then goto @@decompress_done
+if version=0 then collected=collected*2 ;
+
+Note: Version=2 has 32 flags per 32bit. Version=0 has 31 flags and 1 stop bit
+per 32bit, plus 32 null bits at end of data (which is all rather wasteful,
+there's no good reason to use version=0).

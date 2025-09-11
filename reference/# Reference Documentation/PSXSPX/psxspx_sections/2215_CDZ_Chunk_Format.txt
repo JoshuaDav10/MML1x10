@@ -1,0 +1,45 @@
+PSXSPX SPECIFICATIONS - .CDZ CHUNK FORMAT
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: .CDZ Chunk Format
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1043 characters
+Lines: 36
+================================================================================
+
+.CDZ Chunk Format
+
+Chunk Header in v0 (unreleased prototype):
+
+| 4 32bit Decompressed Size (of all blocks) (must be other than "ZLIB")
+
+Chunk Header in v1 (first released version):
+
+| 4 ZLIB ID ("ZLIB")
+8 64bit Decompressed Size (of all blocks)
+
+Chunk Header in v2 and up (later versions):
+
+| 4 Chunk ID (eg. "CUE",00h)
+8 Chunk Size in bytes (starting at "ZLIB" up to including Footer, if any)
+4 ZLIB ID ("ZLIB")
+8 64bit Decompressed Size (of all blocks)
+
+Chunk Body (same in all versions):
+
+| 4 Number of Blocks (N)
+4 Block 1 Compressed Size (CS.1)
+4 Block 1 Decompressed Size (always 00010000h, except last block)
+CS.1 Block 1 Compressed ZLIB Data (starting with 78h,9Ch)
+... ... ;\
+4 Block N Compressed Size (CS.N) ; further block(s)
+4 Block N Decompressed Size ; (if any)
+CS.N Block N Compressed ZLIB Data ;/
+
+Chunk Footer in v0 (when above header didn't have the "ZLIB" ID):
+
+| 4*N Directory Entries for N blocks ;-this ONLY for BIN chunk
+
+Chunk Footer in v1 and up:
+
+| BPD*(N-1) Directory Entries for N-1 blocks ;\this ONLY for BIN chunk

@@ -1,0 +1,26 @@
+MIPS INSTRUCTION SET REFERENCE - COP1                                      0                                                  ABS
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: COP1                                      0                                                  ABS
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1307 characters
+Lines: 17
+================================================================================
+
+COP1                                      0                                                  ABS
+                                        fmt                                   fs             fd
+                 010001                                  00000                                                000101
+                    6                    5                  5                 5              5                   6
+
+               Format:    ABS.S fd, fs                                                                          MIPS32
+                          ABS.D fd, fs                                                                          MIPS32
+                          ABS.PS fd, fs                                                                         MIPS64
+                                                                                                        MIPS32 Release 2
+
+               Purpose:
+               To compute the absolute value of an FP value
+
+               Description: fd ← abs(fs)
+               The absolute value of the value in FPR fs is placed in FPR fd. The operand and result are values in format fmt.
+               ABS.PS takes the absolute value of the two values in FPR fs independently, and ORs together any generated excep-
+               tions.

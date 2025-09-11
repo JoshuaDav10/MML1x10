@@ -1,0 +1,39 @@
+PSXSPX SPECIFICATIONS - 13 TEXTURED RECTANGLE Y-FLIP (BIOS DOES SET IT EQUAL TO GPUSTAT.13...?)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 13 Textured Rectangle Y-Flip (BIOS does set it equal to GPUSTAT.13...?)
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 1187 characters
+Lines: 30
+================================================================================
+
+13 Textured Rectangle Y-Flip (BIOS does set it equal to GPUSTAT.13...?)
+14-23 Not used (should be 0)
+24-31 Command (E1h)
+
+The GP0(E1h) command is required only for Lines, Rectangle, and
+Untextured-Polygons (for Textured-Polygons, the data is specified in form of
+the Texpage attribute; except that, Bit9-10 can be changed only via GP0(E1h),
+not via the Texpage attribute).
+
+Texture page colors setting 3 (reserved) is same as setting 2 (15bit).
+
+Note: GP0(00h) seems to be often inserted between Texpage and Rectangle
+commands, maybe it acts as a NOP, which may be required between that commands,
+for timing reasons...?
+
+GP0(E2h) - Texture Window setting
+
+| 0-4 Texture window Mask X (in 8 pixel steps)
+5-9 Texture window Mask Y (in 8 pixel steps)
+10-14 Texture window Offset X (in 8 pixel steps)
+15-19 Texture window Offset Y (in 8 pixel steps)
+20-23 Not used (zero)
+24-31 Command (E2h)
+
+Mask specifies the bits that are to be manipulated, and Offset contains the new
+values for these bits, ie. texture X/Y coordinates are adjusted as so:
+
+| Texcoord = (Texcoord AND (NOT (Mask*8))) OR ((Offset AND Mask)*8)
+
+The area within a texture window is repeated throughout the texture page. The

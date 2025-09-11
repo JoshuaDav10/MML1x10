@@ -1,0 +1,44 @@
+PSXSPX SPECIFICATIONS - 44.1KHZ LIMIT CAUSES THE HARDWARE TO SKIP SAMPLES (OR ACTUALLY: TO APPLY
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 44.1kHz limit causes the hardware to skip samples (or actually: to apply
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 1560 characters
+Lines: 35
+================================================================================
+
+44.1kHz limit causes the hardware to skip samples (or actually: to apply
+incomplete interpolation on the 'skipped' samples).
+
+VxPitch can be theoretically 0..FFFFh (max 705.6kHz), normally 4000h..FFFFh are
+simply clipped to max=4000h (176.4kHz). Except, 4000h..FFFFh could be used with
+pitch modulation (as they are multiplied by 0.00..1.99 before clipping; in
+practice this works only for 4000h..7FFFh; as values 8000h..FFFFh are mistaken
+as signed values).
+
+4-Point Gaussian Interpolation
+
+Interpolation is applied on the 4 most recent 16bit ADPCM samples
+(new,old,older,oldest), using bit4-11 of the pitch counter as 8bit
+interpolation index (i=00h..FFh):
+
+| out = ((gauss[0FFh-i] * oldest) SAR 15)
+out = out + ((gauss[1FFh-i] * older) SAR 15)
+out = out + ((gauss[100h+i] * old) SAR 15)
+out = out + ((gauss[000h+i] * new) SAR 15)
+
+The Gauss table contains the following values (in hex):
+
+| -001h,-001h,-001h,-001h,-001h,-001h,-001h,-001h ;\
+-001h,-001h,-001h,-001h,-001h,-001h,-001h,-001h ;
+0000h,0000h,0000h,0000h,0000h,0000h,0000h,0001h ;
+0001h,0001h,0001h,0002h,0002h,0002h,0003h,0003h ;
+0003h,0004h,0004h,0005h,0005h,0006h,0007h,0007h ;
+0008h,0009h,0009h,000Ah,000Bh,000Ch,000Dh,000Eh ;
+000Fh,0010h,0011h,0012h,0013h,0015h,0016h,0018h ; entry
+0019h,001Bh,001Ch,001Eh,0020h,0021h,0023h,0025h ; 000h..07Fh
+0027h,0029h,002Ch,002Eh,0030h,0033h,0035h,0038h ;
+003Ah,003Dh,0040h,0043h,0046h,0049h,004Dh,0050h ;
+0054h,0057h,005Bh,005Fh,0063h,0067h,006Bh,006Fh ;
+0074h,0078h,007Dh,0082h,0087h,008Ch,0091h,0096h ;
+009Ch,00A1h,00A7h,00ADh,00B3h,00BAh,00C0h,00C7h ;

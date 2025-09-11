@@ -1,0 +1,37 @@
+PSXSPX SPECIFICATIONS - 44H+FIT 04H TRACK NUMBER (NON-BCD, STARTING AT 0) (00H..62H)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 44h+FIT 04h Track Number (non-BCD, starting at 0) (00h..62h)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1222 characters
+Lines: 28
+================================================================================
+
+44h+FIT 04h Track Number (non-BCD, starting at 0) (00h..62h)
+48h+FIT 04h Track Start Address (eg. 00000000h)
+4Ch+FIT 04h Track Length (eg. 000070DAh)
+50h+FIT 0Ch Unknown (00h-filled)
+5Ch+FIT 04h Unknown (00000000h or 00000001h)
+60h+FIT 04h read_mode (0..4)
+0: Mode1, 800h, 2048
+1: Mode2, 920h, 2336
+2: Audio, 930h, 2352
+3: Raw+PQ, 940h, 2352+16 non-interleaved (P=only 1bit)
+4: Raw+PQRSTUVW, 990h, 2352+96 interleaved
+64h+FIT 4 Control (Upper 4bit of ADR/Control, eg. 00000004h=Data)
+68h+FIT 1 Unknown (00h)
+69h+FIT 4 Track Length (eg. 000070DAh) (same as above)
+6Dh+FIT 4 Unknown (00h,00h,00h,00h)
+71h+FIT 12 ISRC Code 12-letter/digit (ASCII?) string (00h-filled if none)
+7Dh+FIT 4 ISRC Valid Flag (0=None, Other?=Yes?)
+81h+FIT 1 Unknown (00h)
+82h+FIT 8 Unknown (FFh,FFh,FFh,FFh,FFh,FFh,FFh,FFh)
+8Ah+FIT 4 Unknown (00000001h)
+8Eh+FIT 4 Unknown (00000080h)
+92h+FIT 4 Unknown (00000002h) (guess: maybe audio num channels??)
+96h+FIT 4 Unknown (00000010h) (guess: maybe audio bits/sample??)
+9Ah+FIT 4 Unknown (0000AC44h) (44100 decimal, ie. audio sample rate?)
+9Eh+FIT 2Ah Unknown (00h-filled)
+C8h+FIT 4 Unknown (FFh,FFh,FFh,FFh)
+CCh+FIT 12 Unknown (00h-filled)
+D8h+FIT 1 session_type ONLY if last track of a session (else 0)

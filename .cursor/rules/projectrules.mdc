@@ -1,5 +1,5 @@
 ---
-description: Mega Man Legends PSX decompilation project rules and conventions
+description: Mega Man Legends PSX decompilation project rules and conventions - UPDATED
 globs:
 alwaysApply: true
 ---
@@ -11,6 +11,7 @@ alwaysApply: true
 **Platform**: PlayStation (PSX) MIPS R3000A  
 **Tool**: Splat decompilation framework  
 **Goal**: Complete function mapping and systematic decompilation to C source code  
+**AI Training**: Comprehensive PSX programming/reversing AI agent development
 
 ---
 
@@ -19,7 +20,7 @@ You are the AI used within the AI editor Cursor, so you can view, edit, create, 
 edit_file: Edit an existing file, create a new file
 read_file: Read the contents of a file
 grep_search: Search in the codebase based on a specific creator
-list_dir: Get a list of files and folders in a specific directory”
+list_dir: Get a list of files and folders in a specific directory"
 
 Please edit the file in small chunks
 ---
@@ -96,6 +97,23 @@ git push origin main
 - GitHub push every 20-30 functions
 - Tag major milestones
 
+### **RULE 5: REFERENCE DOCUMENTATION USAGE**
+**ALWAYS consult comprehensive reference documentation before function analysis**
+
+**Implementation**:
+- Check PSYQ documentation for function identification
+- Use MML-specific tools (DashEditor) for asset analysis
+- Reference ChrisNonyminus naming conventions
+- Consult hardware research (Dr. Hell) for register usage
+- Use assembly guides (Padua) for pattern recognition
+
+**Reference Priority**:
+1. **MML-specific docs** (ChrisNonyminus, DashEditor)
+2. **PSYQ documentation** (official Sony libraries)
+3. **Hardware research** (Dr. Hell, PSXSPX)
+4. **Assembly guides** (Padua, MIPS manual)
+5. **Modern development** (Nolibgs)
+
 ---
 
 ## 🔧 **TECHNICAL CONVENTIONS**
@@ -109,12 +127,21 @@ git push origin main
 - `FUN_800XXXXX`: Function name
 - `0xYYYYY`: Relative end address
 
-### **Assembly Analysis Approach**
-**Use 24 chunked assembly files for function identification**:
-- `reference/rock_neo_chunks/rock_neo_chunk_XXX.txt`
+### **Enhanced Assembly Analysis Approach**
+**Use comprehensive reference system for function identification**:
+
+**Primary Sources**:
+- `reference/rock_neo_chunks/rock_neo_chunk_XXX.txt` - Assembly chunks
+- `reference/mml_specific_docs/chrisnonyminus_mml1/` - MML decompilation examples
+- `reference/padua_psx_docs/` - Assembly programming guides
+- `reference/psyq/` - PSYQ function identification
+
+**Pattern Recognition**:
 - Look for MIPS prologues: `addiu sp,sp,-0xXX`
 - Look for epilogues: `jr ra`
-- Identify function boundaries by instruction patterns
+- Identify PSYQ function calls using documentation
+- Recognize hardware register access patterns
+- Use MML-specific naming conventions
 
 ### **Memory Range Strategy**
 **Current focus areas**:
@@ -135,14 +162,18 @@ git push origin main
 
 ## 🚀 **WORKFLOW PROTOCOLS**
 
-### **Function Mapping Workflow**
-1. **Analyze chunk files** to identify function boundaries
-2. **Map function in YAML** using `edit_file` or terminal commands
-3. **Create C stub file** immediately
-4. **Verify function count** increased by 1
-5. **Test build** with splat
-6. **Commit changes** if successful
-7. **Repeat** for next function
+### **Enhanced Function Mapping Workflow**
+1. **Consult reference documentation** for function type identification
+2. **Analyze chunk files** to identify function boundaries
+3. **Check PSYQ documentation** for library function recognition
+4. **Reference MML examples** for naming conventions
+5. **Map function in YAML** using `edit_file` or terminal commands
+6. **Create C stub file** immediately with proper naming
+7. **Verify function count** increased by 1
+8. **Test build** with splat
+9. **Document findings** in reference system
+10. **Commit changes** if successful
+11. **Repeat** for next function
 
 ### **Error Handling Protocol**
 **If splat fails**:
@@ -164,38 +195,84 @@ git push origin main
 - Check build status
 - Review recent commits
 - Plan target functions
+- **Consult reference documentation** for context
 
 **After each session**:
 - Document functions mapped
 - Update progress tracking
+- **Update reference documentation** with new findings
 - Commit and push changes
 - Plan next session targets
 
 ---
 
-## 📚 **REFERENCE MATERIALS USAGE**
+## 📚 **COMPREHENSIVE REFERENCE MATERIALS USAGE**
 
-### **Primary References**
-1. **`reference/rock_neo_chunks_analysis.md`**: Complete function distribution analysis
-2. **`reference/meta_strategy.md`**: Strategic approach and efficiency principles
-3. **`reference/patterns/mips_patterns.md`**: MIPS instruction patterns
-4. **`reference/lessons_learned/success_patterns.md`**: What works and what doesn't
+### **Reference Documentation Structure**
+```
+reference/
+├── mips_manual_chunks/     # Official MIPS instruction set reference
+├── padua_psx_docs/         # Practical PSX assembly programming
+├── drhell_psx_research/    # PlayStation hardware research
+├── psxspx_sections/        # Complete PSX specifications
+├── psyq/                   # Official Sony PSYQ libraries
+├── nolibgs_homebrew_docs/  # Modern homebrew development
+└── mml_specific_docs/      # MML-specific tools and examples
+```
+
+### **Primary References for Function Analysis**
+1. **`reference/mml_specific_docs/chrisnonyminus_mml1/`**: MML decompilation examples
+2. **`reference/psyq/`**: PSYQ function identification and usage
+3. **`reference/padua_psx_docs/`**: Assembly programming patterns
+4. **`reference/drhell_psx_research/`**: Hardware register usage
+5. **`reference/mips_manual_chunks/`**: MIPS instruction reference
+
+### **MML-Specific Tools**
+1. **DashEditor**: `reference/mml_specific_docs/dash_editor/`
+   - BIN file disassembly/reassembly
+   - TIM file handling
+   - Font extraction/insertion
+   - Message file handling
+
+2. **ChrisNonyminus Examples**: `reference/mml_specific_docs/chrisnonyminus_mml1/`
+   - Function naming conventions
+   - Code structure patterns
+   - Data structure definitions
+   - Build system reference
 
 ### **Analysis Tools**
 1. **Chunk files**: `reference/rock_neo_chunks/rock_neo_chunk_XXX.txt`
 2. **Function boundaries**: `complete_function_boundaries.csv`
 3. **Complete analysis**: `complete_analysis_report.txt`
 
-### **Knowledge Base Structure**
-```
-reference/
-├── meta_strategy.md              # Strategic brain
-├── patterns/                     # MIPS and function patterns
-├── functions/                    # Function analysis tracking
-├── lessons_learned/              # Success/failure patterns
-├── tools/                        # Tool documentation
-└── rock_neo_chunks/              # 24 assembly chunk files
-```
+---
+
+## 🤖 **AI TRAINING AND KNOWLEDGE COMPOUNDING**
+
+### **Data Collection Protocol**
+**Document everything for AI training**:
+- Function analysis patterns
+- PSYQ function identification methods
+- Hardware register usage patterns
+- MML-specific code patterns
+- Problem-solving approaches
+- Success and failure patterns
+
+### **Knowledge Compounding System**
+**Each function analyzed makes the next easier**:
+- **Pattern Recognition**: Document MIPS patterns discovered
+- **Template Creation**: Create reusable C code templates
+- **Dependency Mapping**: Understand function relationships
+- **Tool Improvement**: Enhance automation tools
+- **Reference Updates**: Keep documentation current
+
+### **Community Contribution Guidelines**
+**Prepare for AI training data sharing**:
+- Document all findings in structured format
+- Create reproducible analysis methods
+- Maintain high-quality code examples
+- Follow consistent naming conventions
+- Build comprehensive test cases
 
 ---
 
@@ -205,17 +282,20 @@ reference/
 - Map 15+ functions in 0x8006XXXX range
 - Maintain build stability
 - Follow anti-corruption protocol
-- Create comprehensive documentation
+- **Use reference documentation** for function identification
+- **Document new patterns** for AI training
 
 ### **Medium-term Goals (Next Month)**
 - Complete 0x8006XXXX range mapping
 - Achieve 1,200+ total functions mapped
 - Establish systematic mapping process
-- Improve automation tools
+- **Integrate MML-specific tools** into workflow
+- **Build comprehensive AI training dataset**
 
 ### **Long-term Goals (Next Quarter)**
 - Complete all function mapping (0x80010000 to 0x8009XXXX)
 - Begin systematic decompilation to C
+- **Develop world-class PSX AI agent**
 - Establish community contribution framework
 - Create industry-leading methodology
 
@@ -230,6 +310,8 @@ reference/
 - Work without frequent commits
 - Ignore splat error messages
 - Map functions without analyzing assembly first
+- **Ignore reference documentation** when available
+- **Skip pattern documentation** for AI training
 
 ### **ALWAYS**
 - Use `edit_file` or terminal commands for YAML
@@ -238,6 +320,8 @@ reference/
 - Commit frequently
 - Test builds after changes
 - Follow address order strictly
+- **Consult reference documentation** before analysis
+- **Document new patterns** and findings
 
 ---
 
@@ -253,6 +337,7 @@ reference/
 - **Function counting**: `grep -c "FUN_800" config/splat.us.rock_neo.yaml`
 - **Build testing**: `./venv/bin/python3 tools/splat/split.py config/splat.us.rock_neo.yaml`
 - **Git operations**: Standard git commands
+- **Reference tools**: DashEditor, PSYQ documentation, MML examples
 
 ---
 
@@ -263,12 +348,14 @@ reference/
 - Document any new patterns discovered
 - Record lessons learned and failures
 - Maintain reference material accuracy
+- **Update AI training dataset** with new findings
 
 ### **Update Frequency**
 - **Real-time**: During function analysis
 - **Daily**: After each work session
 - **Weekly**: Strategy review and planning
 - **Monthly**: Major documentation updates
+- **Continuous**: AI training data collection
 
 ---
 
@@ -282,12 +369,17 @@ reference/
 - ✅ Knowledge base with 24 chunk files preserved
 - ✅ Build system partially working
 - ✅ Comprehensive analysis completed
+- ✅ **Comprehensive reference documentation ecosystem**
+- ✅ **MML-specific tools and examples**
+- ✅ **AI training data collection framework**
 
 ### **Efficiency Improvements**
 - 10x+ improvement in issue resolution speed
 - Automated tools for repetitive tasks
 - Pattern recognition system established
 - Knowledge compounding framework implemented
+- **Reference documentation integration**
+- **MML-specific pattern recognition**
 
 ---
 
@@ -295,4 +387,6 @@ reference/
 
 **Last Updated**: Current session  
 **Function Count**: 1,129 functions mapped  
-**Status**: Active development - 0x8006XXXX range focus
+**Status**: Active development - 0x8006XXXX range focus  
+**Reference Docs**: Comprehensive PSX ecosystem established  
+**AI Training**: Data collection framework active

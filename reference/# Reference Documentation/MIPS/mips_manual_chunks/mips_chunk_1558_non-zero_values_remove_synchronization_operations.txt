@@ -1,0 +1,30 @@
+MIPS INSTRUCTION SET REFERENCE - NON-ZERO VALUES REMOVE SYNCHRONIZATION OPERATIONS.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: non-zero values remove synchronization operations.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1411 characters
+Lines: 21
+================================================================================
+
+non-zero values remove synchronization operations.
+
+
+
+
+278                                                          MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                              Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+Synchronize Shared Memory (cont.)                                                                                   SYNC
+
+
+        Terms:
+        Synchronizable: A load or store instruction is synchronizable if the load or store occurs to a physical location in
+        shared memory using a virtual location with a memory access type of either uncached or cached coherent. Shared
+        memory is memory that can be accessed by more than one processor or by a coherent I/O system module.
+        Performed load: A load instruction is performed when the value returned by the load has been determined. The result
+        of a load on processor A has been determined with respect to processor or coherent I/O module B when a subsequent
+        store to the location by B cannot affect the value returned by the load. The store by B must use the same memory
+        access type as the load.
+        Performed store: A store instruction is performed when the store is observable. A store on processor A is observable
+        with respect to processor or coherent I/O module B when a subsequent load of the location by B returns the value

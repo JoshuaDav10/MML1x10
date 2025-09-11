@@ -1,0 +1,116 @@
+PSXSPX SPECIFICATIONS - FOR ABOVE: NOTE THAT, DESPITE OF PAUSE, THE CDROM IS STILL WRITING TO THE
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: For above: Note that, despite of Pause, the CDROM is still writing to the
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 3083 characters
+Lines: 108
+================================================================================
+
+For above: Note that, despite of Pause, the CDROM is still writing to the
+internal buffer (and overwrites slot 1 by sector 9) (this might be because the
+Pause command isn't processed at all until INT1 is processed).
+
+Double Commands (Getloc then Pause)
+
+| Setloc(0:2:0)+Read
+Process INT1 --> receives sector header for 0:2:0
+GetlocL
+Pause
+Process INT3 --> receives stat=22h (first pause response)
+Process INT2 --> receives stat=02h (second pause response)
+
+Another test,
+
+| Setloc(0:2:0)+Read
+Process INT1 --> receives sector header for 0:2:0
+Delay(1)
+GetlocL
+Pause
+Process INT1 --> receives sector header for 0:2:1
+Process INT1 --> receives sector header for 0:2:6
+Process INT3 --> receives stat=22h (first pause response)
+Process INT2 --> receives stat=02h (second pause response)
+
+Another test,
+
+| Setloc(0:2:0)+Read
+Process INT1 --> receives sector header for 0:2:0
+GetlocL
+Delay(1)
+Pause
+Process INT3 --> receives getloc info for 0:2:0 (first getloc response)
+Process INT3 --> receives stat=22h (first pause response)
+Process INT2 --> receives stat=02h (second pause response)
+
+Another test,
+
+| Setloc(0:2:0)+Read
+Process INT1 --> receives sector header for 0:2:0
+Delay(1)
+GetlocL
+Delay(1)
+Pause
+Process INT1 --> receives sector header for 0:2:9 (oldest/overwritten)
+Process INT3 --> receives stat=22h (first pause response)
+Process INT2 --> receives stat=02h (second pause response)
+
+Double Commands (Pause then Getloc)
+
+| Setloc(0:2:0)+Read
+Process INT1 --> receives sector header for 0:2:0
+Pause
+GetlocL
+Process INT3 --> receives getloc info for 0:2:0 (first getloc response)
+Process INT1 --> receives sector header for 0:2:1
+Process INT1 --> receives sector header for 0:2:2
+Process INT1 --> receives sector header for 0:2:3
+
+Another test,
+
+| Setloc(0:2:0)+Read
+Process INT1 --> receives sector header for 0:2:0
+Delay(1)
+Pause
+GetlocL
+Process INT1 --> receives sector header for 0:2:1
+Process INT3 --> receives getloc info for 0:2:6 (first getloc response)
+Process INT1 --> receives sector header for 0:2:6
+Process INT1 --> receives sector header for 0:2:7
+
+Another test,
+
+| Setloc(0:2:0)+Read
+Process INT1 --> receives sector header for 0:2:0
+Pause
+Delay(1)
+GetlocL
+Process INT3 --> receives stat=22h (first pause response)
+Process INT3 --> receives getloc info for 0:2:6 (first getloc response)
+(No further INT's, ie. read is paused, but second-pause-response is lost).
+
+Another test,
+
+| Setloc(0:2:0)+Read
+Process INT1 --> receives sector header for 0:2:0
+Pause
+Delay(1)
+GetlocL
+Delay(1)
+Process INT3 --> receives stat=22h (first pause response)
+Process INT3 --> receives getloc info for 0:2:6 (first getloc response)
+Process INT2 --> receives stat=02h (second pause response)
+
+Another test,
+
+| Setloc(0:2:0)+Read
+Process INT1 --> receives sector header for 0:2:0
+Delay(1)
+Pause
+Delay(1)
+GetlocL
+Process INT1 --> receives sector header for 0:2:9
+Process INT1 --> receives sector header for 0:2:11
+Process INT3 --> receives getloc info for 0:2:12 (first getloc response)
+Process INT1 --> receives sector header for 0:2:12
+Process INT1 --> receives sector header for 0:2:13

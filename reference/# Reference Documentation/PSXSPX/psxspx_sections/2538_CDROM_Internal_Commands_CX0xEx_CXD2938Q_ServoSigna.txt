@@ -1,0 +1,52 @@
+PSXSPX SPECIFICATIONS - CDROM INTERNAL COMMANDS CX(0X..EX) - CXD2938Q SERVO/SIGNAL/SPU COMBO
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM Internal Commands CX(0x..Ex) - CXD2938Q Servo/Signal/SPU Combo
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1996 characters
+Lines: 43
+================================================================================
+
+CDROM Internal Commands CX(0x..Ex) - CXD2938Q Servo/Signal/SPU Combo
+
+Most commands are same as on CXD2545Q. New/changed commands are:
+
+CXD2938Q - CX(349xxxxx) - New SCEx
+
+Older PSX consoles have received the "SCEx" string at 250 baud via HC05
+PortB.bit1, which allowed modchips to injected faked "SCEx" signals to that
+pin. To prevent that, the CXD2938Q contains some new 32bit commands that allow
+to receive somewhat encrypted "SCEx" strings via SPI bus. The used commands
+are:
+
+| CX(34910000) NewScexStopReading
+CX(3491xy80) NewScexRandomKey(xy)
+CX(34920000) NewScexFlushResyncOrSo
+CX(34944A00) NewScexInitValue1
+CX(3498C000) NewScexInitValue2
+CX(349C1000) NewScexThis ;\inverse ;\use CX(3C2080) for COUT selection
+CX(349D1000) NewScexThat ;/of COUT ;/
+
+The relevant command is NewScexRandomKey(xy) which does send a random value
+(x=01h..0Fh, and y=01h), and does then receive a 12-byte response via SPI bus
+(which is normally used to receive SUB-Q data).
+
+| 1st byte: Unknown/unused (normally ADR/Control) ;\these should be probably
+2nd byte: Unknown/unused (normally Track) ; set to some invalid values
+3rd byte: Unknown/unused (normally Index/Point) ;/to avoid SUB-Q confusion
+4th..10th byte: SCEx data or Dummy bytes (depending on xy.bit7..1)
+11th..12th byte: Unknown/unused (normally Audio Peak level)
+
+The 12-byte packet does contain one SCEx character encoded in 4th..10th byte
+corresponding to Flags in "xy" bit 7..1 (in that order):
+
+All bytes with Flag=1 are ORed together to compute a Character byte (those
+bytes could be all set to 53h for "S", or if more than one flag is set, it
+could be theoretically split to something like 41h and 12h).
+
+All bytes with Flag=0 are ORed together to compute a Dummy byte. If the
+Character byte is same as the Dummy byte, then it gets destroyed by setting
+Character=00h (to avoid that, one could set all dummies to 00h, or set one or
+more dummies to FFh, for example).
+
+Finally, "xy" bit0=0 indicates that the resulting character byte is inverted

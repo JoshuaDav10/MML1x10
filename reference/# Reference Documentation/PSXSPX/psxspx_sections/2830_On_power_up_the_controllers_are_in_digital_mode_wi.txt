@@ -1,0 +1,75 @@
+PSXSPX SPECIFICATIONS - ON POWER-UP, THE CONTROLLERS ARE IN DIGITAL MODE (WITH ANALOG INPUTS DISABLED).
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: On power-up, the controllers are in digital mode (with analog inputs disabled).
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2360 characters
+Lines: 67
+================================================================================
+
+On power-up, the controllers are in digital mode (with analog inputs disabled).
+Analog mode can be (de-)activated manually by pushing the Analog button.
+Alternately, analog mode can be (de-)activated by software via rumble
+configuration commands (though that's supported only on newer pads; those with
+two rumble motors).
+
+The analog sticks are mechanically restricted to a "circular field of motion"
+(most joypads can reach "min/max" values only in "straight" horizontal or
+vertical directions, but not in "diagonal" directions).
+
+Analog Joypad Range
+
+| ...''''''''''...
+____ .''________________''._____ ___ 00h
+| .'' ''. |
+|.' '.| ___ 10h
+.' '.
+:|:
+: | : ___ 60h
+.' | .''''''. | '.
+: | .' '. | :
+: | : : | : ___ 80h
+: | : : | :
+: | '. .' | :
+'. | '......' | .' ___ A0h
+: | :
+:|:
+'. .' ___ F0h
+|'. .'|
+|__'..______________________..'__| ___ FFh
+. '.. ..' .
+00h '''..........''' FFh
+
+| Big Circle --> Mechanically possible field of motion
+Square Area --> Digitally visible 8bit field of motion
+Small Circle --> Resting position when releasing the joystick
+
+Example min/center/max values for three different pads:
+
+| SCPH-1150 Min=(00,00), Mid: (72..90,79..AC), Max=(FF,FF) at 25'C
+SCPH-1200 Min=(0E,0E), Mid: (6C..8A,75..79), Max=(ED,ED) at 16'C
+SCPH-110 Min=(11,11), Mid: (8A..9F,70..96), Max=(FD,FD) at 16'C
+
+Values may vary for other pads and/or different temperatures.
+
+Dual Analog Pad in LED=Green Mode
+
+Basically same as normal analog LED=Red mode, with following differences:
+
+| ID is 5A53h (identifying itself as analog stick) (rather than analog pad)
+Left/right joy-buttons disabled (as for real analog stick, bits are always 1)
+Some buttons are re-arranged: bit9=L1 bit10=[] bit11=/\ bit12=R1 bit15=R2
+
+Concerning the button names, the real analog-stick does NOT have re-arranged
+buttons (eg. it's L1 button is in bit10), however, concerning the button
+locations, the analog stick's buttons are arranged completely differently as on
+analog pads (so it might be rather uncomfortable to play analog stick games on
+analog pads in LED=Red mode; the LED=Green mode is intended to solve that
+problem).
+
+Might be useful for a few analog-stick games like MechWarrior 2, Ace Combat 2,
+Descent Maximum, and Colony Wars. In most other cases the feature is rather
+confusing (that's probably why the LED=Green mode wasn't implemented on the
+Dual Shock).
+
+See also

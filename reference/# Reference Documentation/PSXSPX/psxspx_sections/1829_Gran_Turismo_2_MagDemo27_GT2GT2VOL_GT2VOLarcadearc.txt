@@ -1,0 +1,62 @@
+PSXSPX SPECIFICATIONS - GRAN TURISMO 2 (MAGDEMO27: GT2\GT2.VOL, GT2.VOL\ARCADE\ARC_CARLOGO) - GTFS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Gran Turismo 2 (MagDemo27: GT2\GT2.VOL, GT2.VOL\arcade\arc_carlogo) - GTFS
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2118 characters
+Lines: 54
+================================================================================
+
+Gran Turismo 2 (MagDemo27: GT2\GT2.VOL, GT2.VOL\arcade\arc_carlogo) - GTFS
+
+| 000h 4 ID "GTFS" ;\
+004h 4 Zero ;
+008h 2 Number of 4-byte File Offset List entries (N) ; File(0)
+00Ah 2 Number of 20h-byte File/Folder Name List entries (F) ;
+00Ch 4 Zero ;
+010h N*4 File Offset List (see below) ;/
+... .. Zeropadding to 800h-byte boundary
+... F*20h File/Folder Name List (see below) ;-File(1)
+... .. Zeropadding to 800h-byte boundary
+... .. File Data ;-File(2)
+... .. Zeropadding to 800h-byte boundary
+... File Data ;-File(3)
+... .. ...
+... File Data ;-File(N-2)
+... .. Zeropadding to 800h-byte boundary
+EOF 0 End of File ;-File(N-1)
+
+That is, for N files, numbered File(0)..File(N-1):
+
+| File(0) and File(1) = Directory information
+File(2)..File(N-2) = Regular data files
+File(N-1) = Offset List entry points to the end of .VOL file
+
+File Offset List entries, in File(0):
+
+Contains information for all files, including File(0) and File(1), and
+including an entry for File(N-1), which contains the end offset for the last
+actual file, ie. for File(N-2).
+
+| Bit0-10 = Number of padding bytes in last sector of this file (0..7FFh)
+Bit11-31 = Offset/800h to first sector of this file (increasing)
+To compute the filesize: Size=(Entry[N+1] AND FFFFF800h)-Entry[N]
+
+File/Folder Name List entries, in File(1):
+
+Contains information for all files, excpet File(0), File(1), File(N-1), plus
+extra entries for Folders, plus ".." entries for links to Parent folders.
+
+| 000h 4 Unknown (379xxxxxh) (maybe timestamp?)
+004h 2 When Flags.bit0=0: Index of File in File Offset List (2 and up)
+When Flags.bit0=1: Index of first child in Name List, or...
+When Flags.bit0=1: Index of 1st? parent in Name List (Name="..")
+006h 1 Flags (bit0:0=File, 1=Directory; bit7:1=Last Child entry)
+007h 19h Name (ASCII, zeropadded)
+
+The game does use several archive formats: GTFS (including nested GTFS inside
+of main GTFS) and WAD.WAD and DOT1.
+
+The game does use some GT-ZIP compressed files, and many GZIP compressed files
+(albeit with corrupted/zeropadded GZIP footers; due to DOT1 filesize 4-byte
+padding and (unneccessarily) GTFS 800h-byte padding).

@@ -1,0 +1,85 @@
+PSXSPX SPECIFICATIONS - ENABLE/DISABLE REPLY BYTES IN THE CONTROLLER READ COMMAND (COMMAND 42H).
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: enable/disable Reply bytes in the controller read command (Command 42h).
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 3050 characters
+Lines: 77
+================================================================================
+
+enable/disable Reply bytes in the controller read command (Command 42h).
+
+| - HighZ (always transferred) 1st byte
+- ID/Mode/Len (always transferred) 2nd byte
+- 5Ah (always transferred) 3rd byte
+0 LSB of digital buttons (0=No, 1=Yes) 4th byte
+1 MSB of digital buttons (0=No, 1=Yes) 5th byte
+2 RightJoyX (0=No, 1=Yes) 6th byte
+3 RightJoyY (0=No, 1=Yes) 7th byte
+4 LeftJoyX (0=No, 1=Yes) 8th byte
+5 LeftJoyY (0=No, 1=Yes) 9th byte
+6 DPAD Right (0=No, 1=Yes) button 00h 10th byte
+7 DPAD Left (0=No, 1=Yes) button 01h 11th byte
+8 DPAD Uup (0=No, 1=Yes) button 02h 12th byte
+9 DPAD Down (0=No, 1=Yes) button 03h 13th byte
+10 Button /\ (0=No, 1=Yes) button 04h 14th byte
+11 Button () (0=No, 1=Yes) button 05h 15th byte
+12 Button >
+
+Usually, one would use one of the following command/values:
+
+| Send 01h 41h 00h 03h 00h 00h 00h 00h 00h Digital buttons
+Send 01h 41h 00h 3Fh 00h 00h 00h 00h 00h Digital buttons + analog sticks
+Send 01h 41h 00h FFh FFh 03h 00h 00h 00h Enable all 18 input bytes
+
+The transfer order is 1st..21st byte as shown above (unless some bits are
+cleared, eg. if bit0-5=0 and bit6=1 then DPAD Right would appear as 4th byte
+instead of 10th byte). The command length increases/decreases depening on the
+number of enabled bits. The transfer length is always 3+N*2 bytes (including a
+00h padding byte when the number of enabled bits is odd). The analog mode ID
+byte changes depending on number of halfwords.
+
+CAUTION: Sending Command 44h does RESET the Command 4Fh setting (either to
+DigitalMode=000003h or AnalogMode=00003Fh; same happens when toggling mode via
+Analog button).
+
+Note: Some Dualshock2 Config Mode commands do occassionally send 00h, 5Ah, or
+FFh as last (9th) reply byte (unknown if that is some error/status thing, or
+garbage).
+
+Analog Button Sensitivity
+
+The pressure sensors are rather imprecise and results may vary on various
+factors, including the pressure angle.
+
+| 00h Button released
+01h..2Fh Normal (soft) pressure
+30h..FEh Medium pressure
+FFh Hard pressure
+
+Software can safely distinguish between soft and hard pressure.
+
+Medium pressure is less predictably: The values do not increase linearily, it's
+difficult to apply a specific amount of medium pressure (such like 80h..9Fh),
+increasing pressure may sometimes jump from 24h to FFh, completely skipping the
+medium range.
+
+Relying on the medium range might work for accelleration buttons (where the
+user could still adjust the pressure when the accelleration is too high or too
+low); but it would be very bad practice to assign irreversible actions to
+medium pressure (such like Soft=Load, Medium=Save, Hard=Quit).
+
+Digital Button Sensitivity
+
+Digital inputs are converting the analog inputs as so:
+
+| Analog=00h --> not pressed
+Analog=01h..FFh --> pressed (no matter if soft, medium, or hard pressure)
+
+Digital inputs are working even when also having analog input enabled for the
+same button.
+
+See also
+
+| https://gist.github.com/scanlime/5042071 - tech (=mentions unknown details)
+https://store.curiousinventor.com/guides/PS2/ - guide (=omits unknown stuff)

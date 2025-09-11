@@ -1,0 +1,43 @@
+PSXSPX SPECIFICATIONS - COP2 REGISTERS (GTE)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: COP2 Registers (GTE)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1718 characters
+Lines: 35
+================================================================================
+
+COP2 Registers (GTE)
+
+| cop2r0 = 000000b50h ;\vector0 cop2r32 = 000000ffbh ;\
+cop2r1 = 000000b50h ;/ cop2r33 = 0ffb7ff44h ; rotation
+cop2r2 = 0fdabff8dh ;\vector1 cop2r34 = 0f9ca0ebch ; matrix
+cop2r3 = 0fffffe51h ;/ cop2r35 = 0063700adh ;
+cop2r4 = 0fdab000ah ;\vector2 cop2r36 = 000000eb7h ;/
+cop2r5 = 0fffffdd4h ;/ cop2r37 = 0 ;\translation
+cop2r6 = 0200808ffh ;-rgbc cop2r38 = 0fffffeach ; vector
+cop2r7 = 000000509h ;-otz cop2r39 = 000001700h ;/
+cop2r8 = 0000000a4h ;-ir0 cop2r40 = 0 ;\
+cop2r9 = 00000104ah ;\ cop2r41 = 000000fa0h ; light source
+cop2r10 = 000000082h ; ir1-3 cop2r42 = 00000f060h ; matrix
+cop2r11 = 000000082h ;/ cop2r43 = 00000f060h ;
+cop2r12 = 00041012dh ;\ cop2r44 = 0 ;/
+cop2r13 = 00063012dh ; screen cop2r45 = 000000640h ;\background
+cop2r14 = 000690146h ; xy fifo cop2r46 = 000000640h ; color
+cop2r15 = 000690146h ;/ cop2r47 = 000000640h ;/
+cop2r16 = 000001441h ;\ cop2r48 = 00bb80fa0h ;\
+cop2r17 = 000001441h ; screen cop2r49 = 00fa00fa0h ; light color
+cop2r18 = 000001486h ; z fifo cop2r50 = 00fa00bb8h ; matrix source
+cop2r19 = 000001419h ;/ cop2r51 = 00bb80fa0h ;
+cop2r20 = 0200808ffh ;\color cop2r52 = 000000fa0h ;/
+cop2r21 = 0200808ffh ; rgb fifo cop2r53 = 0 ;\
+cop2r22 = 0200808ffh ;/ cop2r54 = 0 ; far color
+cop2r23 = 0 ;-reserved cop2r55 = 0 ;/
+cop2r24 = 0fffffcaeh ;-mac0 cop2r56 = 001400000h ;\screen offset
+cop2r25 = 00000104ah ;\ cop2r57 = 000f00000h ;/
+cop2r26 = 000000082h ; mac1-3 cop2r58 = 000000400h ;-h
+cop2r27 = 000000082h ;/ cop2r59 = 0fffff9e9h ;-dqa
+cop2r28 = 00000043fh ;-irgb cop2r60 = 001400000h ;-dqb
+cop2r29 = 00000043fh ;-orgb cop2r61 = 000000155h ;\average z scale
+cop2r30 = 0 ;-lzcs cop2r62 = 000000100h ;/
+cop2r31 = 000000020h ;-lzcr cop2r63 = 000600000h ;-flag

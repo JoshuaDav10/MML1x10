@@ -1,0 +1,40 @@
+MIPS INSTRUCTION SET REFERENCE - INEXACT, UNIMPLEMENTED OPERATION, INVALID OPERATION, OVERFLOW
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Inexact, Unimplemented Operation, Invalid Operation, Overflow
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1803 characters
+Lines: 31
+================================================================================
+
+Inexact, Unimplemented Operation, Invalid Operation, Overflow
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                         239
+
+                         Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+RSQRT.fmt
+
+
+
+
+   Reciprocal Square Root Approximation                                                                              RSQRT.fmt
+
+            31                   26 25            21 20            16 15              11 10              6   5                 0
+                    COP1                                     0                                                     RSQRT
+                                         fmt                                   fs                fd
+                   010001                                  00000                                                   010110
+                      6                   5                  5                 5                 5                    6
+
+                 Format:    RSQRT.S      fd, fs                                                                      MIPS64
+                                                                                                             MIPS32 Release 2
+                            RSQRT.D      fd, fs                                                                      MIPS64
+                                                                                                             MIPS32 Release 2
+
+                 Purpose:
+                 To approximate the reciprocal of the square root of an FP value (quickly)
+
+                 Description: fd ← 1.0 / sqrt(fs)
+                 The reciprocal of the positive square root of the value in FPR fs is approximated and placed into FPR fd. The operand

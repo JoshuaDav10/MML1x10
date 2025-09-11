@@ -1,0 +1,48 @@
+PSXSPX SPECIFICATIONS - PSX WIPEOUT 2097, CDROM:\WIPEOUT2\TRACK*\TRACK.WAD:\*.*
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: PSX Wipeout 2097, cdrom:\WIPEOUT2\TRACK*\TRACK.WAD:\*.*
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1257 characters
+Lines: 39
+================================================================================
+
+PSX Wipeout 2097, cdrom:\WIPEOUT2\TRACK*\TRACK.WAD:\*.*
+
+PSX Wipeout 3 (MagDemo25: WIPEOUT3\*)
+
+| 000h 2 Number of files
+002h N*19h Directory Entries for all files
+... .. Data for all files (without any alignment, in same order as above)
+
+Directory Entries
+
+| 000h 10h Filename (ASCII, can be lowercase), terminated by 00h, plus garbage
+010h 4 Filesize in bytes ;\maybe compressed/uncompressed, or rounded,
+014h 4 Filesize in bytes ;/always both same
+018h 1 Unknown (always 00h)
+
+The filesize entry implies offset to next file.
+
+| _______________________________ Entrysize=1Ch ________________________________
+
+Command & Conquer, Red Alert (MagDemo05: RA\*) FAT/MIX/XA
+
+| 000h 4 Number of entries with location 0=MIX (M=65h)
+000h 4 Number of entries with location 1=XA (X=1)
+008h M*1Ch File List for location 0=MIX
+... X*1Ch File List for location 1=XA
+
+File List entries:
+
+| 000h 10h Filename (terminated by 00h, padded with garbage)
+010h 4 Offset/800h in DATA.MIX or Offset/930h DATA.XA file (increasing)
+014h 4 Filesize in bytes
+018h 4 File Location (0=DATA.MIX, 1=DATA.XA)
+
+Syphon Filter 2 (MagDemo30: SYPHON\TRAIN.FOG) (2.8Mbyte, namelen=14h)
+
+| 000h 4 Unknown (80000001h)
+004h 4 Offset/800h to Final Padding area
+008h 8 Zerofilled
+010h N*1Ch File List

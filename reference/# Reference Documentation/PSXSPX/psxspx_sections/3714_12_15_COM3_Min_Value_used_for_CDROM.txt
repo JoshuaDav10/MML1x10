@@ -1,0 +1,39 @@
+PSXSPX SPECIFICATIONS - 12-15 COM3 - MIN VALUE ;USED FOR CDROM
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 12-15 COM3 - Min Value ;used for CDROM
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1157 characters
+Lines: 30
+================================================================================
+
+12-15 COM3 - Min Value ;used for CDROM
+16-17 COM? - Unknown ;used for whatever
+18-31 Unknown/unused (read: always 0000h)
+
+This register contains clock cycle offsets that can be added to the Access Time
+values in Port 1F801008h..1Ch. Works (somehow) like so:
+
+| 1ST=0, SEQ=0, MIN=0
+IF Use_COM0 THEN 1ST=1ST+COM0-1, SEQ=SEQ+COM0-1
+IF Use_COM2 THEN 1ST=1ST+COM2, SEQ=SEQ+COM2
+IF Use_COM3 THEN MIN=COM3
+IF 1ST
+
+The total access time is the sum of First Access, plus any Sequential
+Access(es), eg. for a 32bit access with 8bit bus: Total=1ST+SEQ+SEQ+SEQ.
+
+If the access is done from code in (uncached) RAM, then 0..4 cycles are added
+to the Total value (the exact number seems to vary depending on the used COMx
+values or so).
+
+And the purpose... probably allows to define the length of the chipselect
+signals, and of gaps between that signals...?
+
+1F801060h - RAM_SIZE (R/W) (usually 00000B88h) (or 00000888h)
+
+| 0-2 Unknown (no effect)
+3 Crashes when zero (except PU-7 and EARLY-PU-8, which use bit3=0)
+4-6 Unknown (no effect)
+7 Delay on simultaneous CODE+DATA fetch from RAM (0=None, 1=One Cycle)
+8 Unknown (no effect) (should be set for 8MB, cleared for 2MB)

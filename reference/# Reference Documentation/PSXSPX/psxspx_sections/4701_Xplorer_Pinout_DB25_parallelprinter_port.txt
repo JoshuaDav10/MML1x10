@@ -1,0 +1,52 @@
+PSXSPX SPECIFICATIONS - XPLORER PINOUT DB25 (PARALLEL/PRINTER PORT)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Xplorer Pinout DB25 (parallel/printer port)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1418 characters
+Lines: 44
+================================================================================
+
+Xplorer Pinout DB25 (parallel/printer port)
+
+| 1 In /STB (NC)
+2 In DATA0 (74245.pin11)
+3 In DATA1 (74245.pin12)
+4 In DATA2 (74245.pin13)
+5 In DATA3 (74245.pin14)
+6 In DATA4 (74245.pin15)
+7 In DATA5 (74245.pin16)
+8 In DATA6 (74245.pin17)
+9 In DATA7 (74245.pin18)
+10 Out /ACK (74373.Q3)
+11 Out BUSY (74373.Q2)
+12 Out PE (74373.Q1)
+13 Out SLCT (74373.Q0)
+---
+14 In /LF (NC)
+15 Out /ERR (VCC via 0.47ohm) (installed only on carts with SRAM)
+16 In /INIT (NC)
+17 In /SEL (GAL.IN0.pin1)
+18..25 GND (Ground)
+
+EEPROM.pin1 is NC on 256Kx8 chip (however it is wired to A18 for use with
+512Kx8 chips).
+
+EEPROM.pin30 is A17 from GAL.pin21 (not from PSX.A17), accordingly GAL.pin21 is
+EEPROM.A17 (not A14).
+
+Boards with solder pads for TWO EEPROMs are leaving A18 not connected on the
+2nd EEPROM (but do connect A18 to the first EEPROM, so one could either use one
+512K chip or two 256K chips).
+
+DB25.pin15./ERR is VCC via 0.47ohm (installed only on carts with SRAM, intended
+as supply for the X-ASSIST thing).
+
+SRAM (if any) is wired to GAL.pin17 (/CE), 74373.Q6 (A17 or CE2), 74373.Q7 (A18
+or NC), other SRAM pins are wired straight to D0-D7, A0-A16, /RD, /WR.
+
+VCC is 5V, derived from a 7805 voltage converter (with 7.5V used as input).
+
+Existing boards seem to have 128K SRAM (if any), so SRAM A17/A18 aren't
+actually used (unless a board would have 512K SRAM), however, for 128K SRAMs
+one should switch SRAM CE2 (aka A17) high.

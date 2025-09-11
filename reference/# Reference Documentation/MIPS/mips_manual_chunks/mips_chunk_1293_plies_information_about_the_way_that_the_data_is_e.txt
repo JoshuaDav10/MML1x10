@@ -1,0 +1,19 @@
+MIPS INSTRUCTION SET REFERENCE - PLIES INFORMATION ABOUT THE WAY THAT THE DATA IS EXPECTED TO BE USED.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: plies information about the way that the data is expected to be used.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1189 characters
+Lines: 10
+================================================================================
+
+plies information about the way that the data is expected to be used.
+            PREF enables the processor to take some action, typically prefetching the data into cache, to improve program perfor-
+            mance. The action taken for a specific PREF instruction is both system and context dependent. Any action, including
+            doing nothing, is permitted as long as it does not change architecturally visible state or alter the meaning of a pro-
+            gram. Implementations are expected either to do nothing, or to take an action that increases the performance of the
+            program. The PrepareForStore function is unique in that it may modify the architecturally visible state.
+            PREF does not cause addressing-related exceptions. If the address specified would cause an addressing exception, the
+            exception condition is ignored and no data movement occurs.However even if no data is prefetched, some action that
+            is not architecturally visible, such as writeback of a dirty cache line, can take place.
+            It is implementation dependent whether a Bus Error or Cache Error exception is reported if such an error is detected

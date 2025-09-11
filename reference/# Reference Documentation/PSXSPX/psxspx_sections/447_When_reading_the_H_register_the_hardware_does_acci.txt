@@ -1,0 +1,62 @@
+PSXSPX SPECIFICATIONS - WHEN READING THE H REGISTER, THE HARDWARE DOES ACCIDENTLY
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: When reading the H register, the hardware does accidently
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 2329 characters
+Lines: 53
+================================================================================
+
+When reading the H register, the hardware does accidently 
+the 16bit value (ie. values +8000h..+FFFFh are returned as
+FFFF8000h..FFFFFFFFh) (this bug applies only to "mov rd,cop2r58" opcodes; the
+actual calculations via RTPS/RTPT opcodes are working okay).
+
+The DQA value is only 16bit (1bit sign, 7bit integer, 8bit fraction).
+
+The DQB value is 32bit (1bit sign, 7bit integer, 24bit? fraction).
+
+Used only for RTPS/RTPT commands.
+
+Average Z Registers (ZSF3/ZSF4=Input, R/W?) (OTZ=Result, R)
+
+| cop2r61 (cnt29) ZSF3 | 0|ZSF3 1,3,12| Z3 average scale factor (normally 1/3)
+cop2r62 (cnt30) ZSF4 | 0|ZSF4 1,3,12| Z4 average scale factor (normally 1/4)
+cop2r7 OTZ (R) |OTZ 0,15, 0| Average Z value (for Ordering Table)
+
+Used only for AVSZ3/AVSZ4 commands.
+
+Screen XYZ Coordinate FIFOs
+
+| cop2r12 - SXY0 rw|SY0 1,15, 0|SX0 1,15, 0| Screen XY fifo (older)
+cop2r13 - SXY1 rw|SY1 1,15, 0|SX1 1,15, 0| Screen XY fifo (old)
+cop2r14 - SXY2 rw|SY2 1,15, 0|SX2 1,15, 0| Screen XY fifo (new)
+cop2r15 - SXYP rw|SYP 1,15, 0|SXP 1,15, 0| SXY2-mirror with move-on-write
+cop2r16 - SZ0 rw| 0|SZ0 0,16, 0| Screen Z fifo (oldest)
+cop2r17 - SZ1 rw| 0|SZ1 0,16, 0| Screen Z fifo (older)
+cop2r18 - SZ2 rw| 0|SZ2 0,16, 0| Screen Z fifo (old)
+cop2r19 - SZ3 rw| 0|SZ3 0,16, 0| Screen Z fifo (new)
+
+SX,SY,SZ are used as Output for RTPS/RTPT. Additionally, SX,SY are used as
+Input for NCLIP, and SZ is used as Input for AVSZ3/AVSZ4.
+
+The SZn Fifo has 4 stages (required for AVSZ4 command), the SXYn Fifo has only
+3 stages, and a special mirrored register: SXYP is a mirror of SXY2, the
+difference is that writing to SXYP moves SXY2/SXY1 to SXY1/SXY0, whilst writing
+to SXY2 (or any other SXYn or SZn registers) changes only the written register,
+but doesn't move any other Fifo entries.
+
+16bit Vectors (R/W)
+
+| Vector 0 (V0) Vector 1 (V1) Vector 2 (V2) Vector 3 (IR)
+cop2r0.lsbs - VX0 cop2r2.lsbs - VX1 cop2r4.lsbs - VX2 cop2r9 - IR1
+cop2r0.msbs - VY0 cop2r2.msbs - VY1 cop2r4.msbs - VY2 cop2r10 - IR2
+cop2r1 - VZ0 cop2r3 - VZ1 cop2r5 - VZ2 cop2r11 - IR3
+
+All elements are signed 16bit. The IRn and VZn elements occupy a whole 32bit
+register, reading these registers returns the 16bit value sign-expanded to
+32bit. Note: IRn can be also indirectly accessed via IRGB/ORGB registers.
+
+Color Register and Color FIFO
+
+| cop2r6 - RGBC rw|CODE |B |G |R | Color/code

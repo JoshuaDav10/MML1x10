@@ -1,0 +1,44 @@
+PSXSPX SPECIFICATIONS - SET BY THE KERNEL IRQ-11 (IOP) HANDLER). IF THAT FLAG WAS SET, THEN THE
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: set by the kernel IRQ-11 (IOP) handler). If that flag was set, then the
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1966 characters
+Lines: 36
+================================================================================
+
+set by the kernel IRQ-11 (IOP) handler). If that flag was set, then the
+function does reset it, and does then reset FUNC3=0000h and [0CAh]=00h (both
+only if docked, not when undocked), and, no matter if docked or undocked, it
+enables communication; equivalent to SetComOnOff(1); which sets/clears
+ComFlags.9. The function returns garbage (r0=whatever).
+
+The GUI is calling SWI 05h once per frame. The overall purpose is unknown. It's
+a good idea to reset FUNC3 and to Enable Communication (although that'd be
+required only when docked, not when undocked), but SWI 05h is doing that only
+on (un-)docking transitions (not when it was already docked). In general, it'd
+make more sense to do proper initializations via SWI 11h and SWI 17h as than
+trusting SWI 05h to do the job. The only possibly useful effect is that SWI 05h
+does set/clear ComFlags.9 when docked/undocked.
+
+SWI 17h - GetPtrToFunc3addr()
+
+Returns a pointer to a halfword in RAM which contains the FUNC3 address (for
+bu_cmd_5bh and bu_cmd_5ch). The address is only 16bit, originated at 02000000h
+in FLASH (ie. it can be only in the first 64K of the file), bit0 can be set for
+THUMB code. The default address is zero, which behaves bugged: It accidently
+sets [00000004h]=00000000h, ie. replaces the Undefined Instruction exception
+vector by a "andeq r0,r0,r0" opcode, due to that NOP-like opcode, any Undefined
+Instruction exceptions will run into the SWI vector at [00000008h], and
+randomly execute an SWI function; with some bad luck that may execute one of
+the FlashWrite functions and destroy the saved files.
+
+Although setting 0000h acts bugged, one should restore that setting before
+returning control to GUI or other executables; otherwise the address would
+still point to the FUNC3 address of the old unloaded executable, which is worse
+than the bugged effect.
+
+The FUNC3 address is automatically reset to 0000h when (if) SWI 05h
+(SenseAutoCom) senses new docking.
+
+Download Notification callback

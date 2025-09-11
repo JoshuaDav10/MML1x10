@@ -1,0 +1,34 @@
+PSXSPX SPECIFICATIONS - NOTE: GETQ SENDS SCRATCH NOISE TO THE SPU WHILE SEEKING TO THE LEAD-IN AREA.
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Note: GetQ sends scratch noise to the SPU while seeking to the Lead-In area.
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1333 characters
+Lines: 25
+================================================================================
+
+Note: GetQ sends scratch noise to the SPU while seeking to the Lead-In area.
+
+GetID - Command 1Ah --> INT3(stat) --> INT2/5 (stat,flags,type,atip,"SCEx")
+
+| Drive Status 1st Response 2nd Response
+Door Open INT5(11h,80h) N/A
+Spin-up INT5(01h,80h) N/A
+Detect busy INT5(03h,80h) N/A
+No Disk INT3(stat) INT5(08h,40h, 00h,00h, 00h,00h,00h,00h)
+Audio Disk INT3(stat) INT5(0Ah,90h, 00h,00h, 00h,00h,00h,00h)
+Unlicensed:Mode1 INT3(stat) INT5(0Ah,80h, 00h,00h, 00h,00h,00h,00h)
+Unlicensed:Mode2 INT3(stat) INT5(0Ah,80h, 20h,00h, 00h,00h,00h,00h)
+Unlicensed:Mode2+Audio INT3(stat) INT5(0Ah,90h, 20h,00h, 00h,00h,00h,00h)
+Debug/Yaroze:Mode2 INT3(stat) INT2(02h,00h, 20h,00h, 20h,20h,20h,20h)
+Licensed:Mode2 INT3(stat) INT2(02h,00h, 20h,00h, 53h,43h,45h,4xh)
+Modchip:Audio/Mode1 INT3(stat) INT2(02h,00h, 00h,00h, 53h,43h,45h,4xh)
+
+The status byte (ie. the first byte in the responses), may differ in some
+cases; values shown above are typically received when issuing GetID shortly
+after power-up; however, shortly after the detect-busy phase, seek-busy flag
+(bit6) bit may be set, and, after issuing commands like Play/Read/Stop,
+bit7,6,5,1 may differ. The meaning of the separate 2nd response bytes is:
+
+| 1st byte: stat (as usually, but with bit3 same as bit7 in 2nd byte)
+2nd byte: flags (bit7=denied, bit4=audio... or reportedly import, uh?)

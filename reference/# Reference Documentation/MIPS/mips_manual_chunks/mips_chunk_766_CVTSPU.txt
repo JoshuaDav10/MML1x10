@@ -1,0 +1,38 @@
+MIPS INSTRUCTION SET REFERENCE - CVT.S.PU
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: CVT.S.PU
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1871 characters
+Lines: 29
+================================================================================
+
+CVT.S.PU
+
+
+
+
+   Floating Point Convert Pair Upper to Single Floating Point                                                              CVT.S.PU
+
+           31                   26 25            21 20              16 15             11 10               6   5                  0
+                   COP1                  fmt                 0                                                     CVT.S.PU
+                                                                               fs                 fd
+                  010001                10110              00000                                                    100000
+                     6                    5                  5                  5                 5                    6
+
+                Format:    CVT.S.PU fd, fs                                                                            MIPS64
+                                                                                                              MIPS32 Release 2
+
+                Purpose:
+                To convert one half of a paired single FP value to single FP
+
+                Description: fd ← convert_and_round(fs)
+                The upper paired single value in FPR fs, in format PS, is converted to a value in single floating point format and
+                rounded according to the current rounding mode in FCSR. The result is placed in FPR fd. This instruction can be used
+                to isolate the upper half of a paired single value.
+
+                Restrictions:
+                The fields fs and fd must specify valid FPRs—fs for type PS and fd for single floating point. If they are not valid, the
+                result is UNPREDICTABLE.
+                The operand must be a value in format PS; if it is not, the result is UNPREDICTABLE and the value of the operand
+                FPR becomes UNPREDICTABLE.

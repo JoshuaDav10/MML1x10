@@ -1,0 +1,48 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION NCOMPRESS.Z
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression nCompress.Z
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1513 characters
+Lines: 40
+================================================================================
+
+CDROM File Compression nCompress.Z
+
+| ARC Method 8 with 1-byte header (0Ch) --> nCompress 3-byte header 1Fh,9Dh,8Ch
+ARC Method 9 without header --> nCompress 3-byte header 1Fh,9Dh,8Dh
+
+Method 8 does have 0Ch as first byte (indicating max 12bit codesize, this must
+be always 0Ch, the ARC decoder supports only that value). Method 9 uses max
+13bit codesize (but doesn't have any leading codesize byte).
+
+LZHUF
+
+This is based on LHArc lh1. Like lh1, it does have 13Ah data/len codes, and
+1000h distance codes. There are two differences:
+
+| Differences LHArc method lh1 ARC method 0Ah
+Data/len codes: 100h..139h=Len(3..3Ch) 100h=End, 101h..139h=Len(3..3Bh)
+Initial dictionary: 20h-filled Uninitialized
+
+Notes
+
+ARC file/directory names are alphabetically sorted, that does apply even when
+adding files to an existing archive (they are inserted at alphabetically sorted
+locations rather than being appended at end of archive).
+
+ARC files can be encrypted/garbled with password (via "g" option), the chunk
+header doesn't contain any flags for indicating encrypted files (except, the
+CRC16 will be wrong when not supplying the correct password).
+
+ARC end-marker (1Ah,00h) may be followed by additional padding bytes, or by
+additional information from third-party tools:
+
+| PKARC/PKPAK adds comments (starting with "PK",AAh,55h)
+PAK adds extended records (described in PAK.DOC file in the v2.51)
+
+See also
+
+http://fileformats.archiveteam.org/wiki/ARC_(compression_format)
+
+https://www.fileformat.info/format/arc/corion.htm

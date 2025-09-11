@@ -1,0 +1,38 @@
+PSXSPX SPECIFICATIONS - "LM" BIT OF THE GTE OPCODE (THOUGH NOT ALL COMMANDS, RTPS/RTPT ALWAYS ACT AS IF
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: "lm" bit of the GTE opcode (though not all commands, RTPS/RTPT always act as if
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 1496 characters
+Lines: 29
+================================================================================
+
+"lm" bit of the GTE opcode (though not all commands, RTPS/RTPT always act as if
+lm=0).
+
+cop2r63 (cnt31) - FLAG - Returns any calculation errors.
+
+| 31 Error Flag (Bit30..23, and 18..13 ORed together) (Read only)
+30 MAC1 Result positive 44bit overflow (max +7FFFFFFFFFFh) ;\triggered
+29 MAC2 Result positive 44bit overflow (max +7FFFFFFFFFFh) ; during
+28 MAC3 Result positive 44bit overflow (max +7FFFFFFFFFFh) ; calculations
+27 MAC1 Result negative 44bit overflow (min -80000000000h) ;
+26 MAC2 Result negative 44bit overflow (min -80000000000h) ;
+25 MAC3 Result negative 44bit overflow (min -80000000000h) ;/
+24 IR1 saturated to +0000h..+7FFFh (lm=1) or to -8000h..+7FFFh (lm=0)
+23 IR2 saturated to +0000h..+7FFFh (lm=1) or to -8000h..+7FFFh (lm=0)
+22 IR3 saturated to +0000h..+7FFFh (lm=1) or to -8000h..+7FFFh (lm=0)
+21 Color-FIFO-R saturated to +00h..+FFh
+20 Color-FIFO-G saturated to +00h..+FFh
+19 Color-FIFO-B saturated to +00h..+FFh
+18 SZ3 or OTZ saturated to +0000h..+FFFFh
+17 Divide overflow. RTPS/RTPT division result saturated to max=1FFFFh
+16 MAC0 Result positive 32bit overflow (max +7FFFFFFFh) ;\triggered on
+15 MAC0 Result negative 32bit overflow (min -80000000h) ;/final result
+14 SX2 saturated to -0400h..+03FFh
+13 SY2 saturated to -0400h..+03FFh
+12 IR0 saturated to +0000h..+1000h
+0-11 Not used (always zero) (Read only)
+
+Bit30-12 are read/write-able, ie. they can be set/reset by software, however,
+that's normally not required - all bits are automatically reset at the begin of

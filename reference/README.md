@@ -31,8 +31,26 @@ reference/
 │   └── strategy_evolution.md          # How our approach has evolved (future)
 ├── psx_docs/                          # PSX hardware and system documentation
 │   ├── Software/                      # Software development references
-│   │   └── mips/                     # MIPS instruction set references
+│   │   ├── mips/                     # MIPS instruction set references
+│   │   └── psyq/                     # PSYQ development library documentation
 │   └── Hardware/                      # Hardware specifications (future)
+├── padua_psx_docs/                    # Low-level PlayStation assembly documentation
+│   ├── SYSTEM.txt                     # R3000 instructions, system calls, DMA
+│   ├── GPU.txt                        # GPU operations and frame buffer
+│   ├── GTE.txt                        # 3D math and transformations
+│   ├── SPU.txt                        # Sound Processing Unit
+│   ├── CDINFO.txt                     # CD-ROM operations
+│   └── README.md                      # Documentation overview
+├── drhell_psx_research/               # PlayStation hardware research (Japanese)
+│   ├── main_page.txt                  # Complete hardware documentation
+│   ├── xebra_guide.txt                # XEBRA emulator documentation
+│   ├── main_page.html                 # Original HTML source
+│   ├── xebra_guide.html               # Original HTML source
+│   └── README.md                      # Documentation overview
+├── mml_specific_docs/                 # MML-specific documentation and tools
+│   ├── chrisnonyminus_mml1/           # MML decompilation project
+│   ├── dash_editor/                   # MML file format tools
+│   └── README.md                      # Documentation overview
 └── reverse_engineering/                # Project-specific reverse engineering notes
     └── mml_specific/                  # Mega Man Legends specific findings
         ├── project_plan.md            # Original project planning document

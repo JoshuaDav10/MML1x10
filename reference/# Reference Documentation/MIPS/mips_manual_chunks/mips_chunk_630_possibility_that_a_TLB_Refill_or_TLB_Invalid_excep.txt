@@ -1,0 +1,52 @@
+MIPS INSTRUCTION SET REFERENCE - POSSIBILITY THAT A TLB REFILL OR TLB INVALID EXCEPTION MIGHT OCCUR)
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: possibility that a TLB Refill or TLB Invalid exception might occur)
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 2824 characters
+Lines: 43
+================================================================================
+
+possibility that a TLB Refill or TLB Invalid exception might occur)
+
+                                                The effective address is translated by the MMU to a physical address. The physical
+                 Address            Physical    address is then used to address the cache
+
+                                                The effective address is translated by the MMU to a physical address. It is
+                                                implementation dependent whether the effective address or the translated physical
+                                                address is used to index the cache.
+
+
+                                                Assuming that the total cache size in bytes is CS, the associativity is A, and the
+                                                number of bytes per tag is BPT, the following calculations give the fields of the
+                                                address which specify the way and the index:
+
+                   Index             N/A                       OffsetBit ← Log2(BPT)
+                                                               IndexBit ← Log2(CS / A)
+                                                               WayBit ← IndexBit + Ceiling(Log2(A))
+                                                               Way ← AddrWayBit-1..IndexBit
+                                                               Index ← AddrIndexBit-1..OffsetBit
+
+                                                For a direct-mapped cache, the Way calculation is ignored and the Index value
+                                                fully specifies the cache tag. This is shown symbolically in the figure below.
+
+
+
+
+90                                                                MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                               Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+     Perform Cache Operation                                                                                      CACHE
+
+                              Figure 3-2 Usage of Address Fields to Select Index and Way
+
+                                                          WayBit    IndexBit                      OffsetBit
+                                                                                                              0
+
+                                  Unused                 Way                   Index           byte index
+
+
+
+        A TLB Refill and TLB Invalid (both with cause code equal TLBL) exception can occur on any operation. For index
+        operations (where the address is used to index the cache but need not match the cache tag) software should use
+        unmapped addresses to avoid TLB exceptions. This instruction never causes TLB Modified exceptions nor TLB

@@ -1,0 +1,96 @@
+PSXSPX SPECIFICATIONS - CN3 (CABLE TO CONTROLLER PLUG)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CN3 (cable to controller plug)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1801 characters
+Lines: 87
+================================================================================
+
+CN3 (cable to controller plug)
+
+| 1 red VCC 3.5V (PSX.5 4ohm)
+2 black GND (PSX.4 3ohm)
+3 green /JOYACK (PSX.9 4ohm)
+4 brown JOYDAT (PSX.1 4ohm)
+5 orange JOYCMD (PSX.2 4ohm)
+6 yellow /JOYn (PSX.6 4ohm)
+7 blue JOYCLK (PSX.7 4ohm)
+8 gray Motor AGND (PSX.4 3ohm)
+9 purple Motor AVCC 7.5V (PSX.3 4ohm)
+- N/A /IRQ10 (PSX.8 none)
+
+GND and AGND have separate wires with 3 ohm each (so there's about 6 ohm
+between GND and AGND).
+
+VR4,VR5,VR6,VR7 (potentiometers for analog joysticks)
+
+| 1 GND
+2 POT (to U4 pin 5,4,1,2 for VR4,VR5,VR6,VR7)
+3 STICKSEL (Ux.10)
+
+U1 (LM358, dual op-amp)
+
+| 1 1OUT NC?
+2 1IN- NC?
+3 1IN+ Digital GND (CN3.2 black)
+4 GND Motor AGND (CN3.8 gray)
+5 2IN+ via R1 to Ux.26 and via C3 to GND
+6 2IN- via R3 and via R4
+7 2OUT to Q1 lower left
+8 VCC Motor AVCC 7.5V (CN3.9 purple)
+
+Ux (whatever microprocessor)
+
+| 1 CN2.1 button START
+2 CN1.13 button ANALOG
+3 U3.11 (mux sel0)
+4 U3.10 (mux sel1)
+5 U3.9 (mux sel2)
+6 Q6 lower left to CN2.7+9
+7 S2 digital button L3
+8 CN1.13 button SELECT
+9 VCC
+10 STICKSEL (to VR4,VR5,VR6,VR7)
+11 U3.3 (mux signal)
+---
+12 U4.3 (mux signal)
+13 GND
+14 GND
+15 GND
+16 S1 digital button R3
+17 MOTOR2 (via 1Kohm/R20 to Q5 motor M2)
+18 GND
+19 VCC
+20 LED (via 330ohm/R5 to LED1-)
+21 ?
+22 /JOYACK (via 22ohm/R15 to CN3.3 green)
+---
+23 JOYDAT (via 22ohm/R18 to CN3.4 brown)
+24 JOYCLK (via 220ohm/R19 to CN3.7 blue)
+25 JOYCMD (via 220ohm/R17 to CN3.5 orange)
+26 MOTOR1 (via R1 to U1.5 and via R2 to GND)
+27 /JOYn (via 220ohm/R16 to CN3.6 yellow)
+28 GND
+29 VCC
+30 OSC (from Y1)
+31 OSC' (from Y1)
+32 GND
+33 VCC
+---
+34 via 220ohm/R27 to U5.1
+35 via R26 to ... U5.1
+36 via R25 to ... U5.1
+37 to Q8.3
+38 to Q8.5
+39 to Q9
+40 to Q7.3 and Q10.3
+41 to Q7.5 and Q10.5
+42 U4.9 (mux sel2)
+43 U4.10 (mux sel1)
+44 U4.11 (mux sel0)
+
+U3 (74HC4051, 8-to-1 mux)
+
+| 1 X4 NC? NC?
+2 X6 NC? NC?

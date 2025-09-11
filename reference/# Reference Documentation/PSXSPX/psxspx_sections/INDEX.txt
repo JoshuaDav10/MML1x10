@@ -1,0 +1,2093 @@
+PSXSPX SPECIFICATIONS - CHUNKED INDEX
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Chunked: Wed Sep 10 03:34:25 PM CDT 2025
+Total chunks: 395
+================================================================================
+
+CHUNKED SECTIONS:
+
+01_Memory_Map_Memory_Map
+  File: 01_Memory_Map_Memory_Map.txt
+  Size: 1702.0 KB
+  Lines: 45676
+
+02_IO_Map_IO_Map
+  File: 02_IO_Map_IO_Map.txt
+  Size: 0.3 KB
+  Lines: 9
+
+03_GPU_Graphics_Processing_Unit_GPU
+  File: 03_GPU_Graphics_Processing_Unit_GPU.txt
+  Size: 0.7 KB
+  Lines: 39
+
+04_GTE_Geometry_Transformation_Engine_GTE
+  File: 04_GTE_Geometry_Transformation_Engine_GTE.txt
+  Size: 0.6 KB
+  Lines: 25
+
+05_MDEC_Macroblock_Decoder_MDEC
+  File: 05_MDEC_Macroblock_Decoder_MDEC.txt
+  Size: 0.4 KB
+  Lines: 17
+
+06_SPU_Sound_Processing_Unit_SPU
+  File: 06_SPU_Sound_Processing_Unit_SPU.txt
+  Size: 0.6 KB
+  Lines: 35
+
+07_Interrupts_Interrupts
+  File: 07_Interrupts_Interrupts.txt
+  Size: 0.3 KB
+  Lines: 9
+
+08_DMA_DMA_Channels
+  File: 08_DMA_DMA_Channels.txt
+  Size: 0.3 KB
+  Lines: 9
+
+09_Timers_Timers
+  File: 09_Timers_Timers.txt
+  Size: 7.7 KB
+  Lines: 377
+
+1001_04h_Seek_failed_when_trying_to_use_SeekL_on_Audio_
+  File: 1001_04h_Seek_failed_when_trying_to_use_SeekL_on_Audio_.txt
+  Size: 2.1 KB
+  Lines: 47
+
+1012_Note_GetQ_sends_scratch_noise_to_the_SPU_while_see
+  File: 1012_Note_GetQ_sends_scratch_noise_to_the_SPU_while_see.txt
+  Size: 1.8 KB
+  Lines: 34
+
+1014_bit4_Audio_CD_0Data_CD_1Audio_CD_always_0_when_Mod
+  File: 1014_bit4_Audio_CD_0Data_CD_1Audio_CD_always_0_when_Mod.txt
+  Size: 1.5 KB
+  Lines: 28
+
+1035_Note_Report_mode_affects_only_CD_Audio_not_Data_no
+  File: 1035_Note_Report_mode_affects_only_CD_Audio_not_Data_no.txt
+  Size: 1.7 KB
+  Lines: 36
+
+1050_96h08h15hC2h_PSX_PU_16_Video_CD_15_Aug_1996_versio
+  File: 1050_96h08h15hC2h_PSX_PU_16_Video_CD_15_Aug_1996_versio.txt
+  Size: 1.7 KB
+  Lines: 39
+
+1054_Indicates_the_chipset_that_the_CDROM_controller_is
+  File: 1054_Indicates_the_chipset_that_the_CDROM_controller_is.txt
+  Size: 2.0 KB
+  Lines: 39
+
+1064_Sends_CX39xx_to_the_hardware_and_receives_a_respon
+  File: 1064_Sends_CX39xx_to_the_hardware_and_receives_a_respon.txt
+  Size: 2.7 KB
+  Lines: 61
+
+1081_Caution_Below_commands_19h71h76h_are_supported_onl
+  File: 1081_Caution_Below_commands_19h71h76h_are_supported_onl.txt
+  Size: 2.1 KB
+  Lines: 58
+
+1087_First_40h_bytes_are_IO_ports_as_in_MC68HC05_datash
+  File: 1087_First_40h_bytes_are_IO_ports_as_in_MC68HC05_datash.txt
+  Size: 2.7 KB
+  Lines: 75
+
+1089_1CDh1CFh
+  File: 1089_1CDh1CFh.txt
+  Size: 1.8 KB
+  Lines: 48
+
+1099_CDROM_Secret_Unlock_Commands
+  File: 1099_CDROM_Secret_Unlock_Commands.txt
+  Size: 1.4 KB
+  Lines: 37
+
+1138_the_SUB_CPU_BIOS_merely_sets_a_sector_delivery_nee
+  File: 1138_the_SUB_CPU_BIOS_merely_sets_a_sector_delivery_nee.txt
+  Size: 2.7 KB
+  Lines: 56
+
+1157_Above_suggests_that_the_CDROM_buffer_can_hold_max_
+  File: 1157_Above_suggests_that_the_CDROM_buffer_can_hold_max_.txt
+  Size: 3.9 KB
+  Lines: 116
+
+1158_For_above_Note_that_despite_of_Pause_the_CDROM_is_
+  File: 1158_For_above_Note_that_despite_of_Pause_the_CDROM_is_.txt
+  Size: 3.5 KB
+  Lines: 116
+
+1183_CDROM_Subchannels
+  File: 1183_CDROM_Subchannels.txt
+  Size: 2.1 KB
+  Lines: 60
+
+1184_8_Disk_Type_Byte_00hCD_DA_or_CD_ROM_10hCD_I_20hCD_
+  File: 1184_8_Disk_Type_Byte_00hCD_DA_or_CD_ROM_10hCD_I_20hCD_.txt
+  Size: 1.5 KB
+  Lines: 44
+
+1193_Most_CDROM_drives_for_PCs_do_not_allow_to_read_ISR
+  File: 1193_Most_CDROM_drives_for_PCs_do_not_allow_to_read_ISR.txt
+  Size: 2.0 KB
+  Lines: 50
+
+1196_24_MMSSFF_Skip_interval_start_time_in_6_BCD_digits
+  File: 1196_24_MMSSFF_Skip_interval_start_time_in_6_BCD_digits.txt
+  Size: 1.6 KB
+  Lines: 40
+
+11_Controllers_Controllers_and_Memory_Cards
+  File: 11_Controllers_Controllers_and_Memory_Cards.txt
+  Size: 1.2 KB
+  Lines: 59
+
+1219_sector00ehbcdadr_MOD_75_074
+  File: 1219_sector00ehbcdadr_MOD_75_074.txt
+  Size: 2.4 KB
+  Lines: 79
+
+1226_CDROM_XA_Subheader_File_Channel_Interleave
+  File: 1226_CDROM_XA_Subheader_File_Channel_Interleave.txt
+  Size: 2.0 KB
+  Lines: 57
+
+1239_CD_ROM_XA_ADPCM_is_used_for_Audio_data_compression
+  File: 1239_CD_ROM_XA_ADPCM_is_used_for_Audio_data_compression.txt
+  Size: 2.1 KB
+  Lines: 48
+
+1242_4_5_Filter_03_only_four_filters_unlike_SPU_ADPCM_w
+  File: 1242_4_5_Filter_03_only_four_filters_unlike_SPU_ADPCM_w.txt
+  Size: 2.7 KB
+  Lines: 70
+
+1245_SPU_ADPCM_which_uses_4_point_gaussian_pitch_interp
+  File: 1245_SPU_ADPCM_which_uses_4_point_gaussian_pitch_interp.txt
+  Size: 2.0 KB
+  Lines: 56
+
+1255_CDROM_ISO_Volume_Descriptors
+  File: 1255_CDROM_ISO_Volume_Descriptors.txt
+  Size: 1.5 KB
+  Lines: 38
+
+1261_001h_5_Standard_Identifier_CD001
+  File: 1261_001h_5_Standard_Identifier_CD001.txt
+  Size: 2.0 KB
+  Lines: 39
+
+1280_PSX_kernel_supports_max_800h_bytes_per_directory_o
+  File: 1280_PSX_kernel_supports_max_800h_bytes_per_directory_o.txt
+  Size: 3.8 KB
+  Lines: 76
+
+1281_CDROM_ISO_Misc
+  File: 1281_CDROM_ISO_Misc.txt
+  Size: 4.0 KB
+  Lines: 114
+
+1282_CDROM_Extension_Joliet
+  File: 1282_CDROM_Extension_Joliet.txt
+  Size: 1.6 KB
+  Lines: 36
+
+12_PocketStation_Pocketstation
+  File: 12_PocketStation_Pocketstation.txt
+  Size: 1.2 KB
+  Lines: 57
+
+1345_text_that_is_printed_on_the_CD_cover_but_with_the_
+  File: 1345_text_that_is_printed_on_the_CD_cover_but_with_the_.txt
+  Size: 2.0 KB
+  Lines: 43
+
+1351_CDROM_File_PsyQ_CPE_Files_Debug_Executables
+  File: 1351_CDROM_File_PsyQ_CPE_Files_Debug_Executables.txt
+  Size: 2.2 KB
+  Lines: 74
+
+1353_The_files_are_occassionally_also_found_on_PSX_CDRO
+  File: 1353_The_files_are_occassionally_also_found_on_PSX_CDRO.txt
+  Size: 6.0 KB
+  Lines: 187
+
+1357_CDROM_File_Video_Texture_Image_TIMPXLCLT_Sony
+  File: 1357_CDROM_File_Video_Texture_Image_TIMPXLCLT_Sony.txt
+  Size: 1.8 KB
+  Lines: 44
+
+1359_odd_total_filesize_Gran_Turismo_2_GT2VOLarcadearc_
+  File: 1359_odd_total_filesize_Gran_Turismo_2_GT2VOLarcadearc_.txt
+  Size: 1.9 KB
+  Lines: 54
+
+1360_CDROM_File_Compression_TIM_RLE4RLE8
+  File: 1360_CDROM_File_Compression_TIM_RLE4RLE8.txt
+  Size: 3.0 KB
+  Lines: 81
+
+1371_CDROM_File_Video_TextureBitmap_PCX
+  File: 1371_CDROM_File_Video_TextureBitmap_PCX.txt
+  Size: 5.6 KB
+  Lines: 170
+
+1377_006h_2_Height_usually_F0h240pix_CDh205pix_in_Apoca
+  File: 1377_006h_2_Height_usually_F0h240pix_CDh205pix_in_Apoca.txt
+  Size: 5.6 KB
+  Lines: 146
+
+1378_Sled_Storm_MagDemo24_DEBUGARTART2ART3SOUNDPSH_with
+  File: 1378_Sled_Storm_MagDemo24_DEBUGARTART2ART3SOUNDPSH_with.txt
+  Size: 3.3 KB
+  Lines: 70
+
+1380_N1_Bitmap_Tilenumbers_eg_ABCDEFG_for_Fonts
+  File: 1380_N1_Bitmap_Tilenumbers_eg_ABCDEFG_for_Fonts.txt
+  Size: 1.7 KB
+  Lines: 40
+
+1381_CDROM_File_Video_TextureBitmap_TGA
+  File: 1381_CDROM_File_Video_TextureBitmap_TGA.txt
+  Size: 2.7 KB
+  Lines: 68
+
+1382_CDROM_File_Video_TextureBitmap_PCX
+  File: 1382_CDROM_File_Video_TextureBitmap_PCX.txt
+  Size: 4.5 KB
+  Lines: 112
+
+1385_is_closely_bound_to_colors_available_in_CGA_graphi
+  File: 1385_is_closely_bound_to_colors_available_in_CGA_graphi.txt
+  Size: 1.5 KB
+  Lines: 28
+
+1387_output_but_actually_most_or_all_CGA_hardware_is_ha
+  File: 1387_output_but_actually_most_or_all_CGA_hardware_is_ha.txt
+  Size: 2.0 KB
+  Lines: 40
+
+1389_Classic_EGA_hardware_did_only_use_the_upper_2bit_o
+  File: 1389_Classic_EGA_hardware_did_only_use_the_upper_2bit_o.txt
+  Size: 2.3 KB
+  Lines: 56
+
+1392_EGA_can_display_CGA_colors_with_all_16_colors_in_g
+  File: 1392_EGA_can_display_CGA_colors_with_all_16_colors_in_g.txt
+  Size: 2.9 KB
+  Lines: 70
+
+1393_CDROM_File_Video_2D_Graphics_CELBGDTSQANMSDF_Sony
+  File: 1393_CDROM_File_Video_2D_Graphics_CELBGDTSQANMSDF_Sony.txt
+  Size: 7.7 KB
+  Lines: 209
+
+1394_CDROM_File_Video_3D_Graphics_TMDPMDTODHMDRSD_Sony
+  File: 1394_CDROM_File_Video_3D_Graphics_TMDPMDTODHMDRSD_Sony.txt
+  Size: 8.9 KB
+  Lines: 278
+
+13_Serial_Ports_Serial_Port_SIO
+  File: 13_Serial_Ports_Serial_Port_SIO.txt
+  Size: 0.3 KB
+  Lines: 9
+
+1438_Leading_SPU_ADPCM
+  File: 1438_Leading_SPU_ADPCM.txt
+  Size: 10.8 KB
+  Lines: 292
+
+1448_7th_Sector_and_up_almost_standard_MDEC
+  File: 1448_7th_Sector_and_up_almost_standard_MDEC.txt
+  Size: 2.9 KB
+  Lines: 72
+
+1458_running_on_a_fixed_path_through_a_scene_with_pre_r
+  File: 1458_running_on_a_fixed_path_through_a_scene_with_pre_r.txt
+  Size: 2.2 KB
+  Lines: 53
+
+1477_SPU_ADPCM_in_Chrono_CrossLegend_of_Mana_Audio_Sect
+  File: 1477_SPU_ADPCM_in_Chrono_CrossLegend_of_Mana_Audio_Sect.txt
+  Size: 1.5 KB
+  Lines: 40
+
+1482_SPU_ADPCM_in_Final_Fantasy_IX_FF9_STR_and_MBG
+  File: 1482_SPU_ADPCM_in_Final_Fantasy_IX_FF9_STR_and_MBG.txt
+  Size: 1.4 KB
+  Lines: 33
+
+14_Expansion_Expansion_Port_PIO
+  File: 14_Expansion_Expansion_Port_PIO.txt
+  Size: 0.5 KB
+  Lines: 19
+
+1505_SPU_ADPCM_audio_data_right_10h_bytes_per_sample_bl
+  File: 1505_SPU_ADPCM_audio_data_right_10h_bytes_per_sample_bl.txt
+  Size: 2.2 KB
+  Lines: 58
+
+1509_Note_Total_number_of_10h_byte_SPU_ADPCM_blocks_can
+  File: 1509_Note_Total_number_of_10h_byte_SPU_ADPCM_blocks_can.txt
+  Size: 3.2 KB
+  Lines: 79
+
+1510_5_15_11bit_MDEC_Size_in_20h_word_units_80h_byte_un
+  File: 1510_5_15_11bit_MDEC_Size_in_20h_word_units_80h_byte_un.txt
+  Size: 1.6 KB
+  Lines: 34
+
+151_SPU_Reverb_Configuration_Area
+  File: 151_SPU_Reverb_Configuration_Area.txt
+  Size: 1.4 KB
+  Lines: 32
+
+1525_CDROM_File_XYZ_and_DummyNull_Files
+  File: 1525_CDROM_File_XYZ_and_DummyNull_Files.txt
+  Size: 1.4 KB
+  Lines: 33
+
+1535_v2_used_by_Perfect_Assassin_CDVSTR
+  File: 1535_v2_used_by_Perfect_Assassin_CDVSTR.txt
+  Size: 2.0 KB
+  Lines: 54
+
+1537_standard_BS_v2_data_but_using_custom_MDEC_values_f
+  File: 1537_standard_BS_v2_data_but_using_custom_MDEC_values_f.txt
+  Size: 2.0 KB
+  Lines: 51
+
+1551_004h_2_Quantization_stepfactor_0000h003Fh_for_MDEC
+  File: 1551_004h_2_Quantization_stepfactor_0000h003Fh_for_MDEC.txt
+  Size: 4.6 KB
+  Lines: 110
+
+1567_CDROM_File_Video_BS_Compression_DC_Values
+  File: 1567_CDROM_File_Video_BS_Compression_DC_Values.txt
+  Size: 2.8 KB
+  Lines: 73
+
+1572_negate_the_AC_level_in_lower_10bit_of_the_16bit_MD
+  File: 1572_negate_the_AC_level_in_lower_10bit_of_the_16bit_MD.txt
+  Size: 1.5 KB
+  Lines: 36
+
+1573_Huffman_codes_for_AC_values_BS_v0_Serial_Experimen
+  File: 1573_Huffman_codes_for_AC_values_BS_v0_Serial_Experimen.txt
+  Size: 1.7 KB
+  Lines: 38
+
+1576_standard_Huffman_codes_There_are_two_special_MDEC_
+  File: 1576_standard_Huffman_codes_There_are_two_special_MDEC_.txt
+  Size: 1.4 KB
+  Lines: 36
+
+1582_X_Files_LOGOSBS_and_GRAPHICSGRAPHICSBIN_and_GRAPHI
+  File: 1582_X_Files_LOGOSBS_and_GRAPHICSGRAPHICSBIN_and_GRAPHI.txt
+  Size: 2.6 KB
+  Lines: 61
+
+1589_The_headerdata_lacks_info_about_MDEC_size_after_Hu
+  File: 1589_The_headerdata_lacks_info_about_MDEC_size_after_Hu.txt
+  Size: 3.9 KB
+  Lines: 87
+
+1598_and_the_GPU_is_barely_used_for_transferring_data_f
+  File: 1598_and_the_GPU_is_barely_used_for_transferring_data_f.txt
+  Size: 3.8 KB
+  Lines: 94
+
+15_Memory_Control_Memory_Control
+  File: 15_Memory_Control_Memory_Control.txt
+  Size: 0.3 KB
+  Lines: 9
+
+1607_PSX_Wipeout_2097_cdromWIPEOUT2SOUNDSAMPLESWADvag_v
+  File: 1607_PSX_Wipeout_2097_cdromWIPEOUT2SOUNDSAMPLESWADvag_v.txt
+  Size: 2.3 KB
+  Lines: 55
+
+1611_SPU_ADPCM_Samples
+  File: 1611_SPU_ADPCM_Samples.txt
+  Size: 2.2 KB
+  Lines: 68
+
+1613_PSX_Spider_Man_CDHEDl2a1vab_is_VAB_v5_other_VABs_i
+  File: 1613_PSX_Spider_Man_CDHEDl2a1vab_is_VAB_v5_other_VABs_i.txt
+  Size: 2.8 KB
+  Lines: 68
+
+1617_CDROM_File_Audio_Sequences_SEQSEP_Sony
+  File: 1617_CDROM_File_Audio_Sequences_SEQSEP_Sony.txt
+  Size: 2.0 KB
+  Lines: 58
+
+1635_CDROM_File_Archives_with_Filename
+  File: 1635_CDROM_File_Archives_with_Filename.txt
+  Size: 1.8 KB
+  Lines: 56
+
+1644_First_word_in_MCDIMG_00000010h_074D4C8Ah
+  File: 1644_First_word_in_MCDIMG_00000010h_074D4C8Ah.txt
+  Size: 1.8 KB
+  Lines: 43
+
+1645_CDROM_File_Compression_RESOURCE_Star_Wars_Rebel_As
+  File: 1645_CDROM_File_Compression_RESOURCE_Star_Wars_Rebel_As.txt
+  Size: 3.1 KB
+  Lines: 100
+
+1646_CDROM_File_Compression_LZ5_and_LZ5_variants
+  File: 1646_CDROM_File_Compression_LZ5_and_LZ5_variants.txt
+  Size: 2.6 KB
+  Lines: 80
+
+1648_cdromABE2CRMOV_external_data_the_MOV_being_a_STR_v
+  File: 1648_cdromABE2CRMOV_external_data_the_MOV_being_a_STR_v.txt
+  Size: 1.7 KB
+  Lines: 50
+
+1650_40BEh_Final_Padding_area_CDh_filled
+  File: 1650_40BEh_Final_Padding_area_CDh_filled.txt
+  Size: 5.5 KB
+  Lines: 174
+
+1652_PSX_Wipeout_2097_cdromWIPEOUT2TRACKTRACKWAD
+  File: 1652_PSX_Wipeout_2097_cdromWIPEOUT2TRACKTRACKWAD.txt
+  Size: 1.6 KB
+  Lines: 48
+
+1655_To_detect_the_version_Count_the_length_of_the_ASCI
+  File: 1655_To_detect_the_version_Count_the_length_of_the_ASCI.txt
+  Size: 2.2 KB
+  Lines: 68
+
+1657_CDROM_File_Compression_RNC_Rob_Northen_Compression
+  File: 1657_CDROM_File_Compression_RNC_Rob_Northen_Compression.txt
+  Size: 2.8 KB
+  Lines: 82
+
+1658_CDROM_File_Compression_ZIPGZIPZLIB_InflateDeflate
+  File: 1658_CDROM_File_Compression_ZIPGZIPZLIB_InflateDeflate.txt
+  Size: 1.4 KB
+  Lines: 38
+
+1659_Used_on_Interactive_CD_Sampler_Disc_Volume_10_mayb
+  File: 1659_Used_on_Interactive_CD_Sampler_Disc_Volume_10_mayb.txt
+  Size: 1.9 KB
+  Lines: 49
+
+1661_Gekido_MagDemo31_GEKIDOGLOBALCD
+  File: 1661_Gekido_MagDemo31_GEKIDOGLOBALCD.txt
+  Size: 2.9 KB
+  Lines: 92
+
+1662_15h0_SCD
+  File: 1662_15h0_SCD.txt
+  Size: 2.6 KB
+  Lines: 79
+
+1672_4_Offset_in_CDWAD_in_bytes_usually_800h_byte_align
+  File: 1672_4_Offset_in_CDWAD_in_bytes_usually_800h_byte_align.txt
+  Size: 1.6 KB
+  Lines: 38
+
+1673_CDROM_File_Compression_ZIPGZIPZLIB_InflateDeflate
+  File: 1673_CDROM_File_Compression_ZIPGZIPZLIB_InflateDeflate.txt
+  Size: 4.2 KB
+  Lines: 92
+
+1674_Note_Filenames_can_be_empty_00h_eg_in_WCWDEMOZSOUN
+  File: 1674_Note_Filenames_can_be_empty_00h_eg_in_WCWDEMOZSOUN.txt
+  Size: 2.7 KB
+  Lines: 76
+
+1676_CDROM_File_Archives_with_Offset_and_Size
+  File: 1676_CDROM_File_Archives_with_Offset_and_Size.txt
+  Size: 1.6 KB
+  Lines: 57
+
+1683_Similar_as_CDB_archives_but_with_32bit_offset_and_
+  File: 1683_Similar_as_CDB_archives_but_with_32bit_offset_and_.txt
+  Size: 2.0 KB
+  Lines: 65
+
+1687_ODT_MagDemo17_ODTLNK_and_ODTRSCNTSCALLSOUNDSND_and
+  File: 1687_ODT_MagDemo17_ODTLNK_and_ODTRSCNTSCALLSOUNDSND_and.txt
+  Size: 1.7 KB
+  Lines: 45
+
+1688_CDROM_File_Compression_BPE_Byte_Pair_Encoding
+  File: 1688_CDROM_File_Compression_BPE_Byte_Pair_Encoding.txt
+  Size: 2.6 KB
+  Lines: 69
+
+1689_CDROM_File_Compression_GT20_and_PreGT20
+  File: 1689_CDROM_File_Compression_GT20_and_PreGT20.txt
+  Size: 2.2 KB
+  Lines: 66
+
+1695_Sector_1A0C9h_DATAF1907BIN_file_773h_accessible_vi
+  File: 1695_Sector_1A0C9h_DATAF1907BIN_file_773h_accessible_vi.txt
+  Size: 1.6 KB
+  Lines: 31
+
+1696_CDROM_File_Archives_in_Hidden_Sectors
+  File: 1696_CDROM_File_Archives_in_Hidden_Sectors.txt
+  Size: 2.2 KB
+  Lines: 80
+
+1699_Ape_Escape_Sound_Archive_MagDemo44KIDZKKIIDDZZHEDD
+  File: 1699_Ape_Escape_Sound_Archive_MagDemo44KIDZKKIIDDZZHEDD.txt
+  Size: 2.3 KB
+  Lines: 67
+
+16_CPU_CPU_Specifications
+  File: 16_CPU_CPU_Specifications.txt
+  Size: 0.6 KB
+  Lines: 31
+
+1701_File_Data_area_VB_aka_SPU_ADPCM
+  File: 1701_File_Data_area_VB_aka_SPU_ADPCM.txt
+  Size: 1.4 KB
+  Lines: 38
+
+1703_Speed_Punks_MagDemo32_SPUNKSGDF
+  File: 1703_Speed_Punks_MagDemo32_SPUNKSGDF.txt
+  Size: 2.1 KB
+  Lines: 55
+
+1711_000h_4_SPU_Offset_1010h_and_up_SpuOffset1010h_is_F
+  File: 1711_000h_4_SPU_Offset_1010h_and_up_SpuOffset1010h_is_F.txt
+  Size: 1.9 KB
+  Lines: 53
+
+1715_Align2_no_extra_entry_Incredible_Crisis_ICTAN_DATC
+  File: 1715_Align2_no_extra_entry_Incredible_Crisis_ICTAN_DATC.txt
+  Size: 3.3 KB
+  Lines: 85
+
+1716_Incredible_Crisis_MagDemo38_ICTAN_DATCDB
+  File: 1716_Incredible_Crisis_MagDemo38_ICTAN_DATCDB.txt
+  Size: 2.1 KB
+  Lines: 56
+
+1718_CDROM_File_Compression_GT20_and_PreGT20
+  File: 1718_CDROM_File_Compression_GT20_and_PreGT20.txt
+  Size: 1.5 KB
+  Lines: 41
+
+1719_CDROM_File_Compression_LZ5_and_LZ5_variants
+  File: 1719_CDROM_File_Compression_LZ5_and_LZ5_variants.txt
+  Size: 1.5 KB
+  Lines: 43
+
+1720_CDROM_File_Archives_with_Size
+  File: 1720_CDROM_File_Archives_with_Size.txt
+  Size: 1.4 KB
+  Lines: 43
+
+1722_CDROM_File_Compression_BZZ
+  File: 1722_CDROM_File_Compression_BZZ.txt
+  Size: 1.6 KB
+  Lines: 57
+
+1723_Mat_Hoffmans_Pro_BMX_new_demo_MagDemo48_MHPBBMXCDH
+  File: 1723_Mat_Hoffmans_Pro_BMX_new_demo_MagDemo48_MHPBBMXCDH.txt
+  Size: 1.7 KB
+  Lines: 44
+
+1727_File_Data_area_SPU_ADPCM_VB_files_with_leading_zer
+  File: 1727_File_Data_area_SPU_ADPCM_VB_files_with_leading_zer.txt
+  Size: 1.7 KB
+  Lines: 48
+
+1729_008h_4_SPU_Address_07FFF0h
+  File: 1729_008h_4_SPU_Address_07FFF0h.txt
+  Size: 1.9 KB
+  Lines: 46
+
+1733_directory_Thats_mainly_useful_when_loading_the_who
+  File: 1733_directory_Thats_mainly_useful_when_loading_the_who.txt
+  Size: 4.7 KB
+  Lines: 132
+
+1735_Data_in_BS_v2_format_MDEC_Size4_BS_ID_3800h_etc
+  File: 1735_Data_in_BS_v2_format_MDEC_Size4_BS_ID_3800h_etc.txt
+  Size: 2.5 KB
+  Lines: 78
+
+1738_80000022h_zero8_Sound_VB_file_PMSD0
+  File: 1738_80000022h_zero8_Sound_VB_file_PMSD0.txt
+  Size: 1.9 KB
+  Lines: 53
+
+1740_CDROM_File_Compression_ZIPGZIPZLIB_InflateDeflate
+  File: 1740_CDROM_File_Compression_ZIPGZIPZLIB_InflateDeflate.txt
+  Size: 2.4 KB
+  Lines: 67
+
+1760_CDROM_File_Archive_FAdj0500_Klonoa
+  File: 1760_CDROM_File_Archive_FAdj0500_Klonoa.txt
+  Size: 2.4 KB
+  Lines: 73
+
+1762_CDROM_File_Archive_Darkworks_Chunks_Alone_in_the_D
+  File: 1762_CDROM_File_Archive_Darkworks_Chunks_Alone_in_the_D.txt
+  Size: 2.8 KB
+  Lines: 94
+
+1769_CDROM_File_Archive_HUGIDXBIZ_Power_Spike
+  File: 1769_CDROM_File_Archive_HUGIDXBIZ_Power_Spike.txt
+  Size: 1.8 KB
+  Lines: 62
+
+1777_CDROM_File_Archive_WAD_Doom
+  File: 1777_CDROM_File_Archive_WAD_Doom.txt
+  Size: 2.4 KB
+  Lines: 66
+
+1778_CDROM_File_Archive_WAD_Cardinal_SynFear_Effect
+  File: 1778_CDROM_File_Archive_WAD_Cardinal_SynFear_Effect.txt
+  Size: 2.2 KB
+  Lines: 56
+
+1781_CDROM_File_Archive_DIRDAT_OneViewpoint
+  File: 1781_CDROM_File_Archive_DIRDAT_OneViewpoint.txt
+  Size: 2.3 KB
+  Lines: 56
+
+1782_CDROM_File_Archive_Darkworks_Chunks_Alone_in_the_D
+  File: 1782_CDROM_File_Archive_Darkworks_Chunks_Alone_in_the_D.txt
+  Size: 2.4 KB
+  Lines: 68
+
+1789_SEPD_Chunks_contains_SEP_sound
+  File: 1789_SEPD_Chunks_contains_SEP_sound.txt
+  Size: 1.4 KB
+  Lines: 35
+
+1790_00Ch_VB_File_Sony_Voice_Binary_with_raw_SPU_ADPCM_
+  File: 1790_00Ch_VB_File_Sony_Voice_Binary_with_raw_SPU_ADPCM_.txt
+  Size: 1.7 KB
+  Lines: 43
+
+17_BIOS_Kernel_BIOS
+  File: 17_BIOS_Kernel_BIOS.txt
+  Size: 1.0 KB
+  Lines: 65
+
+1818_CDROM_File_Archive_INDWAD_MTV_Music_Generator
+  File: 1818_CDROM_File_Archive_INDWAD_MTV_Music_Generator.txt
+  Size: 2.7 KB
+  Lines: 60
+
+1819_CDROM_File_Archive_GAMERSC_Colonly_Wars_Red_Sun
+  File: 1819_CDROM_File_Archive_GAMERSC_Colonly_Wars_Red_Sun.txt
+  Size: 2.0 KB
+  Lines: 52
+
+1820_CDROM_File_Archive_BIGFILEDAT_Soul_Reaver
+  File: 1820_CDROM_File_Archive_BIGFILEDAT_Soul_Reaver.txt
+  Size: 1.8 KB
+  Lines: 52
+
+1822_CDROM_File_Archive_FF8_IMG_Final_Fantasy_VIII
+  File: 1822_CDROM_File_Archive_FF8_IMG_Final_Fantasy_VIII.txt
+  Size: 2.2 KB
+  Lines: 50
+
+1823_if_FF8TRYIMG_starts_with_SmCdReadCore_assume_Root_
+  File: 1823_if_FF8TRYIMG_starts_with_SmCdReadCore_assume_Root_.txt
+  Size: 3.1 KB
+  Lines: 90
+
+1825_CDROM_File_Archive_FF9_IMG_Final_Fantasy_IX
+  File: 1825_CDROM_File_Archive_FF9_IMG_Final_Fantasy_IX.txt
+  Size: 2.1 KB
+  Lines: 65
+
+1829_Gran_Turismo_2_MagDemo27_GT2GT2VOL_GT2VOLarcadearc
+  File: 1829_Gran_Turismo_2_MagDemo27_GT2GT2VOL_GT2VOLarcadearc.txt
+  Size: 2.5 KB
+  Lines: 62
+
+1837_sectors_for_current_and_next_used_file_entry_or_en
+  File: 1837_sectors_for_current_and_next_used_file_entry_or_en.txt
+  Size: 1.5 KB
+  Lines: 26
+
+1841_CDROM_File_Archive_FAdj0500_Klonoa
+  File: 1841_CDROM_File_Archive_FAdj0500_Klonoa.txt
+  Size: 1.7 KB
+  Lines: 51
+
+1845_CDROM_XA_Subheader_File_Channel_Interleave
+  File: 1845_CDROM_XA_Subheader_File_Channel_Interleave.txt
+  Size: 4.3 KB
+  Lines: 101
+
+1848_700h_50h_List_for_STR_files_raw_CDROM_sector_numbe
+  File: 1848_700h_50h_List_for_STR_files_raw_CDROM_sector_numbe.txt
+  Size: 1.5 KB
+  Lines: 35
+
+1851_CDROM_File_Archive_WADWAD_BIGBIN_JESTERSPKG_CrashH
+  File: 1851_CDROM_File_Archive_WADWAD_BIGBIN_JESTERSPKG_CrashH.txt
+  Size: 6.1 KB
+  Lines: 149
+
+1854_CDROM_File_Archive_BIGFILEDAT_Gex_Enter_the_Gecko
+  File: 1854_CDROM_File_Archive_BIGFILEDAT_Gex_Enter_the_Gecko.txt
+  Size: 1.8 KB
+  Lines: 59
+
+1862_CDROM_File_Archive_Ace_Combat_2_and_3
+  File: 1862_CDROM_File_Archive_Ace_Combat_2_and_3.txt
+  Size: 1.6 KB
+  Lines: 44
+
+1866_00Ah_2_BCD_Year_or_zero_SPH1999h_BPH0
+  File: 1866_00Ah_2_BCD_Year_or_zero_SPH1999h_BPH0.txt
+  Size: 2.9 KB
+  Lines: 62
+
+1871_CDROM_File_Archive_NSDNSF_Crash_Bandicoot_1_3
+  File: 1871_CDROM_File_Archive_NSDNSF_Crash_Bandicoot_1_3.txt
+  Size: 5.3 KB
+  Lines: 144
+
+1872_002h_2_Chunk_Family_0Misc_or_25Sound
+  File: 1872_002h_2_Chunk_Family_0Misc_or_25Sound.txt
+  Size: 2.1 KB
+  Lines: 55
+
+1879_CDROM_File_Archive_STAGEDIR_and_DAT_Metal_Gear_Sol
+  File: 1879_CDROM_File_Archive_STAGEDIR_and_DAT_Metal_Gear_Sol.txt
+  Size: 1.8 KB
+  Lines: 51
+
+1882_sm_Sound_Music_Nested_DOT1DOTLESS_Archives_nicknam
+  File: 1882_sm_Sound_Music_Nested_DOT1DOTLESS_Archives_nicknam.txt
+  Size: 3.9 KB
+  Lines: 106
+
+1885_or_less_SPU_ADPCM_data
+  File: 1885_or_less_SPU_ADPCM_data.txt
+  Size: 1.6 KB
+  Lines: 48
+
+1895_Type00000400h_Cubemapsounds
+  File: 1895_Type00000400h_Cubemapsounds.txt
+  Size: 2.2 KB
+  Lines: 51
+
+1896_Type_400h_Sound_VAGs
+  File: 1896_Type_400h_Sound_VAGs.txt
+  Size: 2.9 KB
+  Lines: 78
+
+1897_CDROM_File_Archive_Croc_1_DIR_WAD_etc
+  File: 1897_CDROM_File_Archive_Croc_1_DIR_WAD_etc.txt
+  Size: 1.7 KB
+  Lines: 47
+
+18_Arcade_Arcade_Cabinets
+  File: 18_Arcade_Arcade_Cabinets.txt
+  Size: 0.3 KB
+  Lines: 9
+
+1900_VB_file_sample_data_SPU_ADPCM_data_up_to_end_of_fi
+  File: 1900_VB_file_sample_data_SPU_ADPCM_data_up_to_end_of_fi.txt
+  Size: 9.8 KB
+  Lines: 199
+
+1910_44_XSPS_Chunk_SPU_ADPCM_Sound_if_any_not_in_all_WA
+  File: 1910_44_XSPS_Chunk_SPU_ADPCM_Sound_if_any_not_in_all_WA.txt
+  Size: 2.2 KB
+  Lines: 44
+
+1918_Sound_List_entries_as_in_FESOUNDWAD
+  File: 1918_Sound_List_entries_as_in_FESOUNDWAD.txt
+  Size: 1.4 KB
+  Lines: 39
+
+1919_CDROM_File_Archive_Headerless_Archives
+  File: 1919_CDROM_File_Archive_Headerless_Archives.txt
+  Size: 1.7 KB
+  Lines: 33
+
+1965_CDROM_File_Compression_LZSS_Moto_Racer_1_and_2
+  File: 1965_CDROM_File_Compression_LZSS_Moto_Racer_1_and_2.txt
+  Size: 1.5 KB
+  Lines: 42
+
+1970_Serial_Experiments_Lain_LAPKSBIN_on_Disc_1_and_2
+  File: 1970_Serial_Experiments_Lain_LAPKSBIN_on_Disc_1_and_2.txt
+  Size: 1.4 KB
+  Lines: 34
+
+1975_CDROM_File_Compression_UlzULZ_Namco
+  File: 1975_CDROM_File_Compression_UlzULZ_Namco.txt
+  Size: 2.7 KB
+  Lines: 81
+
+1976_CDROM_File_Compression_SLZ01Z_chunk_based_compress
+  File: 1976_CDROM_File_Compression_SLZ01Z_chunk_based_compress.txt
+  Size: 1.9 KB
+  Lines: 57
+
+1977_CDROM_File_Compression_LZ5_and_LZ5_variants
+  File: 1977_CDROM_File_Compression_LZ5_and_LZ5_variants.txt
+  Size: 4.3 KB
+  Lines: 112
+
+1978_The_decompressor_is_at_80093A3Ch_but_the_code_isnt
+  File: 1978_The_decompressor_is_at_80093A3Ch_but_the_code_isnt.txt
+  Size: 2.8 KB
+  Lines: 75
+
+1982_CDROM_File_Compression_GT_ZIP_Gran_Turismo_1_and_2
+  File: 1982_CDROM_File_Compression_GT_ZIP_Gran_Turismo_1_and_2.txt
+  Size: 1.9 KB
+  Lines: 43
+
+1983_Gran_Turismo_2_MagDemo27_GT2GT2VOLarcadearc_othert
+  File: 1983_Gran_Turismo_2_MagDemo27_GT2GT2VOLarcadearc_othert.txt
+  Size: 2.1 KB
+  Lines: 54
+
+1985_CDROM_File_Compression_GT20_and_PreGT20
+  File: 1985_CDROM_File_Compression_GT20_and_PreGT20.txt
+  Size: 3.7 KB
+  Lines: 119
+
+1986_CDROM_File_Compression_HornedLZ
+  File: 1986_CDROM_File_Compression_HornedLZ.txt
+  Size: 1.7 KB
+  Lines: 55
+
+1987_CDROM_File_Compression_LZS_Gundam_Battle_Assault_2
+  File: 1987_CDROM_File_Compression_LZS_Gundam_Battle_Assault_2.txt
+  Size: 1.8 KB
+  Lines: 54
+
+1988_CDROM_File_Compression_BZZ
+  File: 1988_CDROM_File_Compression_BZZ.txt
+  Size: 3.3 KB
+  Lines: 78
+
+1991_CDROM_File_Compression_TIM_RLE4RLE8
+  File: 1991_CDROM_File_Compression_TIM_RLE4RLE8.txt
+  Size: 2.3 KB
+  Lines: 64
+
+1998_CDROM_File_Compression_PIMPRS_Legend_of_Mana
+  File: 1998_CDROM_File_Compression_PIMPRS_Legend_of_Mana.txt
+  Size: 1.8 KB
+  Lines: 44
+
+1999_CDROM_File_Compression_BPE_Byte_Pair_Encoding
+  File: 1999_CDROM_File_Compression_BPE_Byte_Pair_Encoding.txt
+  Size: 2.9 KB
+  Lines: 78
+
+19_Cheat_Devices_Cheat_Devices
+  File: 19_Cheat_Devices_Cheat_Devices.txt
+  Size: 0.9 KB
+  Lines: 35
+
+2001_CDROM_File_Compression_RNC_Rob_Northen_Compression
+  File: 2001_CDROM_File_Compression_RNC_Rob_Northen_Compression.txt
+  Size: 3.4 KB
+  Lines: 84
+
+2003_restrictions_on_old_CPUs_In_PSX_Heart_of_Darkness_
+  File: 2003_restrictions_on_old_CPUs_In_PSX_Heart_of_Darkness_.txt
+  Size: 1.8 KB
+  Lines: 54
+
+2004_CDROM_File_Compression_Darkworks
+  File: 2004_CDROM_File_Compression_Darkworks.txt
+  Size: 2.6 KB
+  Lines: 66
+
+2006_CDROM_File_Compression_Z_Running_Wild
+  File: 2006_CDROM_File_Compression_Z_Running_Wild.txt
+  Size: 1.7 KB
+  Lines: 43
+
+2007_CDROM_File_Compression_ZAL_Z_Axis
+  File: 2007_CDROM_File_Compression_ZAL_Z_Axis.txt
+  Size: 1.8 KB
+  Lines: 53
+
+2008_CDROM_File_Compression_EA_Methods
+  File: 2008_CDROM_File_Compression_EA_Methods.txt
+  Size: 1.7 KB
+  Lines: 45
+
+2013_CDROM_File_Compression_EA_Methods_LZSS_RefPack
+  File: 2013_CDROM_File_Compression_EA_Methods_LZSS_RefPack.txt
+  Size: 2.1 KB
+  Lines: 64
+
+2014_CDROM_File_Compression_EA_Methods_Huffman
+  File: 2014_CDROM_File_Compression_EA_Methods_Huffman.txt
+  Size: 2.5 KB
+  Lines: 78
+
+2015_CDROM_File_Compression_EA_Methods_BPE
+  File: 2015_CDROM_File_Compression_EA_Methods_BPE.txt
+  Size: 1.4 KB
+  Lines: 45
+
+2016_CDROM_File_Compression_EA_Methods_RLE
+  File: 2016_CDROM_File_Compression_EA_Methods_RLE.txt
+  Size: 1.5 KB
+  Lines: 43
+
+2023_Mat_Hoffmans_Pro_BMX_old_demo_MagDemo39_BMXBMXCDHE
+  File: 2023_Mat_Hoffmans_Pro_BMX_old_demo_MagDemo39_BMXBMXCDHE.txt
+  Size: 7.6 KB
+  Lines: 212
+
+2025_CDROM_File_Compression_LZ5_and_LZ5_variants
+  File: 2025_CDROM_File_Compression_LZ5_and_LZ5_variants.txt
+  Size: 6.8 KB
+  Lines: 169
+
+2029_Dictionary_size_dont_care_when_decompressing_the_w
+  File: 2029_Dictionary_size_dont_care_when_decompressing_the_w.txt
+  Size: 2.3 KB
+  Lines: 56
+
+2031_CDROM_File_Compression_XZ
+  File: 2031_CDROM_File_Compression_XZ.txt
+  Size: 3.1 KB
+  Lines: 82
+
+2032_CDROM_File_Compression_XZ
+  File: 2032_CDROM_File_Compression_XZ.txt
+  Size: 6.5 KB
+  Lines: 184
+
+2033_CDROM_File_Compression_FLAC_audio
+  File: 2033_CDROM_File_Compression_FLAC_audio.txt
+  Size: 2.1 KB
+  Lines: 68
+
+2034_CDROM_File_Compression_ARJ
+  File: 2034_CDROM_File_Compression_ARJ.txt
+  Size: 7.3 KB
+  Lines: 186
+
+2035_ARJ_methods_are_allocating_slighly_less_memory_for
+  File: 2035_ARJ_methods_are_allocating_slighly_less_memory_for.txt
+  Size: 2.0 KB
+  Lines: 58
+
+2037_CDROM_File_Compression_ARC
+  File: 2037_CDROM_File_Compression_ARC.txt
+  Size: 7.6 KB
+  Lines: 190
+
+2038_CDROM_File_Compression_nCompressZ
+  File: 2038_CDROM_File_Compression_nCompressZ.txt
+  Size: 1.9 KB
+  Lines: 48
+
+2040_CDROM_File_Compression_RAR
+  File: 2040_CDROM_File_Compression_RAR.txt
+  Size: 6.0 KB
+  Lines: 160
+
+2041_CDROM_File_Compression_ZOO
+  File: 2041_CDROM_File_Compression_ZOO.txt
+  Size: 5.0 KB
+  Lines: 122
+
+2043_CDROM_File_Compression_nCompressZ
+  File: 2043_CDROM_File_Compression_nCompressZ.txt
+  Size: 1.8 KB
+  Lines: 40
+
+2044_CDROM_File_Compression_Octal_Oddities_TAR_CPIO_RPM
+  File: 2044_CDROM_File_Compression_Octal_Oddities_TAR_CPIO_RPM.txt
+  Size: 3.5 KB
+  Lines: 91
+
+2045_Asciioctal_CPIO_Chunk_format
+  File: 2045_Asciioctal_CPIO_Chunk_format.txt
+  Size: 4.6 KB
+  Lines: 123
+
+2046_CDROM_File_Compression_MacBinary_BinHex_PackIt_Stu
+  File: 2046_CDROM_File_Compression_MacBinary_BinHex_PackIt_Stu.txt
+  Size: 3.9 KB
+  Lines: 87
+
+2049_decompress_the_whole_file_and_allocate_more_memory
+  File: 2049_decompress_the_whole_file_and_allocate_more_memory.txt
+  Size: 11.5 KB
+  Lines: 284
+
+2050_httpsgithubcomincbeeUnarchiverblobmasterXADMasterX
+  File: 2050_httpsgithubcomincbeeUnarchiverblobmasterXADMasterX.txt
+  Size: 2.8 KB
+  Lines: 66
+
+2051_81h82h05hFFh_Output_prevbyte_04hFEh_times_this_doe
+  File: 2051_81h82h05hFFh_Output_prevbyte_04hFEh_times_this_doe.txt
+  Size: 1.7 KB
+  Lines: 36
+
+2052_GetLzsshufTreedisp_tree80h_tree_for_dispUpper7bit0
+  File: 2052_GetLzsshufTreedisp_tree80h_tree_for_dispUpper7bit0.txt
+  Size: 2.0 KB
+  Lines: 47
+
+2053_incomplete_trees_like_only_one_disp_code_0DispUppe
+  File: 2053_incomplete_trees_like_only_one_disp_code_0DispUppe.txt
+  Size: 1.7 KB
+  Lines: 34
+
+2054_httpsgithubcomMacPawXADMasterwikiCompactProSpecs
+  File: 2054_httpsgithubcomMacPawXADMasterwikiCompactProSpecs.txt
+  Size: 4.1 KB
+  Lines: 92
+
+2097_CDROM_Protection_Modchips
+  File: 2097_CDROM_Protection_Modchips.txt
+  Size: 4.2 KB
+  Lines: 118
+
+20_Dev_Board_PSX_Dev_Board_Chipsets
+  File: 20_Dev_Board_PSX_Dev_Board_Chipsets.txt
+  Size: 0.4 KB
+  Lines: 9
+
+2135_means_that_the_PSX_cdrom_controller_will_ignore_th
+  File: 2135_means_that_the_PSX_cdrom_controller_will_ignore_th.txt
+  Size: 3.2 KB
+  Lines: 63
+
+2158_it_is_non_BCD_ie_Point_199_are_specified_as_0x010x
+  File: 2158_it_is_non_BCD_ie_Point_199_are_specified_as_0x010x.txt
+  Size: 1.8 KB
+  Lines: 33
+
+2165_44hFIT_04h_Track_Number_non_BCD_starting_at_0_00h6
+  File: 2165_44hFIT_04h_Track_Number_non_BCD_starting_at_0_00h6.txt
+  Size: 1.6 KB
+  Lines: 37
+
+216_GPU_Render_Polygon_Commands
+  File: 216_GPU_Render_Polygon_Commands.txt
+  Size: 3.8 KB
+  Lines: 117
+
+2171_CDRWIN_stores_disk_images_in_two_separate_files_Th
+  File: 2171_CDRWIN_stores_disk_images_in_two_separate_files_Th.txt
+  Size: 1.6 KB
+  Lines: 34
+
+2186_CDROM_Disk_Images_MDSMDF_Alcohol_120
+  File: 2186_CDROM_Disk_Images_MDSMDF_Alcohol_120.txt
+  Size: 1.7 KB
+  Lines: 45
+
+2194_0Bh_1_Frame_Non_BCD_Q9
+  File: 2194_0Bh_1_Frame_Non_BCD_Q9.txt
+  Size: 1.7 KB
+  Lines: 41
+
+2195_when_recording_a_CD_with_more_than_2_indices_per_t
+  File: 2195_when_recording_a_CD_with_more_than_2_indices_per_t.txt
+  Size: 1.6 KB
+  Lines: 45
+
+219_GPU_Render_Line_Commands
+  File: 219_GPU_Render_Line_Commands.txt
+  Size: 1.7 KB
+  Lines: 59
+
+21_Hardware_Numbers_Hardware_Numbers
+  File: 21_Hardware_Numbers_Hardware_Numbers.txt
+  Size: 0.3 KB
+  Lines: 9
+
+2206_1_Last_track_Non_BCD_01h63h
+  File: 2206_1_Last_track_Non_BCD_01h63h.txt
+  Size: 2.4 KB
+  Lines: 68
+
+2215_CDZ_Chunk_Format
+  File: 2215_CDZ_Chunk_Format.txt
+  Size: 1.4 KB
+  Lines: 45
+
+221_of_course_the_GPU_does_render_Rectangles_at_once_w
+  File: 221_of_course_the_GPU_does_render_Rectangles_at_once_w.txt
+  Size: 3.8 KB
+  Lines: 98
+
+2233_ECM_can_be_applied_to_various_CDROM_image_formats_
+  File: 2233_ECM_can_be_applied_to_various_CDROM_image_formats_.txt
+  Size: 2.3 KB
+  Lines: 57
+
+2236_will_cause_the_PSX_cdrom_controller_to_ignore_Q0Q9
+  File: 2236_will_cause_the_PSX_cdrom_controller_to_ignore_Q0Q9.txt
+  Size: 2.4 KB
+  Lines: 48
+
+2243_CUEBINCDT_Cdrwin_NA
+  File: 2243_CUEBINCDT_Cdrwin_NA.txt
+  Size: 1.3 KB
+  Lines: 28
+
+2245_CDROM_Disk_Images_PBP_Sony
+  File: 2245_CDROM_Disk_Images_PBP_Sony.txt
+  Size: 2.2 KB
+  Lines: 54
+
+2254_V3V4_are_inventing_new_metadata_for_info_about_har
+  File: 2254_V3V4_are_inventing_new_metadata_for_info_about_har.txt
+  Size: 1.5 KB
+  Lines: 32
+
+2258_018h_4_Compressor_2_usually_cdflcdromflac
+  File: 2258_018h_4_Compressor_2_usually_cdflcdromflac.txt
+  Size: 1.4 KB
+  Lines: 35
+
+2281_000h_4_Track_Type_07_CHCD_in_above_table_eg_6MODE2
+  File: 2281_000h_4_Track_Type_07_CHCD_in_above_table_eg_6MODE2.txt
+  Size: 2.0 KB
+  Lines: 50
+
+2284_mean_always_FLAC_for_cdroms_and_not_used_elsewhere
+  File: 2284_mean_always_FLAC_for_cdroms_and_not_used_elsewhere.txt
+  Size: 1.7 KB
+  Lines: 37
+
+2288_noncrc16_Uses_the_same_polynomial_as_for_CDROM_sub
+  File: 2288_noncrc16_Uses_the_same_polynomial_as_for_CDROM_sub.txt
+  Size: 1.9 KB
+  Lines: 51
+
+228_bright_as_than_they_were_originially_stored_in_mem
+  File: 228_bright_as_than_they_were_originially_stored_in_mem.txt
+  Size: 1.5 KB
+  Lines: 37
+
+22_Pinouts_Pinouts
+  File: 22_Pinouts_Pinouts.txt
+  Size: 1702.3 KB
+  Lines: 45701
+
+2301_Decompressed_CHD_CDROM_Sectors_are_always_990h_byt
+  File: 2301_Decompressed_CHD_CDROM_Sectors_are_always_990h_byt.txt
+  Size: 2.0 KB
+  Lines: 42
+
+2305_A_normal_CDROM_contains_a_series_of_sectors_The_CH
+  File: 2305_A_normal_CDROM_contains_a_series_of_sectors_The_CH.txt
+  Size: 1.7 KB
+  Lines: 39
+
+236_13_Textured_Rectangle_Y_Flip_BIOS_does_set_it_equa
+  File: 236_13_Textured_Rectangle_Y_Flip_BIOS_does_set_it_equa.txt
+  Size: 1.6 KB
+  Lines: 39
+
+2370_CDROM_Internal_HC05_Instruction_Set
+  File: 2370_CDROM_Internal_HC05_Instruction_Set.txt
+  Size: 3.5 KB
+  Lines: 94
+
+2380_PSX_cdrom_controller
+  File: 2380_PSX_cdrom_controller.txt
+  Size: 1.4 KB
+  Lines: 51
+
+2388_SPI_bus_or_as_Timer_inputoutput
+  File: 2388_SPI_bus_or_as_Timer_inputoutput.txt
+  Size: 3.2 KB
+  Lines: 70
+
+23_Unpredictable_Unpredictable_Things
+  File: 23_Unpredictable_Unpredictable_Things.txt
+  Size: 0.4 KB
+  Lines: 9
+
+2442_HC05_Port_OPTM00Fh_SPDR2_Serial_Peripheral_Data_Re
+  File: 2442_HC05_Port_OPTM00Fh_SPDR2_Serial_Peripheral_Data_Re.txt
+  Size: 1.6 KB
+  Lines: 37
+
+2446_HC05_Port_21h34h_LCDDR120_LCD_Data_Register_120_RW
+  File: 2446_HC05_Port_21h34h_LCDDR120_LCD_Data_Register_120_RW.txt
+  Size: 1.5 KB
+  Lines: 42
+
+2473_CDROM_Internal_HC05_Motorola_Selftest_Mode_52pin_c
+  File: 2473_CDROM_Internal_HC05_Motorola_Selftest_Mode_52pin_c.txt
+  Size: 1.4 KB
+  Lines: 37
+
+2477_IC102Pin32_35V_on_PSone_boards_32pin_Main_BIOS_ROM
+  File: 2477_IC102Pin32_35V_on_PSone_boards_32pin_Main_BIOS_ROM.txt
+  Size: 2.2 KB
+  Lines: 46
+
+2478_CDROM_Internal_HC05_Motorola_Selftest_Mode_80pin_c
+  File: 2478_CDROM_Internal_HC05_Motorola_Selftest_Mode_80pin_c.txt
+  Size: 2.1 KB
+  Lines: 65
+
+248_Transfers_data_from_frame_buffer_to_CPU_Wait_for_b
+  File: 248_Transfers_data_from_frame_buffer_to_CPU_Wait_for_b.txt
+  Size: 1.6 KB
+  Lines: 38
+
+2495_CDROM_Internal_CXD1815Q_Sub_CPU_Sector_Status_Regi
+  File: 2495_CDROM_Internal_CXD1815Q_Sub_CPU_Sector_Status_Regi.txt
+  Size: 3.1 KB
+  Lines: 75
+
+2500_but_the_PSX_CDROM_BIOS_does_set_that_bit_for_whate
+  File: 2500_but_the_PSX_CDROM_BIOS_does_set_that_bit_for_whate.txt
+  Size: 2.9 KB
+  Lines: 90
+
+2515_by_Sub_CPUs_Real_time_ADPCM_or_by_both
+  File: 2515_by_Sub_CPUs_Real_time_ADPCM_or_by_both.txt
+  Size: 1.5 KB
+  Lines: 41
+
+2517_Note_The_PSX_CDROM_BIOS_does_use_the_Undoc_setting
+  File: 2517_Note_The_PSX_CDROM_BIOS_does_use_the_Undoc_setting.txt
+  Size: 1.5 KB
+  Lines: 41
+
+2528_19_1bit_CDROM_0Audio_1CDROM_no_average_and_pre_val
+  File: 2528_19_1bit_CDROM_0Audio_1CDROM_no_average_and_pre_val.txt
+  Size: 4.8 KB
+  Lines: 131
+
+2531_CDROM_Internal_Commands_CX4xEx_CXD2510Q_Signal_Pro
+  File: 2531_CDROM_Internal_Commands_CX4xEx_CXD2510Q_Signal_Pro.txt
+  Size: 1.4 KB
+  Lines: 41
+
+2532_CDROM_Internal_Coefficients_for_CXD2545Q
+  File: 2532_CDROM_Internal_Coefficients_for_CXD2545Q.txt
+  Size: 2.4 KB
+  Lines: 69
+
+2536_Serial_Readout_Addresses
+  File: 2536_Serial_Readout_Addresses.txt
+  Size: 2.2 KB
+  Lines: 65
+
+2538_CDROM_Internal_Commands_CX0xEx_CXD2938Q_ServoSigna
+  File: 2538_CDROM_Internal_Commands_CX0xEx_CXD2938Q_ServoSigna.txt
+  Size: 2.4 KB
+  Lines: 52
+
+2539_XORed_by_FFh_however_the_CDROM_BIOS_does_always_us
+  File: 2539_XORed_by_FFh_however_the_CDROM_BIOS_does_always_us.txt
+  Size: 1.6 KB
+  Lines: 40
+
+2558_The_PSX_CDROM_BIOS_versions_vC1_vC2_and_vC3_are_us
+  File: 2558_The_PSX_CDROM_BIOS_versions_vC1_vC2_and_vC3_are_us.txt
+  Size: 4.1 KB
+  Lines: 97
+
+2562_RAM_settings_and_CX39xxxx_allows_to_readout_some_o
+  File: 2562_RAM_settings_and_CX39xxxx_allows_to_readout_some_o.txt
+  Size: 3.3 KB
+  Lines: 94
+
+2599_Below_is_usually_zero_filled_maybe_exists_on_SVCD_
+  File: 2599_Below_is_usually_zero_filled_maybe_exists_on_SVCD_.txt
+  Size: 1.6 KB
+  Lines: 32
+
+2613_VCDPSDVCD_or_SVCDPSDSVD_000434_and_up_max_256_sect
+  File: 2613_VCDPSDVCD_or_SVCDPSDSVD_000434_and_up_max_256_sect.txt
+  Size: 1.7 KB
+  Lines: 32
+
+2614_01h_1_Next_disc_00h_to_stop_PBC_or_NNh_to_switch_t
+  File: 2614_01h_1_Next_disc_00h_to_stop_PBC_or_NNh_to_switch_t.txt
+  Size: 1.8 KB
+  Lines: 45
+
+2694_The_Pack_Header_is_found_at_the_begin_of_the_strea
+  File: 2694_The_Pack_Header_is_found_at_the_begin_of_the_strea.txt
+  Size: 3.4 KB
+  Lines: 86
+
+2695_15bit_Presentation_Time_Stamp_bit14_0_hardware_in_
+  File: 2695_15bit_Presentation_Time_Stamp_bit14_0_hardware_in_.txt
+  Size: 1.9 KB
+  Lines: 48
+
+2699_10bit_VBV_required_decoding_memory_size_in_16_kB_u
+  File: 2699_10bit_VBV_required_decoding_memory_size_in_16_kB_u.txt
+  Size: 4.6 KB
+  Lines: 155
+
+270_end_later_The_size_of_the_pixels_is_NOT_changed_wi
+  File: 270_end_later_The_size_of_the_pixels_is_NOT_changed_wi.txt
+  Size: 1.6 KB
+  Lines: 34
+
+2743_11_31_Baudrate_Timer_21bit_timer_decrementing_at_3
+  File: 2743_11_31_Baudrate_Timer_21bit_timer_decrementing_at_3.txt
+  Size: 1.4 KB
+  Lines: 31
+
+2787_Controller_and_Memory_Card_Signals
+  File: 2787_Controller_and_Memory_Card_Signals.txt
+  Size: 1.5 KB
+  Lines: 38
+
+2802_controller_Slot_A_is_empty_then_the_Slot_A_access_
+  File: 2802_controller_Slot_A_is_empty_then_the_Slot_A_access_.txt
+  Size: 1.8 KB
+  Lines: 35
+
+2830_On_power_up_the_controllers_are_in_digital_mode_wi
+  File: 2830_On_power_up_the_controllers_are_in_digital_mode_wi.txt
+  Size: 2.8 KB
+  Lines: 75
+
+2843_stuck_ACK_signal_Send_a_command_at_least_one_01h_b
+  File: 2843_stuck_ACK_signal_Send_a_command_at_least_one_01h_b.txt
+  Size: 2.3 KB
+  Lines: 93
+
+2859_A_serial_mouse_should_be_read_at_1200_bauds_7_data
+  File: 2859_A_serial_mouse_should_be_read_at_1200_bauds_7_data.txt
+  Size: 1.8 KB
+  Lines: 45
+
+2876_Unlike_the_neGon_the_controller_has_Select_MadCatz
+  File: 2876_Unlike_the_neGon_the_controller_has_Select_MadCatz.txt
+  Size: 1.6 KB
+  Lines: 40
+
+2894_up_to_eight_controllers_via_multitaps_would_be_abs
+  File: 2894_up_to_eight_controllers_via_multitaps_would_be_abs.txt
+  Size: 2.9 KB
+  Lines: 72
+
+2931_Controllers_Lightguns_PSX_Lightgun_Games
+  File: 2931_Controllers_Lightguns_PSX_Lightgun_Games.txt
+  Size: 1.8 KB
+  Lines: 44
+
+2933_Some_controllers_can_be_switched_from_Normal_Mode_
+  File: 2933_Some_controllers_can_be_switched_from_Normal_Mode_.txt
+  Size: 2.1 KB
+  Lines: 50
+
+2940_loading_data_from_CDROM
+  File: 2940_loading_data_from_CDROM.txt
+  Size: 2.2 KB
+  Lines: 61
+
+2949_Fishing_controllers_with_rumble
+  File: 2949_Fishing_controllers_with_rumble.txt
+  Size: 1.4 KB
+  Lines: 33
+
+2958_either_by_connecting_the_controller_to_a_PSX_conso
+  File: 2958_either_by_connecting_the_controller_to_a_PSX_conso.txt
+  Size: 1.7 KB
+  Lines: 41
+
+2959_enabledisable_Reply_bytes_in_the_controller_read_c
+  File: 2959_enabledisable_Reply_bytes_in_the_controller_read_c.txt
+  Size: 3.4 KB
+  Lines: 85
+
+2961_Unknown_if_the_mat_is_having_a_special_controller_
+  File: 2961_Unknown_if_the_mat_is_having_a_special_controller_.txt
+  Size: 3.4 KB
+  Lines: 81
+
+2964_PSX_Fishing_Controller_Games
+  File: 2964_PSX_Fishing_Controller_Games.txt
+  Size: 1.9 KB
+  Lines: 35
+
+296_Seems_to_be_a_used_only_on_whatever_arcadeprototyp
+  File: 296_Seems_to_be_a_used_only_on_whatever_arcadeprototyp.txt
+  Size: 2.0 KB
+  Lines: 48
+
+298_1F801814h_GPUSTAT_GPU_Status_Register_R
+  File: 298_1F801814h_GPUSTAT_GPU_Status_Register_R.txt
+  Size: 1.5 KB
+  Lines: 29
+
+3010_Spectrum_Emulator_Keyboard_Sega_Sticks_Adaptor_v2c
+  File: 3010_Spectrum_Emulator_Keyboard_Sega_Sticks_Adaptor_v2c.txt
+  Size: 1.6 KB
+  Lines: 43
+
+3051_memory_card_changes_For_some_strange_reason_bit3_i
+  File: 3051_memory_card_changes_For_some_strange_reason_bit3_i.txt
+  Size: 1.8 KB
+  Lines: 37
+
+3054_The_memory_is_split_into_16_blocks_of_8_Kbytes_eac
+  File: 3054_The_memory_is_split_into_16_blocks_of_8_Kbytes_eac.txt
+  Size: 4.1 KB
+  Lines: 107
+
+3057_PlayStation_without_a_CDROM_inserted_The_icons_are
+  File: 3057_PlayStation_without_a_CDROM_inserted_The_icons_are.txt
+  Size: 1.6 KB
+  Lines: 37
+
+3071_should_be_the_same_as_used_in_the_Memory_Card_Dire
+  File: 3071_should_be_the_same_as_used_in_the_Memory_Card_Dire.txt
+  Size: 1.5 KB
+  Lines: 32
+
+3183_04004000h_04FFFFFFh_Mirrors_of_04000000h_04003FFFh
+  File: 3183_04004000h_04FFFFFFh_Mirrors_of_04000000h_04003FFFh.txt
+  Size: 1.5 KB
+  Lines: 27
+
+3385_set_by_the_kernel_IRQ_11_IOP_handler_If_that_flag_
+  File: 3385_set_by_the_kernel_IRQ_11_IOP_handler_If_that_flag_.txt
+  Size: 2.4 KB
+  Lines: 44
+
+3391_indicates_that_communications_are_enabled_and_that
+  File: 3391_indicates_that_communications_are_enabled_and_that.txt
+  Size: 1.9 KB
+  Lines: 40
+
+3502_r1pointer_to_parameter_buffer_which_contains_LEN1_
+  File: 3502_r1pointer_to_parameter_buffer_which_contains_LEN1_.txt
+  Size: 1.8 KB
+  Lines: 58
+
+3518_00h00hSE_in_FLASH_memory
+  File: 3518_00h00hSE_in_FLASH_memory.txt
+  Size: 1.6 KB
+  Lines: 45
+
+3519_speaker_and_memory_card_symbols_and_which_shows_ic
+  File: 3519_speaker_and_memory_card_symbols_and_which_shows_ic.txt
+  Size: 2.6 KB
+  Lines: 56
+
+3549_with_TTY_in_R0_notifying_it_that_the_XBOO_hardware
+  File: 3549_with_TTY_in_R0_notifying_it_that_the_XBOO_hardware.txt
+  Size: 2.6 KB
+  Lines: 74
+
+3554_11_25_Baudrate_Timer_15bit_timer_decrementing_at_3
+  File: 3554_11_25_Baudrate_Timer_15bit_timer_decrementing_at_3.txt
+  Size: 1.5 KB
+  Lines: 34
+
+3632_The_hardware_can_hold_max_2_Tx_characters_per_chan
+  File: 3632_The_hardware_can_hold_max_2_Tx_characters_per_chan.txt
+  Size: 2.1 KB
+  Lines: 50
+
+3633_3_0_Tx_Clock_Select_00ChSee_Table_0DhTimer_0Eh16xI
+  File: 3633_3_0_Tx_Clock_Select_00ChSee_Table_0DhTimer_0Eh16xI.txt
+  Size: 2.2 KB
+  Lines: 48
+
+3635_1F802025hWrite_IMR_DUART_Interrupt_Mask_Register_W
+  File: 3635_1F802025hWrite_IMR_DUART_Interrupt_Mask_Register_W.txt
+  Size: 2.2 KB
+  Lines: 43
+
+3714_12_15_COM3_Min_Value_used_for_CDROM
+  File: 3714_12_15_COM3_Min_Value_used_for_CDROM.txt
+  Size: 1.5 KB
+  Lines: 39
+
+3804_CPU_Opcode_Encoding
+  File: 3804_CPU_Opcode_Encoding.txt
+  Size: 3.8 KB
+  Lines: 89
+
+3816_CPU_ALU_Opcodes
+  File: 3816_CPU_ALU_Opcodes.txt
+  Size: 1.6 KB
+  Lines: 48
+
+3818_registers_while_the_muldiv_operation_is_busy_will_
+  File: 3818_registers_while_the_muldiv_operation_is_busy_will_.txt
+  Size: 1.5 KB
+  Lines: 28
+
+3820_CPU_Jump_Opcodes
+  File: 3820_CPU_Jump_Opcodes.txt
+  Size: 1.8 KB
+  Lines: 45
+
+3824_when_reading_from_memory_see_there_for_details
+  File: 3824_when_reading_from_memory_see_there_for_details.txt
+  Size: 1.4 KB
+  Lines: 31
+
+3825_CPU_Pseudo_Opcodes
+  File: 3825_CPU_Pseudo_Opcodes.txt
+  Size: 3.0 KB
+  Lines: 79
+
+3827_dcb_lenvalue_fill_bytes_by_different_as_DCB_on_ARM
+  File: 3827_dcb_lenvalue_fill_bytes_by_different_as_DCB_on_ARM.txt
+  Size: 2.0 KB
+  Lines: 62
+
+3872_Registers_012410_control_virtual_memory_on_some_MI
+  File: 3872_Registers_012410_control_virtual_memory_on_some_MI.txt
+  Size: 1.7 KB
+  Lines: 43
+
+3874_mov_cop0regmem_does_dummy_memory_read_without_chan
+  File: 3874_mov_cop0regmem_does_dummy_memory_read_without_chan.txt
+  Size: 1.4 KB
+  Lines: 30
+
+3880_5_Automatically_set_by_hardware_upon_any_jump_brea
+  File: 3880_5_Automatically_set_by_hardware_upon_any_jump_brea.txt
+  Size: 3.1 KB
+  Lines: 72
+
+391_output_24bit_data_Ie_24bit_mode_is_used_mostly_for
+  File: 391_output_24bit_data_Ie_24bit_mode_is_used_mostly_for.txt
+  Size: 1.6 KB
+  Lines: 35
+
+392_hardware_clips_their_texture_coordinates_to_8bit_t
+  File: 392_hardware_clips_their_texture_coordinates_to_8bit_t.txt
+  Size: 2.4 KB
+  Lines: 59
+
+3959_less_unused_by_the_BIOS_so_one_can_more_or_less_fr
+  File: 3959_less_unused_by_the_BIOS_so_one_can_more_or_less_fr.txt
+  Size: 2.9 KB
+  Lines: 86
+
+396_GPU_is_equipped_with_a_texture_cache_so_a_given_pi
+  File: 396_GPU_is_equipped_with_a_texture_cache_so_a_given_pi.txt
+  Size: 2.0 KB
+  Lines: 53
+
+400_Timer1_can_use_the_hblank_signal_as_input_allowing
+  File: 400_Timer1_can_use_the_hblank_signal_as_input_allowing.txt
+  Size: 1.6 KB
+  Lines: 34
+
+4021_B06h_restart_timert
+  File: 4021_B06h_restart_timert.txt
+  Size: 3.7 KB
+  Lines: 113
+
+4037_bit16_31_Number_of_memory_card_blocks_for_a_new_fi
+  File: 4037_bit16_31_Number_of_memory_card_blocks_for_a_new_fi.txt
+  Size: 1.6 KB
+  Lines: 34
+
+4051_Erases_all_files_on_the_device_ie_for_formatting_m
+  File: 4051_Erases_all_files_on_the_device_ie_for_formatting_m.txt
+  Size: 1.5 KB
+  Lines: 36
+
+4056_BIOS_File_Execute_and_Flush_Cache
+  File: 4056_BIOS_File_Execute_and_Flush_Cache.txt
+  Size: 2.4 KB
+  Lines: 52
+
+4057_CAUTION_The_BIOS_allocates_ONLY_28_bytes_on_stack_
+  File: 4057_CAUTION_The_BIOS_allocates_ONLY_28_bytes_on_stack_.txt
+  Size: 1.9 KB
+  Lines: 35
+
+412_untextured_polygons_and_of_course_not_for_2D_graph
+  File: 412_untextured_polygons_and_of_course_not_for_2D_graph.txt
+  Size: 1.7 KB
+  Lines: 40
+
+4205_which_5_events_are_internally_used_by_the_BIOS_for
+  File: 4205_which_5_events_are_internally_used_by_the_BIOS_for.txt
+  Size: 2.0 KB
+  Lines: 48
+
+4285_hidden_within_the_BIOS_variables_region_the_only_w
+  File: 4285_hidden_within_the_BIOS_variables_region_the_only_w.txt
+  Size: 1.8 KB
+  Lines: 33
+
+4352_BIOS_String_Functions
+  File: 4352_BIOS_String_Functions.txt
+  Size: 2.5 KB
+  Lines: 67
+
+4354_Note_that_despite_of_the_function_names_the_return
+  File: 4354_Note_that_despite_of_the_function_names_the_return.txt
+  Size: 2.1 KB
+  Lines: 55
+
+4356_long_plus_the_ending_00h_byte_otherwise_the_functi
+  File: 4356_long_plus_the_ending_00h_byte_otherwise_the_functi.txt
+  Size: 1.7 KB
+  Lines: 31
+
+4358_BIOS_NumberStringCharacter_Conversion
+  File: 4358_BIOS_NumberStringCharacter_Conversion.txt
+  Size: 3.9 KB
+  Lines: 92
+
+4366_allowing_to_patch_entries_in_that_lists_however_th
+  File: 4366_allowing_to_patch_entries_in_that_lists_however_th.txt
+  Size: 2.3 KB
+  Lines: 45
+
+4369_Stores_some_not_all_CPU_registers_in_the_specified
+  File: 4369_Stores_some_not_all_CPU_registers_in_the_specified.txt
+  Size: 1.8 KB
+  Lines: 42
+
+4371_Performs_a_warmboot_resets_the_kernel_and_reboots_
+  File: 4371_Performs_a_warmboot_resets_the_kernel_and_reboots_.txt
+  Size: 1.4 KB
+  Lines: 29
+
+4374_No_function_Simply_returns_without_changing_any_re
+  File: 4374_No_function_Simply_returns_without_changing_any_re.txt
+  Size: 1.7 KB
+  Lines: 38
+
+4412_BIOS_TTY_Console_std_io
+  File: 4412_BIOS_TTY_Console_std_io.txt
+  Size: 4.4 KB
+  Lines: 95
+
+4427_Out_r2_address_in_BIOS_ROM_of_the_desired_characte
+  File: 4427_Out_r2_address_in_BIOS_ROM_of_the_desired_characte.txt
+  Size: 1.4 KB
+  Lines: 33
+
+4433_BIOS_Control_Blocks
+  File: 4433_BIOS_Control_Blocks.txt
+  Size: 1.7 KB
+  Lines: 45
+
+4457_COP2_Registers_GTE
+  File: 4457_COP2_Registers_GTE.txt
+  Size: 2.0 KB
+  Lines: 43
+
+446_GTE_Registers
+  File: 446_GTE_Registers.txt
+  Size: 2.3 KB
+  Lines: 66
+
+447_When_reading_the_H_register_the_hardware_does_acci
+  File: 447_When_reading_the_H_register_the_hardware_does_acci.txt
+  Size: 2.7 KB
+  Lines: 62
+
+4500_on_CDROM_seek_time_and_EXE_file_size
+  File: 4500_on_CDROM_seek_time_and_EXE_file_size.txt
+  Size: 1.4 KB
+  Lines: 24
+
+450_cop2r22_RGB2_rwCD2_B2_G2_R2
+  File: 450_cop2r22_RGB2_rwCD2_B2_G2_R2.txt
+  Size: 1.5 KB
+  Lines: 43
+
+451_using_IR1IR2IR3_as_parameters_for_GTE_commands_sim
+  File: 451_using_IR1IR2IR3_as_parameters_for_GTE_commands_sim.txt
+  Size: 1.6 KB
+  Lines: 35
+
+4536_The_old_CEX_1000_KT_3_Kernel_version_did_examine_r
+  File: 4536_The_old_CEX_1000_KT_3_Kernel_version_did_examine_r.txt
+  Size: 3.5 KB
+  Lines: 89
+
+4537_BUG3_and_asides_the_minimum_demo_works_only_with_P
+  File: 4537_BUG3_and_asides_the_minimum_demo_works_only_with_P.txt
+  Size: 1.8 KB
+  Lines: 39
+
+4542_triggered_by_a_timer_IRQ_but_a_newer_card_IRQ_may_
+  File: 4542_triggered_by_a_timer_IRQ_but_a_newer_card_IRQ_may_.txt
+  Size: 3.6 KB
+  Lines: 80
+
+4544_from_inside_of_B4Ah_InitCardpad_enable_and_without
+  File: 4544_from_inside_of_B4Ah_InitCardpad_enable_and_without.txt
+  Size: 2.1 KB
+  Lines: 57
+
+4545_delay_AFTER_the_acknowledge_but_it_DOES_work_the_B
+  File: 4545_delay_AFTER_the_acknowledge_but_it_DOES_work_the_B.txt
+  Size: 2.7 KB
+  Lines: 61
+
+4548_OTHER_controller_slot_and_does_then_execute_the_bi
+  File: 4548_OTHER_controller_slot_and_does_then_execute_the_bi.txt
+  Size: 1.7 KB
+  Lines: 51
+
+454_lm_bit_of_the_GTE_opcode_though_not_all_commands_R
+  File: 454_lm_bit_of_the_GTE_opcode_though_not_all_commands_R.txt
+  Size: 1.9 KB
+  Lines: 38
+
+4551_controller_but_it_doesnt_offer_a_function_vector_f
+  File: 4551_controller_but_it_doesnt_offer_a_function_vector_f.txt
+  Size: 2.8 KB
+  Lines: 85
+
+4552_is_probably_desired_for_most_games_however_mind_th
+  File: 4552_is_probably_desired_for_most_games_however_mind_th.txt
+  Size: 3.1 KB
+  Lines: 73
+
+4606_Cheat_Devices_Datel_DB25_Comms_Link_Protocol
+  File: 4606_Cheat_Devices_Datel_DB25_Comms_Link_Protocol.txt
+  Size: 1.9 KB
+  Lines: 44
+
+4645_Cheat_Devices_Datel_Cheat_Code_Format
+  File: 4645_Cheat_Devices_Datel_Cheat_Code_Format.txt
+  Size: 1.7 KB
+  Lines: 40
+
+4646_00000000_0000_Dummy_do_nothing_needed_between_slid
+  File: 4646_00000000_0000_Dummy_do_nothing_needed_between_slid.txt
+  Size: 1.8 KB
+  Lines: 44
+
+4665_Cheat_Devices_Xplorer_DB25_Parallel_Port_Function_
+  File: 4665_Cheat_Devices_Xplorer_DB25_Parallel_Port_Function_.txt
+  Size: 1.6 KB
+  Lines: 32
+
+4669_GameDelCheatCode_Tx5744hIndex8
+  File: 4669_GameDelCheatCode_Tx5744hIndex8.txt
+  Size: 1.9 KB
+  Lines: 37
+
+4686_Cheat_Devices_Xplorer_DB25_Parallel_Port_Low_Level
+  File: 4686_Cheat_Devices_Xplorer_DB25_Parallel_Port_Low_Level.txt
+  Size: 4.9 KB
+  Lines: 127
+
+4689_an_extra_resistor_the_memoryresistor_are_intended_
+  File: 4689_an_extra_resistor_the_memoryresistor_are_intended_.txt
+  Size: 1.5 KB
+  Lines: 35
+
+4701_Xplorer_Pinout_DB25_parallelprinter_port
+  File: 4701_Xplorer_Pinout_DB25_parallelprinter_port.txt
+  Size: 1.8 KB
+  Lines: 52
+
+4708_decrypt_xplorer_cheat_code
+  File: 4708_decrypt_xplorer_cheat_code.txt
+  Size: 1.5 KB
+  Lines: 42
+
+4716_If_same_assume_Xplorer_hardware_or_Datel_PAR3_what
+  File: 4716_If_same_assume_Xplorer_hardware_or_Datel_PAR3_what.txt
+  Size: 2.6 KB
+  Lines: 64
+
+4725_J803_9pin_rear_connector_Serial_Port_33V_aka_J308_
+  File: 4725_J803_9pin_rear_connector_Serial_Port_33V_aka_J308_.txt
+  Size: 2.3 KB
+  Lines: 42
+
+4797_Sonys_own_hardware_for_PSone
+  File: 4797_Sonys_own_hardware_for_PSone.txt
+  Size: 1.4 KB
+  Lines: 26
+
+480_GTE_Coordinate_Calculation_Commands
+  File: 480_GTE_Coordinate_Calculation_Commands.txt
+  Size: 1.5 KB
+  Lines: 31
+
+481_near_clip_plane_ie_if_it_is_very_close_to_the_came
+  File: 481_near_clip_plane_ie_if_it_is_very_close_to_the_came.txt
+  Size: 1.9 KB
+  Lines: 39
+
+4824_SLPH_00022_Optec_AI_Commander_Pro_digital_pad_with
+  File: 4824_SLPH_00022_Optec_AI_Commander_Pro_digital_pad_with.txt
+  Size: 1.9 KB
+  Lines: 38
+
+4836_SLPH_00100_ASCII_Hanging_Fishing_Controller_contro
+  File: 4836_SLPH_00100_ASCII_Hanging_Fishing_Controller_contro.txt
+  Size: 1.7 KB
+  Lines: 39
+
+486_by_the_hardware_The_MAC_calculation_is_split_into_
+  File: 486_by_the_hardware_The_MAC_calculation_is_split_into_.txt
+  Size: 1.8 KB
+  Lines: 39
+
+4899_Pinouts_Audio_Video_Power_Expansion_Ports
+  File: 4899_Pinouts_Audio_Video_Power_Expansion_Ports.txt
+  Size: 1.4 KB
+  Lines: 36
+
+4905_EXP_4_38_WR1_CPU99______
+  File: 4905_EXP_4_38_WR1_CPU99______.txt
+  Size: 1.6 KB
+  Lines: 58
+
+491_BKBackground_color_and_for_CDP_IR0Interpolation_va
+  File: 491_BKBackground_color_and_for_CDP_IR0Interpolation_va.txt
+  Size: 2.4 KB
+  Lines: 61
+
+4925_The_PSX_serial_port_uses_0V35V_logic_whilst_RS232_
+  File: 4925_The_PSX_serial_port_uses_0V35V_logic_whilst_RS232_.txt
+  Size: 1.5 KB
+  Lines: 29
+
+4953_IC304_52pin_SUB_CPU_MC68HC05G6_52pin_package_LATE_
+  File: 4953_IC304_52pin_SUB_CPU_MC68HC05G6_52pin_package_LATE_.txt
+  Size: 1.4 KB
+  Lines: 26
+
+4978_4_GPUA2_24_D29_44_GND_64_GND_84_D9a_104_RAS_124_D4
+  File: 4978_4_GPUA2_24_D29_44_GND_64_GND_84_D9a_104_RAS_124_D4.txt
+  Size: 1.5 KB
+  Lines: 26
+
+498_E1hDFhDDhDChDAhD8hD6hD5hD3hD1hD0hCEhCDhCBhC9hC8h_0
+  File: 498_E1hDFhDDhDChDAhD8hD6hD5hD3hD1hD0hCEhCDhCBhC9hC8h_0.txt
+  Size: 1.7 KB
+  Lines: 30
+
+5008_IC732_SONY_CXD2941R_SPUCDROMSPU_RAM_on_PM_412_boar
+  File: 5008_IC732_SONY_CXD2941R_SPUCDROMSPU_RAM_on_PM_412_boar.txt
+  Size: 1.9 KB
+  Lines: 33
+
+5078_and_even_later_boards_have_it_integrated_in_the_SP
+  File: 5078_and_even_later_boards_have_it_integrated_in_the_SP.txt
+  Size: 1.5 KB
+  Lines: 28
+
+5081_2_SPINDLE_via_15K_to_SPU21
+  File: 5081_2_SPINDLE_via_15K_to_SPU21.txt
+  Size: 2.3 KB
+  Lines: 78
+
+5103_IC104_Sony_CXD1852AQ_MPEG_1_Decoder_for_Video_CD_1
+  File: 5103_IC104_Sony_CXD1852AQ_MPEG_1_Decoder_for_Video_CD_1.txt
+  Size: 1.4 KB
+  Lines: 26
+
+5113_that_instruction_set_is_also_used_by_SNES_sound_CP
+  File: 5113_that_instruction_set_is_also_used_by_SNES_sound_CP.txt
+  Size: 1.7 KB
+  Lines: 42
+
+5191_IC201_GPU_RAM_1MByte_or_2MByte_of_which_only_1MByt
+  File: 5191_IC201_GPU_RAM_1MByte_or_2MByte_of_which_only_1MByt.txt
+  Size: 1.9 KB
+  Lines: 35
+
+5210_CN_7pin_cable_to_controller_port_plus_shield_but_n
+  File: 5210_CN_7pin_cable_to_controller_port_plus_shield_but_n.txt
+  Size: 2.7 KB
+  Lines: 93
+
+5214_CN1_cable_to_PSX_controller_port_same_for_SCPH_115
+  File: 5214_CN1_cable_to_PSX_controller_port_same_for_SCPH_115.txt
+  Size: 2.5 KB
+  Lines: 103
+
+5217_CN1_cable_to_PSX_controller_port_same_for_SCPH_115
+  File: 5217_CN1_cable_to_PSX_controller_port_same_for_SCPH_115.txt
+  Size: 2.6 KB
+  Lines: 104
+
+5220_CN1_cable_to_PSX_controller_port
+  File: 5220_CN1_cable_to_PSX_controller_port.txt
+  Size: 2.7 KB
+  Lines: 155
+
+5223_CN3_9pin_Cable_to_controller_connector
+  File: 5223_CN3_9pin_Cable_to_controller_connector.txt
+  Size: 2.3 KB
+  Lines: 76
+
+5224_CN3_cable_to_controller_plug
+  File: 5224_CN3_cable_to_controller_plug.txt
+  Size: 2.1 KB
+  Lines: 96
+
+5226_3_Y_to_Ux12_CPU_analog_input
+  File: 5226_3_Y_to_Ux12_CPU_analog_input.txt
+  Size: 1.5 KB
+  Lines: 81
+
+5242_Multitap_PSX_Controller_Port_Cable
+  File: 5242_Multitap_PSX_Controller_Port_Cable.txt
+  Size: 2.1 KB
+  Lines: 56
+
+5273_The_PSX_hardware_is_more_or_less_capable_of_genera
+  File: 5273_The_PSX_hardware_is_more_or_less_capable_of_genera.txt
+  Size: 1.5 KB
+  Lines: 35
+
+5329_TTY_window_can_log_various_HC05_IO_events_eg_Spind
+  File: 5329_TTY_window_can_log_various_HC05_IO_events_eg_Spind.txt
+  Size: 2.2 KB
+  Lines: 57
+
+5340_changing_the_memory_content_ie_the_new_data_must_b
+  File: 5340_changing_the_memory_content_ie_the_new_data_must_b.txt
+  Size: 1.5 KB
+  Lines: 30
+
+5341_mainloop_5_break_every_5th_time_that_pc_gets_to_ma
+  File: 5341_mainloop_5_break_every_5th_time_that_pc_gets_to_ma.txt
+  Size: 1.9 KB
+  Lines: 48
+
+5347_CDROM_File_Formats
+  File: 5347_CDROM_File_Formats.txt
+  Size: 1.6 KB
+  Lines: 51
+
+5348__Sound_Engine_
+  File: 5348__Sound_Engine_.txt
+  Size: 9.2 KB
+  Lines: 271
+
+5351_system_need_to_use_some_of_that_memory
+  File: 5351_system_need_to_use_some_of_that_memory.txt
+  Size: 1.9 KB
+  Lines: 52
+
+539_decode_monochrome_macroblock_MDEC1_command_at_4bpp
+  File: 539_decode_monochrome_macroblock_MDEC1_command_at_4bpp.txt
+  Size: 1.6 KB
+  Lines: 36
+
+540_MDEC3_command_contains_standard_values_which_is_th
+  File: 540_MDEC3_command_contains_standard_values_which_is_th.txt
+  Size: 1.5 KB
+  Lines: 39
+
+543_Maybe_the_real_hardware_is_doing_further_roundings
+  File: 543_Maybe_the_real_hardware_is_doing_further_roundings.txt
+  Size: 1.4 KB
+  Lines: 41
+
+544_set_iqtab_MDEC2_command
+  File: 544_set_iqtab_MDEC2_command.txt
+  Size: 1.5 KB
+  Lines: 51
+
+558_Some_other_differences_are_that_MDEC_has_only_2_fi
+  File: 558_Some_other_differences_are_that_MDEC_has_only_2_fi.txt
+  Size: 1.8 KB
+  Lines: 51
+
+606_Sample_Data_SPU_ADPCM
+  File: 606_Sample_Data_SPU_ADPCM.txt
+  Size: 1.6 KB
+  Lines: 43
+
+618_441kHz_limit_causes_the_hardware_to_skip_samples_o
+  File: 618_441kHz_limit_causes_the_hardware_to_skip_samples_o.txt
+  Size: 2.0 KB
+  Lines: 44
+
+623_4BACh4BF7h4C42h4C8Dh4CD7h4D20h4D68h4DB0h
+  File: 623_4BACh4BF7h4C42h4C8Dh4CD7h4D20h4D68h4DB0h.txt
+  Size: 1.5 KB
+  Lines: 29
+
+625_SPU_Volume_and_ADSR_Generator
+  File: 625_SPU_Volume_and_ADSR_Generator.txt
+  Size: 1.5 KB
+  Lines: 35
+
+626_below_the_hardware_does_then_automatically_go_thro
+  File: 626_below_the_hardware_does_then_automatically_go_thro.txt
+  Size: 2.0 KB
+  Lines: 49
+
+629_ability_to_convert_stereo_CD_output_to_mono_or_to_
+  File: 629_ability_to_convert_stereo_CD_output_to_mono_or_to_.txt
+  Size: 1.9 KB
+  Lines: 48
+
+630_SPU_Voice_Flags
+  File: 630_SPU_Voice_Flags.txt
+  Size: 1.4 KB
+  Lines: 41
+
+709_1F801DA2h_spu_mBASE_base_Reverb_Work_Area_Start_Ad
+  File: 709_1F801DA2h_spu_mBASE_base_Reverb_Work_Area_Start_Ad.txt
+  Size: 2.4 KB
+  Lines: 44
+
+715_SPU_Reverb_Formula
+  File: 715_SPU_Reverb_Formula.txt
+  Size: 2.0 KB
+  Lines: 39
+
+725_SPUCNT_and_to_zerofill_the_Reverb_Buffer_so_that_n
+  File: 725_SPUCNT_and_to_zerofill_the_Reverb_Buffer_so_that_n.txt
+  Size: 1.7 KB
+  Lines: 45
+
+726_11C0h0DC3h0DC0h09C1h0BC4h07C1h0A00h06CDh
+  File: 726_11C0h0DC3h0DC0h09C1h0BC4h07C1h0A00h06CDh.txt
+  Size: 1.6 KB
+  Lines: 46
+
+849_1F801104hN10h_Timer_02_Counter_Mode_RW
+  File: 849_1F801104hN10h_Timer_02_Counter_Mode_RW.txt
+  Size: 1.5 KB
+  Lines: 32
+
+957_20h_to_detect_the_CDROM_Controller_version
+  File: 957_20h_to_detect_the_CDROM_Controller_version.txt
+  Size: 1.7 KB
+  Lines: 34
+
+978_Trying_to_use_SeekL_on_Audio_CDs_passes_okay_on_th
+  File: 978_Trying_to_use_SeekL_on_Audio_CDs_passes_okay_on_th.txt
+  Size: 2.4 KB
+  Lines: 51

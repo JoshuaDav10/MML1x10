@@ -1,0 +1,61 @@
+PSXSPX SPECIFICATIONS - BK=BACKGROUND COLOR, AND, FOR CDP, IR0=INTERPOLATION VALUE, FC=FAR COLOR.
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: BK=Background color, and, for CDP, IR0=Interpolation value, FC=Far color.
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 2014 characters
+Lines: 52
+================================================================================
+
+BK=Background color, and, for CDP, IR0=Interpolation value, FC=Far color.
+
+| [IR1,IR2,IR3] = [MAC1,MAC2,MAC3] = (BK*1000h + LCM*IR) SAR (sf*12)
+[MAC1,MAC2,MAC3] = [R*IR1,G*IR2,B*IR3] SHL 4
+[MAC1,MAC2,MAC3] = MAC+(FC-MAC)*IR0 ;
+
+COP2 0680029h - 8 Cycles - DCPL - Depth Cue Color light
+
+COP2 0780010h - 8 Cycles - DPCS - Depth Cueing (single)
+
+COP2 0x8002Ah - 17 Cycles - DPCT - Depth Cueing (triple)
+
+COP2 0980011h - 8 Cycles - INTPL - Interpolation of a vector and far color
+
+In: [IR1,IR2,IR3]=Vector, FC=Far Color, IR0=Interpolation value, CODE=MSB of
+RGBC, and, for DCPL, R,G,B=LSBs of RGBC.
+
+| [MAC1,MAC2,MAC3] = [R*IR1,G*IR2,B*IR3] SHL 4 ;
+
+DPCT executes thrice, and reads the R,G,B values from RGB0 (ie. reads from the
+Bottom of the Color FIFO, instead of from the RGBC register) (the CODE value is
+kept read from RGBC as usually), so, after DPCT execution, the RGB0,RGB1,RGB2
+Fifo entries are modified.
+
+COP2 190003Dh - 5 Cycles - GPF(sf,lm) - General purpose Interpolation
+
+COP2 1A0003Eh - 5 Cycles - GPL(sf,?) - General Interpolation with base
+
+| [MAC1,MAC2,MAC3] = [0,0,0] ;
+
+Note: Although the SHL in GPL is theoretically undone by the SAR, 44bit
+overflows can occur internally when sf=1.
+
+Details on "MAC+(FC-MAC)*IR0"
+
+| [IR1,IR2,IR3] = (([RFC,GFC,BFC] SHL 12) - [MAC1,MAC2,MAC3]) SAR (sf*12)
+[MAC1,MAC2,MAC3] = (([IR1,IR2,IR3] * IR0) + [MAC1,MAC2,MAC3])
+
+Note: Above "[IR1,IR2,IR3]=(FC-MAC)" is saturated to -8000h..+7FFFh (ie. as if
+lm=0), anyways, further writes to [IR1,IR2,IR3] (within the same command) are
+saturated as usually (ie. depending on lm setting).
+
+Details on "(LLM*V0) SAR (sf*12)" and "(BK*1000h + LCM*IR) SAR (sf*12)"
+
+Works like MVMVA command (see there), but with fixed Tx/Vx/Mx parameters, the
+sf/lm bits can be changed and do affect the results (although normally both
+bits should be set for use with color matrices).
+
+Notes
+
+The 8bit RGB values written to the top of Color Fifo are the 32bit MACn values
+divided by 16, and saturated to +00h..+FFh, and of course, the older Fifo

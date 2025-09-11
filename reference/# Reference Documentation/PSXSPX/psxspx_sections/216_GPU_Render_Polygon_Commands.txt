@@ -1,0 +1,117 @@
+PSXSPX SPECIFICATIONS - GPU RENDER POLYGON COMMANDS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: GPU Render Polygon Commands
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 3488 characters
+Lines: 108
+================================================================================
+
+GPU Render Polygon Commands
+
+GP0(20h) - Monochrome three-point polygon, opaque
+
+GP0(22h) - Monochrome three-point polygon, semi-transparent
+
+GP0(28h) - Monochrome four-point polygon, opaque
+
+GP0(2Ah) - Monochrome four-point polygon, semi-transparent
+
+| 1st Color+Command (CcBbGgRrh)
+2nd Vertex1 (YyyyXxxxh)
+3rd Vertex2 (YyyyXxxxh)
+4th Vertex3 (YyyyXxxxh)
+(5th) Vertex4 (YyyyXxxxh) (if any)
+
+GP0(24h) - Textured three-point polygon, opaque, texture-blending
+
+GP0(25h) - Textured three-point polygon, opaque, raw-texture
+
+GP0(26h) - Textured three-point polygon, semi-transparent, texture-blending
+
+GP0(27h) - Textured three-point polygon, semi-transparent, raw-texture
+
+GP0(2Ch) - Textured four-point polygon, opaque, texture-blending
+
+GP0(2Dh) - Textured four-point polygon, opaque, raw-texture
+
+GP0(2Eh) - Textured four-point polygon, semi-transparent, texture-blending
+
+GP0(2Fh) - Textured four-point polygon, semi-transparent, raw-texture
+
+| 1st Color+Command (CcBbGgRrh) (color is ignored for raw-textures)
+2nd Vertex1 (YyyyXxxxh)
+3rd Texcoord1+Palette (ClutYyXxh)
+4th Vertex2 (YyyyXxxxh)
+5th Texcoord2+Texpage (PageYyXxh)
+6th Vertex3 (YyyyXxxxh)
+7th Texcoord3 (0000YyXxh)
+(8th) Vertex4 (YyyyXxxxh) (if any)
+(9th) Texcoord4 (0000YyXxh) (if any)
+
+GP0(30h) - Shaded three-point polygon, opaque
+
+GP0(32h) - Shaded three-point polygon, semi-transparent
+
+GP0(38h) - Shaded four-point polygon, opaque
+
+GP0(3Ah) - Shaded four-point polygon, semi-transparent
+
+| 1st Color1+Command (CcBbGgRrh)
+2nd Vertex1 (YyyyXxxxh)
+3rd Color2 (00BbGgRrh)
+4th Vertex2 (YyyyXxxxh)
+5th Color3 (00BbGgRrh)
+6th Vertex3 (YyyyXxxxh)
+(7th) Color4 (00BbGgRrh) (if any)
+(8th) Vertex4 (YyyyXxxxh) (if any)
+
+GP0(34h) - Shaded Textured three-point polygon, opaque, texture-blending
+
+GP0(36h) - Shaded Textured three-point polygon, semi-transparent, tex-blend
+
+GP0(3Ch) - Shaded Textured four-point polygon, opaque, texture-blending
+
+GP0(3Eh) - Shaded Textured four-point polygon, semi-transparent, tex-blend
+
+| 1st Color1+Command (CcBbGgRrh)
+2nd Vertex1 (YyyyXxxxh)
+3rd Texcoord1+Palette (ClutYyXxh)
+4th Color2 (00BbGgRrh)
+5th Vertex2 (YyyyXxxxh)
+6th Texcoord2+Texpage (PageYyXxh)
+7th Color3 (00BbGgRrh)
+8th Vertex3 (YyyyXxxxh)
+9th Texcoord3 (0000YyXxh)
+(10th) Color4 (00BbGgRrh) (if any)
+(11th) Vertex4 (YyyyXxxxh) (if any)
+(12th) Texcoord4 (0000YyXxh) (if any)
+
+GP0(35h,37h,3Dh,3Fh) - Undocumented/Nonsense (Raw Texture + UNUSED shading)
+
+These are undocumented inefficient nonsense commands: Parameters are same as
+for GP0(34h,36h,3Ch,3Eh), ie. with colors for all vertices, but without
+actually using that colors. Instead, the commands are rendering raw textures
+without blending.
+
+In other words, the commands have same function as GP0(25h,27h,2Dh,2Fh), but
+with additional/unused parameters (and possible additional/unused internal
+gouraud shading calculations).
+
+For whatever reason, Castlevania is actually using these nonsense commands,
+namely GP0(3Dh) and GP0(3Fh).
+
+GP0(21h,23h,29h,2Bh,31h,33h,39h,3Bh) - Undocumented/Nonsense
+
+These commands have texture-blending disabled, which is nonsense because they
+are using untextured polygons anyways, ie. they are probably same as
+GP0(20h,22h,28h,2Ah,30h,32h,38h,3Ah).
+
+Notes
+
+Polygons are displayed up to their lower-right coordinates.
+
+Four-point polygons are internally processed as two Three-point polygons, the
+first consisting of Vertices 1,2,3, and the second of Vertices 2,3,4.
+
+Within the Three-point polygons, the ordering of the vertices is don't care at

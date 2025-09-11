@@ -1,0 +1,33 @@
+PSXSPX SPECIFICATIONS - CDROM FILE XYZ AND DUMMY/NULL FILES
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File XYZ and Dummy/Null Files
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1001 characters
+Lines: 24
+================================================================================
+
+CDROM File XYZ and Dummy/Null Files
+
+In case of the Demo Discs, the developers did probably have high hopes to
+release a demo version with working streaming data, just to find out that Sony
+had screwed up the data format (or maybe they had only accidentally included
+streaming data, without actually using it in demo version). Confusingly, the
+corrupted files were released on several discs (magazine demos, and other demo
+releases).
+
+The Rugrats demo has intact files in RUGRATS\CINEMAT and RUGRATS\XA folders,
+plus nonsense copies of that files in 920h-byte format in STREAMS folder.
+
+Partially mis-mastered files
+
+Legend of Dragoon (MagDemo34: LOD\XA\LODXA00.XA has FIRST SECTOR mis-mastered
+(it has TWO sub-headers (01,00,48,00,01,00,48,00,01,01,64,04,01,01,64,04), the
+remaining sectors are looking okay).
+
+Porsche Challenge (USA) (SRC\MENU\STREAM\*.STR)
+
+The subheader and data of the 1st sector are accidently overwritten by some
+ASCII string:
+
+| 000h 4 Subheader 01 44 2D 52 ".D-R" ;\distorted

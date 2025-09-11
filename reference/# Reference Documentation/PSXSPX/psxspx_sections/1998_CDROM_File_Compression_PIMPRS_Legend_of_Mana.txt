@@ -1,0 +1,44 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION PIM/PRS (LEGEND OF MANA)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression PIM/PRS (Legend of Mana)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1442 characters
+Lines: 36
+================================================================================
+
+CDROM File Compression PIM/PRS (Legend of Mana)
+
+Legend of Mana (.PIM/.PRS)
+
+| 000h 1 Unknown (always 01h) (maybe File ID or Compression method)
+001h .. Compressed data ;for TIM: usually 00,10, F0,00, 00,0x, F0,00, ...
+
+Compression codes are:
+
+| nn,data[nn+1] ;nn=00..EF len=nn+1 [dst]=data[1] ;-uncompressed
+F0,xn len=n+3 [dst]=0x ;1x4bit ;\
+F1,nn,xx len=nn+4 [dst]=xx ;1x8bit ;
+F2,nn,yx len=nn+2 [dst]=0x,0y ;2x4bit ; RLE fill
+F3,nn,xx,yy len=nn+2 [dst]=xx,yy ;2x8bit ;
+F4,nn,xx,yy,zz len=nn+2 [dst]=xx,yy,zz ;3x8bit ;/
+F5,nn,xx,data[nn+4] len=nn+4 [dst]=xx,data[1] ;\interleaved
+F6,nn,xx,yy,data[nn+3] len=nn+3 [dst]=xx,yy,data[1] ; fill combo
+F7,nn,xx,yy,zz,data[nn+2] len=nn+2 [dst]=xx,yy,zz,data[1] ;/
+F8,nn,xx len=nn+4 [dst]=xx ;xx=xx+1 ;\
+F9,nn,xx len=nn+4 [dst]=xx ;xx=xx-1 ; fill with
+FA,nn,xx,ss len=nn+5 [dst]=xx ;xx=xx+ss ; signed step
+FB,nn,xx,yy,ss ;ss=signed len=nn+3 [dst]=xx,yy ;yyxx=yyxx+ss ;/
+FC,xx,ny len=n+4 [dst]=[dst-yxx-1] ;\
+FD,xx,nn len=nn+14h [dst]=[dst-xx-1] ; LZ compress
+FE,xn len=n+3 [dst]=[dst-x*8-8] ;/
+FF len=0 end ;-end code
+
+The compression is used for several files in Legend of Mana:
+
+| BIN\*.BIN ---> packed misc binary
+MAP\*\FDATA.PRS ---> packed resource, whatever
+MAP\*\MAP*.PRS ---> packed MPD resource, "SKmapDat"
+WM\WMTIM\*.PIM ---> packed TIM image, 384x384x4bpp, bad compression ratio
+WM\WMAP\*.PAT ---> packed loaddata
+WM\WMAP\*.PIM ---> packed TIM image, 320x256x16bit, with UNCOMPRESSED dupe

@@ -1,0 +1,40 @@
+PSXSPX SPECIFICATIONS - OUTPUT, BUT ACTUALLY MOST OR ALL CGA HARDWARE IS HAVING DIGITAL 4BIT IRGB
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: output, but actually most or all CGA hardware is having digital 4bit IRGB
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1547 characters
+Lines: 32
+================================================================================
+
+output, but actually most or all CGA hardware is having digital 4bit IRGB
+output, which outputs cyan-red-white.
+
+The new "smart" method is apparently trying to detect if [13h-1Bh] contains RGB
+values with Color1=Green or Cyan, and to select the corresponding CGA palette;
+unfortunately such PCX files are merely setting [14h,15h] to match up with the
+"smart" formula, without actually storing valid RGB values in [13h-1Bh].
+
+8-Color and 16-Color, with fixed EGA Palettes (version=03h or 04h)
+
+These images have 3 or 4 planes. Plane0-3 correspond to bit0-3 of the EGA color
+numbers (ie. blue=plane0, green=plane1, red=plane2, and either intensity=plane3
+for 16-color, or intensity=0 for 8-color images).
+
+Some 8-Color sample images (with version=03h and 04h) can be found bundled with
+PC Paintbrush Plus 1.22 for Windows. A 16-color sample called WINSCR.PCX can be
+found elsewhere in internet.
+
+Caution 1: Official ZSoft specs are wrongly claiming plane0=red and
+plane2=blue; this is wrong (although Paint Shop Pro 2 is actually implementing
+it that way) (whilst MS Paint for Win95b can properly display them) (most other
+tools are trying to read a palette from [10h..3Fh], which is usually garbage
+filled in version=03h..04h).
+
+Caution 2: The standard EGA palette is used for version=03h..04h (many docs
+claim it to be used for version=03h only).
+
+16-Color, with custom EGA/VGA Palettes (version=02h or 05h)
+
+These can have 1 plane with 4 bits, or 4 planes with 1 bit. Header[10h..3Fh]
+contains a custom 16-color RGB palette with 3x8bit per R,G,B.

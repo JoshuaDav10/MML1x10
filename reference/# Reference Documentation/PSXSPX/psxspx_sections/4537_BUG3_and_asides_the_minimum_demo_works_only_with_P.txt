@@ -1,0 +1,39 @@
+PSXSPX SPECIFICATIONS - ;BUG3: AND, ASIDES, THE MINIMUM DEMO WORKS ONLY WITH PAL BIOS (NOT NTSC)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: ;BUG3: and, asides, the minimum demo works only with PAL BIOS (not NTSC)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1366 characters
+Lines: 31
+================================================================================
+
+;BUG3: and, asides, the minimum demo works only with PAL BIOS (not NTSC)
+0xxxxxxx call xxxxxxxxh ;\B(56h) GetC0Table
+00000000 +nop ;/(mov r8,0B0h, jmp r8, +mov r9,56h)
+3C04xxxx mov r4,xxxx0000h ;\@@ori_data
+2484xxxx add r4,xxxxh ;/
+90460018 movb r6,[r2+06h*4] ;BUG1 ;exception_handler = C(06h)
+24870018 add r7,r4,18h ;@@ori_end ;\
+24C50028 add r5,r6,28h ;C(06h)+28h ;
+00A03021 mov r6,r5 ; @@ori_data:
+@@verify_lop: ; 80086520 AF410004 mov [k0+4h],r1
+8CA30000 mov r3,[r5] ; 80086524 AF420008 mov [k0+8h],r2
+8C820000 mov r2,[r4] ; 80086528 AF43000C mov [k0+0Ch],r3
+00000000 nop ; 8008652C AF5F007C mov [k0+7Ch],ra
+1462000C jne r3,r2,@@verify_mismatch ; 80086530 40037000 mov r3,cop0r14
+24840004 +add r4,4h ; 80086534 00000000 nop
+1487FFFA jne r4,r7,@@verify_lop ; @@ori_end:
+24A50004 +add r5,4h ;/
+00C02821 mov r5,r6 ;\ @@new_data:
+3C04xxxx mov r4,xxxx0000h ;\@@new_data; 80086538 AF410004 mov [k0+4h],r1
+2484xxxx add r4,xxxxh ;/ ; 8008653C AF420008 mov [k0+8h],r2
+2483001C add r3,r4,1Ch ;@@bugged_end ; 80086540 40026800 mov r2,cop0r13
+@@copy_lop: ; 80086544 AF43000C mov [k0+0Ch],r3
+8C820000 mov r2,[r4] ; 80086548 40037000 mov r3,cop0r14
+24840004 add r4,4h ; 8008654C AF5F007C mov [k0+7Ch],ra
+ACA20000 mov [r5],r2 ; @@new_end:
+1483FFFC jne r4,r3,@@copy_lop ; 80086550 00000000 nop ;BUG2
+24A50004 +add r5,4h ;/ @@bugged_end:
+@@verify_mismatch:
+
+early_card_irq_patch:

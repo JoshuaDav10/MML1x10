@@ -1,0 +1,54 @@
+PSXSPX SPECIFICATIONS - ODD TOTAL FILESIZE. GRAN TURISMO 2 (GT2.VOL\ARCADE\ARC_OTHER.TIM\0000) ALSO HAS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: odd total filesize. Gran Turismo 2 (GT2.VOL\arcade\arc_other.tim\0000) also has
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1502 characters
+Lines: 46
+================================================================================
+
+odd total filesize. Gran Turismo 2 (GT2.VOL\arcade\arc_other.tim\0000) also has
+odd size. Unknown if the CLUT can also have odd size (which would misalign the
+following Bitmap section).
+
+Bust A Groove (MagDemo18: BUSTGR_A\G_COMMON.DFS\0005) has 0x0 pixel Bitmaps
+(with CLUT data).
+
+PXL/CLT Format
+
+PXL/CLT is very rare. And oddly, with swapped ID values (official specs say
+11h=PXL, 12h=CLT, but the existing games do use 11h=CLT, 12h=PXL).
+
+Used by Granstream Saga (MagDemo10 GS\*)
+
+Used by Bloody Roar 1 (MagDemo06: BL\*)
+
+Used by Bloody Roar 2 (MagDemo22: ASC,CMN,EFT,LON,SND,ST5,STU\*)
+
+CLT Format
+
+| 000h 1 File ID (always 11h=CLT) (although Sony's doc says 12h)
+001h 1 Version (always 00h)
+002h 2 Reserved (always 0000h)
+004h 4 Flags (bit0-1=Type=2; bit2-31=Reserved/zero)
+... .. Data Section for CLUT (Palette)
+
+The .CLT Type should be always 2 (meant to indicate 16bit CLUT entries).
+
+PXL Format
+
+| 000h 1 File ID (always 12h=PXL) (although Sony's doc says 11h)
+001h 1 Version (always 00h)
+002h 2 Reserved (always 0000h)
+004h 4 Flags (bit0-?=Type; see below, bit?-31=Reserved/zero)
+... .. Data Section for Pixels (Bitmap/Texture)
+
+This does probably support the same 5 types as in .TIMs (though official Sony
+docs claim the .PXL type to be only 1bit wide, but netherless claim that PXL
+can be 4bpp, 8bpp, or 16bpp).
+
+| _______________________________ Compressed TIM _______________________________
+
+Compressed TIMs
+
+Ape Escape (Sony 1999) is using a customized TIM format with 4bpp compression:

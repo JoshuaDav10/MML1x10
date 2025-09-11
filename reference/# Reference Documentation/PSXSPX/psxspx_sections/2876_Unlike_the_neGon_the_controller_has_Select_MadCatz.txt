@@ -1,0 +1,40 @@
+PSXSPX SPECIFICATIONS - UNLIKE THE NEGON, THE CONTROLLER HAS SELECT, >MADCATZ DUAL FORCE RACING WHEEL
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Unlike the neGon, the controller has Select, >MadCatz Dual Force Racing Wheel
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1194 characters
+Lines: 31
+================================================================================
+
+Unlike the neGon, the controller has Select, >MadCatz Dual Force Racing Wheel
+
+Same as above, but with a new Analog mode (additionally to Digital and neGcon
+modes). The new mode is for racing games that support only Analog Joypads
+(instead of neGcon). Additionally it supports vibration feedback.
+
+MadCatz MC2 Vibration compatible Racing Wheel and Pedals
+
+Same as above, but with a redesigned wheel with rearranged buttons, the digital
+pad moved to the center of the wheel, the L/R buttons at the rear-side of the
+wheel have been replaced by 2-way butterfly buttons ("pull towards user" acts
+as normal, the new "push away from user" function acts as L3/R3).
+
+| ____________________
+/ ________________ \ ___ Stick Brakes Gas
+/ / MC2 \ \ ( ) ___ ___
+/ /__________________\ \ \ / | |
+| A () _|_ I >
+
+MadCatz Button Chart
+
+| Mode Buttons...................... Gas Brake Stick Wheel
+Digital >
+
+Whereas, lt/rt/up/dn=Digital Pad, UP/DN=Left Analog Pad Up/Down, LT/RT=Right
+Analog Pad Left/Right. Analog mode is supported only by the Dual Force and MC2
+versions, L3/R3 only by the MC2 version.
+
+Namco Jogcon (NPC-105/SLEH-0020/SLPH-00126/SLUH-00059)
+
+| __Halfword 0 (Controller Info)___________________

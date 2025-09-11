@@ -1,0 +1,26 @@
+MIPS INSTRUCTION SET REFERENCE - THIS SECTION PROVIDES VARIOUS BIT ENCODING TABLES FOR THE INSTRUCTIONS OF THE MIPS32 ISA.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: This section provides various bit encoding tables for the instructions of the MIPS32 ISA.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1054 characters
+Lines: 17
+================================================================================
+
+This section provides various bit encoding tables for the instructions of the MIPS32 ISA.
+
+      Figure A-1 shows a sample encoding table and the instruction opcode field this table encodes. Bits 31..29 of the opcode
+      field are listed in the leftmost columns of the table. Bits 28..26 of the opcode field are listed along the topmost rows of
+      the table. Both decimal and binary values are given, with the first three bits designating the row, and the last three bits
+      designating the column.
+
+      An instruction’s encoding is found at the intersection of a row (bits 31..29) and column (bits 28..26) value. For instance,
+      the opcode value for the instruction labelled EX1 is 33 (decimal, row and column), or 011011 (binary). Similarly, the
+      opcode value for EX2 is 64 (decimal), or 110100 (binary).
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                                  315
+
+                           Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.

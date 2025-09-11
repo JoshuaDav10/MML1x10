@@ -1,0 +1,122 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION ZOO
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression ZOO
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 4789 characters
+Lines: 113
+================================================================================
+
+CDROM File Compression ZOO
+
+ZOO Archives
+
+| File Header:
+000h 20 Text Message (usually "ZOO #.## Archive.",1Ah,00h,00h)
+014h 4 ID (FDC4A7DCh) (use this ID for detection, and ignore above text)
+018h 4 Offset to first Chunk (22h or 2Ah+commentsize?)
+01Ch 4 Offset to first Chunk, negated (-22h or -2Ah-commentsize?)
+020h 1+1 Version needed to extract (Major,Minor) (usually 1,01 or 2,00)
+022h (1) Archive Header Type (01h) ;\
+023h (4) Offset to Archive Comment (0=None) ; v2.00 and
+027h (2) Length of Archive Comment (0=None) ; up only
+029h (1) Version Data (01h or 03h) "HVDATA" ;/
+File Chunks:
+000h 4 ID (FDC4A7DCh)
+004h 1 Type of directory entry (1=Old, 2=New, with extra entries)
+005h 1 Compression method (0=Stored, 1=LZW/default, 2=LZH)
+006h 4 Offset to next Chunk
+00Ah 4 Offset to File Data
+00Eh 4 File Modification Date/time in MSDOS format
+012h 2 CRC16 on uncompressed file (with initial value 0000h)
+014h 4 Filesize, uncompressed
+018h 4 Filesize, compressed
+01Ch 1+1 Version needed to extract (Major,Minor) (usually 1,00 or 2,01)
+01Eh 1 Deleted flag (0=Normal, 1=Deleted)
+01Fh 1 File structure (unknown purpose)
+020h 4 Offset of comment field (0=None)
+024h 2 Length of comment field (0=None)
+026h 13 Short Filename ("FILENAME.EXT",00h, garbage padded if shorter)
+033h (1) Unknown (4Fh) (or 00h when with comment?) ;-Type=1
+033h (2) Length of 038h and up (0Ah+longname+dirname) ;\
+035h (1) Timezone (signed) (7Fh=Unknown) ;
+036h (2) CRC16 on Header (000h..037h+[033h], with [036h]=0000h) ;
+038h (1) Length of Long Filename (0=None, use Short Filename) ;
+039h (1) Length of Directory name (0=None) ; Type=2
+03Ah (..) Long Filename ("longfilename.ext",00h) (if any) ;
+... (..) Directory name ("/path",00h) (if any) ;
+... (2) System ID (0=Unix, 1=DOS, 2=Portable) (but for DOS=0) ;
+... (3) File Attributes (24bit) (but for DOS=0) ;
+... (1) Backup Flags (bit7=On, bit6=Last, bit0-3=Generation) ;
+... (2) Backup File Version Number (for backup copies) ;/
+... 5 File Leader aka Fudge Factor ("@)#(",00h) ;\
+... .. File Data ; All types
+... .. File Comment (if any) (ASCII, "Text string",0Ah) ;/
+Last Chunk:
+000h 4 ID (FDC4A7DCh)
+004h (30h) Zerofilled ;-Type 1
+004h (1) Fixed (02h) ;\
+005h (31h) Zerofilled ; Tyoe 2
+036h (2) CRC16 on Header (with [036h]=0000h) (always 83FCh) ;/
+... (..) Comments may be stored here (if added after archive creation)
+... (..) Padding, if any (1Ah-filled in some files)
+
+Notes:
+
+Method LZW is quite straight, the bitstream is fetched LSB first, codesize is
+initially 9bit, max 13bit, with two special codes (100h=Clear, 101h=Stop),
+there aren't any gaps after clear codes, the unusual part is that the bitstream
+does start with a clear code.
+
+Method LZH is slower, requires Zoo 2.10, and is used only when specifiying "h"
+option in commandline. LZH has 8Kbyte window, same as LHA's "lh5", with an
+extra end marker (blocksize=0000h=end).
+
+Comments may be stored anywhere in the middle or at the end of the archive
+(even after the zerofilled last chunk) (depending on whether the comment or
+further files where last added to the archive).
+
+Zoo is from 1986-1991, long filenames were supported only for OSes that did
+support them at that time (ie. not for DOS/Windows).
+
+When adding new files, Zoo defaults to maintain backups of old files in the
+archive (older files are marked as "deleted" via [01Eh]=1, but are kept in the
+archive; until the user issues command "P" for repacking/removing deleted
+files) (Zoo 2.xx can additionally use a "generation" limit of 0..15, which
+means to keep 0..15 older copies).
+
+All offsets are originated from begin of archive.
+
+Zoo Tiny format (single-file) (commandline "z" option)
+
+This format is called Tiny in Zoo source code, but isn't documented in the Zoo
+manual or Zoo help screen. Tiny can contain only a single file (alike gzip).
+The purpose appears to be using Tiny as temporary files when moving files from
+one archive to another (without needing to decompress & recompress the
+file), for example:
+
+| zoo xz source.too testfile.txt ;extract to tiny/temp file testfile.tzt
+zoo az dest.zoo testfile.txt ;import from tiny/temp file testfile.tzt
+
+The tiny/temp file extensions have the middle character changed to "z" (eg.
+"tzt" instead of "txt").
+
+Going by zoo source code, the format should look as so:
+
+| 000h 2 Zoo Tiny ID (07FEh)
+002h 1 Type (01h)
+003h 1 Compression Method
+004h 4 Date/time in MSDOS format
+008h 2 CRC16 on uncompressed file, or what (?)
+00Ah 4 Filesize, uncompressed
+00Eh 4 Filesize, compressed
+012h 1 Major_ver
+013h 1 Minor_ver
+014h 2 Comment size (0=None)
+016h 13 Short Filename
+023h .. File data ... plus comment, if any?
+
+But, files from Zoo DOS version are reportedly starting with 07h,01h (instead
+FEh,07h,01h).
+
+And, using Zoo DOS version with "z" option in Win98 does merely display "Zoo:

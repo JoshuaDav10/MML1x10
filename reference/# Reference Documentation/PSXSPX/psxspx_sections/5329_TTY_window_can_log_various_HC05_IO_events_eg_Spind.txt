@@ -1,0 +1,57 @@
+PSXSPX SPECIFICATIONS - TTY WINDOW CAN LOG VARIOUS HC05 I/O EVENTS (EG. SPINDLE AND SLED CONTROL).
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: TTY window can log various HC05 I/O events (eg. Spindle and Sled control).
+Chunked: Wed Sep 10 03:34:25 PM CDT 2025
+Size: 1738 characters
+Lines: 48
+================================================================================
+
+TTY window can log various HC05 I/O events (eg. Spindle and Sled control).
+
+No$psx Emulation Notes
+
+Important Notes
+
+Do not expose the emulator to extreme heat, cold, noise, darkness, or direct
+sunlight.
+
+Do not drink, eat, or smoke when using this software.
+
+Sit upright and put your hands on the table.
+
+Defragment your harddisk weekly.
+
+Use specialized defragmentation tools.
+
+This product may contain rude and disturbing language.
+
+No$psx Debugger - Hotkeys in Debug Mode
+
+Most debug functions are available via hotkeys and via mouse accessible popup
+boxes. The popup boxes generally also show the corresponding hotkey.
+
+| Cursor (*) Move around
+Cursor Right Follow (in codewin: map window to jump/call dest adr)
+Cursor Right Follow (in stckwin: map codewin to return adr)
+Cursor Left Undo follow (if nothing to undo: goto program counter)
+Page Up/Down (*) Move around
+Home (*) Goto Start or to 0000
+End (*) Goto End
+Ret (*) Center/Uncenter current line in code window
+Shift+Cursor Change Active Window (Code,Data,Stck,Regs)
+Shift+Cursor (*) Toggle between Hex- and Ascii-input in data window
+Tab (*) Toggle Standard and Symbolic Display in code window
+Tab (*) Toggle Lower Window (Data or Break/Watch)
+Ctrl+B Enter Breakpoint Address, Condition
+Ctrl+N Find Next Breakpoint
+Ctrl+G Goto Address (prompts for address) (does not affect pc)
+Ctrl+E (*) Toggle Warnings on/off
+Ctrl+O OS Shell (calls DOS, type 'exit' to come back)
+Ctrl+I Inspect (Define Watchpoint address)
+Ctrl+R Reload Cartridge
+Ctrl+S Search (see below! this works a bit strange)
+Ctrl+C Continue Search
+Ctrl+V (**) Toggle Screen Size 25/50 lines (DOS version only)
+Ctrl+D Toggle Datazone (see below)
+Ctrl+A/T/X (*) Add/Toggle/Remove Machine (up to 12 consoles at 1 time)

@@ -1,0 +1,51 @@
+PSXSPX SPECIFICATIONS - SET_IQTAB ;MDEC(2) COMMAND
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: set_iqtab ;MDEC(2) command
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 1147 characters
+Lines: 43
+================================================================================
+
+set_iqtab ;MDEC(2) command
+
+| iqtab_core(iq_y,src), src=src+64 ;luminance quant table
+if command_word.bit0=1
+iqtab_core(iq_uv,src), src=src+64 ;color quant table (optional)
+endif
+
+iqtab_core(iq,src) ;src = 64 unsigned parameter bytes
+
+| for i=0 to 63, iq[i]=src[i], next i
+
+Note: For "fast_idct_core" one could precalc "iq[i]=src[i]*scalezag[i]", but
+that would conflict with the RLE saturation/rounding steps (though those steps
+aren't actually required, so a very-fast decoder could omit them).
+
+scalefactor[0..7] = cos((0..7)*90'/8) ;for [1..7]: multiplied by sqrt(2)
+
+| 1.000000000, 1.387039845, 1.306562965, 1.175875602,
+1.000000000, 0.785694958, 0.541196100, 0.275899379
+
+zigzag[0..63] =
+
+| 0 ,1 ,5 ,6 ,14,15,27,28,
+2 ,4 ,7 ,13,16,26,29,42,
+3 ,8 ,12,17,25,30,41,43,
+9 ,11,18,24,31,40,44,53,
+10,19,23,32,39,45,52,54,
+20,22,33,38,46,51,55,60,
+21,34,37,47,50,56,59,61,
+35,36,48,49,57,58,62,63
+
+scalezag[0..63] (precalulated factors, for "fast_idct_core")
+
+| for y=0 to 7
+for x=0 to 7
+scalezag[zigzag[x+y*8]] = scalefactor[x] * scalefactor[y] / 8
+next x
+next y
+
+zagzig[0..63] (reversed zigzag table)
+
+| for i=0 to 63, zagzig[zigzag[i]]=i, next i

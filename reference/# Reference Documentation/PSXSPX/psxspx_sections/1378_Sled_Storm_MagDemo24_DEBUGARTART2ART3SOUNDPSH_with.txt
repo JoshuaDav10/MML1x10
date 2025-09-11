@@ -1,0 +1,70 @@
+PSXSPX SPECIFICATIONS - SLED STORM (MAGDEMO24: DEBUG,ART,ART2,ART3,SOUND\*.PSH) (WITH COMMENT, MIPMAP)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Sled Storm (MagDemo24: DEBUG,ART,ART2,ART3,SOUND\*.PSH) (with Comment, Mipmap)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 2955 characters
+Lines: 62
+================================================================================
+
+Sled Storm (MagDemo24: DEBUG,ART,ART2,ART3,SOUND\*.PSH) (with Comment, Mipmap)
+
+WCW Mayhem (MagDemo28: WCWDEMO\*.BIG\*.PSH) (with chunk C0h/C1h = RefPack)
+
+| 000h 4 ID "SHPP"
+004h 4 Total Filesize (or Filesize-0Ch, eg. FIFA'98 ZLEG*.PSH)
+008h 4 Number of Textures (N)
+00Ch 4 ID "GIMX"
+010h N*8 File List
+... .. Data (each File contains a Bitmap chunk, and Palette chunk, if any)
+File List entries:
+000h 4 Name (ascii) (Mipmaps use the same name for each mipmap level)
+004h 4 Offset from begin of archive to first Chunk of file
+Caution: Most PSH files do have the above offsets sorted in increasing order,
+but some have UNSORTED offsets, eg. Sled Storm (MagDemo24: ART3\LOAD1.PSH),
+so one cannot easily compute sizes as NextOffset-CurrOffset.
+Note: Mipmap textures consist of two files with same name and different
+resolution, eg. in Sled Storm (MagDemo24: ART\WORLD0x.PSH)
+Bitmap Chunk:
+000h 1 Chunk Type (40h=PSX/4bpp, 41h=PSX/8bpp, 42h=PSX/16bpp)
+001h 3 Offset from current chunk to next chunk (000000h=None)
+004h 2 Bitmap Width in pixels (can be odd, pad lines to 2-byte boundary)
+006h 2 Bitmap Height
+008h 2 Center X (whatever that is)
+00Ah 2 Center Y (whatever that is)
+00Ch 2 Position X (whatever that is, plus bit12-15=flags?)
+00Eh 2 Position Y (whatever that is, plus bit12-15=flags?)
+010h .. Bitmap data (each scanline is padded to 2-byte boundary)
+... .. Padding to 8-byte boundary
+Compressed Bitmap Chunk:
+000h 1 Chunk Type (C0h=PSX/4bpp, C1h=PSX/8bpp, and probably C2h=PSX/16bpp)
+001h 0Fh Same as in Chunk 40h/41h/42h (see there)
+010h .. Compressed Bitmap data (usually/always with Method=10FBh)
+... .. Padding to 8-byte boundary
+Palette Chunk (if any) (only for 4bpp/8bpp bitmaps, not for 16bpp):
+000h 1 Chunk Type (23h=PSX/Palette)
+001h 3 Offset from current chunk to next chunk (000000h=None)
+004h 2 Palette Width in halfwords (10h or 100h)
+006h 2 Palette Height (1)
+008h 2 Unknown (usually same as Width) (or 80D0h or 9240h)
+00Ah 2 Unknown (usually 0000h) (or 0001h or 0002h)
+00Ch 2 Unknown (usually 0000h)
+00Eh 2 Unknown (usually 00F0h)
+010h .. Palette data (16bit per color)
+Note: The odd 80D0h,0001h values occur in Sled Storm ART\WORKD00.PSH\TBR1)
+Unknown Chunk (eg. ReBoot (DATA\AREA15.PSH\sp*))
+000h 1 Chunk Type (6Bh)
+001h 3 Offset from current chunk to next chunk (000000h=None)
+004h 8 Unknown (2C,00,00,3C,03,00,00,00)
+00Ch - For whatever reason, there is no 8-byte padding here
+Comment Chunk (eg. Sled Storm (MagDemo24: ART\WORLD0x.PSH))
+000h 1 Chunk Type (6Fh=PSX/Comment)
+001h 3 Offset from current chunk to next chunk (000000h=None)
+004h .. Comment ("Saved in Photoshop Plugin made by PEE00751@...",00h)
+... .. Zeropadding to 8-byte boundary
+Unknown Chunk (eg. Sled Storm (MagDemo24: ART\WORLD09.PSH\ADAA))
+000h 1 Chunk Type (7Ch)
+001h 3 Offset from current chunk to next chunk (000000h=None)
+004h 2Ch Unknown (reportedly Hot spot / Pix region, but differs on PSX?)
+
+The whole .PSH file or the bitmap chunks can be compressed:

@@ -1,0 +1,20 @@
+MIPS INSTRUCTION SET REFERENCE - SPECIAL32
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: SPECIAL32
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1420 characters
+Lines: 11
+================================================================================
+
+SPECIAL32
+         3    011            β             β               β               β         SPECIAL2 δ         JALX ε             ε            δ⊕
+         4    100           LB            LH            LWL               LW             LBU            LHU             LWR              β
+         5    101           SB            SH            SWL               SW              β               β             SWR            CACHE
+         6    110           LL           LWC1          LWC2 θ            PREF             β             LDC1           LDC2 θ            β
+         7    111           SC           SWC1          SWC2 θ              *              β             SDC1           SDC2 θ            β
+        1. In Release 1 of the Architecture, the COP1X opcode was called COP3, and was available as another user-available coprocessor. In
+              Release 2 of the Architecture, a full 64-bit floating point unit is available with 32-bit CPUs, and the COP1X opcode is reserved for
+              that purpose on all Release 2 CPUs. 32-bit implementations of Release 1 of the architecture are strongly discouraged from using
+              this opcode for a user-available coprocessor as doing so will limit the potential for an upgrade path to a 64-bit floating point unit.
+        2. Release 2 of the Architecture added the SPECIAL3 opcode. Implementations of Release 1 of the Architecture signaled a Reserved

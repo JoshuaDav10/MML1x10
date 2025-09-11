@@ -1,0 +1,48 @@
+PSXSPX SPECIFICATIONS - 3-0 TX CLOCK SELECT (0..0CH=SEE TABLE, 0DH=TIMER, 0EH=16XIP, 0FH=1XIP)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 3-0 Tx Clock Select (0..0Ch=See Table, 0Dh=Timer, 0Eh=16xIP, 0Fh=1xIP)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1809 characters
+Lines: 40
+================================================================================
+
+3-0 Tx Clock Select (0..0Ch=See Table, 0Dh=Timer, 0Eh=16xIP, 0Fh=1xIP)
+
+The 2681 has some sets of predefined baud rates (set1/set2 selected via ACR.7),
+additionally, in BRG Test Mode, set3/set4 are used instead of set1/set2), the
+baud rates for selections 00h..0Dh are:
+
+| Rate 00h 01h 02h 03h 04h 05h 06h 07h 08h 09h 0Ah 0Bh 0Ch
+Set1 50 110 134.5 200 300 600 1200 1050 2400 4800 7200 9600 38400
+Set2 75 110 134.5 150 300 600 1200 2000 2400 4800 1800 9600 19200
+Set3 4800 880 1076 19200 28800 57600 115200 1050 57600 4800 57600 9600 38400
+Set4 7200 880 1076 14400 28800 57600 115200 2000 57600 4800 14400 9600 19200
+
+Selection 0Eh/0Fh are using an external clock source (derived from
+IP3,IP4,IP5,IP6 pins; for TxA,RxA,TxB,RxB respectively).
+
+1F802022h/Write - CRA - DUART Command Register A (W)
+
+1F80202Ah/Write - CRB - DUART Command Register B (W)
+
+| 7 Not used (should be 0)
+6-4 Miscellaneous Commands (0..7 = see below)
+3 Disable Tx (0=No change, 1=Disable)
+2 Enable Tx (0=No change, 1=Enable) ;Don't use with Command 3 (Reset Rx)
+1 Disable Rx (0=No change, 1=Disable)
+0 Enable Rx (0=No change, 1=Enable) ;Don't use with Command 2 (Reset Tx)
+
+The command values for CRA (or CRB) are:
+
+| 0 No command ;no effect
+1 Reset MR pointer ;force "FirstAccess" state for MR1A (or MR1B) access
+2 Reset receiver ;reset RxA (or RxB) registers, disable Rx, flush Fifo
+3 Reset transmitter ;reset TxA (or TxB) registers
+4 Reset Error Flags ;reset SRA.7-4 (or SRB.7-4) to zero
+5 Reset Break-Change IRQ Flag ;reset ISR.2 (or ISR.6) to zero
+6 Start break ;after current char, pause Tx with TxDA=Low (or TxDB=Low)
+7 Stop break ;output one High bit, then continue Tx (ie. undo pause)
+
+Access to the upper four bits of the command register should be separated by 3
+edges of the X1 clock. A disabled transmitter cannot be loaded.

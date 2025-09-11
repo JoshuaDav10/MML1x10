@@ -1,0 +1,55 @@
+MIPS INSTRUCTION SET REFERENCE - MNEMONIC                                    INSTRUCTION
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Mnemonic                                    Instruction
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1395 characters
+Lines: 48
+================================================================================
+
+Mnemonic                                    Instruction
+         ADD               Add Word
+
+         ADDI              Add Immediate Word
+
+         ADDIU             Add Immediate Unsigned Word
+
+         ADDU              Add Unsigned Word
+
+         CLO               Count Leading Ones in Word
+
+         CLZ               Count Leading Zeros in Word
+
+         DIV               Divide Word
+
+         DIVU              Divide Unsigned Word
+
+         MADD              Multiply and Add Word to Hi, Lo
+
+         MADDU             Multiply and Add Unsigned Word to Hi, Lo
+
+         MSUB              Multiply and Subtract Word to Hi, Lo
+
+         MSUBU             Multiply and Subtract Unsigned Word to Hi, Lo
+
+         MUL               Multiply Word to GPR
+
+         MULT              Multiply Word
+
+         MULTU             Multiply Unsigned Word
+
+         SEB               Sign-Extend Byte                                                          Release 2 Only
+
+         SEH               Sign-Extend Halftword                                                     Release 2 Only
+
+         SLT               Set on Less Than
+
+         SLTI              Set on Less Than Immediate
+
+         SLTIU             Set on Less Than Immediate Unsigned
+
+         SLTU              Set on Less Than Unsigned
+
+         SUB               Subtract Word
+
+         SUBU              Subtract Unsigned Word

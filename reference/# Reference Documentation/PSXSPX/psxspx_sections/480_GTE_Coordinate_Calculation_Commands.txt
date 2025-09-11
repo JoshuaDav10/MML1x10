@@ -1,0 +1,31 @@
+PSXSPX SPECIFICATIONS - GTE COORDINATE CALCULATION COMMANDS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: GTE Coordinate Calculation Commands
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 1148 characters
+Lines: 22
+================================================================================
+
+GTE Coordinate Calculation Commands
+
+COP2 0180001h - 15 Cycles - RTPS - Perspective Transformation (single)
+
+COP2 0280030h - 23 Cycles - RTPT - Perspective Transformation (triple)
+
+RTPS performs final Rotate, translate and perspective transformation on vertex
+V0. Before writing to the FIFOs, the older entries are moved one stage down.
+RTPT is same as RTPS, but repeats for V1 and V2. The "sf" bit should be usually
+set.
+
+| IR1 = MAC1 = (TRX*1000h + RT11*VX0 + RT12*VY0 + RT13*VZ0) SAR (sf*12)
+IR2 = MAC2 = (TRY*1000h + RT21*VX0 + RT22*VY0 + RT23*VZ0) SAR (sf*12)
+IR3 = MAC3 = (TRZ*1000h + RT31*VX0 + RT32*VY0 + RT33*VZ0) SAR (sf*12)
+SZ3 = MAC3 SAR ((1-sf)*12) ;ScreenZ FIFO 0..+FFFFh
+MAC0=(((H*20000h/SZ3)+1)/2)*IR1+OFX, SX2=MAC0/10000h ;ScrX FIFO -400h..+3FFh
+MAC0=(((H*20000h/SZ3)+1)/2)*IR2+OFY, SY2=MAC0/10000h ;ScrY FIFO -400h..+3FFh
+MAC0=(((H*20000h/SZ3)+1)/2)*DQA+DQB, IR0=MAC0/1000h ;Depth cueing 0..+1000h
+
+If the result of the "(((H*20000h/SZ3)+1)/2)" division is greater than 1FFFFh,
+then the division result is saturated to +1FFFFh, and the divide overflow bit
+in the FLAG register gets set; that happens if the vertex is exceeding the

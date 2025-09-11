@@ -1,0 +1,43 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION Z (RUNNING WILD)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression Z (Running Wild)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1297 characters
+Lines: 35
+================================================================================
+
+CDROM File Compression Z (Running Wild)
+
+Running Wild (MagDemo15: RUNWILD\*.BIN\*.Z and *.z)
+
+| decompress_z:
+src=src+4 ;skip 32bit decompressed size entry
+@@reload_lop:
+load_table1 ;table for first 9bits
+load_table2 ;table for codes longer than 9bits
+@@decompress_lop:
+sym=get_symbol()
+if sym0 then for i=0 to num-1, table2[i]=GetBits(9), next i
+ret
+;-----
+get_symbol:
+;returns a value in range 0..140h:
+; 00h..FFh = data 00h..FFh (or unused for disp codes)
+; 100h = escape (or unused for disp codes)
+; 101h..140h = length 05h..44h (or 6bit fraction of 12bit disp)
+; 141h..3FFh = would be possible for short codes, but shouldn't be used
+x=table1[PeekBits(9)]
+if (x and 8000h)=0 then SkipBits(x/400h), return (x and 3FFh) ;-short code
+SkipBits(9) ;skip first 9 bits, and process futher bit(s).. ;\
+x=x-0C000h ;change C000h..C1FFh and up to 000h..1FFh ; long code
+@@lop: ; (with more
+x=table2[x*2+GetBits(1)] ;branch node0/node1 ; than 9bit)
+if x>=141h then x=x-141h, goto @@lop ;
+return x ;/
+
+The bitstream is fetched in little endian 16bit units (the first bit is in bit7
+of second byte). PeekBits returns the next some bits without discarding them,
+SkipBits does discard them, GetBits does combine PeekBits+SkipBits.
+
+Note: The decompression function in Running Wild (MagDemo15) is at 80029D10h.

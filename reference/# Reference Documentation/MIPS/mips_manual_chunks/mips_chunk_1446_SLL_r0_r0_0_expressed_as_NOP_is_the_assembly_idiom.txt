@@ -1,0 +1,41 @@
+MIPS INSTRUCTION SET REFERENCE - SLL R0, R0, 0, EXPRESSED AS NOP, IS THE ASSEMBLY IDIOM USED TO DENOTE NO OPERATION.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: SLL r0, r0, 0, expressed as NOP, is the assembly idiom used to denote no operation.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1682 characters
+Lines: 33
+================================================================================
+
+SLL r0, r0, 0, expressed as NOP, is the assembly idiom used to denote no operation.
+              SLL r0, r0, 1, expressed as SSNOP, is the assembly idiom used to denote no operation that causes an issue break on
+              superscalar processors.
+
+
+
+
+254                                                             MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                                 Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+SLLV
+
+
+
+
+   Shift Word Left Logical Variable                                                                                       SLLV
+
+       31                 26 25              21 20             16 15              11 10              6   5                  0
+             SPECIAL                                                                          0                 SLLV
+                                      rs                rt                 rd
+              000000                                                                       00000               000100
+                   6                  5                  5                 5                  5                   6
+
+            Format:     SLLV rd, rt, rs                                                                               MIPS32
+
+            Purpose: To left-shift a word by a variable number of bits
+
+            Description: rd ← rt << rs
+            The contents of the low-order 32-bit word of GPR rt are shifted left, inserting zeros into the emptied bits; the result
+            word is placed in GPR rd. The bit-shift amount is specified by the low-order 5 bits of GPR rs.
+
+            Restrictions: None

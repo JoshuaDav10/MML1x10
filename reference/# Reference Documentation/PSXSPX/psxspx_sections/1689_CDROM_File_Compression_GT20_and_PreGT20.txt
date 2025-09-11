@@ -1,0 +1,66 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION GT20 AND PREGT20
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression GT20 and PreGT20
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1877 characters
+Lines: 57
+================================================================================
+
+CDROM File Compression GT20 and PreGT20
+
+Ultimate 8 Ball (MagDemo23: POOL.DAT) (5.5Mbyte)
+
+| 000h 4 Number of Entries
+004h N*0Ch File List
+... .. Zeropadding to 800h-byte boundary
+... .. File Data area
+File List entries:
+000h 4 Unknown (random/checksum?)
+004h 4 File Offset (800h-byte aligned, increasing)
+008h 4 File Size in bytes
+
+Notes: The LAST file isn't zeropadded to 800h-byte boundary. The File List
+includes some unused entries (all 0Ch-bytes zerofilled).
+
+BIGFOOL - 3D Baseball (BIGFILE.FOO)
+
+| 000h N*0Ch File List (154h entries)
+... N*4 Filename Checksums (?) (154h entries)
+... .. Zerofilled (padding to 800h-byte boundary)
+... .. File Data area
+
+The 1st list entry describes the current directory itself, as so:
+
+| 000h 4 Number of entries (including the 1st entry itself)
+004h 4 Offset/800h (always 0, relative from begin of directory)
+008h 4 Type (always 3=Directory)
+
+Further list entries are Files or Subdirectories, as so:
+
+| 000h 4 For Files: Size in bytes, for Directories: Number of entries
+004h 4 Offset/800h (from begin of current directory, increasing)
+008h 4 Type (0=File, 3=Directory)
+
+Spec Ops - Airborne Commando (BIGFILE.CAT and nested CAT files therein)
+
+| 000h 4 File ID (always 01h,02h,04h,08h)
+004h 4 Maybe Version? (always 01h,00h,01h,00h)
+008h 4 Header Size (18h+N*8+ArchiveNameLength) ;eg. 4ECh
+00Ch 4 Sector Alignment (can be 4 or 800h)
+010h 4 Number of Files (N) ;eg. 99h
+014h 4 Length of Archive Name (including ending 00h)
+018h N*8 File entries (see below)
+... .. Archive Name, ASCII, terminated by 00h ;eg. "bigfile.dir",00h
+... .. Zeropadding to Sector Alignment boundary
+... .. File Data
+
+File Entries:
+
+| 000h 4 Fileoffset (with above Sector Alignment) (increasing)
+004h 4 Filesize in bytes
+
+Filetypes in the archive include...
+
+| nested CAT archives (file 07h,0Ch,11h,16h,1Bh,20h,25h,etc)
+empty files (file 3Eh,5Ah-5Fh,62h-67h,etc)

@@ -1,0 +1,31 @@
+MIPS INSTRUCTION SET REFERENCE - JALR.HB
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: JALR.HB
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1340 characters
+Lines: 23
+================================================================================
+
+JALR.HB
+
+
+
+
+   Jump and Link Register with Hazard Barrier                                                                               JALR.HB
+
+
+
+          31                   26 25            21 20              16 15              11 10 9            6    5                   0
+                SPECIAL                                     0                                                        JALR
+                                                                                          1 Any
+                                         rs                                                     other legal
+                                                                              rd
+                 000000                                   00000                               hint value            001001
+                    6                    5                  5                  5          1         4                  6
+
+               Format:    JALR.HB rs (rd = 31 implied)                                                        MIPS32 Release 2
+                          JALR.HB rd, rs                                                                      MIPS32 Release 2
+
+               Purpose:
+               To execute a procedure call to an instruction address in a register and clear all execution and instruction hazards

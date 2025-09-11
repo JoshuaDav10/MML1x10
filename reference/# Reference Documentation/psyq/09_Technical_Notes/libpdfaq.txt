@@ -1,0 +1,223 @@
+PSYQ DOCUMENTATION - FAQ/libpdfaq.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/FAQ/libpdfaq.pdf
+Converted: Wed Sep 10 02:47:38 PM CDT 2025
+================================================================================
+
+                           LibPad/Analog Controller FAQ 1.0
+                                                SCEA Developer Support
+                                                      5/19/97
+
+---------------------------------------------------------------------------------------------------------------------------------
+CONTENTS
+--------------------------------------------------------------------------
+
+1. Controller Types
+         a)What is the 16-Button Analog Controller?
+         b)What is the Dual ShockTM Analog Controller?
+         c)What is the Analog Joystick?
+         d)What is the neGcon?
+2. Calibration
+         a)Must I provide a calibration screen for the Dual Shock Analog Controller SCPH-1200?
+         b)Must I still provide a calibration screen for the 16-Button Analog Controller SCPH-1150 ?
+3. Technical Misc.
+         a)The Dual Shock Analog Controller and 16-Button Analog Controller both report the same ID,
+How do I tell them apart?
+         b)… in Analog Joystick Mode (Flight Stick), the button mappings are incorrect.
+         c)…in Analog Mode (Red light)… an off-center value (> 180 ± 25) is returned.
+         d)When I use the two or more Dual Shock Analog Controllers with a Multi-Tap the second and
+third Dual Shock Analog Controllers do not vibrate. Do Dual Shock Analog Controllers work with the
+Multi-Tap?
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------
+BODY
+--------------------------------------------------------------------------
+
+1. Controller Types
+--------------------------------------------------------------------------
+a)What is the Standard Analog Controller?
+
+The 16-Button Analog Controller SCPH-1150 / 1180, introduced in the US in late 1996, is physically
+identical to the standard 16-Button Controller, with the exception of the joystick like buttons located below
+the Start and Select buttons, between the grips, and a Mode Button/LED.
+
+The two “sticks” allow the user to interface the application in an analog fashion, as opposed to the on-off
+fashion of the digital D-Pad. Instead of the 0-1 value reported by digital buttons the application reads the
+status of the “sticks” as a positional value between 0 and 255, where ±128 is the position relative to the
+origin, along the respective axis.
+
+The Mode button allows the user to select the ID that the controller reports to the application. This allows
+the 16-Button Analog Controller to emulate the standard 16-Button Controller and the Analog Joystick.
+
+In Japan, what is the SCPH-1150 in the US and UK, was released as the SCPH-1180. The 1180 is different
+from the 1150 in that it contains a motor in the grip which produces vibration. This vibration is of a binary
+type, where each frame the application simply sends the controller a 0: Vibration OFF or 1: Vibration ON.
+
+--------------------------------------------------------------------------
+b)What is the Dual Shock Analog Controller?
+The Dual Shock Analog Controller SCPH-1180, is Sony’s newest analog device. Physically it is identical
+to the 16-button Analog Controller SCPH-1150/1180. Functionally it differs from the 16-Button Analog
+Controller in that the Analog Joystick emulation is no longer supported, two modes of vibration are
+simultaneously available, and it supports Expanded Protocol for controller-to-PlayStation communications.
+
+The Dual Shock Analog Controller supports the binary vibration of the Japanese 16-Button Analog
+Controller, thus it accepts old-style vibration commands (SendPad() in Libetc.lib) intended for the SCPH-
+1180. In addition, it contains a second actuator that supports variable vibration. This actuator accepts a
+value between 0-255 where 0 = Lowest Frequency and 255 = Highest Frequency. The Frequency
+effectively translates to the number of pulses per second.
+
+Being an Expanded Protocol Controller, when used in conjunction with Libpad, the Dual Shock Analog
+Controller provides the following functionality:
+
+
+         -Query number of actuators (vibrator)
+         -Query actuators functions
+         -Query actuators current drain
+         -User specified alignment of actuator control data
+         -Check possible combinations of actuators that can be operated
+          simultaneously
+         -Query ID modes supported by controller
+         -Switch ID modes from program
+         -Switch Lock/Unlock of Mode switch
+
+
+--------------------------------------------------------------------------
+c)What is the Analog Joystick?
+
+The Analog Joystick is a flight-stick like controller, with two full-size joysticks providing analog input.
+The data from these sticks is interpreted in the same manner as the 16-Button Analog controller.
+
+The Analog Joystick can also emulate the standard 16-button Controller.
+
+
+d)What is the neGcon?
+
+The neGcon is Namco’s implementation of an analog controller, with a single “twist” interface as opposed
+to the “sticks” interface found on the Sony analog controllers. The neGcon uses the additional analog
+channels for three analog push-buttons.
+
+
+--------------------------------------------------------------------------
+2. Calibration
+--------------------------------------------------------------------------
+a)Must I provide a calibration screen for the Dual-Shock SCPH-1200?
+
+No, you are not required to provide a calibration screen when supporting the Dual Shock Analog
+Controller. As a matter of fact, because the Dual Shock Analog Controller is “auto-calibrating” the TRC
+requires you DO NOT perform calibration for maximum travel (The minimum and maximum value
+obtained on each axis) or center (value obtained when no force is exerted on the stick).
+This is not to say that you should not provide other forms of “calibration” such as, sensitivity, max value
+honored by the application, etc.
+ Note: it is strongly recommended that the application treat a value of 128 ±25 as 0, effectively a dead-
+zone, in order to prevent “jitter”.
+--------------------------------------------------------------------------
+b)Must I still provide a calibration screen for the Standard Analog Controller SCPH-1150 ?
+
+Yes, per the TRC you must provide the capability to calibrate and correct Maximum Travel and Center
+Position when an SCPH-1150 is detected. For example calibration code please refer to the Developers Web
+Site.
+
+
+--------------------------------------------------------------------------
+3. Technical Misc.
+--------------------------------------------------------------------------
+a)The Dual Shock Analog Controller and 16-Button Analog Controller both report the same ID, How do I
+tell them apart?
+
+Two major changes from the 16-Button Analog Controller to the Dual Shock Analog Controller are the
+removal of Analog Joystick emulation, and the addition of vibration functionality, including an analog
+actuator (variable vibration). These differences may be used by the application to determine which analog
+controller is connected.
+
+Two methods are described below:
+
+         int PadInfoMode(int port, int term, int offs);
+
+                   Call PadInfoMode with the first argument port set to the target port (0x00 for port 1 or
+         0x10 for port 2), the second argument term set to a value of 0x2 (or use the Macro
+         InfoModeCurExID defined in Libpad.h), the third argument is ignored. When called with these
+         values, the function will return 0x0 for any controller other than the Dual-Shock.
+
+
+         int PadInfoAct(int port, int acno, int term)
+
+                  Call PadInfoAct with the first argument port set to the target port (0x00 for port 1 or
+         0x10 for port 2), the second argument actno set to a value of -1, and the third argument to any
+         value between 1 and 4.     When called with these values, the function will return 0x0 for any
+         controller other than the Dual-Shock.
+
+         Note: wait for PadGetState() to return PadStateStable, prior to calling this function. If it is called
+in any state other then PadStateStable even a Dual-Shock would return a value of 0x0.
+
+For further details on the above mentioned functions please refer to Libpad_e.txt included with Dshock.zip
+in the Programmers files are of the Developers Web Site.
+
+
+--------------------------------------------------------------------------
+b)When the 16-Button Analog Controller is in Analog Joystick mode (Flight Stick), the button mappings
+are in correct. The Square is the L1, Circle the L2 etc.
+
+On the 16-Button Analog Controller in Analog Joystick mode the L1, L2, R1, and R2 buttons are mapped
+to the π,˜,¢, and Ò buttons. This is by design and is not considered a bug. The application is free to re-
+map the buttons in software upon detection of a Flight Stick ID, but be aware the re-mapping may make it
+difficult to use the “real” Analog Joystick. A possible solution would be to allow the user to choose from
+two sets of button mappings, one for the “real” Flight Stick, unaltered, another for the Analog joystick
+emulation, control and top buttons swapped.
+
+
+
+--------------------------------------------------------------------------
+c)When the 16-Button Analog Controller is in Analog Mode (Red light), If I hold down L1 or L2, hold
+either of the analog sticks in a position other then center, and press the Mode button three times returning
+to analog mode, when I let go of the stick an off-center value (> 180 ± 25) is always returned.
+
+This is a calibration function of the hardware and cannot practically be corrected by the application. The
+controller will continue to output the off-center values until it is unplugged and reinserted, or the
+PlayStation is powered-off.
+
+
+--------------------------------------------------------------------------
+d)When I use the two or more Dual Shock Analog Controllers with a Multi-Tap the second and third Dual
+Shock Analog Controllers do not vibrate. Do Dual Shock Analog Controllers work with the Multi-Tap?
+
+The actuators on the Dual Shock Analog Controller draw power from the PlayStation. Current drains
+above 60 units, may adversely affect the PlayStation's operation. Thus, Libpad monitors the total current
+drain to ensure it does not exceed 60 units per frame. If it receives vibration requests from the application
+that would result in exceeding this limit, those requests are ignored and the target controllers will not
+vibrate.
+
+The potential current drain can be calculated by subtracting 10 units for Actuator 0 (binary), and 20 units
+for Actuator 1 (variable) for each controller in port order. Thus a single controller in each port operating
+both actuators simultaneously would not present a problem, but when using a multi-tap this limit must be
+considered. For example:
+
+ Case 1: All controllers connected to port 00,01,02,03 request to operate
+
+         actuator 1 (20 units).
+
+
+
+          Add current drain in port number order. If total current drain exceeds
+         60 units, its request will be ignored. Thus, in the case actuators
+         with port 00,01,02 will be in operation and requests from 03 will be
+         ignored.
+
+
+  Case 2:Port 00 requests actuator 1 and 2 (10,20 units)
+      Port 01 requests actuator 2     (20 units)
+      Port 02 requests actuator 2     (20 units)
+      Port 03 requests actuator 1     (10 units)
+
+          The sum of current drain of port 00 and port 01 is 50 units. If it
+         accepts actuator 1 of port 02, total current drain exceeds 60 units.
+         So the request from port 02 will be ignored. However, request from
+         port 03 will be accepted, since the total current drain will not
+         exceed 60 units.
+
+
+For more information please refer to the pad_e.txt document contained in Dshock.zip in the programmer
+Files area of the Developers Web Site.
+Dual Shock is a trademark of Sony Computer Entertainment Inc.
+

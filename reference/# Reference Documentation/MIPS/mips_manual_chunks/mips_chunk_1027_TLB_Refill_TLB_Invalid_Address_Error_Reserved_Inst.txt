@@ -1,0 +1,40 @@
+MIPS INSTRUCTION SET REFERENCE - TLB REFILL, TLB INVALID, ADDRESS ERROR, RESERVED INSTRUCTION, COPROCESSOR UNUSABLE, WATCH
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: TLB Refill, TLB Invalid, Address Error, Reserved Instruction, Coprocessor Unusable, Watch
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1643 characters
+Lines: 31
+================================================================================
+
+TLB Refill, TLB Invalid, Address Error, Reserved Instruction, Coprocessor Unusable, Watch
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                               171
+
+                                Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+MADD
+
+
+
+
+        Multiply and Add Word to Hi,Lo                                                                           MADD
+
+
+       31                   26 25            21 20               16 15             11 10             6   5                  0
+             SPECIAL2                                                       0                  0               MADD
+                                      rs                 rt
+              011100                                                      0000              00000              000000
+                   6                  5                  5                  5                  5                  6
+
+            Format:    MADD     rs, rt                                                                                MIPS32
+
+            Purpose:
+            To multiply two words and add the result to Hi, Lo
+
+            Description: (HI,LO) ← (HI,LO) + (rs × rt)
+            The 32-bit word value in GPR rs is multiplied by the 32-bit word value in GPR rt, treating both operands as signed
+            values, to produce a 64-bit result. The product is added to the 64-bit concatenated values of HI and LO.. The most sig-
+            nificant 32 bits of the result are written into HI and the least signficant 32 bits are written into LO. No arithmetic

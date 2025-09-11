@@ -1,0 +1,67 @@
+PSXSPX SPECIFICATIONS - APE ESCAPE SOUND ARCHIVE (MAGDEMO44:KIDZ\KKIIDDZZ.HED\DAT\1BH-1DH,4FH-59H,..)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Ape Escape Sound Archive (MagDemo44:KIDZ\KKIIDDZZ.HED\DAT\1Bh-1Dh,4Fh-59h,..)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1871 characters
+Lines: 59
+================================================================================
+
+Ape Escape Sound Archive (MagDemo44:KIDZ\KKIIDDZZ.HED\DAT\1Bh-1Dh,4Fh-59h,..)
+
+| 000h 5*4 File Sizes (can be odd) (can be 0 for 2nd and 5th file)
+014h 5*4 File Offsets (28h and up, increasing by sizes rounded to N*10h)
+028h .. File Data area (first file usually/always contains "SShd")
+
+Ultimate Fighting Championship (MagDemo38: UFC\CU00.RBB)
+
+| 0000h 4 ID "siff" ;\Header
+0004h 4 Total Filesize (DADB1Ch) ;/
+0008h 4 ID "RSRC" ;\
+000Ch 4 String Size (70h) ; ASCII string
+0010h 70h String "RC ver1.0 Copyright",...,00h ;/
+0080h 4 ID "RIDX" ;\
+0084h 4 File List Size (1F78h) (3EFh*8) ; Directory
+0088h N*8 File List (Offset, Size1) ;/
+2000h 4 ID "EXIX" ;\
+2004h 4 Extended List Size (FBCh) (3EFh*4) ; Extended
+2008h N*4 Extended List (Size2) ;/
+2FC4h 4 ID "GAP0" ;\Alignment Padding
+2FC8h 4 Padding Size (2Ch) ; (so that next chunk
+2FCCh 2Ch Padding (1Ah-filled) ;/starts at boundary-8)
+2FF8h 4 ID "RBB0" ;\
+2FFCh 4 File Data area Size (DAAB1Ch) ; Data area
+3000h .. File Data area ;/
+
+File List entries (RIDX):
+
+| 000h 4 File Offset (increasing, 4-byte aligned, from ID "RBB0" plus 8)
+004h 4 File Size in bytes (can be odd)
+
+Extended List entries (EXIX):
+
+| 000h 4 File Size in bytes (always the same size as in RIDX chunk)
+
+Ultimate Fighting Championship (MagDemo38: UFC\CU00.RBB\183h,37Bh..3EBh)
+
+| 000h 4 ID "OIFF" ;\Header
+004h 4 Total Filesize ;/
+008h 4 ID "TIMT" or "ANMT" ;\
+00Ch 4 Size (N*4) ; Directory Table
+010h N*4 File List (offsets from begin of Data ID+8);/
+... 4 ID "TIMD" or "ANMD" ;\
+... 4 Data Area size (SIZ) (Filesize-18h-N*4) ; Data area
+... SIZ Data Area ;/
+
+E.T. Interplanetary Mission (MagDemo54: MEGA\MEGA.CSH+.BIN)
+
+| MEGA.CSH:
+000h N*0Ch File List
+MEGA.BIN:
+000h .. File Data area
+
+File List entries:
+
+| 000h 4 Offset (in MEGA.BIN file, 800h-byte aligned, increasing)
+004h 4 Unknown (32bit id/random/checksum/whatever)
+008h 4 Filesize in bytes

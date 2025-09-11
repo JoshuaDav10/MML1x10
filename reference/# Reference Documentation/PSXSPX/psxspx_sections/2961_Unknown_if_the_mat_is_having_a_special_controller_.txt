@@ -1,0 +1,81 @@
+PSXSPX SPECIFICATIONS - UNKNOWN IF THE MAT IS HAVING A SPECIAL CONTROLLER ID, OR IF THERE ARE OTHER
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Unknown if the mat is having a special controller ID, or if there are other
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2971 characters
+Lines: 73
+================================================================================
+
+Unknown if the mat is having a special controller ID, or if there are other
+ways to detect mats (the mats are said to be compatible with skateboard games,
+so the mats are probably identifying themselves as normal digital joypad;
+assuming that those skateboard games haven't been specifically designed for
+mats).
+
+Dance Mat Games
+
+| D.D.R. Dance Dance Revolution 2nd Remix
+(and maybe whatever further games)
+
+The mats can be reportedly also used with whatever skateboard games.
+
+Dance Mat Variants
+
+There is the US version (DDR Dance Pad, SLUH-00071), and a slightly different
+European version (Official Dance Mat, SLEH-00023: shiny latex style with
+perverted colors, and Start/Select arranged differently). The japanese version
+(RU017) resembles the US version, but without Triangle/Square symbols drawn in
+lower left/right edges.
+
+And there is a handheld version (with additional L1/L2/R2/R1 buttons; maybe
+unlicensed; produced as MINI DDR, and also as Venom Mini Dance Pad).
+
+| US Version (white/black/red/blue) Handheld Version (blue/gray)
+__________.---------.___________ _____/ MINI \_____
+| \ / | D.D.R. |
+| SELECT '-------' START |L1 L2 SEL STA R2 R1|
+|------------.------.------------| ___ ___ ___ |
+| .''''. / \ .''''. || X | ^ | O ||
+| \/ | /\ | .''. | ||___|___|___||
+| /\ | /..\ | '..' | | ___ .---. ___ |
+| '....' '. || .' '....' |||
+| .-------. .''''''''. .-------. ||___|Cool!|___||
+|/ /| .' '. |\ \| ___ '___' ___ |
+| / |-- | --| \ || []| v | /\||
+| \ |-- | Stay Cool! | --| / ||___|___|___||
+|\ \| '. .' |/ /|___________________|
+| '-------' '........' '-------' |
+| .''''. .' || '. .''''. | Gothic Dance Mat (black/silver)
+| /\ | \''/ | |''| | _.----------._
+| /__\ | \/ | |..| | \ SEL STA / | This one
+| '....' \ / '....' | '--------' | wasn't ever
+'------------'------'------------' | .----------. | produced,
+| .''''. | as cool as
+European Version (pink/blue/yellow) | | /\ | | it could have
+__________.---------.___________ | | /..\ | | been, the lame
+| \ SEL STA / | | '.||.' | marketing
+| '-------' | +----------+ | people didn't
+|----------.----------.----------| | .''''. | even think
+| .''''. | .''''. | .''''. | | /\ | | about it.
+| \/ | | /\ | | .''. | | | /..\ | |
+| /\ | | /..\ | | '..' | | '.||.' |
+| '....' | '.||.' | '....' | +----------+ |
+|----------+-.. ..-+----------| | .'||'. |
+| .'/|'. / '''' \ .'|\'. | | \''/ | |
+| / |--|/ \|--| \ | | | \/ | |
+| \ |--|\ /|--| / | | '....' |
+| '.\|.' \ .... / '.|/.' | +----------+ |
+|----------+-'' ''-+----------| | .'||'. |
+| .''''. | .'||'. | .''''. | | \''/ | |
+| /\ | | \''/ | |''| | | \/ | |
+| /__\ | | \/ | |..| | | '....' |
+| '....' | '....' | '....' | '----------' '
+'----------|----------|----------' '--------------'
+
+Stay Cool?
+
+Despite of the "Stay Cool!" slogan, the mat wasn't very cool - not at all! It
+offered only two steps back-and-forth, and also allowed to do extremly uncool
+side-steps. Not to mention that it would melt when dropping a burning cigarette
+on it. Stay Away!

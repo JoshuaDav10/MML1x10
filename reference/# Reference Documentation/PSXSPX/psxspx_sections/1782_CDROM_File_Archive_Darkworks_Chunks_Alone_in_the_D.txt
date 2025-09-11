@@ -1,0 +1,68 @@
+PSXSPX SPECIFICATIONS - CDROM FILE ARCHIVE DARKWORKS CHUNKS (ALONE IN THE DARK)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Archive Darkworks Chunks (Alone in the Dark)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1996 characters
+Lines: 59
+================================================================================
+
+CDROM File Archive Darkworks Chunks (Alone in the Dark)
+
+Alone in the Dark The New Nightmare (FAT.BIN\*)
+
+The files in FAT.BIN are using a messy chunk format: There's no clear ID+Size
+structure. There are 7 different chunk types (DRAM, DSND, MIDB, G3DB, VRAM,
+WEAP, HAND), each type requires different efforts to compute the chunk size.
+
+VRAM Chunks (Texture/Palette) (in various files)
+
+| 000h 4 ID "VRAM"
+004h 4 With Tags (0=No, 1=Yes) (or "DRAM" when empty 4-byte chunk)
+008h (4) Number of Tagged items (N) (0=None) ;\only when [4]=1
+00Ch N*10h Tagged Item(s) ;/(not so in LEVELS\*\VIEW*)
+... .. Scanline Rows(s)
+... 4 End code (00000000h) (aka final Scanline Row with width=0)
+Tagged Item(s) (IMG, LINE, GLOW, FLARE, BALLE, BLINK, COURIER7, BMP_xxx):
+000h 8 Tag (ASCII, if less than 8 chars: terminate by 00h, pad by FDh)
+008h 8 Data
+Scanline Row(s) (bitmap scanlines and palette data):
+000h 4 Header (bit0-8=Width, bit10-18=Y, bit20-29=X, bit9,19,30,31=?)
+004h W*2 Data (Width*2 bytes, to be stored at VRAM(X,Y))
+
+Empty VRAM chunks can be either 4 or 10h bytes tall. The 4-byte variant is
+directly followed by another chunk name (eg. "VRAMDRAM"), the 10h-byte variant
+contains four words ("VRAM",WithTags=1,NumTags=0,EndCode=0).
+
+Note: Some files contain two VRAM chunks (eg. LEVELS\*\VIEW*).
+
+G3DB Chunks (Models) (in various files)
+
+| 000h 4 ID "G3DB"
+004h 4 Unknown (0, 1, or 2)
+008h 4 Size of Data part (SIZ)
+00Ch 4 Number of List entries (eg. 6 or 0Ah or 117Ch) (N)
+010h SIZ Data (supposedly LibGDX models in G3DB format)
+... N*4 List
+
+DRAM Chunks (Text and Binary data) (in various files)
+
+| 000h 4 ID "DRAM"
+004h 4 Size of Data part (SIZ) (can be odd)
+008h 4 Number of List entries (N)
+00Ch SIZ Data (raw data, and/or tags TEXT, SPC, COURIER7)
+... N*4 List
+
+WEAP Chunks (Weapons) (in WEAPON\*\*)
+
+| 000h 4 ID "WEAP"
+004h 4 Size-10h?
+008h .. Data
+
+Followed by VRAM and DSND chunks.
+
+HAND Chunks (Hands) (in LEFTHAND\*\HAND*)
+
+| 000h 4 ID "HAND"
+004h 4 Size-0Ch? (18h)
+008h 8 Zerofilled

@@ -1,0 +1,51 @@
+PSXSPX SPECIFICATIONS - SOME OTHER DIFFERENCES ARE THAT MDEC HAS ONLY 2 FIXED-PURPOSE QUANT TABLES,
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Some other differences are that MDEC has only 2 fixed-purpose quant tables,
+Chunked: Wed Sep 10 03:34:22 PM CDT 2025
+Size: 1420 characters
+Lines: 43
+================================================================================
+
+Some other differences are that MDEC has only 2 fixed-purpose quant tables,
+whilst JPEGs use up to 4 general-purpose quant tables. Also, JPEGs
+use other color resolutions than the 8x8 color info for 16x16
+pixels. Whereas, JPEGs do that stuff, but most standard JPEG files
+aren't actually using 4 quant tables, nor higher color resolution.
+
+Run-Length compressed Blocks
+
+Within each block the DCT information and RLE compressed data is stored:
+
+| DCT ;1 halfword
+RLE,RLE,RLE,etc. ;0..63 halfwords
+EOB ;1 halfword
+
+DCT (1st value)
+
+DCT data has the quantization factor and the Direct Current (DC) reference.
+
+| 15-10 Q Quantization factor (6 bits, unsigned)
+9-0 DC Direct Current reference (10 bits, signed)
+
+Contains the absolute DC value (the upper-left value of the 8x8 block).
+
+RLE (Run length data, for 2nd through 64th value)
+
+| 15-10 LEN Number of zero AC values to be inserted (6 bits, unsigned)
+9-0 AC Relative AC value (10 bits, signed)
+
+Example: AC values "000h,000h,123h" would be compressed as "(2 shl 10)+123h".
+
+EOB (End Of Block)
+
+Indicates the end of a 8x8 pixel block, causing the rest of the block to be
+padded with zero AC values.
+
+| 15-0 End-code (Fixed, FE00h)
+
+EOB isn't required if the block was already fully defined (up to including
+blk[63]), however, most games seem to append EOB to all blocks (although it's
+just acting as dummy/padding value in case of fully defined blocks).
+
+Dummy halfwords

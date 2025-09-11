@@ -1,0 +1,30 @@
+MIPS INSTRUCTION SET REFERENCE - COP1                                                                                        A    FC
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: COP1                                                                                        A    FC
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 2065 characters
+Lines: 21
+================================================================================
+
+COP1                                                                                        A    FC
+                                            fmt                  ft                 fs              cc       0                        cond
+                     010001                                                                                      0       11
+                        6                    5                   5                   5               3       1   1       2              4
+
+                  Format:     C.cond.S fs, ft (cc = 0 implied)                                                               MIPS32
+                              C.cond.D fs, ft (cc = 0 implied)                                                               MIPS32
+                              C.cond.PS fs, ft(cc = 0 implied)                                                               MIPS64
+                                                                                                                     MIPS32 Release 2
+                              C.cond.S cc, fs, ft                                                                            MIPS32
+                              C.cond.D cc, fs, ft                                                                            MIPS32
+                              C.cond.PS cc, fs, ft                                                                           MIPS64
+                                                                                                                     MIPS32 Release 2
+
+                  Purpose:
+                  To compare FP values and record the Boolean result in a condition code
+
+                  Description: cc ← fs compare_cond ft
+                  The value in FPR fs is compared to the value in FPR ft; the values are in format fmt. The comparison is exact and nei-
+                  ther overflows nor underflows.
+                  If the comparison specified by cond2..1 is true for the operand values, the result is true; otherwise, the result is false. If

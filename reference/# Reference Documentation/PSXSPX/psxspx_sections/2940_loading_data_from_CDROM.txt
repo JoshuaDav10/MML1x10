@@ -1,0 +1,61 @@
+PSXSPX SPECIFICATIONS - LOADING DATA FROM CDROM).
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: loading data from CDROM).
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1886 characters
+Lines: 52
+================================================================================
+
+loading data from CDROM).
+
+Caution 2: A similar reset occurs when the user pushes the Analog button; this
+is causing rumble motors to be stopped and locked, and of course, the
+analog/digital state gets changed.
+
+Caution 3: If config commands were used, and the user does then push the analog
+button, then the 5Ah-byte gets replaced by 00h (ie. responses change from "HiZ
+id 5Ah ..." to "HiZ id 00h ...").
+
+| ____________________________ Config Mode Commands ____________________________
+
+Config Mode - Command 42h "B" - Read Buttons AND analog inputs
+
+| Send 01h 42h 00h M2 M1 00h 00h 00h 00h
+Reply HiZ F3h 5Ah buttons analog-inputs
+
+Same as command 42h in normal mode, but with forced analog response (ie. analog
+inputs and L3/R3 buttons are returned even in Digital Mode with LED=Off).
+
+Config Mode - Command 43h "C" - Enter/Exit Configuration Mode
+
+| Send 01h 43h 00h xx 00h 00h 00h 00h 00h
+Reply HiZ F3h 5Ah 00h 00h 00h 00h 00h 00h
+
+Equivalent to command 43h in normal mode, but returning 00h bytes rather than
+button data, can be used to return to normal mode.
+
+| xx=00h Enter Normal mode (Exit Configuration mode)
+xx=01h Stay in Configuration mode
+
+Back in normal mode, the rumble motors (if they were enabled) can be controlled
+with normal command 42h.
+
+Config Mode - Command 44h "D" - Set LED State (analog mode on/off)
+
+| Send 01h 44h 00h Led Key 00h 00h 00h 00h
+Reply HiZ F3h 5Ah 00h 00h Err 00h 00h 00h
+
+The Led byte can be:
+
+| When Led=00h --> Digital mode, with LED=Off
+When Led=01h --> Analog mode, with LED=On/red
+When Led=02h..FFh --> Ignored (and, in case of dualshock2: set Err=FFh)
+
+The Key byte can be:
+
+| When Key=00h..02h --> Unlock (allow user to push Analog button)
+When Key=03h --> Lock (stay in current mode, ignore Analog button)
+When Key=04h..FFh --> Acts same as (Key AND 03h)
+
+The Err byte is usually 00h (except, Dualshock2 sets Err=FFh upon Led=02h..FFh;

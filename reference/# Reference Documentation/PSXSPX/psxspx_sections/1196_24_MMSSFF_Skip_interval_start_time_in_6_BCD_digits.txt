@@ -1,0 +1,40 @@
+PSXSPX SPECIFICATIONS - 24 MM:SS:FF SKIP INTERVAL START TIME IN 6 BCD DIGITS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 24 MM:SS:FF Skip interval start time in 6 BCD digits
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1193 characters
+Lines: 31
+================================================================================
+
+24 MM:SS:FF Skip interval start time in 6 BCD digits
+
+When Point=B1h:
+
+| 8 Track number (fixed, must be 00h=Lead-in)
+8 POINT=B1h (Audio only: This identifies the presence of skip intervals)
+8x4 Reserved (must be 00h,00h,00h,00h)
+8 the number of skip interval pointers in POINT=01h..40h
+8 the number of skip track assignments in POINT=B2h..B4h
+8 Reserved (must be 00h)
+
+When Point=B2h,B3h,B4h:
+
+| 8 Track number (fixed, must be 00h=Lead-in)
+8 POINT=B2h,B3h,B4h (This identifies tracks that should be skipped)
+8 1st Track number to skip upon playback (01h..99h, must be nonzero)
+8 2nd Track number to skip upon playback (01h..99h, or 00h=None)
+8 3rd Track number to skip upon playback (01h..99h, or 00h=None)
+8 Reserved (must be 00h)... unclear... OR... 4th (of 7) skip info's...?
+8 4th Track number to skip upon playback (01h..99h, or 00h=None)
+8 5th Track number to skip upon playback (01h..99h, or 00h=None)
+8 6th Track number to skip upon playback (01h..99h, or 00h=None)
+
+Note: Skip intervals are seldom written by recorders and typically ignored by
+readers.
+
+Subchannel R..W
+
+Subchannels R..W are usually unused, except for some extended formats:
+
+| CD-TEXT in the Lead-In area (see below)

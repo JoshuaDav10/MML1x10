@@ -1,0 +1,70 @@
+PSXSPX SPECIFICATIONS - EGA CAN DISPLAY CGA COLORS (WITH ALL 16 COLORS IN GRAPHICS MODE).
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: EGA can display CGA colors (with all 16 colors in graphics mode).
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 2554 characters
+Lines: 62
+================================================================================
+
+EGA can display CGA colors (with all 16 colors in graphics mode).
+EGA-with-special-EGA-monitor uses 6pin RGB222 signals for up to 64 colors (but
+not more than 16 colors at once).
+
+Windows is also using those 16 standard colors (when not having any VGA driver
+installed, and also in 256-color VGA mode, in the latter case the 16 standard
+colors are held to always available (even if different tasks are trying to
+simultanously display different images with different palettes).
+
+However, Windows has dropped brown, and uses non-pastelized bright colors.
+
+PCX files in PSX games
+
+| .PCX with RLE used by Jampack Vol. 1 (MDK\CD.HED\*.pcx)
+.PCX with RLE used by Hot Wheels Extreme Racing (MagDemo52: US_01293\MISC\*)
+.PCX with RLE used by Metal Gear Solid (slightly corrupted PCX files)
+
+PCX files in PSX Metal Gear Solid (MGS)
+
+MGS is storing some extra data at [4Ah..57h] (roughly resembling the info in
+TIM files).
+
+| 04Ah 2 Custom MGS ID (always 3039h)
+04Ch 2 Display Mode? (08h/18h=4bit, 09h/19h=8bit)
+04Eh 2 Bitmap X-coordinate in VRAM (reportedly "divided by 2" ???)
+050h 2 Bitmap Y-coordinate in VRAM
+052h 2 Palette X-coordinate in VRAM
+054h 2 Palette Y-coordinate in VRAM
+056h 2 Palette number of actually used colors (can be less than 16/256)
+058h 28h Reserved (zerofilled)
+080h .. Bitmap data (RLE compressed)
+... 1 VGA Palette ID (0Ch=256 colors) ;\when 8bpp
+.. 300h VGA Palette (256 colors, 3-byte per color = R,G,B) ;/
+.. .. Padding to 4-byte boundary, ie. palette isn't at filesize-301h !!!
+
+MGS has filesize padded to 4-byte boundary. That is causing problems for files
+with 256-color palette: The official way to find the palette is to stepback
+301h bytes from end of file, which won't work with padding. To find the MGS
+palette, one must decompress the whole bitmap, and then expect the 301h-byte
+palette to be located after the compressed data.
+
+As an extra oddity, MGS uses non-square ultra-high DPI values.
+
+DCX Archives
+
+DCX archives contain multiple PCX files (eg. multi-page FAX documents). The
+standard format is as so:
+
+| 0000h 4 ID (3ADE68B1h) (987654321 decimal)
+0004h 4000h File List (32bit offsets) (max 1023 files, plus 0=End of List)
+1004h .. File Data area (PCX files)
+
+However, some files have the first PCX at offset 1000h (ie. the list is only
+3FFCh bytes tall). Reportedly there are also files that start with yet smaller
+offsets (for saving space when the file list contains fewer entries).
+
+The PCX filesize is next-curr offset (or total-curr for last file).
+
+References
+
+https://www.fileformat.info/format/pcx/egff.htm

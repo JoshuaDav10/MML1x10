@@ -1,0 +1,58 @@
+PSXSPX SPECIFICATIONS - R1=POINTER TO PARAMETER BUFFER (WHICH CONTAINS LEN1 BYTES) (IN KERNEL RAM)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: r1=pointer to parameter buffer (which contains LEN1 bytes) (in Kernel RAM)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1412 characters
+Lines: 50
+================================================================================
+
+r1=pointer to parameter buffer (which contains LEN1 bytes) (in Kernel RAM)
+
+Return Value on 1st Function Call:
+
+| r0 = Pointer to 64bit memory location (or r0=00000000h=Failed)
+
+That 64bits are:
+
+| 0-31 BUF2 address of data buffer (src/dst)
+32-63 LEN2 (00000000h..00000080h) (clipped to max 00000080h if bigger)
+
+dst is written in 8bit units
+
+src is read in 16bit units (and then split to 8bit units)
+
+Second Function Call (Post-Data)
+
+Incoming parameters on 2nd Function Call:
+
+| r0=flags (11h=Post-Data to PSX, 12h=Post-Data from PSX; plus 04h if Bad-Data)
+r1=pointer to data buffer (which contains LEN2 bytes) (BUF2 address)
+
+Return Value on 2nd Function Call:
+
+| There's no return value required on 2nd call (although the kernel
+functions seem to return the same stuff as on 1st call).
+
+Function flags (r0)
+
+For each function, there is only one single function vector which is called for
+both To- and From-PSX, and both Pre- and Post-Data, and also on errors. The
+function must decipher the flags in r0 to figure out which of that operations
+it should handle:
+
+| 0 To-PSX (when used by Command 5Bh)
+1 From-PSX (when used by Command 5Ch)
+2 Error occurred during Data transfer
+3 Pre-Data
+4 Post-Data
+5-31 Not used (zero)
+
+There are only six possible flags combinations:
+
+| 09h Pre-Data to PSX
+0Ah Pre-Data from PSX
+11h Post-Data to PSX
+12h Post-Data from PSX
+15h Post-Bad-Data to PSX
+16h Post-Bad-Data from PSX

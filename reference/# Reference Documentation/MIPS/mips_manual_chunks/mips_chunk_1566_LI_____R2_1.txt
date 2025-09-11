@@ -1,0 +1,37 @@
+MIPS INSTRUCTION SET REFERENCE - LI     R2, 1
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: LI     R2, 1
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1542 characters
+Lines: 28
+================================================================================
+
+LI     R2, 1
+                 1: LW     R1, FLAG # Get FLAG
+                    BNE    R2, R1, 1B# if it says that DATA is not valid, poll again
+                    NOP
+                    SYNC             # FLAG value checked before doing DATA read
+                    LW     R1, DATA # Read (valid) shared DATA value
+        Prefetch operations have no effect detectable by User-mode programs, so ordering the effects of prefetch operations
+        is not meaningful.
+        The code fragments above shows how SYNC can be used to coordinate the use of shared data between separate writer
+        and reader instruction streams in a multiprocessor environment. The FLAG location is used by the instruction streams
+        to determine whether the shared data item DATA is valid. The SYNC executed by processor A forces the store of
+        DATA to be performed globally before the store to FLAG is performed. The SYNC executed by processor B ensures
+        that DATA is not read until after the FLAG value indicates that the shared data is valid.
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                              281
+
+                          Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+SYNCI
+
+
+
+
+   Synchronize Caches to Make Instruction Writes Effective                                                                 SYNCI
+
+        31                   26 25             21 20             16 15                                                        0

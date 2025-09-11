@@ -1,0 +1,32 @@
+MIPS INSTRUCTION SET REFERENCE - INVALID OPERATION, UNIMPLEMENTED OPERATION, INEXACT, OVERFLOW
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Invalid Operation, Unimplemented Operation, Inexact, Overflow
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1066 characters
+Lines: 23
+================================================================================
+
+Invalid Operation, Unimplemented Operation, Inexact, Overflow
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                                         117
+
+                                    Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+DERET
+
+
+
+
+         Debug Exception Return                                                                                  DERET
+
+        31                   26 25 24                                                                6   5                  0
+                COP0           CO                                   0                                          DERET
+               010000           1                        000 0000 0000 0000 0000                                011111
+                  6             1                                   19                                            6
+
+             Format: DERET                                                                                               EJTAG
+
+             Purpose:

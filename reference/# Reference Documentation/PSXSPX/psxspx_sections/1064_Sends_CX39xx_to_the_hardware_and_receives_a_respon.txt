@@ -1,0 +1,61 @@
+PSXSPX SPECIFICATIONS - SENDS CX(39XX) TO THE HARDWARE, AND RECEIVES A RESPONSE (THE RESPONSE.HI BYTE
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Sends CX(39xx) to the hardware, and receives a response (the response.hi byte
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 2261 characters
+Lines: 52
+================================================================================
+
+Sends CX(39xx) to the hardware, and receives a response (the response.hi byte
+is usually 00h for 8bit responses, or 00h..01h for 9bit responses). For
+example, this can be used to dump the Coefficient RAM.
+
+19h,03h --> INT3(stat) ;force motor off
+
+Forces the motor to stop spinning (ignored during spin-up phase).
+
+19h,17h --> INT3(stat) ;force motor on, clockwise, super-fast
+
+19h,01h --> INT3(stat) ;force motor on, anti-clockwise, super-fast
+
+19h,02h --> INT3(stat) ;force motor on, anti-clockwise, super-fast
+
+19h,10h --> INT3(stat) ;force motor on, anti-clockwise, super-fast
+
+19h,18h --> INT3(stat) ;force motor on, anti-clockwise, super-fast
+
+Forces the drive motor to spin at maximum speed (which is much faster than
+normal or double speed), in normal (clockwise), or reversed (anti-clockwise)
+direction. The commands work even if the shell is open. The commands do not try
+to synchronize the motor with the data on the disk (and do thus work even if no
+disk is inserted).
+
+19h,00h --> INT3(stat) ;force motor on, clockwise (even if shell open)
+
+This command seems to have effect only if the drive motor was off. If it was
+off, it does FFh-fills the TOC entries in RAM, and seek to the begin of the TOC
+at 98:30:00 or so (where minute=98 means minus two). From that location, it
+follows the spiral on the disk, although it does occassionally jump back some
+seconds. After clearing the TOC, the command does not write new data to the TOC
+buffer in RAM.
+
+Note: Like 19h,04h, this command forces the drive motor to spin at standard
+speed (synchronized with the data on the disk), works even if the shell is open
+(but stops spinning after a while if the drive is empty).
+
+19h,11h --> INT3(stat) ;Move Lens Up (leave parking position)
+
+19h,12h --> INT3(stat) ;Move Lens Down (enter parking position)
+
+19h,13h --> INT3(stat) ;Move Lens Outwards (away from center of disk)
+
+19h,14h --> INT3(stat) ;Move Lens Inwards (towards center of disk)
+
+Moves the laser lens. The inwards/outwards commands do move ONLY the lens (ie.
+unlike as for Seek commands, the overall-laser-unit remains in place, only the
+lens is moved).
+
+19h,15h - if motor on: move head outwards + inwards + motor off
+
+Moves the drive head to outer-most and inner-most position. Note that the drive

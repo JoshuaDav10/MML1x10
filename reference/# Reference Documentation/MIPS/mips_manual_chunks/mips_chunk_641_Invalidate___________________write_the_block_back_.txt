@@ -1,0 +1,28 @@
+MIPS INSTRUCTION SET REFERENCE - INVALIDATE                   WRITE THE BLOCK BACK TO THE MEMORY ADDRESS
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Invalidate                   write the block back to the memory address
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1330 characters
+Lines: 19
+================================================================================
+
+Invalidate                   write the block back to the memory address
+     2#000                                                specified by the cache tag. After that operation
+                                                          is completed, set the state of the cache block to
+                                                          invalid. If the block is valid but not dirty, set the
+                                                          state of the block to invalid.
+
+
+                                                          For a write-through cache: Set the state of the
+                         Index Writeback                  cache block at the specified index to invalid.
+               S, T      Invalidate / Index     Index     This required encoding may be used by                     Optional
+                             Invalidate                   software to invalidate the entire data cache by
+                                                          stepping through all valid indices. Note that
+                                                          Index Store Tag should be used to initialize the
+                                                          cache at powerup.
+
+
+
+
+                                                          Read the tag for the cache block at the specified

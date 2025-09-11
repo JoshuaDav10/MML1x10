@@ -1,0 +1,38 @@
+PSXSPX SPECIFICATIONS - NO FUNCTION. SIMPLY RETURNS WITHOUT CHANGING ANY REGISTERS OR MEMORY LOCATIONS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: No function. Simply returns without changing any registers or memory locations
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1223 characters
+Lines: 30
+================================================================================
+
+No function. Simply returns without changing any registers or memory locations
+(except that, of course, the exception handler destroys k0).
+
+SYS(04h..FFFFFFFFh) - calls DeliverEvent(F0000010h,4000h)
+
+These are syscalls with invalid function number in R4. For whatever reason that
+is handled by issuing DeliverEvent(F0000010h,4000h). Thereafter, the syscall
+returns to the main program (ie. it doesn't cause a SystemError).
+
+A(3Ah) - SystemErrorExit(exitcode)
+
+A(40h) - SystemErrorUnresolvedException()
+
+A(A1h) - SystemErrorBootOrDiskFailure(type,errorcode) ;type "B"=Boot,"D"=Disk
+
+These are used "SystemError" functions. The functions are repeatedly jumping to
+themselves, causing the system to hang. Possibly useful for debugging software
+which may hook that functions.
+
+A(4Fh,50h,52h,53h,9Ah,9Bh) B(1Ah..1Fh,21h..23h,2Ah,2Bh,52h,5Ah) C(0Bh) - N/A
+
+These are additional "SystemError" functions, but they are never used. The
+functions are repeatedly jumping to themselves, causing the system to hang.
+
+Note: A(52h) is reportedly "GetSysSp()", but that seems to be nonsense?
+
+BRK(1C00h) - Division by zero (commonly checked/invoked by software)
+
+BRK(1800h) - Division overflow (-80000000h/-1, sometimes checked by software)

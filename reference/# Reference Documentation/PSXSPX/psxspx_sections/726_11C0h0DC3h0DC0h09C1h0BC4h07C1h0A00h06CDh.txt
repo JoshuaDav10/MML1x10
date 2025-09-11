@@ -1,0 +1,46 @@
+PSXSPX SPECIFICATIONS - 11C0H,0DC3H,0DC0H,09C1H,0BC4H,07C1H,0A00H,06CDH
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 11C0h,0DC3h,0DC0h,09C1h,0BC4h,07C1h,0A00h,06CDh
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1259 characters
+Lines: 38
+================================================================================
+
+11C0h,0DC3h,0DC0h,09C1h,0BC4h,07C1h,0A00h,06CDh
+09C2h,05C1h,05C0h,041Ah,0274h,013Ah,8000h,8000h
+
+Half Echo (size=3C00h bytes)
+
+| 0017h,0013h,70F0h,4FA8h,BCE0h,4510h,BEF0h,8500h
+5F80h,54C0h,0371h,02AFh,02E5h,01DFh,02B0h,01D7h
+0358h,026Ah,01D6h,011Eh,012Dh,00B1h,011Fh,0059h
+01A0h,00E3h,0058h,0040h,0028h,0014h,8000h,8000h
+
+Space Echo (size=F6C0h bytes)
+
+| 033Dh,0231h,7E00h,5000h,B400h,B000h,4C00h,B000h
+6000h,5400h,1ED6h,1A31h,1D14h,183Bh,1BC2h,16B2h
+1A32h,15EFh,15EEh,1055h,1334h,0F2Dh,11F6h,0C5Dh
+1056h,0AE1h,0AE0h,07A2h,0464h,0232h,8000h,8000h
+
+Chaos Echo (almost infinite) (size=18040h bytes)
+
+| 0001h,0001h,7FFFh,7FFFh,0000h,0000h,0000h,8100h
+0000h,0000h,1FFFh,0FFFh,1005h,0005h,0000h,0000h
+1005h,0005h,0000h,0000h,0000h,0000h,0000h,0000h
+0000h,0000h,1004h,1002h,0004h,0002h,8000h,8000h
+
+Delay (one-shot echo) (size=18040h bytes)
+
+| 0001h,0001h,7FFFh,7FFFh,0000h,0000h,0000h,0000h
+0000h,0000h,1FFFh,0FFFh,1005h,0005h,0000h,0000h
+1005h,0005h,0000h,0000h,0000h,0000h,0000h,0000h
+0000h,0000h,1004h,1002h,0004h,0002h,8000h,8000h
+
+Reverb off (size=10h dummy bytes)
+
+| 0000h,0000h,0000h,0000h,0000h,0000h,0000h,0000h
+0000h,0000h,0001h,0001h,0001h,0001h,0001h,0001h
+0000h,0000h,0001h,0001h,0001h,0001h,0001h,0001h
+0000h,0000h,0001h,0001h,0001h,0001h,0000h,0000h

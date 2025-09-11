@@ -1,0 +1,52 @@
+PSXSPX SPECIFICATIONS - BIOS FILE EXECUTE AND FLUSH CACHE
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: BIOS File Execute and Flush Cache
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2112 characters
+Lines: 43
+================================================================================
+
+BIOS File Execute and Flush Cache
+
+A(41h) - LoadExeHeader(filename, headerbuf)
+
+Loads the 800h-byte exe file header to an internal sector buffer, and does then
+copy bytes [10h..4Bh] of that header to headerbuf[00h..3Bh].
+
+A(42h) - LoadExeFile(filename, headerbuf)
+
+Same as LoadExeHeader (see there for details), but additionally loads the body
+of the executable (using the size and destination address in the file header),
+and does call FlushCache. The exe can be then started via DoExecute (this isn't
+done automatically by LoadExeFile). Unlike "LoadAndExecute", the
+"LoadExeFile/DoExecute" combination allows to return the new exe file to return
+to the old exe file (instead of restarting the boot executable).
+
+BUG: Uses the unstable FlushCache function (see there for details).
+
+A(43h) - DoExecute(headerbuf, param1, param2)
+
+Can be used to start a previously loaded executable. The function saves
+R16,R28,R30,SP,RA in the reserved region of headerbuf (rather than on stack),
+more or less slowly zerofills the memfill region specified in headerbuf, reads
+the stack base and offset values and sets SP and FP to base+offset (or leaves
+them unchanged if base=0), reads the GP value from headerbuf and sets GP to
+that value. Then calls the excecutables entrypoint, with param1 and param2
+passed in r4,r5.
+
+If the executable (should) return, then R16,R28,R30,SP,RA are restored from
+headerbuf, and the function returns with r2=1.
+
+A(51h) - LoadAndExecute(filename, stackbase, stackoffset)
+
+This is a rather bizarre function. In short, it does load and execute the
+specified file, and thereafter, it (tries to) reload and restart to boot
+executable.
+
+Part1: Takes a copy of the filename, with some adjustments: Everything up to
+the first ":" or 00h byte is copied as is (ie. the device name, if it does
+exist, or otherwise the whole path\filename.ext;ver), the remaining characters
+are copied and converted to uppercase (ie. the path\filename.ext;ver part, or
+none if the device name didn't exist), finally, checks if a ";" exists (ie. the
+version suffix), if there's none, then it appends ";1" as default version.

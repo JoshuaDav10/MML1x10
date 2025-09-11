@@ -1,0 +1,39 @@
+MIPS INSTRUCTION SET REFERENCE - COPROCESSOR UNUSABLE EXCEPTION
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Coprocessor Unusable Exception
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1649 characters
+Lines: 30
+================================================================================
+
+Coprocessor Unusable Exception
+
+
+
+
+130                                                 MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                       Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+EXT
+
+
+
+
+  Extract Bit Field                                                                                                                 EXT
+
+      31                   26 25                    21 20             16 15               11 10               6     5               0
+            SPECIAL3                                                           msbd                  lsb                    EXT
+                                        rs                  rt
+              011111                                                          (size-1)              (pos)                  000000
+                6                       5                   5                    5                    5                      6
+
+           Format:     ext rt, rs, pos, size                                                                        MIPS32 Release 2
+
+           Purpose:
+           To extract a bit field from GPR rs and store it right-justified into GPR rt.
+
+           Description: rt ← ExtractField(rs, msbd, lsb)
+           The bit field starting at bit pos and extending for size bits is extracted from GPR rs and stored zero-extended and
+           right-justified in GPR rt. The assembly language arguments pos and size are converted by the assembler to the
+           instruction fields msbd (the most significant bit of the destination field in GPR rt), in instruction bits 15..11, and lsb

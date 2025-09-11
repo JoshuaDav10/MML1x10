@@ -1,0 +1,132 @@
+PSXSPX SPECIFICATIONS - DIRECTORY. THAT'S MAINLY USEFUL WHEN LOADING THE WHOLE ARCHIVE TO MEMORY.
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: directory. That's mainly useful when loading the whole archive to memory.
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 4390 characters
+Lines: 123
+================================================================================
+
+directory. That's mainly useful when loading the whole archive to memory.
+
+Interchange File Format (IFF)
+
+IFF has been invented by Electronic Arts in 1985 on Amiga (hence using 2-byte
+alignment and big-endian size values).
+
+IFF does mainly define a standarized file structure for use with custom
+group/chunk types (it does also define some Amiga-specific standard audio/video
+types, but those are barely useful on PSX).
+
+The files are starting with a Group Header, followed by Chunks:
+
+| Group Header:
+000h 4 Group ID ("FORM") (or "LIST" or "CAT " or "PROP")
+004h 4 Group Size-08h (SIZ) (filesize-8) (big-endian)
+008h 4 Group Type (4-character ASCII) (should be an unique identifier)
+00Ch SIZ-4 Chunk(s), and/or nested Group(s)
+Chunk Format:
+000h 4 Chunk Type (4-character ASCII) (meaning depends on Group Type)
+004h 4 Chunk Size (SIZ) (big-endian)
+00Ch SIZ Data (eg. .TIM, .VB, .VH or custom data)
+... .. Zeropadding to 2-byte boundary
+
+Used by Forsaken (MagDemo09: FORSAKEN\*\*.BND,MP,PCO)
+
+Used by Perfect Assassin (DATA.JFS\DATA\SCREEN1.LBM)
+
+Used by Star Wars Demolition (MagDemo39,41: STARWARS\*.EXP)
+
+Used by Turbo Prop Racing (MagDemo11: RRACER\*.IFF, except COURSE.IFF)
+
+Used by Viewpoint (VIEW.DIR\*.VCF,*.VCS,*.ST*) - some have wrong Size entry?
+
+Used by Vigilante 8 (MagDemo09: EXAMPLE\*.EXP)
+
+Used by Wing Commander III (*.LIB\*.IFF)
+
+Bugs in Viewpoint: fonts\*.vcf have correct Groupsize=Filesize-8, but
+screens\*.vcf have incorrect Groupsize=Filesize-4, and streams\*.vcf have
+weirdest random Groupsize=Filesize+(-04h,+08h,+14h,+5A0h).
+
+Z-Axis little-endian IFF variant
+
+Unlike real IFF, these are using little-endian, and don't have a Group Type
+entry. There seem to be no nested FORMs. Alignment is kept as 2-byte.
+
+| Group Header:
+000h 4 Group ID ("FORM" or "BODY")
+004h 4 Group Size-08h (SIZ) (little-endian)
+008h SIZ Chunk(s)
+Chunk Format:
+000h 4 Chunk Type (4-character ASCII)
+004h 4 Chunk Size (SIZ) (little-endian)
+00Ch SIZ Data
+... .. Zeropadding to 2-byte boundary
+
+ID "FORM" used by Thrasher: Skate and Destroy (MagDemo27: SKATE\ASSETS\*.ZAL\*)
+
+ID "FORM" used by Dave Mirra Freestyle BMX (MagDemo36,46: BMX\ASSETS\*.ZAL\*)
+
+ID "BODY" used by Colony Wars (MagDemo02: CWARS\GAME.RSC\*.BND)
+
+ID "BODY" used by Colony Wars Venegance (MagDemo14: CWV\GAME.RSC\*.BND)
+
+Alice in Cyberland little-endian IFF variant (.TPK)
+
+Same as Z-Axis IFF variant, except Group IDs are different, and the Header
+sizes are included in the Group/Chunk sizes.
+
+| Group Header:
+000h 4 Group ID ("hTIX","hFNT","hMBD","hHBS")
+004h 4 Group Size (total filesize) (little-endian)
+... (8) Unknown extra (0,0,0,0,0Ch,0,0,0) ;
+
+ID "hTIX" used by Alice in Cyberland (ALICE.PAC\alice.tpk, csel.tpk, etc.)
+
+ID "hFNT" used by Alice in Cyberland (ALICE.PAC\alice.tpk, juri.tpk, etc.)
+
+ID "hMBD" used by Alice in Cyberland (ALICE.PAC\*.FA2\*.MBD)
+
+ID "hHBS" used by Alice in Cyberland (ALICE.PAC\0x_xx.HBS)
+
+Touring Car Championship (MagDemo09: TCAR\GAME\*\*.BFX)
+
+Jarret & LaBonte Stock Car Racing (MagDemo38: WTC\*\*.BFX)
+
+Contains several simple chunks:
+
+| 000h 4 Chunksize in bytes (SIZ) (usually a multiple of 4)
+004h SIZ Chunkdata (eg. .TIM file or other stuff)
+
+There is no end-marker in last chunk (it simply ends at total filesize).
+
+Colony Wars Venegance (MagDemo14: CWV\GAME.RSC\VAG.WAD)
+
+Colony Wars Red Sun (MagDemo31: CWREDSUN\GAME.RSC\0002\VAG_WAD)
+
+Contains several simple chunks with filenames:
+
+| 000h 0Ch Chunk Filename ("filename.ext", zeropadded if shorter)
+00Ch 4 Chunk Data Size in bytes (SIZ)
+010h SIZ Chunk Data (usually VAGp files, in VAG.WAD)
+
+There is no end-marker in last chunk (it simply ends at total filesize).
+
+Red Sun VAG_WAD is a bit odd: The "extension" is _WAD instead .WAD, the chunk
+names include prefix "RedSun\", which leaves only 5 chars for the actual name,
+causig duplicated names like "RedSun\laser" (which were supposedly meant to be
+named laser1, laser2, laser3 or the like), and many of the Red Dun VAG files
+contain damaged 30h-byte VAG header entries, eg. zero instead of ID "VAGp").
+
+Mat Hoffman's Pro BMX (new demo) (MagDemo48: MHPB\STILLS.BIN)
+
+Contains .BS files in several chunks:
+
+| 000h .. Chunk(s) (.BS files with extra header info)
+... 4 End Marker (00000000h)
+Chunk format:
+000h 4 Chunk size (including whole chunk header)
+004h 2 Bitmap Width (eg. F0h)
+006h 2 Bitmap Height (eg. 80h)
+008h 2 Data Size/4 (same as (Chunksize-0Ch-filenamelen)/4)

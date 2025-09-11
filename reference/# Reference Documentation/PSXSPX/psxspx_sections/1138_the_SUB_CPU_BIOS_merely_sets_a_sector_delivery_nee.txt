@@ -1,0 +1,56 @@
+PSXSPX SPECIFICATIONS - THE SUB-CPU BIOS MERELY SETS A SECTOR-DELIVERY-NEEDED FLAG (INSTEAD OF
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: the SUB-CPU BIOS merely sets a sector-delivery-needed flag (instead of
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 2272 characters
+Lines: 47
+================================================================================
+
+the SUB-CPU BIOS merely sets a sector-delivery-needed flag (instead of
+memorizing which/how many sectors need to be delivered, and, accordingly, the
+PSX can use only three of the available eight SRAM slots: One for currently
+pending INT1, one for undelivered INT1, and one for currently/incompletely
+received sector).
+
+First Response (INT3) (or INT5 if failed)
+
+The first response is sent immediately after processing a command. In detail:
+
+The mainloop checks for incoming commands once every some clock cycles, and
+executes commands under following condition:
+
+| Main CPU has sent a command, AND, there is no INT pending
+(if an INT is pending, then the command won't be executed yet, but will be
+executed in following mainloop cycles; once when INT got acknowledged)
+(even if no INT is pending, the mainloop may generate INT1/INT2 before
+executing the command, if so, as said above, the command won't execute yet)
+
+Once when the command gets executed it will sent the first response immediately
+after the command execution (which may only take a few clock cycles, or some
+more cycles, for example Init/ReadTOC do include some time consuming
+initializations). Anyways, there will be no other INTs generated during command
+execution, so once when the command execution has started, it's guaranteed that
+the next INT will contain the first response.
+
+Second Responses (INT2) (or INT5 if failed)
+
+Some commands do send a second response after actual command execution:
+
+| 07h MotorOn E - INT3(stat), INT2(stat)
+08h Stop E - INT3(stat), INT2(stat)
+09h Pause E - INT3(stat), INT2(stat)
+0Ah Init - INT3(late-stat), INT2(stat)
+12h SetSession E session INT3(stat), INT2(stat)
+15h SeekL E - INT3(stat), INT2(stat) ;\use prior Setloc
+16h SeekP E - INT3(stat), INT2(stat) ;/to set target
+1Ah GetID E - INT3(stat), INT2/5(stat,flg,typ,atip,"SCEx")
+1Dh GetQ E adr,point INT3(stat), INT2(10bytesSubQ,peak_lo)
+1Eh ReadTOC - INT3(late-stat), INT2(stat)
+
+In some cases (like seek or spin-up), it may take more than a second until the
+2nd response is sent.
+
+It should be highly recommended to WAIT until the second response is generated
+BEFORE sending a new command (it wouldn't make too much sense to send a new
+command between first and second response, and results would be unknown, and

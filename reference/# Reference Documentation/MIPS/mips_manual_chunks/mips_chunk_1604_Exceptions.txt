@@ -1,0 +1,38 @@
+MIPS INSTRUCTION SET REFERENCE - EXCEPTIONS:
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Exceptions:
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1318 characters
+Lines: 29
+================================================================================
+
+Exceptions:
+            Trap
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                               287
+
+                               Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+TGE
+
+
+
+
+  Trap if Greater or Equal                                                                                              TGE
+
+      31                   26 25           21 20             16 15                                 6   5                 0
+            SPECIAL                                                                                           TGE
+                                    rs                 rt                        code
+             000000                                                                                          110000
+                  6                 5                  5                          10                            6
+
+           Format:    TGE rs, rt                                                                                    MIPS32
+
+           Purpose:
+           To compare GPRs and do a conditional trap
+
+           Description: if rs ≥ rt then Trap
+           Compare the contents of GPR rs and GPR rt as signed integers; if GPR rs is greater than or equal to GPR rt, then take

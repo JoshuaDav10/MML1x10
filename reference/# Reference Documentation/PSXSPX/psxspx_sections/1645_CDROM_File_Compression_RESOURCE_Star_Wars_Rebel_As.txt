@@ -1,0 +1,100 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION RESOURCE (STAR WARS REBEL ASSAULT 2)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression RESOURCE (Star Wars Rebel Assault 2)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 2738 characters
+Lines: 92
+================================================================================
+
+CDROM File Compression RESOURCE (Star Wars Rebel Assault 2)
+
+| _______________________________ Entrysize=14h ________________________________
+
+Fighting Force (MagDemo01: FGHTFRCE\*.WAD)
+
+| 000h 4 Number of files (big endian)
+004h N*14h File List
+... .. File Data
+
+File List entries:
+
+| 000h 0Ch Filename ("FILENAME.EXT", zeropadded if shorter than 12 chars)
+00Ch 4 Filesize in bytes (can be odd) (big endian)
+010h 4 Fileoffset in bytes (increasing, 4-byte aligned) (big endian)
+
+Parappa (MagDemo01: PARAPPA\*.INT)
+
+Um Jammer Lammy (MagDemo24: UJL\*.INT)
+
+| 0000h 2000h Folder 1
+2000h .. File Data for Folder 1
+... 2000h Folder 2
+... .. File Data for Folder 2
+... 2000h Folder End marker (FFFFFFFFh, plus zeropadding)
+
+Folder entries:
+
+| 0000h 4 Folder ID (increasing, 1,2,3, or FFFFFFFFh=End)
+0004h 4 Number of files (max 198h) (N)
+0008h 4 File Data Area size/800h (S)
+000Ch 4 Zero (0)
+0010h N*14h File List
+... .. Zeropadding to 2000h
+2000h S*800h File Data Area for this folder
+
+File List entries:
+
+| 000h 4 Filesize in bytes
+004h 10h Filename (FILENAME.EXT, zeropadded)
+
+File Offsets are always 4-byte aligned (required for Um Jammer Lammy, which
+contains Filesizes that aren's multiples of 4).
+
+Note: There can be more than one folder with same ID (ie. when having more than
+198h TIM files, which won't fit into a single 2000h-byte folder).
+
+Gran Turismo 1 (MagDemo10: GT\BG.DAT\*, GT\COURSE.DAT\*)
+
+Gran Turismo 1 (MagDemo15: GT\BG.DAT\*, GT\COURSE.DAT\*)
+
+JumpStart Wildlife Safari Field Trip (MagDemo52: DEMO\DATA.DAT\*.DAT)
+
+These are child archives found inside of the main GT-ARC and DATA.DAT archives.
+
+| 000h 4 Number of Files (eg. 26h) (usually at least 02h or higher)
+004h N*14h File List
+... .. File Data area
+File List entries:
+000h 10h Filename ("FILENAME.EXT", zeropadded if shorter)
+010h 4 Offset in bytes (increasing, 4-byte-aligned?)
+
+Croc 2 (MagDemo22: CROC2\CROCII.DAT and CROCII.DIR)
+
+Disney's The Emperor's New Groove (MagDemo39: ENG\KINGDOM.DIR+DAT)
+
+Disney's Aladdin in Nasira's Revenge (MagDemo46: ALADDIN\ALADDIN.DIR+DAT)
+
+| DIR:
+000h 4 Number of Entries (0Eh)
+004h N*14h File List
+DAT:
+000h .. File Data (referenced from CROCII.DIR)
+
+File List entries:
+
+| 000h 0Ch Filename ("FILENAME.EXT", zeropadded if shorter)
+00Ch 4 File Size in bytes
+010h 4 File Offset in .DAT file (800h-byte aligned, increasing)
+
+Alice in Cyberland (ALICE.PAC, and nested .PAC, .FA, .FA2 archives)
+
+| 000h N*14h File List
+... 14h Zerofilled (File List end marker)
+... .. File Data area
+File List entries:
+000h 0Ch Filename ("FILENAME.EXT", zeropadded if shorter)
+00Ch 4 Offset (increasing, 4-byte aligned)
+010h 4 Filesize in bytes (can be odd, eg. for .FA2 files)
+
+PAC and FA are uncompressed, FA2 is compressed via some LZ5-variant:

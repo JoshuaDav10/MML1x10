@@ -1,0 +1,35 @@
+PSXSPX SPECIFICATIONS - AN EXTRA RESISTOR (THE MEMORY/RESISTOR ARE INTENDED FOR USE WITH THE "X-ASSIST"
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: an extra resistor (the memory/resistor are intended for use with the "X-Assist"
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1091 characters
+Lines: 27
+================================================================================
+
+an extra resistor (the memory/resistor are intended for use with the "X-Assist"
+add-on device).
+
+Xplorer PCB types
+
+| 1) PXT6 ;original board
+2) Nameless ;with alternate solder pads for smaller SRAM/GAL
+3) PXT6-3 ;with alternate solder pads for smaller SRAM/GAL and 2nd EEPROM
+
+Xplorer Compatibility Issues
+
+The three PCB versions are functionally identical, and do differ only by
+cosmetic changes for alternate/smaller chip packages.
+
+However, some things that can make difference in functionality are the
+installed components and installed firmware version:
+
+| - FX carts have some extra components & more memory installed.
+(needed for "bigger" firmwares, mainly needed for the X-Assist add-on)
+- FLASH chips from different manufacturers can occassionally cause problems
+(eg. older software not knowing how to program newer FLASH chips).
+- DB25 transfer protocol has some changed commands in each firmware version
+(and most transfer tools tend to rely on such commands, so most tools will
+fail unless the cart is flashed with a certain firmware version).
+
+X-Assist add-on for Xplorer carts

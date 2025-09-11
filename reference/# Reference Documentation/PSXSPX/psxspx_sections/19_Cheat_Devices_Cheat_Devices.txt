@@ -1,0 +1,35 @@
+PSXSPX SPECIFICATIONS - CHEAT DEVICES
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Cheat Devices
+Chunked: Wed Sep 10 03:31:04 PM CDT 2025
+Size: 616 characters
+================================================================================
+
+Cheat Devices
+
+Cheat Devices - Datel I/O
+
+Cheat Devices - Datel DB25 Comms Link Protocol
+
+Cheat Devices - Datel Chipset Pinouts
+
+Cheat Devices - Datel Cheat Code Format
+
+Cheat Devices - Xplorer Memory and I/O Map
+
+Cheat Devices - Xplorer DB25 Parallel Port Function Summary
+
+Cheat Devices - Xplorer DB25 Parallel Port Command Handler
+
+Cheat Devices - Xplorer DB25 Parallel Port Low Level Transfer Protocol
+
+Cheat Devices - Xplorer Versions
+
+Cheat Devices - Xplorer Chipset Pinouts
+
+Cheat Devices - Xplorer Cheat Code Format
+
+Cheat Devices - Xplorer Cheat Code and ROM-Image Decryption
+
+Cheat Devices - FLASH/EEPROMs

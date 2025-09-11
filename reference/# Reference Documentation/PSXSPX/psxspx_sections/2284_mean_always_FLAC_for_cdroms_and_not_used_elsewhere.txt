@@ -1,0 +1,37 @@
+PSXSPX SPECIFICATIONS - MEAN "ALWAYS FLAC" FOR CDROMS, AND "NOT USED" ELSEWHERE).
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: mean "always FLAC" for cdroms, and "not used" elsewhere).
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1294 characters
+Lines: 28
+================================================================================
+
+mean "always FLAC" for cdroms, and "not used" elsewhere).
+
+V5 Map Formats
+
+| V5 uncompressed map format (when [filehdr+10h]=00000000h):
+000h N*4 Hunk List (32bit offsets: Offset/BytesPerHunk) (usually 1,2,3..)
+V5 compressed map format (when [filehdr+10h]<>00000000h):
+000h 4 Length of compressed map
+004h 6 Offset of first block (48bit) (E4h, after meta)
+00Ah 2 CRC16 on decompressed map entries
+00Ch 1 bits used to encode complength
+00Dh 1 bits used to encode self-refs
+00Eh 1 bits used to encode parent unit refs
+00Fh 1 Reserved for future use (probably zero)
+010h .. Compressed Map entries (bitstream with Huffman/RLE encoding)
+The decompressed map entries should look as shown below (one could store them
+differently, eg. as 32bit little endian values; however, they must be stored
+exactly as shown below when computing the CRC16 on decompressed map entries):
+000h 1 Compression type (0..3=Codec0..3, 4=Uncompressed, 5=Self, 6=Parent)
+001h 3 Compressed length (24bit big-endian)
+004h 6 Offset to compressed data (48bit big-endian)
+00Ah 2 CRC16 on decompressed data (big-endian)
+V5 compression codecs:
+0,0,0,0 = CHD_CODEC_NONE ;-unused (when using less than 4 codecs)
+"zlib" = CHD_CODEC_ZLIB ;\
+"lzma" = CHD_CODEC_LZMA ; general codecs
+"huff" = CHD_CODEC_HUFFMAN ;
+"flac" = CHD_CODEC_FLAC ;/

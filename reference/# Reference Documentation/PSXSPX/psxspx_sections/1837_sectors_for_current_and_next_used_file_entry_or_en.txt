@@ -1,0 +1,26 @@
+PSXSPX SPECIFICATIONS - SECTORS FOR CURRENT AND NEXT USED FILE ENTRY (OR END OF CD.IMG FOR LAST FILE;
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: sectors for current and next used file entry (or end of CD.IMG for last file;
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1060 characters
+Lines: 17
+================================================================================
+
+sectors for current and next used file entry (or end of CD.IMG for last file;
+or alternately assume last file to be a Normal Binary with Size=NumSectors).
+Normal Binaries:
+Contains single files (file=0/channel=0). Filetypes include TIM, VB, VH,
+other/custom file formats, and DOT1 archives.
+The DOT1 archives have 4-byte aligned offsets, but, unconventionally, with
+some offsets set to ZERO (usually the last entry, and sometimes also other
+entries):
+SEQ files (Disc1:Dir08h\File173h) ;with ZERO entries (=uncommon)
+SEQ files (Disc1:Dir09h\File176h..3D7h) ;with ZERO entries (=uncommon)
+SEQ files (Disc1:Dir0Ah\File3DAh..3E6h) ;with ZERO entries (=uncommon)
+TIM files (Disc1:Dir4Fh\File962h..983h) ;with ZERO entries (=uncommon)
+TIM files (Disc1:Dir0Ch\File414h..426h) ;without ZERO entries (=normal DOT1)
+XA-ADPCM Streams (Disc1:Dir0Bh\File3E7h..413h):
+These contain 16 audio streams (file=1/channel=00h-0Fh). The Size entry is
+set to total size in sectors for all streams, minus 50h (ie. there appears
+to be 50h sectors appended as padding before next file).

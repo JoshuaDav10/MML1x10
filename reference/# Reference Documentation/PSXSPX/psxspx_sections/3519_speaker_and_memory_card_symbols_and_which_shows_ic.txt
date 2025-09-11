@@ -1,0 +1,56 @@
+PSXSPX SPECIFICATIONS - SPEAKER AND MEMORY CARD SYMBOLS, AND WHICH SHOWS ICONS FOR ALL FILES, INCLUDING
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: speaker and memory card symbols, and which shows icons for all files, including
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2238 characters
+Lines: 48
+================================================================================
+
+speaker and memory card symbols, and which shows icons for all files, including
+regular PSX game positions, whose colored icons are converted without any
+contrast optimizations to unidentify-able dithered monochrome icons). If the
+animation length of the File Viewer Icon is 0000h, then the Directory Viewer
+does instead display the first Executable Mono Icon.
+
+Each icon frame is 32x32 pixels with 1bit color depth (32 words, =128 bytes),
+
+| 1st word = top-most scanline, 31st word = bottom-most scanline
+bit0 = left-most pixel, bit31 = right-most pixel (0=white, 1=black)
+
+A normal icon occupies 80h bytes, animated icons have more than one frame and
+do occupy N*80h bytes.
+
+Executable Mono Icon List
+
+The number of entries in the Executable Mono Icon List is specified in hdr[56h]
+(usually 01h). Each entry in the Icon List occupies 8 bytes:
+
+| 00h 2 Animation Length (0001h..any number) (icon frames)
+02h 2 Animation Delay (N 30Hz units per icon frame)
+04h 4 Address of icon frame(s) in Virtual FLASH (at 02000000h and up)
+
+The icon frame(s) can be anywhere on a word-aligned location in the file Body
+(as specified in the above Address entry), the format of the frame(s) is the
+same as for File Viewer Mono Icons (see there).
+
+The Executable Icons are shown in the Executable File Selection Menu (which
+occurs when pressing Left/Right buttons in the GUI). Pressing Fire button in
+that menu starts the selected executable. If the Icon List has more than 1
+entry, then pressing Up/Down buttons moves to the previous/next entry (this
+just allows to view the corresponding icons, but doesn't have any other
+purpose, namely, the current list index is NOT passed to the game when starting
+it).
+
+The Executable Mono Icon List is usually zero-padded to 80h-bytes size
+(although that isn't actually required, the following file Body could start at
+any location).
+
+Entrypoint
+
+The whole file (including the header and icons) gets mapped to 02000000h and
+up. The entrypoint can be anywhere in the file Body, and it gets called with a
+parameter value in r0 (when started by the GUI, that parameter is always zero,
+but it may be nonzero when the executable was started by a game, ie. the
+from SWI 08h, PrepareExecute, or the from BU
+Command 59h).

@@ -1,0 +1,32 @@
+PSXSPX SPECIFICATIONS - CHEAT DEVICES - XPLORER DB25 PARALLEL PORT FUNCTION SUMMARY
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: Cheat Devices - Xplorer DB25 Parallel Port Function Summary
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1161 characters
+Lines: 23
+================================================================================
+
+Cheat Devices - Xplorer DB25 Parallel Port Function Summary
+
+Xplorer Parallel Port Commands (from PC side)
+
+| GetByteByAddr32 Tx(5702h,Addr32), Rx(Data8)
+OldMenuBuReadFile Tx(5703h), TxFilename, RxDataFFEEh
+OldMenuBuDeleteFile Tx(5704h), TxFilename
+OldMenuBuWriteFile Tx(5705h), TxFilename, TxFiledata
+OldMenuBuGetFileHdr Tx(5706h), TxFilename, Rx(00h,00h), RxTurbo, Rx(02h)
+OldMenuBuOpenEvents Tx(5707h)
+SetCop0Breakpoint Tx(5708h,Addr32,Mask32,Ctrl32) ;Menu: Dummy?
+OldMenuBuCopyFile Tx(5709h), TxFilename ;to other memcard
+OldMenuBuFormat Tx(570Ah,Port8)
+OldMenuBuGetStatus2x Tx(570Bh), Rx(Stat8,Stat8) ;\different in old/new
+NewMenuBuGetStatus1x Tx(570Bh,Port8), Rx(Stat8) ;/
+MenuGetSetFlag Tx(570Ch), Rx(Flag8) ;get old flg, then set flg=01h
+NewMenuBuReadSector Tx(570Dh,Port8,Sector16), Rx(Data[80h])
+NewMenuBuWriteSector Tx(570Eh,Port8,Sector16,Data[80h])
+NewRawExecute Tx(570Fh,Addr32) ;call Addr
+MidMenuBuggedExecJump Tx(5710h,ORra32,ORgp32,ORsp32,pc32) ;aka r31,r28,r29,pc
+MidMenuSendComment Tx(5711h,Len8,AsciiMessage[Len])
+NewMenuFillVram Tx(5712h,Xloc32,Yloc32,Xsiz32,Ysiz32,FillValue32)
+NewGetVram Tx(5713h,Xloc32,Yloc32), Rx(Data[800h]) ;32x32pix

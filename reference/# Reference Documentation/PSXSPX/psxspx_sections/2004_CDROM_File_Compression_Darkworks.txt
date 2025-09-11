@@ -1,0 +1,66 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION DARKWORKS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression Darkworks
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 2275 characters
+Lines: 58
+================================================================================
+
+CDROM File Compression Darkworks
+
+Used by Alone in the Dark The New Nightmare (FAT.BIN\LEVELS\*\chunks)
+
+Decompression
+
+The decompressor is designed to hook the sector loading function: It does
+decompress incoming sectors during loading, and forwards the decompressed data
+to the original sector loading function. The decompressed data is temporarily
+stored in two small Dict buffers (which do also serve as compression
+dictionary).
+
+| decompress:
+dictsize=1000h, dict0=alloc(dictsize), dict1=alloc(dictsize)
+src=load_next_800h_byte_sector ;load first sector
+dst=dict0 ;temp dest in current dict
+dst_base=dst ;memorize start of newly decompressed data
+@@decompress_lop:
+if [src]=00h then ;\
+esc=[src+1], src=src+1 ;
+forward_to_actual_dest(source=dst_base, len=dst-dst_base) ; escape
+if esc=0 or esc>4 then esc=2 (or warn_invalid_escape_code) ;
+if esc=1 then goto @@decompress_done ;
+if esc=2 or esc=4 then src=load_next_800h_byte_sector ;
+if esc=3 or esc=4 then swap(dict0,dict1), dst=dict0 ;
+dst_base=dst ;/
+elseif ([src] AND 03h)=0 then ;\
+len=[src]/4+2, dat=[src+1], src=src+2 ; fill 8bit
+for i=1 to len, [dst]=dat, dst=dst+1 ;/
+elseif ([src] AND 03h)=1 then ;\
+len=[src]/4+([src+2] AND 40h)+4 ;
+ptr=[src+1]+([src+2] AND 3Fh)*100h ; LZ compressed
+if ptr+len>dictsize then error (exceeds allocated dictsize) ;
+if ([src+2] AND 80h) then ptr=ptr=dict1 else ptr=ptr=dict0 ;
+src=src+3 ;
+for i=1 to len, [dst]=[ptr], ptr=ptr+1, dst=dst+1 ;/
+elseif ([src] AND 03h)=2 then ;\
+len=[src]/4+3, dat0=[src+1], dat1=[src+2], src=src+3 ; fill 16bit
+for i=1 to len, [dst]=dat0, [dst+1]=dat1, dst=dst+2 ;/
+elseif ([src] AND 03h)=3 then ;\
+len=[src]/4+1, src=src+1 ; uncompressed
+for i=1 to len, [dst]=[src], src=src+1, dst=dst+1 ;/
+goto @@decompress_lop
+@@decompress_done:
+dealloc(dict0), dealloc(dict1)
+ret
+
+There are one or more escape codes per sector (one to indicate the of the
+sector, plus further escape codes to swap the Dict buffers whenever the current
+Dict is full).
+
+The original decompressor is doing the forwarding in 800h-byte units, so Dict
+swapping may be only done when dict0 contains a multiple of 800h bytes (aka
+dictsize bytes).
+
+For whatever reason, there are only 4Kbyte per Dict allocated (although the
+14bit LZ indices could have addressed up to 16Kbyte per Dict).

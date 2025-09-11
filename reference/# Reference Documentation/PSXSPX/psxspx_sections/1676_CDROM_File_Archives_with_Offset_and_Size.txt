@@ -1,0 +1,57 @@
+PSXSPX SPECIFICATIONS - CDROM FILE ARCHIVES WITH OFFSET AND SIZE
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Archives with Offset and Size
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1278 characters
+Lines: 49
+================================================================================
+
+CDROM File Archives with Offset and Size
+
+Crash Team Racing (retail: BIGFILE.BIG, and MagDemo30/42: KART\SAMPLER.BIG)
+
+| 000h 4 Zero
+004h 4 Number of Files (260h)
+010h N*8 File entries
+... .. Zeropadding to 800h byte boundary
+... .. File Data
+
+File Entries:
+
+| 000h 4 Fileoffset/800h (increasing)
+004h 4 Filesize in bytes
+
+Filetypes in the archive include...
+
+| MDEC v2 STR's (file 1E1h..1F8h,1FAh)
+TIM textures (file 01FBh..0200h and others)
+empty files (file 01F9h and others)
+small archives with named entries (file B5h,124h,125h,126h and others)
+stuff with date string and names (file 253h,256h)
+there seem to be no nested BIG files inside of the main BIG file
+
+Black Matrix (*.DAT)
+
+| 000h 4 Number of files (N) (eg. 196h)
+004h 4 Unknown (always 0Bh) (maybe sector size shift?)
+008h N*4 File List
+... .. Zeropadding to 800h-byte boudary
+... .. File Data
+
+File List entries:
+
+| 000h 2 Offset/800h (increasing)
+002h 2 Size/800h (can be zero)
+
+The "files" might actually contain small child folders? Or the whole stuff is
+just some kind of data structure, not an actual file system archive.
+
+Charumera (*.CVF)
+
+| 000h N*4 File List
+... .. Zeropadding to 800h-byte boundary
+... .. File Data area
+File List entries:
+000h 1 Size/800h (8bit)
+001h 3 Offset/800h (24bit, increasing)

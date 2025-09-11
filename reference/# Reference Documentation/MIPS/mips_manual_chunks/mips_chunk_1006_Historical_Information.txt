@@ -1,0 +1,37 @@
+MIPS INSTRUCTION SET REFERENCE - HISTORICAL INFORMATION
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Historical Information
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1320 characters
+Lines: 28
+================================================================================
+
+Historical Information
+      In the MIPS I architecture, the LWL and LWR instructions were exceptions to the load-delay scheduling restriction.
+      A LWL or LWR instruction which was immediately followed by another LWL or LWR instruction, and used the
+      same destination register would correctly merge the 1 to 4 loaded bytes with the data loaded by the previous instruc-
+      tion. All such restrictions were removed from the architecture in MIPS II.
+
+
+
+
+166                                                     MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                         Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+LWR
+
+
+
+
+  Load Word Right                                                                                                           LWR
+
+      31                 26 25               21 20             16 15                                                        0
+              LWR
+                                    base                rt                                    offset
+             100110
+                6                    5                  5                                      16
+
+           Format:    LWR rt, offset(base)                                                                            MIPS32
+
+           Purpose:

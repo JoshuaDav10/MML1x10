@@ -1,0 +1,50 @@
+MIPS INSTRUCTION SET REFERENCE - APPENDIX A INSTRUCTION BIT ENCODINGS
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Appendix A Instruction Bit Encodings
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 3620 characters
+Lines: 41
+================================================================================
+
+Appendix A Instruction Bit Encodings
+
+
+            1. Release 2 of the Architecture added the MFMC0 function, which is further decoded as the DI and EI instructions.
+
+
+
+                                        Table A-12 MIPS32 COP0 Encoding of Function Field When rs=CO
+              function        bits 2..0
+                                 0              1           2              3              4              5              6           7
+              bits 5..3         000            001         010            011            100            101            110         111
+              0 000              *            TLBR        TLBWI            *              *              *           TLBWR          *
+              1 001           TLBP              *           *              *              *              *              *           *
+              2 010              *              *           *              *              *              *              *           *
+              3 011           ERET              *           *              *              *              *              *        DERET σ
+              4 100           WAIT              *           *              *              *              *              *           *
+              5 101              *              *           *              *              *              *              *           *
+              6 110              *              *           *              *              *              *              *           *
+              7 111              *              *           *              *              *              *              *           *
+
+
+                                                 Table A-13 MIPS32 COP1 Encoding of rs Field
+              rs          bits 23..21
+                               0               1             2              3               4               5              6          7
+          bits 25..24        000              001           010            011             100             101            110        111
+           0     00         MFC1               β           CFC1          MFHC1 ⊕          MTC1              β            CTC1      MTHC1 ⊕
+           1     01         BC1 δ         BC1ANY2 δε∇   BC1ANY4 δε∇         *               *               *              *          *
+           2     10           Sδ              Dδ             *              *              Wδ              Lδ            PS δ         *
+           3     11            *               *             *              *               *               *              *          *
+
+
+                                        Table A-14 MIPS32 COP1 Encoding of Function Field When rs=S
+      function        bits 2..0
+                         0           1           2           3           4          5           6          7
+      bits 5..3         000         001         010         011         100        101        110         111
+      0 000            ADD          SUB        MUL          DIV        SQRT        ABS        MOV         NEG
+      1 001         ROUND.L ∇   TRUNC.L ∇     CEIL.L ∇   FLOOR.L ∇   ROUND.W    TRUNC.W      CEIL.W    FLOOR.W
+      2 010              *       MOVCF δ       MOVZ        MOVN          *       RECIP ∇    RSQRT ∇        *
+      3 011              *           *           *           *      RECIP2 ε∇   RECIP1 ε∇  RSQRT1 ε∇   RSQRT2 ε∇
+      4 100              *         CVT.D         *           *        CVT.W      CVT.L ∇    CVT.PS∇        *
+      5 101              *           *           *           *           *          *           *          *

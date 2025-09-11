@@ -1,0 +1,76 @@
+PSXSPX SPECIFICATIONS - PSX KERNEL SUPPORTS MAX 800H BYTES PER DIRECTORY (ONE EXCEPTION IS PSX HOT
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: PSX kernel supports max 800h bytes per directory (one exception is PSX Hot
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 3420 characters
+Lines: 68
+================================================================================
+
+PSX kernel supports max 800h bytes per directory (one exception is PSX Hot
+Shots Golf 2, which has an ISO directory with more than 800h bytes; it does
+use a lookup file instead of actually parsing the while ISO directory).
+
+Names are alphabetically sorted, no matter if the names refer to files or
+directories (ie. SUBDIR would be inserted between STRFILE.EXT and SYSFILE.EXT).
+The first two entries (with non-ascii names 00h and 01h) are referring to
+current and parent directory.
+
+Path Tables
+
+The Path Table contain a summary of the directory names (the same information
+is also stored in the directory records, so programs may either use path tables
+or directory records; the path tables are allowing to read the whole directory
+tree quickly at once, without neeeding to seek from directory to directory).
+
+Path Table 1 is in Little-Endian format, Path Table 3 contains the same data in
+Big-Endian format. Path Table 2 and 4 are optional copies of Table 1 and 3. The
+size and location of the tables is stored in Volume Descriptor entries
+084h..09Bh. The format of the separate entries within a Path Table is,
+
+| 00h 1 Length of Directory Name (LEN_DI) (01h..08h for PSX)
+01h 1 Extended Attribute Record Length (usually 00h)
+02h 4 Directory Logical Block Number
+06h 2 Parent Directory Number (0001h and up)
+08h LEN_DI Directory Name (d-characters, d1-characters) (or 00h for Root)
+xxh 0..1 Padding Field (00h) (only if LEN_FI is odd)
+
+The first entry (directory number 0001h) is the root directory, the root
+doesn't have a name, nor a parent (the name field contains a 00h byte, rather
+than ASCII text, LEN_DI is 01h, and parent is 0001h, making the root it's own
+parent; ignoring the fact that incest is forbidden in many countries).
+
+The next entries (directory number 0002h and up) (if any) are sub-directories
+within the root (sorted in alphabetical order, and all having parent=0001h).
+The next entries are sub-directories (if any) of the first sub-directory (also
+sorted in alphabetical order, and all having parent=0002h). And so on.
+
+PSX disks usually contain all four tables (usually on sectors 18,19,20,21).
+
+Format of an Extended Attribute Record (none such on PSX disks)
+
+If present, an Extended Attribute Record shall be recorded over at least one
+Logical Block. It shall have the following contents.
+
+| 00h 4 Owner Identification (numerical value) ;\used only if
+04h 4 Group Identification (numerical value) ; File Flags Bit4=1
+08h 2 Permission Flags (16bit, little-endian) ;/
+0Ah 17 File Creation Timestamp ("YYYYMMDDHHMMSSFF",timezone)
+1Bh 17 File Modification Timestamp ("0000000000000000",00h)
+2Ch 17 File Expiration Timestamp ("0000000000000000",00h)
+3Dh 17 File Effective Timestamp ("0000000000000000",00h)
+4Eh 1 Record Format (numerical value)
+4Fh 1 Record Attributes (numerical value)
+50h 4 Record Length (numerical value)
+54h 32 System Identifier (a-characters, a1-characters)
+74h 64 System Use (not specified content)
+B4h 1 Extended Attribute Record Version (numerical value)
+B5h 1 Length of Escape Sequences (LEN_ESC)
+B6h 64 Reserved for future standardization (00h-filled)
+F6h 4 Length of Application Use (LEN_AU)
+FAh LEN_AU Application Use
+xxh LEN_ESC Escape Sequences
+
+Unknown WHERE that data is located... the Directory Records can specify the
+Extended Attribute Length, but not the location... maybe it's meant to be
+located in the first some bytes or blocks of the File or Directory...?

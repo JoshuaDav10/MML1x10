@@ -1,0 +1,284 @@
+PSXSPX SPECIFICATIONS - DECOMPRESS THE WHOLE FILE AND ALLOCATE MORE MEMORY AS NEEDED, OR DECOMPRESS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: decompress the whole file and allocate more memory as needed, or decompress
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 11266 characters
+Lines: 276
+================================================================================
+
+decompress the whole file and allocate more memory as needed, or decompress
+only the header (filename+16h bytes) and then compute decompressed size as
+filename+16h+data+2+resource+2 bytes).
+
+Decompressed Binary (big-endian):
+
+| The decompressed binary contains following data (similar as MacBinary):
+00h 1 Length of Filename (1..63)
+01h .. Filename ("FILENAME.EXT")
+01h+N 1 Version (00h)
+02h+N 4 File Type
+06h+N 4 File Creator
+0Ah+N 2 Finder Flags
+0Ch+N 4 Filesize, uncompressed, Data Fork
+10h+N 4 Filesize, uncompressed, Resource Fork
+14h+N 2 Header CRC16-XMODEM on uncompressed 14h+N bytes
+16h+N .. Data Fork
+... 2 Data Fork CRC16-XMODEM on uncompressed Data Fork
+... .. Resource Fork
+... 2 Resource Fork CRC16-XMODEM on uncompressed Resource Fork
+... .. Padding (might reportedly occur in some files)
+Caution: There is a document that does claim that the CRC field should be be
+set to 0000h before CRC calculation, and that the CRC would be computed on
+Size+2 bytes (up to including he CRC field), that appears to be nonsense,
+the CRC is computed on Size+0 bytes, not Size+2.
+
+Multipart files:
+
+| Emails or other text documents may contain multiple binhex files, if so,
+each part should be reportedly followed by a line containing:
+--- end of part NN ---
+Unknown if there are any .hqx files with such multipart stuff.
+Unknown if the next part starts with "(This file must.." or just with ":".
+
+Note: Many files with .hqx extension are actually raw .sit or .cpt files (maybe
+because somebody had removed the binhex encoding without altering the filename
+extension).
+
+PackIt (.pit) (Macintosh) (1986) (big-endian)
+
+MAC File Type,Creator IDs = "PIT ","PIT " 
+| Bitstream for Uncompressed File Entries:
+32bits Uncompressed Header[000h..003h] (Method/Crypto="PMag")
+..bits Uncompressed Header[004h..061h] (uncompressed size = 5Eh)
+..bits Uncompressed Data+Resource+CRC (uncompressed size = Data+Rsrc+2)
+Bitstream for Compressed File Entries:
+32bits Uncompressed Header[000h..003h] (Method/Crypto="PMa4")
+..bits Compressed Huffman Tree (for decoding following bits)
+..bits Compressed Header[004h..061h] (uncompressed size = 5Eh)
+..bits Compressed Data+Resource+CRC (uncompressed size = Data+Rsrc+2)
+..bits Padding to 8bit-boundary (byte align next File Entry)
+Bitstream for Archive End Marker (after last file):
+32bits Uncompressed Header[000h..003h] (Method/Crypto="PEnd")
+File Entry Format:
+000h 4 Method/Crypto (usually "PMag"=Uncompressed, "PMa4"=Huffman)
+004h 1 Filename length
+005h 63 Filename ("FILENAME", garbage padded)
+044h 4 File Type
+048h 4 File Creator
+04Ch 2 Finder flags
+04Eh 2 Locked?
+050h 4 Filesize, uncompressed, Data fork
+054h 4 Filesize, uncompressed, Resource fork
+058h 4 Timestamp, creation
+05Ch 4 Timestamp, modification
+060h 2 CRC16-XMODEM on [004h..05Fh]
+... .. Data Fork
+... .. Resource Fork
+... 2 CRC16-XMODEM on uncompressed Data+Resource forks
+Method/Crypto:
+"PEnd" = Archive End marker (4-byte end marker, without filename etc.)
+"PMag" = Uncompressed
+"PMa1" = Uncompressed, Encrypted Simple
+"PMa2" = Uncompressed, Encrypted DES
+"PMa3" = Uncompressed, Encrypted reserved
+"PMa4" = Huffman
+"PMa5" = Huffman, Encrypted Simple
+"PMa6" = Huffman, Encrypted DES
+"PMa7" = Huffman, Encrypted reserved
+Decompression: ;for PackIt (and also for StuffIt method 03h)
+InitBitstreamMsbFirst(src) ;-src is after "PMa4" PackIt ID
+tree=GetMem(200h*4) ;-alloc tree (probably less needed)
+num_entries=0 ;\init tree
+root=GetTreeEntry ;/
+while dst
+
+http://www.network172.com/early-mac-software/packit-source-code/
+- official
+
+StuffIt (.sit) (Macintosh) (old format) (1987) (big-endian)
+
+MAC File Type,Creator IDs = "SIT!","SIT!" (version=01h).
+
+MAC File Type,Creator IDs = "SITD","SIT!" (version=02h).
+
+MAC File Type,Creator IDs = "APPL","STi0" (whatever, with ID="ST65")
+
+| StuffIt Archive Header:
+000h 4 ID ("SIT!", short for StuffIt)
+Reportedly, there are several alternate IDs:
+"SIT!","ST46","ST50","ST60","ST65","STin","STi2","STi3","STi4"
+Unknown why, and if some do differ somehow (ST65 appears to be
+same as SIT!) (for STi, the "i" might be short for it? installer?)
+004h 2 Number of entries in root directory
+006h 4 Total size of archive
+00Ah 4 ID ("rLau", short for Raymond Lau)
+00Eh 1 Version number (01h=v1.x-v1.5.x, 02h=v1.6-v4.5)
+00Fh 7 Reserved (zerofilled) ;-when version=01h
+00Fh 1 Unknown (C6h or FFh) ;\
+010h 4 Offset to first root entry (16h or elsewhere!) ; when version=02h
+014h 2 Unknown (0001h or FFFFh) ;/
+File Entries:
+000h 1 Compression method, Resource fork
+001h 1 Compression method, Data fork
+002h 1 Filename length (1..63 for version=01h, 1..31 for version=02h)
+003h 1Fh Filename ("FILENAME.EXT", garbage padding)
+022h 20h Filename further chars ;-when version=01h
+022h 2 Filename+size CRC ;\
+024h 2 Unknown (always 0000h or 0986h?) ; when version=02h
+026h 4 Unknown Resource fork related ;maybe window ;
+02Ah 4 Unknown Data fork related ;coords ? ;
+02Eh 1 Unknown Data fork related ;
+02Fh 1 Unknown Resource fork related ;
+030h 2 Number of child entries (excluding End marker) ;
+032h 4 Offset to previous entry ;
+036h 4 Offset to next entry ;
+03Ah 4 Offset to parent entry ;
+03Eh 4 Offset to first child (or -1 for file entries) ;/
+042h 4 File type (eg. "APPL")
+046h 4 File creator (eg. "ACTA")
+04Ah 2 Finder flags (2100h)
+04Ch 4 Creation date
+050h 4 Modification date
+054h 4 Filesize, uncompressed, Resource fork (0=None)
+058h 4 Filesize, uncompressed, Data fork (0=None)
+05Ch 4 Filesize, compressed, Resource fork (0=None)
+060h 4 Filesize, compressed, Data fork (0=None)
+064h 2 CRC16 on uncompressed(?) Resource fork (0=None)
+066h 2 CRC16 on uncompressed(?) Data fork (0=None)
+068h 1 Pad bytes for encrypted Resource? (00h)
+069h 1 Pad bytes for encrypted Data? (00h)
+06Ah 2 Unknown Data fork related (0000h, or 0004h=Encrypted?)
+06Ch 2 Unknown Resource fork related (0000h, or 0004h=Encrypted?)
+06Eh 2 CRC16 on Header [000h..06Dh] with initial=0000h
+070h .. Compressed Data, Resource fork (if any) (size=[05Ch])
+... .. Compressed Data, Data fork (if any) (size=[060h])
+StuffIt Methods:
+00h Uncompressed
+01h RLE90 (same as... unknown if this is like BinHex, or like ARC)
+02h ClearGap LZW (same as nCompress, 14bit, with Clear(+gap), no Stop code)
+03h Huffman (same as PackIt "PMa4" method)
+05h LZHUF (same as LHA "lh1" method)
+06h Fixed Huffman Segmented. PackBits, then optional Huffman coding.
+The set of Huffman codes is predefined, but the meaning
+of a code can be different in each segment
+08h MW (Miller-Wegman, presumably LZMW)
+0Dh LZ+Huffman (?) ;-StuffIt and StuffIt5
+0Eh Installer (uh?)
+0Fh Arsenic (BWT and arithmetic coding) ;-StuffIt5 only?
+1xh Encrypted methods (same as above, plus encryption)
+20h Folder start ;\StuffIt (not StuffIt5)
+21h Folder end ;/
+
+Common methods are 02h,03h,0Dh (rarely also 00h,01h,05h) (and 0Fh for
+StuffIt5).
+
+Folders have BOTH methods set to 20h. Uncompressed Data size is WHAT? (maybe
+sum of all decompressed files in that folder?) Compressed Data size is size in
+SIT file including 70h-byte folder end-marker. The Folder END marker has both
+methods set to 21h. The Folder END marker has NONSENSE data size entries?
+
+When version=01h (eg. blackfor.sit), folder/file entries start at offset 16h,
+and are ordered as so:
+
+| Folder start
+Child entries
+Folder end
+Folder start
+Child entries
+Folder end
+
+When version=02h (eg. cabletron.sit), folder/file entries start at offset from
+archive header [010h] (which can be anywhere at offset 16h, or near end of
+archive), and are ordered as specified in file header entries [022h..041h].
+
+StuffIt 5 (.sit) (Macintosh, Windows) (1997) (big-endian)
+
+| StuffIt Archive Header:
+000h 82 ID "StuffIt (c)1997",...,"/StuffIt/",0Dh,0Ah,1Ah,00h)
+052h 1 Version (always 05h)
+053h 1 Flags (can be 00h, 10h, 80h) (bit4=what?, bit7=Encrypted)
+054h 4 Total size of archive
+058h 4 Offset to first entry in root directory (64h, plus Extra Data)
+05Ch 2 Number of entries in root directory
+05Eh 4 Same as [058h] (maybe one is 1st entry, and other is Header size)?
+062h 2 Header CRC16 on [000h..[05xh]-1] with [062h]=0000h and initial=0
+064h .. Extra Data (see below)
+... .. File/Folder entries
+Extra data can be:
+None (when [58h]=64h) ;with Flags=00h
+05h,76h,35h,B9h,87h,11h ;maybe 05h=Length? ;with Flags=80h=crypto
+0Dh,A5h,A5h,"Reserved",A5h,A5h,00h) ;maybe 0Dh=Length? ;with Flags=10h=what?
+File/Folder entries:
+000h .. Base Header
+... .. OS Header (depending on OS Type in Base Header)
+... .. Resource fork (if any) (MAC only, not Windows)
+... .. Data fork (if any)
+Base Header:
+000h 4 ID (A5A5A5A5h) (or B4B4B4B4h=corrupted charset conversion maybe?)
+004h 1 OS Type (1=Mac, 3=Windows)
+005h 1 Unknown (0)
+006h 2 Base Header size (41h) (30h+IV?+Filename+Comment)
+008h 1 Unknown (0) (maybe Flags MSB?)
+009h 1 Flags (bit3=Comment, bit6=Folder, bit5=Encrypted)
+00Ah 4 Timestamp, Creation (Mac OS format, seconds since 1904)
+00Eh 4 Timestamp, Modification (Mac OS format, seconds since 1904)
+012h 4 Offset of previous entry (0=None)
+016h 4 Offset of next entry (0=None)
+01Ah 4 Offset of parent folder entry (0=None)
+01Eh 2 Filename size (F)
+020h 2 Base Header CRC-16 on [000h..[006h]-1]
+022h (4) Offset of first child entry in folder (FFFFFFFFh=End) ;\Folder
+026h (4) Size of complete directory ; (if Flags
+02Ah (4) Unknown ; bit6=1)
+02Eh (2) Number of child entries (excluding folder End marker) ;/
+022h (4) Data fork uncompressed size ;\
+026h (4) Data fork compressed size ;
+02Ah (2) Data fork CRC-16 (0 for method 0Fh) ; File
+02Ch (2) Data fork Unknown (0000h) ; (if Flags
+02Eh (1) Data fork compression method (00h,0Dh,0Fh) ; bit6=0)
+02Fh (1) Data fork Encryption IV? size ;
+... (..) Data fork Encryption IV? data ;/
+... .. File/Folder name ("FILENAME.EXT")
+... (2) Comment size (K) ;\Comment
+... (2) Comment Unknown (0) ; (if Flags
+... (..) Comment data ;/bit3=1)
+OS Header for Mac (OS=1):
+000h 2 Flags2 (bit0=HasResource, bit4=same as archive header [053h] ?)
+002h 2 CRC16 on OS Header (with [002h]=0000h, initial=0)
+004h 4 Mac OS file type ;\
+008h 4 Mac OS file creator ; as so for Files
+00Ch 2 Mac OS Finder flags ; (seems to contain
+00Eh 2 Mac OS Unknown ; other stfuff/junk
+010h 4 Mac OS Unknown ; for Folders)
+014h 4 Mac OS Unknown ;
+018h 4 Mac OS Unknown ;
+01Ch 4 Mac OS Unknown ;
+020h 4 Mac OS Unknown ;/
+024h (4) Resource fork uncompressed size ;\
+028h (4) Resource fork compressed size ; only if
+02Ch (2) Resource fork CRC-16 (0 for method 0Fh) ; Flags2
+02Eh (2) Resource fork Unknown ; bit0=1
+030h (1) Resource fork compression method ;
+031h (1) Resource fork Encryption IV? size ;
+... (..) Resource fork Encryption IV? data ;/
+OS Header for Windows (OS=3):
+000h 2 Flags 2 (bit4=same as archive header [053h] ?)
+002h 2 CRC16 on OS Header (with [002h]=0000h, initial=0)
+004h 4 Windows File Attribute (20h=Normal, 10h=Folder)
+008h 08h Windows Zerofilled
+010h 4 Windows Timestamp last accessed?
+014h 4 Windows Unknown (0005xxxxh)
+018h 08h Windows Zerofilled
+
+StuffIt 5 seems to only use 00h, 0Dh and 0Fh. See "StuffItSpecs" for
+descriptions of the algorithms.
+
+StuffIt X (.sitx) (Macintosh, Windows) (20xx?)
+
+| StuffIt Archive Header:
+000h 8 ID "StuffIt!" (reportedly "StuffIt?" also exists)
+008h .. Unknown...
+
+The StuffIt X headers are somehow compressed/compacted (there are very few 00h
+bytes even when filesize entries should have zeroes in MSBs).

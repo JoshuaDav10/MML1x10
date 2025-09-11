@@ -1,0 +1,32 @@
+MIPS INSTRUCTION SET REFERENCE - INEXACT, UNIMPLEMENTED OPERATION, INVALID OPERATION, OVERFLOW, UNDERFLOW
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Inexact, Unimplemented Operation, Invalid Operation, Overflow, Underflow
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1028 characters
+Lines: 23
+================================================================================
+
+Inexact, Unimplemented Operation, Invalid Operation, Overflow, Underflow
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                       215
+
+                         Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+NOP
+
+
+
+
+  No Operation                                                                                                             NOP
+
+      31                   26 25            21 20             16 15              11 10              6   5                  0
+            SPECIAL                   0                 0                 0                  0                  SLL
+             000000                00000             00000              00000             00000                000000
+                  6                   5                 5                 5                  5                   6
+
+           Format:    NOP                                                                                   Assembly Idiom
+
+           Purpose:

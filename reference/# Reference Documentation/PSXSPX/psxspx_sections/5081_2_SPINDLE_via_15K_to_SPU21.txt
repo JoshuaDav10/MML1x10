@@ -1,0 +1,78 @@
+PSXSPX SPECIFICATIONS - 2 SPINDLE - VIA 15K TO SPU21
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 2 SPINDLE - via 15K to SPU21
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1946 characters
+Lines: 69
+================================================================================
+
+2 SPINDLE - via 15K to SPU21
+3 SW (ON/OFF) - IC304.27
+4 TRACKING FORWARD
+5 TRACKING REVERSE
+6 FOCUS FORWARD
+7 FOCUS REVERSE
+8 GND - CN702 pin 11
+9 NC (INTERNAL) - via C731 (10uF) to GND
+10 +7.5V (Pow VCC ch1,2)
+11 FOCUS COIL (1) - CN702 pin 15
+12 FOCUS COIL (2) - CN702 pin 14
+13 TRACKING COIL (1) - CN702 pin 16
+14 TRACKING COIL (2) - CN702 pin 13
+15 SPINDLE MOTOR (1) - CN701 pin 4
+16 SPINDLE MOTOR (2) - CN701 pin 3
+17 SLED MOTOR (1) - CN701 pin 1
+18 SLED MOTOR (2) - CN701 pin 2
+19 +7.5V (Pow VCC ch3,4)
+20 MUTE - /RES (via 5K6)
+21 GND
+22 SLED REVERSE
+23 SLED FORWARD
+24 to pin1
+25 via capacitors to pin1
+26 BIAS 1.75V
+27 to pin1
+28 +7.5V (Pre VCC)
+
+Additionally to the above 28pins, the chip has two large grounded pins (between
+pin 7/8 and 21/22) for shielding or cooling purposes.
+
+IC703 - 20pin - "SONY CXA1791N" (RF Amplifier) (on PU-18 boards)
+
+| 1 LD O APC amplifier output
+2 PD I APC amplifier input
+3 PD1 I Input 1 for RF I-V amplifiers
+4 PD2 I Input 2 for RF I-V amplifiers
+5 GND/VEE - Supply Ground
+6 F I Input F for I-V amplifier
+7 E I Input E for I-V amplifier
+8 VR O DC Voltage Output (VCC+VEE)/2
+9 VC I Center Voltage Input
+10 NC - NC
+11 NC - NC
+12 EO O Monitoring Output for I-V amplifier E
+13 EI - Gain Adjust for I-V amplifier E
+14 TE O Tracking Error Amplifier Output
+15 FE_BIAS I BIAS Adjustment for Focus Error
+16 FE O Focus Error Amplifier Output
+17 RFO O RF Amplifier Output
+18 RFI I RF Amplifier Input
+19 /LD_ON I APC amplifier ON=GND, OFF=VCC
+20 VCC - Supply
+
+Datasheet for CXA1791N does exist. Later boards have IC703 replaced by IC723.
+Older PU-7/PU-8 boards appear to have used a bunch of smaller components (8pin
+chips and/or transistors) instead of 20pin RF amplifiers.
+
+IC723 - 20pin - "SONY CXA2575N-T4" (RF (Matrix?) Amplifier) (PU-22..PM-41(2))
+
+| 1-TEIM
+2-TEIG
+3-VEE GND
+4-E via 33K to CN702 pin 4
+5-F via 33K to CN702 pin 8
+6-PD2 via 36K to CN702 pin 6
+7-PD1 via 36K to CN702 pin 7
+8-PD to CN702 pin 9
+9-LD

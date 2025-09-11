@@ -1,0 +1,52 @@
+MIPS INSTRUCTION SET REFERENCE - INEXACT, INVALID OPERATION, OVERFLOW, UNIMPLEMENTED OPERATION
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Inexact, Invalid Operation, Overflow, Unimplemented Operation
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 2688 characters
+Lines: 43
+================================================================================
+
+Inexact, Invalid Operation, Overflow, Unimplemented Operation
+
+
+
+
+308                                                    MIPS32™ Architecture For Programmers Volume II, Revision 2.00
+
+                        Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+WAIT
+
+
+
+
+        Enter Standby Mode                                                                                               WAIT
+
+       31                   26 25 24                                                                  6   5                  0
+               COP0           CO                                                                                 WAIT
+                                                      Implementation-Dependent Code
+              010000           1                                                                                100000
+                 6             1                                    19                                             6
+
+            Format: WAIT                                                                                               MIPS32
+
+            Purpose:
+            Wait for Event
+
+            Description:
+            The WAIT instruction performs an implementation-dependent operation, usually involving a lower power mode.
+            Software may use bits 24:6 of the instruction to communicate additional information to the processor, and the proces-
+            sor may use this information as control for the lower power mode. A value of zero for bits 24:6 is the default and must
+            be valid in all implementations.
+            The WAIT instruction is typically implemented by stalling the pipeline at the completion of the instruction and enter-
+            ing a lower power mode. The pipeline is restarted when an external event, such as an interrupt or external request
+            occurs, and execution continues with the instruction following the WAIT instruction. It is implementation-dependent
+            whether the pipeline restarts when a non-enabled interrupt is requested. In this case, software must poll for the cause
+            of the restart.The assertion of any reset or NMI must restart the pipeline and the corresponding exception must be
+            taken.
+            If the pipeline restarts as the result of an enabled interrupt, that interrupt is taken between the WAIT instruction and
+            the following instruction (EPC for the interrupt points at the instruction following the WAIT instruction).
+
+            Restrictions:
+            The operation of the processor is UNDEFINED if a WAIT instruction is placed in the delay slot of a branch or a
+            jump.

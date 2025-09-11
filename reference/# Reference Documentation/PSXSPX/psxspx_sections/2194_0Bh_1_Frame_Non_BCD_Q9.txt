@@ -1,0 +1,41 @@
+PSXSPX SPECIFICATIONS - 0BH 1 FRAME (NON-BCD!) ;/ Q9
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 0Bh 1 Frame (Non-BCD!) ;/ Q9
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1356 characters
+Lines: 32
+================================================================================
+
+0Bh 1 Frame (Non-BCD!) ;/ Q9
+
+For Point>=A0h, below 44h bytes at [0Ch..4Fh] are zero-filled
+
+| 0Ch 4 Offset to Index-block for this track (from begin of .MDS file)
+10h 2 Sector size (800h..930h) (or 860h..990h if with subchannels)
+12h 1 Unknown (02h) (maybe number of indices?)
+13h 11h Zero
+24h 4 Track start sector, PLBA (00000000h=00:02:00)(or 00000096h=00:02:00?)
+28h 8 Track start offset (from begin of .MDF file)
+30h 4 Number of Filenames for this track (usually 1)
+34h 4 Offset to Filename Block for this track (from begin of .MDS file)
+38h 18h Zero
+
+Trackmode:
+
+| (upper 4bit seem to be meaningless?)
+00h=None (used for entries with Point=A0h..FF)
+A9h=AUDIO ;sector size = 2352 930h ;bytes 000h..92Fh
+AAh=MODE1 ;sector size = 2048 800h ;bytes 010h..80Fh
+ABh=MODE2 ;sector size = 2336 920h ;bytes 010h..92Fh
+ACh=MODE2_FORM1 ;sector size = 2048 800h ;bytes 018h..817h (incomplete!)
+ADh=MODE2_FORM2 ;sector size = 2324+0? 914h ;bytes 018h..91Bh (incomplete!)
+ADh=MODE2_FORM2 ;sector size = 2324+4? 918h ;bytes ??..?? (contains what?)
+ECh=MODE2 ;sector size = 2448 990h ;(930h+60h) (with subchannels)
+
+Index Blocks (usually 8 bytes per track)
+
+| 00h 4 Number of sectors with Index 0 (usually 96h or zero)
+04h 4 Number of sectors with Index 1 (usually size of main-track area)
+
+Index blocks are usually/always 8 bytes in size (two indices per track, even

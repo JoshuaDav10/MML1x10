@@ -1,0 +1,56 @@
+PSXSPX SPECIFICATIONS - CDROM FILE ARCHIVE DIR/DAT (ONE/VIEWPOINT)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Archive DIR/DAT (One/Viewpoint)
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1989 characters
+Lines: 48
+================================================================================
+
+CDROM File Archive DIR/DAT (One/Viewpoint)
+
+DIR/DAT (One/Viewpoint)
+
+| Used by One (DATAFILE.BIN and DIRFILE.BIN)
+Used by Viewpoint (VIEW.DAT and VIEW.DIR)
+
+Format of the DIR file:
+
+| 000h 60h Extension List (20h x 3-char ASCII, zeropadded if shorter than 3)
+060h .. Root Directory (can contain folders and files)
+... .. Child Directories (can contain files) (maybe also sub-folders?)
+
+Extension List contains several uppercase 3-character ASCII extensions, in a
+hex editor this will appear as a continous string of gibberish (dots=00h):
+
+| In Viewpoint: "...VCSVCFBINTXTVH.VB.STRST1ST2ST3......//..."
+In One: "...VCTVCKSNDBINCPEINI..................//..."
+
+Directory Entries contain bitstreams with ASCII characters squeezed into 6bit
+values:
+
+| 000h 1 Length of Filename and Extension index
+bit7-3 File Extension Index (0..1Fh = Offset I*3 in DIR file)
+bit2-0 Filename Length-1 (0..7 = 1..8 chars)
+001h .. Filename in 6bit chars (N*6+7/8 bytes = 1..6 bytes for 1..8 chars)
+bit7-2 1st character, whole 6bit ;\1st byte
+bit1-0 2nd character, upper 2bit (if any) ;/
+bit7-4 2nd character, lower 4bit (if any) ;\2nd byte (if any)
+bit3-0 3rd character, upper 4bit (if any) ;/
+bit7-6 3rd character, lower 2bit (if any) ;\3rd byte (if any)
+bit5-0 4th character, whole 6bit (if any) ;/
+bit7-2 5th character, whole 6bit (if any) ;\4th byte (if any)
+bit1-0 6th character, upper 2bit (if any) ;/
+bit7-4 6th character, lower 4bit (if any) ;\5th byte (if any)
+bit3-0 7th character, upper 4bit (if any) ;/
+bit7-6 7th character, lower 2bit (if any) ;\6th byte (if any)
+bit5-0 8th character, whole 6bit (if any) ;/
+bitN-0 Zeropadding in LSBs of last byte ;-zeropadding
+The 6bit characters codes are:
+00h..09h="0..9", 0Ah..23h="a..z", 24h="_", 25h..3Fh=Unused
+... 4 Filesize and End Flag
+bit31 End of Directory Flag (0=Not last entry, 1=Last entry)
+bit30-0 Filesize 31bit (or 0=Child Folder)
+... 4 Offset and fixed bit
+bit31 Unknown (always 1)
+bit30-0 File Offset in DAT file (or Folder offset in DIR file)

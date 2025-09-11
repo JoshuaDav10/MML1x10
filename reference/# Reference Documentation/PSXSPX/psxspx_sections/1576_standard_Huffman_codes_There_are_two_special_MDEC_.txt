@@ -1,0 +1,36 @@
+PSXSPX SPECIFICATIONS - STANDARD HUFFMAN CODES. THERE ARE TWO SPECIAL MDEC VALUES:
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: standard Huffman codes. There are two special MDEC values:
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1023 characters
+Lines: 27
+================================================================================
+
+standard Huffman codes. There are two special MDEC values:
+
+| FE00h End of Block (EOB)
+7C1Fh Escape code (huffman code will be followed by v2-style 16bit value)
+
+VLC0 chunk entries 00h..DFh are mapped to the following Huffman codes:
+
+| 10 00
+11x 01,02
+011x 03,04
+010xx 05,06,07,08
+0011xx 0D,0E,0B,0C
+00101x 09,0A
+00100xxxx 2E,2F,22,23,2C,2D,2A,2B,26,27,24,25,20,21,28,29
+0001xxx 15,16,13,14,0F,10,11,12
+00001xxx 1A,1B,1E,1F,18,19,1C,1D
+000001 17h
+0000001xxxx 3E,3F,38,39,30,31,34,35,32,33,3C,3D,3A,3B,36,37
+00000001xxxxx 46,47,54,55,4E,4F,44,45,4A,4B,52,53,5E,5F,5C,5D,
+42,43,5A,5B,58,59,48,49,4C,4D,40,41,50,51,56,57
+000000001xxxxx 74,75,72,73,70,71,6E,6F,6C,6D,6A,6B,68,69,66,67,
+64,65,62,63,60,61,7E,7F,7C,7D,7A,7B,78,79,76,77
+0000000001xxxxx 9E,9F,9C,9D,9A,9B,98,99,96,97,94,95,92,93,90,91,
+8E,8F,8C,8D,8A,8B,88,89,86,87,84,85,82,83,80,81
+00000000001xxxxx B0,B1,AE,AF,AC,AD,AA,AB,A8,A9,A6,A7,A4,A5,A2,A3,
+A0,A1,BE,BF,BC,BD,BA,BB,B8,B9,B6,B7,B4,B5,B2,B3
+000000000001xxxxx C6,C7,C4,C5,C2,C3,C0,C1,C8,C9,D4,D5,D2,D3,D0,D1,

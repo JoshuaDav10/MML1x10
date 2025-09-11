@@ -1,0 +1,97 @@
+PSXSPX SPECIFICATIONS - THE PSX CDROM BIOS VERSIONS VC1, VC2, AND VC3 ARE USING FOLLOWING CX()
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: The PSX CDROM BIOS versions vC1, vC2, and vC3 are using following CX()
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 3749 characters
+Lines: 88
+================================================================================
+
+The PSX CDROM BIOS versions vC1, vC2, and vC3 are using following CX()
+commands:
+
+CXD2510Q CXD2545Q CXD2938Q
+CX(00) CX(00) CX(00) AllFocusSwitchesOff
+CX(02) CX(02) CX(02) FocusSearchVoltageFalling
+CX(03) CX(03) CX(03) FocusSearchVoltageRising ;ForTestOnly
+CX(08) CX(08) CX(08) FocusServoOn
+CX(0C) CX(0C) CX(0C) FocusServoOnAndDefectOn ;diff.usage vC# ?
+-----
+CX(11) - - SledKickHeight2
+CX(12) - - SledKickHeightInvalid
+CX(19) - - TrackingGainAndSledKickHeight2
+CX(1D) - - TrackingGainBrakeAndSledKickHeight2
+CX(1E) - - TrackingGainBrakeAndSledKickHeightInvalid
+-----
+- CX(11) CX(11) AntiShockOff ;\
+- CX(13) CX(13) AntiShockOffGainUp ;
+- CX(17) CX(17) AntiShockOffGainUpBrake ;/
+-----
+CX(20) CX(20) CX(20) SledAndTrackingOff
+CX(21) CX(21) CX(21) SledServoOn ;ForTestOnly
+CX(22) CX(22) CX(22) SledFastForward
+CX(23) CX(23) CX(23) SledFastReverse
+CX(24) - - TrackingServoOn
+CX(25) CX(25) CX(25) SledAndTrackingServoOn
+- CX(26) CX(26) SledFastForwardAndTrackingServoOn
+CX(28) CX(28) CX(28) TrackingForwardJump ;ForTestOnly
+CX(2C) CX(2C) CX(2C) TrackingReverseJump ;ForTestOnly
+-----
+CX(30+n) - - BalanceAdjust(0..7)
+CX(38+n) - - GainAdjust(0..7)
+-----
+- CX(30) CX(30) SetSledKickLevel1 ;\
+- CX(31) CX(31) SetSledKickLevel2 ;
+- CX(32) CX(32) SetSledKickLevel3 ;/
+-----
+- CX(3400E6) CX(3400E6) SetK00toE6hSledInputGain ;def=E0h
+- CX(340730) CX(340730) SetK07to30hSledAutoGain ;blah ;def=30h
+- CX(34114A) CX(34114A) SetK11to4AhFocusOutputGain ;def=32h
+- CX(341330) CX(341330) SetK13to30hFocusAutoGain ;blah ;def=30h
+- CX(341D6F) CX(341D6F) SetK1Dto6FhTrackingLowBoostFilterAL ;def=44h
+- CX(341F64) CX(341F64) SetK1Fto64hTrackingLowBoostFilterBL ;def=5Eh
+- CX(342220) CX(342220) SetK22to20hTrackingOutputGain ;def=18h
+- CX(342330) CX(342330) SetK23to30hTrackingAutoGain ;blah ;def=30h
+- CX(342D28) CX(342D28) SetK2Dto28hFocusGainDownOutputGain ;def=1Bh
+- CX(343E70) CX(343E70) SetK3Eto70hTrackingGainUpOutputGain ;def=57h
+- - CX(34910000) NewScexStopReading ;\
+- - CX(3491x180) NewScexRandomKey(x) ;
+- - CX(34920000) NewScexFlushResyncOrSo ; SCEX SPECIAL
+- - CX(34944A00) NewScexInitValue1 ; see also:
+- - CX(3498C000) NewScexInitValue2 ; CX(3C2080)
+- - CX(349C1000) NewScexThis ;\inverse ;
+- - CX(349D1000) NewScexThat ;/of COUT ;/
+- CX(34F000) CX(34F000) SetTRVSCto000h
+- CX(34Fxxx) CX(34Fxxx) SetFBIAStoNNNh
+-----
+- CX(3740AA) CX(3740AA) SetSMto00h ;\set SM to 0,6,7,9
+- CX(3746AA) CX(3746AA) SetSMto06h ; (sled move voltage)
+- CX(3747AA) CX(3747AA) SetSMto07h ; (and init several
+- CX(3749AA) CX(3749AA) SetSMto09h ;/fixed settings)
+-----
+- CX(380010) CX(380010) ModeMeasureTrackingZeroLevel ;\Measure modes
+- CX(380800) CX(380800) ModeMeasureRfZeroLevel ; (accepted
+- CX(382000) CX(382000) ModeMeasureFocusZeroLevel ; every 2.9ms)
+- CX(388000) CX(388000) ModeMeasureVcLevel ;/
+- CX(38140A) CX(38140A) ModeCompensate
+- CX(38140E) CX(38140E) ModeCompensateAndTraverseCenter
+- CX(38148A) CX(38148A) ModeCompensateAndDefectOff
+- CX(38148E) CX(38148E) ModeCompensateAndDefectOffTraverseCenter
+- CX(3814AA) CX(3814AA) ModeCompensateAndStuffAndMeasureTraverse ;!
+- CX(38150A) CX(38150A) ModeCompensateAndTrackingAutoGain
+- CX(38150E) CX(38150E) ModeCompensateAndTrackingAutoGain
+- CX(38160A) CX(38160A) ModeCompensateAndFocusAutoGain
+-----
+- CX(391E) - SenseRFDCinputSignalWithoutDAC ;\rather
+- CX(3983) - SenseFEinputSignalWithDAC ;/unused
+- CX(399C) - SenseTRVSCregisterWithDAC ;\only if
+- CX(399D) - SenseFBIASregisterWithDAC ;/TEST1=LOW
+-----
+- CX(3A0000) CX(3A0000) FocusBiasAdditionOff ;\
+- CX(3A4000) CX(3A4000) FocusBiasAdditionOn ;/
+- CX(3B2250)!CX(3B7250)!InitOperationForMirrDfctFok 
+
+Note: for vC2, some CX(38xxxx) values may differ depending on
+"set_mid_lsb_to_140Eh".
+
+For vC2, CX(Dx) and CX(Ex) should be officially zero-padded to CX(Dx00) and

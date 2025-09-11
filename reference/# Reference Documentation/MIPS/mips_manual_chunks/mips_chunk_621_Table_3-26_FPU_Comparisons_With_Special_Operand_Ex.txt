@@ -1,0 +1,68 @@
+MIPS INSTRUCTION SET REFERENCE - TABLE 3-26 FPU COMPARISONS WITH SPECIAL OPERAND EXCEPTIONS FOR QNANS
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: Table 3-26 FPU Comparisons With Special Operand Exceptions for QNaNs
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 4478 characters
+Lines: 60
+================================================================================
+
+Table 3-26 FPU Comparisons With Special Operand Exceptions for QNaNs
+
+                                                                                               Comparison CC           Instructio
+  Instruction                         Comparison Predicate                                        Result                   n
+
+                                                                              Relation                                 Condition
+                                                                               Values            If         Inv Op       Field
+   Cond                    Name of Predicate and                                             Predicate      Excp If
+  Mnemonic       Logically Negated Predicate (Abbreviation)               >    <   =     ?    Is True       QNaN?       3    2..0
+                Signaling False [this predicate always False]             F    F   F     F
+  SF                                                                                             F                            0
+                Signaling True (ST)                                       T    T   T     T
+
+                Not Greater Than or Less Than or Equal                    F    F   F     T       T
+  NGLE                                                                                                                        1
+                Greater Than or Less Than or Equal (GLE)                  T    T   T     F       F
+
+                Signaling Equal                                           F    F   T     F       T
+  SEQ                                                                                                                         2
+                Signaling Not Equal (SNE)                                 T    T   F     T       F
+
+                Not Greater Than or Less Than                             F    F   T     T       T
+  NGL                                                                                                                         3
+                Greater Than or Less Than (GL)                            T    T   F     F       F
+                                                                                                                Yes     1
+                Less Than                                                 F    T   F     F       T
+  LT                                                                                                                          4
+                Not Less Than (NLT)                                       T    F   T     T       F
+
+                Not Greater Than or Equal                                 F    T   F     T       T
+  NGE                                                                                                                         5
+                Greater Than or Equal (GE)                                T    F   T     F       F
+
+                Less Than or Equal                                        F    T   T     F       T
+  LE                                                                                                                          6
+                Not Less Than or Equal (NLE)                              T    F   F     T       F
+
+                Not Greater Than                                          F    T   T     T       T
+  NGT                                                                                                                         7
+                Greater Than (GT)                                         T    F   F     F       F
+
+                         Key: ? = unordered, > = greater than, < = less than, = is equal, T = True, F = False
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                                       87
+
+                            Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+Floating Point Compare (cont.)                                                                              C.cond.fmt
+
+
+      Restrictions:
+      The fields fs and ft must specify FPRs valid for operands of type fmt; if they are not valid, the result is UNPREDICT-
+      ABLE.
+      The operands must be values in format fmt; if they are not, the result is UNPREDICTABLE and the value of the
+      operand FPRs becomes UNPREDICTABLE.
+      The result of C.cond.PS is UNPREDICTABLE if the processor is executing in 16 FP registers mode, or if the condi-
+      tion code number is odd.

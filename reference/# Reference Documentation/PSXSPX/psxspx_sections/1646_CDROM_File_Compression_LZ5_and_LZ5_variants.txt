@@ -1,0 +1,80 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION LZ5 AND LZ5-VARIANTS
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression LZ5 and LZ5-variants
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 2291 characters
+Lines: 71
+================================================================================
+
+CDROM File Compression LZ5 and LZ5-variants
+
+Interplay Sports Baseball 2000 (MagDemo22:BB2000\DATA\HOG.TOC\UNIFORMS\*.UNI)
+
+| 000h N*14h File List (3Ch*14b bytes, unused entries are zeropadded)
+4B0h .. Data area (TIM files for player uniforms)
+File List entries:
+000h 10h Filename ("FILENAME.EXT", zeropadded)
+010h 4 Offset (zerobased, from begin of Data area, increasing)
+
+| _______________________________ Entrysize=18h ________________________________
+
+Invasion from Beyond (MagDemo15: IFB\*.CC)
+
+| 000h 0Ch Fixed ID (always "KotJCo01Dir ") (always that same string)
+00Ch 4 Number of Files
+010h N*18h File List
+... .. File Data area
+
+File List entries:
+
+| 000h 10h Filename ("FILENAME.EXT", zeropadded)
+010h 4 Offset in bytes (increasing, 1-byte or 4-byte aligned)
+014h 4 Filesize in bytes (can be odd)
+
+Note: Alignment is optional: Files in IFB\HANGAR\*.CC and IFB\MAPS\*.CC use
+4-byte aligned offsets (but may have odd filesizes). Files in IFB\INCBINS\*.CC
+don't use any alignment/padding.
+
+Ghost in the Shell (MagDemo03: GITSDEMO\S01\*.FAC)
+
+| 000h N*18h File List (18h-bytes each)
+... 18h File List end marker (zerofilled)
+... .. File Data
+
+File List entries:
+
+| 000h 1 Filename Checksum (sum of bytes at [001h..00Dh])
+001h 1 Filename Length (excluding ending zeroes) (eg. 8, 9, 10, 12)
+002h 0Ch Filename ("FILENAME.EXT", zeropadded if less than 12 chars)
+00Eh 2 Unknown (2000h) (maybe attr and/or ending zero for filename)
+010h 4 Filesize in bytes (can be odd)
+014h 4 Offset (increasing, 4-byte aligned)
+
+Oddworld: Abe's Exodus (MagDemo17: ABE2\*.LVL)
+
+Oddworld: Abe's Exodus (MagDemo21: ABE2\*.LVL and nested .IDX files)
+
+| 000h 4 Header Size in bytes (2800h) (can be MUCH bigger than needed)
+004h 4 Zero
+008h 4 ID "Indx"
+00Ch 4 Zero
+010h 4 Number of Files (N) (CEh) (can be zero=empty in .IDX files)
+014h 4 Header Size/800h (05h)
+018h 4 Zero
+01Ch 4 Zero
+020h N*18h File List
+... .. Zeropadding to end of Headersize
+... .. File Data area
+
+File List entries (in .LVL files):
+
+| 000h 0Ch Filename ("FILENAME.EXT", zeropadded if shorter)
+00Ch 4 Offset/800h
+010h 4 File Size/800h
+014h 4 File Size in bytes
+
+File List entries (in .IDX files):
+
+| IDX files use the same File List entry format as LVL, but the offsets
+seem to refer to an external file with corresponding name, for example:

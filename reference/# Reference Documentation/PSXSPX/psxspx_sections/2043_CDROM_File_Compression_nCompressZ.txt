@@ -1,0 +1,40 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION NCOMPRESS.Z
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression nCompress.Z
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1426 characters
+Lines: 32
+================================================================================
+
+CDROM File Compression nCompress.Z
+
+nCompress is some kind of a Gzip predecessor. The program was originally called
+"compress" and later renamed to "ncompress" (and sometimes called
+"(n)compress"). Compressed files have uppercase ".Z" attached to their original
+name.
+
+nCompress.Z
+
+The header is rather small and lacks info on decompressed size (ie. the one
+must process the whole bitstream to determine the size, and accordingly, the
+fileformat doesn't allow padding to be appended at end of file). To detect .Z
+files, examine the first three bytes, and best also check that the leading 9bit
+codes don't exceed num_codes (with num_codes increasing from 101h and up for
+each new code).
+
+| 000h 2 ID (1Fh,9Dh)
+002h 1 Mode (MaxBits(9..16) + bit7=WithClearCode) (usually 90h)
+003h .. ClearGap LZW compressed data (or raw LZW when mode.bit7=0)
+
+Compression is relative straight LZW, resembling 8bit GIFs, with 9bit initial
+codesize, with preset codes 000h..0FFh=Data and (optional) 100h=Clear code
+(there is no End code). Codes are allocated from 101h and up (100h and up if
+without Clear code).
+
+The bitstream is fetched LSB first (starting in bit0 of first byte). The
+decoder is prefetching groups of eight codes (N-bytes with eight N-bit codes),
+the odd part is that Clear codes are discarding those prefetched bytes (so
+Clear codes will be followed by Gaps with unused bytes).
+
+ClearGap LZW is also used by ARC Method 8 and 9.

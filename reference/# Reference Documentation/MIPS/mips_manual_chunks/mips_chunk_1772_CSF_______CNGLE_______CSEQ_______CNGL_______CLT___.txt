@@ -1,0 +1,25 @@
+MIPS INSTRUCTION SET REFERENCE - C.SF       C.NGLE       C.SEQ       C.NGL       C.LT       C.NGE       C.LE       C.NGT
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: C.SF       C.NGLE       C.SEQ       C.NGL       C.LT       C.NGE       C.LE       C.NGT
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1617 characters
+Lines: 16
+================================================================================
+
+C.SF       C.NGLE       C.SEQ       C.NGL       C.LT       C.NGE       C.LE       C.NGT
+    7    111     CABS.SF ε∇ CABS.NGLE ε∇ CABS.SEQ ε∇ CABS.NGL ε∇ CABS.LT ε∇ CABS.NGE ε∇ CABS.LE ε∇ CABS.NGT ε∇
+
+
+                               Table A-16 MIPS32 COP1 Encoding of Function Field When rs=W or L1
+    function       bits 2..0
+                      0                1                 2                 3              4       5               6            7
+    bits 5..3        000              001               010               011            100     101             110          111
+    0 000             *                *                 *                 *              *       *               *            *
+    1 001             *                *                 *                 *              *       *               *            *
+    2 010             *                *                 *                 *              *       *               *            *
+    3 011             *                *                 *                 *              *       *               *            *
+    4 100          CVT.S             CVT.D               *                 *              *       *         CVT.PS.PW ε∇       *
+    5 101             *                *                 *                 *              *       *               *            *
+    6 110             *                *                 *                 *              *       *               *            *
+    7 111             *                *                 *                 *              *       *               *            *

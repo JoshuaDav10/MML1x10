@@ -1,0 +1,45 @@
+PSXSPX SPECIFICATIONS - 00H,00H,"SE" IN FLASH MEMORY).
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: 00h,00h,"SE" in FLASH memory).
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1265 characters
+Lines: 36
+================================================================================
+
+00h,00h,"SE" in FLASH memory).
+
+| 000h r1..r12 (ie. without r0)
+030h r13_usr (sp_usr)
+034h r14_usr (lr_usr)
+038h r15 (pc)
+03Ch psr_fc
+040h Snapshot ID (0xh,00h,"SE")
+044h unused (3Ch bytes)
+200h Copy of user RAM at 200h..7FFh
+
+For MCX1 files, snapshots can be automatically loaded and saved via the SWI
+09h, DoExecute function (the snapshot handling seems to be bugged though; see
+SWI 09h for details).
+
+Function Table (FUNC 80h..FFh)
+
+The table can contain 00h..7Fh entries, for FUNC 80h..FFh. Each entry occupies
+8 bytes:
+
+| 00h 4 LEN1 (00000000h..00000080h) (destroys Kernel RAM if bigger)
+04h 4 Function Address (bit0 can be set for THUMB code)
+
+If the number of table entries isn't a multiple of 10h, then the table should
+be zero-padded to a multiple of 80h bytes (the following File Viewer Mono Icon
+data is located on the next higher 80h-byte boundary after the Function Table).
+
+For details see BU Commands 5Bh and 5Ch.
+
+File Viewer Mono Icon
+
+Animation Length (0001h..any number) (icon frames) is stored in hdr[50h], for
+the File Viewer Icon, the Animation Delay is fixed (six 30Hz units per frame).
+
+The File Viewer Icon is shown in the Directory Viewer (which is activated when
+holding the Down-button pressed for some seconds in the GUI screen with the

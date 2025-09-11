@@ -1,0 +1,30 @@
+MIPS INSTRUCTION SET REFERENCE - • EXECUTION OF SC MUST HAVE BEEN PRECEDED BY EXECUTION OF AN LL INSTRUCTION.
+================================================================================
+Source: MIPS Instruction Set Reference Manual
+Section: • Execution of SC must have been preceded by execution of an LL instruction.
+Chunked: Wed Sep 10 05:06:53 PM CDT 2025
+Size: 1508 characters
+Lines: 21
+================================================================================
+
+• Execution of SC must have been preceded by execution of an LL instruction.
+               • An RMW sequence executed without intervening events that would cause the SC to fail must use the same
+                 address in the LL and SC. The address is the same if the virtual address, physical address, and cache-coherence
+                 algorithm are identical.
+
+
+
+
+MIPS32™ Architecture For Programmers Volume II, Revision 2.00                                                                     243
+
+                               Copyright © 2001-2003 MIPS Technologies Inc. All rights reserved.
+Store Conditional Word (cont.)                                                                                           SC
+
+      Atomic RMW is provided only for synchronizable memory locations. A synchronizable memory location is one that
+      is associated with the state and logic necessary to implement the LL/SC semantics. Whether a memory location is
+      synchronizable depends on the processor and system configurations, and on the memory access type used for the
+      location:
+         • Uniprocessor atomicity: To provide atomic RMW on a single processor, all accesses to the location must be
+           made with memory access type of either cached noncoherent or cached coherent. All accesses must be to one or
+           the other access type, and they may not be mixed.
+         • MP atomicity: To provide atomic RMW among multiple processors, all accesses to the location must be made

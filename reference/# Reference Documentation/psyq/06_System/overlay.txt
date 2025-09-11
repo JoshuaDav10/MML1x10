@@ -1,0 +1,458 @@
+PSYQ DOCUMENTATION - TRAINING/FALL96/overlay.pdf
+================================================================================
+Source: /home/deck/MML_Decomp_Project/# Reference Documentation/PSX Development/PSYQ/psx.arthus.net/sdk/Psy-Q/DOCS/TRAINING/FALL96/overlay.pdf
+Converted: Wed Sep 10 02:47:42 PM CDT 2025
+================================================================================
+
+Using Overlays
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+               Overlay (shared library)
+                     Overview
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Methods for reading and
+executing a program from a
+CD
+   Read an EXE file using CD function and
+   Exec()
+   Use LoadExec()
+   Using Overlay(s)
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Execution file Format
+.EXE file
+
+                                                                                      • Launch from CD-ROM
+    header          code                     code                          code   0
+                                                                                      • Length in multiples of 2048
+
+
+
+
+.BIN file
+                                                                                      • Launch from CD-ROM
+                         code                                                         • Overlay
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Read in an EXE file and then
+Exec()
+   Advantage:
+         Can be developed independently and run
+         as a child program
+   Disadvantages:
+         When control is transferred it is necessary
+         to stop all interrupts.
+         Two copies of the Libraries reside in RAM
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Read in an EXE file and then
+Exec()       Initial value of parent stack pointer
+                stack
+
+                                                      Initial value of child stack pointer
+                heap
+
+
+
+                                  library
+
+
+
+           child (.EXE)
+                                                      Load address of child
+                                  library
+
+
+               parent (.EXE)
+                                                      Load address of parent
+                System area
+
+
+CONFIDENTIAL    PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Method using LoadExec()
+   Advantages:
+         Can be developed independently and run
+         as a child program
+         Can load over the parent
+   Disadvantages:
+         When control is transferred it is necessary
+         to stop all interrupts
+         _96_init() must be called
+         and the biggie...
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Method using LoadExec()
+
+   If LoadExec() fails:
+
+
+
+There is NO Recovery
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Method using LoadExec()
+                                                Initial value of parent or child stack
+           stack                                pointer
+
+
+           heap
+
+
+
+
+                            library
+
+
+          parent (.EXE)
+
+          child (.EXE)
+                                                 Load address of parent or child
+           System area
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Method using Overlay
+
+   Overlays are segments of code which
+   can be manipulated so they “take turns”
+   occupying the same memory location
+   Possible examples:
+         animations, levels/scenarios, CD
+         functions, memory card, menus
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Method using Overlay
+
+   Advantages:
+         Library is shared between parent and child
+         Not necessary to stop interrupts
+         A separate process can be executed while
+         the child is loading
+         Can utilize function parameters
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Method using Overlay
+
+   Disadvantages:
+         The make operation is more complex
+         Libraries must be completely linked into
+         the parent program
+               Size of the parent is larger
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Method using overlay
+                                                    Initial value of stack pointer
+               stack                                (shared between parent and child)
+
+               heap
+
+
+
+
+               child (.BIN)
+
+                                                    Load address of child
+                             library
+                             (shared)
+
+
+               parent (.EXE)
+                                                    Load address of parent
+               System area
+
+
+
+CONFIDENTIAL    PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Overlay Programing
+
+
+
+
+ CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Overlay programming
+
+   Makefile
+   Link file
+   Address file
+   Parent/loader
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Sample Program
+
+   Parent: Menu
+         Select the overlay and load it.
+   Children:
+          balls(Sample sprite display)
+         rcube(Sample 3D display)
+         anim:(Sample movie)
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Makefile
+     Using the link file with psylink
+           psylink /c /m @menu.lnk,menu.cpe,
+           menu.sym, menu.map
+       Child compile options
+       -G0 -Wa,s[name]
+               ccpsx -O3 -G0 -c -Wa,sballs balls.c
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Link file
+
+   General link file description
+         org setting
+         group setting
+         section setting
+         include file
+         inclib file
+         pc initial value setting
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Link file
+
+   org setting
+         The target machine code location is made
+         known to the assembler
+               Example: org $80010000
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Link file
+
+   group setting
+         A group is a collection of sections.
+         You can set attributes of each group
+               bss                                             : uninitialized global data
+               org(address)                                    : org setting address
+               file(file)                                      : output binary as a file
+               over(group)                                     : overlay to group
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Link file
+
+   group setting example
+     text                   group org($80010000)
+     bss                    group bss
+     balls                  group file("balls.bin")
+     rcube                  group over(balls),file("rcube.bin")
+     anim                   group over(balls),file(“anim.bin”)
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Link file
+
+   section setting
+         Allocate each section to a group
+         Normally, the compiler creates a section in the six
+         parts below
+            .rdata      read only data
+            .text       code
+            .data       initialized data
+            .sdata      initialized data (small)
+            .sbss       uninitialized data (small)
+            .bss        uninitialized data
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Link file
+
+   Section setting example
+     section                    .rdata,text
+     section                    .text,text
+     section                    .data,text
+     section                    .sdata,text
+     section                    .sbss,bss
+     section                    .bss,bss
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Link file
+
+   include file
+         Describes the file that is linked
+               Example: include main.obj
+   inclib file
+         Describes the library file
+               Example: inclib "c:\psx\lib\libapi.lib”
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Link file
+
+   pc initial value setting
+         Normally set to __SN_ENTRY_POINT
+               Example:
+                regs                          pc=_ _SN_ENTRY_POINT
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Address file
+
+     Set load address of child program
+                   opt                                                     c+
+       balls       group
+                   xdef                                                    LoadAddress
+                   section                                                 .rdata
+       LoadAddress dw                                                      group(balls)
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Parent loader description
+
+   As needed, read the BIN file to the
+   LoadAddress and call the module as a
+   function
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+ Typical Memory Map
+                                          Stack Area
+
+.bss section                                                                 OG.bss section*
+
+
+.sbss section                              Heap Area                         OG.data section*
+
+
+                                                                             OG.text section*
+                                           OG Group*
+.sdata section                                                               OG.rdata section*
+
+
+.data section                              BSS Group                         *where OG is the name
+                                                                              of the overlay group
+.text section
+                                           Text Group
+.rdata section                             System Area
+
+  CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Overlay module debugging
+
+   Compile option -g
+         Necessary for source level debugging
+   Linker option /v
+         Necessary for overlay debugging
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+ Overlay application
+                                      Opening basic
+Title
+                                      game
+
+
+
+
+                                                                             Replace according to overlay
+
+
+                                          BIN File 1                           BIN File 2               BIN File 3...
+ EXE File 1            Replace in
+                       LoadExec
+                                          EXE File 2
+
+
+
+
+ Systemarea
+System  area                            Systemarea
+                                       System  area
+
+
+  CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Things to Know About Overlays
+
+
+
+
+      CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Overlay memory usage
+Memory reserved for largest overlay
+“Lose” memory on smaller overlays
+
+
+
+
+       BIN 1                             BIN 2                             BIN 3
+
+
+
+
+                                                   = Unused Memory
+      PARENT
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Size and number of overlays
+
+   Smaller overlays:
+         Load faster
+         Require less memory
+   Larger overlays can be more complex
+   Linker on latest tools CD supports up to
+   256 overlays
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+Pitfalls
+
+   Be sure to compile overlays with the
+   -G0 option
+   Flush I-cache when loading an overlay
+   Keep heap base clear of overlay space
+   Overlays can not be interdependent
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+          THE END
+
+
+
+
+CONFIDENTIAL   PlayStation Developer Seminar / Fall ‘96 / Using Overlays
+

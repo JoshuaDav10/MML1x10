@@ -1,0 +1,36 @@
+PSXSPX SPECIFICATIONS - CDROM EXTENSION JOLIET
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM Extension Joliet
+Chunked: Wed Sep 10 03:34:23 PM CDT 2025
+Size: 1234 characters
+Lines: 28
+================================================================================
+
+CDROM Extension Joliet
+
+Typical Joliet Disc Header
+
+The discs contains two separate filesystems, the ISO one for backwards
+compatibilty, and the Joliet one with longer filenames and Unicode characters.
+
+| Sector 16 - Primary Volume Descriptor (with 8bit uppercase ASCII ISO names)
+Sector 17 - Secondary Volume Descriptor (with 16bit Unicode Joliet names)
+Sector 18 - Volume Descriptor Set Terminator
+Sector .. - Path Tables and Directory Records (for ISO)
+Sector .. - Path Tables and Directory Records (for Joliet)
+Sector .. - File Data Sectors (shared for ISO and Joliet)
+
+There is no way to determine which ISO name belongs to which Joliet name
+(except, filenames do usually point to the same file data sectors, but that
+doesn't work for empty files, and doesn't work for folder names).
+
+The ISO names can be max 31 chars (or shorter for compatibility with DOS short
+names: Nero does truncate them to max 14 chars "FILENAME.EXT;1", all uppercase,
+with underscores instead of spaces, and somehow assigning names like
+"FILENAMx.EXT;1" in case of duplicated short names).
+
+Secondary Volume Descriptor (aka Supplementary Volume Descriptor)
+
+This is using the same format as ISO Primary Volume Descriptor (but with some
+changed entries).

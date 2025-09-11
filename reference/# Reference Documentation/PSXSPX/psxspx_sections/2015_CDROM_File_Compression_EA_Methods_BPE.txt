@@ -1,0 +1,45 @@
+PSXSPX SPECIFICATIONS - CDROM FILE COMPRESSION EA METHODS (BPE)
+================================================================================
+Source: https://problemkaputt.de/psx-spx.htm
+Section: CDROM File Compression EA Methods (BPE)
+Chunked: Wed Sep 10 03:34:24 PM CDT 2025
+Size: 1027 characters
+Lines: 37
+================================================================================
+
+CDROM File Compression EA Methods (BPE)
+
+Byte-Pair Encoding
+
+| 000h 2 Method (46FBh or 47FBh) (big-endian)
+... (5) Extra 5 bytes (only present if Method=47FBh)
+... 3 Decompressed Size (big-endian)
+... 1 Escape code
+... 1 Number of Dict entries (N)
+... N*3 Dict (each 3 bytes: Index,Dat1,Dat2)
+... .. Compressed Data
+
+decompress_bpe:
+
+| method=BigEndian16bit[src], src=src+2
+if method=47FBh then src=src+5
+dst_size=BigEndian24bit[src], src=src+3
+esc=[src], src=src+1
+num=[src], src=src+1
+for i=0 to FFh, dict1[i]=i ;initially default=self (uncompressed bytes)
+for i=1 to num, j=[src], dict1[j]=[src+1], dict2[j]=[src+2], src=src+3
+@@decompress_lop:
+x=[src], src=src+1
+if x=dict1[x] then
+if x=esc then x=[src], src=src+1, if x=00h then goto @@decompress_done
+[dst]=x, dst=dst+1
+else
+heap[0]=x, i=1
+while i>0
+i=i-1, x=heap[i], a=dict1[x]
+if a=x then [dst]=x, dst=dst+1 ;\output data to
+else b=dict2[x], heap[i]=b, heap[i+1]=a, i=i+2 ;/dst or heap
+goto @@decompress_lop
+@@decompress_done:
+if (dst-dst_base)<>dst_size then error
+ret
