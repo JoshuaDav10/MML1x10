@@ -1,3 +1,2 @@
 #include "common.h"
-
-INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/FUN_80042980", func_80052180);
+INCLUDE_ASM("asm/rock_neo/nonmatchings/FUN_80042980", FUN_80042980);
