@@ -187,6 +187,8 @@
       - [0x2e2d8, c, FUN_8002e2d8, 0x2e3a8]
       - [0x2e3a8, c, FUN_8002e3a8, 0x2e3cc]
       - [0x2e3cc, c, FUN_8002e3cc, 0x2e498]
+      - [0x2e608, c, FUN_8002e608, 0x2e630]
+      - [0x2ea30, c, FUN_8002ea30, 0x2eb14]
       - [0x2d3e8, c, FUN_8002d3e8, 0x2d4c0]
       - [0x2d808, c, FUN_8002d808, 0x2d818]
       - [0x2d8d8, c, FUN_8002d8d8, 0x2d9a0]
