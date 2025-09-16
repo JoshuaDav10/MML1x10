@@ -159,8 +159,6 @@ INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/game", func_8001663C);
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/game", func_80016798);
 
 INCLUDE_ASM("config/../asm/rock_neo/nonmatchings/game", func_800169AC);
-
-
 // clang-format on
 void func_80016BC0(void) {
     if (++Game_work.time > 10799999u)
@@ -211,10 +209,6 @@ s32 func_80016D64(void) {
         func_80012E98(1);
     return func_8001B314();
 }
-
-
-
-
 void func_80016DAC(void) {
     POLY_FT4* v0;
 
